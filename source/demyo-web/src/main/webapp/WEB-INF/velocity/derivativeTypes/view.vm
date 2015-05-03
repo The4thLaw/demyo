@@ -1,0 +1,17 @@
+#setPageTitleParams('title.view.derivativeType' $derivativeType.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-derivativeType",
+	"url" : "../edit/$derivativeType.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-derivativeType",
+	"url" : "../delete/$derivativeType.id",
+	"confirm" : true
+})
+
+#@entityDetails()
+
+#@entityField('field.DerivativeType.identifyingName')$derivativeType.identifyingName#end
+
+#end

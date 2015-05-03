@@ -1,0 +1,9 @@
+#setPageTitleCond($binding.id 'title.edit.binding', 'title.add.binding')
+
+#@form()
+
+#inputHidden('binding.id')
+#inputText('field.Binding.name', 'binding.name')
+#saveButtons
+
+#end

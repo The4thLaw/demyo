@@ -1,0 +1,37 @@
+#setPageTitleParams('title.view.series' $series.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-series",
+	"url" : "../edit/$series.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-series",
+	"url" : "../delete/$series.id",
+	"confirm" : true
+})
+TODO: QT to add an album to the series
+TODO: QT to add a derivative to the series
+TODO: QT to lend albums if at least one album
+TODO: QT to tag all albums if at least one album
+TODO: QT to remove a tag if at least one album
+TODO: printer-friendly version
+
+#@entityDetails()
+
+#@entityField('field.Series.name')$series.name#end
+#entityFieldUrl('field.Series.website', $series.website)
+#entityFieldRichText('field.Series.summary', $series.summary)
+#entityFieldRichText('field.Series.comment', $series.comment)
+TODO: scenarists
+TODO: artists
+TODO: colorists
+TODO: owned albums count
+TODO: derivatives
+TODO: tags
+#entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, './')
+#entityFieldBoolean('field.Series.completed', $series.completed)
+
+#end
+
+TODO: cover slider
+TODO: list of albums

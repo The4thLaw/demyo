@@ -1,0 +1,7 @@
+#setPageTitle('title.index.binding')
+
+#textList($bindingList "name" "identifyingName" "./view/" true)
+
+$paging.pageLinks($bindingList, $request, $javascript)
+## Not really interesting for Bindings
+##$paging.letters($request)

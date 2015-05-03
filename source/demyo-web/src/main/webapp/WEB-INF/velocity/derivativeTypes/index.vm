@@ -1,0 +1,7 @@
+#setPageTitle('title.index.derivativeType')
+
+#textList($derivativeTypeList "name" "identifyingName" "./view/" true)
+
+$paging.pageLinks($derivativeTypeList, $request, $javascript)
+## Not really interesting for Derivative Types
+##$paging.letters($request)

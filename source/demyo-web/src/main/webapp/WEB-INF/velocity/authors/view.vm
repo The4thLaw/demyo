@@ -1,0 +1,21 @@
+#setPageTitleParams('title.view.author' $author.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-author",
+	"url" : "../edit/$author.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-author",
+	"url" : "../delete/$author.id",
+	"confirm" : true
+})
+
+#thumbnail($author.portrait)
+
+#@entityDetails()
+
+#@entityField('field.Author.identifyingName')$author.identifyingName#end
+#entityFieldUrl('field.Author.website', $author.website)
+#entityFieldRichText('field.Author.biography', $author.biography)
+
+#end

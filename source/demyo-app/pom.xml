@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.demyo</groupId>
+		<artifactId>demyo</artifactId>
+		<version>2.0.0-alpha1</version>
+	</parent>
+	<artifactId>demyo-app</artifactId>
+	<name>Demyo: Desktop Application</name>
+	<description>The entry point for Demyo usage.
+Includes the Web server, H2 server, and startup program.</description>
+	<properties>
+		<org.eclipse.jetty.version>8.1.7.v20120910</org.eclipse.jetty.version>
+	</properties>
+	<dependencies>
+		<!-- Needed for bootstrap script -->
+		<dependency>
+			<groupId>org.demyo</groupId>
+			<artifactId>demyo-model</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${org.eclipse.jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${org.eclipse.jetty.version}</version>
+		</dependency>
+		<dependency><!-- TODO: check if still needed -->
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-plus</artifactId>
+			<version>${org.eclipse.jetty.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.168</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,7 @@
+#setPageTitle('title.index.publisher')
+
+#textList($publisherList "name" "identifyingName" "./view/" true)
+##TODO: collections
+
+$paging.pageLinks($publisherList, $request, $javascript)
+$paging.letters($request)

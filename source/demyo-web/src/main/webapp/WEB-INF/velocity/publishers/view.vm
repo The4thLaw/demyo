@@ -1,0 +1,23 @@
+#setPageTitleParams('title.view.publisher' $publisher.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-publisher",
+	"url" : "../edit/$publisher.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-publisher",
+	"url" : "../delete/$publisher.id",
+	"confirm" : true
+})
+## TODO: quick task to add a collection to this publisher
+
+#thumbnail($publisher.logo)
+
+#@entityDetails()
+
+#@entityField('field.Publisher.identifyingName')$publisher.identifyingName#end
+#entityFieldUrl('field.Publisher.website', $publisher.website)
+#entityFieldUrl('field.Publisher.feed', $publisher.feed)
+#entityFieldRichText('field.Publisher.history', $publisher.history)
+
+#end

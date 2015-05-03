@@ -1,0 +1,13 @@
+#setPageTitleCond($publisher.id 'title.edit.publisher', 'title.add.publisher')
+
+#@form()
+
+#inputHidden('publisher.id')
+#inputText('field.Publisher.name', 'publisher.name')
+#inputText('field.Publisher.website', 'publisher.website')
+#inputText('field.Publisher.feed', 'publisher.feed')
+#inputSelect('field.Publisher.logo', 'publisher.logo.id', $images, { "allowEmpty": true })
+#inputRichText('field.Publisher.history', 'publisher.history')
+#saveButtons
+
+#end

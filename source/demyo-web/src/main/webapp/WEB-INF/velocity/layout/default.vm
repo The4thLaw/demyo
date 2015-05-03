@@ -1,0 +1,92 @@
+$quickTasks.prepare($javascript)
+<!DOCTYPE html>
+<html>
+	<head>
+#if($!pageTitle)
+		<title>$pageTitle - Demyo</title>
+#else
+		<title>Demyo</title>
+#end
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/electron.less">
+		<script type="text/javascript" src="$link.contextPath/js/less-1.3.1.js"></script>
+#foreach($source in $javascript.scriptSources)
+		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
+#end
+	</head>
+	<body>
+		<header>#if($!pageTitle)$pageTitle#end</header>
+		<nav role="navigation">
+			<ul id="menu" role="menu">
+				<li id="menu-home"><a href="$link.contextPath/">#_('menu.main.home')</a></li>
+				<li id="menu-albums"><a href="$link.contextPath/albums/">#_('menu.main.albums')</a>
+					<ul>
+						<li id="menu-list-albums"><a href="$link.contextPath/albums/">#_('menu.albums.browse')</a></li>
+						<li id="menu-list-albums-by-cover"><a href="$link.contextPath/albums/covers/">#_('menu.albums.browse_covers')</a></li>
+						<li id="menu-lent-albums"><a href="$link.contextPath/albums/loans/">#_('menu.albums.loans')</a></li>
+						<li id="menu-add-album"><a href="$link.contextPath/albums/add">#_('menu.albums.add')</a></li>
+						<li id="menu-list-series"><a href="$link.contextPath/series/">#_('menu.series.browse')</a></li>
+						<li id="menu-add-series"><a href="$link.contextPath/series/add">#_('menu.series.add')</a></li>
+						<li id="menu-list-tags"><a href="$link.contextPath/tags/">#_('menu.tags.browse')</a></li>
+						<li id="menu-list-bindings"><a href="$link.contextPath/bindings/">#_('menu.bindings.browse')</a></li>
+						<li id="menu-add-binding"><a href="$link.contextPath/bindings/add">#_('menu.bindings.add')</a></li>
+					</ul>
+				</li>
+				<li id="menu-authors"><a href="$link.contextPath/authors/">#_('menu.main.authors')</a>
+					<ul>
+						<li id="menu-list-authors"><a href="$link.contextPath/authors/">#_('menu.authors.browse')</a></li>
+						<li id="menu-add-author"><a href="$link.contextPath/authors/add">#_('menu.authors.add')</a></li>
+						<li id="menu-list-publishers"><a href="$link.contextPath/publishers/">#_('menu.publishers.browse')</a></li>
+						<li id="menu-add-publisher"><a href="$link.contextPath/publishers/add">#_('menu.publishers.add')</a></li>
+						<li id="menu-add-collection"><a href="$link.contextPath/collections/add">#_('menu.collections.add')</a></li>
+					</ul>
+				</li>
+				<li id="menu-derivatives"><a href="$link.contextPath/derivatives/">#_('menu.main.derivatives')</a>
+					<ul>
+						<li id="menu-list-derivatives"><a href="$link.contextPath/derivatives/">#_('menu.derivatives.browse')</a></li>
+						<li id="menu-list-derivatives-stickers"><a href="$link.contextPath/derivatives/stickers/">#_('menu.derivatives.browse.stickers')</a></li>
+						<li id="menu-add-derivative"><a href="$link.contextPath/derivatives/add">#_('menu.derivatives.add')</a></li>
+						<li id="menu-list-images"><a href="$link.contextPath/images/">#_('menu.images.browse')</a></li>
+						<li id="menu-add-image"><a href="$link.contextPath/images/add">#_('menu.images.add')</a></li>
+						<li id="menu-list-derivative-sources"><a href="$link.contextPath/derivativeSources/">#_('menu.derivative_sources.browse')</a></li>
+						<li id="menu-list-derivative-types"><a href="$link.contextPath/derivativeTypes/">#_('menu.derivative_types.browse')</a></li>
+						<li id="menu-add-derivative-type"><a href="$link.contextPath/derivativeTypes/add">#_('menu.derivative_types.add')</a></li>
+					</ul>
+				</li>
+				<li id="menu-manage"><span>#_('menu.main.manage')</span>
+					<ul>
+						
+						<li id="menu-search"><a href="$link.contextPath/search/advanced">#_('menu.manage.search')</a></li>
+						<li id="menu-export"><a href="$link.contextPath/library/export">#_('menu.manage.export')</a></li>
+						<li id="menu-import"><a href="$link.contextPath/manage/import">#_('menu.manage.import')</a></li>
+						<li id="menu-statistics"><a href="$link.contextPath/library/statistics/">#_('menu.manage.stats')</a></li>
+						<li id="menu-configure"><a href="$link.contextPath/configure">#_('menu.manage.configure')</a></li>
+						<li id="menu-orphans"><a href="$link.contextPath/library/orphans/">#_('menu.manage.orphans')</a></li>
+						<li id="menu-help"><a href="$link.contextPath/help/">#_('menu.manage.help')</a></li>
+						<li id="menu-about"><a href="$link.contextPath/about/">#_('menu.manage.about')</a></li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="quicksearch">
+			<label for="quicksearch-field">#_('layout.quick_search')</label>
+			<input type="text" id="quicksearch-field" placeholder="#_('layout.quick_search.hint')" />
+		</div>
+		<div id="page">
+			$quickTasks.list()
+			<div id="content">
+				$screen_content
+			</div>
+		</div>
+		<footer>
+			Demyo v2.0.0-alpha1
+		</footer>
+		
+#if ($javascript.isLoaded("TinyMCE"))
+		<script type="text/javascript">
+			demyoTinyMCEInit('#_("javascript.l10n.tinyMCE")');
+		</script>
+#end
+	</body>
+</html>

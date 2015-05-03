@@ -1,0 +1,12 @@
+#macro(thumbnail $image)
+#if ($image)
+<figure class="thumb">
+	<a href="$link.contextPath/images/full/$image.id/$image.url">
+		<img src="$link.contextPath/images/thumbnail/$image.id/$image.url" alt="$image.description" />
+	</a>
+	#if ($!bodyContent)
+		<div class="legend">$bodyContent</div>
+	#end
+</figure>
+#end
+#end

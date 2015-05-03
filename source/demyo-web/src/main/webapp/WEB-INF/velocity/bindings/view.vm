@@ -1,0 +1,17 @@
+#setPageTitleParams('title.view.binding' $binding.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-binding",
+	"url" : "../edit/$binding.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-binding",
+	"url" : "../delete/$binding.id",
+	"confirm" : true
+})
+
+#@entityDetails()
+
+#@entityField('field.Binding.identifyingName')$binding.identifyingName#end
+
+#end

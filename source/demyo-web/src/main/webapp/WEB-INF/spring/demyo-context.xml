@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+
+	<context:component-scan base-package="org.demyo" />
+	<tx:annotation-driven/>
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>org/demyo/i18n/fields</value>
+				<value>org/demyo/i18n/menu</value>
+				<value>org/demyo/i18n/pages</value>
+				<value>org/demyo/i18n/special</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath">
+			<value>/WEB-INF/velocity/</value>
+		</property>
+		<property name="velocityProperties">
+			<props>
+				<!--Doesn't work with Spring's macros... -->
+				<prop key="runtime.references.strict">true</prop>
+
+				<prop key="velocimacro.arguments.strict">true</prop>
+				<prop key="velocimacro.library">macros/common.vm,macros/forms.vm,macros/form-values.vm,macros/i18n.vm,macros/images.vm,macros/lists.vm</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+		<property name="suffix" value=".vm" />
+		<property name="layoutUrl" value="layout/default.vm" />
+		<property name="contentType" value="text/html; charset=UTF-8"></property>
+		<property name="viewClass"
+			value="org.demyo.web.velocity.view.Velocity2ToolboxView" />
+		<property name="toolboxConfigLocation" value="WEB-INF/velocity/velocity-tools.xml" />
+		<!--<property name="exposeSpringMacroHelpers" value="true" />-->
+		<!--<property name="exposeRequestAttributes" value="true" />-->
+		<!--<property name="exposeSessionAttributes" value="true" />-->
+	</bean>
+
+
+	<!-- Detect @PersistenceUnit / @PersistenceContext annotations -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/demyoDataSource" />
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+
+		<!-- Entity packages -->
+		<property name="packagesToScan">
+			<list>
+				<value>org.demyo.model</value>
+				<value>org.demyo.model.*</value>
+				<value>org.demyo.model.**.*</value>
+			</list>
+		</property>
+
+		<!-- Datasource definition -->
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- Persistence Provider -->
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.ejb.HibernatePersistence" />
+		</property>
+
+		<!-- JPA/Hibernate Configuration -->
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.archive.autodetection" value="class, hbm" />
+				<entry key="hibernate.show_sql" value="true" />
+				<entry key="hibernate.format_sql" value="true" />
+				<entry key="generate_statistics" value="false" />
+				<entry key="hibernate.use_sql_comments" value="false" />
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+				<!-- <entry key="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.WeblogicTransactionManagerLookup" 
+					/> -->
+				<!-- <entry key="hibernate.cache.use_query_cache" value="true" /> <entry 
+					key="hibernate.cache.use_second_level_cache" value="true" /> <entry key="hibernate.cache.region.factory_class" 
+					value="net.sf.ehcache.hibernate.EhCacheRegionFactory" /> -->
+			</map>
+		</property>
+	</bean>
+
+	<!-- JPA Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- Exception translation bean post processor -->
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+</beans>

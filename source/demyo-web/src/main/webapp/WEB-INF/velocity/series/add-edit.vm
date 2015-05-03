@@ -1,0 +1,14 @@
+#setPageTitleCond($series.id 'title.edit.series', 'title.add.series')
+
+#@form()
+
+#inputHidden('series.id')
+#inputText('field.Series.name', 'series.name')
+#inputText('field.Series.website', 'series.website')
+#inputCheckbox('field.Series.completed', 'series.completed')
+#inputRichText('field.Series.summary', 'series.summary')
+#inputRichText('field.Series.comment', 'series.comment')
+#inputSelectMultiple('field.Series.relatedSeries', 'series.relatedSeries', $otherSeries)
+#saveButtons
+
+#end

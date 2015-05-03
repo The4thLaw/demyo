@@ -1,0 +1,55 @@
+@font-face {
+	font-family: "FontAwesome";
+	src: url('../fonts/fontawesome-webfont.eot');
+	src: url('../fonts/fontawesome-webfont.eot?#iefix') format('eot'),
+		url('../fonts/fontawesome-webfont.woff') format('woff'),
+		url('../fonts/fontawesome-webfont.ttf') format('truetype'),
+		url('../fonts/fontawesome-webfont.svg#FontAwesome') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/*
+ * MIXINS
+ */
+
+.std-transition(@property, @time, @timing: ease, @delay:0s) {
+	-moz-transition: @arguments;
+	-webkit-transition: @arguments;
+	transition: @arguments;
+}
+
+.column-count(@count, @gap) {
+	-moz-column-count: @count;
+	-moz-column-gap: @gap;
+	// Webkit does not increase the total width when we force N columns, So we have columns too small. That's fine, but not what we want.
+	//-webkit-column-count: @count;
+	//-webkit-column-gap: @gap;
+}
+
+.column-width(@width, @gap) {
+	-moz-column-width: @width;
+	-moz-column-gap: @gap;
+	-webkit-column-width: @width;
+	-webkit-column-gap: @gap;
+}
+
+// Deprecated: use LessHat instead
+/*.bg-top-down-linear-gradient-part(@start-color, @start-position, @end-color, @end-position) {
+	background: -moz-linear-gradient(top, @start-color @start-position, @end-color @end-position);
+	background: -webkit-linear-gradient(top, @start-color @start-position, @end-color @end-position);
+	background: -ms-linear-gradient(top, @start-color @start-position, @end-color @end-position);
+	background: linear-gradient(top, @start-color @start-position, @end-color @end-position);
+}*/
+
+// Deprecated: use LessHat instead
+/*.bg-top-down-linear-gradient-full(@start-color, @end-color) {
+	.bg-top-down-linear-gradient-part(@start-color, 0, @end-color, 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=@start-color, endColorstr=@end-color, GradientType=0);
+}*/
+
+.column-break-inside(@arguments) {
+	-webkit-column-break-inside: @arguments;
+	-moz-column-break-inside: @arguments;
+	column-break-inside: @arguments;
+}

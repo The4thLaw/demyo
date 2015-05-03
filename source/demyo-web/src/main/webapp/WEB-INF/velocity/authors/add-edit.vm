@@ -1,0 +1,14 @@
+#setPageTitleCond($author.id 'title.edit.author', 'title.add.author')
+
+#@form()
+
+#inputHidden('author.id')
+#inputText('field.Author.name', 'author.name')
+#inputText('field.Author.firstName', 'author.firstName')
+#inputText('field.Author.nickname', 'author.nickname')
+#inputText('field.Author.website', 'author.website')
+#inputSelect('field.Author.portrait', 'author.portrait.id', $images, { "allowEmpty": true })
+#inputRichText('field.Author.biography', 'author.biography')
+#saveButtons
+
+#end

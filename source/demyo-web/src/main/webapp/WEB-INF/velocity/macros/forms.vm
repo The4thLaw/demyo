@@ -1,0 +1,110 @@
+#macro(form)
+<form method="post" enctype="multipart/form-data">
+	$javascript.load("Demyo.Forms")
+	$bodyContent
+</form>
+#end
+
+#*
+ * Redefinition of the springBind macro with less functionality but also compatibility with strict references.
+ * Also sets an HTML id into fieldId based on the path
+ *#
+#macro(demyoBind $path)
+	#set( $status = $springMacroRequestContext.getBindStatus($path) )
+	#set( $fieldId = "field_${path.replaceAll('\.', '_')}" )
+#end
+
+#macro(inputHidden $path)
+	#demyoBind($path)
+	<input type="hidden" id="$fieldId" name="$status.expression" value="$!status.value" />
+#end
+
+#macro(formField $labelId $path)
+	#if ($path != "")
+		#demyoBind($path)
+	#end
+	<div class="field">
+		<label for="$fieldId">#_($labelId)</label>
+		<div class="value">
+			#set( $hasErrors = $!status.errorMessages && $status.errorMessages.size() > 0 )
+			$bodyContent
+			#if ($hasErrors)
+				<span class="validation-error">$status.errorMessages[0]</a>
+			#end
+		</div>
+	</div>
+#end
+
+#macro(inputText $labelId $path)
+	#@formField($labelId, $path)
+		<input type="text" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
+	#end
+#end
+
+#macro(inputRichText $labelId $path)
+	#@formField($labelId, $path)
+		<textarea id="$fieldId" name="$status.expression" class="richtext #if($hasErrors)error#end">$!status.value</textarea>
+	#end
+	$javascript.load("TinyMCE")
+#end
+
+#macro(inputCheckbox $labelId $path)
+	#@formField("${labelId}.edit", $path)
+		<input type="checkbox" id="$fieldId" name="$status.expression"#if ($!status.value == true) checked="checked"#end />
+	#end
+#end
+
+#macro(inputSelect $labelId $path $values $options)
+	#if(!$!options.allowEmpty)#set($dummy = $options.put("allowEmpty", false))#end
+
+	#@formField($labelId, $path)
+		<select id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end>
+		#if ($options.allowEmpty)
+			<option value=""></option>
+		#end
+		#foreach ($value in $values)
+			<option value="$value.id"#if ($!status.value && $status.value == $value.id) selected="selected"#end>$value.identifyingName</option>
+		#end
+		</select>
+	#end
+#end
+
+#macro(inputSelectMultiple $labelId $path $values)
+	#@formField($labelId, $path)
+		<select id="$fieldId" name="$status.expression" multiple="multiple"#if($hasErrors) class="error"#end>
+		#foreach ($value in $values)
+			#set ($selected = false)
+			#if ($!status.value && !$hasErrors) ## When such a field has errors, the value is a String
+				#foreach ($item in $status.value)
+					#if ($item.id == $value.id)
+						#set ($selected = true)
+					#end
+				#end
+			#end
+			<option value="$value.id"#if ($selected) selected="selected"#end>$value.identifyingName</option>
+		#end
+		</select>
+	#end
+#end
+
+#macro(inputFile $labelId $path)
+	#@formField($labelId, $path)
+		<input type="file" id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end />
+	#end
+#end
+
+#macro(formButtons $saveLabel $resetLabel)
+<div class="field">
+	<label></label>
+	<div class="value">
+		<div class="buttons">
+			<input type="submit" value="#_($saveLabel)" />
+			<input type="reset" value="#_($resetLabel)" />
+		</div>
+	</div>
+</div>
+#end
+
+#macro(saveButtons)
+	#formButtons('button.save', 'button.reset')
+#end

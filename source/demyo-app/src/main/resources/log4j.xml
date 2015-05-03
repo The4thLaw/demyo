@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- APPENDERS -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="threshold" value="debug" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{dd.MM.yyyy HH:mm:ss} [%-5p] %c{1}: %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="demyoAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="threshold" value="debug" />
+		<param name="append" value="false" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<param name="file" value="log4j/demyo.log" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%-5p] %c{1}: %m%n" />
+		</layout>
+	</appender>
+
+	<!-- LOGGERS -->
+
+	<logger name="org.demyo" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="console" />
+		<appender-ref ref="demyoAppender" />
+	</logger>
+	
+	<!--<logger name="org.hibernate.SQL" additivity="false">
+		<level value="trace" />
+		<appender-ref ref="console" />
+	</logger>
+	<logger name="org.hibernate.type" additivity="false">
+		<level value="trace" />
+		<appender-ref ref="console" />
+	</logger>-->
+
+	<root>
+		<priority value="warn" />
+		<appender-ref ref="console" />
+	</root>
+
+</log4j:configuration>

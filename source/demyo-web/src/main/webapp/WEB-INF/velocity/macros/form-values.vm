@@ -1,0 +1,51 @@
+#macro(entityDetails)
+<div class="details">
+	$bodyContent
+</div>
+#end
+
+#macro(entityField $labelId)
+	<div class="field">
+		<label>#_($labelId)</label>
+		<div class="value">
+			$bodyContent
+		</div>
+	</div>
+#end
+
+#macro(entityFieldBoolean $labelId $value)
+	<div class="field">
+		<label>#_("${labelId}.view")</label>
+		<div class="value">
+			#if($value)
+				#_("${labelId}.value.true")
+			#else
+				#_("${labelId}.value.false")
+			#end
+		</div>
+	</div>
+#end
+
+#macro(entityFieldUrl $labelId $url)
+	#if($url)
+		#@entityField($labelId)
+			<a href="$url">$url</a>
+		#end
+	#end
+#end
+
+#macro(entityFieldRichText $labelId $value)
+	#if($value)
+		#@entityField($labelId)
+			$rte.parse($value, $link.contextPath, $demyoTranslationService)
+		#end
+	#end
+#end
+
+#macro(entityFieldCsvList $labelId $entityList $baseUrl)
+	#if($entityList && !$entityList.isEmpty())
+		#@entityField($labelId)
+			#csvList($entityList $baseUrl)
+		#end
+	#end
+#end

@@ -1,0 +1,1100 @@
+@import "common.less";
+@import "lesshat.less";
+
+/*
+ * v0.17: changed tag style to be closer to what exists in Demyo 1.x and show the user colours
+ * v0.18: Integrate LessHat
+ *		  Change style of H1 element (inset shadow, left-to-right gradient)
+ *		  Remove box around thumbs. Replace with a shadow
+ * v0.19: Use semantic elements: header, footer, nav, figure, figcaption
+ *		  Improved performance of some selectors
+ *		  Style thumbnails in subcontent ("cover" thumbs next to details)
+ *		  New cleaner styling for letter markers of text list, similar to new H1
+ *		  Fixed z-index of quick tasks
+ */
+
+/*
+ * VARIABLES
+ */
+ 
+// Colors
+@color-menu-bg-top: #777;
+@color-menu-bg-bottom: #333;
+@color-menu-gutter: #555;
+@color-menu-gutter-highlight: #f00;
+@color-menu-icon: #252525;
+@color-menu-icon-shadow: #666;
+@color-menu-icon-highlight: #fff;
+@color-menu-icon-halo: #fafafa;
+
+@color-submenu-base: #fff;
+@color-submenu-contrast: #a00;
+@color-submenu-border: #bbb;
+@color-submenu-shadow: rgba(0,0,0,0.25);
+
+@color-body-bg: #222;
+@color-content-bg: white;
+@color-content-text: #111;
+@color-footer-bg: #333;
+@color-footer-text: #999;
+
+@color-quicktask-border: #ccc;
+
+@color-h1-base: #a22;
+@color-h1-text: @color-submenu-base;
+
+@color-h2-bg-top: @color-menu-bg-top;
+@color-h2-bg-bottom: @color-menu-bg-bottom;
+@color-h2-text: white;
+
+@color-list-header-bg: @color-submenu-contrast;
+@color-list-header-text: @color-submenu-base;
+
+@color-label-border: @color-submenu-contrast;
+@color-label-text: #333;
+
+@color-input-border: #666;
+@color-input-bg: @color-content-bg;
+@color-input-text: @color-content-text;
+@color-input-bg-highlighted: #fff6f6;
+@color-input-shadow-highlighted: @color-submenu-contrast;
+
+@color-button-bg-top: @color-menu-bg-top;
+@color-button-bg-bottom: @color-menu-bg-bottom;
+@color-button-text: white;
+
+@color-links: @color-submenu-contrast;
+
+@color-form-error: red;
+
+// Size - Don't change
+@menu-height: 40px;
+@menu-gutter-height: 3px;
+@menu-gutter-border: 2px;
+@border-radius-normal: 2px;
+@border-radius-more: @border-radius-normal * 2;
+@page-margin: 15px;
+@rwd-width-simple: 660px;
+@rwd-width-minimal: 580px;
+@transition-fast: 0.2s;
+@transition-normal: 0.5s;
+
+/*
+ * MIXINS
+ */
+.icon() {
+	.std-transition(all, @transition-normal);
+	color: @color-menu-icon;
+	text-shadow: 1px 1px @color-menu-icon-shadow;
+}
+
+.icon-hover() {
+	color: @color-menu-icon-highlight;  
+	text-shadow: 0px 0px 3px @color-menu-icon-halo;
+}
+
+/*
+ * GENERAL LAYOUT
+ */
+ 
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	font-size: 11pt;
+	background-color: @color-body-bg;
+	color: @color-content-text;
+}
+
+header {
+	font-size: 0;
+	height: @menu-height + @menu-gutter-height;
+	border-bottom: @menu-gutter-border solid @color-menu-bg-bottom;
+}
+
+#page {
+	
+}
+
+#content {
+	background-color: @color-content-bg;
+	margin: 0 @page-margin 0 @page-margin;
+	@media screen and (max-width: @rwd-width-simple) { margin: 0; }
+	padding: 1em;
+	padding-right: 80px;
+	@media screen and (max-width: @rwd-width-simple) { padding: 0.5em; }
+	margin-top: @menu-gutter-border;
+	min-height: 10em; /* Make sure the quick tasks fit */
+}
+
+a {
+	color: @color-links;
+	text-decoration: none;
+	border-radius: @border-radius-normal;
+	.std-transition(all, 0.2s);
+	
+	&:hover {
+		text-decoration: underline;
+		background-color: @color-links;
+		color: @color-content-bg;
+	}
+}
+
+footer {
+	background-color: @color-footer-bg;
+	color: @color-footer-text;
+	text-align: center;
+	margin: 0 @page-margin @page-margin @page-margin;
+	border-radius: 0 0 @border-radius-normal @border-radius-normal;
+	padding: 0.3em;
+	font-size: 90%;
+	
+	@media screen and (max-width: @rwd-width-simple) { margin: 0; }
+}
+
+/*
+ * MENU
+ */
+
+#menu {
+	@menu-item-width: 60px;
+
+	margin: -@menu-height - (@menu-gutter-height + @menu-gutter-border) 0 0 0;
+	padding: 0 0 0 @menu-item-width;
+	@media screen and (max-width: @rwd-width-simple) { padding: 0; }
+	height: @menu-height;
+	border-bottom: @menu-gutter-height solid @color-menu-gutter;
+	.background-image(~"linear-gradient(top, @{color-menu-bg-top} 0%, @{color-menu-bg-bottom} 100%)");
+	
+	a { /* reset */
+		.std-transition(none, 0s);
+		color: inherit;
+		background-color: transparent;
+		border-radius: 0;
+	}
+	
+	
+	> li {
+		display: table-cell;
+		height: @menu-height;
+		line-height: @menu-height;
+		overflow: hidden;
+		
+		> a, > span {
+			height: @menu-height;
+			display: table;
+			width: @menu-item-width;
+			font-size: 0;
+			.std-transition(all, @transition-normal);
+
+			/* Draw a small highlighter below the menu item */
+			&:after {
+				height: @menu-gutter-height;
+				width: @menu-item-width;
+				position: absolute;
+				display: block;
+				content: "";
+				background: @color-menu-gutter-highlight; // Fallback
+				.background-image(~"linear-gradient(left, @{color-menu-gutter} 0%, @{color-menu-gutter-highlight} 50%, @{color-menu-gutter} 100%)");
+				opacity: 0;
+				.std-transition(all, @transition-normal);
+			}
+			
+			/* Icons on menu */
+			&:before {
+				width: @menu-item-width;
+				font-size: 30px;
+				display: block;
+				font-family: FontAwesome;
+				text-align: center;
+				padding-top: 3px;
+				height: @menu-height - 3px;
+				position: absolute;
+				.icon();
+			}
+		}
+		
+		> span {
+			cursor: default;
+		}
+		
+		&:hover > a:after, &:hover > span:after {
+			opacity: 1;
+		}
+		
+		&:hover {
+			> a:before, > span:before {
+				.icon-hover();
+			}
+		}
+		
+		// Specific icons for main menu
+		&#menu-home > a:before {
+			content: "\f015";
+		}
+		&#menu-albums > a:before {
+			content: "\f0e5";
+		}
+		&#menu-authors > a:before {
+			content: "\f007";
+		}
+		&#menu-derivatives > a:before {
+			content: "\f03e";
+		}
+		&#menu-manage > span:before {
+			content: "\f013";
+		}
+		
+		/* Submenu */
+		> ul { 
+			position: absolute;
+			top: @menu-height;
+			height: 0;
+			overflow: hidden;
+			opacity: 0;
+			.std-transition(opacity, @transition-normal);
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			line-height: normal;
+			z-index: 60;
+			
+			> li {
+				background-color: @color-submenu-base;
+				padding: 0;
+				border: 1px solid @color-submenu-border;
+				border-top: 0;
+				border-bottom: 0;
+
+				&:last-child {
+					border-bottom: 1px solid @color-submenu-border;
+				}
+
+				> a {
+					padding: 0.2em 0.7em 0.2em 0.5em;
+					text-decoration: none;
+					display: block;
+					color: @color-submenu-contrast;
+					.std-transition(padding, @transition-fast);
+					
+					&:hover {
+						padding: 0.2em 0.5em 0.2em 0.7em;
+						background-color: @color-submenu-contrast;
+						color: @color-submenu-base;
+					}
+					
+					/* Icons on submenu */
+					&:before {
+						font-family: FontAwesome;
+						margin-right: 0.5em;
+						text-decoration: none;
+					}
+				}
+				
+				/* Specific icons for submenus */
+				/* Albums */
+				&#menu-list-albums a:before {
+					content: "\f0e5";
+				}
+				&#menu-list-albums-by-cover a:before {
+					content: "\f009";
+				}
+				&#menu-add-album, &#menu-add-series, &#menu-add-binding, &#menu-add-author, &#menu-add-publisher, &#menu-add-collection, &#menu-add-derivative, &#menu-add-image, &#menu-add-derivative-type {
+					a:before {
+						content: "\f067";
+					}
+				}
+				&#menu-lent-albums a:before {
+					content: "\f072";
+				}
+				&#menu-list-series a:before {
+					content: "\f03a";
+				}
+				&#menu-list-tags a:before {
+					content: "\f02b";
+				}
+				&#menu-list-bindings a:before {
+					content: "\f02d";
+				}
+				
+				/* Authors */
+				&#menu-list-authors a:before {
+					content: "\f007";
+				}
+				&#menu-list-publishers a:before {
+					content: "\f0e8";
+				}
+				
+				/* Derivatives */
+				&#menu-list-derivatives a:before {
+					content: "\f03e";
+				}
+				&#menu-list-derivatives-stickers a:before {
+					/* Stamp ? */
+					content: "\f008";
+				}
+				&#menu-list-images a:before {
+					content: "\f030";
+				}
+				&#menu-list-derivative-sources a:before {
+					content: "\f041";
+				}
+				&#menu-list-derivative-types a:before {
+					content: "\f00b"; /* TODO: find something better */
+				}
+				 
+				/* Tools */
+				&#menu-search a:before {
+					content: "\f002";
+				}
+				&#menu-export a:before {
+					content: "\f093";
+				}
+				&#menu-import a:before {
+					content: "\f019";
+				}
+				&#menu-statistics a:before {
+					content: "\f080";
+				}
+				&#menu-configure a:before {
+					content: "\f0ad";
+				}
+				&#menu-orphans a:before {
+					content: "\f071";
+				}
+				&#menu-help a:before {
+					content: "\f059";
+				}
+				&#menu-about a:before {
+					content: "\f05a";
+				}
+			}
+		}
+		
+		&:hover ul {
+			opacity: 1;
+			height: auto;
+			padding: 5px 0 0 0;
+			box-shadow: 0px 5px 5px @color-submenu-shadow;
+		}
+
+	}
+}
+
+/*
+ * TOOLS
+ */
+
+#quicksearch {
+	position: absolute;
+	right: @page-margin;
+	top: 10px;
+	padding-left: 28px;
+	margin: 0;
+	z-index: 40;
+	
+	&:before {
+		font-family: FontAwesome;
+		margin-right: 0.5em;
+		content: '\f002';
+		cursor: default;
+		font-size: 20px;
+		position: absolute;
+		left: 0;
+		top: 0.2em;
+		.icon();
+	}
+	
+	&:hover:before {
+		.icon-hover();
+	}
+	
+	@media screen and (max-width: @rwd-width-minimal) {
+		right: auto;
+		left: @page-margin;
+		top: @menu-height + @page-margin;
+	}
+	
+	label {
+		display: none;
+	}
+	
+	input {
+		width: 125px;
+		border: 2px solid @color-menu-gutter;
+		margin: 0;
+		.std-transition(width, 0.5s);
+		
+		&:focus {
+			width: 250px;
+			box-shadow: 0 0 3px @color-menu-icon-halo;
+		}
+	}
+}
+
+@quick-tasks-icon-size: 22px;
+
+#quick-tasks {
+	position: fixed;
+	z-index: 10;
+	margin-top: 30px;
+	right: 35px;
+	list-style-type: none;
+	white-space: nowrap;
+	border: 1px solid @color-quicktask-border;
+	width: 30px;
+	border-radius: @border-radius-more;
+	padding: 5px;
+	box-shadow: 0 0 15px @color-quicktask-border;
+	background-color: @color-content-bg;
+	
+	@hidden-width: 40px;
+	@hover-width: 400px;
+	@li-alignment: 27px; /* The width minus a few pixels for centering. A bit magic. */
+	
+	li {
+		text-align: right;
+		width: @hidden-width;
+		margin-left: -@hidden-width + @li-alignment;
+		margin-top: 3px;
+		margin-bottom: 3px;
+		
+		a {
+			font-size: 0;
+			display: inline-block;
+			text-decoration: none;
+			border-radius: @border-radius-normal;
+			padding: 4px;
+			color: @color-submenu-contrast;
+			.std-transition(none, 0s);
+			
+			&:after {
+				font-size: @quick-tasks-icon-size;
+				font-family: FontAwesome;
+				padding-left: 0.5em;
+			}
+		}
+		
+		&:hover {
+			width: @hover-width;
+			margin-left: -@hover-width + @li-alignment;
+
+			a {
+				.std-transition(all, 0.25s);
+				font-size: 100%; /* Restore text */
+				background: @color-submenu-contrast;
+				color: @color-submenu-base;
+			}
+		}
+		
+		/* Specific icons */
+		&.add a:after {
+			content: "\f067";
+		}
+		&.edit a:after {
+			content: "\f040";
+		}
+		&.delete a:after {
+			content: "\f014";
+		}
+		&.tag a:after {
+			content: "\f02b";
+		}
+	}
+}
+
+@media screen and (max-width: @rwd-width-simple) {
+	#quick-tasks {
+		position: static;
+		width: auto;
+		box-shadow: none;
+		padding: 0.5em;
+		margin: 0;
+		border: 0;
+		border-radius: 0;
+		
+		li {
+			text-align: left;
+			margin: 0;
+			padding: 0;
+			
+			a {
+				font-size: 100%;
+				color: @color-links;
+				padding: 0;
+
+				/* Show the icons before instead */
+				&:before {
+					font-family: FontAwesome;
+					padding-right: 0.5em;
+					text-decoration: none;
+				}
+				&:after {
+					display: none;
+				}
+				
+				&:hover {
+					color: @color-links;
+					text-decoration: underline;
+				}
+			}
+			
+			&:hover {
+				width: auto;
+				margin: auto;
+				
+				a {
+					.std-transition(all, 0s);
+					background-color: transparent;
+				}
+			}
+			
+			/* Specific icons */
+			&.add a:before {
+				content: "\f067";
+			}
+			&.edit a:before {
+				content: "\f040";
+			}
+			&.delete a:before {
+				content: "\f014";
+			}
+			&.tag a:before {
+				content: "\f02b";
+			}
+		}
+	}
+}
+
+@media screen and (max-width: @rwd-width-minimal) {
+	#quick-tasks {
+		padding-top: 3em;
+	}
+}
+
+/*
+ * PAGE CONTENT
+ */
+
+h1 {
+	@color-h1-left: lighten(@color-h1-base, 10%);
+	.background-image(~"linear-gradient(left, @{color-h1-left} 0%, @{color-h1-base} 8em)");
+	border: 1px solid darken(@color-h1-base, 10%);
+	border-radius: @border-radius-normal;
+	font-size: 150%;
+	padding: 0 2em 0 2em;
+	margin-left: 2em;
+	@media screen and (max-width: @rwd-width-simple) { margin-left: 0; }
+	color: @color-h1-text;
+	display: table;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.4)
+}
+
+/*h1 {
+	background-color: @color-submenu-contrast;
+	color: @color-submenu-base;
+	display: table;
+	font-size: 150%;
+	padding: 0 1.5em 0 1.5em;
+	position: relative;
+	height: 30px;
+	margin-left: 15px;
+	
+	&:before {
+		content: '';
+		border: 15px solid @color-content-bg;
+		border-top-color: @color-content-bg;
+		border-bottom-color: @color-submenu-contrast;
+		border-right-color: @color-submenu-contrast;
+		height: 0;
+		top: 0;
+		left: -15px;
+		display: block;
+		position: absolute;
+	}
+	
+	&:after {
+		content: '';
+		border: 15px solid @color-submenu-contrast;
+		border-top-color: @color-submenu-contrast;
+		border-bottom-color: @color-content-bg;
+		border-right-color: @color-content-bg;
+		height: 0;
+		top: 0;
+		right: -15px;
+		display: block;
+		position: absolute;
+	}
+}*/
+
+h2 {
+	.background-image(~"linear-gradient(top, @{color-h2-bg-top} 0%, @{color-h2-bg-bottom} 100%)");
+	color: @color-h2-text;
+	font-size: 120%;
+	font-weight: normal;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	border: 1px solid white;
+	padding: 3px;
+	border-radius: @border-radius-normal;	
+	padding-left: 1.5em;
+	margin-bottom: 0;
+	z-index: 1;
+	
+	a {
+		color: @color-h2-text;
+		&:hover {
+			background-color: transparent;
+		}
+	}
+}
+
+.actions {
+	a {
+		font-size: 0;
+		
+		&:before {
+			font-family: FontAwesome;
+			margin-left: 1em;
+			font-size: 1.25rem;
+			color: @color-menu-icon;  
+			.std-transition(all, @transition-normal);
+			text-shadow: 1px 1px @color-menu-icon-shadow;
+		}
+		
+		&:hover {
+			text-decoration: none;
+			
+			&:before {
+				.icon-hover();
+			}
+		}
+	}
+	
+	a.edit:before {
+		content: "\f040";
+	}
+}
+
+.subcontent {
+	background-color: @color-content-bg;
+
+	figure {
+		float: right;
+		@media screen and (max-width: @rwd-width-simple) {
+			float: none;
+		}
+	}
+
+	&:after { /* Clears the floating figures, if any */
+		content: '';
+		display: block;
+		clear: both;
+		visibility: hidden;
+	}
+}
+
+span.tag {
+	background-color: @color-submenu-contrast; /* Default, could be overriden */
+	color: white; /* Default, could be overriden */
+	border-radius: @border-radius-normal 0 0 @border-radius-normal;
+	position: relative;
+	margin-right: 1em;
+	white-space:nowrap;
+	
+	a {
+		margin-left: 0.2em; /* Simulates a border */
+		background-color: rgba(255, 255, 255, 0.8);
+		color: black;
+		padding: 0 0.5em 0 0.25em;
+		position: relative;
+		border-radius:0;
+		
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.6);
+		}
+	}
+	
+	.count {
+		display: inline-block;
+		overflow: hidden;
+		max-width: 0px;
+		.std-transition(all, 0.5s);
+		margin-right: 0.3em;
+		font-size: 85%;
+		position: absolute;
+		z-index: 1;
+		background-color: inherit;
+		height: 100%;
+		padding-left: 0.8em;
+		.box-sizing(border-box);
+		border-radius: 0 @border-radius-normal @border-radius-normal 0;
+
+		&:before { /* some kind of bullet over the count */
+			left:-3px;
+			top: 6px;
+			content: '';
+			position: absolute;
+			display: block;
+			border: 3px solid rgba(255, 255, 255, 0.8);
+			border-radius: 3px;
+			box-shadow: 2px 0 1px 1px rgba(0, 0, 0, 0.3);
+			z-index: 2;
+			.std-transition(all, 0.5s);
+		}
+	}
+	
+	&:hover .count {
+		max-width: 100px;
+		padding-right: 0.8em;
+		
+		&:before {
+			border-color: rgba(255, 255, 255, 0.6);
+		}
+	}
+}
+
+span.tag2 {
+	background-color: @color-submenu-contrast; /* Default, could be overriden */
+	color: white; /* Default, could be overriden */
+	border-radius: @border-radius-normal 0 0 @border-radius-normal;
+	position: relative;
+	margin-right: 1em;
+	white-space:nowrap;
+	
+	a:before { /* Simulates a border of a color that matches the background */
+		display: inline-block;
+		content: '\00a0'; /* non-breaking space */
+		background-color: rgba(255, 255, 255, 0.5);
+		width: 0.3em;
+		height: 100%;
+		margin-right: 0.25em;
+	}
+	
+	a {
+		color: inherit;
+		padding: 0 0.5em 0 0em;
+		position: relative;
+		border-radius:0;
+		
+		&:hover {
+			background-color: inherit;
+		}
+	}
+	
+	.count {
+		display: inline-block;
+		overflow: hidden;
+		max-width: 0px;
+		.std-transition(all, 0.5s);
+		margin-right: 0.3em;
+		font-size: 85%;
+		position: absolute;
+		z-index: 2;
+		background-color: inherit;
+		height: 100%;
+		padding-left: 0.8em;
+		.box-sizing(border-box);
+		border-radius: 0 @border-radius-normal @border-radius-normal 0;
+
+		&:before { /* some kind of bullet over the count */
+			.std-transition(all, 0.5s);
+			left:-3px;
+			top: 6px;
+			content: '';
+			position: absolute;
+			display: block;
+			border: 3px solid transparent;
+			border-radius: 3px;
+			background-color: inherit;
+			z-index: 4;
+		}
+		
+		&:after { /* Shading above the count placeholder */
+			.std-transition(all, 0.5s);
+			position: absolute;
+			content: '';
+			display: block;
+			height: 100%;
+			width: 100%;
+			z-index: 3; /* Shown above the count, but below the bullet */
+			background-color: rgba(255, 255, 255, 0.5);
+			top: 0;
+			left: 0;
+		}
+	}
+	
+	&:hover .count {
+		max-width: 100px;
+		padding-right: 0.8em;
+		
+		&:before {
+			opacity: 0;
+		}
+		&:after {
+			opacity: 0;
+		}
+	}
+}
+
+/*
+ * FORMS (and readonly view)
+ */
+
+form, div.details {
+	display:table;
+
+	.field {
+		display: table-row;
+	}
+	
+	label, .value {
+		display: table-cell;
+		vertical-align: top;
+		padding: 0.25em;
+	}
+	
+	label {
+		text-align: right;
+		border-right: 1px solid @color-label-border;
+		padding-right: 10px;
+		font-weight: bold;
+		color: @color-label-text;
+	}
+	
+	.value {
+		padding-left: 0.5em;
+
+		p {
+			margin-top: 0;
+		}
+	}
+	
+	@media screen and (max-width: @rwd-width-simple) {
+		display:block;
+	
+		.field {
+			display: block;
+		}
+	
+		label, .value {
+			display: block;
+			padding: 0;
+		}
+		
+		label {
+			border: 0;
+			border-top: 1px dotted fadeout(@color-label-border, 25%);
+			margin-top: 0.25em;
+			padding-top: 0.25em;
+			text-align: left;
+		}
+		
+		.value {
+			margin-left: 1em;
+		}
+		
+		.field:first-child label {
+			border: 0;
+			margin-top: 0;
+		}
+	}
+}
+
+form {
+	.value {
+		padding-left: 2em;
+		position: relative;
+
+		input[type=text] {
+			height: 1.3em;
+		}
+		
+		input[type=text], textarea {
+			border: 1px solid @color-input-border;
+			border-radius: @border-radius-normal;
+			vertical-align: middle;
+			
+			&.error {
+				border-color: @color-form-error;
+			}
+		}
+		
+		input[type=text].mandatory, textarea.mandatory {
+			border-width: 2px;
+		}
+		
+		&:before {
+			font-family: FontAwesome;
+			position: absolute;
+			margin-left: -1.2em;
+			font-size: 1.3em;
+		}
+		
+		&.date:before {
+			content: '\f073';
+		}
+		&.url:before {
+			content: "\f0ac";
+		}
+		&.address:before {
+			content: "\f041";
+		}
+		&.tag:before {
+			content: "\f02b";
+		}
+	}
+
+	.validation-error {
+		display: block;
+		font-size: 90%;
+		color: @color-form-error;
+	}
+	
+	div.buttons {
+		margin-left: 5em;
+		@media screen and (max-width: @rwd-width-minimal) { margin-left: auto; }
+		
+		input {
+			border-radius: @border-radius-normal;
+			border: 1px solid #333	;
+			padding: 0.2em 0.8em;
+			text-shadow: 0 1px 0 darken(@color-button-bg-top, 75%);
+			font-weight: bold;
+			color: @color-button-text;
+			.background-image(~"linear-gradient(top, @{color-button-bg-top} 0%, @{color-button-bg-bottom} 100%)");
+			cursor: pointer;
+			
+			&:hover {
+				box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+			}
+			
+			&:active {
+				.background-image(~"linear-gradient(top, @{color-button-bg-bottom} 0%, @{color-button-bg-top} 100%)");
+			}
+
+			&:disabled {
+				color: #bbb;
+				
+				&:hover {
+					box-shadow: none;
+				}
+				
+				&:active {
+					.background-image(~"linear-gradient(top, @{color-button-bg-top} 0%, @{color-button-bg-bottom} 100%)");
+				}
+			}
+		}
+		
+		input[type=reset] {
+			.background-image(~"linear-gradient(top, #ddd 0%, #bbb 100%)");
+			color: black;
+			text-shadow: 0 1px 0 white;
+			border-color: #999;
+			
+			&:active {
+				.background-image(~"linear-gradient(top, #bbb 0%, #ddd 100%)");
+			}
+			
+			&:disabled {
+				color: #666;
+				
+				&:active {
+					.background-image(~"linear-gradient(top, #ddd 0%, #bbb 100%)");
+				}
+			}
+		}
+	}
+}
+
+input[type=text], textarea {
+	background-color: @color-input-bg;
+	color: @color-input-text;
+	.std-transition(background, 0.35s);
+	outline: none;
+	
+	&:hover, &:focus {
+		background-color: @color-input-bg-highlighted;
+	}
+	
+	&:focus {
+		box-shadow: 0 0 5px @color-input-shadow-highlighted;
+	}
+}
+
+textarea {
+	overflow: auto;
+}
+
+/*
+ * GALLERY
+ */
+
+.thumb {
+	background-color: #eee;
+	display: inline-block;
+	vertical-align: top;
+	margin: 0.6em;
+	box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+	
+	img {
+		display: block;
+	}
+
+	a:hover {
+		background-color: transparent;
+	}
+	
+	figcaption {
+		.box-sizing(border-box);
+		border: 1px solid #ccc;
+		border-top: 0;
+		text-align: center;
+		font-size: 80%;
+		width: 100%;
+		margin-top: 0;
+		padding: 0.2em;
+	}
+}
+
+.gallery {
+	text-align: center;
+
+	.thumb { /* Leave a bit more space in gallery */
+		margin: 1em;
+	}
+}
+
+/*
+ * TEXT LIST
+ */
+
+.text-list {
+	.column-width(17em, 0.5em);
+	
+	ul {
+		list-style-type: none;
+		margin: 0 2em 1em 0.5em;
+		
+		&:before {
+			content: attr(title);
+			float: left;
+			margin-left: -3em;
+			background-color: @color-list-header-bg;
+			color: @color-list-header-text;
+			font-weight: bold;
+			padding: 0.3em 0.5em;
+			border-radius: @border-radius-normal;
+			border: 1px solid darken(@color-list-header-bg, 10%);
+			box-shadow: inset 0 1px rgba(255, 255, 255, 0.4);
+			@color-list-header-top: lighten(@color-list-header-bg, 10%);
+			.background-image(~"linear-gradient(top, @{color-list-header-top} 0%, @{color-list-header-bg} 100%)");
+			.background-image(~"linear-gradient(top, @{color-list-header-bg} 0%, @{color-list-header-top} 100%)");
+			text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+		}
+		
+		li {
+			.column-break-inside(avoid);
+		}
+	}
+}

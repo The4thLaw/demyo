@@ -1,0 +1,10 @@
+## This library includes some tricks to make whitespaces behave properly. Labels are so frequent, we want to avoid
+## line breaks every time
+
+#macro(_ $labelId)
+$demyoTranslationService.translate($labelId)##
+#end
+
+#macro(_p $labelId $params)
+$demyoTranslationService.translate($labelId, $params)##
+#end

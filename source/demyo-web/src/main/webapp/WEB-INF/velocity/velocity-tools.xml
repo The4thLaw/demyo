@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- Velocity Tools 2.0-style toolbox configuration. -->
+<tools>
+	<toolbox scope="application">
+		<tool class="org.apache.velocity.tools.generic.RenderTool" />
+		<tool class="org.demyo.web.velocity.tools.PagingTool" />
+		<tool class="org.demyo.web.velocity.tools.RteTool" />
+	</toolbox>
+	<toolbox scope="request">
+		<tool class="org.apache.velocity.tools.generic.ContextTool" />
+		<tool class="org.apache.velocity.tools.view.LinkTool" />
+		<tool class="org.demyo.web.velocity.tools.JavascriptTool" />
+		<tool class="org.demyo.web.velocity.tools.QuickTasksTool" />
+	</toolbox>
+</tools>

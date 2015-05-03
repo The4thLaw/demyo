@@ -1,0 +1,15 @@
+#macro(setPageTitle $labelId)
+	#set( $pageTitle = "#_($labelId)" )
+#end
+
+#macro(setPageTitleParams $labelId $params)
+	#set( $pageTitle = "#_p($labelId $params)" )
+#end
+
+#macro(setPageTitleCond $condition $labelIdIfTrue $labelIdIfFalse)
+	#if ($condition)
+		#setPageTitle($labelIdIfTrue)
+	#else
+		#setPageTitle($labelIdIfFalse)
+	#end
+#end
