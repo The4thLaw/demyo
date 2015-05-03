@@ -1,0 +1,6 @@
+demyo-app/target
+demyo-dao/target/
+demyo-model/target/
+demyo-service/target/
+demyo-utils/target/
+demyo-web/target/
