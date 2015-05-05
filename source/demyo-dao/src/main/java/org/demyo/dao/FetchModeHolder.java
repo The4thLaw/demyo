@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
+import org.hibernate.sql.JoinType;
 
 /**
  * Wrapper class to set fetch modes for use with {@link Criteria#setFetchMode(String, FetchMode)}.
@@ -14,7 +15,7 @@ import org.hibernate.FetchMode;
  * @version $Revision: 1063 $
  */
 public class FetchModeHolder {
-	private Map<String, FetchMode> fetchModes = new HashMap<String, FetchMode>();
+	private Map<String, JoinType> fetchModes = new HashMap<>();
 
 	// Use default constructor
 
@@ -26,7 +27,7 @@ public class FetchModeHolder {
 	 * @return The current object, for chaining.
 	 * @see Criteria#setFetchMode(String, FetchMode)
 	 */
-	public FetchModeHolder add(String associationPath, FetchMode mode) {
+	public FetchModeHolder add(String associationPath, JoinType mode) {
 		fetchModes.put(associationPath, mode);
 		return this;
 	}
@@ -37,8 +38,13 @@ public class FetchModeHolder {
 	 * @param criteria The criteria to populate.
 	 */
 	public void populateCriteria(Criteria criteria) {
-		for (Entry<String, FetchMode> entry : fetchModes.entrySet()) {
-			criteria.setFetchMode(entry.getKey(), entry.getValue());
+		for (Entry<String, JoinType> entry : fetchModes.entrySet()) {
+			//criteria.setFetchMode(entry.getKey(), entry.getValue());
+
+			//if (FetchMode.JOIN.equals(entry.getValue())) {
+			//criteria.createAlias(entry.getKey(), entry.getKey());
+			criteria.createAlias(entry.getKey(), entry.getKey(), entry.getValue());
+			//}
 		}
 	}
 }

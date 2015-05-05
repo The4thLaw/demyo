@@ -12,6 +12,7 @@ import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelService;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,9 +96,9 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 */
 	@Transactional(readOnly = true)
 	@Override
-	public List<M> findPaginated(int currentPage, Criterion criterion, FetchModeHolder fetchModes) {
+	public List<M> findPaginated(int currentPage, Criterion criterion, FetchModeHolder fetchModes, Order... orders) {
 		return getDao().findPaginated(currentPage, configurationService.getConfiguration().getPageSizeForText(),
-				criterion, fetchModes);
+				criterion, fetchModes, orders);
 	}
 
 	@Transactional(rollbackFor = Throwable.class)

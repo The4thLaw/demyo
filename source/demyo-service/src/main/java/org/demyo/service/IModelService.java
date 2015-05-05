@@ -6,6 +6,7 @@ import org.demyo.dao.FetchModeHolder;
 import org.demyo.model.IModel;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 
 /**
  * This interface defines a common set of operation on models.
@@ -74,9 +75,11 @@ public interface IModelService<M extends IModel> {
 	 * @param criterion The restriction on the set of entities.
 	 * @param fetchModes Potential fetching of associations without relying on the Model's default strategy. May be
 	 *        <code>null</code> for no special behaviour.
+	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no
+	 *        default ordering is defined, the ordering is defined by the database.
 	 * @return The list of entities.
 	 */
-	List<M> findPaginated(int currentPage, Criterion criterion, FetchModeHolder fetchModes);
+	List<M> findPaginated(int currentPage, Criterion criterion, FetchModeHolder fetchModes, Order... orders);
 
 	/**
 	 * Saves the given model.

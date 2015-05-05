@@ -1,7 +1,45 @@
 #setPageTitle('title.index.publisher')
 
-#textList($publisherList "name" "identifyingName" "./view/" true)
-##TODO: collections
+## Mostly copy-pasted from lists.vm because we need the collections for each publisher
+#set ($first = true)
+#set ($lastFirstLetter = '/')
+<div class="text-list">
+#foreach ($entity in $publisherList)
+	## A bit hacky, but we need this kind of flexibility
+	#set ($temp = $context.this.put("entity", $entity))
+	
+		#set ($firstLetter = $paging.getFirstLetter($render.eval($context.this, "\$entity.name")))
+	
+		#if ($firstLetter != $lastFirstLetter)
+			#if (!$first)
+				</ul>
+			#else
+				#set ($first = false)
+			#end
+			
+			<ul title="$firstLetter">
+			
+			#set ($lastFirstLetter = $firstLetter)
+		#end
+	
+	<li><a href="./view/$entity.id">$render.eval($context.this, "\$entity.identifyingName")</a>
+	
+	#if (!$entity.collections.isEmpty())
+		<ul>
+	#end
+	#foreach ($collection in $entity.collections)
+			<li><a href="../collections/view/$collection.id">$collection.identifyingName</a></li>
+	#end
+	#if (!$entity.collections.isEmpty())
+		</ul>
+	#end
+	
+	</li>
+#end
+#if (!$publisherList.isEmpty())
+	</ul>
+#end
+</div>
 
 $paging.pageLinks($publisherList, $request, $javascript)
 $paging.letters($request)

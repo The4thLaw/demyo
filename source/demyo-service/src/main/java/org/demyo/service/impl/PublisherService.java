@@ -8,7 +8,8 @@ import org.demyo.dao.IPublisherDao;
 import org.demyo.model.Publisher;
 import org.demyo.service.IPublisherService;
 
-import org.hibernate.FetchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +41,7 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	@Override
 	public List<Publisher> findPaginated(int currentPage) {
 		FetchModeHolder fetchModes = new FetchModeHolder();
-		fetchModes.add("collections", FetchMode.JOIN);
-		// TODO: probably going to need to order by two columns: Publisher name and Collection name
-		return findPaginated(currentPage, null, fetchModes);
+		fetchModes.add("collections", JoinType.LEFT_OUTER_JOIN);
+		return findPaginated(currentPage, null, fetchModes, Order.asc("name"), Order.asc("collections.name"));
 	}
 }
