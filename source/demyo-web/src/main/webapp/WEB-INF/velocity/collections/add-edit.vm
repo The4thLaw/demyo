@@ -1,0 +1,14 @@
+#setPageTitleCond($collection.id 'title.edit.collection', 'title.add.collection')
+
+#@form()
+
+#inputHidden('collection.id')
+#inputText('field.Collection.name', 'collection.name')
+#inputSelect('field.Collection.publisher', 'collection.publisher.id', $publishers, {})
+#inputText('field.Collection.website', 'collection.website')
+#inputText('field.Collection.feed', 'collection.feed')
+#inputSelect('field.Collection.logo', 'collection.logo.id', $images, { "allowEmpty": true })
+#inputRichText('field.Collection.history', 'collection.history')
+#saveButtons
+
+#end

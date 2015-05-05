@@ -54,6 +54,8 @@
 	#end
 #end
 
+## Options:
+##		allowEmpty	Whether to let the user select no value (defaults to false)
 #macro(inputSelect $labelId $path $values $options)
 	#if(!$!options.allowEmpty)#set($dummy = $options.put("allowEmpty", false))#end
 

@@ -23,7 +23,7 @@ $quickTasks.add({
 	#@entityField('field.Publisher.collections')
 		<ul>
 			#foreach ($collection in $publisher.collections)
-				<li><a href="../collections/view/$collection.id">$collection.identifyingName</a></li>
+				<li><a href="../../collections/view/$collection.id">$collection.identifyingName</a></li>
 			#end
 		</ul>
 	#end

@@ -1,0 +1,23 @@
+#setPageTitleParams('title.view.collection' $collection.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-collection",
+	"url" : "../edit/$collection.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-collection",
+	"url" : "../delete/$collection.id",
+	"confirm" : true
+})
+
+#thumbnail($collection.logo)
+
+#@entityDetails()
+
+#@entityField('field.Collection.identifyingName')$collection.identifyingName#end
+#@entityField('field.Collection.publisher')<a href="../../publishers/view/$collection.publisher.id">$collection.publisher.identifyingName</a>#end
+#entityFieldUrl('field.Collection.website', $collection.website)
+#entityFieldUrl('field.Collection.feed', $collection.feed)
+#entityFieldRichText('field.Collection.history', $collection.history)
+
+#end
