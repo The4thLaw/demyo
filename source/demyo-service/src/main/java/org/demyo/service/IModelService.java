@@ -2,7 +2,7 @@ package org.demyo.service;
 
 import java.util.List;
 
-import org.demyo.dao.FetchModeHolder;
+import org.demyo.dao.JoinTypeHolder;
 import org.demyo.model.IModel;
 
 import org.hibernate.criterion.Criterion;
@@ -79,7 +79,7 @@ public interface IModelService<M extends IModel> {
 	 *        default ordering is defined, the ordering is defined by the database.
 	 * @return The list of entities.
 	 */
-	List<M> findPaginated(int currentPage, Criterion criterion, FetchModeHolder fetchModes, Order... orders);
+	List<M> findPaginated(int currentPage, Criterion criterion, JoinTypeHolder fetchModes, Order... orders);
 
 	/**
 	 * Saves the given model.

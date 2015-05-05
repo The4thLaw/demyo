@@ -9,13 +9,14 @@ import org.hibernate.FetchMode;
 import org.hibernate.sql.JoinType;
 
 /**
- * Wrapper class to set fetch modes for use with {@link Criteria#setFetchMode(String, FetchMode)}.
+ * Wrapper class to set fetch modes for use with {@link Criteria#createAlias(String, String, JoinType)}. By
+ * convention, the association is aliased to its name.
  * 
  * @author $Author: xr $
  * @version $Revision: 1063 $
  */
-public class FetchModeHolder {
-	private Map<String, JoinType> fetchModes = new HashMap<>();
+public class JoinTypeHolder {
+	private Map<String, JoinType> joinTypes = new HashMap<>();
 
 	// Use default constructor
 
@@ -23,12 +24,12 @@ public class FetchModeHolder {
 	 * Adds an association fetching strategy for an association or a collection of values.
 	 * 
 	 * @param associationPath a dot seperated property path
-	 * @param mode The fetch mode for the referenced association
+	 * @param type The join type for the referenced association
 	 * @return The current object, for chaining.
 	 * @see Criteria#setFetchMode(String, FetchMode)
 	 */
-	public FetchModeHolder add(String associationPath, JoinType mode) {
-		fetchModes.put(associationPath, mode);
+	public JoinTypeHolder add(String associationPath, JoinType type) {
+		joinTypes.put(associationPath, type);
 		return this;
 	}
 
@@ -38,13 +39,8 @@ public class FetchModeHolder {
 	 * @param criteria The criteria to populate.
 	 */
 	public void populateCriteria(Criteria criteria) {
-		for (Entry<String, JoinType> entry : fetchModes.entrySet()) {
-			//criteria.setFetchMode(entry.getKey(), entry.getValue());
-
-			//if (FetchMode.JOIN.equals(entry.getValue())) {
-			//criteria.createAlias(entry.getKey(), entry.getKey());
+		for (Entry<String, JoinType> entry : joinTypes.entrySet()) {
 			criteria.createAlias(entry.getKey(), entry.getKey(), entry.getValue());
-			//}
 		}
 	}
 }

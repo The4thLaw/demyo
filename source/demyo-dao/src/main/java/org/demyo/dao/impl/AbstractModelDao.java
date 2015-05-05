@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.demyo.dao.FetchModeHolder;
+import org.demyo.dao.JoinTypeHolder;
 import org.demyo.dao.IModelDao;
 import org.demyo.model.IModel;
 import org.demyo.model.exception.DemyoErrorCode;
@@ -182,16 +182,16 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 	// Documentation of Criteria is at https://docs.jboss.org/hibernate/orm/4.1/manual/en-US/html/ch17.html
 	@Override
 	public PaginatedList<M> findPaginated(int currentPage, int pageSize, Criterion criterion,
-			FetchModeHolder fetchModes, Order... orders) {
+			JoinTypeHolder fetchModes, Order... orders) {
 		return findAllInternal(currentPage, pageSize, criterion, fetchModes, orders);
 	}
 
 	/**
-	 * Same behaviour as {@link #findPaginated(int, int, Criterion, FetchModeHolder, Order...)}, except that the
+	 * Same behaviour as {@link #findPaginated(int, int, Criterion, JoinTypeHolder, Order...)}, except that the
 	 * list is not paginated if {@code currentPage} or {@code pageSize} is <code>null</code>.
 	 */
 	private PaginatedList<M> findAllInternal(Integer currentPage, Integer pageSize, Criterion criterion,
-			FetchModeHolder fetchModes, Order... orders) {
+			JoinTypeHolder fetchModes, Order... orders) {
 		Criteria criteria = getBaseCriteria(criterion, fetchModes);
 
 		if (orders == null || orders.length == 0) {
@@ -223,7 +223,7 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 		}
 	}
 
-	private Criteria getBaseCriteria(Criterion criterion, FetchModeHolder fetchModes) {
+	private Criteria getBaseCriteria(Criterion criterion, JoinTypeHolder fetchModes) {
 		Criteria criteria = getSession().createCriteria(modelClass);
 
 		if (criterion != null) {

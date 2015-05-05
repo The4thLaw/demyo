@@ -74,7 +74,7 @@ public interface IModelDao<M extends IModel> {
 	 * @param pageSize The size of the page in number of entities (starting at 1). Default ordering is used: the
 	 *        ordering is defined by model or, if not, by the database.
 	 * @return The list of matching entities, with pagination information.
-	 * @see #findPaginated(int, int, Criterion, FetchModeHolder, Order...)
+	 * @see #findPaginated(int, int, Criterion, JoinTypeHolder, Order...)
 	 */
 	PaginatedList<M> findPaginated(int currentPage, int pageSize);
 
@@ -86,7 +86,7 @@ public interface IModelDao<M extends IModel> {
 	 * @param criterion A potential criterion to restrict the set of entities. May be <code>null</code> for no
 	 *        restriction.
 	 * @return The list of matching entities, with pagination information.
-	 * @see #findPaginated(int, int, Criterion, FetchModeHolder, Order...)
+	 * @see #findPaginated(int, int, Criterion, JoinTypeHolder, Order...)
 	 */
 	PaginatedList<M> findPaginated(int currentPage, int pageSize, Criterion criterion);
 
@@ -100,7 +100,7 @@ public interface IModelDao<M extends IModel> {
 	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no
 	 *        default ordering is defined, the ordering is defined by the database.
 	 * @return The list of matching entities, with pagination information.
-	 * @see #findPaginated(int, int, Criterion, FetchModeHolder, Order...)
+	 * @see #findPaginated(int, int, Criterion, JoinTypeHolder, Order...)
 	 */
 	PaginatedList<M> findPaginated(int currentPage, int pageSize, Criterion criterion, Order... orders);
 
@@ -117,6 +117,6 @@ public interface IModelDao<M extends IModel> {
 	 *        default ordering is defined, the ordering is defined by the database.
 	 * @return The list of matching entities, with pagination information.
 	 */
-	PaginatedList<M> findPaginated(int currentPage, int pageSize, Criterion criterion, FetchModeHolder fetchModes,
+	PaginatedList<M> findPaginated(int currentPage, int pageSize, Criterion criterion, JoinTypeHolder fetchModes,
 			Order... orders);
 }

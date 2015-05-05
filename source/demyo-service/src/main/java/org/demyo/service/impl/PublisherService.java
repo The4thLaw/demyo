@@ -2,7 +2,7 @@ package org.demyo.service.impl;
 
 import java.util.List;
 
-import org.demyo.dao.FetchModeHolder;
+import org.demyo.dao.JoinTypeHolder;
 import org.demyo.dao.IModelDao;
 import org.demyo.dao.IPublisherDao;
 import org.demyo.model.Publisher;
@@ -40,7 +40,7 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	@Transactional(readOnly = true)
 	@Override
 	public List<Publisher> findPaginated(int currentPage) {
-		FetchModeHolder fetchModes = new FetchModeHolder();
+		JoinTypeHolder fetchModes = new JoinTypeHolder();
 		fetchModes.add("collections", JoinType.LEFT_OUTER_JOIN);
 		return findPaginated(currentPage, null, fetchModes, Order.asc("name"), Order.asc("collections.name"));
 	}

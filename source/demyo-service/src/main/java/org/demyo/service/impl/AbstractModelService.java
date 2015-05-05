@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.demyo.dao.FetchModeHolder;
+import org.demyo.dao.JoinTypeHolder;
 import org.demyo.dao.IModelDao;
 import org.demyo.model.Author;
 import org.demyo.model.IModel;
@@ -96,7 +96,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 */
 	@Transactional(readOnly = true)
 	@Override
-	public List<M> findPaginated(int currentPage, Criterion criterion, FetchModeHolder fetchModes, Order... orders) {
+	public List<M> findPaginated(int currentPage, Criterion criterion, JoinTypeHolder fetchModes, Order... orders) {
 		return getDao().findPaginated(currentPage, configurationService.getConfiguration().getPageSizeForText(),
 				criterion, fetchModes, orders);
 	}
