@@ -13,6 +13,18 @@
 	</div>
 #end
 
+#macro(entityFieldText $labelId $value)
+	#if($value)
+		#@entityField($labelId)$value#end
+	#end
+#end
+
+#macro(entityFieldMultilineText $labelId $value)
+	#if($value)
+		#@entityField($labelId)$value.replaceAll("\n", "<br />")#end
+	#end
+#end
+
 #macro(entityFieldBoolean $labelId $value)
 	<div class="field">
 		<label>#_("${labelId}.view")</label>
@@ -30,6 +42,14 @@
 	#if($url)
 		#@entityField($labelId)
 			<a href="$url">$url</a>
+		#end
+	#end
+#end
+
+#macro(entityFieldEmail $labelId $email)
+	#if($email)
+		#@entityField($labelId)
+			<a href="mailto:$email">$email</a>
 		#end
 	#end
 #end

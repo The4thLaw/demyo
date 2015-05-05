@@ -41,6 +41,12 @@
 	#end
 #end
 
+#macro(inputMultilineText $labelId $path)
+	#@formField($labelId, $path)
+		<textarea id="$fieldId" name="$status.expression" class="plaintext #if($hasErrors)error#end">$!status.value</textarea>
+	#end
+#end
+
 #macro(inputRichText $labelId $path)
 	#@formField($labelId, $path)
 		<textarea id="$fieldId" name="$status.expression" class="richtext #if($hasErrors)error#end">$!status.value</textarea>

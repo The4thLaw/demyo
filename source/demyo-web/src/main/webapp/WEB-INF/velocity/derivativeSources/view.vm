@@ -1,0 +1,23 @@
+#setPageTitleParams('title.view.derivativeSource' $derivativeSource.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-derivativeSource",
+	"url" : "../edit/$derivativeSource.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-derivativeSource",
+	"url" : "../delete/$derivativeSource.id",
+	"confirm" : true
+})
+
+#@entityDetails()
+
+#@entityField('field.DerivativeSource.identifyingName')$derivativeSource.identifyingName#end
+#entityFieldText('field.DerivativeSource.owner', $derivativeSource.owner)
+#entityFieldEmail('field.DerivativeSource.email', $derivativeSource.email)
+#entityFieldUrl('field.DerivativeSource.website', $derivativeSource.website)
+#entityFieldMultilineText('field.DerivativeSource.address', $derivativeSource.address)
+#entityFieldText('field.DerivativeSource.phoneNumber', $derivativeSource.phoneNumber)
+#entityFieldRichText('field.DerivativeSource.history', $derivativeSource.history)
+
+#end

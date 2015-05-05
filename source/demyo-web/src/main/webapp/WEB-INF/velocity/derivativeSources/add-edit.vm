@@ -1,0 +1,15 @@
+#setPageTitleCond($derivativeSource.id 'title.edit.derivativeSource', 'title.add.derivativeSource')
+
+#@form()
+
+#inputHidden('derivativeSource.id')
+#inputText('field.DerivativeSource.name', 'derivativeSource.name')
+#inputText('field.DerivativeSource.owner', 'derivativeSource.owner')
+#inputText('field.DerivativeSource.email', 'derivativeSource.email')
+#inputText('field.DerivativeSource.website', 'derivativeSource.website')
+#inputMultilineText('field.DerivativeSource.address', 'derivativeSource.address')
+#inputText('field.DerivativeSource.phoneNumber', 'derivativeSource.phoneNumber')
+#inputRichText('field.DerivativeSource.history', 'derivativeSource.history')
+#saveButtons
+
+#end

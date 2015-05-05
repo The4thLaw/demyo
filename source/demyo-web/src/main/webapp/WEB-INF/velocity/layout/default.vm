@@ -50,6 +50,7 @@ $quickTasks.prepare($javascript)
 						<li id="menu-list-images"><a href="$link.contextPath/images/">#_('menu.images.browse')</a></li>
 						<li id="menu-add-image"><a href="$link.contextPath/images/add">#_('menu.images.add')</a></li>
 						<li id="menu-list-derivative-sources"><a href="$link.contextPath/derivativeSources/">#_('menu.derivative_sources.browse')</a></li>
+						<li id="menu-list-derivative-sources"><a href="$link.contextPath/derivativeSources/add">#_('menu.derivative_sources.add')</a></li>
 						<li id="menu-list-derivative-types"><a href="$link.contextPath/derivativeTypes/">#_('menu.derivative_types.browse')</a></li>
 						<li id="menu-add-derivative-type"><a href="$link.contextPath/derivativeTypes/add">#_('menu.derivative_types.add')</a></li>
 					</ul>
