@@ -4,9 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import org.demyo.dao.JoinTypeHolder;
 import org.demyo.dao.IModelDao;
-import org.demyo.model.Author;
+import org.demyo.dao.JoinTypeHolder;
 import org.demyo.model.IModel;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelService;
@@ -105,14 +104,14 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Override
 	public long save(M model) {
 		// Before saving, we must remove any linked models that have a null id. These are models that should not exist
-		for (Method meth : Author.class.getMethods()) {
+		for (Method meth : modelClass.getMethods()) {
 			if (IModel.class.isAssignableFrom(meth.getReturnType()) && meth.getName().startsWith("get")
 					&& !"getClass".equals(meth.getName()) && meth.getParameterTypes().length == 0) {
 				// This is a standard getter method for a linked model
 				try {
 					IModel other = (IModel) meth.invoke(model);
 					if (other.getId() == null) {
-						Method setter = Author.class.getMethod(meth.getName().replaceFirst("get", "set"),
+						Method setter = modelClass.getMethod(meth.getName().replaceFirst("get", "set"),
 								meth.getReturnType());
 						setter.invoke(model, new Object[] { null });
 					}
