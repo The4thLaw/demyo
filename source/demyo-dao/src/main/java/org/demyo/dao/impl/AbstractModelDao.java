@@ -2,19 +2,20 @@ package org.demyo.dao.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.demyo.dao.JoinTypeHolder;
 import org.demyo.dao.IModelDao;
+import org.demyo.dao.JoinTypeHolder;
 import org.demyo.model.IModel;
 import org.demyo.model.exception.DemyoErrorCode;
 import org.demyo.model.exception.DemyoRuntimeException;
@@ -110,16 +111,18 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 
 		if (loadLazy) {
 			for (Field f : modelClass.getDeclaredFields()) {
+				OneToMany oneToMany = f.getAnnotation(OneToMany.class);
 				ManyToOne manyToOne = f.getAnnotation(ManyToOne.class);
 				ManyToMany manyToMany = f.getAnnotation(ManyToMany.class);
-				if ((manyToOne != null && FetchType.LAZY.equals(manyToOne.fetch()))
+				if ((oneToMany != null && FetchType.LAZY.equals((oneToMany.fetch())))
+						|| (manyToOne != null && FetchType.LAZY.equals(manyToOne.fetch()))
 						|| (manyToMany != null && FetchType.LAZY.equals(manyToMany.fetch()))) {
 					try {
 						Object property = PropertyUtils.getProperty(singleResult, f.getName());
 						if (property instanceof IModel) {
 							((IModel) property).getId();
-						} else if (property instanceof Set) {
-							((Set<?>) property).size();
+						} else if (property instanceof Collection) {
+							((Collection<?>) property).size();
 						}
 					} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 						LOGGER.error("Failed to fetch lazy relationships for {} with id {}", modelClass, id, e);

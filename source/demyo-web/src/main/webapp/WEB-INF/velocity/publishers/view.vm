@@ -19,5 +19,14 @@ $quickTasks.add({
 #entityFieldUrl('field.Publisher.website', $publisher.website)
 #entityFieldUrl('field.Publisher.feed', $publisher.feed)
 #entityFieldRichText('field.Publisher.history', $publisher.history)
+#if (!$publisher.collections.isEmpty())
+	#@entityField('field.Publisher.collections')
+		<ul>
+			#foreach ($collection in $publisher.collections)
+				<li><a href="../collections/view/$collection.id">$collection.identifyingName</a></li>
+			#end
+		</ul>
+	#end
+#end
 
 #end

@@ -1,6 +1,6 @@
 package org.demyo.model;
 
-import java.util.List;
+import java.util.SortedSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.demyo.model.util.DefaultOrder;
+import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
 
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -53,7 +56,8 @@ public class Publisher extends AbstractModel {
 	private Long logoId;
 	/** The collections belonging to this publisher. */
 	@OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
-	private List<Collection> collections;
+	@Sort(comparator = IdentifyingNameComparator.class, type = SortType.COMPARATOR)
+	private SortedSet<Collection> collections;
 
 	@Override
 	public String getIdentifyingName() {
@@ -173,7 +177,7 @@ public class Publisher extends AbstractModel {
 	 * 
 	 * @return the collections belonging to this publisher
 	 */
-	public List<Collection> getCollections() {
+	public SortedSet<Collection> getCollections() {
 		return collections;
 	}
 
