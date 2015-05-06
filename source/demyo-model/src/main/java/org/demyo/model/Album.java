@@ -10,6 +10,19 @@ import org.demyo.model.util.DefaultOrder;
 // TODO: far from complete
 // TODO: order by is not complete
 // TODO: when saving this entity, it should at least have a title or a Series.
+/*
+ * TODO: We will need to ways to order albums
+ * 
+ * - One for the index, where the work is done by the database: order by (case when series_id is null then
+ * album.title else series.title), album.number or something like that
+ * 
+ * - One in Java to follow the same logic, but work on datasets retrieved e.g. from the tags, the authors, etc.
+ * 
+ * Or perhaps the database could be always used, but the albums would be fetched by separate queries and put in
+ * transient fields
+ * 
+ * To be determined: does Hibernate allow to use direct SQL order queries
+ */
 /**
  * The Class Album.
  */

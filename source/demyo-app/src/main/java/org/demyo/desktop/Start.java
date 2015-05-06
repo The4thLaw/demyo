@@ -3,6 +3,7 @@ package org.demyo.desktop;
 import java.io.File;
 
 import org.demyo.model.config.SystemConfiguration;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
@@ -26,6 +27,7 @@ public class Start {
 		String databaseFilePath = databaseFile.getAbsolutePath().replaceAll("\\.h2\\.db$", "");
 
 		LOGGER.info("Starting database...");
+		// TODO: set collation, perhaps according to configured locale? To test, see tag index
 		JdbcDataSource ds = new JdbcDataSource();
 		ds.setURL("jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
 		ds.setUser("sa");
