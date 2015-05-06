@@ -170,6 +170,12 @@
 			<xsl:for-each select="@*">
 				<xsl:choose>
 					<xsl:when test="not(string-length(.))"><!-- Nothing --></xsl:when>
+					<xsl:when test="name() = 'fgcolor'">
+						<xsl:attribute name="fgcolour"><xsl:value-of select="."/></xsl:attribute>
+					</xsl:when>
+					<xsl:when test="name() = 'bgcolor'">
+						<xsl:attribute name="bgcolour"><xsl:value-of select="."/></xsl:attribute>
+					</xsl:when>
 					<xsl:otherwise>
 						<xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute>
 					</xsl:otherwise>

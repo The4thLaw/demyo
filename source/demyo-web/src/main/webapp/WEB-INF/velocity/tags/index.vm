@@ -1,0 +1,14 @@
+#setPageTitle('title.index.tag')
+
+## TODO: improve styling. With a large amount of tags, it looks ugly
+
+<div class="tag-index">
+	#foreach ($tag in $tagList)
+	<span class="tag" #if($tag.fgColour)data-fgColour="$tag.fgColour"#end #if($tag.bgColour)data-bgColour="$tag.bgColour"#end>
+		<a href="./view/$tag.id">$tag.name</a>
+		<span class="count">
+			$tag.occurrencesCount
+		</span>
+	</span>
+	#end
+</div>

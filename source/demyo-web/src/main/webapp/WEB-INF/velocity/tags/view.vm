@@ -1,0 +1,31 @@
+#setPageTitleParams('title.view.tag' $tag.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-tag",
+	"url" : "../edit/$tag.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-author",
+	"url" : "../delete/$tag.id",
+	"confirm" : true
+})
+
+#@entityDetails()
+
+#@entityField('field.Tag.identifyingName')
+	## TODO: use proper tag style
+	$tag.identifyingName
+#end
+
+#if (!$tag.taggedAlbums.isEmpty())
+	## TODO: sort this list, and split it by Series
+	#@entityField('field.Tag.taggedAlbums')
+		<ul>
+			#foreach ($album in $tag.taggedAlbums)
+				<li><a href="../../albums/view/$album.id">$album.identifyingName</a></li>
+			#end
+		</ul>
+	#end
+#end
+
+#end

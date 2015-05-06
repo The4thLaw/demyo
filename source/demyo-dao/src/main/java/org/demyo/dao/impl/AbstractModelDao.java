@@ -170,6 +170,11 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 	}
 
 	@Override
+	public List<M> findAll(Criterion criterion, JoinTypeHolder fetchModes, Order... orders) {
+		return findAllInternal(null, null, criterion, fetchModes, orders);
+	}
+
+	@Override
 	public final PaginatedList<M> findPaginated(int currentPage, int pageSize) {
 		return findPaginated(currentPage, pageSize, null, null, (Order[]) null);
 	}

@@ -54,6 +54,12 @@
 	$javascript.load("TinyMCE")
 #end
 
+#macro(inputColour $labelId $path)
+	#@formField($labelId, $path)
+		<input type="color" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
+	#end
+#end
+
 #macro(inputCheckbox $labelId $path)
 	#@formField("${labelId}.edit", $path)
 		<input type="checkbox" id="$fieldId" name="$status.expression"#if ($!status.value == true) checked="checked"#end />

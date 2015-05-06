@@ -1,0 +1,14 @@
+#setPageTitleCond($tag.id 'title.edit.tag', 'title.add.tag')
+
+## TODO: preview of final tag
+
+#@form()
+
+#inputHidden('tag.id')
+#inputText('field.Tag.name', 'tag.name')
+## TODO allow to set no colour
+#inputColour('field.Tag.fgColour', 'tag.fgColour')
+#inputColour('field.Tag.bgColour', 'tag.bgColour')
+#saveButtons
+
+#end

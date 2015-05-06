@@ -53,6 +53,19 @@ public interface IModelDao<M extends IModel> {
 	List<M> findAll(Criterion criterion);
 
 	/**
+	 * Finds all entities from this model that match the given criteria, without paging.
+	 * 
+	 * @param criterion A potential criterion to restrict the set of entities. May be <code>null</code> for no
+	 *        restriction.
+	 * @param fetchModes Potential fetching of associations without relying on the Model's default strategy. May be
+	 *        <code>null</code> for no special behaviour.
+	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no
+	 *        default ordering is defined, the ordering is defined by the database.
+	 * @return The list of entities.
+	 */
+	List<M> findAll(Criterion criterion, JoinTypeHolder fetchModes, Order... orders);
+
+	/**
 	 * Saves the given entity in the database.
 	 * 
 	 * @param model The entity to save.
