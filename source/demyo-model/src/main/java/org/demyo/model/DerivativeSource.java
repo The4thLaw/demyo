@@ -24,11 +24,6 @@ public class DerivativeSource extends AbstractModel {
 	@StartsWithField
 	private String name;
 
-	@Override
-	public String getIdentifyingName() {
-		return getName();
-	}
-
 	/** The owner name. */
 	@Column(name = "owner")
 	private String owner;
@@ -54,6 +49,11 @@ public class DerivativeSource extends AbstractModel {
 	/** The history of this Source. */
 	@Column(name = "history")
 	private String history;
+
+	@Override
+	public String getIdentifyingName() {
+		return getName();
+	}
 
 	/**
 	 * Gets the name of the Source.
