@@ -13,8 +13,9 @@ $quickTasks.add({
 #@entityDetails()
 
 #@entityField('field.Tag.identifyingName')
-	## TODO: use proper tag style
-	$tag.identifyingName
+	<span class="tag" style="#if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">
+		<a href=".">$tag.name</a>
+	</span>
 #end
 
 #if (!$tag.taggedAlbums.isEmpty())

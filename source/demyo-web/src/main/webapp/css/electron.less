@@ -38,6 +38,10 @@
 @color-footer-bg: #333;
 @color-footer-text: #999;
 
+@color-tag-background: @color-menu-icon-halo;
+@color-tag-foreground: @color-body-bg;
+@color-tag-border: darken(@color-tag-background, 10%);
+
 @color-quicktask-border: #ccc;
 
 @color-h1-base: #a22;
@@ -695,145 +699,46 @@ h2 {
 }
 
 span.tag {
-	background-color: @color-submenu-contrast; /* Default, could be overriden */
-	color: white; /* Default, could be overriden */
-	border-radius: @border-radius-normal 0 0 @border-radius-normal;
-	position: relative;
+	background-color: @color-tag-background; /* Default, could be overriden */
+	color: @color-tag-foreground; /* Default, could be overriden */
 	margin-right: 1em;
-	white-space:nowrap;
+	white-space: nowrap;
+	display: inline-block; /* Required so that the nowrap does not affect other span elements, i.e. lines can break between tags */
+	box-shadow: inset 0.35em 0 0 0 rgba(0, 0, 0, 0.5); /* Simulates a border, darkens the background */
+	padding: 0.15rem 0.25rem 0.15rem 0;
+	border: 1px solid @color-tag-border;
 	
 	a {
-		margin-left: 0.2em; /* Simulates a border */
-		background-color: rgba(255, 255, 255, 0.8);
-		color: black;
-		padding: 0 0.5em 0 0.25em;
-		position: relative;
-		border-radius:0;
+		margin-left: 0.35em; /* Matches the size of the shadow above */
+		color: inherit;
+		padding-left: 0.3em;
 		
 		&:hover {
-			background-color: rgba(255, 255, 255, 0.6);
+			background-color: inherit;
 		}
 	}
 	
 	.count {
-		display: inline-block;
-		overflow: hidden;
-		max-width: 0px;
-		.std-transition(all, 0.5s);
-		margin-right: 0.3em;
-		font-size: 85%;
-		position: absolute;
-		z-index: 1;
-		background-color: inherit;
-		height: 100%;
-		padding-left: 0.8em;
-		.box-sizing(border-box);
-		border-radius: 0 @border-radius-normal @border-radius-normal 0;
-
-		&:before { /* some kind of bullet over the count */
-			left:-3px;
-			top: 6px;
-			content: '';
-			position: absolute;
-			display: block;
-			border: 3px solid rgba(255, 255, 255, 0.8);
-			border-radius: 3px;
-			box-shadow: 2px 0 1px 1px rgba(0, 0, 0, 0.3);
-			z-index: 2;
-			.std-transition(all, 0.5s);
-		}
+		.std-transition(all, 0.3s);
+		opacity: 0.2;
+		font-size: 0.6rem;
+		&:before { display: inline; content: '('; margin: 0; padding: 0; }
+		&:after { display: inline; content: ')'; margin: 0; padding: 0; }
 	}
 	
 	&:hover .count {
-		max-width: 100px;
-		padding-right: 0.8em;
-		
-		&:before {
-			border-color: rgba(255, 255, 255, 0.6);
-		}
+		opacity: 1;
 	}
 }
 
-span.tag2 {
-	background-color: @color-submenu-contrast; /* Default, could be overriden */
-	color: white; /* Default, could be overriden */
-	border-radius: @border-radius-normal 0 0 @border-radius-normal;
-	position: relative;
-	margin-right: 1em;
-	white-space:nowrap;
-	
-	a:before { /* Simulates a border of a color that matches the background */
-		display: inline-block;
-		content: '\00a0'; /* non-breaking space */
-		background-color: rgba(255, 255, 255, 0.5);
-		width: 0.3em;
-		height: 100%;
-		margin-right: 0.25em;
-	}
-	
-	a {
-		color: inherit;
-		padding: 0 0.5em 0 0em;
-		position: relative;
-		border-radius:0;
-		
-		&:hover {
-			background-color: inherit;
-		}
-	}
-	
-	.count {
-		display: inline-block;
-		overflow: hidden;
-		max-width: 0px;
-		.std-transition(all, 0.5s);
-		margin-right: 0.3em;
-		font-size: 85%;
-		position: absolute;
-		z-index: 2;
-		background-color: inherit;
-		height: 100%;
-		padding-left: 0.8em;
-		.box-sizing(border-box);
-		border-radius: 0 @border-radius-normal @border-radius-normal 0;
+.tag-index {
+	text-align: center;
+	line-height: 300%;
 
-		&:before { /* some kind of bullet over the count */
-			.std-transition(all, 0.5s);
-			left:-3px;
-			top: 6px;
-			content: '';
-			position: absolute;
-			display: block;
-			border: 3px solid transparent;
-			border-radius: 3px;
-			background-color: inherit;
-			z-index: 4;
-		}
-		
-		&:after { /* Shading above the count placeholder */
-			.std-transition(all, 0.5s);
-			position: absolute;
-			content: '';
-			display: block;
-			height: 100%;
-			width: 100%;
-			z-index: 3; /* Shown above the count, but below the bullet */
-			background-color: rgba(255, 255, 255, 0.5);
-			top: 0;
-			left: 0;
-		}
-	}
-	
-	&:hover .count {
-		max-width: 100px;
-		padding-right: 0.8em;
-		
-		&:before {
-			opacity: 0;
-		}
-		&:after {
-			opacity: 0;
-		}
+	span.tag {
+		line-height: 130%;
+		padding-top: 0.05rem;
+		padding-bottom: 0.05rem;
 	}
 }
 

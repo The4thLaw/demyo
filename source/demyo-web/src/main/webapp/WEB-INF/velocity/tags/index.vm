@@ -1,14 +1,21 @@
 #setPageTitle('title.index.tag')
 
-## TODO: improve styling. With a large amount of tags, it looks ugly
+#set ($maxCount = 10) ## Start at something reasonable, or it will look silly when there are few tags and they're barely used
+
+#foreach($tag in $tagList)
+	#if ($tag.occurrencesCount > $maxCount)
+		#set ($maxCount = $tag.occurrencesCount)
+	#end
+#end
 
 <div class="tag-index">
 	#foreach ($tag in $tagList)
-	<span class="tag" #if($tag.fgColour)data-fgColour="$tag.fgColour"#end #if($tag.bgColour)data-bgColour="$tag.bgColour"#end>
+	#set ($relativeSize = 100 * $tag.occurrencesCount / $maxCount + 100)
+	<span class="tag" style="font-size: $relativeSize%; #if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">
 		<a href="./view/$tag.id">$tag.name</a>
 		<span class="count">
 			$tag.occurrencesCount
 		</span>
-	</span>
+	</span> 
 	#end
 </div>
