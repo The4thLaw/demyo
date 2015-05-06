@@ -49,6 +49,9 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 	private final Class<M> modelClass;
 	private final String className;
 	private final String defaultOrderAsString;
+	/**
+	 * The default order specified by the {@link IModel}, as a Hibernate {@link Criteria}-compatible {@link Order}.
+	 */
 	private final Order[] defaultOrderAsCriteria;
 	private final String startsWithFieldName;
 
@@ -206,7 +209,7 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 			}
 		}
 
-		if (currentPage != null || pageSize != null) {
+		if (currentPage != null && pageSize != null) {
 			criteria.setFirstResult((currentPage - 1) * pageSize);
 			criteria.setMaxResults(pageSize);
 		}
@@ -273,5 +276,16 @@ public abstract class AbstractModelDao<M extends IModel> implements IModelDao<M>
 	 */
 	protected Session getSession() {
 		return getEntityManager().unwrap(Session.class);
+	}
+
+	/**
+	 * Gets the default order specified by the {@link IModel}, as a Hibernate {@link Criteria}-compatible
+	 * {@link Order}.
+	 * 
+	 * @return the default order specified by the {@link IModel}, as a Hibernate {@link Criteria}-compatible
+	 *         {@link Order}
+	 */
+	protected Order[] getDefaultOrderAsCriteria() {
+		return defaultOrderAsCriteria;
 	}
 }
