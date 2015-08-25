@@ -1,5 +1,7 @@
 package org.demyo.model.config;
 
+import java.util.Locale;
+
 import org.apache.commons.configuration.Configuration;
 
 /**
@@ -11,6 +13,8 @@ import org.apache.commons.configuration.Configuration;
  * @version $Revision: 1073 $
  */
 public class ApplicationConfiguration {
+	/** The language in which the application is displayed. */
+	private final Locale language;
 	/** The number of items per page of textual entries. */
 	private final int pageSizeForText;
 	/** The number of items per page of images. */
@@ -26,6 +30,7 @@ public class ApplicationConfiguration {
 	 * @param config The configuration to retrieve values from.
 	 */
 	public ApplicationConfiguration(Configuration config) {
+		language = Locale.forLanguageTag(config.getString("language"));
 		pageSizeForText = config.getInt("paging.textPageSize");
 		pageSizeForImages = config.getInt("paging.imagePageSize");
 		thumbnailWidth = config.getInt("thumbnail.width");
@@ -38,10 +43,20 @@ public class ApplicationConfiguration {
 	 * @param config The configuration to fill.
 	 */
 	public void fillConfiguration(Configuration config) {
+		config.setProperty("language", language.toString());
 		config.setProperty("paging.textPageSize", pageSizeForText);
 		config.setProperty("paging.imagePageSize", pageSizeForImages);
 		config.setProperty("thumbnail.width", thumbnailWidth);
 		config.setProperty("thumbnail.height", thumbnailHeight);
+	}
+
+	/**
+	 * Gets the language in which the application is displayed.
+	 * 
+	 * @return the language in which the application is displayed
+	 */
+	public Locale getLanguage() {
+		return language;
 	}
 
 	/**

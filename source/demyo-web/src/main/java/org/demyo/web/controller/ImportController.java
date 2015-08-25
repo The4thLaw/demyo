@@ -87,6 +87,6 @@ public class ImportController extends AbstractController {
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
 		}
-		redirect(request, response, "/manage/import"); // TODO: redirect to /
+		redirect("/");
 	}
 }
