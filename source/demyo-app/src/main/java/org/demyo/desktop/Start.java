@@ -113,7 +113,7 @@ public class Start {
 		URL iconUrl = Start.class.getResource("app-icon.png");
 		assert (iconUrl != null);
 		ImageIcon icon = new ImageIcon(iconUrl, "Demyo tray icon");
-		TrayIcon trayIcon = new TrayIcon(icon.getImage(), "Demyo");
+		TrayIcon trayIcon = new TrayIcon(icon.getImage(), "Demyo"); // TODO: resize icon to expected size
 		trayIcon.setPopupMenu(popup);
 		try {
 			SystemTray.getSystemTray().add(trayIcon);
