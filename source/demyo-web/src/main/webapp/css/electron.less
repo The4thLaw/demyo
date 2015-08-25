@@ -753,13 +753,13 @@ form, div.details {
 		display: table-row;
 	}
 	
-	label, .value {
+	.field > label, .value {
 		display: table-cell;
 		vertical-align: top;
 		padding: 0.25em;
 	}
 	
-	label {
+	.field > label {
 		text-align: right;
 		border-right: 1px solid @color-label-border;
 		padding-right: 10px;
@@ -782,12 +782,12 @@ form, div.details {
 			display: block;
 		}
 	
-		label, .value {
+		.field > label, .value {
 			display: block;
 			padding: 0;
 		}
 		
-		label {
+		.field > label {
 			border: 0;
 			border-top: 1px dotted fadeout(@color-label-border, 25%);
 			margin-top: 0.25em;

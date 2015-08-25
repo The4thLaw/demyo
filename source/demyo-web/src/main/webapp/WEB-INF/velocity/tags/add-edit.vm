@@ -1,14 +1,35 @@
 #setPageTitleCond($tag.id 'title.edit.tag', 'title.add.tag')
 
-## TODO: preview of final tag
-
 #@form()
 
 #inputHidden('tag.id')
 #inputText('field.Tag.name', 'tag.name')
-## TODO allow to set no colour
 #inputColour('field.Tag.fgColour', 'tag.fgColour')
 #inputColour('field.Tag.bgColour', 'tag.bgColour')
+#@entityField('field.Tag.preview')
+	<span id="tag-preview" class="tag" style="#if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">
+		<a href="#">$tag.name</a>
+	</span>
+#end
 #saveButtons
 
 #end
+
+<script type="text/javascript">
+function updatePreview() {
+	jQuery('#tag-preview > a').html(jQuery('#field_tag_name').val()); // TODO: escape value
+	jQuery('#tag-preview').css({
+		'color': getColour('#field_tag_fgColour'),
+		'background-color': getColour('#field_tag_bgColour')
+	});
+}
+function getColour(selector) {
+	var input = jQuery(selector);
+	return input.is(':disabled') ? 'inherit' : input.val();
+}
+jQuery(function () {
+	jQuery('#content input').on('input change keyDown click', updatePreview);
+	// Trigger initially
+	jQuery('#field_tag_name').change();
+});
+</script>

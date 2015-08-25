@@ -57,6 +57,11 @@
 #macro(inputColour $labelId $path)
 	#@formField($labelId, $path)
 		<input type="color" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
+		<div class="colour-remover">
+			## TODO: default the checkbox to checked if the value is empty
+			<input type="checkbox" id="${fieldId}_colour_remover" data-for="$fieldId" />
+			<label for="${fieldId}_colour_remover">#_('special.form.noColour')</label>
+		</div>
 	#end
 #end
 
