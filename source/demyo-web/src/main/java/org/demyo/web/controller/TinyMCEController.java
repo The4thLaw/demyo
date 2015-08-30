@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Uses Spring's MD5 helper. Use IOUtils to read file contents. All methods are private. Assumes no custom files.
  * </p>
  * <p>
- * Appart from that, most of the structure is untouched, and a bit ugly.
+ * Apart from that, most of the structure is untouched, and a bit ugly.
  * </p>
  * <p>
  * The original code is copyright 2009, Moxiecode Systems AB, released under LGPL License.

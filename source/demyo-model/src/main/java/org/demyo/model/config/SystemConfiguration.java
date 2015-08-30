@@ -111,7 +111,7 @@ public final class SystemConfiguration {
 			}
 		}
 		imagesDirectory = new File(userDirectory, "images");
-		thumbnailDirectory = new File(tempDirectory, "thumbnails");
+		thumbnailDirectory = new File(userDirectory, "thumbnails");
 		databaseFile = new File(userDirectory, "demyo.h2.db");
 		configurationFile = new File(userDirectory, "demyo-config.properties");
 		createDirectoryIfNeeded(userDirectory);
