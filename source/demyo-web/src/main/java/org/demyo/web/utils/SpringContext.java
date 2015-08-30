@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * Static accessor for the Application Context. Used by
+ * Static accessor for the Application Context.
  * 
  * @author $Author: xr $
  * @version $Revision: 1070 $
