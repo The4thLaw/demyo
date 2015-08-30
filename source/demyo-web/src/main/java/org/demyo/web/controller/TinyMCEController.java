@@ -11,6 +11,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.demyo.model.config.SystemConfiguration;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -51,8 +53,7 @@ public class TinyMCEController {
 	 * Default constructor.
 	 */
 	public TinyMCEController() {
-		// TODO: use demyo cache location
-		cachePath = System.getProperty("java.io.tmpdir");
+		cachePath = SystemConfiguration.getInstance().getTempDirectory().getAbsolutePath();
 	}
 
 	/**
