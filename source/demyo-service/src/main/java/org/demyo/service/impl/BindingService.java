@@ -1,11 +1,11 @@
 package org.demyo.service.impl;
 
-import org.demyo.dao.IBindingDao;
-import org.demyo.dao.IModelDao;
+import org.demyo.dao.IBindingRepo;
 import org.demyo.model.Binding;
 import org.demyo.service.IBindingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
  * @version $Revision: 1080 $
  */
 @Service
-public class BindingService extends AbstractModelService<Binding> implements IBindingService {
+public class BindingService extends AbstractModelServiceNG<Binding> implements IBindingService {
 	@Autowired
-	private IBindingDao dao;
+	private IBindingRepo repo;
 
 	/**
 	 * Default constructor.
@@ -26,8 +26,13 @@ public class BindingService extends AbstractModelService<Binding> implements IBi
 		super(Binding.class);
 	}
 
+	/*@Override
+	protected IModelRepo<Binding> getRepo() {
+		return repo;
+	}*/
+
 	@Override
-	protected IModelDao<Binding> getDao() {
-		return dao;
+	protected JpaRepository<Binding, Long> getRepo() {
+		return repo;
 	}
 }

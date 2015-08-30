@@ -8,6 +8,6 @@ import org.demyo.model.Binding;
  * @author $Author: xr $
  * @version $Revision: 1080 $
  */
-public interface IBindingService extends IModelService<Binding> {
+public interface IBindingService extends IModelServiceNG<Binding> {
 
 }

@@ -8,6 +8,7 @@ import org.demyo.model.Binding;
  * @author $Author: xr $
  * @version $Revision: 1080 $
  */
+@Deprecated
 public interface IBindingDao extends IModelDao<Binding> {
 
 }

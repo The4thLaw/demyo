@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
  * @version $Revision: 1080 $
  */
 @Repository
+@Deprecated
 public class BindingDao extends AbstractModelDao<Binding> implements IBindingDao {
 
 	/**

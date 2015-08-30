@@ -17,6 +17,7 @@ import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 
 /**
  * Velocity tool for paging and text list management.
@@ -71,9 +72,26 @@ public class PagingTool {
 	 */
 	public String pageLinks(PaginatedList<?> list, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
-		int current = list.getCurrentPage();
-		int max = list.getMaxPages();
+		return pageLinks(list.getCurrentPage(), list.getMaxPages(), request, jsTool);
+	}
 
+	/**
+	 * Gets the list of links to individual pages. This method forwards parameters according to
+	 * {@link #getBaseUrlForPageLinks(HttpServletRequest)}.
+	 * 
+	 * @param list The paginated list of entities.
+	 * @param request The HTTP request.
+	 * @param jsTool The {@link JavascriptTool} in this request.
+	 * @return The page links (as an HTML fragment).
+	 * @throws UnsupportedEncodingException If encoding the parameters fails.
+	 */
+	public String pageLinks(Page<?> list, HttpServletRequest request, JavascriptTool jsTool)
+			throws UnsupportedEncodingException {
+		return pageLinks(list.getNumber(), list.getTotalPages(), request, jsTool);
+	}
+
+	private String pageLinks(int current, int max, HttpServletRequest request, JavascriptTool jsTool)
+			throws UnsupportedEncodingException {
 		LOGGER.debug("Generating page links for page {} of {}", current, max);
 
 		StringBuilder baseUrl = getBaseUrlForPageLinks(request);
