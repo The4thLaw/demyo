@@ -1,16 +1,19 @@
 package org.demyo.desktop;
 
 import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -19,6 +22,7 @@ import org.demyo.model.config.SystemConfiguration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
+import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,13 +115,28 @@ public class Start {
 
 		URL iconUrl = Start.class.getResource("app-icon.png");
 		assert (iconUrl != null);
-		ImageIcon icon = new ImageIcon(iconUrl, "Demyo tray icon");
-		TrayIcon trayIcon = new TrayIcon(icon.getImage(), "Demyo"); // TODO: resize icon to expected size
+		//ImageIcon icon = new ImageIcon(iconUrl, "Demyo tray icon");
+		BufferedImage iconBI;
+		try {
+			iconBI = ImageIO.read(iconUrl);
+		} catch (IOException ioe) {
+			LOGGER.warn("Failed to load the tray icon; there will be no GUI to close Demyo");
+			return;
+		}
+
+		// Resize icon to expected size
+		SystemTray tray = SystemTray.getSystemTray();
+		Dimension trayIconSize = tray.getTrayIconSize();
+		LOGGER.debug("Tray icon size is (w x h): {} x {}", trayIconSize.width, trayIconSize.height);
+		iconBI = Scalr.resize(iconBI, trayIconSize.width, trayIconSize.height, Scalr.OP_ANTIALIAS);
+
+		TrayIcon trayIcon = new TrayIcon(iconBI, "Demyo");
 		trayIcon.setPopupMenu(popup);
 		try {
-			SystemTray.getSystemTray().add(trayIcon);
+			tray.add(trayIcon);
 		} catch (AWTException e) {
 			LOGGER.warn("Failed to add a system tray icon; there will be no GUI to close Demyo");
+			return;
 		}
 
 		LOGGER.info("System tray menu is available");
