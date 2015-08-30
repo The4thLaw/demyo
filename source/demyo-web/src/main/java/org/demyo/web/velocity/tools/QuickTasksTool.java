@@ -8,7 +8,7 @@ import java.util.Map;
 import org.demyo.model.exception.DemyoErrorCode;
 import org.demyo.model.exception.DemyoException;
 import org.demyo.service.ITranslationService;
-import org.demyo.web.utils.SpringContext;
+import org.demyo.utils.web.SpringContext;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;

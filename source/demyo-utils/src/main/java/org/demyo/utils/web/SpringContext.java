@@ -1,4 +1,4 @@
-package org.demyo.web.utils;
+package org.demyo.utils.web;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
