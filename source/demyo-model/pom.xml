@@ -34,14 +34,6 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<!-- TODO: dep mgmt at root -->
-			<version>4.1.7.Final</version>
-		</dependency>
-		<!-- Should be in web -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>4.1.7.Final</version>
 		</dependency>
 	</dependencies>
 </project>
