@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.demyo.model.IModel;
 
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Order;
 
 /**
@@ -67,7 +67,7 @@ public interface IModelServiceNG<M extends IModel> {
 	 *        default ordering is defined, the ordering is defined by the database.
 	 * @return The list of entities.
 	 */
-	Page<M> findPaginated(int currentPage, Order... orders);
+	Slice<M> findPaginated(int currentPage, Order... orders);
 
 	/**
 	 * Saves the given model.

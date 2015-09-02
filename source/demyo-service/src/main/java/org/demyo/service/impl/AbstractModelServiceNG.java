@@ -11,9 +11,9 @@ import org.demyo.service.IModelServiceNG;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -91,10 +91,14 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	 */
 	@Transactional(readOnly = true)
 	@Override
-	public Page<M> findPaginated(int currentPage, Order... orders) {
+	public Slice<M> findPaginated(int currentPage, Order... orders) {
+		// Adjust the page number: Spring Data counts from 0
+		currentPage--;
+
 		Sort sort = orders.length == 0 ? null : new Sort(orders);
 		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
 				.getPageSizeForText(), sort);
+		// TODO: find how to force this to return a slice rather than a page
 		return getRepo().findAll(pageable);
 	}
 

@@ -12,7 +12,7 @@ import org.demyo.service.IModelServiceNG;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -83,7 +83,7 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 		} else if (currentPage == null) {
 			currentPage = 1;
 		}
-		Page<M> entities = getService().findPaginated(currentPage);
+		Slice<M> entities = getService().findPaginated(currentPage);
 
 		model.addAttribute(modelKey + "List", entities);
 

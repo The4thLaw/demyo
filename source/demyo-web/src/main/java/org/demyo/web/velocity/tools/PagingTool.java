@@ -18,6 +18,7 @@ import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 
 /**
  * Velocity tool for paging and text list management.
@@ -128,6 +129,40 @@ public class PagingTool {
 		jsTool.load("Demyo.Paging");
 
 		return "<div class=\"pages_nav_numbers\">" + previousLink + directPageLinks + nextLink + "</div>";
+	}
+
+	/**
+	 * Gets the pagination links. This method forwards parameters according to
+	 * {@link #getBaseUrlForPageLinks(HttpServletRequest)}.
+	 * 
+	 * @param slice The paginated list of entities.
+	 * @param request The HTTP request.
+	 * @param jsTool The {@link JavascriptTool} in this request.
+	 * @return The page links (as an HTML fragment).
+	 * @throws UnsupportedEncodingException If encoding the parameters fails.
+	 */
+	// TODO: allow to generate letters on the fly or not (boolean parameter)
+	public String pageLinks(Slice<?> slice, HttpServletRequest request, JavascriptTool jsTool)
+			throws UnsupportedEncodingException {
+		int current = slice.getNumber() + 1; // Slices starts at 0
+		LOGGER.debug("Generating page links for slice {}", current);
+
+		StringBuilder baseUrl = getBaseUrlForPageLinks(request);
+		baseUrl.append("page=");
+
+		// TODO: rather than hiding the links if they don't exist, disable them
+		String previousLink = "";
+		if (slice.hasPrevious()) {
+			previousLink = "<a id=\"page-link-prev\" href=\"" + baseUrl.toString() + (current - 1) + "\">«</a> ";
+		}
+		String nextLink = "";
+		if (slice.hasNext()) {
+			nextLink = " <a id=\"page-link-next\" href=\"" + baseUrl.toString() + (current + 1) + "\">»</a>";
+		}
+
+		jsTool.load("Demyo.Paging");
+
+		return "<div id=\"pagination\">" + previousLink + nextLink + "</div>";
 	}
 
 	/**
