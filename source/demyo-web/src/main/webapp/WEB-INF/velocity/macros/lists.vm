@@ -27,11 +27,16 @@
 		
 		<li><a href="$baseUrl$entity.id">$render.eval($context.this, "\$entity.$displayProperty")</a></li>
 	#end
-	## TODO: use hasContent if in a Spring Data Page
-	## ${myObj.class.name} would return "com.test.MyObj"
-	## ${myObj.class.simpleName} would return "MyObj"
-	#if (!$entityList.isEmpty())
-		</ul>
+	
+	#if (${entityList.class.name} == "org.springframework.data.domain.PageImpl")
+		#if (!$entityList.hasContent())
+			</ul>
+		#end
+	#else
+		## TODO: eventually, this will disappear
+		#if (!$entityList.isEmpty())
+			</ul>
+		#end
 	#end
 	</div>
 #end
