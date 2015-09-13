@@ -231,6 +231,11 @@
 			<!-- Copy all attributes except ones to split -->
 			<xsl:for-each select="@*">
 				<xsl:choose>
+					<xsl:when test="name() = 'title' and not(string-length())">
+						<!-- Now, all albums must have a title, even one shots. But they won't have a Series. -->
+						<xsl:variable name="series_id" select="../@series_id" />
+						<xsl:attribute name="title"><xsl:value-of select="/library/series/series[@id=$series_id]/@name" /></xsl:attribute>
+					</xsl:when>
 					<xsl:when test="not(string-length(.)) or .='0000-00-00'"><!-- Nothing --></xsl:when>
 					<xsl:when test=".='0' and (name() = 'height' or name() = 'width' or name() = 'pages')"><!-- Nothing --></xsl:when>
 					<xsl:when test="name() = 'wishlist'"><!-- Convert boolean -->

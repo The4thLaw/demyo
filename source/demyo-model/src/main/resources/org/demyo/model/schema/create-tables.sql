@@ -70,16 +70,17 @@ CREATE TABLE bindings (
 
 CREATE TABLE albums (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	series_id INT UNSIGNED NOT NULL,
+	series_id INT UNSIGNED NULL, /* One shots have no series */
 	cycle SMALLINT UNSIGNED NULL,
 	number FLOAT UNSIGNED NULL,
 	number_suffix VARCHAR(5) NULL,
-	title VARCHAR(255) NULL, /* One shots sometimes have no title */
+	title VARCHAR(255) NOT NULL, /* Since it is now possible to have one shots with no series, all albums must have a title */
 	publisher_id INT UNSIGNED NOT NULL,
 	collection_id INT UNSIGNED NULL,
 	first_edition DATE NULL,
 	this_edition DATE NULL,
 	isbn VARCHAR(18) NULL, /* ISBN-10 or ISBN-13 with at most 5 separators (spaces, dashes, ...) */
+	/* TODO: ISBNs now have a trailing version number in some case: '.... / 001' */
 	purchase_date DATE NULL,
 	purchase_price FLOAT NULL,
 	wishlist BOOLEAN DEFAULT 'false',
