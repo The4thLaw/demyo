@@ -16,13 +16,41 @@ public class AlbumComparator implements Comparator<Album> {
 
 	@Override
 	public int compare(Album a1, Album a2) {
-		// TODO: order by cycle, number, number_suffix, title
 		int comparison;
-		comparison = collator.compare(a1.getIdentifyingName(), a2.getIdentifyingName());
+
+		comparison = nullSafeComparison(a1.getCycle(), a2.getCycle());
+		if (comparison != 0) {
+			return comparison;
+		}
+
+		comparison = nullSafeComparison(a1.getNumber(), a2.getNumber());
+		if (comparison != 0) {
+			return comparison;
+		}
+
+		comparison = nullSafeComparison(a1.getNumberSuffix(), a2.getNumberSuffix());
+		if (comparison != 0) {
+			return comparison;
+		}
+
+		comparison = collator.compare(a1.getTitle(), a2.getTitle());
 		if (comparison != 0) {
 			return comparison;
 		}
 		// In case of equal everything, still distinguish them by ID to avoid omitting some results
 		return a1.getId().compareTo(a2.getId());
+	}
+
+	private static <T> int nullSafeComparison(Comparable<T> c1, T c2) {
+		if (c1 == null && c2 == null) {
+			return 0;
+		}
+		if (c1 == null) {
+			return -1;
+		}
+		if (c2 == null) {
+			return 1;
+		}
+		return c1.compareTo(c2);
 	}
 }

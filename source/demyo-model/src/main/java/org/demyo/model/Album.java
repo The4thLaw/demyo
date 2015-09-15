@@ -7,36 +7,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.demyo.model.util.DefaultOrder;
-
-// TODO: Auto-generated Javadoc
 // TODO: far from complete
-// TODO: order by is not complete
-// TODO: when saving this entity, it should at least have a title or a Series.
-/*
- * TODO: We will need two ways to order albums
- * 
- * - One for the index, where the work is done by the database: order by (case when series_id is null then
- * album.title else series.title), album.number or something like that
- * 
- * - One in Java to follow the same logic, but work on datasets retrieved e.g. from the tags, the authors, etc.
- * 
- * Or perhaps the database could be always used, but the albums would be fetched by separate queries and put in
- * transient fields
- * 
- * To be determined: does Hibernate allow to use direct SQL order queries
- */
 /**
  * The Class Album.
  */
 @Entity
 @Table(name = "ALBUMS")
-@DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 public class Album extends AbstractModel {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
 	private Series series;
+
+	/** The cycle. */
+	@Column(name = "cycle")
+	private Integer cycle;
+
+	/** The number. */
+	@Column(name = "number")
+	private Float number;
+
+	/** The number suffix. */
+	@Column(name = "number_suffix")
+	private String numberSuffix;
 
 	/** The title. */
 	@Column(name = "title")
@@ -63,6 +56,60 @@ public class Album extends AbstractModel {
 	 */
 	public void setSeries(Series series) {
 		this.series = series;
+	}
+
+	/**
+	 * Gets the cycle.
+	 * 
+	 * @return the cycle
+	 */
+	public Integer getCycle() {
+		return cycle;
+	}
+
+	/**
+	 * Sets the cycle.
+	 * 
+	 * @param cycle the new cycle
+	 */
+	public void setCycle(Integer cycle) {
+		this.cycle = cycle;
+	}
+
+	/**
+	 * Gets the number.
+	 * 
+	 * @return the number
+	 */
+	public Float getNumber() {
+		return number;
+	}
+
+	/**
+	 * Sets the number.
+	 * 
+	 * @param number the new number
+	 */
+	public void setNumber(Float number) {
+		this.number = number;
+	}
+
+	/**
+	 * Gets the number suffix.
+	 * 
+	 * @return the number suffix
+	 */
+	public String getNumberSuffix() {
+		return numberSuffix;
+	}
+
+	/**
+	 * Sets the number suffix.
+	 * 
+	 * @param numberSuffix the new number suffix
+	 */
+	public void setNumberSuffix(String numberSuffix) {
+		this.numberSuffix = numberSuffix;
 	}
 
 	/**
