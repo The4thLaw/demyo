@@ -23,10 +23,8 @@
 
 	<properties>
 		<org.slf4j.version>1.7.2</org.slf4j.version>
-		<!--<org.springframework.version>3.1.2.RELEASE</org.springframework.version>-->
 		<org.springframework.version>4.2.0.RELEASE</org.springframework.version>
-		<org.hibernate.version>4.1.7.Final</org.hibernate.version>
-		<!-- TODO: update to Hibernate 4.3 at least. Then, use EntityGraphs to load entities. -->
+		<org.hibernate.version>4.3.11.Final</org.hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

@@ -15,8 +15,7 @@ import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
 
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
+import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -56,7 +55,7 @@ public class Publisher extends AbstractModel {
 	private Long logoId;
 	/** The collections belonging to this publisher. */
 	@OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
-	@Sort(comparator = IdentifyingNameComparator.class, type = SortType.COMPARATOR)
+	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Collection> collections;
 
 	@Override

@@ -83,7 +83,7 @@
 
 		<!-- Persistence Provider -->
 		<property name="persistenceProvider">
-			<bean class="org.hibernate.ejb.HibernatePersistence" />
+			<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
 		</property>
 
 		<!-- JPA/Hibernate Configuration -->

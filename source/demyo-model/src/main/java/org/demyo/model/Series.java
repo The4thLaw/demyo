@@ -17,8 +17,7 @@ import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
 
-import org.hibernate.annotations.Sort;
-import org.hibernate.annotations.SortType;
+import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -58,7 +57,7 @@ public class Series extends AbstractModel {
 	private Set<Series> relatedSeries;
 	/** The albums belonging to this series. */
 	@OneToMany(mappedBy = "series", fetch = FetchType.LAZY)
-	@Sort(comparator = AlbumComparator.class, type = SortType.COMPARATOR)
+	@SortComparator(AlbumComparator.class)
 	private SortedSet<Album> albums;
 
 	@Override
