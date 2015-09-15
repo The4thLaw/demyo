@@ -12,6 +12,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
+import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Pattern.Flag;
 
@@ -29,4 +30,14 @@ public @interface ISBN {
 	 * @return The error message template.
 	 */
 	String message() default "{org.demyo.validation.constraints.ISBN.message}";
+
+	/**
+	 * @return The groups the constraint belongs to.
+	 */
+	Class<?>[] groups() default {};
+
+	/**
+	 * @return The payload associated to the constraint
+	 */
+	Class<? extends Payload>[] payload() default {};
 }

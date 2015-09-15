@@ -5,7 +5,11 @@ import java.util.Comparator;
 import java.util.Locale;
 
 import org.demyo.model.Album;
+import org.demyo.model.Series;
 
+/**
+ * A {@link Comparator} allowing to sort {@link Album}s based on their order in a specific {@link Series}.
+ */
 public class AlbumComparator implements Comparator<Album> {
 	private final Collator collator;
 

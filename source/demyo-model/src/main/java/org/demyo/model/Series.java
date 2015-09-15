@@ -1,6 +1,5 @@
 package org.demyo.model;
 
-import java.util.Set;
 import java.util.SortedSet;
 
 import javax.persistence.Column;
@@ -54,7 +53,7 @@ public class Series extends AbstractModel {
 	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"),
 			inverseJoinColumns = @JoinColumn(name = "sub"))
 	@OrderBy(value = "name asc")
-	private Set<Series> relatedSeries;
+	private SortedSet<Series> relatedSeries;
 	/** The albums belonging to this series. */
 	@OneToMany(mappedBy = "series", fetch = FetchType.LAZY)
 	@SortComparator(AlbumComparator.class)
@@ -160,7 +159,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the series related to this one
 	 */
-	public Set<Series> getRelatedSeries() {
+	public SortedSet<Series> getRelatedSeries() {
 		return relatedSeries;
 	}
 
@@ -169,7 +168,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @param relatedSeries the new series related to this one
 	 */
-	public void setRelatedSeries(Set<Series> relatedSeries) {
+	public void setRelatedSeries(SortedSet<Series> relatedSeries) {
 		this.relatedSeries = relatedSeries;
 	}
 
