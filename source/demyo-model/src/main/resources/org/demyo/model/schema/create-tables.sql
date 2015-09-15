@@ -79,9 +79,8 @@ CREATE TABLE albums (
 	collection_id INT UNSIGNED NULL,
 	first_edition DATE NULL,
 	this_edition DATE NULL,
-	isbn VARCHAR(18) NULL, /* ISBN-10 or ISBN-13 with at most 5 separators (spaces, dashes, ...) */
-	/* TODO: ISBNs now have a trailing version number in some case: '.... / 001' */
-	purchase_date DATE NULL,
+	isbn VARCHAR(63) NULL, /* ISBN-10 or ISBN-13 with potential revision number at the end */
+	acquisition_date DATE NULL,
 	purchase_price FLOAT NULL,
 	wishlist BOOLEAN DEFAULT 'false',
 	binding_id INT UNSIGNED NULL,

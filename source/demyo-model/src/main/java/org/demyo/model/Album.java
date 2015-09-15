@@ -1,11 +1,18 @@
 package org.demyo.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.demyo.model.constraints.ISBN;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 // TODO: far from complete
 /**
@@ -33,7 +40,36 @@ public class Album extends AbstractModel {
 
 	/** The title. */
 	@Column(name = "title")
+	@NotBlank
 	private String title;
+
+	/** The owning {@link Publisher}. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "publisher_id")
+	@NotNull
+	private Publisher publisher;
+
+	/** The owning {@link Collection}. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "collection_id")
+	private Collection collection;
+
+	/** The date of first edition. */
+	@Column(name = "first_edition")
+	private Date firstEditionDate;
+
+	/** The date of current edition. */
+	@Column(name = "this_edition")
+	private Date currentEditionDate;
+
+	/** The ISBN. */
+	@Column(name = "isbn")
+	@ISBN
+	private String isbn;
+
+	/** The date of acquisition. */
+	@Column(name = "acquisition_date")
+	private Date acquisitionDate;
 
 	@Override
 	public String getIdentifyingName() {

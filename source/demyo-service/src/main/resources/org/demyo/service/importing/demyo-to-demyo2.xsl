@@ -241,6 +241,9 @@
 					<xsl:when test="name() = 'wishlist'"><!-- Convert boolean -->
 						<xsl:attribute name="{name(.)}"><xsl:value-of select="boolean(number(.))"/></xsl:attribute>
 					</xsl:when>
+					<xsl:when test="name() = 'purchase_date'"><!-- Convert name -->
+						<xsl:attribute name="acquisition_date"><xsl:value-of select="."/></xsl:attribute>
+					</xsl:when>
 					<!-- Ignore to split and borrower -->
 					<xsl:when test="name() != 'artists' and name() != 'writers' and name() != 'colorists' and name() != 'tags' and name() != 'images' and name() != 'borrowers'">
 						<xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute>
