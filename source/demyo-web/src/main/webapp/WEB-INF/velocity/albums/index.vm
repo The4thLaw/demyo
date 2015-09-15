@@ -1,0 +1,49 @@
+#setPageTitle('title.index.album')
+
+## This is a special index since we need to group everything by series
+#set ($lastSeries = -1)
+#set ($inSeries = false)
+#foreach ($album in $albumList)
+
+	#if (!$album.series)
+		## Single albums
+		
+		#if ($inSeries)
+			## Close pending series
+			#set ($inSeries = false)
+			</div>
+		#end
+		#set ($lastSeries = -1)
+	
+		<div class="album">
+			<a href="./view/$album.id">$album.identifyingName</a>
+		</div>
+	#else
+		## Albums in a series
+		
+		#if ($inSeries && $lastSeries != $album.series.id)
+			## Close the previous series
+			</div>
+			#set ($inSeries = false)
+		#end
+		#if (!$inSeries)
+			## Open a new series
+			<div class="series">
+				<h2>$album.series.identifyingName</h2>
+		#end
+		#set ($lastSeries = $album.series.id)
+		#set ($inSeries = true)
+		
+		<a href="./view/$album.id">$album.identifyingName</a><br>
+	#end
+
+#end
+
+#if ($inSeries)
+	## Close any pending series
+	</div>
+#end
+
+
+$paging.pageLinks($albumList, $request, $javascript)
+$paging.letters($request)

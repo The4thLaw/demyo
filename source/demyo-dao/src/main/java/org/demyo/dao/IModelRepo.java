@@ -12,5 +12,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface IModelRepo<M extends IModel> extends JpaRepository<M, Long> {
-
+	// TODO: figure out how to return slices. We can't override JpaRepository's findAll to return a slice
+	//Slice<M> findAll(Pageable pageable);
 }

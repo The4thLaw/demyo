@@ -1,6 +1,7 @@
 package org.demyo.model;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,12 +9,16 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
 
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
@@ -51,6 +56,10 @@ public class Series extends AbstractModel {
 			inverseJoinColumns = @JoinColumn(name = "sub"))
 	@OrderBy(value = "name asc")
 	private Set<Series> relatedSeries;
+	/** The albums belonging to this series. */
+	@OneToMany(mappedBy = "series", fetch = FetchType.LAZY)
+	@Sort(comparator = AlbumComparator.class, type = SortType.COMPARATOR)
+	private SortedSet<Album> albums;
 
 	@Override
 	public String getIdentifyingName() {
@@ -163,5 +172,14 @@ public class Series extends AbstractModel {
 	 */
 	public void setRelatedSeries(Set<Series> relatedSeries) {
 		this.relatedSeries = relatedSeries;
+	}
+
+	/**
+	 * Gets the albums belonging to this series.
+	 * 
+	 * @return the albums belonging to this series
+	 */
+	public SortedSet<Album> getAlbums() {
+		return albums;
 	}
 }

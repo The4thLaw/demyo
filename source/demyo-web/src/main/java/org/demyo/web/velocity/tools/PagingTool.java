@@ -88,7 +88,7 @@ public class PagingTool {
 	 */
 	public String pageLinks(Page<?> list, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
-		return pageLinks(list.getNumber(), list.getTotalPages(), request, jsTool);
+		return pageLinks(list.getNumber() + 1, list.getTotalPages(), request, jsTool);
 	}
 
 	private String pageLinks(int current, int max, HttpServletRequest request, JavascriptTool jsTool)

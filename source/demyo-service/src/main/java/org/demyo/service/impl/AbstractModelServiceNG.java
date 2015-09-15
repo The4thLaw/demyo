@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.demyo.dao.IModelRepo;
 import org.demyo.model.IModel;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelServiceNG;
@@ -16,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -48,8 +48,7 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	 * 
 	 * @return the DAO.
 	 */
-	//protected abstract IModelRepo<M> getRepo();
-	protected abstract JpaRepository<M, Long> getRepo();
+	protected abstract IModelRepo<M> getRepo();
 
 	/** {@inheritDoc} By default, this method delegates to {@link #getByIdForEdition(long)}. */
 	@Transactional(rollbackFor = Throwable.class)
@@ -98,7 +97,6 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 		Sort sort = orders.length == 0 ? null : new Sort(orders);
 		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
 				.getPageSizeForText(), sort);
-		// TODO: find how to force this to return a slice rather than a page
 		return getRepo().findAll(pageable);
 	}
 

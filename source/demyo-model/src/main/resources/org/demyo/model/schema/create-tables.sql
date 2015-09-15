@@ -241,3 +241,12 @@ CREATE TABLE searches (
 	UNIQUE(model, status, name)
 );
 CREATE INDEX ON searches(model);
+
+/* A view of series names where albums without series are also listed (in that case, the title becomes the series name).
+ * The ID is positive for series, negative for albums. */
+CREATE VIEW v_meta_series AS
+		(SELECT -id as id, id AS series_id, NULL AS album_id, name AS meta_name FROM series)
+	UNION
+		(SELECT id as id, series_id, id AS album_id, title AS meta_name FROM albums WHERE series_id IS NULL)
+	ORDER BY meta_name;
+	

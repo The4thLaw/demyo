@@ -2,6 +2,9 @@ package org.demyo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.demyo.model.util.DefaultOrder;
@@ -30,14 +33,36 @@ import org.demyo.model.util.DefaultOrder;
 @Table(name = "ALBUMS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 public class Album extends AbstractModel {
+	/** The parent {@link Series}. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "series_id")
+	private Series series;
+
 	/** The title. */
 	@Column(name = "title")
 	private String title;
 
 	@Override
 	public String getIdentifyingName() {
-		// TODO: If there is no title, this should return the Series name and number
 		return getTitle();
+	}
+
+	/**
+	 * Gets the parent {@link Series}.
+	 * 
+	 * @return the parent {@link Series}
+	 */
+	public Series getSeries() {
+		return series;
+	}
+
+	/**
+	 * Sets the parent {@link Series}.
+	 * 
+	 * @param series the new parent {@link Series}
+	 */
+	public void setSeries(Series series) {
+		this.series = series;
 	}
 
 	/**

@@ -28,7 +28,8 @@
 		<li><a href="$baseUrl$entity.id">$render.eval($context.this, "\$entity.$displayProperty")</a></li>
 	#end
 	
-	#if (${entityList.class.name} == "org.springframework.data.domain.PageImpl")
+	#if (${entityList.class.name} == "org.springframework.data.domain.PageImpl"
+			|| ${entityList.class.name} == "org.springframework.data.domain.SliceImpl")
 		#if (!$entityList.hasContent())
 			</ul>
 		#end

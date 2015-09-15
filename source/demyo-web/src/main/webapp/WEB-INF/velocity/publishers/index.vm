@@ -8,19 +8,19 @@
 	## A bit hacky, but we need this kind of flexibility
 	#set ($temp = $context.this.put("entity", $entity))
 	
-		#set ($firstLetter = $paging.getFirstLetter($render.eval($context.this, "\$entity.name")))
-	
-		#if ($firstLetter != $lastFirstLetter)
-			#if (!$first)
-				</ul>
-			#else
-				#set ($first = false)
-			#end
-			
-			<ul title="$firstLetter">
-			
-			#set ($lastFirstLetter = $firstLetter)
+	#set ($firstLetter = $paging.getFirstLetter($render.eval($context.this, "\$entity.name")))
+
+	#if ($firstLetter != $lastFirstLetter)
+		#if (!$first)
+			</ul>
+		#else
+			#set ($first = false)
 		#end
+		
+		<ul title="$firstLetter">
+		
+		#set ($lastFirstLetter = $firstLetter)
+	#end
 	
 	<li><a href="./view/$entity.id">$render.eval($context.this, "\$entity.identifyingName")</a>
 	
