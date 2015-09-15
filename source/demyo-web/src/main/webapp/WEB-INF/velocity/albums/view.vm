@@ -1,0 +1,43 @@
+#setPageTitleParams('title.view.album' $album.title)
+
+$quickTasks.add({
+	"id" : "qt-edit-album",
+	"url" : "../edit/$album.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-album",
+	"url" : "../delete/$album.id",
+	"confirm" : true
+})
+##TODO: QT to add a derivative to the Album
+##TODO: QT to lend album
+
+#thumbnail($album.cover)
+
+#@entityDetails()
+
+## TODO: links
+
+#entityFieldLinkedModel('field.Album.series' $album.series)
+#entityFieldText('field.Album.identifyingName' $album.identifyingName)
+#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
+#entityFieldLinkedModel('field.Album.collection' $album.collection)
+## TODO: writers
+## TODO: artists
+## TODO: colorists
+## TODO: first edition & current edition (incl. special if equal)
+## TODO: wishlist
+## TODO: binding
+## TODO: size (W x H)
+## TODO: pages
+## TODO: prices
+## TODO: tags
+## TODO: borrower
+#entityFieldText('field.Album.isbn' $album.isbn)
+#entityFieldRichText('field.Album.summary', $album.summary)
+#entityFieldRichText('field.Album.comment', $album.comment)
+
+#end
+
+## TODO: list of derivatives
+## TODO: list of other images

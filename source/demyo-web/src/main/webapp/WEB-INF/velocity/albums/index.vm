@@ -16,7 +16,7 @@
 		#set ($lastSeries = -1)
 	
 		<div class="album">
-			<a href="./view/$album.id">$album.identifyingName</a>
+			<a href="./view/$album.id">$album.title</a>
 		</div>
 	#else
 		## Albums in a series
@@ -34,7 +34,7 @@
 		#set ($lastSeries = $album.series.id)
 		#set ($inSeries = true)
 		
-		<a href="./view/$album.id">$album.identifyingName</a><br>
+		<a href="./view/$album.id">$album.title</a><br>
 	#end
 
 #end

@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -26,7 +28,10 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "ALBUMS")
+@NamedEntityGraph(name = "Album.forEdition", attributeNodes = { @NamedAttributeNode("series"),
+		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover") })
 // TODO: prices
+// TODO: loans
 public class Album extends AbstractModel {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -156,7 +161,35 @@ public class Album extends AbstractModel {
 
 	@Override
 	public String getIdentifyingName() {
-		return getTitle();
+		StringBuilder sb = new StringBuilder();
+
+		if (cycle != null) {
+			sb.append(cycle);
+		}
+		if (number != null) {
+			if (sb.length() > 0) {
+				sb.append(".");
+			}
+			// TODO: investigate other ways to round a decimal if it has no actual decimals
+			if (number.compareTo(BigDecimal.valueOf(number.intValue())) == 0) {
+				sb.append(number.intValueExact());
+			} else {
+				sb.append(number);
+			}
+		}
+		if (numberSuffix != null) {
+			if (sb.length() > 0) {
+				sb.append(" - ");
+			}
+			sb.append(numberSuffix);
+		}
+
+		if (sb.length() > 0) {
+			sb.append(" ");
+		}
+		sb.append(title);
+
+		return sb.toString();
 	}
 
 	/**

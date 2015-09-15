@@ -6,6 +6,8 @@ import org.demyo.model.IModel;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -17,6 +19,16 @@ import org.springframework.data.repository.NoRepositoryBean;
  */
 @NoRepositoryBean
 public interface IModelRepo<M extends IModel> extends CrudRepository<M, Long> {
+	/**
+	 * Returns a model for edition. Repositories needing to fetch more entities for edition should override this
+	 * method and specify an {@link EntityGraph}.
+	 * 
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	public M findOneForEdition(long id);
+
 	@Override
 	List<M> findAll();
 

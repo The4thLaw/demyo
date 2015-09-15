@@ -60,11 +60,7 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public M getByIdForEdition(long id) {
-		// TODO: load all lazy associations
-		// not great: https://stackoverflow.com/questions/15359306/how-to-load-lazy-fetched-items-from-hibernate-jpa-in-my-controller
-		// looks good: https://stackoverflow.com/questions/29602386/how-does-the-fetchmode-work-in-spring-data-jpa
-		// http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.entity-graph
-		return getRepo().findOne(id);
+		return getRepo().findOneForEdition(id);
 	}
 
 	@Transactional(readOnly = true)

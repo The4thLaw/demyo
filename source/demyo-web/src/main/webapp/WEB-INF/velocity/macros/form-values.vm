@@ -69,3 +69,19 @@
 		#end
 	#end
 #end
+
+#macro(entityFieldLinkedModel $labelId $model)
+	#if($model)
+		## Auto-detect URL
+		#if ($model.class.simpleName == 'Collection')
+			#set ($baseUrl = "collections")
+		#end
+		#if ($model.class.simpleName == 'Publisher')
+			#set ($baseUrl = "publishers")
+		#end
+		#if ($model.class.simpleName == 'Series')
+			#set ($baseUrl = "series")
+		#end
+		#@entityField($labelId)$link.contextPath<a href="$link.contextPath/$baseUrl/view/${model.id}">$model.identifyingName</a>#end
+	#end
+#end
