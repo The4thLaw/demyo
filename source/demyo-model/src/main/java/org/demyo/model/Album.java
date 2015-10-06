@@ -14,13 +14,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.demyo.model.constraints.ISBN;
+import org.demyo.model.util.AuthorComparator;
+import org.demyo.model.util.IdentifyingNameComparator;
 
+import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -29,7 +31,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "ALBUMS")
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes = { @NamedAttributeNode("series"),
-		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover") })
+		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover"),
+		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
+		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("images") })
 // TODO: prices
 // TODO: loans
 public class Album extends AbstractModel {
@@ -129,28 +133,28 @@ public class Album extends AbstractModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"),
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	@OrderBy(value = "name asc")
+	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Tag> tags;
 
 	/** The {@link Author}s who wrote this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_writers", joinColumns = @JoinColumn(name = "album_id"),
 			inverseJoinColumns = @JoinColumn(name = "writer_id"))
-	@OrderBy(value = "name asc, fname asc")
+	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> writers;
 
 	/** The {@link Author}s who drew this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_artists", joinColumns = @JoinColumn(name = "album_id"),
 			inverseJoinColumns = @JoinColumn(name = "artist_id"))
-	@OrderBy(value = "name asc, fname asc")
+	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> artists;
 
 	/** The {@link Author}s who colored this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_colorists", joinColumns = @JoinColumn(name = "album_id"),
 			inverseJoinColumns = @JoinColumn(name = "colorist_id"))
-	@OrderBy(value = "name asc, fname asc")
+	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> colorists;
 
 	/** The {@link Image}s related to this Album. */
@@ -170,7 +174,7 @@ public class Album extends AbstractModel {
 			if (sb.length() > 0) {
 				sb.append(".");
 			}
-			// TODO: investigate other ways to round a decimal if it has no actual decimals
+			// TODO: investigate other ways to round a decimal if it has no actual decimals. Then, also apply it to view for width, height
 			if (number.compareTo(BigDecimal.valueOf(number.intValue())) == 0) {
 				sb.append(number.intValueExact());
 			} else {

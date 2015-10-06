@@ -1,0 +1,34 @@
+#setPageTitleCond($album.id 'title.edit.album', 'title.add.album')
+
+#@form()
+
+## TODO: reorder fields. Check with to see what makes the most sense...
+
+#inputHidden('album.id')
+#inputSelect('field.Album.series', 'album.series.id', $series, { "allowEmpty": true })
+#inputText('field.Album.title', 'album.title')
+#inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
+#inputSelect('field.Album.collection', 'album.collection.id', [], { })
+#inputSelectMultiple('field.Album.writers', 'album.writers', $authors)
+#inputSelectMultiple('field.Album.artists', 'album.artists', $authors)
+#inputSelectMultiple('field.Album.colorists', 'album.colorists', $authors)
+## TODO: first edition & current edition (incl. special if equal)
+#inputCheckbox('field.Album.wishlist', 'album.wishlist')
+#inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
+##entityFieldText('field.Album.size' "$album.width x $album.height")
+##entityFieldText('field.Album.pages' "$album.pages")
+## TODO: prices
+#inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
+## TODO: borrower
+#inputText('field.Album.isbn', 'album.isbn')
+#inputRichText('field.Album.summary', 'album.summary')
+#inputRichText('field.Album.comment', 'album.comment')
+#inputSelect('field.Album.cover', 'album.cover.id', $images, { "allowEmpty": true })
+#inputSelectMultiple('field.Album.images', 'album.images', $images)
+## TODO: list of derivatives
+
+#saveButtons
+
+## TODO: load collections with AJAX. Possibly using Spring Data REST ?
+
+#end

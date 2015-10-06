@@ -1,8 +1,6 @@
 package org.demyo.model.util;
 
-import java.text.Collator;
 import java.util.Comparator;
-import java.util.Locale;
 
 import org.demyo.model.Album;
 import org.demyo.model.Series;
@@ -10,14 +8,7 @@ import org.demyo.model.Series;
 /**
  * A {@link Comparator} allowing to sort {@link Album}s based on their order in a specific {@link Series}.
  */
-public class AlbumComparator implements Comparator<Album> {
-	private final Collator collator;
-
-	public AlbumComparator() {
-		// This relies on the French locale, like in the database. Should not be an issue in English at least.
-		collator = Collator.getInstance(Locale.FRENCH);
-	}
-
+public class AlbumComparator extends AbstractModelComparator<Album> {
 	@Override
 	public int compare(Album a1, Album a2) {
 		int comparison;
@@ -37,24 +28,11 @@ public class AlbumComparator implements Comparator<Album> {
 			return comparison;
 		}
 
-		comparison = collator.compare(a1.getTitle(), a2.getTitle());
+		comparison = nullSafeCollatingComparison(a1.getTitle(), a2.getTitle());
 		if (comparison != 0) {
 			return comparison;
 		}
-		// In case of equal everything, still distinguish them by ID to avoid omitting some results
-		return a1.getId().compareTo(a2.getId());
-	}
 
-	private static <T> int nullSafeComparison(Comparable<T> c1, T c2) {
-		if (c1 == null && c2 == null) {
-			return 0;
-		}
-		if (c1 == null) {
-			return -1;
-		}
-		if (c2 == null) {
-			return 1;
-		}
-		return c1.compareTo(c2);
+		return defaultComparison(a1, a2);
 	}
 }

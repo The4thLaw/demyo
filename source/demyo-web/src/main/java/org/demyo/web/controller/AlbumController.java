@@ -4,10 +4,16 @@ import java.util.Set;
 
 import org.demyo.model.Album;
 import org.demyo.model.Author;
+import org.demyo.model.Image;
 import org.demyo.model.Tag;
 import org.demyo.service.IAlbumService;
+import org.demyo.service.IAuthorService;
+import org.demyo.service.IBindingService;
+import org.demyo.service.IImageService;
 import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IPublisherService;
 import org.demyo.service.ISeriesService;
+import org.demyo.service.ITagService;
 
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +29,16 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 	private IAlbumService service;
 	@Autowired
 	private ISeriesService seriesService;
+	@Autowired
+	private IPublisherService publisherService;
+	@Autowired
+	private IAuthorService authorService;
+	@Autowired
+	private IBindingService bindingService;
+	@Autowired
+	private ITagService tagService;
+	@Autowired
+	private IImageService imageService;
 
 	/**
 	 * Default constructor.
@@ -30,6 +46,8 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 	public AlbumController() {
 		super(Album.class, "albums", "album");
 	}
+
+	// TODO: pre-fill from last album for addition of one to a specific series
 
 	@Override
 	protected IModelServiceNG<Album> getService() {
@@ -39,6 +57,11 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 	@Override
 	protected void fillModelForEdition(Album entity, Model model) {
 		model.addAttribute("series", seriesService.findAll());
+		model.addAttribute("publishers", publisherService.findAll());
+		model.addAttribute("authors", authorService.findAll());
+		model.addAttribute("bindings", bindingService.findAll());
+		model.addAttribute("tags", tagService.findAll());
+		model.addAttribute("images", imageService.findAll());
 	}
 
 	@InitBinder
@@ -47,17 +70,10 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 		registerCollectionEditor(binder, Set.class, "artists", Author.class);
 		registerCollectionEditor(binder, Set.class, "colorists", Author.class);
 		registerCollectionEditor(binder, Set.class, "tags", Tag.class);
+		registerCollectionEditor(binder, Set.class, "images", Image.class);
 	}
 
-	//@Autowired
-	//private IAuthorDao authorDao;
-	/*@RequestMapping("/")
-	public String list() {
-		//authorDao.findAuthors();
-		return "albums/list";
-	}
-
-	@RequestMapping("/ajax")
+	/*@RequestMapping("/ajax")
 	public String listAjax(Model model) {
 		setLayoutAjax(model);
 		return "albums/list";

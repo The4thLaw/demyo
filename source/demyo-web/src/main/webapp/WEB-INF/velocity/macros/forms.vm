@@ -1,3 +1,6 @@
+## TODO: input for numbers, incl. support for decimals. Use the HTML5 type
+## TODO: input for dates, using the existing date picker
+
 #macro(form)
 <form method="post" enctype="multipart/form-data">
 	$javascript.load("Demyo.Forms")
