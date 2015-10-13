@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -38,9 +36,7 @@ public class Tag extends AbstractModel {
 	private String bgColour;
 
 	/** The Albums tagged with this Tag. */
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(
-			name = "album_id"))
+	@ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
 	private List<Album> taggedAlbums;
 
 	@Override
@@ -119,5 +115,14 @@ public class Tag extends AbstractModel {
 	 */
 	public List<Album> getTaggedAlbums() {
 		return taggedAlbums;
+	}
+
+	/**
+	 * Sets the Albums tagged with this Tag.
+	 * 
+	 * @param taggedAlbums the new Albums tagged with this Tag
+	 */
+	public void setTaggedAlbums(List<Album> taggedAlbums) {
+		this.taggedAlbums = taggedAlbums;
 	}
 }
