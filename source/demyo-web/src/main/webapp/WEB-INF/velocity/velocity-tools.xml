@@ -5,11 +5,10 @@
 		<tool class="org.apache.velocity.tools.generic.RenderTool" />
 		<tool class="org.demyo.web.velocity.tools.PagingTool" />
 		<tool class="org.demyo.web.velocity.tools.RteTool" />
+		<tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
 	</toolbox>
 	<toolbox scope="request">
 		<tool class="org.apache.velocity.tools.generic.ContextTool" />
-		<!-- TODO: check if this can be scoped to something else -->
-		<tool class="org.apache.velocity.tools.generic.DateTool" />
 		<tool class="org.apache.velocity.tools.view.LinkTool" />
 		<tool class="org.demyo.web.velocity.tools.JavascriptTool" />
 		<tool class="org.demyo.web.velocity.tools.QuickTasksTool" />

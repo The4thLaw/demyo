@@ -282,8 +282,8 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 
 			@Override
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			// TODO: check if Spring signature is correct
-			protected Collection createCollection(Class<? extends Collection> clazz, int size) {
+			// Also warnings in CustomCollectionEditor, do don't mind the @SuppressWarnings
+			protected Collection<Object> createCollection(Class<? extends Collection> clazz, int size) {
 				if (SortedSet.class.isAssignableFrom(clazz)) {
 					return new TreeSet(comparator);
 				}

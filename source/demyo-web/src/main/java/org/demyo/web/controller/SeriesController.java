@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author $Author: xr $
  * @version $Revision: 1071 $
  */
-// TODO: quicksearch and help
 @Controller
 @RequestMapping("/series")
 public class SeriesController extends AbstractModelController<Series> {

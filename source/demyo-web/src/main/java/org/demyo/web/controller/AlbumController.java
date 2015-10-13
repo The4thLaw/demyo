@@ -50,8 +50,6 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 		super(Album.class, "albums", "album");
 	}
 
-	// TODO: pre-fill from last album for addition of one to a specific series
-
 	@Override
 	protected IModelServiceNG<Album> getService() {
 		return service;
