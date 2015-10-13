@@ -1,0 +1,47 @@
+#setPageTitleParams('title.view.derivative' $derivative.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-derivative",
+	"url" : "../edit/$derivative.id"
+})
+$quickTasks.add({
+	"id" : "qt-delete-derivative",
+	"url" : "../delete/$derivative.id",
+	"confirm" : true
+})
+
+#@entityDetails()
+
+##entityFieldText('field.Derivative.identifyingName' $derivative.identifyingName)
+#entityFieldLinkedModel('field.Derivative.series' $derivative.series) ## TODO: figure out why the simpleName returns a proxy, breaking the link
+#entityFieldLinkedModel('field.Derivative.album' $derivative.album)
+#entityFieldLinkedModel('field.Derivative.artist' $derivative.artist)
+#entityFieldLinkedModel('field.Derivative.type' $derivative.type)
+#entityFieldText('field.Derivative.colours' $derivative.colours)
+#entityFieldLinkedModel('field.Derivative.source' $derivative.source)
+#if ($derivative.number && $derivative.total)
+	#entityFieldText('field.Derivative.numberOverTotal' "$derivative.number / $derivative.total")
+#elseif ($derivative.number)
+	#entityFieldText('field.Derivative.number' $derivative.number)
+#elseif ($derivative.total)
+	#entityFieldText('field.Derivative.number' $derivative.total)
+#end
+## TODO: signed
+## TODO: authors_copy
+## TODO: restricted_sale
+## TODO: number format for size
+#if ($derivative.width && $derivative.height && $derivative.depth)
+	#entityFieldText('field.Derivative.size' "$derivative.width x $derivative.height x $derivative.depth")
+#elseif ($derivative.width && $derivative.height)
+	#entityFieldText('field.Derivative.size' "$derivative.width x $derivative.height")
+#else
+	#entityFieldText('field.Derivative.width' $derivative.width)
+	#entityFieldText('field.Derivative.height' $derivative.height)
+	#entityFieldText('field.Derivative.depth' $derivative.depth)
+#end
+## TODO: purchase price, acquisition date
+#entityFieldRichText('field.Derivative.description', $derivative.description)
+
+#end
+
+##TODO: list of images

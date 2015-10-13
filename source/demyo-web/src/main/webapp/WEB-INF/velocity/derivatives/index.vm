@@ -1,0 +1,7 @@
+#setPageTitle('title.index.derivatives')
+
+## TODO: rework this in material design with images
+#textList($derivativeList "identifyingName" "identifyingName" "./view/" false)
+
+$paging.pageLinks($derivativeList, $request, $javascript)
+$paging.letters($request)

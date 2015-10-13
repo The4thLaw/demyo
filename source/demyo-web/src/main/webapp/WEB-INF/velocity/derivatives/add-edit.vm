@@ -1,0 +1,28 @@
+#setPageTitleCond($derivative.id 'title.edit.derivative', 'title.add.derivative')
+
+#@form()
+
+#inputHidden('derivative.id')
+#inputSelect('field.Derivative.series', 'derivative.series.id', $series, { "allowEmpty": true })
+## TODO: load albums using AJAX (possibly using Spring Data REST?)
+#inputSelect('field.Derivative.album', 'derivative.album.id', [], { })
+#inputSelect('field.Derivative.artist', 'derivative.artist.id', $authors, { "allowEmpty": true })
+#inputSelect('field.Derivative.source', 'derivative.source.id', $sources, { "allowEmpty": true })
+#inputSelect('field.Derivative.type', 'derivative.type.id', $types, { })
+#inputFloat('field.Derivative.colours', 'derivative.colours')
+#inputFloat('field.Derivative.number', 'derivative.number')
+#inputFloat('field.Derivative.total', 'derivative.total')
+#inputCheckbox('field.Derivative.signed', 'derivative.signed')
+#inputCheckbox('field.Derivative.authors_copy', 'derivative.authors_copy')
+#inputCheckbox('field.Derivative.restricted_sale', 'derivative.restricted_sale')
+#inputFloat('field.Derivative.width', 'derivative.width')
+#inputFloat('field.Derivative.height', 'derivative.height')
+#inputFloat('field.Derivative.depth', 'derivative.depth') 
+#inputDate('field.Deri.vative.acquisitionDate', 'derivative.acquisitionDate')
+#inputFloat('field.Derivative.purchasePrice', 'derivative.purchasePrice') ## TODO: append currency
+#inputRichText('field.Derivative.description', 'derivative.description')
+#inputSelectMultiple('field.Derivative.images', 'derivative.images', $images)
+
+#saveButtons
+
+#end

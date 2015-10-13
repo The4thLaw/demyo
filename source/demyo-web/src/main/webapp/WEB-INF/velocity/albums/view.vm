@@ -26,11 +26,16 @@ $quickTasks.add({
 ## TODO: first edition & current edition (incl. special if equal)
 ## TODO: wishlist
 #entityFieldLinkedModel('field.Album.binding' $album.binding)
+## TODO: number format for size
 #if ($album.width && $album.height)
 	#entityFieldText('field.Album.size' "$album.width x $album.height")
+#elseif ($album.width)
+	#entityFieldText('field.Album.width' $album.width)
+#elseif ($album.height)
+	#entityFieldText('field.Album.height' $album.height)
 #end
 #entityFieldText('field.Album.pages' $album.pages)
-## TODO: prices
+## TODO: prices, purchase price, acquisition date
 #entityFieldCsvList('field.Album.tags', $album.tags, '../../tags/view/')
 ## TODO: borrower
 #entityFieldText('field.Album.isbn' $album.isbn)

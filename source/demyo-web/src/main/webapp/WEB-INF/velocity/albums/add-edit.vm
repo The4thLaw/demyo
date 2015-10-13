@@ -11,6 +11,7 @@
 #inputText('field.Album.numberSuffix', 'album.numberSuffix')
 #inputText('field.Album.title', 'album.title')
 #inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
+## TODO: load collections with AJAX. Possibly using Spring Data REST ?
 #inputSelect('field.Album.collection', 'album.collection.id', [], { })
 #inputSelectMultiple('field.Album.writers', 'album.writers', $authors)
 #inputSelectMultiple('field.Album.artists', 'album.artists', $authors)
@@ -22,6 +23,7 @@
 #inputFloat('field.Album.width', 'album.width')
 #inputFloat('field.Album.height', 'album.height')
 #inputInteger('field.Album.pages', 'album.pages')
+#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
 #inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
 ## TODO: price history
 #inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
@@ -35,7 +37,6 @@
 
 #saveButtons
 
-## TODO: load collections with AJAX. Possibly using Spring Data REST ?
 ## TODO: button to copy the first edition date to the current edition date
 
 #end

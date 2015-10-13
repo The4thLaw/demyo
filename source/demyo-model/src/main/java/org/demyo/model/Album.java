@@ -26,7 +26,7 @@ import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * The Class Album.
+ * Represents Albums. Albums are the core elements in Demyo. They may belong to a {@link Series} or not.
  */
 @Entity
 @Table(name = "ALBUMS")
@@ -121,7 +121,7 @@ public class Album extends AbstractModel {
 	@JoinColumn(name = "cover_id")
 	private Image cover;
 
-	/** The summary of the album. */
+	/** The summary of the Album. */
 	@Column(name = "summary")
 	private String summary;
 
@@ -189,7 +189,7 @@ public class Album extends AbstractModel {
 		}
 
 		if (sb.length() > 0) {
-			sb.append(" ");
+			sb.append(" - ");
 		}
 		sb.append(title);
 

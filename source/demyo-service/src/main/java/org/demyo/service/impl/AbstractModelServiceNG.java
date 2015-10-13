@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.IModel;
+import org.demyo.model.util.DefaultOrder;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelServiceNG;
 
@@ -16,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,10 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	private IConfigurationService configurationService;
 
 	private final Class<M> modelClass;
+	/**
+	 * The default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}.
+	 */
+	private final Order[] defaultOrder;
 
 	/**
 	 * Creates an abstract model service.
@@ -41,6 +47,23 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	 */
 	protected AbstractModelServiceNG(Class<M> modelClass) {
 		this.modelClass = modelClass;
+
+		// Detect default order
+		DefaultOrder defaultOrderAnnotation = modelClass.getAnnotation(DefaultOrder.class);
+		if (defaultOrderAnnotation != null && defaultOrderAnnotation.expression().length > 0) {
+			org.demyo.model.util.DefaultOrder.Order[] defaultOrderExpression = defaultOrderAnnotation.expression();
+
+			defaultOrder = new Order[defaultOrderExpression.length];
+
+			// Convert the default order to expressions that can be handled later. Preserve the order of the annotation.
+			for (int i = 0; i < defaultOrderExpression.length; i++) {
+				org.demyo.model.util.DefaultOrder.Order order = defaultOrderExpression[i];
+				defaultOrder[i] = new Order(order.asc() ? Direction.ASC : Direction.DESC, order.property());
+			}
+		} else {
+			defaultOrder = null;
+		}
+		LOGGER.debug("Default order set for {}", modelClass);
 	}
 
 	/**
@@ -74,7 +97,8 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	@Transactional(readOnly = true)
 	@Override
 	public List<M> findAll() {
-		return getRepo().findAll();
+		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
+		return getRepo().findAll(sort);
 	}
 
 	/**
@@ -90,6 +114,9 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 		// Adjust the page number: Spring Data counts from 0
 		currentPage--;
 
+		if (orders.length == 0) {
+			orders = defaultOrder;
+		}
 		Sort sort = orders.length == 0 ? null : new Sort(orders);
 		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
 				.getPageSizeForText(), sort);
@@ -127,5 +154,14 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	@Override
 	public void delete(long id) {
 		getRepo().delete(id);
+	}
+
+	/**
+	 * Gets the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}.
+	 * 
+	 * @return the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}
+	 */
+	protected Order[] getDefaultOrder() {
+		return defaultOrder;
 	}
 }

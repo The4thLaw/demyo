@@ -170,7 +170,7 @@ CREATE TABLE derivative_types (
 
 CREATE TABLE derivatives (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	series_id INT UNSIGNED NOT NULL,
+	series_id INT UNSIGNED NULL, /* Since Albums may not have a Series, Derivatives could as well */ 
 	album_id INT UNSIGNED NULL,
 	artist_id INT UNSIGNED NULL,
 	derivative_type_id INT UNSIGNED NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE derivatives (
 	width float UNSIGNED NULL,
 	height float UNSIGNED NULL,
 	depth float UNSIGNED NULL,
-	purchase_date DATE NULL,
+	acquisition_date DATE NULL,
 	purchase_price FLOAT NULL,
 	CONSTRAINT fk_derivatives_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE RESTRICT,
 	CONSTRAINT fk_derivatives_albums FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE SET NULL,

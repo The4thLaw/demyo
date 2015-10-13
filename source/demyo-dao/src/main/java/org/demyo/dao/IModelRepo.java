@@ -6,6 +6,7 @@ import org.demyo.model.IModel;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -29,8 +30,13 @@ public interface IModelRepo<M extends IModel> extends CrudRepository<M, Long> {
 	@Query("select x from #{#entityName} x where id=?1")
 	public M findOneForEdition(long id);
 
-	@Override
-	List<M> findAll();
+	/**
+	 * Returns a list of entities in the requested order.
+	 * 
+	 * @param sort The order.
+	 * @return a list of entities
+	 */
+	List<M> findAll(Sort sort);
 
 	/**
 	 * Returns a {@link Slice} of entities meeting the paging restriction provided in the {@code Pageable} object.

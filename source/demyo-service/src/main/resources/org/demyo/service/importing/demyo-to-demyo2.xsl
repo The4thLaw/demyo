@@ -423,6 +423,9 @@
 					<xsl:when test="name() = 'signed' or name() = 'authors_copy' or name() = 'restricted_sale'"><!-- Convert boolean -->
 						<xsl:attribute name="{name(.)}"><xsl:value-of select="boolean(number(.))"/></xsl:attribute>
 					</xsl:when>
+					<xsl:when test="name() = 'purchase_date'"><!-- Convert name -->
+						<xsl:attribute name="acquisition_date"><xsl:value-of select="."/></xsl:attribute>
+					</xsl:when>
 					<!-- Ignore meta, to split, and obsolete -->
 					<xsl:when test="name() != 'meta_name' and name() != 'images' and name() != 'price'">
 						<xsl:attribute name="{name(.)}"><xsl:value-of select="."/></xsl:attribute>
