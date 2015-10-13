@@ -5,9 +5,14 @@ Demyo is a Comic Manager intented for local usage trough a Web interface.
 This project is the Java port / upgrade of the existing PHP software available at http://www.demyo.org/en/ .
 
 ## Contributing
-At the moment, I do not accept contributions. I don't have time to manage them, and the project is not yet Open Source.
+At the moment, I do not accept contributions. I don't have time to manage them, and the software is not at a sufficient point in its development in my opinion.
+
+Eventually, I could accept merge requests.
 
 ## License
-Right now, this project is not Free or Open Source. The Belgian copyright law applies.
+Demyo Comic Manager
+Copyright (C) 2007-2015 Xavier Dalem
 
-Once a first version is ready for release, it will be published under the GPLv3.
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation; version 3 of the License.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A² PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details. You should have received a copy of the GNU Affero General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
