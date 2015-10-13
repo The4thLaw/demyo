@@ -1,6 +1,11 @@
 package org.demyo.web.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +16,7 @@ import org.demyo.service.IModelServiceNG;
 
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Slice;
 import org.springframework.ui.Model;
@@ -184,6 +190,7 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 	private void initBinder(PropertyEditorRegistry binder) {
 		StringTrimmerEditor stringtrimmer = new StringTrimmerEditor(true);
 		binder.registerCustomEditor(String.class, stringtrimmer);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 
 	// Utilities used by the stubs
@@ -236,6 +243,26 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 	 */
 	protected <C extends Collection<?>> void registerCollectionEditor(PropertyEditorRegistry binder,
 			Class<C> collectionClass, String propertyPath, final Class<? extends IModel> collectionModelClass) {
+		registerCollectionEditor(binder, collectionClass, propertyPath, collectionModelClass, null);
+	}
+
+	/**
+	 * Registers a {@link CustomCollectionEditor} to translate a multiple select bind value into a sorted
+	 * collection of the proper model elements.
+	 * 
+	 * @param binder The binder to register the editor into.
+	 * @param collectionClass The class of the collection.
+	 * @param propertyPath The path of the property to convert.
+	 * @param collectionModelClass The class of the model in the collection.
+	 * @param <C> The class of the collection.
+	 */
+	protected <C extends Collection<?>> void registerCollectionEditor(PropertyEditorRegistry binder,
+			final Class<C> collectionClass, String propertyPath,
+			final Class<? extends IModel> collectionModelClass, final Comparator<?> comparator) {
+		if (collectionClass.isInstance(SortedSet.class) && comparator == null) {
+			throw new NullPointerException("comparator cannot be null if the collection is sorted");
+		}
+
 		binder.registerCustomEditor(collectionClass, propertyPath, new CustomCollectionEditor(collectionClass) {
 			@Override
 			protected Object convertElement(Object element) {
@@ -251,6 +278,16 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 					model.setId(id);
 				}
 				return model;
+			}
+
+			@Override
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			// TODO: check if Spring signature is correct
+			protected Collection createCollection(Class<? extends Collection> clazz, int size) {
+				if (SortedSet.class.isAssignableFrom(clazz)) {
+					return new TreeSet(comparator);
+				}
+				return super.createCollection(clazz, size);
 			}
 		});
 	}

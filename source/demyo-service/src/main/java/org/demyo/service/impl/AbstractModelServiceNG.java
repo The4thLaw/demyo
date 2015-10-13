@@ -106,12 +106,12 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 				// This is a standard getter method for a linked model
 				try {
 					IModel other = (IModel) meth.invoke(model);
-					if (other.getId() == null) {
+					if (other != null && other.getId() == null) {
 						Method setter = modelClass.getMethod(meth.getName().replaceFirst("get", "set"),
 								meth.getReturnType());
 						setter.invoke(model, new Object[] { null });
+						LOGGER.debug("Cleared linked model: {}.{}()", modelClass.getName(), meth.getName());
 					}
-					LOGGER.debug("Cleared linked model: {}.{}()", modelClass.getName(), meth.getName());
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
 						| NoSuchMethodException | SecurityException e) {
 					LOGGER.warn("Failed to clear linked model", e);

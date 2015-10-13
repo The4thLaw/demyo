@@ -1,11 +1,14 @@
 package org.demyo.web.controller;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
 import org.demyo.model.Tag;
+import org.demyo.model.util.AuthorComparator;
+import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IBindingService;
@@ -66,10 +69,11 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 
 	@InitBinder
 	private void initBinder(PropertyEditorRegistry binder) throws Exception {
-		registerCollectionEditor(binder, Set.class, "writers", Author.class);
-		registerCollectionEditor(binder, Set.class, "artists", Author.class);
-		registerCollectionEditor(binder, Set.class, "colorists", Author.class);
-		registerCollectionEditor(binder, Set.class, "tags", Tag.class);
+		AuthorComparator authComp = new AuthorComparator();
+		registerCollectionEditor(binder, SortedSet.class, "writers", Author.class, authComp);
+		registerCollectionEditor(binder, SortedSet.class, "artists", Author.class, authComp);
+		registerCollectionEditor(binder, SortedSet.class, "colorists", Author.class, authComp);
+		registerCollectionEditor(binder, SortedSet.class, "tags", Tag.class, new IdentifyingNameComparator());
 		registerCollectionEditor(binder, Set.class, "images", Image.class);
 	}
 

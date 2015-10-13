@@ -6,18 +6,24 @@
 
 #inputHidden('album.id')
 #inputSelect('field.Album.series', 'album.series.id', $series, { "allowEmpty": true })
+#inputInteger('field.Album.cycle', 'album.cycle')
+#inputFloat('field.Album.number', 'album.number')
+#inputText('field.Album.numberSuffix', 'album.numberSuffix')
 #inputText('field.Album.title', 'album.title')
 #inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
 #inputSelect('field.Album.collection', 'album.collection.id', [], { })
 #inputSelectMultiple('field.Album.writers', 'album.writers', $authors)
 #inputSelectMultiple('field.Album.artists', 'album.artists', $authors)
 #inputSelectMultiple('field.Album.colorists', 'album.colorists', $authors)
-## TODO: first edition & current edition (incl. special if equal)
+#inputDate('field.Album.firstEditionDate', 'album.firstEditionDate')
+#inputDate('field.Album.currentEditionDate', 'album.currentEditionDate')
 #inputCheckbox('field.Album.wishlist', 'album.wishlist')
 #inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
-##entityFieldText('field.Album.size' "$album.width x $album.height")
-##entityFieldText('field.Album.pages' "$album.pages")
-## TODO: prices
+#inputFloat('field.Album.width', 'album.width')
+#inputFloat('field.Album.height', 'album.height')
+#inputInteger('field.Album.pages', 'album.pages')
+#inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
+## TODO: price history
 #inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
 ## TODO: borrower
 #inputText('field.Album.isbn', 'album.isbn')
@@ -30,5 +36,6 @@
 #saveButtons
 
 ## TODO: load collections with AJAX. Possibly using Spring Data REST ?
+## TODO: button to copy the first edition date to the current edition date
 
 #end

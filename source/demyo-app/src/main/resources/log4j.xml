@@ -38,7 +38,7 @@
 		<level value="trace" />
 		<appender-ref ref="console" />
 	</logger>-->
-
+	
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />

@@ -1,6 +1,3 @@
-## TODO: input for numbers, incl. support for decimals. Use the HTML5 type
-## TODO: input for dates, using the existing date picker
-
 #macro(form)
 <form method="post" enctype="multipart/form-data">
 	$javascript.load("Demyo.Forms")
@@ -66,6 +63,25 @@
 			<input type="checkbox" id="${fieldId}_colour_remover" data-for="$fieldId" />
 			<label for="${fieldId}_colour_remover">#_('special.form.noColour')</label>
 		</div>
+	#end
+#end
+
+#macro(inputInteger $labelId $path)
+	#@formField($labelId, $path)
+		<input type="number" step="1" id="$fieldId" name="$status.expression" value="$!status.value" class="integer #if($hasErrors)error#end" />
+	#end
+#end
+
+#macro(inputFloat $labelId $path)
+	#@formField($labelId, $path)
+		<input type="number" step="any" id="$fieldId" name="$status.expression" value="$!status.value" class="float #if($hasErrors)error#end" />
+	#end
+#end
+
+#macro(inputDate $labelId $path)
+	## TODO: polyfill if not supported
+	#@formField($labelId, $path)
+		<input type="date" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
 	#end
 #end
 

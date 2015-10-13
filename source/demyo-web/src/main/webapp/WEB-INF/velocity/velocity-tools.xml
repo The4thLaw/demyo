@@ -8,6 +8,8 @@
 	</toolbox>
 	<toolbox scope="request">
 		<tool class="org.apache.velocity.tools.generic.ContextTool" />
+		<!-- TODO: check if this can be scoped to something else -->
+		<tool class="org.apache.velocity.tools.generic.DateTool" />
 		<tool class="org.apache.velocity.tools.view.LinkTool" />
 		<tool class="org.demyo.web.velocity.tools.JavascriptTool" />
 		<tool class="org.demyo.web.velocity.tools.QuickTasksTool" />
