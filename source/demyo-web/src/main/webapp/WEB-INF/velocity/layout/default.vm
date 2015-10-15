@@ -9,14 +9,37 @@ $quickTasks.prepare($javascript)
 #end
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/electron.less">
+		<!--<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/electron.less">-->
+		<link rel="stylesheet" type="text/css" href="$link.contextPath/css/material.blue-pink.min.css">
+		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/demyo.blue-pink.less">
 		<script type="text/javascript" src="$link.contextPath/js/less-1.3.1.js"></script>
+		<script type="text/javascript" src="$link.contextPath/js/material.min.js"></script>
 #foreach($source in $javascript.scriptSources)
 		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
 #end
 	</head>
-	<body>
-		<header>#if($!pageTitle)$pageTitle#end</header>
+	<!-- TODO: make header sticky -->
+	<body class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<span class="mdl-layout-title">#if($!pageTitle)$pageTitle#end</span>
+				<!-- Add spacer, to align navigation to the right -->
+				<div class="mdl-layout-spacer"></div>
+				<!-- Quick links -->
+				<nav class="mdl-navigation mdl-layout--large-screen-only">
+					<a class="mdl-navigation__link" href="$link.contextPath/albums/">TODO</a>
+				</nav>
+				<!-- Qucik search -->
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+						?
+					</label>
+					<div class="mdl-textfield__expandable-holder">
+  						<input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp" />
+					</div>
+  				</div>
+			</div>
+		</header>
 		<nav role="navigation">
 			<ul id="menu" role="menu">
 				<li id="menu-home"><a href="$link.contextPath/">#_('menu.main.home')</a></li>
