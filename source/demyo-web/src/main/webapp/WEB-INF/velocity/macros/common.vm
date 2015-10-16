@@ -13,3 +13,7 @@
 		#setPageTitle($labelIdIfFalse)
 	#end
 #end
+
+#macro(menuItem $id $urlFromRoot $labelId)
+<a id="$id" href="$link.contextPath/$urlFromRoot" class="mdl-navigation__link">#_("$labelId")</a>##
+#end

@@ -18,9 +18,9 @@ $quickTasks.prepare($javascript)
 		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
 #end
 	</head>
-	<!-- TODO: make header sticky -->
 	<body class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
+			<div class="mdl-layout__drawer-button"><i class="fa fa-bars"></i></div>
 			<div class="mdl-layout__header-row">
 				<span class="mdl-layout-title">#if($!pageTitle)$pageTitle#end</span>
 				<!-- Add spacer, to align navigation to the right -->
@@ -29,18 +29,39 @@ $quickTasks.prepare($javascript)
 				<nav class="mdl-navigation mdl-layout--large-screen-only">
 					<a class="mdl-navigation__link" href="$link.contextPath/albums/">TODO</a>
 				</nav>
-				<!-- Qucik search -->
+				<!-- Quick search -->
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-					<label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-field" title="#_('layout.quick_search')">
 						?
 					</label>
 					<div class="mdl-textfield__expandable-holder">
-  						<input class="mdl-textfield__input" type="text" name="sample" id="fixed-header-drawer-exp" />
+  						<input class="mdl-textfield__input" type="text" id="quicksearch-field" placeholder="#_('layout.quick_search.hint')" />
 					</div>
   				</div>
 			</div>
 		</header>
-		<nav role="navigation">
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">#_('menu.title')</span>
+			<nav class="mdl-navigation dem-app-menu">
+				#menuItem('menu-home', '', 'menu.main.home', 'fa-home')
+				<div class="dem-app-menu__title" id"menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.main.albums')</div>
+				<div class="dem-app-menu__section" id="menu-section-albums">
+					## TODO: icons (maybe foresee way for + to overlap regular icon?)
+					#menuItem('menu-list-albums', 'albums/', 'menu.albums.browse', 'comment-o')
+					## TODO: use tabs to go to cover list at albums/covers/ _('menu.albums.browse_covers')
+					#menuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', '')
+					#menuItem('menu-add-album', 'albums/add', 'menu.albums.add', '')
+					#menuItem('menu-list-series', 'series/', 'menu.series.browse', '')
+					#menuItem('menu-add-series', 'series/add', 'menu.series.add', '')
+					#menuItem('menu-list-tags', 'tags/', 'menu.tags.browse', '')
+					#menuItem('menu-list-bindings', 'bindings/', 'menu.bindings.browse', '')
+					#menuItem('menu-add-binding', 'bindings/add', 'menu.bindings.add', '')
+				</div>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div id="page-content">
+			<nav role="navigation">
 			<ul id="menu" role="menu">
 				<li id="menu-home"><a href="$link.contextPath/">#_('menu.main.home')</a></li>
 				<li id="menu-albums"><a href="$link.contextPath/albums/">#_('menu.main.albums')</a>
@@ -93,10 +114,6 @@ $quickTasks.prepare($javascript)
 				</li>
 			</ul>
 		</nav>
-		<div id="quicksearch">
-			<label for="quicksearch-field">#_('layout.quick_search')</label>
-			<input type="text" id="quicksearch-field" placeholder="#_('layout.quick_search.hint')" />
-		</div>
 		<div id="page">
 			$quickTasks.list()
 			<div id="content">
@@ -106,7 +123,8 @@ $quickTasks.prepare($javascript)
 		<footer>
 			Demyo v2.0.0-alpha1
 		</footer>
-		
+			</div>
+		</main>
 #if ($javascript.isLoaded("TinyMCE"))
 		<script type="text/javascript">
 			demyoTinyMCEInit('#_("javascript.l10n.tinyMCE")');
