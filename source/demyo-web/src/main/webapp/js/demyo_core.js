@@ -47,42 +47,19 @@ var demyo = {};
 	
 	demyo.registeredShortcuts = {};
 	demyo.registerShortcuts = function () {
-		/*$('[data-dem-shortcut]').each(function () {
-			var trigger = $(this);
-			$(document).bind('keydown', trigger.data('dem-shortcut'), function () {
-				alert('click');
-				// Check if a colorbox is currently active. If so, Ignore the shortcut
-				var box = $('div#colorbox');
-				if (box.length > 0 && box.css('display') != 'none')
-					return;
-				
-				alert(trigger.get(0));
-				trigger.click();
-			});
-		});*/
 		$('[data-dem-shortcut]').each(function () {
 			var trigger = $(this);
 			demyo.registeredShortcuts['key_' + trigger.data('dem-shortcut')] = trigger;
 		});
-		/*function jumpToPage(evt) {
-			
-			
-			var url = null;
-			if (evt.data.keys === 'left') {
-				url = $('#page-link-prev').attr('href');
-			} else if (evt.data.keys === 'right') {
-				url = $('#page-link-next').attr('href');
-			}
-			if (url != null && typeof(url) !== 'undefined') {
-				window.location = url;			
-			}
-			
-		}
-		$(document).bind('keydown', 'left', jumpToPage);
-		$(document).bind('keydown', 'right', jumpToPage);*/
 		$(document).on('keydown', function (evt) {
 			if (evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) {
 				// always ignore combinations, we don't support them at the moment
+				return true;
+			}
+			
+			var target = $(evt.target);
+			if (target.is('input,textarea,select,option')) {
+				// Always ignore events in input fields
 				return true;
 			}
 			
