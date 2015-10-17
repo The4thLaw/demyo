@@ -3,41 +3,71 @@
 ## This is a special index since we need to group everything by series
 #set ($lastSeries = -1)
 #set ($inSeries = false)
+#set ($lastFirstLetter = '/')
+<div class="dem-card-list">
 #foreach ($album in $albumList)
 
+	## Split by first letter
+	#if (!$album.series)
+		#set ($firstLetter = $paging.getFirstLetter($album.title))
+	#else
+		#set ($firstLetter = $paging.getFirstLetter($album.series.name))
+	#end
+			
+	#if ($firstLetter != $lastFirstLetter)
+		## If in a series, close if
+		#if ($inSeries)
+			## Close pending series
+			#set ($inSeries = false)
+				</ul>
+			</div>
+		#end
+		
+		## Close general list and start a new one
+		</div>
+		<div class="dem-card-list__separator">$firstLetter</div>
+		<div class="dem-card-list">
+		#set ($lastFirstLetter = $firstLetter)
+	#end
+
+	## Show actual data
 	#if (!$album.series)
 		## Single albums
 		
 		#if ($inSeries)
 			## Close pending series
 			#set ($inSeries = false)
+				</ul>
 			</div>
 		#end
 		#set ($lastSeries = -1)
 	
-		<div class="album">
-			<a href="./view/$album.id">$album.title</a>
+		<div class="mdl-card mdl-shadow--2dp dem-model-card">
+			<a class="dem-model-card__title" href="./view/$album.id">$album.title</a>
 		</div>
 	#else
 		## Albums in a series
 		
 		#if ($inSeries && $lastSeries != $album.series.id)
 			## Close the previous series
+				</ul>
 			</div>
 			#set ($inSeries = false)
 		#end
 		#if (!$inSeries)
 			## Open a new series
-			<div class="series">
-				<h2>$album.series.identifyingName</h2>
+			<div class="mdl-card mdl-shadow--2dp dem-model-card">
+				<a class="dem-model-card__title" href="../series/view/$album.series.id">$album.series.identifyingName</a>
+				<ul class="dem-model-card__dependencies">
 		#end
 		#set ($lastSeries = $album.series.id)
 		#set ($inSeries = true)
 		
-		<a href="./view/$album.id">$album.title</a><br>
+		<li><a href="./view/$album.id">$album.title</a></li>
 	#end
 
 #end
+</div>
 
 #if ($inSeries)
 	## Close any pending series

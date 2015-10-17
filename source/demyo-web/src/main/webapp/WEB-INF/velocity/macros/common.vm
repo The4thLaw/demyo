@@ -14,6 +14,6 @@
 	#end
 #end
 
-#macro(menuItem $id $urlFromRoot $labelId)
-<a id="$id" href="$link.contextPath/$urlFromRoot" class="mdl-navigation__link">#_("$labelId")</a>##
+#macro(menuItem $id $urlFromRoot $labelId $iconClass)
+<a id="$id" href="$link.contextPath/$urlFromRoot" class="mdl-navigation__link">#if($iconClass != '')<i class="fa fa-$iconClass"></i>#end#_("$labelId")</a>##
 #end

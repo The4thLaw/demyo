@@ -88,7 +88,8 @@ public class PagingTool {
 	 */
 	public String pageLinks(Page<?> list, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
-		return pageLinks(list.getNumber() + 1, list.getTotalPages(), request, jsTool);
+		//return pageLinks(list.getNumber() + 1, list.getTotalPages(), request, jsTool);
+		return pageLinks((Slice<?>) list, request, jsTool);
 	}
 
 	private String pageLinks(int current, int max, HttpServletRequest request, JavascriptTool jsTool)
@@ -126,8 +127,6 @@ public class PagingTool {
 			nextLink = " <a id=\"page-link-next\" href=\"" + baseUrl.toString() + (current + 1) + "\">»</a>";
 		}
 
-		jsTool.load("Demyo.Paging");
-
 		return "<div class=\"pages_nav_numbers\">" + previousLink + directPageLinks + nextLink + "</div>";
 	}
 
@@ -150,19 +149,23 @@ public class PagingTool {
 		StringBuilder baseUrl = getBaseUrlForPageLinks(request);
 		baseUrl.append("page=");
 
-		// TODO: rather than hiding the links if they don't exist, disable them
-		String previousLink = "";
+		final String previousLink;
 		if (slice.hasPrevious()) {
-			previousLink = "<a id=\"page-link-prev\" href=\"" + baseUrl.toString() + (current - 1) + "\">«</a> ";
+			previousLink = "<a class='mdl-button mdl-js-button mdl-js-ripple-effect' id='page-link-prev' href='"
+					+ baseUrl.toString() + (current - 1) + "' data-dem-shortcut='37'>PREV</a> "; // TODO: icon
+		} else {
+			previousLink = "<a class='mdl-button mdl-js-button mdl-button--disabled' href='#'>PREV</a> "; // TODO: icon
 		}
-		String nextLink = "";
+
+		final String nextLink;
 		if (slice.hasNext()) {
-			nextLink = " <a id=\"page-link-next\" href=\"" + baseUrl.toString() + (current + 1) + "\">»</a>";
+			nextLink = " <a class='mdl-button mdl-js-button mdl-js-ripple-effect' id='page-link-next' href='"
+					+ baseUrl.toString() + (current + 1) + "' data-dem-shortcut='39'>NEXT</a>"; // TODO: icon
+		} else {
+			nextLink = " <a class='mdl-button mdl-js-button mdl-button--disabled' href='#'>NEXT</a>"; // TODO: icon
 		}
 
-		jsTool.load("Demyo.Paging");
-
-		return "<div id=\"pagination\">" + previousLink + nextLink + "</div>";
+		return "<div id='dem-paging'>" + previousLink + nextLink + "</div>";
 	}
 
 	/**

@@ -61,7 +61,8 @@ public class Start {
 
 		WebAppContext webapp = new WebAppContext();
 		webapp.setContextPath("/");
-		webapp.setWar("../demyo-web/target/demyo-web-2.0.0-alpha1");
+		// TODO: auto-detect war path
+		webapp.setWar("../demyo-web/target/demyo-web-2.0.0-alpha2");
 		new org.eclipse.jetty.plus.jndi.Resource("jdbc/demyoDataSource", ds);
 		server.setHandler(webapp);
 

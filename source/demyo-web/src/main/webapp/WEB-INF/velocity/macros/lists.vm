@@ -48,3 +48,26 @@
 		#if( $foreach.hasNext ), #end
 	#end
 #end
+
+#macro(textCardListCustomBody $entityList $sortProperty $splitByFirstLetter)
+	#set ($lastFirstLetter = '/')
+	<div class="dem-card-list">
+	#foreach ($entity in $entityList)
+		## A bit hacky, but we need this kind of flexibility
+		#set ($temp = $context.this.put("entity", $entity))
+		
+		#if ($splitByFirstLetter)
+			#set ($firstLetter = $paging.getFirstLetter($render.eval($context.this, "\$entity.$sortProperty")))
+			
+			#if ($firstLetter != $lastFirstLetter)
+				</div>
+				<div class="dem-card-list__separator">$firstLetter</div>
+				<div class="dem-card-list">
+				#set ($lastFirstLetter = $firstLetter)
+			#end
+		#end
+		
+		$bodyContent
+	#end
+	</div>
+#end

@@ -14,9 +14,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Velocity tool for Javascript management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1070 $
  */
 @ValidScope(value = Scope.REQUEST)
 public class JavascriptTool {
@@ -24,9 +21,6 @@ public class JavascriptTool {
 
 	/**
 	 * This class represents a Javascript file: its location, dependencies and potential CSS annex.
-	 * 
-	 * @author $Author: xr $
-	 * @version $Revision: 1070 $
 	 */
 	private static class Script {
 		private final String id;
@@ -68,13 +62,15 @@ public class JavascriptTool {
 		KNOWN_SCRIPTS = new HashMap<String, Script>();
 
 		// TinyMce
+		addScript(new Script("Material", "material.min.js"));
 		addScript(new Script("TinyMCE_DemyoInit", "demyo_TinyMCE_init.js"));
 		addScript(new Script("TinyMCE", "tiny_mce/tiny_mce_gzip.js", KNOWN_SCRIPTS.get("TinyMCE_DemyoInit")));
 		addScript(new Script("JQuery", "jquery-1.9.1.js"));
 		addScript(new Script("Demyo.Forms", "demyo_forms.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("JQuery.HotKeys", "jquery.hotkeys.js", KNOWN_SCRIPTS.get("JQuery")));
-		addScript(new Script("Demyo.Paging", "demyo_paging.js", KNOWN_SCRIPTS.get("JQuery.HotKeys")));
 		addScript(new Script("Demyo.QuickTasks", "demyo_quicktasks.js", KNOWN_SCRIPTS.get("JQuery")));
+		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery"),
+				KNOWN_SCRIPTS.get("Material")));
 	}
 
 	private final Set<String> loadedScripts = new LinkedHashSet<String>();

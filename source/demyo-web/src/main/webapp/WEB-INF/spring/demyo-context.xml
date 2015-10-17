@@ -26,6 +26,7 @@
 				<value>org/demyo/i18n/menu</value>
 				<value>org/demyo/i18n/pages</value>
 				<value>org/demyo/i18n/special</value>
+				<value>org/demyo/i18n/widgets</value>
 			</list>
 		</property>
 	</bean>
