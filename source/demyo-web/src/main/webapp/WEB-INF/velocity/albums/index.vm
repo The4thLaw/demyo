@@ -63,6 +63,7 @@
 		#set ($lastSeries = $album.series.id)
 		#set ($inSeries = true)
 		
+		## When https://github.com/google/material-design-lite/issues/1096 is solved, perhaps we could add ripples here
 		<li><a href="./view/$album.id">$album.title</a></li>
 	#end
 

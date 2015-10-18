@@ -36,9 +36,9 @@ var demyo = {};
 			hiddenDeps.hide();
 			
 			card.append('<div class="mdl-card__actions dem-dependencies-exander">'
-					+ '<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">&hellip;</a></div>');
+					+ '<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"><i class="dico">ellipsis_h</i></button></div>');
 			
-			$('.dem-dependencies-exander > a', card).click(function () {
+			$('.dem-dependencies-exander > button', card).click(function () {
 				$('.dem-dependencies-exander', card).remove();
 				hiddenDeps.slideDown('fast');
 			});

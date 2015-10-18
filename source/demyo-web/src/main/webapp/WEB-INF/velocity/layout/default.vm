@@ -9,6 +9,7 @@ $quickTasks.prepare($javascript)
 #end
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/demyo-icons.css">
 		<!--<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/electron.less">-->
 		<link rel="stylesheet" type="text/css" href="$link.contextPath/css/material.blue-pink.min.css">
 		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/demyo.blue-pink.less">
@@ -20,7 +21,7 @@ $quickTasks.prepare($javascript)
 	</head>
 	<body class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
-			<div class="mdl-layout__drawer-button" data-dem-shortcut="77"><i class="fa fa-bars"></i>M</div> ## TODO: icon
+			<div class="mdl-layout__drawer-button" data-dem-shortcut="77">#icon('menu')</div>
 			<div class="mdl-layout__header-row">
 				<span class="mdl-layout-title">#if($!pageTitle)$pageTitle#end</span>
 				<!-- Add spacer, to align navigation to the right -->
@@ -32,7 +33,7 @@ $quickTasks.prepare($javascript)
 				<!-- Quick search -->
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
 					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-field" title="#_('layout.quick_search')">
-						? ## TODO: proper icon
+						<i class="dico">search</i>
 					</label>
 					<div class="mdl-textfield__expandable-holder">
   						<input class="mdl-textfield__input" type="text" id="quicksearch-field" placeholder="#_('layout.quick_search.hint')" />
@@ -43,53 +44,54 @@ $quickTasks.prepare($javascript)
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">#_('menu.title')</span>
 			<nav class="mdl-navigation dem-app-menu" id="main-menu" role="menu">
-				#menuItem('menu-home', '', 'menu.main.home', 'fa-home')
+				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
 				<div class="dem-app-menu__title" id"menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.albums')</div>
 				<div class="dem-app-menu__section" id="menu-section-albums">
 					## TODO: icons (maybe foresee way for + to overlap regular icon?)
-					#menuItem('menu-list-albums', 'albums/', 'menu.albums.browse', 'comment-o')
+					#navMenuItem('menu-list-albums', 'albums/', 'menu.albums.browse', 'speech_bubble')
 					## TODO: use tabs to go to cover list at albums/covers/ _('menu.albums.browse_covers')
-					#menuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', '')
-					#menuItem('menu-add-album', 'albums/add', 'menu.albums.add', '')
-					#menuItem('menu-list-series', 'series/', 'menu.series.browse', '')
-					#menuItem('menu-add-series', 'series/add', 'menu.series.add', '')
-					#menuItem('menu-list-tags', 'tags/', 'menu.tags.browse', '')
-					#menuItem('menu-list-bindings', 'bindings/', 'menu.bindings.browse', '')
-					#menuItem('menu-add-binding', 'bindings/add', 'menu.bindings.add', '')
+					#navMenuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', 'plane')
+					#navMenuItem('menu-add-album', 'albums/add', 'menu.albums.add', 'speech_bubble+add')
+					#navMenuItem('menu-list-series', 'series/', 'menu.series.browse', 'books')
+					#navMenuItem('menu-add-series', 'series/add', 'menu.series.add', 'books+add')
+					#navMenuItem('menu-list-tags', 'tags/', 'menu.tags.browse', 'tag')
+					#navMenuItem('menu-list-bindings', 'bindings/', 'menu.bindings.browse', 'book')
+					#navMenuItem('menu-add-binding', 'bindings/add', 'menu.bindings.add', 'book+add')
 				</div>
 				
 				<div class="dem-app-menu__title" id"menu-header-authoring" data-dem-collapses="#menu-section-authoring" data-dem-collapsed-initially>#_('menu.section.authoring')</div>
 				<div class="dem-app-menu__section" id="menu-section-authoring">
-					#menuItem('menu-list-authors', 'authors/', 'menu.authors.browse', '')
-					#menuItem('menu-add-author', 'authors/add', 'menu.authors.add', '')
-					#menuItem('menu-list-publishers', 'publishers/', 'menu.publishers.browse', '')
-					#menuItem('menu-add-publisher', 'publishers/add', 'menu.publishers.add', '')
-					#menuItem('menu-add-collection', 'collections/add', 'menu.collections.add', '')
+					#navMenuItem('menu-list-authors', 'authors/', 'menu.authors.browse', 'person')
+					#navMenuItem('menu-add-author', 'authors/add', 'menu.authors.add', 'person+add')
+					#navMenuItem('menu-list-publishers', 'publishers/', 'menu.publishers.browse', 'building')
+					#navMenuItem('menu-add-publisher', 'publishers/add', 'menu.publishers.add', 'building+add')
+					#navMenuItem('menu-add-collection', 'collections/add', 'menu.collections.add', 'city+add')
 				</div>
 				
 				<div class="dem-app-menu__title" id"menu-header-derivatives" data-dem-collapses="#menu-section-derivatives" data-dem-collapsed-initially>#_('menu.section.derivatives')</div>
 				<div class="dem-app-menu__section" id="menu-section-derivatives">
-					#menuItem('menu-list-derivatives', 'derivatives/', 'menu.derivatives.browse', '')
-					#menuItem('menu-list-derivatives-stickers', 'derivatives/stickers/', 'menu.derivatives.browse.stickers', '')
-					#menuItem('menu-add-derivative', 'derivatives/add', 'menu.derivatives.add', '')
-					#menuItem('menu-list-images', 'images/', 'menu.images.browse', '')
-					#menuItem('menu-add-image', 'images/add', 'menu.images.add', '')
-					#menuItem('menu-list-derivative-sources', 'derivativeSources/', 'menu.derivative_sources.browse', '')
-					#menuItem('menu-list-derivative-sources', 'derivativeSources/add', 'menu.derivative_sources.add', '')
-					#menuItem('menu-list-derivative-types', 'derivativeTypes/', 'menu.derivative_types.browse', '')
-					#menuItem('menu-add-derivative-type', 'derivativeTypes/add', 'menu.derivative_types.add', '')
+					#navMenuItem('menu-list-derivatives', 'derivatives/', 'menu.derivatives.browse', 'photo')
+					## TODO: use tabs for sticker list?
+					#navMenuItem('menu-list-derivatives-stickers', 'derivatives/stickers/', 'menu.derivatives.browse.stickers', 'sticky_note')
+					#navMenuItem('menu-add-derivative', 'derivatives/add', 'menu.derivatives.add', 'photo+add')
+					#navMenuItem('menu-list-images', 'images/', 'menu.images.browse', 'image_file')
+					#navMenuItem('menu-add-image', 'images/add', 'menu.images.add', 'image_file+add')
+					#navMenuItem('menu-list-derivative-sources', 'derivativeSources/', 'menu.derivative_sources.browse', 'person_location')
+					#navMenuItem('menu-list-derivative-sources', 'derivativeSources/add', 'menu.derivative_sources.add', 'person_location+add')
+					#navMenuItem('menu-list-derivative-types', 'derivativeTypes/', 'menu.derivative_types.browse', 'paint_brush')
+					#navMenuItem('menu-add-derivative-type', 'derivativeTypes/add', 'menu.derivative_types.add', 'paint_brush+add')
 				</div>
 				
 				<div class="dem-app-menu__title" id"menu-header-management" data-dem-collapses="#menu-section-management" data-dem-collapsed-initially>#_('menu.section.management')</div>
 				<div class="dem-app-menu__section" id="menu-section-management">
-					#menuItem('menu-search', 'search/advanced', 'menu.manage.search', '')
-					#menuItem('menu-export', 'library/export', 'menu.manage.export', '')
-					#menuItem('menu-import', 'manage/import', 'menu.manage.import', '')
-					#menuItem('menu-statistics', 'library/statistics/', 'menu.manage.stats', '')
-					#menuItem('menu-configure', 'configure', 'menu.manage.configure', '')
-					#menuItem('menu-orphans', 'library/orphans/', 'menu.manage.orphans', '')
-					#menuItem('menu-help', 'help/', 'menu.manage.help', '')
-					#menuItem('menu-about', 'about/', 'menu.manage.about', '')
+					#navMenuItem('menu-search', 'search/advanced', 'menu.manage.search', 'search_advanced')
+					#navMenuItem('menu-export', 'library/export', 'menu.manage.export', 'download')
+					#navMenuItem('menu-import', 'manage/import', 'menu.manage.import', 'upload')
+					#navMenuItem('menu-statistics', 'library/statistics/', 'menu.manage.stats', 'pie_chart')
+					#navMenuItem('menu-configure', 'configure', 'menu.manage.configure', 'settings')
+					#navMenuItem('menu-orphans', 'library/orphans/', 'menu.manage.orphans', 'unlink')
+					#navMenuItem('menu-help', 'help/', 'menu.manage.help', 'help')
+					#navMenuItem('menu-about', 'about/', 'menu.manage.about', 'info')
 				</div>
 			</nav>
 		</div>

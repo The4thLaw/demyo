@@ -1,3 +1,28 @@
+@import "demyo-icons-variables.less"; /* TODO: import (reference) after update of LESS version */
+
+.mix-dico() {
+	font-family: 'Demyo-Icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	
+	/* Enable Ligatures ================ */
+	letter-spacing: 0;
+	-webkit-font-feature-settings: "liga";
+	-moz-font-feature-settings: "liga=1";
+	-moz-font-feature-settings: "liga";
+	-ms-font-feature-settings: "liga" 1;
+	-o-font-feature-settings: "liga";
+	font-feature-settings: "liga";
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 a {
 	color: inherit;
 	text-decoration: none;
@@ -29,7 +54,9 @@ a {
 			}
 			
 			&::before {
-				content: 'v';
+				.mix-dico();
+				font-size: 200%;
+				content: @dico-arrow_down;
 				float: right;
 				transition: 0.3s;
 			}
@@ -138,4 +165,35 @@ a {
 	.dem-dependencies-exander {
 		text-align: center;
 	}
+}
+
+#main-menu .mdl-navigation__link {
+	&:hover {
+		text-decoration: none;
+	}
+	
+	> .dico, > .dico-stack {
+		font-size: 200%;
+		vertical-align: bottom;
+		margin-right: 0.25em;
+	}
+}
+.dico-stack {
+	position: relative;
+	display: inline-block;
+	
+	.dico-overlay {
+		margin: 0;
+		position: absolute;
+		top: 0;
+		right: 0;
+		font-size: 50%;
+	    text-shadow: -1px -1px #fff, 0px -1px #fff, 1px -1px #fff, -1px 1px #fff, 0px 1px #fff, 1px 1px #fff;
+	}
+}
+
+/* Override to have a menu a bit larger */
+.mdl-layout__drawer {
+	width: 600px;
+	transform: translateX(-610px);
 }

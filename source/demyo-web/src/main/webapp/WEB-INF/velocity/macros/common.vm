@@ -14,6 +14,19 @@
 	#end
 #end
 
-#macro(menuItem $id $urlFromRoot $labelId $iconClass)
-<a id="$id" href="$link.contextPath/$urlFromRoot" class="mdl-navigation__link">#if($iconClass != '')<i class="fa fa-$iconClass"></i>#end#_("$labelId")</a>##
+#macro(navMenuItem $id $urlFromRoot $labelId $icon)
+<a id="$id" href="$link.contextPath/$urlFromRoot" class="mdl-navigation__link">#if($icon != '')#icon($icon)#end#_("$labelId")</a>##
+#end
+
+#macro(icon $iconSpec)
+	#set( $sepIndex = $iconSpec.indexOf('+') )
+	#if ($sepIndex >= 0)
+		#set( $overlayStart = $sepIndex + 1 )
+		<span class="dico-stack">
+			<i class="dico">$iconSpec.substring(0, $sepIndex)</i>
+			<i class="dico dico-overlay">$iconSpec.substring($overlayStart, $iconSpec.length())</i>
+		</span>
+	#else
+		<i class="dico">$iconSpec</i>
+	#end
 #end
