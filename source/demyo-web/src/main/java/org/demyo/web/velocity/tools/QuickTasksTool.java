@@ -1,17 +1,15 @@
 package org.demyo.web.velocity.tools;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.demyo.model.exception.DemyoErrorCode;
 import org.demyo.model.exception.DemyoException;
-import org.demyo.service.ITranslationService;
-import org.demyo.utils.web.SpringContext;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
@@ -19,26 +17,19 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Velocity tool for the page quick tasks. This tool preserves the order in which the tasks are added.
- * 
- * @author $Author: xr $
- * @version $Revision: 1074 $
  */
 @ValidScope(value = Scope.REQUEST)
-public class QuickTasksTool {
+public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuickTasksTool.class);
-	private static final String QUICK_TASKS_TITLE_CODE = "quickTasks.title";
 
 	/**
 	 * Describes a single quick tasks.
-	 * 
-	 * @author $Author: xr $
-	 * @version $Revision: 1074 $
 	 */
 	public static class QuickTask {
 		/** The HTML ID. */
 		private String id;
-		/** The CSS class or classes. */
-		private String css = "";
+		/** The icon. */
+		private String icon;
 		/** The URL to access (HTML 'href' attribute). */
 		private String url;
 		/** The label code to be passed to the message source. */
@@ -67,47 +58,15 @@ public class QuickTasksTool {
 					throw new DemyoException(DemyoErrorCode.QUICK_TASKS_MISSING_LABEL);
 				}
 			}
-
-			// Automatically guess a class
-			if (css.isEmpty() && id != null) {
-				if (id.startsWith("qt-add")) {
-					css = "add";
-				} else if (id.startsWith("qt-edit")) {
-					css = "edit";
-				} else if (id.startsWith("qt-delete")) {
-					css = "delete";
-				}
-			}
 		}
 
 		/**
-		 * Generates an HTML snippet for the current task.
+		 * Gets the HTML ID.
 		 * 
-		 * @param sb The {@link StringBuilder} to append the HTML to.
-		 * @param ts The translation service, for labels.
+		 * @return the HTML ID
 		 */
-		public void toHTML(StringBuilder sb, ITranslationService ts) {
-			sb.append("\n\t<li");
-			appendAttribute(sb, "id", id);
-			appendAttribute(sb, "class", css);
-			if (confirm) {
-				appendAttribute(sb, "data-qt-confirm", ts.translate(label + ".confirm"));
-			}
-			sb.append(">");
-			if (url != null) {
-				sb.append("<a href=\"").append(url).append("\">");
-			}
-			sb.append(ts.translate(label));
-			if (url != null) {
-				sb.append("</a>");
-			}
-			sb.append("</li>");
-		}
-
-		private static void appendAttribute(StringBuilder sb, String attrName, String attrValue) {
-			if (StringUtils.isNotEmpty(attrValue)) {
-				sb.append(" ").append(attrName).append("=\"").append(attrValue).append("\"");
-			}
+		public String getId() {
+			return id;
 		}
 
 		/**
@@ -120,12 +79,30 @@ public class QuickTasksTool {
 		}
 
 		/**
-		 * Sets the CSS class or classes.
+		 * Gets the icon.
 		 * 
-		 * @param css the new CSS class or classes
+		 * @return the icon
 		 */
-		public void setCss(String css) {
-			this.css = css;
+		public String getIcon() {
+			return icon;
+		}
+
+		/**
+		 * Sets the icon.
+		 * 
+		 * @param iconSpec the new icon
+		 */
+		public void setIcon(String icon) {
+			this.icon = icon;
+		}
+
+		/**
+		 * Gets the URL to access (HTML 'href' attribute).
+		 * 
+		 * @return the URL to access (HTML 'href' attribute)
+		 */
+		public String getUrl() {
+			return url;
 		}
 
 		/**
@@ -138,12 +115,39 @@ public class QuickTasksTool {
 		}
 
 		/**
+		 * Gets the label code to be passed to the message source.
+		 * 
+		 * @return the label code to be passed to the message source
+		 */
+		public String getLabel() {
+			return label;
+		}
+
+		/**
+		 * Gets the label for confirmation.
+		 * 
+		 * @return the label
+		 */
+		public String getConfirmLabel() {
+			return label + ".confirm";
+		}
+
+		/**
 		 * Sets the label code to be passed to the message source.
 		 * 
 		 * @param label the new label code to be passed to the message source
 		 */
 		public void setLabel(String label) {
 			this.label = label;
+		}
+
+		/**
+		 * Checks if is the flag to determine whether clicking on this item requires confirmation.
+		 * 
+		 * @return the flag to determine whether clicking on this item requires confirmation
+		 */
+		public boolean isConfirm() {
+			return confirm;
 		}
 
 		/**
@@ -157,14 +161,12 @@ public class QuickTasksTool {
 	}
 
 	private final List<QuickTask> tasks = new LinkedList<QuickTask>();
-	private final ITranslationService translationService;
 
 	/**
 	 * Default constructor.
 	 */
 	public QuickTasksTool() {
 		LOGGER.debug("Creating instance");
-		translationService = SpringContext.getContext().getBean(ITranslationService.class);
 	}
 
 	/**
@@ -191,25 +193,12 @@ public class QuickTasksTool {
 		js.load("Demyo.QuickTasks");
 	}
 
-	/**
-	 * Returns the HTML to display the list of quick tasks.
-	 * 
-	 * @return The HTML snippet.
-	 */
-	public String list() {
-		if (tasks.isEmpty()) {
-			return "";
-		}
+	@Override
+	public Iterator<QuickTask> iterator() {
+		return tasks.iterator();
+	}
 
-		StringBuilder sb = new StringBuilder("<ul id=\"quick-tasks\" data-title=\"");
-		sb.append(translationService.translate(QUICK_TASKS_TITLE_CODE)).append("\">");
-
-		for (QuickTask task : tasks) {
-			task.toHTML(sb, translationService);
-		}
-
-		sb.append("\n</ul>");
-
-		return sb.toString();
+	public boolean isEmpty() {
+		return tasks.isEmpty();
 	}
 }
