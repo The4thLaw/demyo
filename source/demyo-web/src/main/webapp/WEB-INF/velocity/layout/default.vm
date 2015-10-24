@@ -102,16 +102,13 @@ $quickTasks.prepare($javascript)
 						#icon('ellipsis_v')
 					</button>
 
-					## TODO: sort issue with not whole menu being clickable
-					<ul id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
+					<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
 					#foreach ($task in $quickTasks)
-						<li class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end>
-							<a href="$task.url">
+							<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
 								#if($task.icon != '')#icon($task.icon)#end#_($task.label)
 							</a>
-						</li>
 					#end
-					</ul>
+					</div>
 				#end
 				
 				$screen_content
