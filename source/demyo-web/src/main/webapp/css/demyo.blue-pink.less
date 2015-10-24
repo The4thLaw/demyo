@@ -1,4 +1,8 @@
-@import "demyo-icons-variables.less"; /* TODO: import (reference) after update of LESS version */
+@import (reference) "demyo-icons-variables.less";
+
+// Color definitions
+@color-primary: rgb(33,150,243);
+@color-contrast: rgb(255, 64, 129);
 
 .mix-dico() {
 	font-family: 'Demyo-Icons';
@@ -28,7 +32,7 @@ a {
 	text-decoration: none;
 	&:hover {
 		text-decoration: underline;
-		color: rgb(255, 64, 129);
+		color: @color-contrast;
 	}
 	
 	&.mdl-button:hover {
