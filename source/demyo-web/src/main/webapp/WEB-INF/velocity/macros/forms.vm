@@ -1,5 +1,5 @@
 #macro(form)
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" class="dem-model-form">
 	$javascript.load("Demyo.Forms")
 	$bodyContent
 </form>
@@ -19,7 +19,7 @@
 	<input type="hidden" id="$fieldId" name="$status.expression" value="$!status.value" />
 #end
 
-#macro(formField $labelId $path)
+#macro(formFieldOld $labelId $path)
 	#if ($path != "")
 		#demyoBind($path)
 	#end
@@ -35,27 +35,42 @@
 	</div>
 #end
 
+#macro(formField $labelId $path)
+	#if ($path != "")
+		#demyoBind($path)
+	#end
+	#set( $hasErrors = $!status.errorMessages && $status.errorMessages.size() > 0 )
+	## TODO: figure out how to preserve invalid status, which is removed by material on page load. Possibly, there is a callback after material has initialized, and we can re-add the class. Or perhaps a javascript snippet can run immediately to set the input to invalid
+	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label #if($hasErrors)is-invalid#end">
+		$bodyContent
+		<label class="mdl-textfield__label" for="$fieldId">#_($labelId)</label>
+		#if ($hasErrors)
+			<span class="mdl-textfield__error">$status.errorMessages[0]</span>
+		#end
+	</div>
+#end
+
 #macro(inputText $labelId $path)
 	#@formField($labelId, $path)
-		<input type="text" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
+		<input type="text" id="$fieldId" name="$status.expression" value="$!status.value" class="mdl-textfield__input" />
 	#end
 #end
 
 #macro(inputMultilineText $labelId $path)
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<textarea id="$fieldId" name="$status.expression" class="plaintext #if($hasErrors)error#end">$!status.value</textarea>
 	#end
 #end
 
 #macro(inputRichText $labelId $path)
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<textarea id="$fieldId" name="$status.expression" class="richtext #if($hasErrors)error#end">$!status.value</textarea>
 	#end
 	$javascript.load("TinyMCE")
 #end
 
 #macro(inputColour $labelId $path)
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<input type="color" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
 		## TODO: use a polyfill for IE11
 		<div class="colour-remover">
@@ -68,25 +83,25 @@
 
 #macro(inputInteger $labelId $path)
 	#@formField($labelId, $path)
-		<input type="number" step="1" id="$fieldId" name="$status.expression" value="$!status.value" class="integer #if($hasErrors)error#end" />
+		<input type="number" step="1" id="$fieldId" name="$status.expression" value="$!status.value" class="mdl-textfield__input integer" />
 	#end
 #end
 
 #macro(inputFloat $labelId $path)
 	#@formField($labelId, $path)
-		<input type="number" step="any" id="$fieldId" name="$status.expression" value="$!status.value" class="float #if($hasErrors)error#end" />
+		<input type="number" step="any" id="$fieldId" name="$status.expression" value="$!status.value" class="mdl-textfield__input float" />
 	#end
 #end
 
 #macro(inputDate $labelId $path)
 	## TODO: polyfill if not supported
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<input type="date" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
 	#end
 #end
 
 #macro(inputCheckbox $labelId $path)
-	#@formField("${labelId}.edit", $path)
+	#@formFieldOld("${labelId}.edit", $path)
 		<input type="checkbox" id="$fieldId" name="$status.expression"#if ($!status.value == true) checked="checked"#end />
 	#end
 #end
@@ -96,7 +111,7 @@
 #macro(inputSelect $labelId $path $values $options)
 	#if(!$!options.allowEmpty)#set($dummy = $options.put("allowEmpty", false))#end
 
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<select id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end>
 		#if ($options.allowEmpty)
 			<option value=""></option>
@@ -109,7 +124,7 @@
 #end
 
 #macro(inputSelectMultiple $labelId $path $values)
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<select id="$fieldId" name="$status.expression" multiple="multiple"#if($hasErrors) class="error"#end>
 		#foreach ($value in $values)
 			#set ($selected = false)
@@ -127,21 +142,16 @@
 #end
 
 #macro(inputFile $labelId $path)
-	#@formField($labelId, $path)
+	#@formFieldOld($labelId, $path)
 		<input type="file" id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end />
 	#end
 #end
 
 #macro(formButtons $saveLabel $resetLabel)
-<div class="field">
-	<label></label>
-	<div class="value">
-		<div class="buttons">
-			<input type="submit" value="#_($saveLabel)" />
-			<input type="reset" value="#_($resetLabel)" />
-		</div>
+	<div class="dem-form__buttons">
+		<input type="submit" value="#_($saveLabel)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" />
+		<input type="reset" value="#_($resetLabel)" class="mdl-button mdl-js-button mdl-button--primary mdl-js-ripple-effect" />
 	</div>
-</div>
 #end
 
 #macro(saveButtons)

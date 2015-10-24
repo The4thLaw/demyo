@@ -2,41 +2,121 @@
 
 #@form()
 
-## TODO: reorder fields. Check with to see what makes the most sense...
-
 #inputHidden('album.id')
-#inputSelect('field.Album.series', 'album.series.id', $series, { "allowEmpty": true })
-#inputInteger('field.Album.cycle', 'album.cycle')
-#inputFloat('field.Album.number', 'album.number')
-#inputText('field.Album.numberSuffix', 'album.numberSuffix')
-#inputText('field.Album.title', 'album.title')
-#inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
-## TODO: load collections with AJAX. Possibly using Spring Data REST ?
-#inputSelect('field.Album.collection', 'album.collection.id', [], { })
-#inputSelectMultiple('field.Album.writers', 'album.writers', $authors)
-#inputSelectMultiple('field.Album.artists', 'album.artists', $authors)
-#inputSelectMultiple('field.Album.colorists', 'album.colorists', $authors)
-#inputDate('field.Album.firstEditionDate', 'album.firstEditionDate')
-#inputDate('field.Album.currentEditionDate', 'album.currentEditionDate')
-#inputCheckbox('field.Album.wishlist', 'album.wishlist')
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col">
+		#inputSelect('field.Album.series', 'album.series.id', $series, { "allowEmpty": true })
+	</div>
+</div>
+	
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.identification')</h6></div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputInteger('field.Album.cycle', 'album.cycle')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputFloat('field.Album.number', 'album.number')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputText('field.Album.numberSuffix', 'album.numberSuffix')
+	</div>
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--5-col-tablet">
+		#inputText('field.Album.title', 'album.title')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.publishing')</h6></div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		## TODO: load collections with AJAX. Possibly using Spring Data REST ?
+		#inputSelect('field.Album.collection', 'album.collection.id', [], { })
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputText('field.Album.isbn', 'album.isbn')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.authoring')</h6></div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputSelectMultiple('field.Album.writers', 'album.writers', $authors)
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputSelectMultiple('field.Album.artists', 'album.artists', $authors)
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputSelectMultiple('field.Album.colorists', 'album.colorists', $authors)
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.dates')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputDate('field.Album.firstEditionDate', 'album.firstEditionDate')
+		## TODO: tool to copy that date to the current edition
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputDate('field.Album.currentEditionDate', 'album.currentEditionDate')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputCheckbox('field.Album.wishlist', 'album.wishlist')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.format')</h6></div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputFloat('field.Album.width', 'album.width')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputFloat('field.Album.height', 'album.height')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputInteger('field.Album.pages', 'album.pages')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.freeText')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputRichText('field.Album.summary', 'album.summary')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputRichText('field.Album.comment', 'album.comment')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.images')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Album.cover', 'album.cover.id', $images, { "allowEmpty": true })
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelectMultiple('field.Album.images', 'album.images', $images)
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.prices')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		## TODO: price history
+	</div>
+</div>
+
+## TODO: find a place for these two fields
 #inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
-#inputFloat('field.Album.width', 'album.width')
-#inputFloat('field.Album.height', 'album.height')
-#inputInteger('field.Album.pages', 'album.pages')
-#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
-#inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
-## TODO: price history
 #inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
-## TODO: borrower
-#inputText('field.Album.isbn', 'album.isbn')
-#inputRichText('field.Album.summary', 'album.summary')
-#inputRichText('field.Album.comment', 'album.comment')
-#inputSelect('field.Album.cover', 'album.cover.id', $images, { "allowEmpty": true })
-#inputSelectMultiple('field.Album.images', 'album.images', $images)
-## TODO: list of derivatives
 
 #saveButtons
-
-## TODO: button to copy the first edition date to the current edition date
 
 #end

@@ -10,10 +10,11 @@
 	 * This is broken for TinyMCE but validation on such field is currently not performed in Demyo
 	 */
 	$(function() {
-		$('form .value .error').change(function () {
+		$('form .dem-field-error input').change(function () {
 			var self = $(this);
-			self.removeClass('error');
-			$('.validation-error', self.parents('.value').get(0)).remove();
+			var parent = $(self.parents('.dem-field-error').get(0));
+			parent.removeClass('dem-field-error');
+			$('.mdl-textfield__error', parent).remove();
 		});
 	});
 	
