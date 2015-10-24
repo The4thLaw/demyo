@@ -12,17 +12,20 @@
 	
 <div class="mdl-grid dem-field-set">
 	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.identification')</h6></div>
-	<div class="mdl-cell mdl-cell--4-col">
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
 		#inputInteger('field.Album.cycle', 'album.cycle')
 	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
 		#inputFloat('field.Album.number', 'album.number')
 	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
 		#inputText('field.Album.numberSuffix', 'album.numberSuffix')
 	</div>
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--5-col-tablet">
+	<div class="mdl-cell mdl-cell--12-col">
 		#inputText('field.Album.title', 'album.title')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col">
+		#inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
 	</div>
 </div>
 
@@ -81,6 +84,9 @@
 	<div class="mdl-cell mdl-cell--4-col">
 		#inputInteger('field.Album.pages', 'album.pages')
 	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
+	</div>
 </div>
 
 <div class="mdl-grid dem-field-set">
@@ -112,10 +118,6 @@
 		## TODO: price history
 	</div>
 </div>
-
-## TODO: find a place for these two fields
-#inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
-#inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
 
 #saveButtons
 
