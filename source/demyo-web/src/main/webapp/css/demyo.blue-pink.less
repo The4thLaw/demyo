@@ -5,6 +5,7 @@
 @color-contrast: rgb(255, 64, 129);
 
 .mix-dico() {
+	// Copied from demyo-icons.css
 	font-family: 'Demyo-Icons';
 	speak: none;
 	font-style: normal;
@@ -95,8 +96,8 @@ a {
 		padding: 16px;
 		font-family: serif;
 		font-weight: bold;
-		color: rgba(0, 0, 0, 0.54);
-		font-size: 150%;
+		color: @color-primary;
+		font-size: 200%;
 		
 		&::after {
 			content: ' ';
@@ -104,7 +105,7 @@ a {
 			box-sizing: border-box;
 			position: absolute;
 			display: block;
-			left: 3em;
+			left: 2em;
 			top: 48%;
 			right: 0;
 		}
