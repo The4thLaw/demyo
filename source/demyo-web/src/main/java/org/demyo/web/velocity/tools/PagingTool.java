@@ -92,6 +92,7 @@ public class PagingTool {
 		return pageLinks((Slice<?>) list, request, jsTool);
 	}
 
+	@Deprecated
 	private String pageLinks(int current, int max, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
 		LOGGER.debug("Generating page links for page {} of {}", current, max);

@@ -1,6 +1,6 @@
 #setPageTitle('title.index.author')
 
-#textList($authorList "name" "identifyingName" "./view/" true)
+#textCardListStdBody($authorList "name" "identifyingName" "./view/" true)
 
 $paging.pageLinks($authorList, $request, $javascript)
 $paging.letters($request)

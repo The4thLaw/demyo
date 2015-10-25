@@ -1,7 +1,6 @@
 #setPageTitle('title.index.binding')
 
-#textList($bindingList "name" "identifyingName" "./view/" true)
+#textCardListStdBody($bindingList "name" "identifyingName" "./view/" false)
 
 $paging.pageLinks($bindingList, $request, $javascript)
-## Not really interesting for Bindings
-##$paging.letters($request)
+## Letters are not really interesting for Bindings

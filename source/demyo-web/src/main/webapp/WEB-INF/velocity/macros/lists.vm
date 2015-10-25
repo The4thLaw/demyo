@@ -49,6 +49,31 @@
 	#end
 #end
 
+#macro(textCardListStdBody $entityList $sortProperty $displayProperty $baseUrl $splitByFirstLetter)
+	#set ($lastFirstLetter = '/')
+	<div class="dem-card-list">
+	#foreach ($entity in $entityList)
+		## A bit hacky, but we need this kind of flexibility
+		#set ($temp = $context.this.put("entity", $entity))
+		
+		#if ($splitByFirstLetter)
+			#set ($firstLetter = $paging.getFirstLetter($render.eval($context.this, "\$entity.$sortProperty")))
+			
+			#if ($firstLetter != $lastFirstLetter)
+				</div>
+				<div class="dem-card-list__separator">$firstLetter</div>
+				<div class="dem-card-list">
+				#set ($lastFirstLetter = $firstLetter)
+			#end
+		#end
+		
+		<div class="mdl-card mdl-shadow--2dp dem-model-card">
+			<a class="dem-model-card__title" href="$baseUrl$entity.id">$render.eval($context.this, "\$entity.$displayProperty")</a>
+		</div>
+	#end
+	</div>
+#end
+
 #macro(textCardListCustomBody $entityList $sortProperty $splitByFirstLetter)
 	#set ($lastFirstLetter = '/')
 	<div class="dem-card-list">

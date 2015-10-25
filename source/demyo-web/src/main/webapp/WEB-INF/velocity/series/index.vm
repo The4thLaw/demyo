@@ -1,6 +1,6 @@
 #setPageTitle('title.index.series')
 
-#textList($seriesList "identifyingName" "identifyingName" "./view/" true)
+#textCardListStdBody($seriesList "identifyingName" "identifyingName" "./view/" true)
 
 $paging.pageLinks($seriesList, $request, $javascript)
 $paging.letters($request)

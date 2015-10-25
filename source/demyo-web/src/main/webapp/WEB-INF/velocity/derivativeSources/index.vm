@@ -1,7 +1,6 @@
 #setPageTitle('title.index.derivativeSource')
 
-#textList($derivativeSourceList "name" "identifyingName" "./view/" true)
+#textCardListStdBody($derivativeSourceList "name" "identifyingName" "./view/" true)
 
 $paging.pageLinks($derivativeSourceList, $request, $javascript)
-## Not really interesting for Derivative Sources
-##$paging.letters($request)
+## Letters are not really interesting for Derivative Sources
