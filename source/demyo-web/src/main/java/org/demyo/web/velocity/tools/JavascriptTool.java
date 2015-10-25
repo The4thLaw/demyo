@@ -63,6 +63,7 @@ public class JavascriptTool {
 
 		// TinyMce
 		addScript(new Script("Material", "material.min.js"));
+		addScript(new Script("PrefixFree", "prefixfree.min.js"));
 		addScript(new Script("TinyMCE_DemyoInit", "demyo_TinyMCE_init.js"));
 		addScript(new Script("TinyMCE", "tiny_mce/tiny_mce_gzip.js", KNOWN_SCRIPTS.get("TinyMCE_DemyoInit")));
 		addScript(new Script("JQuery", "jquery-1.9.1.js"));
@@ -70,7 +71,7 @@ public class JavascriptTool {
 		addScript(new Script("JQuery.HotKeys", "jquery.hotkeys.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.QuickTasks", "demyo_quicktasks.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery"),
-				KNOWN_SCRIPTS.get("Material")));
+				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
 	}
 
 	private final Set<String> loadedScripts = new LinkedHashSet<String>();
