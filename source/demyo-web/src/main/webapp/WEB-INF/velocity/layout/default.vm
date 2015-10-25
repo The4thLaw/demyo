@@ -113,7 +113,9 @@ $quickTasks.prepare($javascript)
 				
 				$screen_content
 			</div>
-			## Keep the footer in the page content to avoid displaying it all the time
+			<!-- Add a spacer to push the footer down when there is not enough content -->
+            <div class="mdl-layout-spacer"></div>
+			## Keep the footer in the page content to avoid having it stick
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__middle-section">
 					<div class="mdl-logo">Demyo v2.0.0-alpha2</div>## TODO: make this dynamic
