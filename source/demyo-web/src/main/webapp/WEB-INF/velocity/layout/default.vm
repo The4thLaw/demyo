@@ -114,15 +114,15 @@ $quickTasks.prepare($javascript)
 				
 				$screen_content
 			</div>
-			<!-- Add a spacer to push the footer down when there is not enough content -->
-            <div class="mdl-layout-spacer"></div>
 			## Keep the footer in the page content to avoid having it stick
+			## TODO: submit a request to MDL to have a floating footer that works on Chrome
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__middle-section">
 					<div class="mdl-logo">Demyo v2.0.0-alpha2</div>## TODO: make this dynamic
 				</div>
 			</footer>
 		</main>
+		
 #if ($javascript.isLoaded("TinyMCE"))
 		<script type="text/javascript">
 			demyoTinyMCEInit('#_("javascript.l10n.tinyMCE")');
