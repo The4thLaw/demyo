@@ -5,9 +5,9 @@
 #end
 
 #macro(entityField $labelId)
-	<div class="field">
-		<label>#_($labelId)</label>
-		<div class="value">
+	<div class="dem-form-value__field">
+		<label class="dem-form__label">#_($labelId)</label>
+		<div class="dem-form__value">
 			$bodyContent
 		</div>
 	</div>
@@ -41,7 +41,7 @@
 #macro(entityFieldUrl $labelId $url)
 	#if($url)
 		#@entityField($labelId)
-			<a href="$url">$url</a>
+			<a href="$url" class="dem-user-provided">$url</a>
 		#end
 	#end
 #end
@@ -55,7 +55,7 @@
 #end
 
 #macro(entityFieldRichText $labelId $value)
-	#if($value)
+	#if($!value && $value != '')
 		#@entityField($labelId)
 			$rte.parse($value, $link.contextPath, $demyoTranslationService)
 		#end

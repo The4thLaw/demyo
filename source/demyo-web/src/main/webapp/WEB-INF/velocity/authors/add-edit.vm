@@ -3,12 +3,34 @@
 #@form()
 
 #inputHidden('author.id')
-#inputText('field.Author.name', 'author.name')
-#inputText('field.Author.firstName', 'author.firstName')
-#inputText('field.Author.nickname', 'author.nickname')
-#inputText('field.Author.website', 'author.website')
-#inputSelect('field.Author.portrait', 'author.portrait.id', $images, { "allowEmpty": true })
-#inputRichText('field.Author.biography', 'author.biography')
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Author.identity')</h6></div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputText('field.Author.name', 'author.name')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputText('field.Author.firstName', 'author.firstName')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+		#inputText('field.Author.nickname', 'author.nickname')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+		#inputSelect('field.Author.portrait', 'author.portrait.id', $images, { "allowEmpty": true })
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Author.biography')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+		## TODO: RTE is broken :(
+		#inputRichText('field.Author.biography', 'author.biography')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+		#inputText('field.Author.website', 'author.website')
+	</div>
+</div>
+
 #saveButtons
 
 #end
