@@ -36,6 +36,7 @@
 	</div>
 	<div class="mdl-cell mdl-cell--4-col">
 		## TODO: load collections with AJAX. Possibly using Spring Data REST ?
+		## When doing that, use   $('.my_select_box').trigger('chosen:updated'); to update the element
 		#inputSelect('field.Album.collection', 'album.collection.id', [], { })
 	</div>
 	<div class="mdl-cell mdl-cell--4-col">
