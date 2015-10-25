@@ -32,18 +32,25 @@ $quickTasks.prepare($javascript)
 					<a class="mdl-navigation__link" href="$link.contextPath/albums/">TODO</a>
 				</nav>
 				<!-- Quick search -->
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
-					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-field" title="#_('layout.quick_search')">
+				<div id="header-quicksearch" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right  mdl-layout--large-screen-only">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-header-field" title="#_('layout.quick_search')">
 						<i class="dico">search</i>
 					</label>
 					<div class="mdl-textfield__expandable-holder">
-  						<input class="mdl-textfield__input" type="text" id="quicksearch-field" placeholder="#_('layout.quick_search.hint')" />
+  						<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
 					</div>
   				</div>
 			</div>
 		</header>
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">#_('menu.title')</span>
+			<!-- Quick search -->
+			<div class="mdl-textfield mdl-js-textfield mdl-layout--small-screen-only" id="menu-quicksearch">
+				<label for="quicksearch-menu-field" title="#_('layout.quick_search')">
+					<i class="dico">search</i>
+				</label>
+				<input class="mdl-textfield__input" type="text" id="quicksearch-menu-field" placeholder="#_('layout.quick_search.hint')" />
+			</div>
 			<nav class="mdl-navigation dem-app-menu" id="main-menu" role="menu">
 				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
 				<div class="dem-app-menu__title" id"menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.albums')</div>

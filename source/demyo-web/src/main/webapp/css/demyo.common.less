@@ -181,6 +181,19 @@ a {
 	}
 }
 
+@media screen and (max-width: 560px) {
+	.dem-model-card {
+		width: 100%;
+		min-width: auto;
+		max-width: 20000px;
+	}
+	
+	.dem-card-list .dem-model-card {
+		margin-right: 0.5em;
+		margin-bottom: 0.5em;
+	}
+}
+
 .dem-field-set {
 	border-bottom: 1px solid rgba(0,0,0,0.12);
 	margin-bottom: 1em;
@@ -322,7 +335,7 @@ a {
 	position: fixed;
 	bottom: 16px;
 	right: 32px;
-	z-index: 10;
+	z-index: 4; /* Must remain the MDL obfuscator to be hidden by the menu */
 	.dico { // Copied from MDL
 		position: absolute;
 	    top: 50%;
@@ -333,5 +346,25 @@ a {
 	}
 }
 .is-small-screen .dem-fab-button {
-	right: 16px;
+//	right: 16px;
+}
+
+#header-quicksearch {
+	.dico {
+		vertical-align: middle;
+	}
+}
+
+#menu-quicksearch {
+	padding: 0 16px;
+	
+	.mdl-textfield__input {
+		display: inline;
+		width: auto;
+		max-width: 170px;
+	}
+	.dico {
+		font-size: 1.4em;
+		vertical-align: middle;
+	}
 }

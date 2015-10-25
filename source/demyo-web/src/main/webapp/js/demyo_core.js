@@ -76,7 +76,30 @@ var demyo = {};
 				return false;
 			}
 		});
-	}
+	};
+	
+	demyo.alignFAB = function () {
+		var fab = $('.dem-fab-button');
+		var page = $('#page-content');
+		if (fab.length <= 0 || page.length <= 0) {
+			return;
+		}
+		
+		var aligner = function () {
+			fab.css({
+				top: (page.offset().top - 32) + 'px',
+				bottom: 'auto'
+			});
+		}
+		// Move the element at the top of the markup
+		fab.insertBefore($('body > header'));
+		// Align it
+		aligner();
+		// Align on resize (in case the header gets smaller
+		$(window).resize(aligner);
+		// Change the margin for the quick search so that it's displayed properly
+		$('#header-quicksearch').css({'margin-right': '64px'});
+	};
 	
 })(jQuery);
 
@@ -84,4 +107,5 @@ jQuery(function () {
 	demyo.registerMenu();
 	demyo.registerCollapsibleCards();
 	demyo.registerShortcuts();
+	demyo.alignFAB();
 });
