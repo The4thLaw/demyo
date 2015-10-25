@@ -48,10 +48,9 @@ $quickTasks.prepare($javascript)
 				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
 				<div class="dem-app-menu__title" id"menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.albums')</div>
 				<div class="dem-app-menu__section" id="menu-section-albums">
-					## TODO: icons (maybe foresee way for + to overlap regular icon?)
 					#navMenuItem('menu-list-albums', 'albums/', 'menu.albums.browse', 'speech_bubble')
 					## TODO: use tabs to go to cover list at albums/covers/ _('menu.albums.browse_covers')
-					#navMenuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', 'plane')
+					#navMenuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', '')
 					#navMenuItem('menu-add-album', 'albums/add', 'menu.albums.add', 'speech_bubble+add')
 					#navMenuItem('menu-list-series', 'series/', 'menu.series.browse', 'books')
 					#navMenuItem('menu-add-series', 'series/add', 'menu.series.add', 'books+add')
@@ -64,9 +63,9 @@ $quickTasks.prepare($javascript)
 				<div class="dem-app-menu__section" id="menu-section-authoring">
 					#navMenuItem('menu-list-authors', 'authors/', 'menu.authors.browse', 'person')
 					#navMenuItem('menu-add-author', 'authors/add', 'menu.authors.add', 'person+add')
-					#navMenuItem('menu-list-publishers', 'publishers/', 'menu.publishers.browse', 'building')
-					#navMenuItem('menu-add-publisher', 'publishers/add', 'menu.publishers.add', 'building+add')
-					#navMenuItem('menu-add-collection', 'collections/add', 'menu.collections.add', 'city+add')
+					#navMenuItem('menu-list-publishers', 'publishers/', 'menu.publishers.browse', 'city')
+					#navMenuItem('menu-add-publisher', 'publishers/add', 'menu.publishers.add', 'city+add')
+					#navMenuItem('menu-add-collection', 'collections/add', 'menu.collections.add', 'add')
 				</div>
 				
 				<div class="dem-app-menu__title" id"menu-header-derivatives" data-dem-collapses="#menu-section-derivatives" data-dem-collapsed-initially>#_('menu.section.derivatives')</div>
@@ -106,8 +105,7 @@ $quickTasks.prepare($javascript)
 					<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
 					#foreach ($task in $quickTasks)
 							<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
-								#if($!task.icon != '')#icon($task.icon)#end
-								#_($task.label)
+								#icon($task.icon)#_($task.label)
 							</a>
 					#end
 					</div>
