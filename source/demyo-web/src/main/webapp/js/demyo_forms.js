@@ -37,17 +37,48 @@
 	demyo.bindSelectInputs = function () {
 		var elementSet = $('select');
 		elementSet.chosen({
-			// TODO: find a way to set no_results_text, placeholder_text_multiple, placeholder_text_single. Placeholder can be set through data-placeholder
+			// TODO: find a way to set no_results_text
 			allow_single_deselect: true,
 			disable_search_threshold: 5,
 			search_contains: true,
 			display_selected_options: false,
+			placeholder_text_single: ' ',
+			placeholder_text_multiple: ' ',
 			width: '100%'
 		});
-		elementSet.each(function() {
+		elementSet.each(function () {
 			// Add a special class to all labels, to style them
 			$('label[for='+$(this).attr('id')+']').addClass('chosen-label')
 		});
+		var changeTrigger = function (evt, params) {
+			var chosenCtn = $('~ .chosen-container', this);
+			var isSingle = chosenCtn.is('.chosen-container-single');
+			var singleIsDirty = $('.chosen-default', chosenCtn).length <= 0;
+			var isMulti = chosenCtn.is('.chosen-container-multi');
+			// Event is fired too soon by plugin: the last element is still there. We need a workaround
+			var multiIsDirty;
+			if (typeof(params.selected) != 'undefined') {
+				// If we selected something, the element is always dirty
+				multiIsDirty = true;
+			} else if (typeof(params.deselected) != 'undefined') {
+				// On deselection, the removed element remains until after the callback
+				multiIsDirty = $('.search-choice', chosenCtn).length > 1;
+			} else {
+				// Initial page load
+				multiIsDirty = $('.search-choice', chosenCtn).length > 0;
+			}
+			
+			var mdlTextField = $($(this).parents('.mdl-textfield').get(0));
+			if (isSingle && singleIsDirty || isMulti && multiIsDirty) {
+				mdlTextField.addClass('is-dirty');
+			} else {
+				mdlTextField.removeClass('is-dirty');
+			}
+		};
+		// Bind handler
+		elementSet.change(changeTrigger);
+		// Trigger the change event initially to mark fields as dirty at load time if needed
+		elementSet.each(changeTrigger);
 	};
 
 })(jQuery);

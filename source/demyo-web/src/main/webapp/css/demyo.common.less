@@ -259,17 +259,55 @@ a {
 }
 
 /* Chosen */
+.mdl-textfield .chosen-container-single {
+	margin-top: -9px; /* Align with other fields */
+}
 .chosen-container .chosen-results li.highlighted {
 	color: @color-primary-contrast;
 	background: @color-primary-dark;
 }
 .chosen-container-active {
+	.chosen-single, .chosen-choices {
+		/* Larger border for box */
+		border-color: @color-primary;
+		border-width: 2px;	
+	}
+	
 	margin-bottom: -1px; /* Compensate larger border */
 }
-.chosen-container-active .chosen-single, .chosen-container-active .chosen-choices {
-	border-color: @color-primary;
-	border-width: 2px;	
+.chosen-container-single .chosen-single span {
+	height: 1.25em; /* Force height to allow empty labels */
 }
-.chosen-label {
-	.dem-form__label();
+/* Chosen label placement */
+.chosen-container-single ~ .chosen-label {
+	/* When the field is not dirty, single */
+	top: 1.5em;
+	left: 8px;
+}
+.chosen-container-multi ~ .chosen-label {
+	/* When the field is not dirty, multi */
+	top: 2em;
+	left: 8px;
+}
+.chosen-container-active ~ .chosen-label {
+	.dem-form__label(); /* When the container is active, set the right font and color */
+}
+
+.chosen-container-active {
+	/* When the container is active, set the position depending on whether the container is single or multiple */
+	&.chosen-container-single ~ .chosen-label {
+		top: -0.5em;
+	}
+	&.chosen-container-multi ~ .chosen-label {
+		top: 0.5em;
+	}
+}
+.mdl-textfield.is-invalid, .mdl-textfield.is-dirty {
+	/* When the field is dirty or invalid, set the position depending on whether the container is single or multiple */
+	.chosen-container-single ~ .mdl-textfield__label.chosen-label {
+		top: -0.5em;
+	}
+	.chosen-container-multi ~ .mdl-textfield__label.chosen-label {
+		top: 0.5em;
+	}
 }

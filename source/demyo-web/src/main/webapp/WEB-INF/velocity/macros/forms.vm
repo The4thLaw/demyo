@@ -116,7 +116,7 @@
 #macro(inputSelect $labelId $path $values $options)
 	#if(!$!options.allowEmpty)#set($dummy = $options.put("allowEmpty", false))#end
 
-	#@formFieldOld($labelId, $path)
+	#@formField($labelId, $path)
 		<select id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end>
 		#if ($options.allowEmpty)
 			<option value=""></option>
@@ -129,7 +129,7 @@
 #end
 
 #macro(inputSelectMultiple $labelId $path $values)
-	#@formFieldOld($labelId, $path)
+	#@formField($labelId, $path)
 		<select id="$fieldId" name="$status.expression" multiple="multiple"#if($hasErrors) class="error"#end>
 		#foreach ($value in $values)
 			#set ($selected = false)
