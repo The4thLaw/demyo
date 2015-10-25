@@ -2,11 +2,13 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-series",
-	"url" : "../edit/$series.id"
+	"url" : "../edit/$series.id",
+	"icon": "books+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-series",
 	"url" : "../delete/$series.id",
+	"icon": "books+delete",
 	"confirm" : true
 })
 ##TODO: QT to add an album to the series
