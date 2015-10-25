@@ -1,0 +1,55 @@
+// TODO: Find a way to hide the date placeholder text on Chrome, when the field is not focused
+
+@import (reference) "demyo-icons-variables.less";
+
+a {
+	color: inherit;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+		color: @color-accent;
+	}
+	
+	&.mdl-button:hover {
+		/* Special override */
+		text-decoration: none;
+	}
+}
+
+.dem-widget {
+	width: auto;
+	
+	.mdl-textfield {
+		display: block;
+		width: auto;
+	}
+}
+
+.dico-stack {
+	position: relative;
+	
+	.dico-overlay {
+		margin: 0;
+		position: absolute;
+		top: 0;
+		right: 0.5em;
+		font-size: 50%;
+	    text-shadow: -1px -1px #fff, 0px -1px #fff, 1px -1px #fff, -1px 1px #fff, 0px 1px #fff, 1px 1px #fff;
+	}
+}
+
+.dico-placeholder {
+	display: inline-block;
+	width: 1em;
+}
+
+/* Override to have larger fields */
+.dem-model-form .mdl-textfield {
+	width: 100%;
+}
+
+@import "demyo.mixins.less";
+@import "demyo.layout.less";
+@import "demyo.forms.less";
+@import "demyo.cards.less";
+@import "demyo.chosen.less";
