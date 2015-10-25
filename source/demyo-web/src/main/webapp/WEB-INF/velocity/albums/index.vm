@@ -56,7 +56,7 @@
 		#end
 		#if (!$inSeries)
 			## Open a new series
-			<div class="mdl-card mdl-shadow--2dp dem-model-card">
+			<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--with-dependencies">
 				<a class="dem-model-card__title" href="../series/view/$album.series.id">$album.series.identifyingName</a>
 				<ul class="dem-model-card__dependencies">
 		#end

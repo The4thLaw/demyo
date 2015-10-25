@@ -2,7 +2,10 @@
 
 // Color definitions
 @color-primary: rgb(33,150,243);
-@color-contrast: rgb(255, 64, 129);
+@color-primary-contrast: rgb(255, 255, 255);
+@color-primary-dark: rgb(25,118,210);
+@color-accent: rgb(255, 64, 129);
+@color-accent-contrast: rgb(255, 255, 255);
 
 .mix-dico() {
 	// Copied from demyo-icons.css
@@ -33,7 +36,7 @@ a {
 	text-decoration: none;
 	&:hover {
 		text-decoration: underline;
-		color: @color-contrast;
+		color: @color-accent;
 	}
 	
 	&.mdl-button:hover {
@@ -137,10 +140,20 @@ a {
 		}
 	}
 	
+	&--with-dependencies {
+		.dem-model-card__title {
+			background: @color-primary;
+			color: @color-primary-contrast;
+			
+			&:hover {
+				background: @color-primary-dark;
+			}
+		}
+	}
+	
 	&__dependencies {
 		margin: 0;
 		padding: 0;
-		background: #fafafa;
 		flex-grow: 1;
 		
 		> li {
@@ -161,7 +174,7 @@ a {
 			}
 			
 			&:hover {
-				background: #e0e0e0;
+				background: rgba(158,158,158, 0.20);
 				border-top-color: #e0e0e0;
 			}
 		}
