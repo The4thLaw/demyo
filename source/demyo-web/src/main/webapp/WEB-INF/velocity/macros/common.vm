@@ -34,3 +34,12 @@
 		<i class="dico dico-placeholder"></i>
 	#end
 #end
+
+#macro(fab $url $iconSpec)
+	<a href="$url" class="dem-fab-button">
+		<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+	  		## TODO: use material icon rather than FontAwesome, for "add"
+	  		#icon($iconSpec)
+		</button>
+	</a>
+#end

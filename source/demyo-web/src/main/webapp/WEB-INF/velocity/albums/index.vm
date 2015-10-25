@@ -1,5 +1,7 @@
 #setPageTitle('title.index.album')
 
+#fab('./add', 'add')
+
 ## This is a special index since we need to group everything by series
 #set ($lastSeries = -1)
 #set ($inSeries = false)

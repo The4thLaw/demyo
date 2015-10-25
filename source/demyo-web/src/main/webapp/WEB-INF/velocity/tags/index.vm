@@ -1,5 +1,7 @@
 #setPageTitle('title.index.tag')
 
+#fab('./add', 'add')
+
 #set ($maxCount = 10) ## Start at something reasonable, or it will look silly when there are few tags and they're barely used
 
 #foreach($tag in $tagList)

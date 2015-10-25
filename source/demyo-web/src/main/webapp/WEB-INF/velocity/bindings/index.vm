@@ -1,5 +1,7 @@
 #setPageTitle('title.index.binding')
 
+#fab('./add', 'add')
+
 #textCardListStdBody($bindingList "name" "identifyingName" "./view/" false)
 
 $paging.pageLinks($bindingList, $request, $javascript)

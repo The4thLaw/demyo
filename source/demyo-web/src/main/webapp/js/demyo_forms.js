@@ -46,6 +46,7 @@
 			placeholder_text_multiple: ' ',
 			width: '100%'
 		});
+		// TODO: if chosen is disabled in this device, stop here
 		elementSet.each(function () {
 			// Add a special class to all labels, to style them
 			$('label[for='+$(this).attr('id')+']').addClass('chosen-label')

@@ -1,5 +1,7 @@
 #setPageTitle('title.index.derivativeType')
 
+#fab('./add', 'add')
+
 #textCardListStdBody($derivativeTypeList "name" "identifyingName" "./view/" false)
 
 $paging.pageLinks($derivativeTypeList, $request, $javascript)

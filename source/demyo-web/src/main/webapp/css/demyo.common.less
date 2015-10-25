@@ -1,3 +1,5 @@
+// TODO: Find a way to hide the date placeholder text on Chrome, when the field is not focused
+
 @import (reference) "demyo-icons-variables.less";
 
 .mix-dico() {
@@ -236,10 +238,13 @@ a {
 }
 
 /* Override to have a menu a bit larger */
-.mdl-layout__drawer {
-	width: 320px;
-	transform: translateX(-330px);
+@media (min-width: 350px) {
+	.mdl-layout__drawer {
+		width: 320px;
+		transform: translateX(-330px);
+	}
 }
+	
 
 #page-content {
 	position: relative;
@@ -311,4 +316,22 @@ a {
 	.chosen-container-multi ~ .mdl-textfield__label.chosen-label {
 		top: 0.5em;
 	}
+}
+
+.dem-fab-button {
+	position: fixed;
+	bottom: 16px;
+	right: 32px;
+	z-index: 10;
+	.dico { // Copied from MDL
+		position: absolute;
+	    top: 50%;
+	    left: 50%;
+        transform: translate(-12px, -12px);
+	    line-height: 24px;
+	    width: 24px;
+	}
+}
+.is-small-screen .dem-fab-button {
+	right: 16px;
 }
