@@ -73,6 +73,7 @@
 	#@formFieldOld($labelId, $path)
 		<input type="color" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
 		## TODO: use a polyfill for IE11
+		## TODO: use MDL for the checkbox
 		<div class="colour-remover">
 			## TODO: default the checkbox to checked if the value is empty
 			<input type="checkbox" id="${fieldId}_colour_remover" data-for="$fieldId" />
@@ -95,8 +96,8 @@
 
 #macro(inputDate $labelId $path)
 	## TODO: polyfill if not supported
-	#@formFieldOld($labelId, $path)
-		<input type="date" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
+	#@formField($labelId, $path)
+		<input type="date" id="$fieldId" name="$status.expression" value="$!status.value" class="mdl-textfield__input date" />
 	#end
 #end
 
