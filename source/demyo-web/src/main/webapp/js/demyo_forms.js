@@ -35,12 +35,18 @@
 	 * Binds all select elements to used Chosen.js
 	 */
 	demyo.bindSelectInputs = function () {
-		$('select').chosen({
+		var elementSet = $('select');
+		elementSet.chosen({
 			// TODO: find a way to set no_results_text, placeholder_text_multiple, placeholder_text_single. Placeholder can be set through data-placeholder
 			allow_single_deselect: true,
 			disable_search_threshold: 5,
 			search_contains: true,
-			width: '95%'
+			display_selected_options: false,
+			width: '100%'
+		});
+		elementSet.each(function() {
+			// Add a special class to all labels, to style them
+			$('label[for='+$(this).attr('id')+']').addClass('chosen-label')
 		});
 	};
 

@@ -232,3 +232,20 @@ a {
 	display: flex;
 	flex-direction: column;
 }
+
+/* Chosen */
+.chosen-container .chosen-results li.highlighted {
+	color: @color-primary-contrast;
+	background: @color-primary-dark;
+}
+.chosen-container-active {
+	margin-bottom: -1px; /* Compensate larger border */
+}
+.chosen-container-active .chosen-single, .chosen-container-active .chosen-choices {
+	border-color: @color-primary;
+	border-width: 2px;	
+}
+.chosen-label {
+	color: @color-primary;
+	font-size: 12px;	
+}
