@@ -62,10 +62,9 @@ public class JavascriptTool {
 		KNOWN_SCRIPTS = new HashMap<String, Script>();
 
 		// TinyMce
+		addScript(new Script("TinyMCE", "vendor/tinymce/tinymce.min.js"));
 		addScript(new Script("Material", "material.min.js"));
 		addScript(new Script("PrefixFree", "prefixfree.min.js"));
-		addScript(new Script("TinyMCE_DemyoInit", "demyo_TinyMCE_init.js"));
-		addScript(new Script("TinyMCE", "tiny_mce/tiny_mce_gzip.js", KNOWN_SCRIPTS.get("TinyMCE_DemyoInit")));
 		addScript(new Script("JQuery", "jquery-1.9.1.js"));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery"),
 				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));

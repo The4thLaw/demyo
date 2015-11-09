@@ -19,8 +19,9 @@ $quickTasks.prepare($javascript)
 #foreach($source in $javascript.scriptSources)
 		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
 #end
+
 	</head>
-	<body class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<body><div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__drawer-button" data-dem-shortcut="77">#icon('menu')</div>
 			<div class="mdl-layout__header-row">
@@ -122,6 +123,7 @@ $quickTasks.prepare($javascript)
 			</div>
 			## Keep the footer in the page content to avoid having it stick
 			## TODO: submit a request to MDL to have a floating footer that works on Chrome
+			## TODO: re-test floating the footer now that the layout is in a div rather than the body
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__middle-section">
 					<div class="mdl-logo">Demyo v2.0.0-alpha2</div>## TODO: make this dynamic
@@ -129,10 +131,20 @@ $quickTasks.prepare($javascript)
 			</footer>
 		</main>
 		
-#if ($javascript.isLoaded("TinyMCE"))
+		#if ($javascript.isLoaded("TinyMCE"))
 		<script type="text/javascript">
-			demyoTinyMCEInit('#_("javascript.l10n.tinyMCE")');
+			jQuery(function() {
+				// TODO: figure out why the timeout is needed. It's very ugly
+				jQuery('textarea.richtext').css('opacity', 0); // Hide them already
+				window.setTimeout(function () {
+					tinymce.init({
+						selector: "textarea.richtext",
+						language: '#_("javascript.l10n.tinyMCE")'
+					});
+				}, 500 );
+			});
 		</script>
-#end
-	</body>
+		#end
+
+	</div></body>
 </html>

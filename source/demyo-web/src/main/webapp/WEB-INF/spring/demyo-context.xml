@@ -17,6 +17,13 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
+	<!--
+		TODO: gzip the resources uzing the GzipResourceResolver
+		(maybe use a mvn plugin to zip them all automatically?)
+		See:
+			http://www.baeldung.com/spring-mvc-static-resources
+			https://github.com/spring-projects/spring-framework/blob/master/spring-webmvc/src/test/resources/org/springframework/web/servlet/config/mvc-config-resources-chain-no-auto.xml
+	-->
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
