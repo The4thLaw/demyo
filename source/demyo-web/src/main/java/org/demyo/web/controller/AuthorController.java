@@ -3,7 +3,7 @@ package org.demyo.web.controller;
 import org.demyo.model.Author;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelService;
+import org.demyo.service.IModelServiceNG;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller for {@link Author} management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1 $
  */
 @Controller
 @RequestMapping("/authors")
-public class AuthorController extends AbstractModelController<Author> {
+public class AuthorController extends AbstractModelControllerNG<Author> {
 	@Autowired
 	private IAuthorService service;
 	@Autowired
@@ -35,7 +32,7 @@ public class AuthorController extends AbstractModelController<Author> {
 	// TODO: get albums he's worked on on "view" action
 
 	@Override
-	protected IModelService<Author> getService() {
+	protected IModelServiceNG<Author> getService() {
 		return service;
 	}
 

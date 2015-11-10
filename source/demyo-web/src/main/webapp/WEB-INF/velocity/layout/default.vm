@@ -134,7 +134,8 @@ $quickTasks.prepare($javascript)
 		#if ($javascript.isLoaded("TinyMCE"))
 		<script type="text/javascript">
 			jQuery(function() {
-				// TODO: figure out why the timeout is needed. It's very ugly
+				## TODO: figure out why the timeout is needed. It's very ugly
+				## TODO: tweak editor config. Available plugings: autoresize, charmap, code, link, nonbreaking, paste, tabfocus, textcolor, visualchars, lists, table
 				jQuery('textarea.richtext').css('opacity', 0); // Hide them already
 				window.setTimeout(function () {
 					tinymce.init({

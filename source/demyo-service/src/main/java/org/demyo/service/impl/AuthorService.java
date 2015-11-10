@@ -1,23 +1,21 @@
 package org.demyo.service.impl;
 
-import org.demyo.dao.IAuthorDao;
-import org.demyo.dao.IModelDao;
+import org.demyo.dao.IAuthorRepo;
+import org.demyo.dao.IModelRepo;
 import org.demyo.model.Author;
 import org.demyo.service.IAuthorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IAuthorService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1 $
  */
 @Service
-public class AuthorService extends AbstractModelService<Author> implements IAuthorService {
+public class AuthorService extends AbstractModelServiceNG<Author> implements IAuthorService {
 	@Autowired
-	private IAuthorDao dao;
+	private IAuthorRepo repo;
 
 	/**
 	 * Default constructor.
@@ -26,8 +24,15 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		super(Author.class);
 	}
 
+	// Override to 
+	@Transactional(rollbackFor = Throwable.class)
 	@Override
-	protected IModelDao<Author> getDao() {
-		return dao;
+	public Author getByIdForView(long id) {
+		return repo.findOneForView(id);
+	}
+
+	@Override
+	protected IModelRepo<Author> getRepo() {
+		return repo;
 	}
 }

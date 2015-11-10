@@ -2,6 +2,7 @@ package org.demyo.dao.impl;
 
 import org.demyo.dao.IAuthorDao;
 import org.demyo.model.Author;
+
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
  * @version $Revision: 1 $
  */
 @Repository
+@Deprecated
 public class AuthorDao extends AbstractModelDao<Author> implements IAuthorDao {
 
 	/**

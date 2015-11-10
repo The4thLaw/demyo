@@ -1,29 +1,42 @@
 package org.demyo.model;
 
+import java.util.SortedSet;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
+import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 /**
- * Represents an Author (Artist, Scenarist, Colorist, Inker...).
- * 
- * @author $Author: xr $
- * @version $Revision: 1076 $
+ * Represents an Author (Artist, Writer, Colorist, Inker...).
  */
 @Entity
 @Table(name = "AUTHORS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name"), @DefaultOrder.Order(property = "firstName") })
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "Author.forEdition", attributeNodes = { @NamedAttributeNode("portrait") }),
+		@NamedEntityGraph(name = "Author.forView", attributeNodes = { @NamedAttributeNode("portrait"),
+				@NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
+				@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
+				@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album") },
+				subgraphs = { @NamedSubgraph(name = "Author.Album",
+						attributeNodes = { @NamedAttributeNode("series") }) }) })
 public class Author extends AbstractModel {
 	/** The last name. */
 	@Column(name = "name")
@@ -43,15 +56,25 @@ public class Author extends AbstractModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "portrait_id")
 	private Image portrait;
-	/** The portrait ID. */
-	// Work around bug HHH-3718
-	//@Column(name = "portrait_id", insertable = false, updatable = false)
-	@Transient
-	private Long portraitId;
 	/** The website. */
 	@Column(name = "website")
 	@URL
 	private String website;
+
+	/** The {@link Album}s that this Author wrote. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "writers")
+	@SortComparator(AlbumAndSeriesComparator.class)
+	private SortedSet<Album> albumsAsWriter;
+
+	/** The {@link Album}s that this Author drew. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "artists")
+	@SortComparator(AlbumAndSeriesComparator.class)
+	private SortedSet<Album> albumsAsArtist;
+
+	/** The {@link Album}s that this Author colored. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "colorists")
+	@SortComparator(AlbumAndSeriesComparator.class)
+	private SortedSet<Album> albumsAsColorist;
 
 	@Override
 	public String getIdentifyingName() {
@@ -149,24 +172,6 @@ public class Author extends AbstractModel {
 	}
 
 	/**
-	 * Gets the portrait ID.
-	 * 
-	 * @return the portrait ID
-	 */
-	public Long getPortraitId() {
-		return portraitId;
-	}
-
-	/**
-	 * Sets the portrait ID.
-	 * 
-	 * @param portraitId the new portrait ID
-	 */
-	public void setPortraitId(Long portraitId) {
-		this.portraitId = portraitId;
-	}
-
-	/**
 	 * Gets the website.
 	 * 
 	 * @return the website
@@ -199,5 +204,29 @@ public class Author extends AbstractModel {
 		}
 		sb.append(name);
 		return sb.toString().trim();
+	}
+
+	public SortedSet<Album> getAlbumsAsWriter() {
+		return albumsAsWriter;
+	}
+
+	public void setAlbumsAsWriter(SortedSet<Album> albumsAsWriter) {
+		this.albumsAsWriter = albumsAsWriter;
+	}
+
+	public SortedSet<Album> getAlbumsAsArtist() {
+		return albumsAsArtist;
+	}
+
+	public void setAlbumsAsArtist(SortedSet<Album> albumsAsArtist) {
+		this.albumsAsArtist = albumsAsArtist;
+	}
+
+	public SortedSet<Album> getAlbumsAsColorist() {
+		return albumsAsColorist;
+	}
+
+	public void setAlbumsAsColorist(SortedSet<Album> albumsAsColorist) {
+		this.albumsAsColorist = albumsAsColorist;
 	}
 }

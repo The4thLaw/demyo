@@ -8,6 +8,7 @@ import org.demyo.model.Author;
  * @author $Author: xr $
  * @version $Revision: 1 $
  */
+@Deprecated
 public interface IAuthorDao extends IModelDao<Author> {
 
 }

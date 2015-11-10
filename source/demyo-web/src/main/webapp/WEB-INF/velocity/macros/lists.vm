@@ -96,3 +96,82 @@
 	#end
 	</div>
 #end
+
+## This is a special index since we need to group everything by series
+#macro(textCardListAlbums $albumList $baseUrl $splitByFirstLetter)
+	#set ($lastSeries = -1)
+	#set ($inSeries = false)
+	#set ($lastFirstLetter = '/')
+	<div class="dem-card-list">
+	#foreach ($album in $albumList)
+	
+		## Split by first letter
+		#if ($splitByFirstLetter)
+			#if (!$album.series)
+				#set ($firstLetter = $paging.getFirstLetter($album.title))
+			#else
+				#set ($firstLetter = $paging.getFirstLetter($album.series.name))
+			#end
+					
+			#if ($firstLetter != $lastFirstLetter)
+				## If in a series, close if
+				#if ($inSeries)
+					## Close pending series
+					#set ($inSeries = false)
+						</ul>
+					</div>
+				#end
+				
+				## Close general list and start a new one
+				</div>
+				<div class="dem-card-list__separator">$firstLetter</div>
+				<div class="dem-card-list">
+				#set ($lastFirstLetter = $firstLetter)
+			#end
+		#end
+	
+		## Show actual data
+		#if (!$album.series)
+			## Single albums
+			
+			#if ($inSeries)
+				## Close pending series
+				#set ($inSeries = false)
+					</ul>
+				</div>
+			#end
+			#set ($lastSeries = -1)
+		
+			<div class="mdl-card mdl-shadow--2dp dem-model-card">
+				<a class="dem-model-card__title" href="${baseUrl}/view/$album.id">$album.title</a>
+			</div>
+		#else
+			## Albums in a series
+			
+			#if ($inSeries && $lastSeries != $album.series.id)
+				## Close the previous series
+					</ul>
+				</div>
+				#set ($inSeries = false)
+			#end
+			#if (!$inSeries)
+				## Open a new series
+				<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--with-dependencies">
+					<a class="dem-model-card__title" href="${baseUrl}/series/view/$album.series.id">$album.series.identifyingName</a>
+					<ul class="dem-model-card__dependencies">
+			#end
+			#set ($lastSeries = $album.series.id)
+			#set ($inSeries = true)
+			
+			## When https://github.com/google/material-design-lite/issues/1096 is solved, perhaps we could add ripples here
+			<li><a href="${baseUrl}/albums/view/$album.id">$album.title</a></li>
+		#end
+	
+	#end
+	</div>
+	
+	#if ($inSeries)
+		## Close any pending series
+		</div>
+	#end
+#end

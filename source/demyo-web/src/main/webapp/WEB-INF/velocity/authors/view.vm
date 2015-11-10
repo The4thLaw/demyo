@@ -9,12 +9,10 @@ $quickTasks.add({
 	"id" : "qt-delete-author",
 	"url" : "../delete/$author.id",
 	"icon": "person+delete",
-	"confirm" : true
-})
-
-
-#@entityDetails()
-
+		"confirm" : true
+	})
+	
+	
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet">
 		#@entityField('field.Author.identifyingName')$author.identifyingName#end
@@ -29,10 +27,17 @@ $quickTasks.add({
 
 <h3 class="mdl-typography--title">#_('page.Author.works')</h3>
 
-<h4 class="mdl-typography--subhead">#_('page.Author.works.asScenarist')</h4>
+#if (!$author.albumsAsWriter.isEmpty())
+	<h4 class="mdl-typography--subhead">#_('page.Author.works.asWriter')</h4>
+	#textCardListAlbums($author.albumsAsWriter '../..' false)
+#end
 
-<h4 class="mdl-typography--subhead">#_('page.Author.works.asArtist')</h4>
+#if (!$author.albumsAsArtist.isEmpty())
+	<h4 class="mdl-typography--subhead">#_('page.Author.works.asArtist')</h4>
+	#textCardListAlbums($author.albumsAsArtist '../..' false)
+#end
 
-<h4 class="mdl-typography--subhead">#_('page.Author.works.asColorist')</h4>
-
+#if (!$author.albumsAsColorist.isEmpty())
+	<h4 class="mdl-typography--subhead">#_('page.Author.works.asColorist')</h4>
+	#textCardListAlbums($author.albumsAsColorist '../..' false)
 #end
