@@ -41,6 +41,21 @@ $quickTasks.prepare($javascript)
   						<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
 					</div>
   				</div>
+  				#if (!$quickTasks.isEmpty())
+  					<div id="header-quick-tasks">
+						<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon" title="#_('quickTasks.title')">
+							#icon('ellipsis_v')
+						</button>
+	
+						<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
+						#foreach ($task in $quickTasks)
+								<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
+									#icon($task.icon)#_($task.label)
+								</a>
+						#end
+						</div>
+					<div>
+				#end
 			</div>
 		</header>
 		<div class="mdl-layout__drawer">
@@ -105,20 +120,6 @@ $quickTasks.prepare($javascript)
 		</div>
 		<main class="mdl-layout__content">
 			<div id="page-content">
-				#if (!$quickTasks.isEmpty())
-					<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon" title="#_('quickTasks.title')">
-						#icon('ellipsis_v')
-					</button>
-
-					<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
-					#foreach ($task in $quickTasks)
-							<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
-								#icon($task.icon)#_($task.label)
-							</a>
-					#end
-					</div>
-				#end
-				
 				$screen_content
 			</div>
 			## Keep the footer in the page content to avoid having it stick
