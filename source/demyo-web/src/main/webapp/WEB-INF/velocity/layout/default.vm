@@ -71,7 +71,7 @@ $quickTasks.prepare($javascript)
 			</div>
 			<nav class="mdl-navigation dem-app-menu" id="main-menu" role="menu">
 				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
-				<div class="dem-app-menu__title" id"menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.albums')</div>
+				<div class="dem-app-menu__title" id="menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.albums')</div>
 				<div class="dem-app-menu__section" id="menu-section-albums">
 					#navMenuItem('menu-list-albums', 'albums/', 'menu.albums.browse', 'speech_bubble')
 					## TODO: use tabs to go to cover list at albums/covers/ _('menu.albums.browse_covers')
@@ -84,7 +84,7 @@ $quickTasks.prepare($javascript)
 					#navMenuItem('menu-add-binding', 'bindings/add', 'menu.bindings.add', 'book+add')
 				</div>
 				
-				<div class="dem-app-menu__title" id"menu-header-authoring" data-dem-collapses="#menu-section-authoring" data-dem-collapsed-initially>#_('menu.section.authoring')</div>
+				<div class="dem-app-menu__title" id="menu-header-authoring" data-dem-collapses="#menu-section-authoring" data-dem-collapsed-initially>#_('menu.section.authoring')</div>
 				<div class="dem-app-menu__section" id="menu-section-authoring">
 					#navMenuItem('menu-list-authors', 'authors/', 'menu.authors.browse', 'person')
 					#navMenuItem('menu-add-author', 'authors/add', 'menu.authors.add', 'person+add')
@@ -93,7 +93,7 @@ $quickTasks.prepare($javascript)
 					#navMenuItem('menu-add-collection', 'collections/add', 'menu.collections.add', 'add')
 				</div>
 				
-				<div class="dem-app-menu__title" id"menu-header-derivatives" data-dem-collapses="#menu-section-derivatives" data-dem-collapsed-initially>#_('menu.section.derivatives')</div>
+				<div class="dem-app-menu__title" id="menu-header-derivatives" data-dem-collapses="#menu-section-derivatives" data-dem-collapsed-initially>#_('menu.section.derivatives')</div>
 				<div class="dem-app-menu__section" id="menu-section-derivatives">
 					#navMenuItem('menu-list-derivatives', 'derivatives/', 'menu.derivatives.browse', 'photo')
 					## TODO: use tabs for sticker list?
@@ -107,7 +107,7 @@ $quickTasks.prepare($javascript)
 					#navMenuItem('menu-add-derivative-type', 'derivativeTypes/add', 'menu.derivative_types.add', 'paint_brush+add')
 				</div>
 				
-				<div class="dem-app-menu__title" id"menu-header-management" data-dem-collapses="#menu-section-management" data-dem-collapsed-initially>#_('menu.section.management')</div>
+				<div class="dem-app-menu__title" id="menu-header-management" data-dem-collapses="#menu-section-management" data-dem-collapsed-initially>#_('menu.section.management')</div>
 				<div class="dem-app-menu__section" id="menu-section-management">
 					#navMenuItem('menu-search', 'search/advanced', 'menu.manage.search', 'search_advanced')
 					#navMenuItem('menu-export', 'library/export', 'menu.manage.export', 'download')
