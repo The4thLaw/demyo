@@ -10,8 +10,6 @@ $quickTasks.add({
 	"confirm" : true
 })
 
-#@entityDetails()
-
 #@entityField('field.Binding.identifyingName')$binding.identifyingName#end
 
-#end
+## TODO: albums from this binding

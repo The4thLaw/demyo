@@ -10,8 +10,6 @@ $quickTasks.add({
 	"confirm" : true
 })
 
-#@entityDetails()
-
 #@entityField('field.DerivativeType.identifyingName')$derivativeType.identifyingName#end
 
-#end
+## TODO: derivatives of this type
