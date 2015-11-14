@@ -23,7 +23,8 @@ $quickTasks.prepare($javascript)
 	</head>
 	<body><div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
-			<div class="mdl-layout__drawer-button" data-dem-shortcut="77">#icon('menu')</div>
+			<div class="mdl-layout__drawer-button" data-dem-shortcut="77" id="menu-icon">#icon('menu')</div>
+			<div class="mdl-tooltip" for="menu-icon">#_('menu.title')</div>
 			<div class="mdl-layout__header-row">
 				<span class="mdl-layout-title">#if($!pageTitle)$pageTitle#end</span>
 				<!-- Add spacer, to align navigation to the right -->
@@ -34,9 +35,10 @@ $quickTasks.prepare($javascript)
 				</nav>
 				<!-- Quick search -->
 				<div id="header-quicksearch" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right  mdl-layout--large-screen-only">
-					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-header-field" title="#_('layout.quick_search')">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-header-field" id="quicksearch-header-icon">
 						<i class="dico">search</i>
 					</label>
+					<div class="mdl-tooltip" for="quicksearch-header-icon">#_('layout.quick_search')</div>
 					<div class="mdl-textfield__expandable-holder">
   						<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
 					</div>
