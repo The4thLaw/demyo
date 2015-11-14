@@ -69,6 +69,16 @@
 	}
 }
 
+/* Override to flush the footer */
+main.mdl-layout__content {
+	display: flex;
+	flex-flow: column nowrap;
+	
+	#page-content {
+		flex: 1;
+	}
+}
+
 #page-content {
 	position: relative; /* We will align the quick tasks on that */
 	padding: 0.5em;
