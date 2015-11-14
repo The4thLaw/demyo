@@ -63,15 +63,15 @@ public class JavascriptTool {
 
 		// TinyMce
 		addScript(new Script("TinyMCE", "vendor/tinymce/tinymce.min.js"));
-		addScript(new Script("Material", "material.min.js"));
-		addScript(new Script("PrefixFree", "prefixfree.min.js"));
-		addScript(new Script("JQuery", "jquery-1.9.1.js"));
+		addScript(new Script("Material", "vendor/material.min.js"));
+		addScript(new Script("PrefixFree", "vendor/prefixfree.min.js"));
+		addScript(new Script("JQuery", "vendor/jquery-1.9.1.js"));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery"),
 				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
-		addScript(new Script("Chosen", "chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
+		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.Forms", "demyo_forms.js", KNOWN_SCRIPTS.get("JQuery"),
 				KNOWN_SCRIPTS.get("Chosen"), KNOWN_SCRIPTS.get("Demyo.Core")));
-		addScript(new Script("JQuery.HotKeys", "jquery.hotkeys.js", KNOWN_SCRIPTS.get("JQuery")));
+		addScript(new Script("JQuery.HotKeys", "vendor/jquery.hotkeys.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.QuickTasks", "demyo_quicktasks.js", KNOWN_SCRIPTS.get("JQuery")));
 	}
 

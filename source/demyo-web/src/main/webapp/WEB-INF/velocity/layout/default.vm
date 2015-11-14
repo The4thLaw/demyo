@@ -14,7 +14,7 @@ $quickTasks.prepare($javascript)
 		<!--<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/electron.less">-->
 		<link rel="stylesheet" type="text/css" href="$link.contextPath/css/material.blue-pink.min.css">
 		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/demyo.blue-pink.less">
-		<script type="text/javascript" src="$link.contextPath/js/less-2.5.3.min.js"></script>
+		<script type="text/javascript" src="$link.contextPath/js/vendor/less-2.5.3.min.js"></script>
 		$javascript.load('Demyo.Core') ## Always load the core
 #foreach($source in $javascript.scriptSources)
 		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
