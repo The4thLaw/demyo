@@ -7,4 +7,3 @@
 #textCardListAlbums($albumList '..' true)
 
 $paging.pageLinks($albumList, $request, $javascript)
-$paging.letters($request)

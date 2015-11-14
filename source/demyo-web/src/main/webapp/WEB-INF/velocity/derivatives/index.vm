@@ -8,4 +8,3 @@
 #textList($derivativeList "identifyingName" "identifyingName" "./view/" false)
 
 $paging.pageLinks($derivativeList, $request, $javascript)
-$paging.letters($request)

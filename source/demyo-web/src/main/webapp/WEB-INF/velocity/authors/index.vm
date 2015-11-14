@@ -7,4 +7,3 @@
 #textCardListStdBody($authorList "name" "identifyingName" "./view/" true)
 
 $paging.pageLinks($authorList, $request, $javascript)
-$paging.letters($request)

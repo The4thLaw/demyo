@@ -20,4 +20,3 @@
 #end
 
 $paging.pageLinks($publisherList, $request, $javascript)
-$paging.letters($request)
