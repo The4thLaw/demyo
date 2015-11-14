@@ -1,6 +1,8 @@
 #setPageTitle('title.index.tag')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #set ($maxCount = 10) ## Start at something reasonable, or it will look silly when there are few tags and they're barely used
 

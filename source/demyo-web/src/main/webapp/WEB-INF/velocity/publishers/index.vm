@@ -1,6 +1,8 @@
 #setPageTitle('title.index.publisher')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #@textCardListCustomBody($publisherList 'name' true)
 	<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--with-dependencies">

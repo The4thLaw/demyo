@@ -1,6 +1,8 @@
 #setPageTitle('title.index.derivativeSource')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #textCardListStdBody($derivativeSourceList "name" "identifyingName" "./view/" true)
 

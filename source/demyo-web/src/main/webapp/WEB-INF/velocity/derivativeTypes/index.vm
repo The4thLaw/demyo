@@ -1,6 +1,8 @@
 #setPageTitle('title.index.derivativeType')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #textCardListStdBody($derivativeTypeList "name" "identifyingName" "./view/" false)
 

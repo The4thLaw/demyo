@@ -1,6 +1,8 @@
 #setPageTitle('title.index.album')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #textCardListAlbums($albumList '..' true)
 

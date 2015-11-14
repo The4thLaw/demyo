@@ -1,6 +1,8 @@
 #setPageTitle('title.index.binding')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #textCardListStdBody($bindingList "name" "identifyingName" "./view/" false)
 

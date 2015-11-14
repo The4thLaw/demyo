@@ -1,6 +1,8 @@
 #setPageTitle('title.index.series')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 #textCardListStdBody($seriesList "identifyingName" "identifyingName" "./view/" true)
 

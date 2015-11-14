@@ -1,6 +1,8 @@
 #setPageTitle('title.index.derivatives')
 
-#fab('./add', 'add')
+#@fabs()
+	#fab('./add', 'add')
+#end
 
 ## TODO: rework this in material design with images
 #textList($derivativeList "identifyingName" "identifyingName" "./view/" false)
