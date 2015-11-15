@@ -1,17 +1,23 @@
 package org.demyo.model;
 
-import java.util.List;
+import java.util.SortedSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
 
+import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -20,6 +26,9 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "TAGS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
+@NamedEntityGraphs({ @NamedEntityGraph(name = "Tag.forView", attributeNodes = { @NamedAttributeNode(
+		value = "taggedAlbums", subgraph = "Tag.Album") }, subgraphs = { @NamedSubgraph(name = "Tag.Album",
+		attributeNodes = { @NamedAttributeNode("series") }) }) })
 public class Tag extends AbstractModel {
 	/** The name of the Tag. */
 	@Column(name = "name")
@@ -37,7 +46,12 @@ public class Tag extends AbstractModel {
 
 	/** The Albums tagged with this Tag. */
 	@ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-	private List<Album> taggedAlbums;
+	@SortComparator(AlbumAndSeriesComparator.class)
+	private SortedSet<Album> taggedAlbums;
+
+	/** The number of times this Tag has been used. */
+	@Transient
+	private Integer usageCount;
 
 	@Override
 	public String getIdentifyingName() {
@@ -99,13 +113,14 @@ public class Tag extends AbstractModel {
 	}
 
 	/**
-	 * Gets the number of times this Tag has been used.
+	 * 
 	 * 
 	 * @return the number of times this Tag has been used.
 	 */
 	@Transient
 	public int getOccurrencesCount() {
-		return taggedAlbums.size();
+		//return taggedAlbums.size();
+		return 0; // TODO
 	}
 
 	/**
@@ -113,7 +128,7 @@ public class Tag extends AbstractModel {
 	 * 
 	 * @return the Albums tagged with this Tag
 	 */
-	public List<Album> getTaggedAlbums() {
+	public SortedSet<Album> getTaggedAlbums() {
 		return taggedAlbums;
 	}
 
@@ -122,7 +137,28 @@ public class Tag extends AbstractModel {
 	 * 
 	 * @param taggedAlbums the new Albums tagged with this Tag
 	 */
-	public void setTaggedAlbums(List<Album> taggedAlbums) {
+	public void setTaggedAlbums(SortedSet<Album> taggedAlbums) {
 		this.taggedAlbums = taggedAlbums;
+	}
+
+	/**
+	 * Gets the number of times this Tag has been used.
+	 * 
+	 * @return the number of times this Tag has been used
+	 */
+	public Integer getUsageCount() {
+		if (usageCount == null) {
+			return taggedAlbums.size();
+		}
+		return usageCount;
+	}
+
+	/**
+	 * Sets the number of times this Tag has been used.
+	 * 
+	 * @param usageCount the new number of times this Tag has been used
+	 */
+	public void setUsageCount(Integer usageCount) {
+		this.usageCount = usageCount;
 	}
 }

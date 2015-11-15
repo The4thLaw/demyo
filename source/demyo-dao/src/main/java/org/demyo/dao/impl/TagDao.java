@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
  * Implements the contract defined by {@link ITagDao}.
  */
 @Repository
+@Deprecated
 public class TagDao extends AbstractModelDao<Tag> implements ITagDao {
 
 	/**
@@ -23,6 +24,7 @@ public class TagDao extends AbstractModelDao<Tag> implements ITagDao {
 		super(Tag.class);
 	}
 
+	@Override
 	public List<Tag> findAllTagsWithUsageCount() {
 		Criteria criteria = getSession().createCriteria(Tag.class);
 		criteria.createAlias("taggedAlbums", "album", JoinType.LEFT_OUTER_JOIN);

@@ -1,15 +1,14 @@
 package org.demyo.service.impl;
 
-import java.util.List;
-
-import org.demyo.dao.IModelDao;
-import org.demyo.dao.ITagDao;
-import org.demyo.dao.JoinTypeHolder;
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ITagRepo;
 import org.demyo.model.Tag;
 import org.demyo.service.ITagService;
 
-import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
  * Implements the contract defined by {@link ITagService}.
  */
 @Service
-public class TagService extends AbstractModelService<Tag> implements ITagService {
+public class TagService extends AbstractModelServiceNG<Tag> implements ITagService {
 	@Autowired
-	private ITagDao dao;
+	private ITagRepo repo;
 
 	/**
 	 * Default constructor.
@@ -28,18 +27,21 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 		super(Tag.class);
 	}
 
+	@Transactional(rollbackFor = Throwable.class)
 	@Override
-	protected IModelDao<Tag> getDao() {
-		return dao;
+	public Tag getByIdForView(long id) {
+		return repo.findOneForView(id);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Tag> findPaginated(int currentPage) {
-		JoinTypeHolder holder = new JoinTypeHolder();
-		holder.add("taggedAlbums", JoinType.LEFT_OUTER_JOIN);
-
-		// Ignore pagination to make the tag cloud
-		return getDao().findAll(null, holder);
+	public Slice<Tag> findPaginated(int currentPage, Order... orders) {
+		return new SliceImpl<>(repo.findAllWithUsageCounts());
 	}
+
+	@Override
+	protected IModelRepo<Tag> getRepo() {
+		return repo;
+	}
+
 }

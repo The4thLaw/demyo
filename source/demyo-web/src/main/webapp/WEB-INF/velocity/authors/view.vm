@@ -9,8 +9,8 @@ $quickTasks.add({
 	"id" : "qt-delete-author",
 	"url" : "../delete/$author.id",
 	"icon": "person+delete",
-		"confirm" : true
-	})
+	"confirm" : true
+})
 	
 	
 <div class="mdl-grid">

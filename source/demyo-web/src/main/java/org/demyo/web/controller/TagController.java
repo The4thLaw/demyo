@@ -1,7 +1,7 @@
 package org.demyo.web.controller;
 
 import org.demyo.model.Tag;
-import org.demyo.service.IModelService;
+import org.demyo.service.IModelServiceNG;
 import org.demyo.service.ITagService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/tags")
-public class TagController extends AbstractModelController<Tag> {
+public class TagController extends AbstractModelControllerNG<Tag> {
 	@Autowired
 	private ITagService service;
 
@@ -25,7 +25,7 @@ public class TagController extends AbstractModelController<Tag> {
 	}
 
 	@Override
-	protected IModelService<Tag> getService() {
+	protected IModelServiceNG<Tag> getService() {
 		return service;
 	}
 }

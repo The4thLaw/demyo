@@ -2,11 +2,13 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-tag",
-	"url" : "../edit/$tag.id"
+	"url" : "../edit/$tag.id",
+	"icon": "tag+add"
 })
 $quickTasks.add({
 	"id" : "qt-delete-author",
 	"url" : "../delete/$tag.id",
+	"icon": "tag+delete",
 	"confirm" : true
 })
 

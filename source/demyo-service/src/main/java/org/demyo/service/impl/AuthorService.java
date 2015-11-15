@@ -24,7 +24,6 @@ public class AuthorService extends AbstractModelServiceNG<Author> implements IAu
 		super(Author.class);
 	}
 
-	// Override to 
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public Author getByIdForView(long id) {
