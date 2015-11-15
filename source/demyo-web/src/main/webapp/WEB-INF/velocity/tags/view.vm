@@ -12,12 +12,17 @@ $quickTasks.add({
 	"confirm" : true
 })
 
-#@entityField('field.Tag.identifyingName')
-	#tag($tag)
-#end
-
-#if (!$tag.taggedAlbums.isEmpty())
-	#@entityField('field.Tag.taggedAlbums')
-		#textCardListAlbums($tag.taggedAlbums false)
-	#end
-#end
+## Grids are not really required here, but theyr provide a more consistent look & feel compared to other pages
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--12-col">
+		#@entityField('field.Tag.identifyingName')
+			#tag($tag)
+		#end
+		
+		#if (!$tag.taggedAlbums.isEmpty())
+			#@entityField('field.Tag.taggedAlbums')
+				#textCardListAlbums($tag.taggedAlbums false)
+			#end
+		#end
+	</div>
+</div>
