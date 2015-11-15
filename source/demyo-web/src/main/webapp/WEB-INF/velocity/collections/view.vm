@@ -2,22 +2,32 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-collection",
-	"url" : "../edit/$collection.id"
+	"url" : "../edit/$collection.id",
+	"icon": "edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-collection",
 	"url" : "../delete/$collection.id",
+	"icon": "delete",
 	"confirm" : true
 })
 
-#thumbnail($collection.logo)
 
 #@entityDetails()
 
-#@entityField('field.Collection.identifyingName')$collection.identifyingName#end
-#@entityField('field.Collection.publisher')<a href="../../publishers/view/$collection.publisher.id">$collection.publisher.identifyingName</a>#end
-#entityFieldUrl('field.Collection.website', $collection.website)
-#entityFieldUrl('field.Collection.feed', $collection.feed)
-#entityFieldRichText('field.Collection.history', $collection.history)
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet">
+		#@entityField('field.Collection.identifyingName')$collection.identifyingName#end
+		#@entityField('field.Collection.publisher')<a href="../../publishers/view/$collection.publisher.id">$collection.publisher.identifyingName</a>#end
+		#entityFieldUrl('field.Collection.website', $collection.website)
+		#entityFieldUrl('field.Collection.feed', $collection.feed)
+		#entityFieldRichText('field.Collection.history', $collection.history)
+	</div>
+	
+	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+		#@thumbnail($collection.logo)#end
+	</div>
+</div>
+
 
 #end
