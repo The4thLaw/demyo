@@ -4,6 +4,6 @@
 	#fab('./add', 'add')
 #end
 
-#textCardListAlbums($albumList '..' true)
+#textCardListAlbums($albumList true)
 
 $paging.pageLinks($albumList, $request, $javascript)

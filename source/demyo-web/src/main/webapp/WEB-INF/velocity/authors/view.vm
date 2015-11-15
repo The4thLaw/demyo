@@ -29,15 +29,15 @@ $quickTasks.add({
 
 #if (!$author.albumsAsWriter.isEmpty())
 	<h4 class="mdl-typography--subhead">#_('page.Author.works.asWriter')</h4>
-	#textCardListAlbums($author.albumsAsWriter '../..' false)
+	#textCardListAlbums($author.albumsAsWriter false)
 #end
 
 #if (!$author.albumsAsArtist.isEmpty())
 	<h4 class="mdl-typography--subhead">#_('page.Author.works.asArtist')</h4>
-	#textCardListAlbums($author.albumsAsArtist '../..' false)
+	#textCardListAlbums($author.albumsAsArtist false)
 #end
 
 #if (!$author.albumsAsColorist.isEmpty())
 	<h4 class="mdl-typography--subhead">#_('page.Author.works.asColorist')</h4>
-	#textCardListAlbums($author.albumsAsColorist '../..' false)
+	#textCardListAlbums($author.albumsAsColorist false)
 #end

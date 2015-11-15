@@ -49,3 +49,9 @@
 		$bodyContent
 	</div>
 #end
+
+#macro(tag $tag)
+	<a href="$link.contextPath/tags/view/$tag.id" class="dem-tag" style="#if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">
+		<span class="dem-tag__name">$tag.name</a>
+	</span>
+#end

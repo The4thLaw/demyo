@@ -98,7 +98,7 @@
 #end
 
 ## This is a special index since we need to group everything by series
-#macro(textCardListAlbums $albumList $baseUrl $splitByFirstLetter)
+#macro(textCardListAlbums $albumList $splitByFirstLetter)
 	#set ($lastSeries = -1)
 	#set ($inSeries = false)
 	#set ($lastFirstLetter = '/')
@@ -143,7 +143,7 @@
 			#set ($lastSeries = -1)
 		
 			<div class="mdl-card mdl-shadow--2dp dem-model-card">
-				<a class="dem-model-card__title" href="${baseUrl}/view/$album.id">$album.title</a>
+				<a class="dem-model-card__title" href="$link.contextPath/albums/view/$album.id">$album.title</a>
 			</div>
 		#else
 			## Albums in a series
@@ -157,14 +157,14 @@
 			#if (!$inSeries)
 				## Open a new series
 				<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--with-dependencies">
-					<a class="dem-model-card__title" href="${baseUrl}/series/view/$album.series.id">$album.series.identifyingName</a>
+					<a class="dem-model-card__title" href="$link.contextPath/series/view/$album.series.id">$album.series.identifyingName</a>
 					<ul class="dem-model-card__dependencies">
 			#end
 			#set ($lastSeries = $album.series.id)
 			#set ($inSeries = true)
 			
 			## When https://github.com/google/material-design-lite/issues/1096 is solved, perhaps we could add ripples here
-			<li><a href="${baseUrl}/albums/view/$album.id">$album.title</a></li>
+			<li><a href="$link.contextPath/albums/view/$album.id">$album.title</a></li>
 		#end
 	
 	#end

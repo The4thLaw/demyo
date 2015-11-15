@@ -15,8 +15,8 @@
 <div class="dem-tag-index">
 	#foreach ($tag in $tagList)
 	#set ($relativeSize = 100 * $tag.usageCount / $maxCount + 100)
-	<span class="dem-tag" style="font-size: $relativeSize%; #if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">##
-<a href="./view/$tag.id">$tag.name</a> <span class="dem-tag__count">${tag.usageCount}</span>##
-</span> 
+	<a href="./view/$tag.id" class="dem-tag" style="font-size: $relativeSize%; #if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">##
+<span class="dem-tag__name">$tag.name</span><span class="dem-tag__count">$tag.usageCount</span>##
+</a> 
 	#end
 </div>

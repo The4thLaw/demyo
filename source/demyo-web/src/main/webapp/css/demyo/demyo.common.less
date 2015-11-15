@@ -61,22 +61,27 @@ a {
 	}
 }
 
+a.dem-tag:hover {
+	text-decoration:none;
+	
+	.dem-tag__name {
+		text-decoration: underline;
+	}
+}
 .dem-tag {
 	border-top-left-radius: 5px;
 	border-bottom-right-radius: 5px;
 	background-color: @color-background-light-highlight;
 	margin-right: 1em;
-	padding: 2px 8px;
+	padding: 4px 12px;
 	white-space: nowrap;
-	
-	a, a:hover {
-		color: inherit;
-	}
+	font-size: 16px;
 	
 	&__count {
 		font-size: 9pt;
 		&:before {
 			content: '(';
+			margin-left: 0.5em;
 		}
 		&:after {
 			content: ')';
