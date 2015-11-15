@@ -25,6 +25,7 @@
 		<org.slf4j.version>1.7.2</org.slf4j.version>
 		<org.springframework.version>4.2.0.RELEASE</org.springframework.version>
 		<org.hibernate.version>4.3.11.Final</org.hibernate.version>
+		<com.fasterxml.jackson.version>2.6.3</com.fasterxml.jackson.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -133,6 +134,17 @@
 				<groupId>org.imgscalr</groupId>
 				<artifactId>imgscalr-lib</artifactId>
 				<version>4.2</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 
 			<!-- Test dependencies (TODO: check what is actually needed) -->

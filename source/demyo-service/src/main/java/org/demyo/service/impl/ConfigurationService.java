@@ -64,6 +64,7 @@ public class ConfigurationService implements IConfigurationService {
 			} catch (IOException e) {
 				throw new DemyoRuntimeException(DemyoErrorCode.CONFIG_TEMPLATE_CANNOT_COPY, e);
 			}
+			// TODO: close stream
 		}
 
 		try {

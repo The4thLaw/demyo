@@ -1,10 +1,19 @@
 package org.demyo.model.config;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
+import com.fasterxml.jackson.databind.type.CollectionType;
 
 /**
  * Demyo application configuration. These are things that the user can change through the application and impact
@@ -15,6 +24,8 @@ import org.apache.commons.configuration.Configuration;
  * @version $Revision: 1073 $
  */
 public class ApplicationConfiguration {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);
+
 	/** The language in which the application is displayed. */
 	private final Locale language;
 	/** The list of quick links in the header. */
@@ -43,11 +54,21 @@ public class ApplicationConfiguration {
 		thumbnailWidth = config.getInt("thumbnail.width");
 		thumbnailHeight = config.getInt("thumbnail.height");
 
-		headerLinks = new ArrayList<>();
+		// Load the header links as JSON data
 		String headerLinksSpec = config.getString("header.quickLinks", "[]");
-		// TODO: parse JSON
-		headerLinks.add(new HeaderLink("albums/", "speech_bubble", "menu.albums.browse"));
-		headerLinks.add(new HeaderLink("authors/", "person", "menu.authors.browse"));
+		JsonFactory jsonFactory = new JsonFactory();
+		ObjectMapper jsonMapper = new ObjectMapper(jsonFactory);
+		CollectionType jsonType = jsonMapper.getTypeFactory().constructCollectionType(ArrayList.class,
+				HeaderLink.class);
+		List<HeaderLink> links = new ArrayList<>();
+		try {
+			LOGGER.debug("Header links: {}", headerLinksSpec);
+			JsonParser jsonParser = jsonFactory.createParser(headerLinksSpec);
+			links = jsonMapper.<List<HeaderLink>> readValue(jsonParser, jsonType);
+		} catch (RuntimeJsonMappingException | IOException e) {
+			LOGGER.warn("Failed to load the header configuration", e);
+		}
+		headerLinks = links;
 	}
 
 	/**

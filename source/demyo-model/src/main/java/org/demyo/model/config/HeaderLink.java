@@ -1,5 +1,8 @@
 package org.demyo.model.config;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a quick link in the header.
  */
@@ -24,7 +27,9 @@ public class HeaderLink {
 	 * @param iconSpec The icon specification
 	 * @param label The label ID
 	 */
-	public HeaderLink(String urlFromRoot, String iconSpec, String label) {
+	@JsonCreator
+	public HeaderLink(@JsonProperty("urlFromRoot") String urlFromRoot, @JsonProperty("iconSpec") String iconSpec,
+			@JsonProperty("label") String label) {
 		this.urlFromRoot = urlFromRoot;
 		this.iconSpec = iconSpec;
 		this.label = label;
