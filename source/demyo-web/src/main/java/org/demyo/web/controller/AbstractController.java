@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.demyo.model.exception.DemyoErrorCode;
 import org.demyo.model.exception.IDemyoException;
+import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
 import org.demyo.utils.io.DIOUtils;
 
@@ -22,14 +23,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
  * Base controller for Demyo.
- * 
- * @author Xavier 'Xr' Dalem
- * @version $Revision$
  */
 public abstract class AbstractController {
 	private static final String MODEL_KEY_LAYOUT = "layout";
 	private static final String LAYOUT_AJAX = "layout/ajax.vm";
 
+	@Autowired
+	private IConfigurationService configService;
 	@Autowired
 	private ITranslationService translationService;
 
@@ -63,6 +63,16 @@ public abstract class AbstractController {
 	@ModelAttribute
 	private void initTranslationService(Model model) {
 		model.addAttribute("demyoTranslationService", translationService);
+	}
+
+	/**
+	 * Sets the application configuration into the model.
+	 * 
+	 * @param model The view model.
+	 */
+	@ModelAttribute
+	private void initConfiguration(Model model) {
+		model.addAttribute("appConfig", configService.getConfiguration());
 	}
 
 	/**

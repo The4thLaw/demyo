@@ -1,5 +1,7 @@
 package org.demyo.model.config;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.configuration.Configuration;
@@ -15,6 +17,8 @@ import org.apache.commons.configuration.Configuration;
 public class ApplicationConfiguration {
 	/** The language in which the application is displayed. */
 	private final Locale language;
+	/** The list of quick links in the header. */
+	private final List<HeaderLink> headerLinks;
 	/** The number of items per page of textual entries. */
 	private final int pageSizeForText;
 	/** The number of items per page of images. */
@@ -38,6 +42,12 @@ public class ApplicationConfiguration {
 		pageSizeForAlbums = config.getInt("paging.albumPageSize");
 		thumbnailWidth = config.getInt("thumbnail.width");
 		thumbnailHeight = config.getInt("thumbnail.height");
+
+		headerLinks = new ArrayList<>();
+		String headerLinksSpec = config.getString("header.quickLinks", "[]");
+		// TODO: parse JSON
+		headerLinks.add(new HeaderLink("albums/", "speech_bubble", "menu.albums.browse"));
+		headerLinks.add(new HeaderLink("authors/", "person", "menu.authors.browse"));
 	}
 
 	/**
@@ -60,6 +70,15 @@ public class ApplicationConfiguration {
 	 */
 	public Locale getLanguage() {
 		return language;
+	}
+
+	/**
+	 * Gets the list of quick links in the header.
+	 * 
+	 * @return the list of quick links in the header
+	 */
+	public List<HeaderLink> getHeaderLinks() {
+		return headerLinks;
 	}
 
 	/**
