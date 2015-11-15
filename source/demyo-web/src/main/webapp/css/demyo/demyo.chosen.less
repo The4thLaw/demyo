@@ -18,6 +18,9 @@
 	
 	margin-bottom: -1px; /* Compensate larger border */
 }
+.chosen-container-single .chosen-single {
+	padding-left: 0;
+}
 .chosen-container-single .chosen-single span {
 	height: 1.25em; /* Force height to allow empty labels */
 }
@@ -25,12 +28,12 @@
 .chosen-container-single ~ .chosen-label {
 	/* When the field is not dirty, single */
 	top: 1.5em;
-	left: 8px;
+	left: 0;
 }
 .chosen-container-multi ~ .chosen-label {
 	/* When the field is not dirty, multi */
 	top: 2em;
-	left: 8px;
+	left: 0;
 }
 .chosen-container-active ~ .chosen-label {
 	.dem-form__label(); /* When the container is active, set the right font and color */

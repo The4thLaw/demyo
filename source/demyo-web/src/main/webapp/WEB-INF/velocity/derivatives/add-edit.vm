@@ -3,25 +3,79 @@
 #@form()
 
 #inputHidden('derivative.id')
-#inputSelect('field.Derivative.series', 'derivative.series.id', $series, { "allowEmpty": true })
-## TODO: load albums using AJAX (possibly using Spring Data REST?)
-#inputSelect('field.Derivative.album', 'derivative.album.id', [], { })
-#inputSelect('field.Derivative.artist', 'derivative.artist.id', $authors, { "allowEmpty": true })
-#inputSelect('field.Derivative.source', 'derivative.source.id', $sources, { "allowEmpty": true })
-#inputSelect('field.Derivative.type', 'derivative.type.id', $types, { })
-#inputFloat('field.Derivative.colours', 'derivative.colours')
-#inputFloat('field.Derivative.number', 'derivative.number')
-#inputFloat('field.Derivative.total', 'derivative.total')
-#inputCheckbox('field.Derivative.signed', 'derivative.signed')
-#inputCheckbox('field.Derivative.authors_copy', 'derivative.authors_copy')
-#inputCheckbox('field.Derivative.restricted_sale', 'derivative.restricted_sale')
-#inputFloat('field.Derivative.width', 'derivative.width')
-#inputFloat('field.Derivative.height', 'derivative.height')
-#inputFloat('field.Derivative.depth', 'derivative.depth') 
-#inputDate('field.Deri.vative.acquisitionDate', 'derivative.acquisitionDate')
-#inputFloat('field.Derivative.purchasePrice', 'derivative.purchasePrice') ## TODO: append currency
-#inputRichText('field.Derivative.description', 'derivative.description')
-#inputSelectMultiple('field.Derivative.images', 'derivative.images', $images)
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.origin')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Derivative.series', 'derivative.series.id', $series, { "allowEmpty": true })
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		## TODO: load albums using AJAX (possibly using Spring Data REST?)
+		## When doing that, use   $('.my_select_box').trigger('chosen:updated'); to update the element
+		#inputSelect('field.Derivative.album', 'derivative.album.id', [], { })
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Derivative.artist', 'derivative.artist.id', $authors, { "allowEmpty": true })
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Derivative.source', 'derivative.source.id', $sources, { "allowEmpty": true })
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.format')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Derivative.type', 'derivative.type.id', $types, { })
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputFloat('field.Derivative.colours', 'derivative.colours')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputFloat('field.Derivative.width', 'derivative.width')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputFloat('field.Derivative.height', 'derivative.height')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+		#inputFloat('field.Derivative.depth', 'derivative.depth') 
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.description')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputFloat('field.Derivative.number', 'derivative.number')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputFloat('field.Derivative.total', 'derivative.total')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputCheckbox('field.Derivative.signed', 'derivative.signed')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+		#inputCheckbox('field.Derivative.authors_copy', 'derivative.authors_copy')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+		#inputCheckbox('field.Derivative.restricted_sale', 'derivative.restricted_sale')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputRichText('field.Derivative.description', 'derivative.description')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelectMultiple('field.Derivative.images', 'derivative.images', $images)
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.acquisition')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputDate('field.Derivative.acquisitionDate', 'derivative.acquisitionDate')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputFloat('field.Derivative.purchasePrice', 'derivative.purchasePrice') ## TODO: append currency
+	</div>
+</div>
+
 
 #saveButtons
 
