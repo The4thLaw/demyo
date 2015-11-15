@@ -3,13 +3,39 @@
 #@form()
 
 #inputHidden('derivativeSource.id')
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col">
 #inputText('field.DerivativeSource.name', 'derivativeSource.name')
-#inputText('field.DerivativeSource.owner', 'derivativeSource.owner')
-#inputText('field.DerivativeSource.email', 'derivativeSource.email')
-#inputText('field.DerivativeSource.website', 'derivativeSource.website')
-#inputMultilineText('field.DerivativeSource.address', 'derivativeSource.address')
-#inputText('field.DerivativeSource.phoneNumber', 'derivativeSource.phoneNumber')
-#inputRichText('field.DerivativeSource.history', 'derivativeSource.history')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.DerivativeSource.contact')</h6></div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputText('field.DerivativeSource.owner', 'derivativeSource.owner')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col">
+		#inputText('field.DerivativeSource.phoneNumber', 'derivativeSource.phoneNumber')
+	</div>
+	<div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+		#inputMultilineText('field.DerivativeSource.address', 'derivativeSource.address')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.DerivativeSource.email', 'derivativeSource.email')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.DerivativeSource.website', 'derivativeSource.website')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col">
+		#inputRichText('field.DerivativeSource.history', 'derivativeSource.history')
+	</div>
+</div>
+
+
 #saveButtons
 
 #end

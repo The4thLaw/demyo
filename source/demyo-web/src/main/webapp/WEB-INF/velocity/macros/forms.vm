@@ -57,8 +57,8 @@
 #end
 
 #macro(inputMultilineText $labelId $path)
-	#@formFieldOld($labelId, $path)
-		<textarea id="$fieldId" name="$status.expression" class="plaintext #if($hasErrors)error#end">$!status.value</textarea>
+	#@formField($labelId, $path)
+		<textarea id="$fieldId" name="$status.expression" rows="4" class="mdl-textfield__input plaintext #if($hasErrors)error#end">$!status.value</textarea>
 	#end
 #end
 
