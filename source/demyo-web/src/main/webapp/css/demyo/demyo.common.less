@@ -1,6 +1,7 @@
 // TODO: Find a way to hide the date placeholder text on Chrome, when the field is not focused
 
 @import (reference) "demyo-icons-variables.less";
+@import "demyo.mixins.less";
 
 a {
 	color: inherit;
@@ -52,7 +53,37 @@ a {
 	width: 100%;
 }
 
-@import "demyo.mixins.less";
+.dem-tag-index {
+	text-align: center;
+	
+	.dem-tag {
+		line-height: 180%;
+	}
+}
+
+.dem-tag {
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background-color: @color-background-light-highlight;
+	margin-right: 1em;
+	padding: 2px 8px;
+	white-space: nowrap;
+	
+	a, a:hover {
+		color: inherit;
+	}
+	
+	&__count {
+		font-size: 9pt;
+		&:before {
+			content: '(';
+		}
+		&:after {
+			content: ')';
+		}
+	}
+}
+
 @import "demyo.layout.less";
 @import "demyo.forms.less";
 @import "demyo.cards.less";
