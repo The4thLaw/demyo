@@ -3,12 +3,38 @@
 #@form()
 
 #inputHidden('collection.id')
-#inputText('field.Collection.name', 'collection.name')
-#inputSelect('field.Collection.publisher', 'collection.publisher.id', $publishers, {})
-#inputText('field.Collection.website', 'collection.website')
-#inputText('field.Collection.feed', 'collection.feed')
-#inputSelect('field.Collection.logo', 'collection.logo.id', $images, { "allowEmpty": true })
-#inputRichText('field.Collection.history', 'collection.history')
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Collection.identification')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.Collection.name', 'collection.name')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Collection.publisher', 'collection.publisher.id', $publishers, {})
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Collection.internet')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.Collection.website', 'collection.website')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.Collection.feed', 'collection.feed')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Collection.history')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputRichText('field.Collection.history', 'collection.history')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Collection.logo', 'collection.logo.id', $images, { "allowEmpty": true })
+	</div>
+</div>
+
+
 #saveButtons
 
 #end
