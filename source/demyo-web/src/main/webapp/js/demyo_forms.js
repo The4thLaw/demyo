@@ -22,13 +22,13 @@
 	 * Clears the colour inputs on demand
 	 */
 	demyo.bindColourInputs = function () {
-		$('.colour-remover input').change(function (e) {
+		$('.dem-colour-remover input').change(function (e) {
 			var self = $(this);
 			$('#' + self.data('for')).prop('disabled', self.is(':checked'));
 			$('#' + self.data('for')).change(); // Trigger event
 		});
 		// Trigger at start to disable the input if needed
-		$('.colour-remover input').change();
+		$('.dem-colour-remover input').change();
 	};
 	
 	/**

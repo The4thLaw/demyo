@@ -73,12 +73,12 @@
 	#@formFieldOld($labelId, $path)
 		<input type="color" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
 		## TODO: use a polyfill for IE11
-		## TODO: use MDL for the checkbox
-		<div class="colour-remover">
+		
+		<label class="dem-colour-remover mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="${fieldId}_colour_remover">
 			## TODO: default the checkbox to checked if the value is empty
-			<input type="checkbox" id="${fieldId}_colour_remover" data-for="$fieldId" />
-			<label for="${fieldId}_colour_remover">#_('special.form.noColour')</label>
-		</div>
+			<input type="checkbox" id="${fieldId}_colour_remover" class="mdl-checkbox__input" data-for="$fieldId" #if($!status.value)checked="checked"#end/>
+			<span class="mdl-checkbox__label">#_('special.form.noColour')</span>
+		</label>
 	#end
 #end
 
