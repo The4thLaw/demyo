@@ -3,11 +3,33 @@
 #@form()
 
 #inputHidden('publisher.id')
-#inputText('field.Publisher.name', 'publisher.name')
-#inputText('field.Publisher.website', 'publisher.website')
-#inputText('field.Publisher.feed', 'publisher.feed')
-#inputSelect('field.Publisher.logo', 'publisher.logo.id', $images, { "allowEmpty": true })
-#inputRichText('field.Publisher.history', 'publisher.history')
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col">
+		#inputText('field.Publisher.name', 'publisher.name')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Publisher.internet')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.Publisher.website', 'publisher.website')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputText('field.Publisher.feed', 'publisher.feed')
+	</div>
+</div>
+
+<div class="mdl-grid dem-field-set">
+	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Publisher.history')</h6></div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputRichText('field.Publisher.history', 'publisher.history')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#inputSelect('field.Publisher.logo', 'publisher.logo.id', $images, { "allowEmpty": true })
+	</div>
+</div>
+
 #saveButtons
 
 #end

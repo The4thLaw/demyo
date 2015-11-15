@@ -2,31 +2,36 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-publisher",
-	"url" : "../edit/$publisher.id"
+	"url" : "../edit/$publisher.id",
+	"icon": "city+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-publisher",
 	"url" : "../delete/$publisher.id",
+	"icon": "city+delete",
 	"confirm" : true
 })
 ## TODO: quick task to add a collection to this publisher
 
-#thumbnail($publisher.logo)
-
-#@entityDetails()
-
-#@entityField('field.Publisher.identifyingName')$publisher.identifyingName#end
-#entityFieldUrl('field.Publisher.website', $publisher.website)
-#entityFieldUrl('field.Publisher.feed', $publisher.feed)
-#entityFieldRichText('field.Publisher.history', $publisher.history)
-#if (!$publisher.collections.isEmpty())
-	#@entityField('field.Publisher.collections')
-		<ul>
-			#foreach ($collection in $publisher.collections)
-				<li><a href="../../collections/view/$collection.id">$collection.identifyingName</a></li>
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet">
+		#@entityField('field.Publisher.identifyingName')$publisher.identifyingName#end
+		#entityFieldUrl('field.Publisher.website', $publisher.website)
+		#entityFieldUrl('field.Publisher.feed', $publisher.feed)
+		#entityFieldRichText('field.Publisher.history', $publisher.history)
+	</div>
+	
+	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+		#@thumbnail($publisher.logo)#end
+	</div>
+	
+	#if (!$publisher.collections.isEmpty())
+		<div class="mdl-cell">
+			#@entityField('field.Publisher.collections')
+				#textCardListStdBody($publisher.collections "name" "identifyingName" "../../collections/view/" false)
 			#end
-		</ul>
+		</div>
 	#end
-#end
+</div>
 
-#end
+
