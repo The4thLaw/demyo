@@ -58,9 +58,8 @@ public class AlbumService extends AbstractModelServiceNG<Album> implements IAlbu
 		if (orders.length > 0) {
 			throw new UnsupportedOperationException("It is not possible to override the order for pages of albums");
 		}
-		// Since series are likely to take a bit more space on a page, we use the page size size for images instead
 		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
-				.getPageSizeForImages());
+				.getPageSizeForAlbums());
 
 		Slice<MetaSeries> metaSlice = metaSeriesRepo.findAll(pageable);
 

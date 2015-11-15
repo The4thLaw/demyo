@@ -19,6 +19,8 @@ public class ApplicationConfiguration {
 	private final int pageSizeForText;
 	/** The number of items per page of images. */
 	private final int pageSizeForImages;
+	/** The number of series per page of albums. */
+	private final int pageSizeForAlbums;
 	/** The maximum thumbnail width in pixels. */
 	private final int thumbnailWidth;
 	/** The maximum thumbnail height in pixels. */
@@ -33,6 +35,7 @@ public class ApplicationConfiguration {
 		language = Locale.forLanguageTag(config.getString("language"));
 		pageSizeForText = config.getInt("paging.textPageSize");
 		pageSizeForImages = config.getInt("paging.imagePageSize");
+		pageSizeForAlbums = config.getInt("paging.albumPageSize");
 		thumbnailWidth = config.getInt("thumbnail.width");
 		thumbnailHeight = config.getInt("thumbnail.height");
 	}
@@ -75,6 +78,10 @@ public class ApplicationConfiguration {
 	 */
 	public int getPageSizeForImages() {
 		return pageSizeForImages;
+	}
+
+	public int getPageSizeForAlbums() {
+		return pageSizeForAlbums;
 	}
 
 	/**
