@@ -52,9 +52,10 @@ $quickTasks.prepare($javascript)
   				</div>
   				#if (!$quickTasks.isEmpty())
   					<div id="header-quick-tasks">
-						<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon" title="#_('quickTasks.title')">
+						<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">
 							#icon('ellipsis_v')
 						</button>
+						<div class="mdl-tooltip" for="button-quick-tasks">#_("quickTasks.title")</div>
 	
 						<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
 						#foreach ($task in $quickTasks)
