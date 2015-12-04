@@ -2,22 +2,44 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-derivativeSource",
-	"url" : "../edit/$derivativeSource.id"
+	"url" : "../edit/$derivativeSource.id",
+	"icon" : "person_location+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-derivativeSource",
 	"url" : "../delete/$derivativeSource.id",
+	"icon" : "person_location+delete",
 	"confirm" : true
 })
 
-#@entityDetails()
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--12-col">
+		#@entityField('field.DerivativeSource.identifyingName')$derivativeSource.identifyingName#end
+	</div>
+	
+	#if ($derivativeSource.owner || $derivativeSource.phoneNumber)
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#entityFieldText('field.DerivativeSource.owner', $derivativeSource.owner)
+		#entityFieldText('field.DerivativeSource.phoneNumber', $derivativeSource.phoneNumber)
+	</div>
+	#end
+	#if ($derivativeSource.email || $derivativeSource.website)
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#entityFieldEmail('field.DerivativeSource.email', $derivativeSource.email)
+		#entityFieldUrl('field.DerivativeSource.website', $derivativeSource.website)
+	</div>
+	#end
+	
+	#if ($derivativeSource.address)
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#entityFieldMultilineText('field.DerivativeSource.address', $derivativeSource.address)
+	</div>
+	#end
+	#if ($derivativeSource.history)
+	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		#entityFieldRichText('field.DerivativeSource.history', $derivativeSource.history)
+	</div>
+	#end
+</div>
 
-#@entityField('field.DerivativeSource.identifyingName')$derivativeSource.identifyingName#end
-#entityFieldText('field.DerivativeSource.owner', $derivativeSource.owner)
-#entityFieldEmail('field.DerivativeSource.email', $derivativeSource.email)
-#entityFieldUrl('field.DerivativeSource.website', $derivativeSource.website)
-#entityFieldMultilineText('field.DerivativeSource.address', $derivativeSource.address)
-#entityFieldText('field.DerivativeSource.phoneNumber', $derivativeSource.phoneNumber)
-#entityFieldRichText('field.DerivativeSource.history', $derivativeSource.history)
 
-#end
