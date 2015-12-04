@@ -3,7 +3,7 @@
 $quickTasks.add({
 	"id" : "qt-edit-author",
 	"url" : "../edit/$author.id",
-	"icon": "person+add"
+	"icon": "person+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-author",
