@@ -19,20 +19,61 @@ $quickTasks.add({
 
 #@entityDetails()
 
+## TODO: grid for the following data
+
 #entityFieldText('field.Series.identifyingName' $series.identifyingName)
 #entityFieldUrl('field.Series.website', $series.website)
 #entityFieldRichText('field.Series.summary', $series.summary)
 #entityFieldRichText('field.Series.comment', $series.comment)
-##TODO: scenarists
-##TODO: artists
-##TODO: colorists
-##TODO: owned albums count
-##TODO: derivatives
-##TODO: tags
+#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '../../authors/view/')
+#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '../../authors/view/')
+#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '../../authors/view/')
+#@entityField('field.Series.albumCount')
+	#if ($series.ownedAlbumCount == $series.totalAlbumCount)
+		#_p('field.Series.albumCount.count.full', $series.totalAlbumCount)
+	#else
+		#_p('field.Series.albumCount.count.partial', [ $series.ownedAlbumCount, $series.totalAlbumCount ])
+	#end 
+#end
+#entityFieldTagList('field.Series.albumTags', $series.albumTags)
 #entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, './')
 #entityFieldBoolean('field.Series.completed', $series.completed)
+##TODO: derivatives
 
 #end
 
-##TODO: cover slider
-##TODO: list of albums
+##TODO: cover slider or equivalent
+##TODO: thumbnails if large screen
+##TODO: opacity for wishlist items (and hide by default ? --> quick task will need a different icon based on status)
+
+#if (!$series.albums.isEmpty())
+<div id="dem-series-album-list" class="mdl-grid">
+
+	#foreach($album in $series.albums)
+		<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+			<div class="mdl-card mdl-shadow--2dp dem-album-card">
+				<div class="mdl-card__title">
+					<a href="$link.contextPath/albums/view/$album.id" class="mdl-card__title-text">$album.identifyingName</a>
+					<button id="button-quick-tasks-album-$album.id" class="mdl-button mdl-js-button mdl-button--icon">
+						<i class="dico">ellipsis_v</i>
+					</button>
+					<div class="mdl-tooltip" for="button-quick-tasks-album-$album.id">#_("quickTasks.title")</div>
+					<div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks-album-$album.id">
+						<a class="mdl-menu__item" href="$link.contextPath/albums/edit/$album.id">
+							#icon('speech_bubble+edit')#_('quickTasks.edit.album')
+						</a>
+					</div>
+				</div>
+				<div class="dem-album-card__details">
+					#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
+					#entityFieldLinkedModel('field.Album.collection' $album.collection)
+					#entityFieldCsvList('field.Album.writers', $album.writers, "$link.contextPath/author/view/")
+					#entityFieldCsvList('field.Album.artists', $album.artists, "$link.contextPath/author/view/")
+					#entityFieldTagList('field.Album.tags', $album.tags)
+				</div>
+			</div>
+		</div>
+	#end
+
+</div>
+#end

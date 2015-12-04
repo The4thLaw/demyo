@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IAlbumRepo extends IModelRepo<Album> {
+	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
 	// TODO: open a feature request to Spring Data to support some genericity in @EntityGraph: automatic context with

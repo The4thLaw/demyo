@@ -26,9 +26,9 @@
 #end
 
 #macro(entityFieldBoolean $labelId $value)
-	<div class="field">
-		<label>#_("${labelId}.view")</label>
-		<div class="value">
+	<div class="dem-form-value__field">
+		<label class="dem-form__label">#_("${labelId}.view")</label>
+		<div class="dem-form__value">
 			#if($value)
 				#_("${labelId}.value.true")
 			#else
@@ -66,6 +66,14 @@
 	#if($entityList && !$entityList.isEmpty())
 		#@entityField($labelId)
 			#csvList($entityList $baseUrl)
+		#end
+	#end
+#end
+
+#macro(entityFieldTagList $labelId $entityList)
+	#if($entityList && !$entityList.isEmpty())
+		#@entityField($labelId)
+			#tagList($entityList)
 		#end
 	#end
 #end

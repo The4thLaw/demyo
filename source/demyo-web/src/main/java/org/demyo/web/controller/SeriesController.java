@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller for {@link Series} management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1071 $
  */
 @Controller
 @RequestMapping("/series")

@@ -44,8 +44,13 @@
 
 #macro(csvList $entityList $baseUrl)
 	#foreach ($entity in $entityList)
-		<a href="$baseUrl$entity.id">$entity.identifyingName</a>
-		#if( $foreach.hasNext ), #end
+		<a href="$baseUrl$entity.id">$entity.identifyingName</a>#if( $foreach.hasNext ), #end
+	#end
+#end
+
+#macro(tagList $tags)
+	#foreach ($tag in $tags)
+		#tag($tag)
 	#end
 #end
 

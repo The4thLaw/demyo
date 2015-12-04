@@ -1,5 +1,6 @@
 package org.demyo.service.impl;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.demyo.service.ITranslationService;
@@ -36,6 +37,11 @@ public class TranslationService implements ITranslationService {
 
 	@Override
 	public String translate(String labelId, Object[] params) {
+		if (params.length == 1 && params[0] instanceof ArrayList<?>) {
+			// Unbox ArrayList provided by velocity
+			params = ((ArrayList<?>) params[0]).toArray();
+		}
+
 		Locale locale = getLocale();
 		try {
 			return messageSource.getMessage(labelId, params, locale);

@@ -112,3 +112,30 @@
 		margin-bottom: 0.5em;
 	}
 }
+
+/* Special cards for albums */
+
+
+.dem-album-card {
+	width: auto;
+	
+	.mdl-card__title {
+		background: @color-primary;
+		color: @color-primary-contrast;
+	}
+	
+	.mdl-card__title-text {
+		flex-grow: 1; /* Make it push the buttons */
+		color: inherit;
+		/* Overrides to get text-overflow */
+		white-space: pre;
+		display: block;
+		text-overflow: ellipsis;
+		display: block;
+	}
+	
+	&__details {
+		padding: 16px;
+		font-size: 14px;
+	}
+}
