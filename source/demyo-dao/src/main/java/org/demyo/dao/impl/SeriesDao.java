@@ -42,7 +42,7 @@ public class SeriesDao extends AbstractModelDao<Series> implements ISeriesDao {
 		long id = super.save(model);
 
 		// Insert backwards associated in for all new related series
-		if (!model.getRelatedSeries().isEmpty()) {
+		if (model.getRelatedSeries() != null && !model.getRelatedSeries().isEmpty()) {
 			LOGGER.trace("Inserting {} new reverse associations to series {}", model.getRelatedSeries().size(), id);
 
 			Query query = getEntityManager().createNativeQuery(
