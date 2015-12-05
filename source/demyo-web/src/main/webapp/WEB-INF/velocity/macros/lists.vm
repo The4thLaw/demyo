@@ -35,7 +35,7 @@
 		#end
 	#else
 		## TODO: eventually, this will disappear
-		#if (!$entityList.isEmpty())
+		#if (!$entityList.empty)
 			</ul>
 		#end
 	#end

@@ -72,7 +72,7 @@ $quickTasks.add({
 
 ##TODO: cover slider or equivalent
 
-#if (!$series.albums.isEmpty())
+#if (!$series.albums.empty)
 <div id="dem-series-album-list" class="mdl-grid">
 
 	#foreach($album in $series.albums)

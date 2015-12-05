@@ -30,7 +30,7 @@ $quickTasks.prepare($javascript)
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>
 				
-				#if (! $appConfig.headerLinks.isEmpty())
+				#if (! $appConfig.headerLinks.empty)
 				<!-- Quick links -->
 				<nav class="mdl-navigation mdl-layout--large-screen-only" id="header-quick-links">
 					#foreach ($entry in $appConfig.headerLinks)
@@ -50,7 +50,7 @@ $quickTasks.prepare($javascript)
   				##		<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
 				##	</div>
   				##</div>
-  				#if (!$quickTasks.isEmpty())
+  				#if (!$quickTasks.empty)
   					<div id="header-quick-tasks">
 						<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">
 							#icon('ellipsis_v')

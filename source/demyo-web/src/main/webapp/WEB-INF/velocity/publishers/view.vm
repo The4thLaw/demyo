@@ -25,7 +25,7 @@ $quickTasks.add({
 		#@thumbnail($publisher.logo)#end
 	</div>
 	
-	#if (!$publisher.collections.isEmpty())
+	#if (!$publisher.collections.empty)
 		<div class="mdl-cell mdl-cell--12-col">
 			#@entityField('field.Publisher.collections')
 				#textCardListStdBody($publisher.collections "name" "identifyingName" "../../collections/view/" false)

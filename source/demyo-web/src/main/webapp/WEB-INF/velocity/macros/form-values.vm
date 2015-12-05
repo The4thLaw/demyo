@@ -64,7 +64,7 @@
 #end
 
 #macro(entityFieldCsvList $labelId $entityList $baseUrl)
-	#if($entityList && !$entityList.isEmpty())
+	#if($entityList && !$entityList.empty)
 		#@entityField($labelId)
 			#csvList($entityList $baseUrl)
 		#end
@@ -72,7 +72,7 @@
 #end
 
 #macro(entityFieldTagList $labelId $entityList)
-	#if($entityList && !$entityList.isEmpty())
+	#if($entityList && !$entityList.empty)
 		#@entityField($labelId)
 			#tagList($entityList)
 		#end

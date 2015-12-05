@@ -19,7 +19,7 @@ $quickTasks.add({
 			#tag($tag)
 		#end
 		
-		#if (!$tag.taggedAlbums.isEmpty())
+		#if (!$tag.taggedAlbums.empty)
 			#@entityField('field.Tag.taggedAlbums')
 				#textCardListAlbums($tag.taggedAlbums false)
 			#end
