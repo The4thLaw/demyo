@@ -32,16 +32,16 @@ $quickTasks.add({
 ##TODO: QT to remove a tag if at least one album
 
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#@mdlGridCell([6,4,4])
 		#entityFieldText('field.Series.identifyingName' $series.identifyingName)
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#@mdlGridCellCond([6,4,4], $series.website)
 		#entityFieldUrl('field.Series.website', $series.website)
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,4])
 		#entityFieldBoolean('field.Series.completed', $series.completed)
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,4])
 		#@entityField('field.Series.albumCount')
 			#if ($series.ownedAlbumCount == $series.totalAlbumCount)
 				#_p('field.Series.albumCount.count.full', $series.totalAlbumCount)
@@ -49,22 +49,24 @@ $quickTasks.add({
 				#_p('field.Series.albumCount.count.partial', [ $series.ownedAlbumCount, $series.totalAlbumCount ])
 			#end
 		#end
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#set ($cond = !($series.albumWriters.empty && $series.albumArtists.empty && $series.albumColorists.empty))
+	#@mdlGridCellCond([6,4,4], $cond)
 		#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '../../authors/view/')
 		#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '../../authors/view/')
 		#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '../../authors/view/')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#set ($cond = !($series.albumTags.empty && $series.relatedSeries.empty))
+	#@mdlGridCellCond([6,4,4], $cond)
 		#entityFieldTagList('field.Series.albumTags', $series.albumTags)
 		#entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, './')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#@mdlGridCellCond([6,4,4], $series.summary)
 		#entityFieldRichText('field.Series.summary', $series.summary)
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+	#end
+	#@mdlGridCellCond([6,4,4], $series.comment)
 		#entityFieldRichText('field.Series.comment', $series.comment)
-	</div>
+	#end
 </div>
 ##TODO: derivatives
 

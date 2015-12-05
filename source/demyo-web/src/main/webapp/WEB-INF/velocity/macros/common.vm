@@ -56,3 +56,25 @@
 <span class="dem-tag__name">$tag.name</span>##
 </a>
 #end
+
+## Extract this to MDL helpers if the list of macros grows
+## TODO: use this as much as possible in existing pages
+#macro(mdlGridCell $sizes)
+	#set ($classes = "mdl-cell")
+	#set ($classes = "$classes mdl-cell--$sizes[0]-col")
+	#if ($sizes[1] != $sizes[0] && $sizes[1] != 0)
+		#set ($classes = "$classes mdl-cell--$sizes[1]-col-tablet")
+	#end
+	#if ($sizes[2] != $sizes[1] && $sizes[2] != 0)
+		#set ($classes = "$classes mdl-cell--$sizes[2]-col-phone")
+	#end
+	<div class="$classes">
+		$bodyContent
+	</div>
+#end
+
+#macro(mdlGridCellCond $sizes $condition)
+	#if ($condition)
+		#mdlGridCell($sizes)## Relays $bodyContent transparently
+	#end
+#end
