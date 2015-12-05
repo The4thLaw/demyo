@@ -51,7 +51,8 @@
 #end
 
 #macro(tag $tag)
-	<a href="$link.contextPath/tags/view/$tag.id" class="dem-tag" style="#if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">
-		<span class="dem-tag__name">$tag.name</span>
-	</a>
+	## Avoid any space that could break the tag across lines
+	<a href="$link.contextPath/tags/view/$tag.id" class="dem-tag" style="#if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">##
+<span class="dem-tag__name">$tag.name</span>##
+</a>
 #end

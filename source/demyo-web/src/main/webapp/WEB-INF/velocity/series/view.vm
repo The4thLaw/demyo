@@ -11,17 +11,20 @@ $quickTasks.add({
 	"icon": "books+delete",
 	"confirm" : true
 })
-$quickTasks.add({
-	"id" : "qt-show-wishlist-albums",
-	"url" : "#",
-	"icon": "gift+eye"
-})
-## TODO: icon with barred eye
-$quickTasks.add({
-	"id" : "qt-hide-wishlist-albums",
-	"url" : "#",
-	"icon": "gift"
-})
+#set ($hasWishlistAlbums = $series.ownedAlbumCount != $series.totalAlbumCount)
+#if ($hasWishlistAlbums)
+	$quickTasks.add({
+		"id" : "qt-show-wishlist-albums",
+		"url" : "#",
+		"icon": "gift+eye"
+	})
+	## TODO: icon with barred eye
+	$quickTasks.add({
+		"id" : "qt-hide-wishlist-albums",
+		"url" : "#",
+		"icon": "gift"
+	})
+#end
 ##TODO: QT to add an album to the series
 ##TODO: QT to add a derivative to the series
 ##TODO: QT to lend albums if at least one album
@@ -30,25 +33,41 @@ $quickTasks.add({
 
 #@entityDetails()
 
-## TODO: grid for the following data
-
-#entityFieldText('field.Series.identifyingName' $series.identifyingName)
-#entityFieldUrl('field.Series.website', $series.website)
-#entityFieldRichText('field.Series.summary', $series.summary)
-#entityFieldRichText('field.Series.comment', $series.comment)
-#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '../../authors/view/')
-#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '../../authors/view/')
-#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '../../authors/view/')
-#@entityField('field.Series.albumCount')
-	#if ($series.ownedAlbumCount == $series.totalAlbumCount)
-		#_p('field.Series.albumCount.count.full', $series.totalAlbumCount)
-	#else
-		#_p('field.Series.albumCount.count.partial', [ $series.ownedAlbumCount, $series.totalAlbumCount ])
-	#end 
-#end
-#entityFieldTagList('field.Series.albumTags', $series.albumTags)
-#entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, './')
-#entityFieldBoolean('field.Series.completed', $series.completed)
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldText('field.Series.identifyingName' $series.identifyingName)
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldUrl('field.Series.website', $series.website)
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldBoolean('field.Series.completed', $series.completed)
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#@entityField('field.Series.albumCount')
+			#if ($series.ownedAlbumCount == $series.totalAlbumCount)
+				#_p('field.Series.albumCount.count.full', $series.totalAlbumCount)
+			#else
+				#_p('field.Series.albumCount.count.partial', [ $series.ownedAlbumCount, $series.totalAlbumCount ])
+			#end
+		#end
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '../../authors/view/')
+		#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '../../authors/view/')
+		#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '../../authors/view/')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldTagList('field.Series.albumTags', $series.albumTags)
+		#entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, './')
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldRichText('field.Series.summary', $series.summary)
+	</div>
+	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
+		#entityFieldRichText('field.Series.comment', $series.comment)
+	</div>
+</div>
 ##TODO: derivatives
 
 #end
@@ -75,6 +94,7 @@ $quickTasks.add({
 				</div>
 				<div class="dem-album-card__details">
 					## TODO: have some JavaScript to avoid loading images (defer loading) if the layout is small
+					## TODO: open thumbnails using colorbox or equivalent.
 					#thumbnail($album.cover)
 					#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 					#entityFieldLinkedModel('field.Album.collection' $album.collection)
@@ -89,7 +109,9 @@ $quickTasks.add({
 </div>
 #end
 
+#if ($hasWishlistAlbums)
 <script type="text/javascript">
+	// Handler for show/hide wishlist albums
 	jQuery(function () {
 		jQuery('#qt-hide-wishlist-albums').hide();
 		
@@ -108,3 +130,4 @@ $quickTasks.add({
 		});
 	});
 </script>
+#end
