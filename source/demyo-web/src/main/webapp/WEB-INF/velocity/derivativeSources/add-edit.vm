@@ -5,34 +5,34 @@
 #inputHidden('derivativeSource.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col">
-#inputText('field.DerivativeSource.name', 'derivativeSource.name')
-	</div>
+	#@mdlGridCell([12,0,0])
+		#inputText('field.DerivativeSource.name', 'derivativeSource.name')
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.DerivativeSource.contact')</h6></div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.DerivativeSource.contact')</h6>#end
+	#@mdlGridCell([4,0,0])
 		#inputText('field.DerivativeSource.owner', 'derivativeSource.owner')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputText('field.DerivativeSource.phoneNumber', 'derivativeSource.phoneNumber')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+	#end
+	#@mdlGridCell([4,8,0])
 		#inputMultilineText('field.DerivativeSource.address', 'derivativeSource.address')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.DerivativeSource.email', 'derivativeSource.email')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.DerivativeSource.website', 'derivativeSource.website')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col">
+	#@mdlGridCell([12,0,0])
 		#inputRichText('field.DerivativeSource.history', 'derivativeSource.history')
-	</div>
+	#end
 </div>
 
 

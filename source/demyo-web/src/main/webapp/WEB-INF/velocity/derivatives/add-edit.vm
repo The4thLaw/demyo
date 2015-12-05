@@ -5,75 +5,75 @@
 #inputHidden('derivative.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.origin')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Derivative.origin')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Derivative.series', 'derivative.series.id', $series, { "allowEmpty": true })
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		## TODO: load albums using AJAX (possibly using Spring Data REST?)
 		## When doing that, use   $('.my_select_box').trigger('chosen:updated'); to update the element
 		#inputSelect('field.Derivative.album', 'derivative.album.id', [], { })
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Derivative.artist', 'derivative.artist.id', $authors, { "allowEmpty": true })
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Derivative.source', 'derivative.source.id', $sources, { "allowEmpty": true })
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.format')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Derivative.format')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Derivative.type', 'derivative.type.id', $types, { })
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputFloat('field.Derivative.colours', 'derivative.colours')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,3,4])
 		#inputFloat('field.Derivative.width', 'derivative.width')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,3,4])
 		#inputFloat('field.Derivative.height', 'derivative.height')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,2,4])
 		#inputFloat('field.Derivative.depth', 'derivative.depth') 
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.description')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Derivative.description')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputFloat('field.Derivative.number', 'derivative.number')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputFloat('field.Derivative.total', 'derivative.total')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,3,4])
 		#inputCheckbox('field.Derivative.signed', 'derivative.signed')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,3,4])
 		#inputCheckbox('field.Derivative.authors_copy', 'derivative.authors_copy')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,2,4])
 		#inputCheckbox('field.Derivative.restricted_sale', 'derivative.restricted_sale')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Derivative.description', 'derivative.description')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelectMultiple('field.Derivative.images', 'derivative.images', $images)
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Derivative.acquisition')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Derivative.acquisition')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputDate('field.Derivative.acquisitionDate', 'derivative.acquisitionDate')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputFloat('field.Derivative.purchasePrice', 'derivative.purchasePrice') ## TODO: append currency
-	</div>
+	#end
 </div>
 
 

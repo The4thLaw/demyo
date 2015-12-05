@@ -5,32 +5,30 @@
 #inputHidden('series.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Series.identification')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Series.identification')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Series.name', 'series.name')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Series.website', 'series.website')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelectMultiple('field.Series.relatedSeries', 'series.relatedSeries', $otherSeries)
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputCheckbox('field.Series.completed', 'series.completed')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Series.freeText')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Series.freeText')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Series.summary', 'series.summary')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Series.comment', 'series.comment')
-	</div>
+	#end
 </div>
-
-
 
 #saveButtons
 

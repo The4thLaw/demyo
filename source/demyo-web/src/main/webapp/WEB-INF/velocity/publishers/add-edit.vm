@@ -5,29 +5,29 @@
 #inputHidden('publisher.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col">
+	#@mdlGridCell([12,0,0])
 		#inputText('field.Publisher.name', 'publisher.name')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Publisher.internet')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Publisher.internet')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Publisher.website', 'publisher.website')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Publisher.feed', 'publisher.feed')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Publisher.history')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Publisher.history')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Publisher.history', 'publisher.history')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Publisher.logo', 'publisher.logo.id', $images, { "allowEmpty": true })
-	</div>
+	#end
 </div>
 
 #saveButtons

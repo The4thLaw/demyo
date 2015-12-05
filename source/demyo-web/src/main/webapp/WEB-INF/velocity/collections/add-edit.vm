@@ -5,33 +5,33 @@
 #inputHidden('collection.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Collection.identification')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Collection.identification')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Collection.name', 'collection.name')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Collection.publisher', 'collection.publisher.id', $publishers, {})
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Collection.internet')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Collection.internet')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Collection.website', 'collection.website')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Collection.feed', 'collection.feed')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Collection.history')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Collection.history')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Collection.history', 'collection.history')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Collection.logo', 'collection.logo.id', $images, { "allowEmpty": true })
-	</div>
+	#end
 </div>
 
 

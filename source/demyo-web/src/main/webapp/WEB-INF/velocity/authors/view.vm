@@ -14,15 +14,15 @@ $quickTasks.add({
 	
 	
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet">
+	#@mdlGridCell([9,5,0])
 		#@entityField('field.Author.identifyingName')$author.identifyingName#end
 		#entityFieldUrl('field.Author.website', $author.website)
 		#entityFieldRichText('field.Author.biography', $author.biography)
-	</div>
+	#end
 	
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+	#@mdlGridCell([3,3,4])
 		#@thumbnail($author.portrait)#end
-	</div>
+	#end
 </div>
 
 <h3 class="mdl-typography--title">#_('page.Author.works')</h3>

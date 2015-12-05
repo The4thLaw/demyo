@@ -14,23 +14,22 @@ $quickTasks.add({
 ## TODO: quick task to add a collection to this publisher
 
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet">
+	#@mdlGridCell([9,5,0])
 		#@entityField('field.Publisher.identifyingName')$publisher.identifyingName#end
 		#entityFieldUrl('field.Publisher.website', $publisher.website)
 		#entityFieldUrl('field.Publisher.feed', $publisher.feed)
 		#entityFieldRichText('field.Publisher.history', $publisher.history)
-	</div>
+	#end
 	
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+	#@mdlGridCell([3,3,4])
 		#@thumbnail($publisher.logo)#end
-	</div>
+	#end
 	
-	#if (!$publisher.collections.empty)
-		<div class="mdl-cell mdl-cell--12-col">
-			#@entityField('field.Publisher.collections')
-				#textCardListStdBody($publisher.collections "name" "identifyingName" "../../collections/view/" false)
-			#end
-		</div>
+	#set ($cond = !$publisher.collections.empty)
+	#@mdlGridCellCond([12,0,0], $cond)
+		#@entityField('field.Publisher.collections')
+			#textCardListStdBody($publisher.collections "name" "identifyingName" "../../collections/view/" false)
+		#end
 	#end
 </div>
 

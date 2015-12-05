@@ -5,26 +5,26 @@
 #inputHidden('tag.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([6,4,0])
 		#inputText('field.Tag.name', 'tag.name')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#@entityField('field.Tag.preview')
 			<span id="tag-preview" class="dem-tag" style="#if($tag.fgColour)color: $tag.fgColour;#end #if($tag.bgColour)background-color: $tag.bgColour;#end">
 				<a href="#">#if($!tag.name)$tag.name#end</a>
 			</span>
 		#end
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Tag.colors')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Tag.colors')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputColour('field.Tag.fgColour', 'tag.fgColour')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputColour('field.Tag.bgColour', 'tag.bgColour')
-	</div>
+	#end
 </div>
 
 

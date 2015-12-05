@@ -5,119 +5,119 @@
 #inputHidden('album.id')
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col">
+	#@mdlGridCell([12,0,0])
 		#inputSelect('field.Album.series', 'album.series.id', $series, { "allowEmpty": true })
-	</div>
+	#end
 </div>
 	
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.identification')</h6></div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.identification')</h6>#end
+	#@mdlGridCell([4,3,4])
 		#inputInteger('field.Album.cycle', 'album.cycle')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,3,4])
 		#inputFloat('field.Album.number', 'album.number')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--4-col-phone">
+	#end
+	#@mdlGridCell([4,2,4])
 		#inputText('field.Album.numberSuffix', 'album.numberSuffix')
-	</div>
-	<div class="mdl-cell mdl-cell--12-col">
+	#end
+	#@mdlGridCell([12,0,0])
 		#inputText('field.Album.title', 'album.title')
-	</div>
-	<div class="mdl-cell mdl-cell--12-col">
+	#end
+	#@mdlGridCell([12,0,0])
 		#inputSelectMultiple('field.Album.tags', 'album.tags', $tags)
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.publishing')</h6></div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.publishing')</h6>#end
+	#@mdlGridCell([4,0,0])
 		#inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		## TODO: load collections with AJAX. Possibly using Spring Data REST ?
 		## When doing that, use   $('.my_select_box').trigger('chosen:updated'); to update the element
 		#inputSelect('field.Album.collection', 'album.collection.id', [], { })
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputText('field.Album.isbn', 'album.isbn')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.authoring')</h6></div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.authoring')</h6>#end
+	#@mdlGridCell([4,0,0])
 		#inputSelectMultiple('field.Album.writers', 'album.writers', $authors)
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputSelectMultiple('field.Album.artists', 'album.artists', $authors)
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputSelectMultiple('field.Album.colorists', 'album.colorists', $authors)
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.dates')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.dates')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputDate('field.Album.firstEditionDate', 'album.firstEditionDate')
 		## TODO: tool to copy that date to the current edition
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputDate('field.Album.currentEditionDate', 'album.currentEditionDate')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputCheckbox('field.Album.wishlist', 'album.wishlist')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.format')</h6></div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.format')</h6>#end
+	#@mdlGridCell([4,0,0])
 		#inputFloat('field.Album.width', 'album.width')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputFloat('field.Album.height', 'album.height')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputInteger('field.Album.pages', 'album.pages')
-	</div>
-	<div class="mdl-cell mdl-cell--4-col">
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.freeText')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.freeText')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Album.summary', 'album.summary')
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Album.comment', 'album.comment')
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.images')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.images')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Album.cover', 'album.cover.id', $images, { "allowEmpty": true })
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		#inputSelectMultiple('field.Album.images', 'album.images', $images)
-	</div>
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
-	<div class="mdl-cell mdl-cell--12-col"><h6>#_('fieldset.Album.prices')</h6></div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.prices')</h6>#end
+	#@mdlGridCell([6,4,0])
 		#inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
-	</div>
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#end
+	#@mdlGridCell([6,4,0])
 		## TODO: price history
-	</div>
+	#end
 </div>
 
 #saveButtons

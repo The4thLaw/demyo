@@ -2,15 +2,15 @@
 
 <div class="mdl-grid">
 
-	<div class="mdl-cell mdl-cell--12-col">
+	#@mdlGridCell([12,0,0])
 		<div class="mdl-card mdl-shadow--2dp dem-widget">
 			<div class="mdl-card__title">
 				Welcome to Demyo
 			</div>
 		</div>
-	</div>
+	#end
 
-##	<div class="mdl-cell mdl-cell--12-col">
+##	#@mdlGridCell([12,0,0])
 ##		<div class="mdl-card mdl-shadow--2dp dem-widget">
 ##			<div class="mdl-card__title">
 ##				<h2 class="mdl-card__title-text">#_('widget.search.title')</h2>
@@ -23,9 +23,9 @@
 ##				</div>
 ##			</div>
 ##		</div>
-##	</div>
+##	#end
 ##	
-##	<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
+##	#@mdlGridCell([6,8,0])
 ##		<div class="mdl-card mdl-shadow--2dp dem-widget">
 ##			<div class="mdl-card__title">
 ##				<h2 class="mdl-card__title-text">#_('widget.random_album.title')</h2>
@@ -34,9 +34,9 @@
 ##				<p>TODO</p>
 ##			</div>
 ##		</div>
-##	</div>
+##	#@mdlGridCell([12,0,0])
 ##	
-##	<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet">
+##	#@mdlGridCell([6,8,0])
 ##		<div class="mdl-card mdl-shadow--2dp dem-widget">
 ##			<div class="mdl-card__title">
 ##				<h2 class="mdl-card__title-text">#_('widget.random_images.title')</h2>
@@ -45,6 +45,6 @@
 ##				<p>TODO</p>
 ##			</div>
 ##		</div>
-##	</div>
+##	#@mdlGridCell([12,0,0])
 
 </div>

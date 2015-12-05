@@ -13,32 +13,26 @@ $quickTasks.add({
 })
 
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--12-col">
+	#@mdlGridCell([12,0,0])
 		#@entityField('field.DerivativeSource.identifyingName')$derivativeSource.identifyingName#end
-	</div>
+	#end
 	
-	#if ($derivativeSource.owner || $derivativeSource.phoneNumber)
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#set ($cond = ($derivativeSource.owner || $derivativeSource.phoneNumber))
+	#@mdlGridCellCond([6,4,0], $cond)
 		#entityFieldText('field.DerivativeSource.owner', $derivativeSource.owner)
 		#entityFieldText('field.DerivativeSource.phoneNumber', $derivativeSource.phoneNumber)
-	</div>
 	#end
-	#if ($derivativeSource.email || $derivativeSource.website)
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#set ($cond = ($derivativeSource.email || $derivativeSource.website))
+	#@mdlGridCellCond([6,4,0], $cond)
 		#entityFieldEmail('field.DerivativeSource.email', $derivativeSource.email)
 		#entityFieldUrl('field.DerivativeSource.website', $derivativeSource.website)
-	</div>
 	#end
 	
-	#if ($derivativeSource.address)
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCellCond([6,4,0], $derivativeSource.address)
 		#entityFieldMultilineText('field.DerivativeSource.address', $derivativeSource.address)
-	</div>
 	#end
-	#if ($derivativeSource.history)
-	<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+	#@mdlGridCellCond([6,4,0], $derivativeSource.history)
 		#entityFieldRichText('field.DerivativeSource.history', $derivativeSource.history)
-	</div>
 	#end
 </div>
 

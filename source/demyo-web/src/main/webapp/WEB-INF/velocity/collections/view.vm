@@ -16,17 +16,17 @@ $quickTasks.add({
 #@entityDetails()
 
 <div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet">
+	#@mdlGridCell([9,5,0])
 		#@entityField('field.Collection.identifyingName')$collection.identifyingName#end
 		#@entityField('field.Collection.publisher')<a href="../../publishers/view/$collection.publisher.id">$collection.publisher.identifyingName</a>#end
 		#entityFieldUrl('field.Collection.website', $collection.website)
 		#entityFieldUrl('field.Collection.feed', $collection.feed)
 		#entityFieldRichText('field.Collection.history', $collection.history)
-	</div>
+	#end
 	
-	<div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-phone">
+	#@mdlGridCell([3,3,4])
 		#@thumbnail($collection.logo)#end
-	</div>
+	#end
 </div>
 
 
