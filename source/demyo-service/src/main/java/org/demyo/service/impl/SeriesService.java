@@ -42,6 +42,9 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 			if (a.getCollection() != null) {
 				a.getCollection().getIdentifyingName();
 			}
+			if (a.getCover() != null) {
+				a.getCover().getUrl();
+			}
 		}
 		return series;
 	}
