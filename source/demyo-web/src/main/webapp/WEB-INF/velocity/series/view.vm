@@ -51,7 +51,7 @@ $quickTasks.add({
 
 	#foreach($album in $series.albums)
 		<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
-			<div class="mdl-card mdl-shadow--2dp dem-album-card">
+			<div class="mdl-card mdl-shadow--2dp dem-album-card #if($album.wishlist)dem-album-card--wishlist#end">
 				<div class="mdl-card__title">
 					<a href="$link.contextPath/albums/view/$album.id" class="mdl-card__title-text">$album.identifyingName</a>
 					<button id="button-quick-tasks-album-$album.id" class="mdl-button mdl-js-button mdl-button--icon">
