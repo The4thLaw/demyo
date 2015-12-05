@@ -1,4 +1,5 @@
 #macro(entityDetails)
+## TODO: remove this from everywhere
 <div class="details">
 	$bodyContent
 </div>

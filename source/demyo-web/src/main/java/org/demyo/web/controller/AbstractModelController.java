@@ -1,7 +1,10 @@
 package org.demyo.web.controller;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -236,6 +239,26 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	 */
 	protected <C extends Collection<?>> void registerCollectionEditor(PropertyEditorRegistry binder,
 			Class<C> collectionClass, String propertyPath, final Class<? extends IModel> collectionModelClass) {
+		registerCollectionEditor(binder, collectionClass, propertyPath, collectionModelClass, null);
+	}
+
+	/**
+	 * Registers a {@link CustomCollectionEditor} to translate a multiple select bind value into a sorted
+	 * collection of the proper model elements.
+	 * 
+	 * @param binder The binder to register the editor into.
+	 * @param collectionClass The class of the collection.
+	 * @param propertyPath The path of the property to convert.
+	 * @param collectionModelClass The class of the model in the collection.
+	 * @param <C> The class of the collection.
+	 */
+	protected <C extends Collection<?>> void registerCollectionEditor(PropertyEditorRegistry binder,
+			final Class<C> collectionClass, String propertyPath,
+			final Class<? extends IModel> collectionModelClass, final Comparator<?> comparator) {
+		if (collectionClass.isInstance(SortedSet.class) && comparator == null) {
+			throw new NullPointerException("comparator cannot be null if the collection is sorted");
+		}
+
 		binder.registerCustomEditor(collectionClass, propertyPath, new CustomCollectionEditor(collectionClass) {
 			@Override
 			protected Object convertElement(Object element) {
@@ -251,6 +274,16 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 					model.setId(id);
 				}
 				return model;
+			}
+
+			@Override
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			// Also warnings in CustomCollectionEditor, do don't mind the @SuppressWarnings
+			protected Collection<Object> createCollection(Class<? extends Collection> clazz, int size) {
+				if (SortedSet.class.isAssignableFrom(clazz)) {
+					return new TreeSet(comparator);
+				}
+				return super.createCollection(clazz, size);
 			}
 		});
 	}

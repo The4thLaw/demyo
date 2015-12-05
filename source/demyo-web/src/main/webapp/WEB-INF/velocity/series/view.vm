@@ -31,8 +31,6 @@ $quickTasks.add({
 ##TODO: QT to tag all albums if at least one album
 ##TODO: QT to remove a tag if at least one album
 
-#@entityDetails()
-
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--6-col mdl-cell-4-col-tablet">
 		#entityFieldText('field.Series.identifyingName' $series.identifyingName)
@@ -69,8 +67,6 @@ $quickTasks.add({
 	</div>
 </div>
 ##TODO: derivatives
-
-#end
 
 ##TODO: cover slider or equivalent
 

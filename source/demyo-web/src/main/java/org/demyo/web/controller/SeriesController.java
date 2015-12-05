@@ -1,8 +1,9 @@
 package org.demyo.web.controller;
 
-import java.util.Set;
+import java.util.SortedSet;
 
 import org.demyo.model.Series;
+import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.service.IModelService;
 import org.demyo.service.ISeriesService;
 
@@ -47,6 +48,7 @@ public class SeriesController extends AbstractModelController<Series> {
 
 	@InitBinder
 	private void initBinder(PropertyEditorRegistry binder) throws Exception {
-		registerCollectionEditor(binder, Set.class, "relatedSeries", Series.class);
+		registerCollectionEditor(binder, SortedSet.class, "relatedSeries", Series.class,
+				new IdentifyingNameComparator());
 	}
 }
