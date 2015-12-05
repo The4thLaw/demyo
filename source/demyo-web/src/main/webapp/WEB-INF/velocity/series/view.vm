@@ -11,6 +11,17 @@ $quickTasks.add({
 	"icon": "books+delete",
 	"confirm" : true
 })
+$quickTasks.add({
+	"id" : "qt-show-wishlist-albums",
+	"url" : "#",
+	"icon": "gift+eye"
+})
+## TODO: icon with barred eye
+$quickTasks.add({
+	"id" : "qt-hide-wishlist-albums",
+	"url" : "#",
+	"icon": "gift"
+})
 ##TODO: QT to add an album to the series
 ##TODO: QT to add a derivative to the series
 ##TODO: QT to lend albums if at least one album
@@ -44,13 +55,12 @@ $quickTasks.add({
 
 ##TODO: cover slider or equivalent
 ##TODO: thumbnails if large screen
-##TODO: opacity for wishlist items (and hide by default ? --> quick task will need a different icon based on status)
 
 #if (!$series.albums.isEmpty())
 <div id="dem-series-album-list" class="mdl-grid">
 
 	#foreach($album in $series.albums)
-		<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet">
+		<div class="mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet #if($album.wishlist)dem-hidden#end">
 			<div class="mdl-card mdl-shadow--2dp dem-album-card #if($album.wishlist)dem-album-card--wishlist#end">
 				<div class="mdl-card__title">
 					<a href="$link.contextPath/albums/view/$album.id" class="mdl-card__title-text">$album.identifyingName</a>
@@ -77,3 +87,23 @@ $quickTasks.add({
 
 </div>
 #end
+
+<script type="text/javascript">
+	jQuery(function () {
+		jQuery('#qt-hide-wishlist-albums').hide();
+		
+		jQuery('#qt-hide-wishlist-albums').click(function (e) {
+			e.preventDefault();
+			jQuery('#qt-hide-wishlist-albums').hide();
+			jQuery('#qt-show-wishlist-albums').show();
+			jQuery('.dem-album-card--wishlist').parent().addClass('dem-hidden');
+		});
+		
+		jQuery('#qt-show-wishlist-albums').click(function (e) {
+			e.preventDefault();
+			jQuery('#qt-hide-wishlist-albums').show();
+			jQuery('#qt-show-wishlist-albums').hide();
+			jQuery('.dem-album-card--wishlist').parent().removeClass('dem-hidden');
+		});
+	});
+</script>
