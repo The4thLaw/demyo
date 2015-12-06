@@ -13,16 +13,14 @@ $quickTasks.add({
 })
 ## TODO: quick task to add a collection to this publisher
 
+## TODO: split publisher view fields like collection, author
+#thumbnail($publisher.logo, {'classes':'model-identification'})
 <div class="mdl-grid">
 	#@mdlGridCell([9,5,0])
 		#@entityField('field.Publisher.identifyingName')$publisher.identifyingName#end
 		#entityFieldUrl('field.Publisher.website', $publisher.website)
 		#entityFieldUrl('field.Publisher.feed', $publisher.feed)
 		#entityFieldRichText('field.Publisher.history', $publisher.history)
-	#end
-	
-	#@mdlGridCell([3,3,4])
-		#@thumbnail($publisher.logo)#end
 	#end
 	
 	#set ($cond = !$publisher.collections.empty)

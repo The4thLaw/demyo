@@ -14,7 +14,7 @@ $quickTasks.add({
 ##TODO: QT to add a derivative to the Album
 ##TODO: QT to lend album
 
-#thumbnail($album.cover)
+#thumbnail($album.cover, {'classes':'model-identification'})
 
 #@entityDetails()
 

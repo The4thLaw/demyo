@@ -100,7 +100,7 @@
 	}
 }
 
-@media screen and (max-width: 560px) {
+@media screen and (max-width: @phone-breakpoint-exclusive) {
 	.dem-model-card {
 		width: 100%;
 		min-width: auto;
@@ -150,6 +150,7 @@
 	
 	.thumb {
 		float: right;
+		margin-right: 0;
 	}
 }
 div.mdl-layout.is-small-screen .dem-album-card .thumb {

@@ -93,6 +93,20 @@ a.dem-tag:hover {
 	display: none;
 }
 
+figure.thumb {
+	margin: 8px;
+}
+
+.model-identification {
+	float: right;
+	margin-right: 0;
+	
+	@media (max-width: @tablet-breakpoint-exclusive) {
+		float: none;
+		text-align: center;
+	}
+}
+
 @import "demyo.layout.less";
 @import "demyo.forms.less";
 @import "demyo.cards.less";

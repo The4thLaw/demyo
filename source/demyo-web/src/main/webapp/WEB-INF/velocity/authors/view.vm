@@ -13,15 +13,16 @@ $quickTasks.add({
 })
 	
 	
+#thumbnail($author.portrait, {'classes':'model-identification'})
 <div class="mdl-grid">
-	#@mdlGridCell([9,5,0])
+	#@mdlGridCell([6,4,0])
 		#@entityField('field.Author.identifyingName')$author.identifyingName#end
-		#entityFieldUrl('field.Author.website', $author.website)
-		#entityFieldRichText('field.Author.biography', $author.biography)
 	#end
-	
-	#@mdlGridCell([3,3,4])
-		#@thumbnail($author.portrait)#end
+	#@mdlGridCell([6,4,0])
+		#entityFieldUrl('field.Author.website', $author.website)
+	#end
+	#@mdlGridCellCond([12,0,0], $author.biography)
+		#entityFieldRichText('field.Author.biography', $author.biography)
 	#end
 </div>
 

@@ -93,7 +93,7 @@ $quickTasks.add({
 				<div class="dem-album-card__details">
 					## TODO: have some JavaScript to avoid loading images (defer loading) if the layout is small
 					## TODO: open thumbnails using colorbox or equivalent.
-					#thumbnail($album.cover)
+					#thumbnail($album.cover, {})
 					#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 					#entityFieldLinkedModel('field.Album.collection' $album.collection)
 					#entityFieldCsvList('field.Album.writers', $album.writers, "$link.contextPath/author/view/")
