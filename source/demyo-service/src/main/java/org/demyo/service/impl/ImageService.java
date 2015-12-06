@@ -79,9 +79,15 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
+		// If the image has one dimension too small, constrain it to that
 		ApplicationConfiguration config = configService.getConfiguration();
-		BufferedImage buffThumb = Scalr.resize(buffImage, Method.BALANCED, Mode.AUTOMATIC,
-				config.getThumbnailWidth(), config.getThumbnailHeight(), Scalr.OP_ANTIALIAS);
+		int desiredMaxWidth = config.getThumbnailWidth() > buffImage.getWidth() ? buffImage.getWidth() : config
+				.getThumbnailWidth();
+		int desiredMaxHeight = config.getThumbnailHeight() > buffImage.getHeight() ? buffImage.getHeight()
+				: config.getThumbnailHeight();
+		// Resize
+		BufferedImage buffThumb = Scalr.resize(buffImage, Method.BALANCED, Mode.AUTOMATIC, desiredMaxWidth,
+				desiredMaxHeight, Scalr.OP_ANTIALIAS);
 		buffImage.flush();
 		LOGGER.debug("Thumbnail generated in {}ms", System.currentTimeMillis() - time);
 
