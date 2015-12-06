@@ -35,6 +35,11 @@ public abstract class AbstractController {
 
 	private MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
 
+	protected AbstractController() {
+		// May be missing from some systems at least
+		mimeTypes.addMimeTypes("image/png png");
+	}
+
 	@ExceptionHandler
 	private void demyoExceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
 		if (ex instanceof IDemyoException) {
