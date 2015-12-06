@@ -26,7 +26,7 @@ $quickTasks.add({
 	#set ($cond = !$publisher.collections.empty)
 	#@mdlGridCellCond([12,0,0], $cond)
 		#@entityField('field.Publisher.collections')
-			#textCardListStdBody($publisher.collections "name" "identifyingName" "../../collections/view/" false)
+			#textCardListStdBody($publisher.collections "name" "identifyingName" "/collections/view/" false)
 		#end
 	#end
 </div>

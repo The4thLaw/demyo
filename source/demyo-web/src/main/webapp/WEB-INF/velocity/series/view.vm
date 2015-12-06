@@ -52,14 +52,14 @@ $quickTasks.add({
 	#end
 	#set ($cond = !($series.albumWriters.empty && $series.albumArtists.empty && $series.albumColorists.empty))
 	#@mdlGridCellCond([6,4,4], $cond)
-		#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '../../authors/view/')
-		#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '../../authors/view/')
-		#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '../../authors/view/')
+		#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '/authors/view/')
+		#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '/authors/view/')
+		#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '/authors/view/')
 	#end
 	#set ($cond = !($series.albumTags.empty && $series.relatedSeries.empty))
 	#@mdlGridCellCond([6,4,4], $cond)
 		#entityFieldTagList('field.Series.albumTags', $series.albumTags)
-		#entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, './')
+		#entityFieldCsvList('field.Series.relatedSeries', $series.relatedSeries, '/series/view/')
 	#end
 	#@mdlGridCellCond([6,4,4], $series.summary)
 		#entityFieldRichText('field.Series.summary', $series.summary)
@@ -96,8 +96,8 @@ $quickTasks.add({
 					#thumbnail($album.cover, {})
 					#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 					#entityFieldLinkedModel('field.Album.collection' $album.collection)
-					#entityFieldCsvList('field.Album.writers', $album.writers, "$link.contextPath/author/view/")
-					#entityFieldCsvList('field.Album.artists', $album.artists, "$link.contextPath/author/view/")
+					#entityFieldCsvList('field.Album.writers', $album.writers, "/authors/view/")
+					#entityFieldCsvList('field.Album.artists', $album.artists, "/authors/view/")
 					#entityFieldTagList('field.Album.tags', $album.tags)
 				</div>
 			</div>

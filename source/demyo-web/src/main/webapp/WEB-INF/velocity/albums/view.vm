@@ -22,9 +22,9 @@ $quickTasks.add({
 #entityFieldText('field.Album.identifyingName' $album.identifyingName)
 #entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 #entityFieldLinkedModel('field.Album.collection' $album.collection)
-#entityFieldCsvList('field.Album.writers', $album.writers, '../../author/view/')
-#entityFieldCsvList('field.Album.artists', $album.artists, '../../author/view/')
-#entityFieldCsvList('field.Album.colorists', $album.colorists, '../../author/view/')
+#entityFieldCsvList('field.Album.writers', $album.writers, '/authors/view/')
+#entityFieldCsvList('field.Album.artists', $album.artists, '/authors/view/')
+#entityFieldCsvList('field.Album.colorists', $album.colorists, '/authors/view/')
 ## TODO: first edition & current edition (incl. special if equal)
 ## TODO: wishlist
 #entityFieldLinkedModel('field.Album.binding' $album.binding)
@@ -38,7 +38,7 @@ $quickTasks.add({
 #end
 #entityFieldText('field.Album.pages' $album.pages)
 ## TODO: prices, purchase price, acquisition date
-#entityFieldCsvList('field.Album.tags', $album.tags, '../../tags/view/')
+#entityFieldCsvList('field.Album.tags', $album.tags, '/tags/view/')
 ## TODO: borrower
 #entityFieldText('field.Album.isbn' $album.isbn)
 #entityFieldRichText('field.Album.summary', $album.summary)

@@ -4,6 +4,6 @@
 	#fab('./add', 'add')
 #end
 
-#textCardListStdBody($seriesList "identifyingName" "identifyingName" "./view/" true)
+#textCardListStdBody($seriesList "identifyingName" "identifyingName" "/series/view/" true)
 
 $paging.pageLinks($seriesList, $request, $javascript)

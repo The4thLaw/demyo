@@ -6,12 +6,12 @@
 
 #@textCardListCustomBody($publisherList 'name' true)
 	<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--with-dependencies">
-		<a class="dem-model-card__title" href="./view/$entity.id">$entity.identifyingName</a>
+		<a class="dem-model-card__title" href="$link.contextPath/publishers/view/$entity.id">$entity.identifyingName</a>
 		#if (!$entity.collections.empty)
 			<ul class="dem-model-card__dependencies">
 		#end
 		#foreach ($collection in $entity.collections)
-				<li><a href="../collections/view/$collection.id">$collection.identifyingName</a></li>
+				<li><a href="$link.contextPath/collections/view/$collection.id">$collection.identifyingName</a></li>
 		#end
 		#if (!$entity.collections.empty)
 			</ul>

@@ -4,7 +4,7 @@
 	#fab('./add', 'add')
 #end
 
-#textCardListStdBody($bindingList "name" "identifyingName" "./view/" false)
+#textCardListStdBody($bindingList "name" "identifyingName" "/bindings/view/" false)
 
 $paging.pageLinks($bindingList, $request, $javascript)
 ## Letters are not really interesting for Bindings

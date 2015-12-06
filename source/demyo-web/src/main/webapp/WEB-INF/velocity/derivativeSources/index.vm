@@ -4,7 +4,7 @@
 	#fab('./add', 'add')
 #end
 
-#textCardListStdBody($derivativeSourceList "name" "identifyingName" "./view/" true)
+#textCardListStdBody($derivativeSourceList "name" "identifyingName" "/derivativeSources/view/" true)
 
 $paging.pageLinks($derivativeSourceList, $request, $javascript)
 ## Letters are not really interesting for Derivative Sources

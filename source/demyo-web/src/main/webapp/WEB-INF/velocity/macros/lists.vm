@@ -44,7 +44,7 @@
 
 #macro(csvList $entityList $baseUrl)
 	#foreach ($entity in $entityList)
-		<a href="$baseUrl$entity.id">$entity.identifyingName</a>#if( $foreach.hasNext ), #end
+		<a href="$link.contextPath$baseUrl$entity.id">$entity.identifyingName</a>#if( $foreach.hasNext ), #end
 	#end
 #end
 
@@ -73,7 +73,7 @@
 		#end
 		
 		<div class="mdl-card mdl-shadow--2dp dem-model-card">
-			<a class="dem-model-card__title" href="$baseUrl$entity.id">$render.eval($context.this, "\$entity.$displayProperty")</a>
+			<a class="dem-model-card__title" href="$link.contextPath$baseUrl$entity.id">$render.eval($context.this, "\$entity.$displayProperty")</a>
 		</div>
 	#end
 	</div>

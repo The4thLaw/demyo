@@ -4,7 +4,7 @@
 	#fab('./add', 'add')
 #end
 
-#textCardListStdBody($derivativeTypeList "name" "identifyingName" "./view/" false)
+#textCardListStdBody($derivativeTypeList "name" "identifyingName" "/derivativeTypes/view/" false)
 
 $paging.pageLinks($derivativeTypeList, $request, $javascript)
 ## Letters are not really interesting for Derivative Types
