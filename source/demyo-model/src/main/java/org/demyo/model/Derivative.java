@@ -29,7 +29,9 @@ import org.demyo.model.util.DefaultOrder;
 // TODO: validation rule for either an Album or a Series at least
 @Entity
 @Table(name = "DERIVATIVES")
-@DefaultOrder(expression = @DefaultOrder.Order(property = "series.name"))
+@DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"),
+		@DefaultOrder.Order(property = "album.cycle"), @DefaultOrder.Order(property = "album.number"),
+		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
 @NamedEntityGraphs({
 		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes = { @NamedAttributeNode("artist"),
 				@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images") }),
