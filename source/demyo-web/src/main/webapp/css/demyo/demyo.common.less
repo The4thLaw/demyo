@@ -97,6 +97,29 @@ figure.thumb {
 	margin: 8px;
 }
 
+.dem-thumb-legend {
+	margin-top: 0.5em;
+	font-size: 10pt;
+	position: relative;
+	
+	p {
+		margin: 0;
+		font-size: inherit;
+	}
+	
+	&__expander {
+		position: absolute;
+		top: 0;
+		right: 0;
+		opacity: 0.75;
+		transition: opacity 0.3s;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
 .model-identification {
 	float: right;
 	margin-right: 0;

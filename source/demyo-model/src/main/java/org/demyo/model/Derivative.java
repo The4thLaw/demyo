@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,13 +30,16 @@ import org.demyo.model.util.DefaultOrder;
 @Entity
 @Table(name = "DERIVATIVES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "series.name"))
-@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = { @NamedAttributeNode("artist"),
-		@NamedAttributeNode("images") })
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes = { @NamedAttributeNode("artist"),
+				@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images") }),
+		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = { @NamedAttributeNode("artist"),
+				@NamedAttributeNode("images") }) })
+// TODO: Add constraint to have either Album or Series nullable, but not both
 public class Derivative extends AbstractModel {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "series_id")
-	@NotNull
 	private Series series;
 
 	/** The parent {@link Album}. */
@@ -131,6 +135,13 @@ public class Derivative extends AbstractModel {
 			sb.append(" ").append(source.getIdentifyingName());
 		}
 		return sb.toString();
+	}
+
+	public Image getMainImage() {
+		if (images.size() == 0) {
+			return null;
+		}
+		return images.iterator().next();
 	}
 
 	/**

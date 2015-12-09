@@ -6,7 +6,7 @@
 		<img src="$link.contextPath/images/thumbnail/$image.id/$image.url" alt="$image.description" />
 	</a>
 	#if ($!bodyContent && $bodyContent != '')
-		<div class="legend">$bodyContent</div>
+		<div class="dem-thumb-legend">$bodyContent</div>
 	#end
 </figure>
 #end

@@ -80,8 +80,16 @@
 #end
 
 #macro(textCardListCustomBody $entityList $sortProperty $splitByFirstLetter)
+	#cardListCustomBody($entityList $sortProperty $splitByFirstLetter "dem-card-list--text")
+#end
+
+#macro(thumbCardListCustomBody $entityList $sortProperty $splitByFirstLetter)
+	#cardListCustomBody($entityList $sortProperty $splitByFirstLetter "dem-card-list--thumbs")
+#end
+
+#macro(cardListCustomBody $entityList $sortProperty $splitByFirstLetter $class)
 	#set ($lastFirstLetter = '/')
-	<div class="dem-card-list">
+	<div class="dem-card-list $class">
 	#foreach ($entity in $entityList)
 		## A bit hacky, but we need this kind of flexibility
 		#set ($temp = $context.this.put("entity", $entity))

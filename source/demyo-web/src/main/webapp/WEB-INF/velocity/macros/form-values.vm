@@ -93,24 +93,6 @@
 
 #macro(entityFieldLinkedModel $labelId $model)
 	#if($model)
-		## Auto-detect URL
-		#if ($model.class.simpleName == 'Album')
-			#set ($baseUrl = "albums")
-		#elseif ($model.class.simpleName == 'Author')
-			#set ($baseUrl = "authors")
-		#elseif ($model.class.simpleName == 'Collection')
-			#set ($baseUrl = "collections")
-		#elseif ($model.class.simpleName == 'DerivativeSource')
-			#set ($baseUrl = "derivativeSources")
-		#elseif ($model.class.simpleName == 'DerivativeType')
-			#set ($baseUrl = "derivativeTypes")
-		#elseif ($model.class.simpleName == 'Publisher')
-			#set ($baseUrl = "publishers")
-		#elseif ($model.class.simpleName == 'Series')
-			#set ($baseUrl = "series")
-		#else
-			#set ($baseUrl = "TODO $model.class.simpleName")
-		#end
-		#@entityField($labelId)$link.contextPath<a href="$link.contextPath/$baseUrl/view/${model.id}">$model.identifyingName</a>#end
+		#@entityField($labelId)#modelLink($model)#end
 	#end
 #end

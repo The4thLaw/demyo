@@ -78,10 +78,20 @@ var demyo = {};
 		});
 	};
 	
+	demyo.registerThumbExpanders = function () {
+		$('.dem-thumb-legend__details').hide();
+		$('.dem-thumb-legend__expander').click(function() {
+		    var $this = $(this);
+		    $('~ .dem-thumb-legend__details', $this).slideDown('fast');
+		    $this.fadeOut('fast', function() {$(this).remove()} );
+		});
+	}
+	
 })(jQuery);
 
 jQuery(function () {
 	demyo.registerMenu();
 	demyo.registerCollapsibleCards();
 	demyo.registerShortcuts();
+	demyo.registerThumbExpanders();
 });
