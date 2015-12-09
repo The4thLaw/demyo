@@ -5,23 +5,25 @@
 #end
 
 #macro(derivativeLegendContent $entity $wrapDetails)
-	#if ($entity.series)
-		<p>#modelLink($entity.series)</p>
-	#else ($entity.album)
-		<p>#modelLink($entity.album)</p>
-	#end
-	#if ($wrapDetails)<div class="dem-thumb-legend__details">#end
-		#if ($entity.series && $entity.album)
-			<p>#modelLink($entity.album)</p>
+	<a href="$link.contextPath/derivatives/view/$entity.id">
+		#if ($entity.series)
+			<p>$entity.series.identifyingName</p>
+		#else ($entity.album)
+			<p>$entity.album.identifyingName</p>
 		#end
-		#if ($entity.artist)
-			<p>#modelLink($entity.artist)</p>
-		#end
-		#if ($entity.source)
-			<p>#modelLink($entity.source)</p>
-		#end
-		<p>#modelLink($entity.type)</p>
-	#if ($wrapDetails)</div>#end
+		#if ($wrapDetails)<div class="dem-thumb-legend__details">#end
+			#if ($entity.series && $entity.album)
+				<p>$entity.album.identifyingName</p>
+			#end
+			#if ($entity.artist)
+				<p>$entity.artist.identifyingName</p>
+			#end
+			#if ($entity.source)
+				<p>$entity.source.identifyingName</p>
+			#end
+			<p>$entity.type.identifyingName</p>
+		#if ($wrapDetails)</div>#end
+	</a>
 #end
 
 #@thumbCardListCustomBody($derivativeList "identifyingName" false)
