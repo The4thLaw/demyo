@@ -68,6 +68,7 @@
 	#end
 	#@mdlGridCell([6,4,0])
 		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
+		## TODO: disable if wishlist
 	#end
 	#@mdlGridCell([6,4,0])
 		#inputCheckbox('field.Album.wishlist', 'album.wishlist')
@@ -77,6 +78,9 @@
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.format')</h6>#end
 	#@mdlGridCell([4,0,0])
+		#inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputFloat('field.Album.width', 'album.width')
 	#end
 	#@mdlGridCell([4,0,0])
@@ -84,9 +88,6 @@
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputInteger('field.Album.pages', 'album.pages')
-	#end
-	#@mdlGridCell([4,0,0])
-		#inputSelect('field.Album.binding', 'album.binding.id', $bindings, { "allowEmpty": true })
 	#end
 </div>
 

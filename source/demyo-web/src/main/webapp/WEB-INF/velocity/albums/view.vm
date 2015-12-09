@@ -16,35 +16,112 @@ $quickTasks.add({
 
 #thumbnail($album.cover, {'classes':'model-identification'})
 
-#@entityDetails()
+<div class="mdl-grid">
+	#@mdlGridCell([6,4,4])
+		#entityFieldText('field.Album.identifyingName' $album.identifyingName)
+	#end
+	#@mdlGridCellCond([6,4,4], $album.series)
+		#entityFieldLinkedModel('field.Album.series' $album.series)
+	#end
+	#set ($cond = !($album.tags.empty))
+	#@mdlGridCellCond([12,0,0], $cond)
+		#entityFieldTagList('field.Album.tags', $album.tags)
+	#end
+</div>
 
-#entityFieldLinkedModel('field.Album.series' $album.series)
-#entityFieldText('field.Album.identifyingName' $album.identifyingName)
-#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
-#entityFieldLinkedModel('field.Album.collection' $album.collection)
-#entityFieldCsvList('field.Album.writers', $album.writers, '/authors/view/')
-#entityFieldCsvList('field.Album.artists', $album.artists, '/authors/view/')
-#entityFieldCsvList('field.Album.colorists', $album.colorists, '/authors/view/')
-## TODO: first edition & current edition (incl. special if equal)
-## TODO: wishlist
-#entityFieldLinkedModel('field.Album.binding' $album.binding)
-## TODO: number format for size
-#if ($album.width && $album.height)
-	#entityFieldText('field.Album.size' "$album.width x $album.height")
-#elseif ($album.width)
-	#entityFieldText('field.Album.width' $album.width)
-#elseif ($album.height)
-	#entityFieldText('field.Album.height' $album.height)
+
+<div class="mdl-grid">
+	#@mdlGridCell([6,4,4])
+		#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
+	#end
+	#@mdlGridCellCond([6,4,4], $album.collection)
+		#entityFieldLinkedModel('field.Album.collection' $album.collection)
+	#end
+	#@mdlGridCellCond([6,4,4], $album.isbn)
+		#entityFieldText('field.Album.isbn' $album.isbn)
+	#end
+</div>
+
+
+#if (!($album.writers.empty && $album.artists.empty && $album.colorists.empty))
+<div class="mdl-grid">
+	#set ($cond = !($album.writers.empty))
+	#@mdlGridCellCond([4,0,0], $cond)
+		#entityFieldCsvList('field.Album.writers', $album.writers, '/authors/view/')
+	#end
+	#set ($cond = !($album.artists.empty))
+	#@mdlGridCellCond([4,0,0], $cond)
+		#entityFieldCsvList('field.Album.artists', $album.artists, '/authors/view/')
+	#end
+	#set ($cond = !($album.colorists.empty))
+	#@mdlGridCellCond([4,0,0], $cond)
+		#entityFieldCsvList('field.Album.colorists', $album.colorists, '/authors/view/')
+	#end
+</div>
 #end
-#entityFieldText('field.Album.pages' $album.pages)
-## TODO: prices, purchase price, acquisition date
-#entityFieldCsvList('field.Album.tags', $album.tags, '/tags/view/')
+
+
+#if($album.firstEditionDate || $album.currentEditionDate || $album.wishlist)
+<div class="mdl-grid">
+	#if ($album.firstEditionDate && $album.currentEditionDate && $album.firstEditionDate == $album.currentEditionDate)
+		#@mdlGridCell([6,4,0])
+			#@entityField('field.Album.firstEditionDate')
+				$date.format("#_('special.date.format')", $album.firstEditionDate, $appConfig.language)
+				#_('field.Album.isFirstEdition')
+			#end
+		#end
+	#elseif ($album.firstEditionDate || $album.currentEditionDate)
+		#@mdlGridCell([6,4,0])
+			#entityFieldDate('field.Album.firstEditionDate' $album.firstEditionDate)
+			#entityFieldDate('field.Album.currentEditionDate' $album.currentEditionDate)
+		#end
+	#end
+	#if ($album.wishlist)
+		#entityFieldBoolean('field.Album.wishlist', $album.wishlist)
+	#end
+</div>
+#end
+
+
+<div class="mdl-grid">
+	#@mdlGridCellCond([4,0,0], $album.binding)
+		#entityFieldLinkedModel('field.Album.binding' $album.binding)
+	#end
+	## TODO: number format for size
+	#set ($cond = ($album.width || $album.height))
+	#@mdlGridCellCond([4,0,0], $cond)
+		#if ($album.width && $album.height)
+			#entityFieldText('field.Album.size' "$album.width x $album.height")
+		#elseif ($album.width)
+			#entityFieldText('field.Album.width' $album.width)
+		#elseif ($album.height)
+			#entityFieldText('field.Album.height' $album.height)
+		#end
+	#end
+	#@mdlGridCellCond([4,0,0], $album.pages)
+		#entityFieldText('field.Album.pages' $album.pages)
+	#end
+</div>
+
+
+<div class="mdl-grid">
+	## TODO: price history
+	#@mdlGridCellCond([6,4,0], $album.purchasePrice)
+		#entityFieldText('field.Album.width' $album.purchasePrice) ## TODO: append currency
+	#end
+</div>
+
+
 ## TODO: borrower
-#entityFieldText('field.Album.isbn' $album.isbn)
-#entityFieldRichText('field.Album.summary', $album.summary)
-#entityFieldRichText('field.Album.comment', $album.comment)
 
-#end
+<div class="mdl-grid">
+	#@mdlGridCellCond([6,4,0], $album.summary)
+		#entityFieldRichText('field.Album.summary', $album.summary)
+	#end
+	#@mdlGridCellCond([6,4,0], $album.comment)
+		#entityFieldRichText('field.Album.comment', $album.comment)
+	#end
+</div>
 
 ## TODO: list of derivatives
 ## TODO: list of other images

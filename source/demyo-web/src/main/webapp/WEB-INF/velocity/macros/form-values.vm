@@ -63,6 +63,12 @@
 	#end
 #end
 
+#macro(entityFieldDate $labelId $value)
+	#if($value)
+		#@entityField($labelId)$date.format("#_('special.date.format')", $value, $appConfig.language)#end
+	#end
+#end
+
 #macro(entityFieldCsvList $labelId $entityList $baseUrl)
 	#if($entityList && !$entityList.empty)
 		#@entityField($labelId)
