@@ -42,17 +42,3 @@
 #end
 
 $paging.pageLinks($derivativeList, $request, $javascript)
-
-<script type="text/javascript">
-jQuery('.dem-thumb-legend__details').hide();
-jQuery('dem-thumb-legend__expander').click(function() {
-    var self = jQuery(this);
-    $('~ .details', self).slideDown('fast');
-    self.fadeOut('fast', function() {$(this).remove()} );
-});
-$('img').each(function () {
-    var self = $(this);
-    var parent = $(self.parent());
-    parent.css({'max-width': self.width() + 'px'});
-});
-</script>
