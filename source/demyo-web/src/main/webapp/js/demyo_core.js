@@ -94,4 +94,8 @@ jQuery(function () {
 	demyo.registerCollapsibleCards();
 	demyo.registerShortcuts();
 	demyo.registerThumbExpanders();
+	// The MDL layout with fixed header seems to steal focus at some point.
+	// Fix it so that users can scroll and use shortcut keys directly when landing on the page
+	var refocus = function () { $('.mdl-layout__content').focus(); }
+	window.setTimeout(refocus, 300);
 });
