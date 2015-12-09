@@ -87,15 +87,14 @@ $quickTasks.add({
 	#@mdlGridCellCond([4,0,0], $album.binding)
 		#entityFieldLinkedModel('field.Album.binding' $album.binding)
 	#end
-	## TODO: number format for size
 	#set ($cond = ($album.width || $album.height))
 	#@mdlGridCellCond([4,0,0], $cond)
 		#if ($album.width && $album.height)
-			#entityFieldText('field.Album.size' "$album.width x $album.height")
+			#entityFieldText('field.Album.size' "#number($album.width) x #number($album.height)")
 		#elseif ($album.width)
-			#entityFieldText('field.Album.width' $album.width)
+			#entityFieldNumber('field.Album.width' $album.width)
 		#elseif ($album.height)
-			#entityFieldText('field.Album.height' $album.height)
+			#entityFieldNumber('field.Album.height' $album.height)
 		#end
 	#end
 	#@mdlGridCellCond([4,0,0], $album.pages)
@@ -107,7 +106,7 @@ $quickTasks.add({
 <div class="mdl-grid">
 	## TODO: price history
 	#@mdlGridCellCond([6,4,0], $album.purchasePrice)
-		#entityFieldText('field.Album.width' $album.purchasePrice) ## TODO: append currency
+		#entityFieldNumber('field.Album.purchasePrice' $album.purchasePrice) ## TODO: append currency
 	#end
 </div>
 

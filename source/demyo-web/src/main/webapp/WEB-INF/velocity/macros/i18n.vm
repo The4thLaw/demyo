@@ -8,3 +8,7 @@ $demyoTranslationService.translate($labelId)##
 #macro(_p $labelId $params)
 $demyoTranslationService.translate($labelId, $params)##
 #end
+
+#macro(number $toFormat)
+$number.format("#[[#,##0.##]]#", $toFormat, $appConfig.language)## The pattern is escaped with Velocity
+#end

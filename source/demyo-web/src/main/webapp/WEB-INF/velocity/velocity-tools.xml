@@ -6,6 +6,7 @@
 		<tool class="org.demyo.web.velocity.tools.PagingTool" />
 		<tool class="org.demyo.web.velocity.tools.RteTool" />
 		<tool class="org.apache.velocity.tools.generic.DateTool" format="yyyy-MM-dd"/>
+		<tool class="org.apache.velocity.tools.generic.NumberTool" />
 	</toolbox>
 	<toolbox scope="request">
 		<tool class="org.apache.velocity.tools.generic.ContextTool" />

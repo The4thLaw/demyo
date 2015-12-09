@@ -63,6 +63,12 @@
 	#end
 #end
 
+#macro(entityFieldNumber $labelId $value)
+	#if($value)
+		#@entityField($labelId)#number($value)#end
+	#end
+#end
+
 #macro(entityFieldDate $labelId $value)
 	#if($value)
 		#@entityField($labelId)$date.format("#_('special.date.format')", $value, $appConfig.language)#end
