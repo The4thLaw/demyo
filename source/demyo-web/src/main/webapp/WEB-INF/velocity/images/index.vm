@@ -1,0 +1,15 @@
+#setPageTitle('title.index.image')
+
+#@fabs()
+	#fab('./add', 'add')
+#end
+
+#@thumbCardListCustomBody($imageList "identifyingName" false)
+	<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--thumb">
+		#@thumbnail($entity, {})
+			<a href="$link.contextPath/images/view/$entity.id">$entity.description</a>
+		#end
+	</div>
+#end
+
+$paging.pageLinks($imageList, $request, $javascript)
