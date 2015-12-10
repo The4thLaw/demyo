@@ -5,12 +5,14 @@ $quickTasks.add({
 	"url" : "../edit/$series.id",
 	"icon": "books+edit"
 })
-$quickTasks.add({
-	"id" : "qt-delete-series",
-	"url" : "../delete/$series.id",
-	"icon": "books+delete",
-	"confirm" : true
-})
+#if ($series.totalAlbumCount <= 0)
+	$quickTasks.add({
+		"id" : "qt-delete-series",
+		"url" : "../delete/$series.id",
+		"icon": "books+delete",
+		"confirm" : true
+	})
+#end
 #set ($hasWishlistAlbums = $series.ownedAlbumCount != $series.totalAlbumCount)
 #if ($hasWishlistAlbums)
 	$quickTasks.add({
