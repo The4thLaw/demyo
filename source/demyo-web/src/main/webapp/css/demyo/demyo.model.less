@@ -1,0 +1,58 @@
+/**
+ * CSS Specific to some models
+ */
+
+/* Special cards for albums */
+
+.dem-album-card {
+	width: auto;
+	
+	.mdl-card__title {
+		background: @color-primary;
+		color: @color-primary-contrast;
+	}
+	
+	.mdl-card__title-text {
+		flex-grow: 1; /* Make it push the buttons */
+		color: inherit;
+		/* Overrides to get text-overflow */
+		white-space: pre;
+		display: block;
+		text-overflow: ellipsis;
+		display: block;
+	}
+	
+	&__details {
+		padding: 16px;
+		font-size: 14px;
+	}
+	
+	&--wishlist {
+		opacity: 0.5;
+		transition: opacity 0.3s;
+		
+		&:hover {
+			opacity: 1;
+		}
+	}
+	
+	.thumb {
+		float: right;
+		margin-right: 0;
+	}
+}
+div.mdl-layout.is-small-screen .dem-album-card .thumb {
+	display: none;
+}
+ 
+/* Images */
+
+.dem-image-view {
+	text-align: center;
+	
+	p {
+		font-style: italic;
+		opacity: 0.9;
+		font-size: 120%;
+	}
+}

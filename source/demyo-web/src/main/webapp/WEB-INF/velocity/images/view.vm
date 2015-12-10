@@ -1,0 +1,23 @@
+#setPageTitleParams('title.view.image' $image.identifyingName)
+
+$quickTasks.add({
+	"id" : "qt-edit-image",
+	"url" : "../edit/$image.id",
+	"icon" : "image_file+edit"
+})
+$quickTasks.add({
+	"id" : "qt-delete-image",
+	"url" : "../delete/$image.id",
+	"icon" : "image_file+delete",
+	"confirm" : true
+})
+
+<div class="dem-image-view">
+	<img src="$link.contextPath/images/full/$image.id/$image.url" alt="$image.description" />
+	## Display it after since we already have the page title
+	<p>
+		$image.description
+	</p>
+</div>
+
+## TODO: where is this image used?

@@ -1,0 +1,16 @@
+#setPageTitle('title.edit.image')
+
+#@form()
+
+#inputHidden('image.id')
+#inputHidden('image.url')
+
+<div class="mdl-grid">
+	#@mdlGridCell([12,0,0])
+		#inputText('field.Image.description', 'image.description')
+	#end
+</div>
+
+#saveButtons
+
+#end
