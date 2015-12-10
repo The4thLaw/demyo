@@ -33,7 +33,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @version $Revision: 1079 $
  * @param <M> The model type.
  */
-// TODO: Protect all access against XSS
+// TODO: Remove when no longer used
+@Deprecated
 public abstract class AbstractModelController<M extends IModel> extends AbstractController {
 	private final Class<M> modelClass;
 	private final String urlPrefix;

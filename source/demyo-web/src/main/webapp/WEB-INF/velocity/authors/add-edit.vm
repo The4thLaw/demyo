@@ -23,7 +23,6 @@
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Author.biography')</h6>#end
 	#@mdlGridCell([6,8,0])
-		## TODO: RTE is broken :(
 		#inputRichText('field.Author.biography', 'author.biography')
 	#end
 	#@mdlGridCell([6,8,0])

@@ -29,8 +29,6 @@ public class AuthorController extends AbstractModelControllerNG<Author> {
 		super(Author.class, "authors", "author");
 	}
 
-	// TODO: get albums he's worked on on "view" action
-
 	@Override
 	protected IModelServiceNG<Author> getService() {
 		return service;

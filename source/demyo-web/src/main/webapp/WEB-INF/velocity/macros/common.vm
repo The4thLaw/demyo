@@ -58,7 +58,6 @@
 #end
 
 ## Extract this to MDL helpers if the list of macros grows
-## TODO: use this as much as possible in existing pages
 #macro(mdlGridCell $sizes)
 	#set ($classes = "mdl-cell")
 	#set ($classes = "$classes mdl-cell--$sizes[0]-col")
@@ -97,7 +96,7 @@
 		## Work around proxy name being Series_$$_jvstdc3_3
 		#set ($baseUrl = "series")
 	#else
-		#set ($baseUrl = "TODO $model.class.simpleName")
+		#set ($baseUrl = "_missing_$model.class.simpleName")
 	#end
 	<a href="$link.contextPath/$baseUrl/view/${model.id}">$model.identifyingName</a>
 #end
