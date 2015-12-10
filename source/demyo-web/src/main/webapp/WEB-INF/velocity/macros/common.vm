@@ -93,7 +93,8 @@
 		#set ($baseUrl = "derivativeTypes")
 	#elseif ($model.class.simpleName == 'Publisher')
 		#set ($baseUrl = "publishers")
-	#elseif ($model.class.simpleName == 'Series')
+	#elseif ($model.class.simpleName.startsWith('Series'))
+		## Work around proxy name being Series_$$_jvstdc3_3
 		#set ($baseUrl = "series")
 	#else
 		#set ($baseUrl = "TODO $model.class.simpleName")

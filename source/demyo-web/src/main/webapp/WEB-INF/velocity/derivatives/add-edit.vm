@@ -53,10 +53,10 @@
 		#inputCheckbox('field.Derivative.signed', 'derivative.signed')
 	#end
 	#@mdlGridCell([4,3,4])
-		#inputCheckbox('field.Derivative.authors_copy', 'derivative.authors_copy')
+		#inputCheckbox('field.Derivative.authorsCopy', 'derivative.authorsCopy')
 	#end
 	#@mdlGridCell([4,2,4])
-		#inputCheckbox('field.Derivative.restricted_sale', 'derivative.restricted_sale')
+		#inputCheckbox('field.Derivative.restrictedSale', 'derivative.restrictedSale')
 	#end
 	#@mdlGridCell([6,4,0])
 		#inputRichText('field.Derivative.description', 'derivative.description')

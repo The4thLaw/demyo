@@ -61,7 +61,7 @@ $quickTasks.add({
 #end
 
 
-#if($album.firstEditionDate || $album.currentEditionDate || $album.wishlist)
+#if($album.firstEditionDate || $album.currentEditionDate || $album.wishlist || $album.acquisitionDate)
 <div class="mdl-grid">
 	#if ($album.firstEditionDate && $album.currentEditionDate && $album.firstEditionDate == $album.currentEditionDate)
 		#@mdlGridCell([6,4,0])
@@ -76,8 +76,13 @@ $quickTasks.add({
 			#entityFieldDate('field.Album.currentEditionDate' $album.currentEditionDate)
 		#end
 	#end
-	#if ($album.wishlist)
-		#entityFieldBoolean('field.Album.wishlist', $album.wishlist)
+	#set ($cond = $album.wishlist || $album.acquisitionDate)
+	#@mdlGridCellCond([6,4,0], $cond)
+		#if ($album.wishlist)
+			#entityFieldBoolean('field.Album.wishlist', $album.wishlist)
+		#else
+			#entityFieldDate('field.Album.acquisitionDate', $album.acquisitionDate)
+		#end
 	#end
 </div>
 #end

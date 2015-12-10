@@ -34,7 +34,7 @@ import org.demyo.model.util.DefaultOrder;
 		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
 @NamedEntityGraphs({
 		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes = { @NamedAttributeNode("artist"),
-				@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images") }),
+				@NamedAttributeNode("images") }),
 		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = { @NamedAttributeNode("artist"),
 				@NamedAttributeNode("images") }) })
 // TODO: Add constraint to have either Album or Series nullable, but not both
@@ -83,11 +83,11 @@ public class Derivative extends AbstractModel {
 
 	/** The flag indicating whether this Derivative is an artist's personal copy. */
 	@Column(name = "authors_copy")
-	private boolean authors_copy;
+	private boolean authorsCopy;
 
 	/** The flag indicating whether this Derivative is marked as restricted sale. */
 	@Column(name = "restricted_sale")
-	private boolean restricted_sale;
+	private boolean restrictedSale;
 
 	/** The description. */
 	@Column(name = "description")
@@ -313,17 +313,17 @@ public class Derivative extends AbstractModel {
 	 * 
 	 * @return the flag indicating whether this Derivative is an artist's personal copy
 	 */
-	public boolean isAuthors_copy() {
-		return authors_copy;
+	public boolean isAuthorsCopy() {
+		return authorsCopy;
 	}
 
 	/**
 	 * Sets the flag indicating whether this Derivative is an artist's personal copy.
 	 * 
-	 * @param authors_copy the new flag indicating whether this Derivative is an artist's personal copy
+	 * @param authorsCopy the new flag indicating whether this Derivative is an artist's personal copy
 	 */
-	public void setAuthors_copy(boolean authors_copy) {
-		this.authors_copy = authors_copy;
+	public void setAuthorsCopy(boolean authorsCopy) {
+		this.authorsCopy = authorsCopy;
 	}
 
 	/**
@@ -331,17 +331,17 @@ public class Derivative extends AbstractModel {
 	 * 
 	 * @return the flag indicating whether this Derivative is marked as restricted sale
 	 */
-	public boolean isRestricted_sale() {
-		return restricted_sale;
+	public boolean isRestrictedSale() {
+		return restrictedSale;
 	}
 
 	/**
 	 * Sets the flag indicating whether this Derivative is marked as restricted sale.
 	 * 
-	 * @param restricted_sale the new flag indicating whether this Derivative is marked as restricted sale
+	 * @param restrictedSale the new flag indicating whether this Derivative is marked as restricted sale
 	 */
-	public void setRestricted_sale(boolean restricted_sale) {
-		this.restricted_sale = restricted_sale;
+	public void setRestrictedSale(boolean restrictedSale) {
+		this.restrictedSale = restrictedSale;
 	}
 
 	/**

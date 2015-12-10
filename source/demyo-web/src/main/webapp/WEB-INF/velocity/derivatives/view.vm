@@ -10,38 +10,64 @@ $quickTasks.add({
 	"confirm" : true
 })
 
-#@entityDetails()
+#thumbnail($derivative.mainImage, {'classes':'model-identification'})
 
-##entityFieldText('field.Derivative.identifyingName' $derivative.identifyingName)
-#entityFieldLinkedModel('field.Derivative.series' $derivative.series) ## TODO: figure out why the simpleName returns a proxy, breaking the link
-#entityFieldLinkedModel('field.Derivative.album' $derivative.album)
-#entityFieldLinkedModel('field.Derivative.artist' $derivative.artist)
-#entityFieldLinkedModel('field.Derivative.type' $derivative.type)
-#entityFieldText('field.Derivative.colours' $derivative.colours)
-#entityFieldLinkedModel('field.Derivative.source' $derivative.source)
-#if ($derivative.number && $derivative.total)
-	#entityFieldText('field.Derivative.numberOverTotal' "$derivative.number / $derivative.total")
-#elseif ($derivative.number)
-	#entityFieldText('field.Derivative.number' $derivative.number)
-#elseif ($derivative.total)
-	#entityFieldText('field.Derivative.number' $derivative.total)
-#end
-## TODO: signed
-## TODO: authors_copy
-## TODO: restricted_sale
-## TODO: number format for size
-#if ($derivative.width && $derivative.height && $derivative.depth)
-	#entityFieldText('field.Derivative.size' "$derivative.width x $derivative.height x $derivative.depth")
-#elseif ($derivative.width && $derivative.height)
-	#entityFieldText('field.Derivative.size' "$derivative.width x $derivative.height")
-#else
-	#entityFieldText('field.Derivative.width' $derivative.width)
-	#entityFieldText('field.Derivative.height' $derivative.height)
-	#entityFieldText('field.Derivative.depth' $derivative.depth)
-#end
-## TODO: purchase price, acquisition date
-#entityFieldRichText('field.Derivative.description', $derivative.description)
+<div class="mdl-grid">
+	#@mdlGridCell([6,4,4])
+		#entityFieldLinkedModel('field.Derivative.series' $derivative.series)
+		#entityFieldLinkedModel('field.Derivative.album' $derivative.album)
+	#end
+	#set ($cond = $derivative.artist || $derivative.source)
+	#@mdlGridCellCond([6,4,4], $cond)
+		#entityFieldLinkedModel('field.Derivative.artist' $derivative.artist)
+		#entityFieldLinkedModel('field.Derivative.source' $derivative.source)
+	#end
+</div>
 
-#end
+<div class="mdl-grid">
+	#@mdlGridCell([6,4,4])
+		#entityFieldLinkedModel('field.Derivative.type' $derivative.type)
+		#entityFieldText('field.Derivative.colours' $derivative.colours)
+	#end
+	#@mdlGridCell([6,4,4])
+		#if ($derivative.width && $derivative.height && $derivative.depth)
+			#entityFieldText('field.Derivative.size' "#number($derivative.width) x #number($derivative.height) x #number($derivative.depth)")
+		#elseif ($derivative.width && $derivative.height)
+			#entityFieldText('field.Derivative.size' "#number($derivative.width) x #number($derivative.height)")
+		#else
+			#entityFieldNumber('field.Derivative.width' $derivative.width)
+			#entityFieldNumber('field.Derivative.height' $derivative.height)
+			#entityFieldNumber('field.Derivative.depth' $derivative.depth)
+		#end
+	#end
+</div>
+
+<div class="mdl-grid">
+	#@mdlGridCell([6,4,4])
+		#if ($derivative.number && $derivative.total)
+			#entityFieldText('field.Derivative.numberOverTotal' "#number($derivative.number) / #number($derivative.total)")
+		#elseif ($derivative.number)
+			#entityFieldNumber('field.Derivative.number' $derivative.number)
+		#elseif ($derivative.total)
+			#entityFieldNumber('field.Derivative.number' $derivative.total)
+		#end
+		
+		#entityFieldBoolean('field.Derivative.signed', $derivative.signed)
+		#entityFieldBoolean('field.Derivative.authorsCopy', $derivative.authorsCopy)
+		#entityFieldBoolean('field.Derivative.restrictedSale', $derivative.restrictedSale)
+	#end
+	#@mdlGridCell([6,4,4])
+		#entityFieldRichText('field.Derivative.description', $derivative.description)
+	#end
+</div>
+
+<div class="mdl-grid">
+	#@mdlGridCellCond([6,4,4], $derivative.acquisitionDate)
+		#entityFieldDate('field.Derivative.acquisitionDate', $derivative.acquisitionDate)
+	#end
+	#@mdlGridCellCond([6,4,0], $derivative.purchasePrice)
+		#entityFieldNumber('field.Derivative.purchasePrice', $derivative.purchasePrice) ## TODO: append currency
+	#end
+</div>
 
 ##TODO: list of images
