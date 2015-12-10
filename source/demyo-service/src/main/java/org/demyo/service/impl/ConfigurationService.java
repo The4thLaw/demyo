@@ -53,18 +53,16 @@ public class ConfigurationService implements IConfigurationService {
 
 		if (!configFile.exists()) {
 			// The file does not exist. Create it from a template.
-			InputStream configTemplateIs = ConfigurationService.class
-					.getResourceAsStream("/org/demyo/model/config/demyo-config.properties");
-			if (configTemplateIs == null) {
-				throw new DemyoRuntimeException(DemyoErrorCode.CONFIG_TEMPLATE_NOT_FOUND);
-			}
-
-			try {
+			try (InputStream configTemplateIs = ConfigurationService.class
+					.getResourceAsStream("/org/demyo/model/config/demyo-config.properties")) {
+				if (configTemplateIs == null) {
+					throw new DemyoRuntimeException(DemyoErrorCode.CONFIG_TEMPLATE_NOT_FOUND);
+				}
 				FileUtils.copyInputStreamToFile(configTemplateIs, configFile);
+
 			} catch (IOException e) {
 				throw new DemyoRuntimeException(DemyoErrorCode.CONFIG_TEMPLATE_CANNOT_COPY, e);
 			}
-			// TODO: close stream
 		}
 
 		try {
