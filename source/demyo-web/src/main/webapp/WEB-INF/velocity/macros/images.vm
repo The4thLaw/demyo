@@ -1,5 +1,4 @@
 #macro(thumbnail $image $options)
-## TODO: handle options
 #if ($image)
 <figure class="thumb $!options.classes">
 	<a href="$link.contextPath/images/full/$image.id/$image.url">
