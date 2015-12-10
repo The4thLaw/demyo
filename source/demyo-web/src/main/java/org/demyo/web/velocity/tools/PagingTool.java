@@ -71,6 +71,7 @@ public class PagingTool {
 	 * @return The page links (as an HTML fragment).
 	 * @throws UnsupportedEncodingException If encoding the parameters fails.
 	 */
+	@Deprecated
 	public String pageLinks(PaginatedList<?> list, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
 		return pageLinks(list.getCurrentPage(), list.getMaxPages(), request, jsTool);
@@ -153,17 +154,21 @@ public class PagingTool {
 		final String previousLink;
 		if (slice.hasPrevious()) {
 			previousLink = "<a class='mdl-button mdl-js-button mdl-js-ripple-effect' id='page-link-prev' href='"
-					+ baseUrl.toString() + (current - 1) + "' data-dem-shortcut='37'>PREV</a> "; // TODO: icon
+					+ baseUrl.toString() + (current - 1)
+					+ "' data-dem-shortcut='37'><span class='dico'>arrow_left</span></a> ";
 		} else {
-			previousLink = "<a class='mdl-button mdl-js-button mdl-button--disabled' href='#'>PREV</a> "; // TODO: icon
+			previousLink = "<a class='mdl-button mdl-js-button mdl-button--disabled' href='#'>"
+					+ "<span class='dico'>arrow_left</span></a> ";
 		}
 
 		final String nextLink;
 		if (slice.hasNext()) {
 			nextLink = " <a class='mdl-button mdl-js-button mdl-js-ripple-effect' id='page-link-next' href='"
-					+ baseUrl.toString() + (current + 1) + "' data-dem-shortcut='39'>NEXT</a>"; // TODO: icon
+					+ baseUrl.toString() + (current + 1)
+					+ "' data-dem-shortcut='39'><span class='dico'>arrow_right</span></a>";
 		} else {
-			nextLink = " <a class='mdl-button mdl-js-button mdl-button--disabled' href='#'>NEXT</a>"; // TODO: icon
+			nextLink = " <a class='mdl-button mdl-js-button mdl-button--disabled' href='#'>"
+					+ "<span class='dico'>arrow_right</span></a>";
 		}
 
 		return "<div id='dem-paging'>" + previousLink + nextLink + "</div>";
