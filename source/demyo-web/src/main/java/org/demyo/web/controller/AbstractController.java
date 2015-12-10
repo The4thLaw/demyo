@@ -16,15 +16,19 @@ import org.demyo.service.ITranslationService;
 import org.demyo.utils.io.DIOUtils;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Base controller for Demyo.
  */
 public abstract class AbstractController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 	private static final String MODEL_KEY_LAYOUT = "layout";
 	private static final String LAYOUT_AJAX = "layout/ajax.vm";
 
@@ -41,14 +45,24 @@ public abstract class AbstractController {
 	}
 
 	@ExceptionHandler
-	private void demyoExceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
+	private ModelAndView demyoExceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
+		boolean statusSet = false;
 		if (ex instanceof IDemyoException) {
 			IDemyoException ide = (IDemyoException) ex;
 			if (ide.is(DemyoErrorCode.IMAGE_NOT_FOUND)) {
 				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				statusSet = true;
 			}
 		}
-		throw ex; // TODO: send to a proper view
+		if (!statusSet) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+		LOGGER.error("Uncaught error reached the exception handler", ex);
+		ModelAndView model = new ModelAndView("core/exception");
+		model.addObject("exception", ex);
+		model.addObject("demyoTranslationService", translationService);
+		model.addObject("appConfig", configService.getConfiguration());
+		return model;
 	}
 
 	/**
