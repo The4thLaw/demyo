@@ -5,7 +5,7 @@ $quickTasks.add({
 	"url" : "../edit/$publisher.id",
 	"icon": "city+edit"
 })
-$quickTasks.add({
+$quickTasks.add({ 
 	"id" : "qt-delete-publisher",
 	"url" : "../delete/$publisher.id",
 	"icon": "city+delete",
@@ -13,22 +13,28 @@ $quickTasks.add({
 })
 ## TODO: quick task to add a collection to this publisher
 
-## TODO: split publisher view fields like collection, author
 #thumbnail($publisher.logo, {'classes':'model-identification'})
 <div class="mdl-grid">
-	#@mdlGridCell([9,5,0])
+	#@mdlGridCell([6,4,0])
 		#@entityField('field.Publisher.identifyingName')$publisher.identifyingName#end
-		#entityFieldUrl('field.Publisher.website', $publisher.website)
-		#entityFieldUrl('field.Publisher.feed', $publisher.feed)
 		#entityFieldRichText('field.Publisher.history', $publisher.history)
 	#end
 	
-	#set ($cond = !$publisher.collections.empty)
-	#@mdlGridCellCond([12,0,0], $cond)
+	#set ($cond = $publisher.website || $publisher.feed)
+	#@mdlGridCellCond([6,4,0], $cond)
+		#entityFieldUrl('field.Publisher.website', $publisher.website)
+		#entityFieldUrl('field.Publisher.feed', $publisher.feed)
+	#end
+</div>
+
+#if (!$publisher.collections.empty)
+<div class="mdl-grid">
+	#@mdlGridCell([12,0,0])
 		#@entityField('field.Publisher.collections')
 			#textCardListStdBody($publisher.collections "name" "identifyingName" "/collections/view/" false)
 		#end
 	#end
 </div>
+#end
 
 
