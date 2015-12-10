@@ -1,6 +1,9 @@
 package org.demyo.model;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Set;
 import java.util.SortedSet;
@@ -37,6 +40,21 @@ import org.hibernate.validator.constraints.NotBlank;
 // TODO: prices
 // TODO: loans
 public class Album extends AbstractModel {
+	private static ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
+		@Override
+		protected NumberFormat initialValue() {
+			NumberFormat fmt = NumberFormat.getInstance();
+			if (fmt instanceof DecimalFormat) {
+				DecimalFormat df = (DecimalFormat) fmt;
+				DecimalFormatSymbols symbols = (DecimalFormatSymbols) df.getDecimalFormatSymbols().clone();
+				symbols.setDecimalSeparator('.'); // We always want a dot in this case
+				df.setDecimalFormatSymbols(symbols);
+				df.applyPattern("#0.#");
+			}
+			return fmt;
+		}
+	};
+
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
@@ -174,12 +192,7 @@ public class Album extends AbstractModel {
 			if (sb.length() > 0) {
 				sb.append(".");
 			}
-			// TODO: investigate other ways to round a decimal if it has no actual decimals. Then, also apply it to view for width, height
-			if (number.compareTo(BigDecimal.valueOf(number.intValue())) == 0) {
-				sb.append(number.intValueExact());
-			} else {
-				sb.append(number);
-			}
+			sb.append(NUMBER_FORMAT.get().format(number.doubleValue()));
 		}
 		if (numberSuffix != null) {
 			if (sb.length() > 0) {
