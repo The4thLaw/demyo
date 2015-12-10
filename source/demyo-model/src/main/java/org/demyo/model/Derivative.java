@@ -26,7 +26,6 @@ import org.demyo.model.util.DefaultOrder;
 /**
  * Derivatives of {@link Album}s or {@link Series}.
  */
-// TODO: validation rule for either an Album or a Series at least
 @Entity
 @Table(name = "DERIVATIVES")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"),

@@ -113,17 +113,6 @@ public class Tag extends AbstractModel {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @return the number of times this Tag has been used.
-	 */
-	@Transient
-	public int getOccurrencesCount() {
-		//return taggedAlbums.size();
-		return 0; // TODO
-	}
-
-	/**
 	 * Gets the Albums tagged with this Tag.
 	 * 
 	 * @return the Albums tagged with this Tag

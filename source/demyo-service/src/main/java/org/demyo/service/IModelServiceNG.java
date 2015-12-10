@@ -55,7 +55,7 @@ public interface IModelServiceNG<M extends IModel> {
 	 *        restriction.
 	 * @return The list of entities.
 	 */
-	// TODO: use QueryDSL, see JpaSpecificationExecutor
+	// If needed use QueryDSL, see JpaSpecificationExecutor
 	//List<M> findAll(Criterion criterion);
 
 	/**
