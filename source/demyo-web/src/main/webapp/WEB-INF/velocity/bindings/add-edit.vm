@@ -3,7 +3,13 @@
 #@form()
 
 #inputHidden('binding.id')
-#inputText('field.Binding.name', 'binding.name')
+
+<div class="mdl-grid">
+	#@mdlGridCell([12,0,0])
+		#inputText('field.Binding.name', 'binding.name')
+	#end
+</div>
+
 #saveButtons
 
 #end
