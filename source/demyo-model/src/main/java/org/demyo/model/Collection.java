@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
@@ -23,6 +24,8 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 @Table(name = "COLLECTIONS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
+@NamedEntityGraph(name = "Collection.forEdition", attributeNodes = { @NamedAttributeNode(value = "logo"),
+		@NamedAttributeNode(value = "publisher") })
 public class Collection extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
@@ -44,18 +47,10 @@ public class Collection extends AbstractModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "logo_id")
 	private Image logo;
-	/** The logo ID. */
-	// Work around bug HHH-3718
-	@Transient
-	private Long logoId;
 	/** The parent Publisher of the Collection. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
-	/** The Publisher ID. */
-	// Work around bug HHH-3718
-	@Transient
-	private Long publisherId;
 
 	@Override
 	public String getIdentifyingName() {
@@ -153,24 +148,6 @@ public class Collection extends AbstractModel {
 	}
 
 	/**
-	 * Gets the logo ID.
-	 * 
-	 * @return the logo ID
-	 */
-	public Long getLogoId() {
-		return logoId;
-	}
-
-	/**
-	 * Sets the logo ID.
-	 * 
-	 * @param logoId the new logo ID
-	 */
-	public void setLogoId(Long logoId) {
-		this.logoId = logoId;
-	}
-
-	/**
 	 * Gets the parent Publisher of the Collection.
 	 * 
 	 * @return the parent Publisher of the Collection
@@ -186,23 +163,5 @@ public class Collection extends AbstractModel {
 	 */
 	public void setPublisher(Publisher publisher) {
 		this.publisher = publisher;
-	}
-
-	/**
-	 * Gets the Publisher ID.
-	 * 
-	 * @return the Publisher ID
-	 */
-	public Long getPublisherId() {
-		return publisherId;
-	}
-
-	/**
-	 * Sets the Publisher ID.
-	 * 
-	 * @param publisherId the new Publisher ID
-	 */
-	public void setPublisherId(Long publisherId) {
-		this.publisherId = publisherId;
 	}
 }

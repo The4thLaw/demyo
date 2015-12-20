@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.demyo.model.Collection;
 import org.demyo.service.ICollectionService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelService;
+import org.demyo.service.IModelServiceNG;
 import org.demyo.service.IPublisherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/collections")
-public class CollectionController extends AbstractModelController<Collection> {
+public class CollectionController extends AbstractModelControllerNG<Collection> {
 	@Autowired
 	private ICollectionService service;
 	@Autowired
@@ -41,7 +41,7 @@ public class CollectionController extends AbstractModelController<Collection> {
 	}
 
 	@Override
-	protected IModelService<Collection> getService() {
+	protected IModelServiceNG<Collection> getService() {
 		return service;
 	}
 

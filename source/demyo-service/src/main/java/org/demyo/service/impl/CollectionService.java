@@ -1,7 +1,7 @@
 package org.demyo.service.impl;
 
-import org.demyo.dao.ICollectionDao;
-import org.demyo.dao.IModelDao;
+import org.demyo.dao.ICollectionRepo;
+import org.demyo.dao.IModelRepo;
 import org.demyo.model.Collection;
 import org.demyo.service.ICollectionService;
 
@@ -10,14 +10,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * Implements the contract defined by {@link ICollectionService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  */
 @Service
-public class CollectionService extends AbstractModelService<Collection> implements ICollectionService {
+public class CollectionService extends AbstractModelServiceNG<Collection> implements ICollectionService {
 	@Autowired
-	private ICollectionDao dao;
+	private ICollectionRepo repo;
 
 	/**
 	 * Default constructor.
@@ -27,7 +24,7 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 	}
 
 	@Override
-	protected IModelDao<Collection> getDao() {
-		return dao;
+	protected IModelRepo<Collection> getRepo() {
+		return repo;
 	}
 }
