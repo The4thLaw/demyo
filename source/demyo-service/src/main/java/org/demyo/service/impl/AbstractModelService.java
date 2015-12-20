@@ -19,11 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of base operations on models.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
- * @param <M>
  */
+@Deprecated
 public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
 

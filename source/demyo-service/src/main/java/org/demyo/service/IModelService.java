@@ -10,11 +10,8 @@ import org.hibernate.criterion.Order;
 
 /**
  * This interface defines a common set of operation on models.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
- * @param <M>
  */
+@Deprecated
 public interface IModelService<M extends IModel> {
 
 	/**
