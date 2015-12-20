@@ -1,28 +1,21 @@
 package org.demyo.service.impl;
 
-import java.util.List;
-
-import org.demyo.dao.IModelDao;
-import org.demyo.dao.IPublisherDao;
-import org.demyo.dao.JoinTypeHolder;
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.IPublisherRepo;
 import org.demyo.model.Publisher;
 import org.demyo.service.IPublisherService;
 
-import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IPublisherService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  */
 @Service
-public class PublisherService extends AbstractModelService<Publisher> implements IPublisherService {
+public class PublisherService extends AbstractModelServiceNG<Publisher> implements IPublisherService {
 	@Autowired
-	private IPublisherDao dao;
+	private IPublisherRepo repo;
 
 	/**
 	 * Default constructor.
@@ -31,16 +24,14 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 		super(Publisher.class);
 	}
 
+	@Transactional(rollbackFor = Throwable.class)
 	@Override
-	protected IModelDao<Publisher> getDao() {
-		return dao;
+	public Publisher getByIdForView(long id) {
+		return repo.findOneForView(id);
 	}
 
-	@Transactional(readOnly = true)
 	@Override
-	public List<Publisher> findPaginated(int currentPage) {
-		JoinTypeHolder fetchModes = new JoinTypeHolder();
-		fetchModes.add("collections", JoinType.LEFT_OUTER_JOIN);
-		return findPaginated(currentPage, null, fetchModes);
+	protected IModelRepo<Publisher> getRepo() {
+		return repo;
 	}
 }

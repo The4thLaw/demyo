@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -28,6 +30,11 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 @Table(name = "PUBLISHERS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "Publisher.forIndex", attributeNodes = @NamedAttributeNode("collections")),
+		@NamedEntityGraph(name = "Publisher.forView", attributeNodes = { @NamedAttributeNode("collections"),
+				@NamedAttributeNode("logo") }),
+		@NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo")) })
 public class Publisher extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
@@ -49,10 +56,6 @@ public class Publisher extends AbstractModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "logo_id")
 	private Image logo;
-	/** The logo ID. */
-	// Work around bug HHH-3718
-	@Transient
-	private Long logoId;
 	/** The collections belonging to this publisher. */
 	@OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
 	@SortComparator(IdentifyingNameComparator.class)
@@ -151,24 +154,6 @@ public class Publisher extends AbstractModel {
 	 */
 	public void setLogo(Image logo) {
 		this.logo = logo;
-	}
-
-	/**
-	 * Gets the logo ID.
-	 * 
-	 * @return the logo ID
-	 */
-	public Long getLogoId() {
-		return logoId;
-	}
-
-	/**
-	 * Sets the logo ID.
-	 * 
-	 * @param logoId the new logo ID
-	 */
-	public void setLogoId(Long logoId) {
-		this.logoId = logoId;
 	}
 
 	/**

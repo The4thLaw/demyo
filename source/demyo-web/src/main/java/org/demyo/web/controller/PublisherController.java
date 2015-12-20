@@ -2,7 +2,7 @@ package org.demyo.web.controller;
 
 import org.demyo.model.Publisher;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelService;
+import org.demyo.service.IModelServiceNG;
 import org.demyo.service.IPublisherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller for {@link Publisher} management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1082 $
  */
 @Controller
 @RequestMapping("/publishers")
-public class PublisherController extends AbstractModelController<Publisher> {
+public class PublisherController extends AbstractModelControllerNG<Publisher> {
 	@Autowired
 	private IPublisherService service;
 	@Autowired
@@ -33,7 +30,7 @@ public class PublisherController extends AbstractModelController<Publisher> {
 	}
 
 	@Override
-	protected IModelService<Publisher> getService() {
+	protected IModelServiceNG<Publisher> getService() {
 		return service;
 	}
 
