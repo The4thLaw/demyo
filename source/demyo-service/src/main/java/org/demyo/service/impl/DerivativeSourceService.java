@@ -1,7 +1,7 @@
 package org.demyo.service.impl;
 
-import org.demyo.dao.IDerivativeSourceDao;
-import org.demyo.dao.IModelDao;
+import org.demyo.dao.IDerivativeSourceRepo;
+import org.demyo.dao.IModelRepo;
 import org.demyo.model.DerivativeSource;
 import org.demyo.service.IDerivativeSourceService;
 
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
  * Implements the contract defined by {@link IDerivativeSourceService}.
  */
 @Service
-public class DerivativeSourceService extends AbstractModelService<DerivativeSource> implements
+public class DerivativeSourceService extends AbstractModelServiceNG<DerivativeSource> implements
 		IDerivativeSourceService {
 	@Autowired
-	private IDerivativeSourceDao dao;
+	private IDerivativeSourceRepo repo;
 
 	/**
 	 * Default constructor.
@@ -25,7 +25,7 @@ public class DerivativeSourceService extends AbstractModelService<DerivativeSour
 	}
 
 	@Override
-	protected IModelDao<DerivativeSource> getDao() {
-		return dao;
+	protected IModelRepo<DerivativeSource> getRepo() {
+		return repo;
 	}
 }

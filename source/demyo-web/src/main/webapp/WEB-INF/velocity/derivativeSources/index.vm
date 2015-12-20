@@ -7,4 +7,3 @@
 #textCardListStdBody($derivativeSourceList "name" "identifyingName" "/derivativeSources/view/" true)
 
 $paging.pageLinks($derivativeSourceList, $request, $javascript)
-## Letters are not really interesting for Derivative Sources
