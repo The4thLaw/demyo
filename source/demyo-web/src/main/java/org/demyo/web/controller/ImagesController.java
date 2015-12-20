@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.demyo.model.Image;
 import org.demyo.model.exception.DemyoException;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelService;
+import org.demyo.service.IModelServiceNG;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,13 +20,10 @@ import org.springframework.web.servlet.HandlerMapping;
 
 /**
  * Controller for {@link Image} management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1059 $
  */
 @Controller
 @RequestMapping("/images")
-public class ImagesController extends AbstractModelController<Image> {
+public class ImagesController extends AbstractModelControllerNG<Image> {
 	@Autowired
 	private IImageService imageService;
 
@@ -73,7 +71,7 @@ public class ImagesController extends AbstractModelController<Image> {
 	}
 
 	@Override
-	protected IModelService<Image> getService() {
+	protected IModelServiceNG<Image> getService() {
 		return imageService;
 	}
 }

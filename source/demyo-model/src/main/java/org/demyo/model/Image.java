@@ -5,13 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.demyo.model.util.DefaultOrder;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents an image.
- * 
- * @author $Author: xr $
- * @version $Revision: 1063 $
  */
 @Entity
 @Table(name = "IMAGES")

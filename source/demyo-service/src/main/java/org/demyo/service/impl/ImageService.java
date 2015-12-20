@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import org.demyo.dao.IImageDao;
-import org.demyo.dao.IModelDao;
+import org.demyo.dao.IImageRepo;
+import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.config.SystemConfiguration;
@@ -27,16 +27,13 @@ import org.springframework.stereotype.Service;
 
 /**
  * Implements the contract defined by {@link IImageService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1075 $
  */
 @Service
-public class ImageService extends AbstractModelService<Image> implements IImageService {
+public class ImageService extends AbstractModelServiceNG<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 
 	@Autowired
-	private IImageDao dao;
+	private IImageRepo repo;
 	@Autowired
 	private IConfigurationService configService;
 
@@ -48,8 +45,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	protected IModelDao<Image> getDao() {
-		return dao;
+	protected IModelRepo<Image> getRepo() {
+		return repo;
 	}
 
 	@Override

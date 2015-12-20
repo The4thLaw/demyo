@@ -7,11 +7,8 @@ import org.demyo.model.exception.DemyoException;
 
 /**
  * Service for management of {@link Image}s.
- * 
- * @author $Author: xr $
- * @version $Revision: 1059 $
  */
-public interface IImageService extends IModelService<Image> {
+public interface IImageService extends IModelServiceNG<Image> {
 
 	/**
 	 * Gets the actual file for an image from the collection.
