@@ -2,11 +2,13 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-derivativeType",
-	"url" : "../edit/$derivativeType.id"
+	"url" : "../edit/$derivativeType.id",
+	"icon": "edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-derivativeType",
 	"url" : "../delete/$derivativeType.id",
+	"icon": "delete",
 	"confirm" : true
 })
 
