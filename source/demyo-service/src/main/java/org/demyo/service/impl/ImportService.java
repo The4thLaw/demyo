@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.demyo.dao.impl.IRawSQLDao;
+
+import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.config.SystemConfiguration;
 import org.demyo.model.exception.DemyoErrorCode;
 import org.demyo.model.exception.DemyoException;

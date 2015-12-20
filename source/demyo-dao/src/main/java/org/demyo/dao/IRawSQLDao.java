@@ -1,4 +1,4 @@
-package org.demyo.dao.impl;
+package org.demyo.dao;
 
 import java.util.Map;
 

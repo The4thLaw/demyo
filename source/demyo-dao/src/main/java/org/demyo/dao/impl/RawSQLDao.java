@@ -7,6 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.demyo.dao.IRawSQLDao;
+
 import org.springframework.stereotype.Repository;
 
 /**
