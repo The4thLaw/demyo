@@ -124,8 +124,9 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public long save(M model) {
-		// TODO: figure out if this is still needed with Spring Data
-		// Before saving, we must remove any linked models that have a null id. These are models that should not exist
+		// Before saving, we must remove any linked models that have a null id. These are models that should not exist.
+		// For example, this happens when trying to save an Album that has no binding. It is still applicable with
+		// Spring Data
 		for (Method meth : modelClass.getMethods()) {
 			if (IModel.class.isAssignableFrom(meth.getReturnType()) && meth.getName().startsWith("get")
 					&& !"getClass".equals(meth.getName()) && meth.getParameterTypes().length == 0) {
