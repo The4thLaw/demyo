@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Implements the contract defined by {@link IAuthorService}.
  */
 @Service
-public class AuthorService extends AbstractModelServiceNG<Author> implements IAuthorService {
+public class AuthorService extends AbstractModelService<Author> implements IAuthorService {
 	@Autowired
 	private IAuthorRepo repo;
 

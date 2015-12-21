@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Implements the contract defined by {@link ISeriesService}.
  */
 @Service
-public class SeriesService extends AbstractModelServiceNG<Series> implements ISeriesService {
+public class SeriesService extends AbstractModelService<Series> implements ISeriesService {
 	@Autowired
 	private ISeriesRepo repo;
 

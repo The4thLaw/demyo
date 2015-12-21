@@ -13,7 +13,7 @@ import org.demyo.service.IAlbumService;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IBindingService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 import org.demyo.service.IPublisherService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/albums")
-public class AlbumController extends AbstractModelControllerNG<Album> {
+public class AlbumController extends AbstractModelController<Album> {
 	@Autowired
 	private IAlbumService service;
 	@Autowired
@@ -51,7 +51,7 @@ public class AlbumController extends AbstractModelControllerNG<Album> {
 	}
 
 	@Override
-	protected IModelServiceNG<Album> getService() {
+	protected IModelService<Album> getService() {
 		return service;
 	}
 

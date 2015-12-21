@@ -10,11 +10,9 @@ import org.springframework.data.domain.Sort.Order;
 /**
  * This interface defines a common set of operation on models.
  * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  * @param <M>
  */
-public interface IModelServiceNG<M extends IModel> {
+public interface IModelService<M extends IModel> {
 
 	/**
 	 * Finds an entity based on its ID in order to view it.

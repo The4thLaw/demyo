@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Implements the contract defined by {@link IAlbumService}.
  */
 @Service
-public class AlbumService extends AbstractModelServiceNG<Album> implements IAlbumService {
+public class AlbumService extends AbstractModelService<Album> implements IAlbumService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AlbumService.class);
 
 	@Autowired

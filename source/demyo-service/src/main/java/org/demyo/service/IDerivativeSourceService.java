@@ -5,6 +5,6 @@ import org.demyo.model.DerivativeSource;
 /**
  * Service for management of {@link DerivativeSource}s.
  */
-public interface IDerivativeSourceService extends IModelServiceNG<DerivativeSource> {
+public interface IDerivativeSourceService extends IModelService<DerivativeSource> {
 
 }

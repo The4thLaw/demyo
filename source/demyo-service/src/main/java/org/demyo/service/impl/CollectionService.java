@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * Implements the contract defined by {@link ICollectionService}.
  */
 @Service
-public class CollectionService extends AbstractModelServiceNG<Collection> implements ICollectionService {
+public class CollectionService extends AbstractModelService<Collection> implements ICollectionService {
 	@Autowired
 	private ICollectionRepo repo;
 

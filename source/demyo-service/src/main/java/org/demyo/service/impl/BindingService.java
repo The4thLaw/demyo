@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * Implements the contract defined by {@link IBindingService}.
  */
 @Service
-public class BindingService extends AbstractModelServiceNG<Binding> implements IBindingService {
+public class BindingService extends AbstractModelService<Binding> implements IBindingService {
 	@Autowired
 	private IBindingRepo repo;
 

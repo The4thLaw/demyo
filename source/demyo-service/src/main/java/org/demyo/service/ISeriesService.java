@@ -7,7 +7,7 @@ import org.demyo.model.Series;
 /**
  * Service for management of {@link Series}.
  */
-public interface ISeriesService extends IModelServiceNG<Series> {
+public interface ISeriesService extends IModelService<Series> {
 
 	/**
 	 * Finds all Series which are not the given one.

@@ -9,7 +9,7 @@ import org.demyo.service.IDerivativeService;
 import org.demyo.service.IDerivativeSourceService;
 import org.demyo.service.IDerivativeTypeService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 import org.demyo.service.ISeriesService;
 
 import org.springframework.beans.PropertyEditorRegistry;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/derivatives")
-public class DerivativeController extends AbstractModelControllerNG<Derivative> {
+public class DerivativeController extends AbstractModelController<Derivative> {
 	@Autowired
 	private IDerivativeService service;
 	@Autowired
@@ -43,7 +43,7 @@ public class DerivativeController extends AbstractModelControllerNG<Derivative> 
 	}
 
 	@Override
-	protected IModelServiceNG<Derivative> getService() {
+	protected IModelService<Derivative> getService() {
 		return service;
 	}
 

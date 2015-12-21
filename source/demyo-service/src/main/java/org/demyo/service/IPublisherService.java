@@ -5,6 +5,6 @@ import org.demyo.model.Publisher;
 /**
  * Service for management of {@link Publisher}s.
  */
-public interface IPublisherService extends IModelServiceNG<Publisher> {
+public interface IPublisherService extends IModelService<Publisher> {
 
 }

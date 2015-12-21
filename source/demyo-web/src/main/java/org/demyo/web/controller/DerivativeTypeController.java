@@ -2,7 +2,7 @@ package org.demyo.web.controller;
 
 import org.demyo.model.DerivativeType;
 import org.demyo.service.IDerivativeTypeService;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/derivativeTypes")
-public class DerivativeTypeController extends AbstractModelControllerNG<DerivativeType> {
+public class DerivativeTypeController extends AbstractModelController<DerivativeType> {
 	@Autowired
 	private IDerivativeTypeService service;
 
@@ -25,7 +25,7 @@ public class DerivativeTypeController extends AbstractModelControllerNG<Derivati
 	}
 
 	@Override
-	protected IModelServiceNG<DerivativeType> getService() {
+	protected IModelService<DerivativeType> getService() {
 		return service;
 	}
 }

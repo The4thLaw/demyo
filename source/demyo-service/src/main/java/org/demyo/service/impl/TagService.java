@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Implements the contract defined by {@link ITagService}.
  */
 @Service
-public class TagService extends AbstractModelServiceNG<Tag> implements ITagService {
+public class TagService extends AbstractModelService<Tag> implements ITagService {
 	@Autowired
 	private ITagRepo repo;
 

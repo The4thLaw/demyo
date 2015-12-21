@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.demyo.model.IModel;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
@@ -32,12 +32,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * Base controller for management of models.
  * 
- * @author $Author: xr $
- * @version $Revision: 1079 $
  * @param <M> The model type.
  */
 // TODO: Protect all access against XSS
-public abstract class AbstractModelControllerNG<M extends IModel> extends AbstractController {
+public abstract class AbstractModelController<M extends IModel> extends AbstractController {
 	private final Class<M> modelClass;
 	private final String urlPrefix;
 	private final String modelKey;
@@ -50,7 +48,7 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 	 *        of the folder where views are stored.
 	 * @param modelKey The key to store the entity in the view model.
 	 */
-	protected AbstractModelControllerNG(Class<M> modelClass, String urlPrefix, String modelKey) {
+	protected AbstractModelController(Class<M> modelClass, String urlPrefix, String modelKey) {
 		this.modelClass = modelClass;
 		this.urlPrefix = urlPrefix;
 		this.modelKey = modelKey;
@@ -297,5 +295,5 @@ public abstract class AbstractModelControllerNG<M extends IModel> extends Abstra
 	 * 
 	 * @return the service.
 	 */
-	protected abstract IModelServiceNG<M> getService();
+	protected abstract IModelService<M> getService();
 }

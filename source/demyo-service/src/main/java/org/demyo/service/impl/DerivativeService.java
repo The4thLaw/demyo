@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * Implements the contract defined by {@link IDerivativeService}.
  */
 @Service
-public class DerivativeService extends AbstractModelServiceNG<Derivative> implements IDerivativeService {
+public class DerivativeService extends AbstractModelService<Derivative> implements IDerivativeService {
 	@Autowired
 	private IDerivativeRepo repo;
 	@Autowired

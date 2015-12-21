@@ -3,7 +3,7 @@ package org.demyo.web.controller;
 import org.demyo.model.Author;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/authors")
-public class AuthorController extends AbstractModelControllerNG<Author> {
+public class AuthorController extends AbstractModelController<Author> {
 	@Autowired
 	private IAuthorService service;
 	@Autowired
@@ -30,7 +30,7 @@ public class AuthorController extends AbstractModelControllerNG<Author> {
 	}
 
 	@Override
-	protected IModelServiceNG<Author> getService() {
+	protected IModelService<Author> getService() {
 		return service;
 	}
 

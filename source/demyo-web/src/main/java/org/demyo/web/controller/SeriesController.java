@@ -4,7 +4,7 @@ import java.util.SortedSet;
 
 import org.demyo.model.Series;
 import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 import org.demyo.service.ISeriesService;
 
 import org.springframework.beans.PropertyEditorRegistry;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/series")
-public class SeriesController extends AbstractModelControllerNG<Series> {
+public class SeriesController extends AbstractModelController<Series> {
 	@Autowired
 	private ISeriesService service;
 
@@ -31,7 +31,7 @@ public class SeriesController extends AbstractModelControllerNG<Series> {
 	}
 
 	@Override
-	protected IModelServiceNG<Series> getService() {
+	protected IModelService<Series> getService() {
 		return service;
 	}
 

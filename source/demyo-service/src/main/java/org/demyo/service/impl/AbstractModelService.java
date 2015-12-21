@@ -8,7 +8,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.model.IModel;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.service.IConfigurationService;
-import org.demyo.service.IModelServiceNG;
+import org.demyo.service.IModelService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementation of base operations on models.
  * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  * @param <M>
  */
-public abstract class AbstractModelServiceNG<M extends IModel> implements IModelServiceNG<M> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelServiceNG.class);
+public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
 
 	@Autowired
 	private IConfigurationService configurationService;
@@ -45,7 +43,7 @@ public abstract class AbstractModelServiceNG<M extends IModel> implements IModel
 	 * 
 	 * @param modelClass The class of the model to work on.
 	 */
-	protected AbstractModelServiceNG(Class<M> modelClass) {
+	protected AbstractModelService(Class<M> modelClass) {
 		this.modelClass = modelClass;
 
 		// Detect default order

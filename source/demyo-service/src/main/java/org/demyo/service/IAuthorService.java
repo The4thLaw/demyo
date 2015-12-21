@@ -5,6 +5,6 @@ import org.demyo.model.Author;
 /**
  * Service for management of {@link Author}s.
  */
-public interface IAuthorService extends IModelServiceNG<Author> {
+public interface IAuthorService extends IModelService<Author> {
 
 }

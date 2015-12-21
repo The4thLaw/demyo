@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
  * Implements the contract defined by {@link IImageService}.
  */
 @Service
-public class ImageService extends AbstractModelServiceNG<Image> implements IImageService {
+public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 
 	@Autowired
