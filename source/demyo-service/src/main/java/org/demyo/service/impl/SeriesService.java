@@ -1,8 +1,9 @@
 package org.demyo.service.impl;
 
-import org.demyo.dao.IModelDao;
-import org.demyo.dao.ISeriesDao;
-import org.demyo.model.Album;
+import java.util.List;
+
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Series;
 import org.demyo.service.ISeriesService;
 
@@ -12,14 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link ISeriesService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1075 $
  */
 @Service
-public class SeriesService extends AbstractModelService<Series> implements ISeriesService {
+public class SeriesService extends AbstractModelServiceNG<Series> implements ISeriesService {
 	@Autowired
-	private ISeriesDao dao;
+	private ISeriesRepo repo;
 
 	/**
 	 * Default constructor.
@@ -31,26 +29,23 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public Series getByIdForView(long id) {
-		Series series = super.getByIdForView(id);
-		// TODO (v2.0.0-alpha3): when switch to Spring data, remove these calls and use graphs. Also remove transaction annotation
-		series.getAlbumTags();
-		series.getAlbumWriters();
-		series.getAlbumArtists();
-		series.getAlbumColorists();
-		for (Album a : series.getAlbums()) {
-			a.getPublisher().getIdentifyingName();
-			if (a.getCollection() != null) {
-				a.getCollection().getIdentifyingName();
-			}
-			if (a.getCover() != null) {
-				a.getCover().getUrl();
-			}
-		}
-		return series;
+		return repo.findOneForView(id);
 	}
 
 	@Override
-	protected IModelDao<Series> getDao() {
-		return dao;
+	public List<Series> findOtherSeries(long id) {
+		return repo.findByIdNot(id);
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@Override
+	public long save(Series model) {
+		Series savedModel = repo.saveWithReverseRelations(model);
+		return savedModel.getId();
+	}
+
+	@Override
+	protected IModelRepo<Series> getRepo() {
+		return repo;
 	}
 }

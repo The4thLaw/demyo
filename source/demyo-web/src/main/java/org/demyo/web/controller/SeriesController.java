@@ -4,11 +4,9 @@ import java.util.SortedSet;
 
 import org.demyo.model.Series;
 import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.service.IModelService;
+import org.demyo.service.IModelServiceNG;
 import org.demyo.service.ISeriesService;
 
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/series")
-public class SeriesController extends AbstractModelController<Series> {
+public class SeriesController extends AbstractModelControllerNG<Series> {
 	@Autowired
 	private ISeriesService service;
 
@@ -33,17 +31,17 @@ public class SeriesController extends AbstractModelController<Series> {
 	}
 
 	@Override
-	protected IModelService<Series> getService() {
+	protected IModelServiceNG<Series> getService() {
 		return service;
 	}
 
 	@Override
 	protected void fillModelForEdition(Series entity, Model model) {
-		Criterion criterion = null;
 		if (entity.getId() != null) {
-			criterion = Restrictions.ne("id", entity.getId());
+			model.addAttribute("otherSeries", service.findOtherSeries(entity.getId()));
+		} else {
+			model.addAttribute("otherSeries", service.findAll());
 		}
-		model.addAttribute("otherSeries", service.findAll(criterion));
 	}
 
 	@InitBinder

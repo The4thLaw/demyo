@@ -10,8 +10,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.demyo.model.util.AlbumComparator;
@@ -29,6 +32,14 @@ import org.hibernate.validator.constraints.URL;
 @Entity
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "Series.forView", attributeNodes = { @NamedAttributeNode("relatedSeries"),
+				@NamedAttributeNode(value = "albums", subgraph = "Series.Album") }, subgraphs = { @NamedSubgraph(
+				name = "Series.Album", attributeNodes = { @NamedAttributeNode("writers"),
+						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
+						@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+						@NamedAttributeNode("tags"), @NamedAttributeNode("cover"), }) }),
+		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
 public class Series extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
@@ -52,10 +63,8 @@ public class Series extends AbstractModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"),
 			inverseJoinColumns = @JoinColumn(name = "sub"))
-	@OrderBy(value = "name asc")
-	// TODO (2.0.0-alpha3): set this back to SortedSet after switching to Spring Data
-	//@SortComparator(IdentifyingNameComparator.class)
-	private Set<Series> relatedSeries;
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Series> relatedSeries;
 	/** The albums belonging to this series. */
 	@OneToMany(mappedBy = "series", fetch = FetchType.LAZY)
 	@SortComparator(AlbumComparator.class)
