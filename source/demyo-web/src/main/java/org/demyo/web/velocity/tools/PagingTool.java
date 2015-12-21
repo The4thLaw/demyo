@@ -10,9 +10,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.demyo.model.util.PaginatedList;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
@@ -71,65 +68,10 @@ public class PagingTool {
 	 * @return The page links (as an HTML fragment).
 	 * @throws UnsupportedEncodingException If encoding the parameters fails.
 	 */
-	@Deprecated
-	public String pageLinks(PaginatedList<?> list, HttpServletRequest request, JavascriptTool jsTool)
-			throws UnsupportedEncodingException {
-		return pageLinks(list.getCurrentPage(), list.getMaxPages(), request, jsTool);
-	}
-
-	/**
-	 * Gets the list of links to individual pages. This method forwards parameters according to
-	 * {@link #getBaseUrlForPageLinks(HttpServletRequest)}.
-	 * 
-	 * @param list The paginated list of entities.
-	 * @param request The HTTP request.
-	 * @param jsTool The {@link JavascriptTool} in this request.
-	 * @return The page links (as an HTML fragment).
-	 * @throws UnsupportedEncodingException If encoding the parameters fails.
-	 */
 	public String pageLinks(Page<?> list, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
 		//return pageLinks(list.getNumber() + 1, list.getTotalPages(), request, jsTool);
 		return pageLinks((Slice<?>) list, request, jsTool);
-	}
-
-	@Deprecated
-	private String pageLinks(int current, int max, HttpServletRequest request, JavascriptTool jsTool)
-			throws UnsupportedEncodingException {
-		LOGGER.debug("Generating page links for page {} of {}", current, max);
-
-		StringBuilder baseUrl = getBaseUrlForPageLinks(request);
-		baseUrl.append("page=");
-
-		List<Integer> pageNumbers = getPageNumbers(current, max);
-		List<String> pageLinks = new ArrayList<String>(pageNumbers.size());
-		int lastPage = pageNumbers.get(0) - 1;
-		for (int page : pageNumbers) {
-			if (page != lastPage + 1) {
-				// In case of gap in the page numbers, write it
-				pageLinks.add("&hellip;");
-			}
-			lastPage = page;
-
-			if (page == current) {
-				pageLinks.add(String.valueOf(page));
-			} else {
-				pageLinks.add("<a href=\"" + baseUrl.toString() + page + "\">" + page + "</a>");
-			}
-		}
-
-		String directPageLinks = StringUtils.join(pageLinks, " , ");
-
-		String previousLink = "";
-		if (current > 1) {
-			previousLink = "<a id=\"page-link-prev\" href=\"" + baseUrl.toString() + (current - 1) + "\">«</a> ";
-		}
-		String nextLink = "";
-		if (current < max) {
-			nextLink = " <a id=\"page-link-next\" href=\"" + baseUrl.toString() + (current + 1) + "\">»</a>";
-		}
-
-		return "<div class=\"pages_nav_numbers\">" + previousLink + directPageLinks + nextLink + "</div>";
 	}
 
 	/**
