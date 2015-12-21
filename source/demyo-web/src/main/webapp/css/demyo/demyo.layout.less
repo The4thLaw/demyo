@@ -86,6 +86,11 @@
 	}
 }
 
+#page-content {
+	position: relative; /* We will align the quick tasks on that */
+	padding: 0.5em;
+}
+
 /* Override to flush the footer */
 main.mdl-layout__content {
 	display: flex;
@@ -96,9 +101,9 @@ main.mdl-layout__content {
 	}
 }
 
-#page-content {
-	position: relative; /* We will align the quick tasks on that */
-	padding: 0.5em;
+/* Override to make sure logos don't get in the way */
+.mdl-mini-footer {
+	clear: both;
 }
 
 .dem-fabs {
