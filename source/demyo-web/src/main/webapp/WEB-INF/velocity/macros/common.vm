@@ -23,9 +23,14 @@
 		#set( $sepIndex = $iconSpec.indexOf('+') )
 		#if ($sepIndex >= 0)
 			#set( $overlayStart = $sepIndex + 1 )
+			#set ($overlay = $iconSpec.substring($overlayStart, $iconSpec.length()))
+			#if ($overlay == "add")
+				## Regular "add" is too thin for overlays
+				#set ($overlay = "overlay_add")
+			#end
 			<span class="dico-stack">
 				<i class="dico">$iconSpec.substring(0, $sepIndex)</i>
-				<i class="dico dico-overlay">$iconSpec.substring($overlayStart, $iconSpec.length())</i>
+				<i class="dico dico-overlay">$overlay</i>
 			</span>
 		#else
 			<i class="dico">$iconSpec</i>
@@ -38,7 +43,6 @@
 #macro(fab $url $iconSpec)
 	<a href="$url" class="dem-fabs__button">
 		<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-	  		## TODO: use material icon rather than FontAwesome, for "add"
 	  		#icon($iconSpec)
 		</button>
 	</a>

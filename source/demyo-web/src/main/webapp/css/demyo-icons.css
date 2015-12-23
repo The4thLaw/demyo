@@ -1,197 +1,216 @@
 @font-face {
-	font-family: 'Demyo-Icons';
-	src:url('../fonts/Demyo-Icons.eot?jl36o5');
-	src:url('../fonts/Demyo-Icons.eot?jl36o5#iefix') format('embedded-opentype'),
-		url('../fonts/Demyo-Icons.ttf?jl36o5') format('truetype'),
-		url('../fonts/Demyo-Icons.woff?jl36o5') format('woff'),
-		url('../fonts/Demyo-Icons.svg?jl36o5#Demyo-Icons') format('svg');
-	font-weight: normal;
-	font-style: normal;
+    font-family: 'Demyo-Icons';
+    src:    url('../fonts/Demyo-Icons.eot?aeivk2');
+    src:    url('../fonts/Demyo-Icons.eot?aeivk2#iefix') format('embedded-opentype'),
+        url('../fonts/Demyo-Icons.ttf?aeivk2') format('truetype'),
+        url('../fonts/Demyo-Icons.woff?aeivk2') format('woff'),
+        url('../fonts/Demyo-Icons.svg?aeivk2#Demyo-Icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 .dico {
-	font-family: 'Demyo-Icons';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	
-	/* Enable Ligatures ================ */
-	letter-spacing: 0;
-	-webkit-font-feature-settings: "liga";
-	-moz-font-feature-settings: "liga=1";
-	-moz-font-feature-settings: "liga";
-	-ms-font-feature-settings: "liga" 1;
-	-o-font-feature-settings: "liga";
-	font-feature-settings: "liga";
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'Demyo-Icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    -o-font-feature-settings: "liga";
+    font-feature-settings: "liga";
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .dico-location_on:before {
-	content: "\e052";
+    content: "\e052";
+}
+.dico-add:before {
+    content: "\e069";
 }
 .dico-airplanemode_active:before {
-	content: "\e091";
+    content: "\e091";
 }
 .dico-storage:before {
-	content: "\e0bc";
+    content: "\e0bc";
+}
+.dico-insert_drive_file:before {
+    content: "\e0e7";
 }
 .dico-mode_edit:before {
-	content: "\e0ee";
+    content: "\e0ee";
 }
 .dico-file_download:before {
-	content: "\e0ff";
+    content: "\e0ff";
 }
 .dico-file_upload:before {
-	content: "\e100";
+    content: "\e100";
 }
 .dico-arrow_down:before {
-	content: "\e10f";
+    content: "\e10f";
 }
 .dico-arrow_left:before {
-	content: "\e110";
+    content: "\e110";
 }
 .dico-arrow_right:before {
-	content: "\e111";
+    content: "\e111";
 }
 .dico-arrow_up:before {
-	content: "\e112";
+    content: "\e112";
 }
 .dico-broken:before {
-	content: "\e142";
+    content: "\e142";
 }
 .dico-color_lens:before {
-	content: "\e14c";
+    content: "\e14c";
 }
 .dico-photo:before {
-	content: "\e1a2";
-}
-.dico-eye:before {
-	content: "\e1a8";
+    content: "\e1a2";
 }
 .dico-person-location:before {
-	content: "\e1f2";
+    content: "\e1f2";
 }
 .dico-menu:before {
-	content: "\e20e";
+    content: "\e20e";
 }
 .dico-keyboard_control:before {
-	content: "\e20f";
+    content: "\e20f";
 }
 .dico-more_vert:before {
-	content: "\e210";
+    content: "\e210";
 }
 .dico-location_city:before {
-	content: "\e247";
+    content: "\e247";
 }
 .dico-person:before {
-	content: "\e253";
+    content: "\e253";
 }
 .dico-star:before {
-	content: "\e260";
+    content: "\e260";
 }
 .dico-star_outline:before {
-	content: "\e262";
+    content: "\e262";
 }
 .dico-delete:before {
-	content: "\e287";
+    content: "\e287";
 }
 .dico-favorite:before {
-	content: "\e291";
+    content: "\e291";
 }
 .dico-favorite_outline:before {
-	content: "\e292";
+    content: "\e292";
 }
 .dico-home:before {
-	content: "\e29e";
+    content: "\e29e";
 }
 .dico-info_outline:before {
-	content: "\e2a3";
+    content: "\e2a3";
 }
 .dico-list:before {
-	content: "\e2aa";
+    content: "\e2aa";
 }
 .dico-search:before {
-	content: "\e2ca";
+    content: "\e2ca";
 }
 .dico-settings:before {
-	content: "\e2cb";
+    content: "\e2cb";
 }
 .dico-shopping_cart:before {
-	content: "\e2df";
+    content: "\e2df";
+}
+.dico-thumbs:before {
+    content: "\e302";
 }
 .dico-help_outline:before {
-	content: "\e30f";
+    content: "\e30f";
 }
 .dico-th-large:before {
-	content: "\f009";
+    content: "\f009";
 }
 .dico-th:before {
-	content: "\f00a";
+    content: "\f00a";
 }
 .dico-th-list:before {
-	content: "\f00b";
+    content: "\f00b";
 }
 .dico-tag:before {
-	content: "\f02b";
+    content: "\f02b";
 }
 .dico-image:before {
-	content: "\f03e";
+    content: "\f03e";
 }
 .dico-photo2:before {
-	content: "\f03e";
+    content: "\f03e";
 }
 .dico-picture-o:before {
-	content: "\f03e";
+    content: "\f03e";
 }
 .dico-plus:before {
-	content: "\f067";
+    content: "\f067";
 }
 .dico-gift:before {
-	content: "\f06b";
+    content: "\f06b";
+}
+.dico-eye:before {
+    content: "\f06e";
+}
+.dico-eye-slash:before {
+    content: "\f070";
+}
+.dico-arrows-v:before {
+    content: "\f07d";
+}
+.dico-arrows-h:before {
+    content: "\f07e";
 }
 .dico-comment-o:before {
-	content: "\f0e5";
+    content: "\f0e5";
 }
 .dico-chain-broken:before {
-	content: "\f127";
+    content: "\f127";
 }
 .dico-unlink:before {
-	content: "\f127";
+    content: "\f127";
 }
 .dico-box:before {
-	content: "\f187";
+    content: "\f187";
 }
 .dico-building:before {
-	content: "\f1ad";
+    content: "\f1ad";
 }
 .dico-image-file:before {
-	content: "\f1c5";
+    content: "\f1c5";
 }
 .dico-circle-o-notch:before {
-	content: "\f1ce";
+    content: "\f1ce";
 }
 .dico-search-advanced:before {
-	content: "\f1e5";
+    content: "\f1e5";
 }
 .dico-paint-brush:before {
-	content: "\f1fc";
+    content: "\f1fc";
 }
 .dico-pie-chart:before {
-	content: "\f200";
+    content: "\f200";
 }
 .dico-sticky-note:before {
-	content: "\f24a";
+    content: "\f24a";
 }
 .dico-book:before {
-	content: "\e800";
+    content: "\e800";
 }
 .dico-books:before {
-	content: "\e801";
+    content: "\e801";
 }
 

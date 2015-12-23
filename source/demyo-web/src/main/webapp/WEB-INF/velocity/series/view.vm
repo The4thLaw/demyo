@@ -20,11 +20,10 @@ $quickTasks.add({
 		"url" : "#",
 		"icon": "gift+eye"
 	})
-	## TODO: icon with barred eye
 	$quickTasks.add({
 		"id" : "qt-hide-wishlist-albums",
 		"url" : "#",
-		"icon": "gift"
+		"icon": "gift+eye_slashed"
 	})
 #end
 ##TODO: QT to add an album to the series
