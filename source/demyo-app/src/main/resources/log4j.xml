@@ -15,7 +15,7 @@
 		<param name="threshold" value="debug" />
 		<param name="append" value="false" />
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
-		<param name="file" value="log4j/demyo.log" />
+		<param name="file" value="${user.home}/.demyo/logs/demyo.log" />
 		<param name="Encoding" value="UTF-8" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} [%-5p] %c{1}: %m%n" />
