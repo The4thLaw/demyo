@@ -19,9 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Controller for import of files.
- * 
- * @author $Author: xr $
- * @version $Revision: 1075 $
  */
 @Controller
 @RequestMapping("/manage/import")
@@ -79,7 +76,7 @@ public class ImportController extends AbstractController {
 	 * @throws DemyoException If import fails.
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public void importFile(@ModelAttribute("importFile") FileUpload upload, HttpServletRequest request,
+	public String importFile(@ModelAttribute("importFile") FileUpload upload, HttpServletRequest request,
 			HttpServletResponse response) throws DemyoException {
 		try {
 			importService.importFile(upload.getUploadedFile().getOriginalFilename(), upload.getUploadedFile()
@@ -87,6 +84,6 @@ public class ImportController extends AbstractController {
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
 		}
-		redirect("/");
+		return redirect("/");
 	}
 }
