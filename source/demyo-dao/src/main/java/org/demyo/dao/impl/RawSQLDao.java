@@ -13,9 +13,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Implements the contract defined by {@link IRawSQLDao}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1054 $
  */
 @Repository
 public class RawSQLDao implements IRawSQLDao {
@@ -33,9 +30,10 @@ public class RawSQLDao implements IRawSQLDao {
 		// To get the list of tables:
 		// grep "CREATE TABLE" create-tables.sql | sed 's/CREATE TABLE /"/' | sed 's/ (/",/' | tac
 		for (String table : new String[] { "searches", "albums_borrowers", "borrowers", "derivatives_images",
-				"derivative_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
-				"albums_colorists", "albums_writers", "albums_artists", "albums_images", "album_prices", "albums",
-				"bindings", "series_relations", "series", "authors", "collections", "publishers", "images" }) {
+				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
+				"albums_colorists", "albums_writers", "albums_artists", "albums_images", "albums_prices",
+				"albums", "bindings", "series_relations", "series", "authors", "collections", "publishers",
+				"images" }) {
 			executeUpdate("DELETE FROM " + table);
 		}
 	}

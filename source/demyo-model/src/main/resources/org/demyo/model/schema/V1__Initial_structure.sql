@@ -95,7 +95,7 @@ CREATE TABLE albums (
 );
 CREATE INDEX ON albums(title);
 
-CREATE TABLE album_prices (
+CREATE TABLE albums_prices (
 	album_id INT UNSIGNED NOT NULL,
 	date DATE NOT NULL,
 	price FLOAT UNSIGNED NOT NULL,
@@ -192,7 +192,7 @@ CREATE TABLE derivatives (
 	CONSTRAINT fk_derivatives_sources FOREIGN KEY (source_id) REFERENCES sources(id) ON DELETE SET NULL
 );
 
-CREATE TABLE derivative_prices (
+CREATE TABLE derivatives_prices (
 	derivative_id INT UNSIGNED NOT NULL,
 	date DATE NOT NULL,
 	price FLOAT UNSIGNED NOT NULL,

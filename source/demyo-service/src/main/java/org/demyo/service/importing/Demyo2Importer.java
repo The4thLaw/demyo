@@ -37,9 +37,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Importer for Demyo 2.x files.
- * 
- * @author $Author: xr $
- * @version $Revision: 1074 $
  */
 @Component
 public class Demyo2Importer implements IImporter {
@@ -160,9 +157,6 @@ public class Demyo2Importer implements IImporter {
 
 	/**
 	 * SAX handler for import of Demyo 2.x files.
-	 * 
-	 * @author $Author: xr $
-	 * @version $Revision: 1074 $
 	 */
 	public class Demyo2Handler extends DefaultHandler {
 		private String seriesId = null;
@@ -244,7 +238,7 @@ public class Demyo2Importer implements IImporter {
 				columns.put("image_id", attributes.getValue("ref"));
 				albumImages.add(columns);
 			} else if ("album_price".equals(localName)) {
-				createLine("album_prices", attributes);
+				createLine("albums_prices", attributes);
 			} else if ("borrower".equals(localName)) {
 				createLine("borrowers", attributes);
 			} else if ("loan".equals(localName)) {
@@ -262,7 +256,7 @@ public class Demyo2Importer implements IImporter {
 				columns.put("image_id", attributes.getValue("ref"));
 				derivativeImages.add(columns);
 			} else if ("derivative_price".equals(localName)) {
-				createLine("derivative_prices", attributes);
+				createLine("derivatives_prices", attributes);
 			}
 		}
 
