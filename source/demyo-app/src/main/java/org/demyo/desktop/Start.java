@@ -28,9 +28,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Main entry point for Demyo operation.
- * 
- * @author $Author: xr $
- * @version $Revision: 1055 $
  */
 public class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
@@ -45,14 +42,13 @@ public class Start {
 		LOGGER.info("Starting database...");
 		JdbcDataSource ds = new JdbcDataSource();
 		ds.setURL("jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
-		ds.setUser("sa");
-		ds.setPassword("sa");
+		ds.setUser("demyo");
+		ds.setPassword("demyo");
 
 		if (isNewDatabase) {
-			LOGGER.info("Creating the database");
-			ds.getConnection().createStatement()
-					.execute("RUNSCRIPT FROM 'classpath:/org/demyo/model/schema/create-tables.sql'");
-			LOGGER.debug("Created the database");
+			LOGGER.info("Setting the database collation...");
+			// This is the collation for French, but it should do no harm to English
+			ds.getConnection().createStatement().execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
 		}
 
 		LOGGER.info("Starting server...");

@@ -14,7 +14,7 @@ Includes the Web server, H2 server, and startup program.</description>
 		<org.eclipse.jetty.version>8.1.7.v20120910</org.eclipse.jetty.version>
 	</properties>
 	<dependencies>
-		<!-- Needed for bootstrap script -->
+		<!-- Needed for SystemConfiguration -->
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-model</artifactId>
@@ -31,7 +31,8 @@ Includes the Web server, H2 server, and startup program.</description>
 			<artifactId>jetty-webapp</artifactId>
 			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
-		<dependency><!-- TODO: check if still needed -->
+		<!-- Needed for JNDI -->
+		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-plus</artifactId>
 			<version>${org.eclipse.jetty.version}</version>

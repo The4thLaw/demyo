@@ -1,6 +1,3 @@
--- This is the collation for French, but it should do no harm to English
-SET DATABASE COLLATION French STRENGTH PRIMARY;
-
 CREATE TABLE images (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	url VARCHAR(255) NOT NULL,
