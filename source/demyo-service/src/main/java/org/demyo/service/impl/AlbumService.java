@@ -18,6 +18,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,6 +80,29 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		}
 
 		return new SliceImpl<Album>(albumList, pageable, metaSlice.hasNext());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Album getAlbumTemplateForSeries(long seriesId) {
+		Sort sort = new Sort(Direction.DESC, "cycle", "number", "numberSuffix", "title");
+		Album last = repo.findTopBySeriesId(seriesId, sort);
+
+		Album template = new Album();
+
+		template.setArtists(last.getArtists());
+		template.setBinding(last.getBinding());
+		template.setCollection(last.getCollection());
+		template.setColorists(last.getColorists());
+		template.setHeight(last.getHeight());
+		template.setPages(last.getPages());
+		template.setPublisher(last.getPublisher());
+		template.setSeries(last.getSeries());
+		template.setTags(last.getTags());
+		template.setWidth(last.getWidth());
+		template.setWriters(last.getWriters());
+
+		return template;
 	}
 
 	@Override

@@ -13,6 +13,11 @@ $quickTasks.add({
 		"confirm" : true
 	})
 #end
+$quickTasks.add({
+	"id" : "qt-add-album-to-series",
+	"url" : "../../albums/add/?toSeries=$series.id",
+	"icon": "speech_bubble+add"
+})
 #set ($hasWishlistAlbums = $series.ownedAlbumCount != $series.totalAlbumCount)
 #if ($hasWishlistAlbums)
 	$quickTasks.add({

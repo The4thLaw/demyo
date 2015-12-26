@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
+import org.demyo.model.Series;
 import org.demyo.model.Tag;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/albums")
@@ -48,6 +51,22 @@ public class AlbumController extends AbstractModelController<Album> {
 	 */
 	public AlbumController() {
 		super(Album.class, "albums", "album");
+	}
+
+	/**
+	 * Adds an {@link Album}.
+	 * 
+	 * @param model The view model.
+	 * @param seriesId The ID of the {@link Series} to add the album to.
+	 * @return The view name.
+	 */
+	// params attributes allows overriding the parent /add
+	@RequestMapping(value = "/add", params = { "toSeries" }, method = RequestMethod.GET)
+	public String add(Model model, @RequestParam(name = "toSeries", required = false) long seriesId) {
+		model.addAttribute("album", service.getAlbumTemplateForSeries(seriesId));
+		fillModelForEdition(null, model);
+
+		return "albums/add-edit";
 	}
 
 	@Override
