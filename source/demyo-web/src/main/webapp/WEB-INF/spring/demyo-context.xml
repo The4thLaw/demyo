@@ -109,10 +109,12 @@
 		<!-- JPA/Hibernate Configuration -->
 		<property name="jpaPropertyMap">
 			<map>
-				<entry key="hibernate.archive.autodetection" value="class, hbm" />
-				<entry key="hibernate.show_sql" value="true" />
-				<entry key="hibernate.format_sql" value="true" />
+				<!--<entry key="hibernate.archive.autodetection" value="class, hbm" />-->
+				<entry key="hibernate.show_sql" value="${config.hibernate.debug}" />
+				<entry key="hibernate.format_sql" value="${config.hibernate.debug}" />
+				<!-- If enabled, Hibernate will collect statistics useful for performance tuning. -->
 				<entry key="generate_statistics" value="false" />
+				<!-- If turned on, Hibernate will generate comments inside the SQL, for easier debugging. -->
 				<entry key="hibernate.use_sql_comments" value="false" />
 				<entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 				<!-- <entry key="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.WeblogicTransactionManagerLookup" 

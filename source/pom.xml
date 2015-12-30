@@ -251,4 +251,27 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<config.hibernate.debug>true</config.hibernate.debug>
+				<config.core.log.level>debug</config.core.log.level>
+				<config.war.path>../demyo-web/target/demyo-web-${project.version}</config.war.path>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		
+		<profile>
+			<id>prod</id>
+			<properties>
+				<config.hibernate.debug>false</config.hibernate.debug>
+				<config.core.log.level>info</config.core.log.level>
+				<config.war.path>war/demyo-web-${project.version}.war</config.war.path>
+			</properties>
+		</profile>
+	</profiles>
 </project>

@@ -25,7 +25,7 @@
 	<!-- LOGGERS -->
 
 	<logger name="org.demyo" additivity="false">
-		<level value="debug" />
+		<level value="${config.core.log.level}" />
 		<appender-ref ref="console" />
 		<appender-ref ref="demyoAppender" />
 	</logger>

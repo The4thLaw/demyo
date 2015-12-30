@@ -14,14 +14,16 @@ public enum DemyoErrorCode {
 	 */
 	/** Cannot determine Demyo application directory. */
 	SYS_APPDIR_NOT_FOUND(10000),
+	/** Cannot find the default system configuration. */
+	SYS_CONFIG_NO_DEFAULT(10001),
 	/** Cannot read the system configuration (but the file exists). */
-	SYS_CONFIG_NOT_READABLE(10001),
+	SYS_CONFIG_NOT_READABLE(10002),
 	/** The given path for a Demyo directory already exists, but is not a directory. */
-	SYS_DIR_PATH_ALREADY_TAKEN(10002),
+	SYS_DIR_PATH_ALREADY_TAKEN(10003),
 	/** Failed to create a directory required to operate. */
-	SYS_DIR_CANNOT_CREATE(10003),
+	SYS_DIR_CANNOT_CREATE(10004),
 	/** Generic I/O operation error. */
-	SYS_IO_ERROR(10004),
+	SYS_IO_ERROR(10005),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */

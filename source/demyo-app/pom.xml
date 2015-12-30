@@ -50,4 +50,23 @@ Includes the Web server, H2 server, and startup program.</description>
 			<artifactId>imgscalr-lib</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>log4j.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>log4j.xml</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
 </project>

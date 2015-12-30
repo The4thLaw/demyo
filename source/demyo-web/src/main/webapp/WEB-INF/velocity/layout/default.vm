@@ -137,7 +137,7 @@ $quickTasks.prepare($javascript)
 			## TODO: re-test floating the footer now that the layout is in a div rather than the body
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__middle-section">
-					<div class="mdl-logo">Demyo v2.0.0-alpha3</div>## TODO: make this dynamic
+					<div class="mdl-logo">Demyo v${project.version}</div>
 				</div>
 			</footer>
 		</main>
