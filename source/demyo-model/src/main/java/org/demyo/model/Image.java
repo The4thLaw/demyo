@@ -29,6 +29,24 @@ public class Image extends AbstractModel {
 	}
 
 	/**
+	 * Gets a file name that makes sense to the user, regardless of the name on disk.
+	 * 
+	 * @return a file name.
+	 */
+	public String getUserFileName() {
+		int lastDot = url.lastIndexOf('.');
+		final String fileExtension;
+		if (lastDot <= 0) {
+			// Reasonable default, more useful to most people than a ".dat" or something
+			fileExtension = "jpg";
+		} else {
+			fileExtension = url.substring(lastDot, url.length());
+		}
+		String basename = getIdentifyingName();
+		return basename + fileExtension;
+	}
+
+	/**
 	 * Gets the URL to access the image.
 	 * 
 	 * @return the URL to access the image

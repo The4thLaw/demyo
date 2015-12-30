@@ -17,7 +17,17 @@ public interface IImageService extends IModelService<Image> {
 	 * @return The image file.
 	 * @throws DemyoException In case of security or I/O error.
 	 */
+	@Deprecated
 	File getImageFile(String path) throws DemyoException;
+
+	/**
+	 * Gets the actual file for an image from the collection.
+	 * 
+	 * @param image The image to get the file.
+	 * @return The image file on disk.
+	 * @throws DemyoException In case of security or I/O error.
+	 */
+	File getImageFile(Image image) throws DemyoException;
 
 	/**
 	 * Gets the thumbnail file for an image from the collection. Thumbnails are generated if necessary and cached.

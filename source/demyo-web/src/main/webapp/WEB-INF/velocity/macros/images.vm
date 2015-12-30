@@ -1,7 +1,7 @@
 #macro(thumbnail $image $options)
 #if ($image)
 <figure class="thumb $!options.classes">
-	<a href="$link.contextPath/images/full/$image.id/$image.url">
+	<a href="$link.contextPath/images/full/$image.id/$image.userFileName">
 		<img src="$link.contextPath/images/thumbnail/$image.id/$image.url" alt="$image.description" />
 	</a>
 	#if ($!bodyContent && $bodyContent != '')

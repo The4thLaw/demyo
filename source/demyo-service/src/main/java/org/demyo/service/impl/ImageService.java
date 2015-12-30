@@ -50,7 +50,19 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
+	@Deprecated
 	public File getImageFile(String path) throws DemyoException {
+		File image = new File(SystemConfiguration.getInstance().getImagesDirectory(), path);
+		validateImagePath(image);
+		if (!image.isFile()) {
+			throw new DemyoException(DemyoErrorCode.IMAGE_NOT_FOUND, path);
+		}
+		return image;
+	}
+
+	@Override
+	public File getImageFile(Image imageModel) throws DemyoException {
+		String path = imageModel.getUrl();
 		File image = new File(SystemConfiguration.getInstance().getImagesDirectory(), path);
 		validateImagePath(image);
 		if (!image.isFile()) {

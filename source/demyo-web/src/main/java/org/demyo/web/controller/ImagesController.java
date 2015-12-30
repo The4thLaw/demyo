@@ -35,7 +35,7 @@ public class ImagesController extends AbstractModelController<Image> {
 	}
 
 	/**
-	 * Gets an image file. The path is retrieved from the URL.
+	 * Gets an image file. The path is retrieved from the database.
 	 * 
 	 * @param id The image ID.
 	 * @param request The HTTP request.
@@ -46,9 +46,8 @@ public class ImagesController extends AbstractModelController<Image> {
 	@RequestMapping(value = "/full/{id}/**", method = RequestMethod.GET)
 	public void getFullImage(@PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response)
 			throws DemyoException, IOException {
-		String imagePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-		imagePath = imagePath.substring(("/images/full/" + id + "/").length());
-		File imageFile = imageService.getImageFile(imagePath);
+		Image image = imageService.getByIdForEdition(id);
+		File imageFile = imageService.getImageFile(image);
 		download(imageFile, request, response);
 	}
 
