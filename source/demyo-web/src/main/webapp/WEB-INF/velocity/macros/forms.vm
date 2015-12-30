@@ -145,9 +145,11 @@
 	#end
 #end
 
-#macro(inputFile $labelId $path)
+#macro(inputFile $labelId $path $options)
+	#if(!$!options.multiple)#set($dummy = $options.put("multiple", false))#end
+
 	#@formFieldOld($labelId, $path)
-		<input type="file" id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end />
+		<input type="file" id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end #if($options.multiple)multiple#end />
 	#end
 #end
 

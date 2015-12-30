@@ -133,4 +133,19 @@ public final class DIOUtils {
 
 		return tempDir;
 	}
+
+	/**
+	 * Returns the extension of a file.
+	 * 
+	 * @param fileName The name of the file.
+	 * @return The extension, or <code>null</code> if there was no extension.
+	 */
+	public static String getFileExtension(String fileName) {
+		int lastDot = fileName.lastIndexOf('.');
+		if (lastDot <= 0) {
+			return null;
+		} else {
+			return fileName.substring(lastDot + 1, fileName.length());
+		}
+	}
 }

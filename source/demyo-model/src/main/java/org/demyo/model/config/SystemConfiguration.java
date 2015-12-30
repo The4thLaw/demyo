@@ -1,6 +1,7 @@
 package org.demyo.model.config;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -154,6 +155,25 @@ public final class SystemConfiguration {
 		if (!dir.mkdirs()) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_DIR_CANNOT_CREATE, dir.getAbsolutePath());
 		}
+	}
+
+	/**
+	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on
+	 * exit.
+	 * 
+	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters
+	 *        long
+	 * @return The created file.
+	 */
+	public File createTempFile(String prefix) {
+		File temp;
+		try {
+			temp = File.createTempFile(prefix, null, getTempDirectory());
+		} catch (IOException e) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+		}
+		temp.deleteOnExit();
+		return temp;
 	}
 
 	@Override

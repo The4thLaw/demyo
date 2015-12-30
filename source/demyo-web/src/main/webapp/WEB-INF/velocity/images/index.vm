@@ -12,4 +12,6 @@
 	</div>
 #end
 
-$paging.pageLinks($imageList, $request, $javascript)
+#if (!$!isFullList)
+	$paging.pageLinks($imageList, $request, $javascript)
+#end

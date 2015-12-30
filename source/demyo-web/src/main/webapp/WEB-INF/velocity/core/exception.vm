@@ -4,5 +4,5 @@
 <p>#_('core.exception.explanation.detail')</p>
 
 <div class="dem-exception-message">
-	$exception.message
+	$!exception.message
 </div>

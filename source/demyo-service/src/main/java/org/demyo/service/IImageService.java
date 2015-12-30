@@ -39,4 +39,13 @@ public interface IImageService extends IModelService<Image> {
 	 */
 	File getImageThumbnail(long id, String path) throws DemyoException;
 
+	/**
+	 * Processes the upload of an image.
+	 * 
+	 * @param originalFileName The name of the uploaded image.
+	 * @param imageFile The file stored on disk, temporarily.
+	 * @return The created or recovered image.
+	 */
+	long uploadImage(String originalFileName, File imageFile);
+
 }

@@ -1,0 +1,10 @@
+#setPageTitle('title.add.image.upload')
+
+<p>#_('page.Image.upload.explanation')</p>
+
+#@form()
+
+#inputFile('field.Image.multiUpload', 'imageUpload.uploadedFiles', {"multiple":true})
+#formButtons('button.image.upload', 'button.reset')
+
+#end

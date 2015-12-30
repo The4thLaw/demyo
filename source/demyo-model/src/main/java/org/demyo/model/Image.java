@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.demyo.model.util.DefaultOrder;
+import org.demyo.utils.io.DIOUtils;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -34,16 +35,13 @@ public class Image extends AbstractModel {
 	 * @return a file name.
 	 */
 	public String getUserFileName() {
-		int lastDot = url.lastIndexOf('.');
-		final String fileExtension;
-		if (lastDot <= 0) {
+		String fileExtension = DIOUtils.getFileExtension(url);
+		if (fileExtension == null) {
 			// Reasonable default, more useful to most people than a ".dat" or something
 			fileExtension = "jpg";
-		} else {
-			fileExtension = url.substring(lastDot, url.length());
 		}
 		String basename = getIdentifyingName();
-		return basename + fileExtension;
+		return basename + "." + fileExtension;
 	}
 
 	/**

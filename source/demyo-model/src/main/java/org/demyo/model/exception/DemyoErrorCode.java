@@ -36,6 +36,8 @@ public enum DemyoErrorCode {
 	IMAGE_DIRECTORY_TRAVERSAL(12000),
 	/** The accessed image does not exist. */
 	IMAGE_NOT_FOUND(12001),
+	/** Error while uploading an image. */
+	IMAGE_UPLOAD_ERROR(12002),
 	/** The system could not save the configuration. */
 	CONFIG_CANNOT_SAVE(13000),
 	/** The system could not load the configuration. */

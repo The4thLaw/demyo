@@ -9,4 +9,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IImageRepo extends IModelRepo<Image> {
+	/**
+	 * Finds an {@link Image} based on its path.
+	 * 
+	 * @param url The path to the {@link Image}.
+	 * @return The found {@link Image}.
+	 */
+	Image findByUrl(String url);
 }

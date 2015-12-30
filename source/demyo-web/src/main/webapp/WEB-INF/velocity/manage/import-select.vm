@@ -1,6 +1,6 @@
 #setPageTitle('title.manage.import.select')
 
 #@form()
-#inputFile('field.manage.import.file', 'importFile.uploadedFile')
+#inputFile('field.manage.import.file', 'importFile.uploadedFile', {})
 #formButtons('button.import', 'button.reset')
 #end

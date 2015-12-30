@@ -2,20 +2,29 @@ package org.demyo.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.demyo.model.Image;
+import org.demyo.model.config.SystemConfiguration;
+import org.demyo.model.exception.DemyoErrorCode;
 import org.demyo.model.exception.DemyoException;
+import org.demyo.model.exception.DemyoRuntimeException;
 import org.demyo.service.IImageService;
 import org.demyo.service.IModelService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
 /**
@@ -24,6 +33,32 @@ import org.springframework.web.servlet.HandlerMapping;
 @Controller
 @RequestMapping("/images")
 public class ImagesController extends AbstractModelController<Image> {
+	/**
+	 * Support class for file uploads.
+	 */
+	public static class FileUpload {
+		/** The uploaded files. */
+		private List<MultipartFile> uploadedFiles;
+
+		/**
+		 * Gets the uploaded files.
+		 * 
+		 * @return the uploaded files
+		 */
+		public List<MultipartFile> getUploadedFiles() {
+			return uploadedFiles;
+		}
+
+		/**
+		 * Sets the uploaded files.
+		 * 
+		 * @param uploadedFile the new uploaded files
+		 */
+		public void setUploadedFiles(List<MultipartFile> uploadedFiles) {
+			this.uploadedFiles = uploadedFiles;
+		}
+	}
+
 	@Autowired
 	private IImageService imageService;
 
@@ -67,6 +102,69 @@ public class ImagesController extends AbstractModelController<Image> {
 		imagePath = imagePath.substring(("/images/thumbnail/" + id + "/").length());
 		File imageFile = imageService.getImageThumbnail(id, imagePath);
 		download(imageFile, request, response);
+	}
+
+	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
+	public String index(@RequestParam("id") List<Long> ids, Model model) {
+
+		List<Image> images = new ArrayList<>(ids.size());
+
+		for (long id : ids) {
+			images.add(imageService.getByIdForView(id));
+		}
+
+		model.addAttribute("imageList", images);
+		model.addAttribute("isFullList", true);
+
+		return "images/index";
+	}
+
+	/**
+	 * Displays the image upload page.
+	 * 
+	 * @param model The model
+	 * @return The view name
+	 */
+	@RequestMapping(value = "/upload", method = RequestMethod.GET)
+	public String addFromUpload(Model model) {
+		model.addAttribute("imageUpload", new FileUpload());
+		return "images/upload";
+	}
+
+	/**
+	 * Uploads image(s) in the library.
+	 * 
+	 * @param upload The content of the submitted form.
+	 * @param model The model.
+	 * @return The view name
+	 */
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public String uploadFile(@ModelAttribute("imageUpload") FileUpload upload, Model model) {
+		SystemConfiguration config = SystemConfiguration.getInstance();
+		List<Long> addedImages = new ArrayList<>(upload.getUploadedFiles().size());
+		for (MultipartFile file : upload.getUploadedFiles()) {
+			if (file.getSize() <= 0) {
+				// Skipping empty files also allows recovering from no selected file at all
+				continue;
+			}
+			// Store the file in a temporary location
+			File temp = config.createTempFile("image-upload-");
+			try {
+				file.transferTo(temp);
+			} catch (IllegalStateException | IOException e) {
+				throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_UPLOAD_ERROR, e);
+			}
+			addedImages.add(imageService.uploadImage(file.getOriginalFilename(), temp));
+		}
+
+		if (addedImages.isEmpty()) {
+			return "images/upload";
+		} else if (addedImages.size() == 1) {
+			return redirect("/images/view/" + addedImages.get(0));
+		} else {
+			model.addAttribute("id", addedImages);
+			return redirect("/images/list");
+		}
 	}
 
 	@Override
