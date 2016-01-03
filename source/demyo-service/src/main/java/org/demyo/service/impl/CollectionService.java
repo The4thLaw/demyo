@@ -31,12 +31,7 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 	public List<Collection> findByPublisherId(long publisherId) {
 		Order[] defaultOrder = getDefaultOrder();
 		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
-		List<Collection> collections = repo.findByPublisherId(publisherId, sort);
-		// Clear the Publisher. It's not needed and would cause lazy loading when used.
-		for (Collection c : collections) {
-			c.setPublisher(null);
-		}
-		return collections;
+		return repo.findByPublisherId(publisherId, sort);
 	}
 
 	@Override
