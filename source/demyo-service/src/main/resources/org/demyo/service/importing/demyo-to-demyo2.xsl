@@ -24,8 +24,8 @@
 					<xsl:attribute name="derivatives"><xsl:value-of select="derivatives/@entries"/></xsl:attribute>
 					<xsl:attribute name="borrowers"><xsl:value-of select="borrowers/@entries"/></xsl:attribute>
 					<xsl:attribute name="loan-history"><xsl:value-of select="loan-history/@entries"/></xsl:attribute>
-					<xsl:attribute name="album_prices"><xsl:value-of select="album_prices/@entries"/></xsl:attribute>
-					<xsl:attribute name="derivative_prices"><xsl:value-of select="derivative_prices/@entries"/></xsl:attribute>
+					<xsl:attribute name="albums_prices"><xsl:value-of select="album_prices/@entries"/></xsl:attribute>
+					<xsl:attribute name="derivatives_prices"><xsl:value-of select="derivative_prices/@entries"/></xsl:attribute>
 				</counts>
 			</meta>
 			<xsl:apply-templates select="images"/>
@@ -297,9 +297,9 @@
 	
 	
 	<xsl:template match="/library/album_prices">
-		<album_prices>
+		<albums_prices>
 			<xsl:apply-templates select="album_price"/>
-		</album_prices>
+		</albums_prices>
 	</xsl:template>
 	
 	<xsl:template match="/library/album_prices/album_price">
@@ -447,9 +447,9 @@
 	
 	
 	<xsl:template match="/library/derivative_prices">
-		<derivative_prices>
+		<derivatives_prices>
 			<xsl:apply-templates select="derivative_price"/>
-		</derivative_prices>
+		</derivatives_prices>
 	</xsl:template>
 	
 	<xsl:template match="/library/derivative_prices/derivative_price">

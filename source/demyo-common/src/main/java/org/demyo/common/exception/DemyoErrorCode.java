@@ -48,7 +48,9 @@ public enum DemyoErrorCode {
 	/** The quick task configuration is invalid. */
 	QUICK_TASKS_INVALID_CONFIG(15000),
 	/** The quick task configuration is invalid: the task is missing its label. */
-	QUICK_TASKS_MISSING_LABEL(15001);
+	QUICK_TASKS_MISSING_LABEL(15001),
+	/** The system encountered a parse error during export. */
+	EXPORT_IO_ERROR(16001);
 
 	private final int numericCode;
 

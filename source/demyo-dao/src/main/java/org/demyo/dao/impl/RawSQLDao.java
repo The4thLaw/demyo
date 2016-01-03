@@ -1,5 +1,6 @@
 package org.demyo.dao.impl;
 
+import java.math.BigInteger;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -57,5 +58,11 @@ public class RawSQLDao implements IRawSQLDao {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
 		query.executeUpdate();
+	}
+
+	@Override
+	public long count(String tableName) {
+		Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM " + tableName);
+		return ((BigInteger) query.getSingleResult()).longValue();
 	}
 }

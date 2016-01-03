@@ -25,9 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImportController extends AbstractController {
 	/**
 	 * Support class for file upload.
-	 * 
-	 * @author $Author: xr $
-	 * @version $Revision: 1075 $
 	 */
 	public static class FileUpload {
 		/** The uploaded file. */

@@ -5,9 +5,6 @@ import java.util.Map;
 /**
  * Provides access to raw SQL operations, for cases when flexibility and reflection primes over clean Hibernate
  * beans.
- * 
- * @author $Author: xr $
- * @version $Revision: 1054 $
  */
 public interface IRawSQLDao {
 	/**
@@ -22,4 +19,12 @@ public interface IRawSQLDao {
 	 * @param values A map of column-to-value data to insert.
 	 */
 	void insert(String tableName, Map<String, ? extends Object> values);
+
+	/**
+	 * Counts the number of entries in a table.
+	 * 
+	 * @param tableName The table to retrieve the number of entries from.
+	 * @return The number of entries
+	 */
+	long count(String tableName);
 }

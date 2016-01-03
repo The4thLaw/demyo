@@ -166,9 +166,23 @@ public final class SystemConfiguration {
 	 * @return The created file.
 	 */
 	public File createTempFile(String prefix) {
+		return createTempFile(prefix, null);
+	}
+
+	/**
+	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on
+	 * exit.
+	 * 
+	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters
+	 *        long
+	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which
+	 *        case the suffix <code>".tmp"</code> will be used
+	 * @return The created file.
+	 */
+	public File createTempFile(String prefix, String suffix) {
 		File temp;
 		try {
-			temp = File.createTempFile(prefix, null, getTempDirectory());
+			temp = File.createTempFile(prefix, suffix, getTempDirectory());
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}

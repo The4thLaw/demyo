@@ -1,13 +1,16 @@
 package org.demyo.utils.io;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -69,6 +72,46 @@ public final class ZipUtils {
 			}
 		} finally {
 			DIOUtils.closeQuietly(zipFile);
+		}
+	}
+
+	/**
+	 * Adds a file or directory to a ZIP.
+	 * 
+	 * @param source The entry to zip.
+	 * @param alias An alias to use instead of the name of the entry.
+	 * @param destination The ZIP file to populate.
+	 * @throws IOException In case of error during compression.
+	 */
+	public static void compress(File source, String alias, ZipOutputStream destination) throws IOException {
+		compress(source, alias, destination, null);
+	}
+
+	private static void compress(File source, String alias, ZipOutputStream destination, String currentPath)
+			throws IOException {
+		String newPath;
+		if (alias != null) {
+			newPath = alias;
+		} else {
+			newPath = source.getName();
+		}
+		if (currentPath != null) {
+			newPath = currentPath + "/" + newPath;
+		}
+
+		if (source.isDirectory()) {
+			for (File f : source.listFiles()) {
+				compress(f, null, destination, newPath);
+			}
+		} else {
+			destination.putNextEntry(new ZipEntry(newPath));
+			try (InputStream is = new BufferedInputStream(new FileInputStream(source))) {
+				IOUtils.copy(is, destination);
+			} catch (IOException e) {
+				LOGGER.warn("Failed to zip {}", newPath, e);
+				throw e;
+			}
+			destination.closeEntry();
 		}
 	}
 }
