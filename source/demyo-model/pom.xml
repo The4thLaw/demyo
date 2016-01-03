@@ -41,7 +41,7 @@
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 		
-		<!-- Jackson, needed for application configuration -->
+		<!-- Jackson, needed for application configuration and JsonView annotation -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>

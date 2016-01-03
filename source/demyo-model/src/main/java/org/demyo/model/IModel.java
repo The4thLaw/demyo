@@ -1,5 +1,7 @@
 package org.demyo.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 /**
  * Base interface for all standard Demyo models.
  * 
@@ -12,6 +14,7 @@ public interface IModel {
 	 * 
 	 * @return The model ID.
 	 */
+	@JsonView(ModelView.Minimal.class)
 	Long getId();
 
 	/**
@@ -27,5 +30,6 @@ public interface IModel {
 	 * 
 	 * @return A string representing the object.
 	 */
+	@JsonView(ModelView.Minimal.class)
 	String getIdentifyingName();
 }

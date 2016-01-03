@@ -58,7 +58,9 @@
 			var isMulti = chosenCtn.is('.chosen-container-multi');
 			// Event is fired too soon by plugin: the last element is still there. We need a workaround
 			var multiIsDirty;
-			if (typeof(params.selected) != 'undefined') {
+			if (typeof(params) == 'undefined') {
+				multiIsDirty = false;
+			} else if (typeof(params.selected) != 'undefined') {
 				// If we selected something, the element is always dirty
 				multiIsDirty = true;
 			} else if (typeof(params.deselected) != 'undefined') {
@@ -80,6 +82,36 @@
 		elementSet.change(changeTrigger);
 		// Trigger the change event initially to mark fields as dirty at load time if needed
 		elementSet.each(changeTrigger);
+	};
+	
+	demyo.dependentSelect = function (mainSelector, dependentSelector, urlBuilder) {
+		var main = $(mainSelector), sub = $(dependentSelector);
+		
+		var refresher = function () {
+			var mainValue = main.val();
+			if (mainValue == '') {
+				sub.html('<option value=""></option>');
+				sub.trigger('chosen:updated');
+			} else {
+				jQuery.ajax({
+					url: urlBuilder(mainValue),
+					contentType: 'application/json',
+					dataType: 'json',
+					success: function (data, status, jqXHR) {
+						console.log('Successfully got the list of dependent items (HTTP ' + jqXHR.status + ')')
+						sub.html('<option value=""></option>');
+						jQuery(data).each(function (index, value) {
+							sub.append('<option value="' + value.id + '">' + value.identifyingName + '</option>');
+						});
+						sub.trigger('chosen:updated');
+					}
+				});
+			}
+		};
+		
+		// Bind event and trigger it already
+		main.change(refresher);
+		refresher();
 	};
 
 })(jQuery);

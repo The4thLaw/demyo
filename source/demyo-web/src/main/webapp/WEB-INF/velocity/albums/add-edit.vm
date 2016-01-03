@@ -35,9 +35,7 @@
 		#inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
 	#end
 	#@mdlGridCell([4,0,0])
-		## TODO: load collections with AJAX. Possibly using Spring Data REST ?
-		## When doing that, use   $('.my_select_box').trigger('chosen:updated'); to update the element
-		#inputSelect('field.Album.collection', 'album.collection.id', [], { })
+		#inputSelect('field.Album.collection', 'album.collection.id', [], { "allowEmpty": true })
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputText('field.Album.isbn', 'album.isbn')
@@ -124,3 +122,11 @@
 #saveButtons
 
 #end
+
+<script type="text/javascript">
+jQuery(function () {
+	demyo.dependentSelect('#field_album_publisher_id', '#field_album_collection_id', function (val) {
+			return "$link.contextPath/publishers/" + val + "/collections";
+		});
+});
+</script>
