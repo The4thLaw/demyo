@@ -1,4 +1,6 @@
 .project
+integration/*.exe
+integration/*.tar.bz2
 source/.settings/
 source/demyo-app/.classpath
 source/demyo-app/.settings/
