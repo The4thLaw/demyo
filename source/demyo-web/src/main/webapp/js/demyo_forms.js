@@ -86,6 +86,7 @@
 	
 	demyo.dependentSelect = function (mainSelector, dependentSelector, urlBuilder) {
 		var main = $(mainSelector), sub = $(dependentSelector);
+		var initialSubValue = sub.val();
 		
 		var refresher = function () {
 			var mainValue = main.val();
@@ -102,7 +103,9 @@
 						console.log('Successfully got the list of dependent items (HTTP ' + jqXHR.status + ')')
 						sub.html('<option value=""></option>');
 						jQuery(data).each(function (index, value) {
-							sub.append('<option value="' + value.id + '">' + value.identifyingName + '</option>');
+							sub.append('<option value="' + value.id + '" '
+									+ ((value.id == initialSubValue)?'selected="selected"':'')
+									+ '>' + value.identifyingName + '</option>');
 						});
 						// Trigger events
 						sub.trigger('chosen:updated');
