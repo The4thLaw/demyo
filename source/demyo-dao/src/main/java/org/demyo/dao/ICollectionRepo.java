@@ -5,6 +5,7 @@ import java.util.List;
 import org.demyo.model.Collection;
 import org.demyo.model.Publisher;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,8 @@ public interface ICollectionRepo extends IModelRepo<Collection> {
 	 * Finds the {@link Collection}s belonging to a specific {@link Publisher}.
 	 * 
 	 * @param publisherId The Publisher ID
+	 * @param sort The order in which to fetch the collections.
 	 * @return The associated Collections
 	 */
-	List<Collection> findByPublisherId(long publisherId);
+	List<Collection> findByPublisherId(long publisherId, Sort sort);
 }

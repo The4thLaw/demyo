@@ -8,6 +8,8 @@ import org.demyo.model.Collection;
 import org.demyo.service.ICollectionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,7 +29,9 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 
 	@Override
 	public List<Collection> findByPublisherId(long publisherId) {
-		List<Collection> collections = repo.findByPublisherId(publisherId);
+		Order[] defaultOrder = getDefaultOrder();
+		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
+		List<Collection> collections = repo.findByPublisherId(publisherId, sort);
 		// Clear the Publisher. It's not needed and would cause lazy loading when used.
 		for (Collection c : collections) {
 			c.setPublisher(null);
