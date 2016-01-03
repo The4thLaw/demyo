@@ -1,5 +1,7 @@
 package org.demyo.service;
 
+import java.util.List;
+
 import org.demyo.model.Album;
 import org.demyo.model.Series;
 
@@ -15,6 +17,14 @@ public interface IAlbumService extends IModelService<Album> {
 	 * @param seriesId The {@link Series} to query.
 	 * @return The template {@link Album}.
 	 */
-	public abstract Album getAlbumTemplateForSeries(long seriesId);
+	Album getAlbumTemplateForSeries(long seriesId);
+
+	/**
+	 * Finds the {@link Album}s belonging to a specific {@link Series}.
+	 * 
+	 * @param seriesId The Series ID
+	 * @return The associated Albums
+	 */
+	List<Album> findBySeriesId(long seriesId);
 
 }

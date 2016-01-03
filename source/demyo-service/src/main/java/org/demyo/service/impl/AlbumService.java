@@ -1,6 +1,7 @@
 package org.demyo.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.demyo.dao.IAlbumRepo;
@@ -9,6 +10,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.MetaSeries;
+import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IConfigurationService;
 
@@ -113,7 +115,15 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
+	public List<Album> findBySeriesId(long seriesId) {
+		List<Album> albums = repo.findBySeriesId(seriesId);
+		Collections.sort(albums, new AlbumComparator());
+		return albums;
+	}
+
+	@Override
 	protected IModelRepo<Album> getRepo() {
 		return repo;
 	}
+
 }

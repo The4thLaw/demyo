@@ -1,6 +1,9 @@
 package org.demyo.dao;
 
+import java.util.List;
+
 import org.demyo.model.Album;
+import org.demyo.model.Series;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -21,4 +24,12 @@ public interface IAlbumRepo extends IModelRepo<Album> {
 
 	@EntityGraph("Album.forEdition")
 	public Album findTopBySeriesId(long id, Sort sort);
+
+	/**
+	 * Finds the {@link Album}s belonging to a specific {@link Series}.
+	 * 
+	 * @param seriesId The Series ID
+	 * @return The associated Albums
+	 */
+	List<Album> findBySeriesId(long seriesId);
 }

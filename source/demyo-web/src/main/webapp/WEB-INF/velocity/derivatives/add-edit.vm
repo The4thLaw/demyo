@@ -10,9 +10,8 @@
 		#inputSelect('field.Derivative.series', 'derivative.series.id', $series, { "allowEmpty": true })
 	#end
 	#@mdlGridCell([6,4,0])
-		## TODO: load albums using AJAX (possibly using Spring Data REST?)
-		## When doing that, use   $('.my_select_box').trigger('chosen:updated'); to update the element
-		#inputSelect('field.Derivative.album', 'derivative.album.id', [], { })
+		## Preload with a default value that the JavaScript helper can use
+		#inputSelect('field.Derivative.album', 'derivative.album.id', [ { "id": $derivative.album.id, "identifyingName": "-" } ], { "allowEmpty": true })
 	#end
 	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Derivative.artist', 'derivative.artist.id', $authors, { "allowEmpty": true })
@@ -80,3 +79,11 @@
 #saveButtons
 
 #end
+
+<script type="text/javascript">
+jQuery(function () {
+	demyo.dependentSelect('#field_derivative_series_id', '#field_derivative_album_id', function (val) {
+			return "$link.contextPath/series/" + val + "/albums";
+		});
+});
+</script>
