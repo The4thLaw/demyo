@@ -2,9 +2,7 @@ package org.demyo.common.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLDecoder;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -60,15 +58,13 @@ public final class SystemConfiguration {
 	 */
 	private SystemConfiguration() {
 		// Find out where we reside
-		// TODO: this is broken
-		String path = SystemConfiguration.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		String decodedPath;
-		try {
-			decodedPath = URLDecoder.decode(path, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_APPDIR_NOT_FOUND, e);
+		String path = System.getProperty("demyo.applicationDirectory");
+		if (path == null || !(new File(path, "lib").isDirectory())) {
+			LOGGER.debug("Application directory is set to {} and does not contain a lib directory; "
+					+ "defaulting to working directory", path);
+			path = System.getProperty("user.dir");
 		}
-		applicationDirectory = new File(decodedPath);
+		applicationDirectory = new File(path);
 
 		// Find the default configuration
 		URL defaultConfig = SystemConfiguration.class.getResource("/org/demyo/common/config/system.properties");
@@ -80,13 +76,13 @@ public final class SystemConfiguration {
 		File systemConfigurationFile = new File(applicationDirectory, SYSTEM_CONFIGURATION_FILENAME);
 		PropertiesConfiguration config;
 		try {
-			config = new PropertiesConfiguration();
 			// Load defaults
-			config.load(defaultConfig);
+			config = new PropertiesConfiguration(defaultConfig);
 			if (systemConfigurationFile.exists()) {
 				// Load overrides
 				LOGGER.debug("Loading configuration from {}", systemConfigurationFile);
-				config.load(systemConfigurationFile);
+				PropertiesConfiguration overrides = new PropertiesConfiguration(systemConfigurationFile);
+				config.copy(overrides);
 			} else {
 				LOGGER.debug("No system configuration found at {}, relying on defaults", systemConfigurationFile);
 			}
@@ -184,6 +180,7 @@ public final class SystemConfiguration {
 	public String toString() {
 		StringBuilder sb = new StringBuilder("System configuration:");
 		sb.append("\n\tportable: ").append(portable);
+		sb.append("\n\tHTTP address: ").append(httpAddress);
 		sb.append("\n\tHTTP port: ").append(httpPort);
 		sb.append("\n\tapplication directory: ").append(applicationDirectory);
 		sb.append("\n\tWAR path: ").append(warPath);

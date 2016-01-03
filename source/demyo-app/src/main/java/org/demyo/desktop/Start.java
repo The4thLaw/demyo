@@ -11,14 +11,18 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URL;
+import java.net.URLDecoder;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -34,6 +38,20 @@ public class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
 
 	public static void main(String[] args) throws Exception {
+		// Try to detect the application directory, based on the app JAR (the only reliable one since others may come
+		// from the exploded WAR).
+		if (System.getProperty("demyo.applicationDirectory") == null) {
+			String path = SystemConfiguration.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+			String decodedPath;
+			try {
+				decodedPath = URLDecoder.decode(path, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				throw new DemyoRuntimeException(DemyoErrorCode.SYS_APPDIR_NOT_FOUND, e);
+			}
+			// Go two directories above: from JAR to lib dir to app dir
+			System.setProperty("demyo.applicationDirectory", new File(decodedPath).getParentFile().getParentFile()
+					.getAbsolutePath());
+		}
 
 		File databaseFile = SystemConfiguration.getInstance().getDatabaseFile();
 		boolean isNewDatabase = !databaseFile.exists();
@@ -89,6 +107,7 @@ public class Start {
 
 	private static void createAndShowGUI(final Server server) {
 		final PopupMenu popup = new PopupMenu();
+		// TODO: localise this
 		MenuItem exitItem = new MenuItem("Exit Demyo");
 		exitItem.addActionListener(new ActionListener() {
 			@Override
