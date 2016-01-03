@@ -173,8 +173,6 @@ Section $(COMP_NAME_JavaAds) COMP_JavaAds
 	${EndIf}
 SectionEnd
 
-# TODO: section to disable Java ads
-
 Section "Uninstall"
 	# Start menu
 	!insertmacro MUI_STARTMENU_GETFOLDER CreateStartMenuShortcuts $R0
@@ -228,7 +226,7 @@ Function CreateShortcutsIn
 	SetShellVarContext current
 	Pop $0 # Output directory
 	CreateDirectory "$0"
-	CreateShortCut "$0\$(SHELL_Launch_Demyo).lnk" "$INSTDIR\$(SHELL_Launch_Demyo).bat" "" "$INSTDIR\Demyo.ico" 0
+	CreateShortCut "$0\$(SHELL_Launch_Demyo).lnk" "$INSTDIR\Demyo.bat" "" "$INSTDIR\Demyo.ico" 0
 	CreateShortCut "$0\$(SHELL_Official_website).lnk" "$INSTDIR\$(SHELL_Official_website).url"
 	CreateShortCut "$0\$(SHELL_Uninstall).lnk" "$INSTDIR\$(SHELL_Uninstall).exe"
 FunctionEnd
