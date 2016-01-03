@@ -92,6 +92,7 @@
 			if (mainValue == '') {
 				sub.html('<option value=""></option>');
 				sub.trigger('chosen:updated');
+				sub.change();
 			} else {
 				jQuery.ajax({
 					url: urlBuilder(mainValue),
@@ -103,7 +104,9 @@
 						jQuery(data).each(function (index, value) {
 							sub.append('<option value="' + value.id + '">' + value.identifyingName + '</option>');
 						});
+						// Trigger events
 						sub.trigger('chosen:updated');
+						sub.change();
 					}
 				});
 			}
