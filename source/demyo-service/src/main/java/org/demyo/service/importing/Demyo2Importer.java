@@ -15,10 +15,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.dao.IRawSQLDao;
-import org.demyo.model.config.SystemConfiguration;
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IImportService;
 import org.demyo.utils.io.DIOUtils;
 import org.demyo.utils.io.ZipUtils;

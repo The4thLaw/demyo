@@ -1,10 +1,7 @@
-package org.demyo.model.exception;
+package org.demyo.common.exception;
 
 /**
  * Exhaustive list of error codes in Demyo.
- * 
- * @author $Author: xr $
- * @version $Revision: 1070 $
  */
 public enum DemyoErrorCode {
 	/*

@@ -1,12 +1,9 @@
-package org.demyo.model.exception;
+package org.demyo.common.exception;
 
 import java.util.Arrays;
 
 /**
  * Demyo standard exception.
- * 
- * @author $Author: xr $
- * @version $Revision: 1059 $
  */
 public class DemyoException extends Exception implements IDemyoException {
 	private static final long serialVersionUID = 4065045510974057178L;

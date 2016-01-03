@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IImportService;
 
 import org.springframework.beans.factory.annotation.Autowired;

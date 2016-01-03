@@ -9,8 +9,8 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.IDemyoException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.IDemyoException;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
 import org.demyo.utils.io.DIOUtils;

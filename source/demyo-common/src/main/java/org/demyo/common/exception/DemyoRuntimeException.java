@@ -1,11 +1,7 @@
-package org.demyo.model.exception;
-
+package org.demyo.common.exception;
 
 /**
  * Demyo unchecked exception.
- * 
- * @author $Author: xr $
- * @version $Revision: 1059 $
  */
 public class DemyoRuntimeException extends RuntimeException implements IDemyoException {
 	private static final long serialVersionUID = -1903648607988955726L;

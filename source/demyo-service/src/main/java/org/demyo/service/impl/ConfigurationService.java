@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.model.config.SystemConfiguration;
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
-import org.demyo.model.exception.DemyoRuntimeException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IConfigurationService;
 
 import org.apache.commons.configuration.ConfigurationException;

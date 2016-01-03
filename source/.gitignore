@@ -1,4 +1,5 @@
-demyo-app/target
+demyo-app/target/
+demyo-common/target/
 demyo-dao/target/
 demyo-model/target/
 demyo-service/target/

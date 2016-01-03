@@ -186,6 +186,7 @@
 	</dependencyManagement>
 
 	<modules>
+		<module>demyo-common</module>
 		<module>demyo-utils</module>
 		<module>demyo-model</module>
 		<module>demyo-dao</module>

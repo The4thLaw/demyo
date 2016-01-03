@@ -18,8 +18,8 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IImportService;
 import org.demyo.utils.io.DIOUtils;
 

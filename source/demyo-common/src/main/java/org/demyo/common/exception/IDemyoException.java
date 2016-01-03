@@ -1,4 +1,4 @@
-package org.demyo.model.exception;
+package org.demyo.common.exception;
 
 public interface IDemyoException {
 

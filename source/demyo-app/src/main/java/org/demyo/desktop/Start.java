@@ -18,7 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import org.demyo.model.config.SystemConfiguration;
+import org.demyo.common.config.SystemConfiguration;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;

@@ -15,10 +15,9 @@ Includes the Web server, H2 server, and startup program.</description>
 	</properties>
 	<dependencies>
 		<!-- Needed for SystemConfiguration -->
-		<!-- TODO: try to extract only what's needed -->
 		<dependency>
 			<groupId>org.demyo</groupId>
-			<artifactId>demyo-model</artifactId>
+			<artifactId>demyo-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	

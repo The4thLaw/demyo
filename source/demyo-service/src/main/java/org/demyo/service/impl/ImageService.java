@@ -8,14 +8,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.dao.IImageRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.model.config.SystemConfiguration;
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
-import org.demyo.model.exception.DemyoRuntimeException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IImageService;
 import org.demyo.utils.io.DIOUtils;

@@ -2,7 +2,7 @@ package org.demyo.service;
 
 import java.io.InputStream;
 
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.service.importing.IImporter;
 
 /**

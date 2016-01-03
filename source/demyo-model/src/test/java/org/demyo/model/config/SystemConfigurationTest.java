@@ -1,5 +1,7 @@
 package org.demyo.model.config;
 
+import org.demyo.common.config.SystemConfiguration;
+
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -8,11 +8,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.model.Image;
-import org.demyo.model.config.SystemConfiguration;
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
-import org.demyo.model.exception.DemyoRuntimeException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IImageService;
 import org.demyo.service.IModelService;
 

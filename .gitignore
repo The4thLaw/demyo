@@ -4,6 +4,8 @@ integration/*.tar.bz2
 source/.settings/
 source/demyo-app/.classpath
 source/demyo-app/.settings/
+source/demyo-common/.classpath
+source/demyo-common/.settings/
 source/demyo-dao/.classpath
 source/demyo-dao/.settings/
 source/demyo-model/.classpath

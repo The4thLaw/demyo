@@ -10,10 +10,10 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.dao.IRawSQLDao;
-import org.demyo.model.config.SystemConfiguration;
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IImportService;
 import org.demyo.service.importing.IImporter;
 import org.demyo.utils.io.DIOUtils;

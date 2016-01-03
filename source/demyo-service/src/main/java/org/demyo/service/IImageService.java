@@ -3,7 +3,7 @@ package org.demyo.service;
 import java.io.File;
 
 import org.demyo.model.Image;
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoException;
 
 /**
  * Service for management of {@link Image}s.

@@ -2,7 +2,7 @@ package org.demyo.service.importing;
 
 import java.io.File;
 
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoException;
 
 /**
  * Defines the contract for importers.

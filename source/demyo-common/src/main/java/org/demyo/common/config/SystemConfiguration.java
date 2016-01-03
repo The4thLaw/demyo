@@ -1,4 +1,4 @@
-package org.demyo.model.config;
+package org.demyo.common.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 
-import org.demyo.model.exception.DemyoErrorCode;
-import org.demyo.model.exception.DemyoRuntimeException;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -60,6 +60,7 @@ public final class SystemConfiguration {
 	 */
 	private SystemConfiguration() {
 		// Find out where we reside
+		// TODO: this is broken
 		String path = SystemConfiguration.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		String decodedPath;
 		try {
@@ -70,7 +71,7 @@ public final class SystemConfiguration {
 		applicationDirectory = new File(decodedPath);
 
 		// Find the default configuration
-		URL defaultConfig = SystemConfiguration.class.getResource("/org/demyo/model/config/system.properties");
+		URL defaultConfig = SystemConfiguration.class.getResource("/org/demyo/common/config/system.properties");
 		if (defaultConfig == null) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NO_DEFAULT);
 		}

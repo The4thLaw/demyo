@@ -1,18 +1,18 @@
 package org.demyo.service;
 
 import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.model.exception.DemyoException;
+import org.demyo.common.exception.DemyoException;
 
 /**
  * Service to manage the {@link ApplicationConfiguration}. To get instances of
- * {@link org.demyo.model.config.SystemConfiguration SystemConfiguration}, see instead
- * {@link org.demyo.model.config.SystemConfiguration#getInstance() SystemConfiguration.getInstance()}.
+ * {@link org.demyo.common.config.SystemConfiguration SystemConfiguration}, see instead
+ * {@link org.demyo.common.config.SystemConfiguration#getInstance() SystemConfiguration.getInstance()}.
  * <p>
  * Avoid changing values in the configuration, as it might be shared with others parts of the application
  * immediately.
  * </p>
  * <p>
- * The location of the configuration file is defined by the {@link org.demyo.model.config.SystemConfiguration
+ * The location of the configuration file is defined by the {@link org.demyo.common.config.SystemConfiguration
  * SystemConfiguration}.
  * </p>
  * 
