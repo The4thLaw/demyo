@@ -38,6 +38,8 @@ public final class SystemConfiguration {
 	private final String warPath;
 	/** The flag indicating whether Demyo is being used in portable mode or not. */
 	private final boolean portable;
+	/** The listening address for the HTTP server. */
+	private final String httpAddress;
 	/** The port for the HTTP server. */
 	private final int httpPort;
 	/** The directory to store user data. */
@@ -92,6 +94,7 @@ public final class SystemConfiguration {
 		}
 		warPath = config.getString("war.path");
 		portable = config.getBoolean("portable");
+		httpAddress = config.getString("http.address");
 		httpPort = config.getInt("http.port");
 
 		// Prepare all paths
@@ -207,6 +210,15 @@ public final class SystemConfiguration {
 	 */
 	public String getWarPath() {
 		return warPath;
+	}
+
+	/**
+	 * Gets the listening address for the HTTP server.
+	 * 
+	 * @return the listening address for the HTTP server
+	 */
+	public String getHttpAddress() {
+		return httpAddress;
 	}
 
 	/**

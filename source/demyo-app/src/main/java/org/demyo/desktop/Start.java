@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -51,9 +52,11 @@ public class Start {
 			ds.getConnection().createStatement().execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
 		}
 
-		LOGGER.info("Starting server...");
+		String httpAddress = SystemConfiguration.getInstance().getHttpAddress();
+		int httpPort = SystemConfiguration.getInstance().getHttpPort();
+		LOGGER.info("Starting server on {}:{} ...", httpAddress, httpPort);
 
-		final Server server = new Server(SystemConfiguration.getInstance().getHttpPort());
+		final Server server = new Server(new InetSocketAddress(httpAddress, httpPort));
 
 		WebAppContext webapp = new WebAppContext();
 		webapp.setContextPath("/");
