@@ -4,6 +4,11 @@ version="2.0.0-alpha3"
 
 rm -f demyo-v*.tar.bz2 Demyo*.exe
 
+echo "Building Demyo..."
+cd ../source
+mvn clean install -Pprod
+cd -
+
 #
 # LINUX
 #
