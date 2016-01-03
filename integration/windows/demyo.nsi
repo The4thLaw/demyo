@@ -88,6 +88,7 @@ Section "Demyo" COMP_Demyo
 	# Common instructions
 	SetOutPath "$INSTDIR"
 
+	File Demyo.bat
 	File /oname=Readme.txt ..\..\README.md
 	File /oname=License.txt ..\..\LICENSE
 	DetailPrint "Changing newline characters"

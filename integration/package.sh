@@ -20,7 +20,7 @@ tar cjf demyo-v$version.tar.bz2 demyo-v$version
 cd -
 cp $tempDir/../demyo-v$version.tar.bz2 ./
 echo "Cleaning up"
-rm -rf $tempDir/..
+rm -rf $(dirname $tempDir)
 echo "Done for Linux"
 
 echo
