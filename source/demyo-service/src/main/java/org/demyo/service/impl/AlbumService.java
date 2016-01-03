@@ -6,6 +6,7 @@ import java.util.List;
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IMetaSeriesRepo;
 import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.MetaSeries;
 import org.demyo.service.IAlbumService;
@@ -37,6 +38,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	private IMetaSeriesRepo metaSeriesRepo;
 	@Autowired
 	private IConfigurationService configurationService;
+	@Autowired
+	ISeriesRepo seriesRepo;
 
 	/**
 	 * Default constructor.
@@ -90,17 +93,21 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 		Album template = new Album();
 
-		template.setArtists(last.getArtists());
-		template.setBinding(last.getBinding());
-		template.setCollection(last.getCollection());
-		template.setColorists(last.getColorists());
-		template.setHeight(last.getHeight());
-		template.setPages(last.getPages());
-		template.setPublisher(last.getPublisher());
-		template.setSeries(last.getSeries());
-		template.setTags(last.getTags());
-		template.setWidth(last.getWidth());
-		template.setWriters(last.getWriters());
+		if (last != null) {
+			template.setArtists(last.getArtists());
+			template.setBinding(last.getBinding());
+			template.setCollection(last.getCollection());
+			template.setColorists(last.getColorists());
+			template.setHeight(last.getHeight());
+			template.setPages(last.getPages());
+			template.setPublisher(last.getPublisher());
+			template.setSeries(last.getSeries());
+			template.setTags(last.getTags());
+			template.setWidth(last.getWidth());
+			template.setWriters(last.getWriters());
+		} else {
+			template.setSeries(seriesRepo.findOne(seriesId));
+		}
 
 		return template;
 	}
