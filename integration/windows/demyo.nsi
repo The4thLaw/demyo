@@ -4,6 +4,7 @@
 # TODO: enable portable mode (should be exclusive with Desktop shortcut)
 # TODO: Once an exe file to start is available, use it instead of the .bat file
 # TODO: detect Demyo 1 installation in updates (add a specific key for major version. If the key is not present, exit with error)
+# TODO: ensure that the "Start Demyo" command at the end is performed with the right user
 # Similar to:
 #ClearErrors
 #		ReadRegStr $R0 HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
