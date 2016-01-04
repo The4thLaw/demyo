@@ -1,5 +1,6 @@
 package org.demyo.service.impl;
 
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,13 +10,13 @@ import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
 import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IImageRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
-import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IImageService;
 import org.demyo.utils.io.DIOUtils;
@@ -83,10 +84,14 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 	@Override
 	public File getImageThumbnail(long id, String path) throws DemyoException {
-		// Check cache
-		File thumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".jpg");
-		if (thumb.exists()) {
-			return thumb;
+		// Check cache (two possible formats)
+		File pngThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".png");
+		File jpgThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".jpg");
+		if (pngThumb.exists()) {
+			return pngThumb;
+		}
+		if (jpgThumb.exists()) {
+			return pngThumb;
 		}
 
 		// No cache hit, generate thumbnail
@@ -98,26 +103,37 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
+
 		// If the image has one dimension too small, constrain it to that
 		ApplicationConfiguration config = configService.getConfiguration();
 		int desiredMaxWidth = config.getThumbnailWidth() > buffImage.getWidth() ? buffImage.getWidth() : config
 				.getThumbnailWidth();
 		int desiredMaxHeight = config.getThumbnailHeight() > buffImage.getHeight() ? buffImage.getHeight()
 				: config.getThumbnailHeight();
+
 		// Resize
 		BufferedImage buffThumb = Scalr.resize(buffImage, Method.BALANCED, Mode.AUTOMATIC, desiredMaxWidth,
 				desiredMaxHeight, Scalr.OP_ANTIALIAS);
-		buffImage.flush();
 		LOGGER.debug("Thumbnail generated in {}ms", System.currentTimeMillis() - time);
 
 		try {
-			ImageIO.write(buffThumb, "jpg", thumb);
+			// Write opaque images as JPG, transparent images as PNG
+			if (Transparency.OPAQUE == buffThumb.getTransparency()) {
+				ImageIO.write(buffThumb, "jpg", jpgThumb);
+				return jpgThumb;
+			} else {
+				ImageIO.write(buffThumb, "png", pngThumb);
+				return pngThumb;
+			}
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+			// Ensure we don't store invalid contents
+			jpgThumb.delete();
+			pngThumb.delete();
+			throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_IO_ERROR, e);
+		} finally {
+			buffImage.flush();
+			buffThumb.flush();
 		}
-		buffThumb.flush();
-
-		return thumb;
 	}
 
 	private void validateImagePath(File image) throws DemyoException {

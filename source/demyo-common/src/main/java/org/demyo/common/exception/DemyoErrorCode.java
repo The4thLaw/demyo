@@ -35,6 +35,8 @@ public enum DemyoErrorCode {
 	IMAGE_NOT_FOUND(12001),
 	/** Error while uploading an image. */
 	IMAGE_UPLOAD_ERROR(12002),
+	/** Error while processing an image. */
+	IMAGE_IO_ERROR(12003),
 	/** The system could not save the configuration. */
 	CONFIG_CANNOT_SAVE(13000),
 	/** The system could not load the configuration. */
