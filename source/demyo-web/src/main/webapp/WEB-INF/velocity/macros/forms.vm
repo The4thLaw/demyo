@@ -112,6 +112,7 @@
 
 ## Options:
 ##		allowEmpty	Whether to let the user select no value (defaults to false)
+##		ajaxLoaded	Whether the options will be loaded by AJAX afterwards (defaults to false)
 #macro(inputSelect $labelId $path $values $options)
 	#if(!$!options.allowEmpty)#set($dummy = $options.put("allowEmpty", false))#end
 
@@ -122,6 +123,11 @@
 		#end
 		#foreach ($value in $values)
 			<option value="$value.id"#if ($!status.value && $status.value == $value.id) selected="selected"#end>$value.identifyingName</option>
+		#end
+		#if ($values.empty && $!options.ajaxLoaded && $!status.value)
+			## Preload with a default value that the JavaScript helper can use
+			<!-- Default value for an AJAX-loaded option list -->
+			<option value="$status.value" selected="selected">$status.value</option>
 		#end
 		</select>
 	#end

@@ -35,8 +35,7 @@
 		#inputSelect('field.Album.publisher', 'album.publisher.id', $publishers, { })
 	#end
 	#@mdlGridCell([4,0,0])
-		## Preload with a default value that the JavaScript helper can use
-		#inputSelect('field.Album.collection', 'album.collection.id', [ { "id": $album.collection.id, "identifyingName": "-" } ], { "allowEmpty": true })
+		#inputSelect('field.Album.collection', 'album.collection.id', [], { "ajaxLoaded": true, "allowEmpty": true })
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputText('field.Album.isbn', 'album.isbn')

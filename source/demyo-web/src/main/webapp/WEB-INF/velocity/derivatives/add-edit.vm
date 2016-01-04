@@ -11,7 +11,7 @@
 	#end
 	#@mdlGridCell([6,4,0])
 		## Preload with a default value that the JavaScript helper can use
-		#inputSelect('field.Derivative.album', 'derivative.album.id', [ { "id": $derivative.album.id, "identifyingName": "-" } ], { "allowEmpty": true })
+		#inputSelect('field.Derivative.album', 'derivative.album.id', [], { "ajaxLoaded": true, "allowEmpty": true })
 	#end
 	#@mdlGridCell([6,4,0])
 		#inputSelect('field.Derivative.artist', 'derivative.artist.id', $authors, { "allowEmpty": true })
