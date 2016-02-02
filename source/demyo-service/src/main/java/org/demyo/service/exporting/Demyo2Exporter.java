@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import javanet.staxutils.IndentingXMLStreamWriter;
+
 import javax.annotation.PostConstruct;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -51,6 +53,7 @@ public class Demyo2Exporter implements IExporter {
 
 			XMLStreamWriter xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(
 					new OutputStreamWriter(outputStream, "utf-8"));
+			xsw = new IndentingXMLStreamWriter(xsw);
 
 			xsw.writeStartDocument();
 
@@ -76,12 +79,11 @@ public class Demyo2Exporter implements IExporter {
 	private void writeMeta(XMLStreamWriter xsw) throws XMLStreamException {
 		xsw.writeStartElement("meta");
 
-		xsw.writeStartElement("version");
+		xsw.writeEmptyElement("version");
 		xsw.writeAttribute("demyo", "2.0.0-alpha3"); // TODO dynamic version
 		xsw.writeAttribute("schema", "1"); // TODO dynamic version
-		xsw.writeEndElement();
 
-		xsw.writeStartElement("counts");
+		xsw.writeEmptyElement("counts");
 		writeCount(xsw, "albums");
 		writeCount(xsw, "albums_prices");
 		writeCount(xsw, "authors");
@@ -97,7 +99,6 @@ public class Demyo2Exporter implements IExporter {
 		writeCount(xsw, "series");
 		writeCount(xsw, "sources");
 		writeCount(xsw, "tags");
-		xsw.writeEndElement();
 
 		xsw.writeEndElement();
 	}
