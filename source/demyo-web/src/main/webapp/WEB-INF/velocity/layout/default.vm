@@ -118,7 +118,7 @@ $quickTasks.prepare($javascript)
 				<div class="dem-app-menu__title" id="menu-header-management" data-dem-collapses="#menu-section-management" data-dem-collapsed-initially>#_('menu.section.management')</div>
 				<div class="dem-app-menu__section" id="menu-section-management">
 					#navMenuItem('menu-search', 'search/advanced', 'menu.manage.search', 'search_advanced')
-					#navMenuItem('menu-export', 'library/export', 'menu.manage.export', 'download')
+					#navMenuItem('menu-export', 'manage/export', 'menu.manage.export', 'download')
 					#navMenuItem('menu-import', 'manage/import', 'menu.manage.import', 'upload')
 					#navMenuItem('menu-statistics', 'library/statistics/', 'menu.manage.stats', 'pie_chart')
 					#navMenuItem('menu-configure', 'configure', 'menu.manage.configure', 'settings')
