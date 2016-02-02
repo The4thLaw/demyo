@@ -1,15 +1,19 @@
 package org.demyo.dao.impl;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 
 import org.demyo.dao.IRawSQLDao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,6 +24,17 @@ public class RawSQLDao implements IRawSQLDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+
+	private JdbcTemplate jdbcTemplate;
+
+	public RawSQLDao() {
+		jdbcTemplate = new JdbcTemplate();
+	}
+
+	@Autowired
+	public void setDataSource(DataSource source) {
+		jdbcTemplate.setDataSource(source);
+	}
 
 	private void executeUpdate(String sql) {
 		Query query = entityManager.createNativeQuery(sql);
@@ -64,5 +79,10 @@ public class RawSQLDao implements IRawSQLDao {
 	public long count(String tableName) {
 		Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM " + tableName);
 		return ((BigInteger) query.getSingleResult()).longValue();
+	}
+
+	@Override
+	public List<Map<String, Object>> getRawRecords(String tableName) {
+		return jdbcTemplate.queryForList("SELECT * FROM " + tableName);
 	}
 }

@@ -5,6 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
 
@@ -30,6 +36,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class Demyo2Exporter implements IExporter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Exporter.class);
+
+	private static ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
+		@Override
+		protected DateFormat initialValue() {
+			return new SimpleDateFormat("yyyy-MM-dd");
+		}
+	};
 
 	@Autowired
 	private IExportService exportService;
@@ -60,6 +73,22 @@ public class Demyo2Exporter implements IExporter {
 			xsw.writeStartElement("library");
 
 			writeMeta(xsw);
+
+			exportModel(xsw, "images", "image", "IMAGES");
+			exportModel(xsw, "publishers", "publisher", "PUBLISHERS");
+			exportModel(xsw, "collections", "collection", "COLLECTIONS");
+			exportModel(xsw, "bindings", "binding", "BINDINGS");
+			// authors
+			// tags
+			// series-list / series (with self habtm for <related_series>			<series ref="165"/>
+			// albums (with many habtm)
+			// album_prices / album_price
+			// borrowers / borrower
+			// loan-history / loan
+			// derivative_types
+			// sources / source
+			// derivatives (with habtm)
+			// derivative_prices
 
 			xsw.writeEndElement();
 
@@ -113,9 +142,34 @@ public class Demyo2Exporter implements IExporter {
 
 	private void exportModel(XMLStreamWriter xsw, String listTag, String entityTag, String tableName)
 			throws XMLStreamException {
+		List<Map<String, Object>> records = rawSqlDao.getRawRecords(tableName);
+
+		if (records.isEmpty()) {
+			return;
+		}
+
 		xsw.writeStartElement(listTag);
 
+		for (Map<String, Object> record : records) {
+			xsw.writeEmptyElement(entityTag);
+			for (Entry<String, Object> field : record.entrySet()) {
+				if (field.getValue() != null) {
+					xsw.writeAttribute(field.getKey().toLowerCase(), toString(field.getValue()));
+				}
+			}
+		}
+
 		xsw.writeEndElement();
+	}
+
+	private static String toString(Object value) {
+		if (value == null) {
+			return "";
+		}
+		if (value instanceof Date) {
+			return DATE_FORMAT.get().format((Date) value);
+		}
+		return value.toString();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.demyo.dao;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,4 +28,12 @@ public interface IRawSQLDao {
 	 * @return The number of entries
 	 */
 	long count(String tableName);
+
+	/**
+	 * Gets the raw data from a table.
+	 * 
+	 * @param tableName The table to query.
+	 * @return The data contained inside the table.
+	 */
+	List<Map<String, Object>> getRawRecords(String tableName);
 }
