@@ -208,12 +208,12 @@
 			</xsl:for-each>
 			<!-- Split related_series into real fields -->
 			<xsl:if test="string-length(@related_series)">
-				<related_series_list>
+				<related_series-list>
 					<xsl:call-template name="split-id-list">
 						<xsl:with-param name="toSplit"><xsl:value-of select="@related_series"/></xsl:with-param>
 						<xsl:with-param name="elementName">related_series</xsl:with-param>
 					</xsl:call-template>
-				</related_series_list>
+				</related_series-list>
 			</xsl:if>
 		</series>
 	</xsl:template>

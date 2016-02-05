@@ -30,6 +30,8 @@ public final class SystemConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SystemConfiguration.class);
 	private static final String SYSTEM_CONFIGURATION_FILENAME = "system.properties";
 
+	/** The version of Demyo */
+	private final String version;
 	/** The root directory for the Demyo installation. */
 	private final File applicationDirectory;
 	/** Path to the WAR file containing the Demyo Web app. */
@@ -89,6 +91,7 @@ public final class SystemConfiguration {
 		} catch (ConfigurationException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NOT_READABLE, e);
 		}
+		version = config.getString("version");
 		warPath = config.getString("war.path");
 		portable = config.getBoolean("portable");
 		httpAddress = config.getString("http.address");
@@ -204,6 +207,15 @@ public final class SystemConfiguration {
 		sb.append("\n\timages directory: ").append(imagesDirectory);
 		sb.append("\n\ttemporary directory: ").append(tempDirectory);
 		return sb.toString();
+	}
+
+	/**
+	 * Gets the version of Demyo.
+	 * 
+	 * @return the version of Demyo
+	 */
+	public String getVersion() {
+		return version;
 	}
 
 	/**

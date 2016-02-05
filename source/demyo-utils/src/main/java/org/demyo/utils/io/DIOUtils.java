@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.zip.ZipFile;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +67,29 @@ public final class DIOUtils {
 		try {
 			closeable.close();
 		} catch (IOException e) {
+			LOGGER.warn("Failed to close stream", e);
+		}
+	}
+
+	/**
+	 * Unconditionally close an {@link XMLStreamWriter}.
+	 * <p>
+	 * Equivalent to {@link XMLStreamWriter#close()}, except any exceptions will be logged and ignored. This is
+	 * typically used in finally blocks.
+	 * </p>
+	 * <p>
+	 * Similar to Apache Commons' method, but actually logs any error rather than discarding them.
+	 * </p>
+	 * 
+	 * @param closeable The object to close, may be null or already closed
+	 */
+	public static void closeQuietly(XMLStreamWriter closeable) {
+		if (closeable == null) {
+			return;
+		}
+		try {
+			closeable.close();
+		} catch (XMLStreamException e) {
 			LOGGER.warn("Failed to close stream", e);
 		}
 	}

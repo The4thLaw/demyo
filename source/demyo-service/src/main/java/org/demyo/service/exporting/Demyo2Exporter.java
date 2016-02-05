@@ -7,7 +7,9 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,6 +27,7 @@ import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.impl.IExportService;
 import org.demyo.service.impl.IExporter;
+import org.demyo.utils.io.DIOUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +35,63 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-// TODO: use https://ewernli.wordpress.com/2009/06/18/stax-pretty-printer/
 @Component
 public class Demyo2Exporter implements IExporter {
+	private static class ManyToManyRelation {
+		private final String relationTag;
+		private final String entryTag;
+		private final Map<Number, List<Number>> entries;
+
+		public ManyToManyRelation(String relationtag, String entryTag, String primaryKey, String secondaryKey,
+				List<Map<String, Object>> relations) {
+			this.relationTag = relationtag;
+			this.entryTag = entryTag;
+			entries = new HashMap<>();
+
+			for (Map<String, Object> relation : relations) {
+				Number primaryValue = (Number) relation.get(primaryKey);
+				Number secondaryValue = (Number) relation.get(secondaryKey);
+				if (primaryValue == null) {
+					throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_DB_CONSISTENCY_ERROR,
+							"null primary value for key " + primaryKey + " in relation " + relation.toString());
+				}
+				if (secondaryValue == null) {
+					throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_DB_CONSISTENCY_ERROR,
+							"null secondary value for key " + secondaryKey + " in relation " + relation.toString());
+				}
+				List<Number> secondaryValues = entries.get(primaryValue);
+				if (secondaryValues == null) {
+					secondaryValues = new ArrayList<>();
+					entries.put(primaryValue, secondaryValues);
+				}
+				secondaryValues.add(secondaryValue);
+			}
+		}
+
+		public void writeRelationToStream(Number primaryValue, XMLStreamWriter writer) throws XMLStreamException {
+			if (entries.isEmpty()) {
+				// No data at all
+				return;
+			}
+			List<Number> secondaryValues = entries.get(primaryValue);
+			if (secondaryValues == null || secondaryValues.isEmpty()) {
+				// No associations for this primary key
+				return;
+			}
+			writer.writeStartElement(relationTag);
+			for (Number sec : secondaryValues) {
+				writer.writeEmptyElement(entryTag);
+				writer.writeAttribute("ref", sec.toString());
+			}
+			writer.writeEndElement();
+		}
+
+		public boolean hasRelations(Number primaryValue) {
+			List<Number> secondaryValues = entries.get(primaryValue);
+			return secondaryValues != null && !secondaryValues.isEmpty();
+		}
+	}
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Exporter.class);
 
 	private static ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
@@ -61,10 +118,12 @@ public class Demyo2Exporter implements IExporter {
 
 		File out = SystemConfiguration.getInstance().createTempFile("demyo2-export-", ".xml");
 
+		OutputStream outputStream = null;
+		XMLStreamWriter xsw = null;
 		try {
-			OutputStream outputStream = new FileOutputStream(out);
+			outputStream = new FileOutputStream(out);
 
-			XMLStreamWriter xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(
+			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(
 					new OutputStreamWriter(outputStream, "utf-8"));
 			xsw = new IndentingXMLStreamWriter(xsw);
 
@@ -78,17 +137,44 @@ public class Demyo2Exporter implements IExporter {
 			exportModel(xsw, "publishers", "publisher", "PUBLISHERS");
 			exportModel(xsw, "collections", "collection", "COLLECTIONS");
 			exportModel(xsw, "bindings", "binding", "BINDINGS");
-			// authors
-			// tags
-			// series-list / series (with self habtm for <related_series>			<series ref="165"/>
-			// albums (with many habtm)
-			// album_prices / album_price
-			// borrowers / borrower
-			// loan-history / loan
-			// derivative_types
-			// sources / source
-			// derivatives (with habtm)
-			// derivative_prices
+			exportModel(xsw, "authors", "author", "AUTHORS");
+			exportModel(xsw, "tags", "tag", "TAGS");
+
+			// Series
+			exportModel(xsw, "series-list", "series", "SERIES",
+					new ManyToManyRelation[] { new ManyToManyRelation("related_series-list", "related_series",
+							"MAIN", "SUB", rawSqlDao.getRawRecords("SERIES_RELATIONS")) });
+
+			// Albums
+			exportModel(
+					xsw,
+					"albums",
+					"album",
+					"ALBUMS",
+					new ManyToManyRelation[] {
+							new ManyToManyRelation("writers", "writer", "ALBUM_ID", "WRITER_ID", rawSqlDao
+									.getRawRecords("ALBUMS_WRITERS")),
+							new ManyToManyRelation("artists", "artist", "ALBUM_ID", "ARTIST_ID", rawSqlDao
+									.getRawRecords("ALBUMS_ARTISTS")),
+							new ManyToManyRelation("colorists", "colorist", "ALBUM_ID", "COLORIST_ID", rawSqlDao
+									.getRawRecords("ALBUMS_COLORISTS")),
+							new ManyToManyRelation("album-tags", "album-tag", "ALBUM_ID", "TAG_ID", rawSqlDao
+									.getRawRecords("ALBUMS_TAGS")),
+							new ManyToManyRelation("album-images", "album-image", "ALBUM_ID", "IMAGE_ID",
+									rawSqlDao.getRawRecords("ALBUMS_IMAGES")) });
+
+			exportModel(xsw, "album_prices", "album_price", "ALBUMS_PRICES");
+			exportModel(xsw, "borrowers", "borrower", "BORROWERS");
+			exportModel(xsw, "loan-history", "loan", "ALBUMS_BORROWERS");
+			exportModel(xsw, "derivative_types", "derivative_type", "DERIVATIVE_TYPES");
+			exportModel(xsw, "sources", "source", "SOURCES");
+
+			// Derivatives
+			exportModel(xsw, "derivatives", "derivative", "DERIVATIVES",
+					new ManyToManyRelation[] { new ManyToManyRelation("derivative-images", "derivative-image",
+							"DERIVATIVE_ID", "IMAGE_ID", rawSqlDao.getRawRecords("DERIVATIVES_IMAGES")) });
+
+			exportModel(xsw, "derivative_prices", "derivative_price", "DERIVATIVES_PRICES");
 
 			xsw.writeEndElement();
 
@@ -98,9 +184,11 @@ public class Demyo2Exporter implements IExporter {
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_IO_ERROR, e);
 		} catch (XMLStreamException e) {
-			e.printStackTrace();
+			throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_XML_ERROR, e);
+		} finally {
+			DIOUtils.closeQuietly(xsw);
+			DIOUtils.closeQuietly(outputStream);
 		}
-		// TODO: proper error management
 
 		return out;
 	}
@@ -109,7 +197,7 @@ public class Demyo2Exporter implements IExporter {
 		xsw.writeStartElement("meta");
 
 		xsw.writeEmptyElement("version");
-		xsw.writeAttribute("demyo", "2.0.0-alpha3"); // TODO dynamic version
+		xsw.writeAttribute("demyo", SystemConfiguration.getInstance().getVersion());
 		xsw.writeAttribute("schema", "1"); // TODO dynamic version
 
 		xsw.writeEmptyElement("counts");
@@ -140,8 +228,8 @@ public class Demyo2Exporter implements IExporter {
 		xsw.writeAttribute(alias, Long.toString(rawSqlDao.count(tableName)));
 	}
 
-	private void exportModel(XMLStreamWriter xsw, String listTag, String entityTag, String tableName)
-			throws XMLStreamException {
+	private void exportModel(XMLStreamWriter xsw, String listTag, String entityTag, String tableName,
+			ManyToManyRelation... relations) throws XMLStreamException {
 		List<Map<String, Object>> records = rawSqlDao.getRawRecords(tableName);
 
 		if (records.isEmpty()) {
@@ -151,15 +239,41 @@ public class Demyo2Exporter implements IExporter {
 		xsw.writeStartElement(listTag);
 
 		for (Map<String, Object> record : records) {
-			xsw.writeEmptyElement(entityTag);
+			Number recordId = (Number) record.get("ID"); // By convention
+			boolean hasRelations = hasRelations(relations, recordId);
+			if (hasRelations) {
+				xsw.writeStartElement(entityTag);
+			} else {
+				xsw.writeEmptyElement(entityTag);
+			}
+
+			// Write entity fields
 			for (Entry<String, Object> field : record.entrySet()) {
 				if (field.getValue() != null) {
 					xsw.writeAttribute(field.getKey().toLowerCase(), toString(field.getValue()));
 				}
 			}
+
+			// Write relations
+			for (ManyToManyRelation rel : relations) {
+				rel.writeRelationToStream(recordId, xsw);
+			}
+
+			if (hasRelations) {
+				xsw.writeEndElement();
+			}
 		}
 
 		xsw.writeEndElement();
+	}
+
+	private static boolean hasRelations(ManyToManyRelation[] relations, Number recordId) {
+		for (ManyToManyRelation rel : relations) {
+			if (rel.hasRelations(recordId)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private static String toString(Object value) {
