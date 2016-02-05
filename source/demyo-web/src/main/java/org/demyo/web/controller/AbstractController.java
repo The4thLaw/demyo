@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +44,9 @@ public abstract class AbstractController {
 	protected AbstractController() {
 		// May be missing from some systems at least
 		mimeTypes.addMimeTypes("image/png png");
+
+		// Note: intentionally, there is no specific MIME type for DEA export files.
+		// The HTTP spec discourages vendor-specific MIME types
 	}
 
 	@ExceptionHandler
@@ -156,6 +161,21 @@ public abstract class AbstractController {
 	 */
 	protected void download(File file, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		download(file, null, request, response);
+	}
+
+	/**
+	 * Sends a local file for download by the client. Honours the "If-Modified-Since" header, and guesses the
+	 * content-type.
+	 * 
+	 * @param file The file to download.
+	 * @param filename An file name to advertise. If <code>null</code>, rely on browser defaults.
+	 * @param request The HTTP request.
+	 * @param response The HTTP response.
+	 * @throws IOException In case of error while sending the file to the client.
+	 */
+	protected void download(File file, String filename, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
 		if (handleLastModified(file.lastModified(), request, response)) {
 			return;
 		}
@@ -165,6 +185,13 @@ public abstract class AbstractController {
 		response.setDateHeader("Last-Modified", file.lastModified());
 		response.setContentLength((int) file.length());
 		response.setContentType(mimeTypes.getContentType(file));
+
+		if (filename != null) {
+			String targetFilename = URLEncoder.encode(filename, "UTF-8");
+			targetFilename = URLDecoder.decode(targetFilename, "ISO8859_1");
+			response.setHeader("Content-disposition", "attachment; filename=" + targetFilename);
+		}
+
 		try {
 			fis = new FileInputStream(file);
 			bis = new BufferedInputStream(fis);

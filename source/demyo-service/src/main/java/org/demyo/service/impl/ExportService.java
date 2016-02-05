@@ -11,6 +11,7 @@ import java.util.zip.ZipOutputStream;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.service.IExportService;
 import org.demyo.utils.io.ZipUtils;
 
 import org.slf4j.Logger;
@@ -18,6 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implements the contract defined by {@link IExportService}.
+ */
 @Service
 public class ExportService implements IExportService {
 	private static final String EXPORT_DIRECTORY_NAME = "exports";
@@ -40,9 +44,10 @@ public class ExportService implements IExportService {
 
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
-	public File export() throws DemyoException {
-		// TODO: generate files to the right directory (exportDirectory)
-		boolean withResources = false;
+	public File export(boolean withResources) throws DemyoException {
+		// Note that we don't check if withResources makes sense for the selected exporter.
+		// It's not a issue at the moment.
+
 		IExporter exporter = exporters.get(0);
 
 		File libraryExport = exporter.export();
@@ -52,7 +57,8 @@ public class ExportService implements IExportService {
 		}
 
 		// Build the ZIP file including all resources
-		File zipFile = SystemConfiguration.getInstance().createTempFile("demyo-export-archive-", ".dea");
+		File zipFile = SystemConfiguration.getInstance().createTempFile("demyo-export-archive-", ".dea",
+				exportDirectory);
 
 		try (FileOutputStream fos = new FileOutputStream(zipFile);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);

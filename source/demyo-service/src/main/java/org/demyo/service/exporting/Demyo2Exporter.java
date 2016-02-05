@@ -7,9 +7,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,7 +23,7 @@ import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IRawSQLDao;
-import org.demyo.service.impl.IExportService;
+import org.demyo.service.IExportService;
 import org.demyo.service.impl.IExporter;
 import org.demyo.utils.io.DIOUtils;
 
@@ -35,63 +33,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * {@link IExporter} using the native Demyo 2 format.
+ */
 @Component
 public class Demyo2Exporter implements IExporter {
-	private static class ManyToManyRelation {
-		private final String relationTag;
-		private final String entryTag;
-		private final Map<Number, List<Number>> entries;
-
-		public ManyToManyRelation(String relationtag, String entryTag, String primaryKey, String secondaryKey,
-				List<Map<String, Object>> relations) {
-			this.relationTag = relationtag;
-			this.entryTag = entryTag;
-			entries = new HashMap<>();
-
-			for (Map<String, Object> relation : relations) {
-				Number primaryValue = (Number) relation.get(primaryKey);
-				Number secondaryValue = (Number) relation.get(secondaryKey);
-				if (primaryValue == null) {
-					throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_DB_CONSISTENCY_ERROR,
-							"null primary value for key " + primaryKey + " in relation " + relation.toString());
-				}
-				if (secondaryValue == null) {
-					throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_DB_CONSISTENCY_ERROR,
-							"null secondary value for key " + secondaryKey + " in relation " + relation.toString());
-				}
-				List<Number> secondaryValues = entries.get(primaryValue);
-				if (secondaryValues == null) {
-					secondaryValues = new ArrayList<>();
-					entries.put(primaryValue, secondaryValues);
-				}
-				secondaryValues.add(secondaryValue);
-			}
-		}
-
-		public void writeRelationToStream(Number primaryValue, XMLStreamWriter writer) throws XMLStreamException {
-			if (entries.isEmpty()) {
-				// No data at all
-				return;
-			}
-			List<Number> secondaryValues = entries.get(primaryValue);
-			if (secondaryValues == null || secondaryValues.isEmpty()) {
-				// No associations for this primary key
-				return;
-			}
-			writer.writeStartElement(relationTag);
-			for (Number sec : secondaryValues) {
-				writer.writeEmptyElement(entryTag);
-				writer.writeAttribute("ref", sec.toString());
-			}
-			writer.writeEndElement();
-		}
-
-		public boolean hasRelations(Number primaryValue) {
-			List<Number> secondaryValues = entries.get(primaryValue);
-			return secondaryValues != null && !secondaryValues.isEmpty();
-		}
-	}
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Exporter.class);
 
 	private static ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {

@@ -17,5 +17,4 @@ public interface IExporter {
 	 * @return The extension (without heading ".")
 	 */
 	String getExtension();
-
 }
