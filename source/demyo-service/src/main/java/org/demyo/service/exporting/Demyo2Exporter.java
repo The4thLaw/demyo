@@ -24,7 +24,6 @@ import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IExportService;
-import org.demyo.service.impl.IExporter;
 import org.demyo.utils.io.DIOUtils;
 
 import org.slf4j.Logger;
@@ -144,7 +143,7 @@ public class Demyo2Exporter implements IExporter {
 
 		xsw.writeEmptyElement("version");
 		xsw.writeAttribute("demyo", SystemConfiguration.getInstance().getVersion());
-		xsw.writeAttribute("schema", "1"); // TODO dynamic version
+		xsw.writeAttribute("schema", "1"); // TODO dynamic database schema version
 
 		xsw.writeEmptyElement("counts");
 		writeCount(xsw, "albums");
@@ -233,7 +232,7 @@ public class Demyo2Exporter implements IExporter {
 	}
 
 	@Override
-	public String getExtension() {
-		return "xml";
+	public String getExtension(boolean withResources) {
+		return withResources ? "dea" : "xml";
 	}
 }

@@ -16,9 +16,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.demyo.common.config.SystemConfiguration;
-import org.demyo.dao.IRawSQLDao;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IImportService;
 import org.demyo.utils.io.DIOUtils;
 import org.demyo.utils.io.ZipUtils;
@@ -74,7 +74,6 @@ public class Demyo2Importer implements IImporter {
 
 	@Override
 	public void importFile(String originalFilename, File file) throws DemyoException {
-		// TODO: never tested
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		File archiveDirectory = null;

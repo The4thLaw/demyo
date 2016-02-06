@@ -1,6 +1,5 @@
 package org.demyo.web.controller;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IExportService;
+import org.demyo.service.impl.ExportService.Output;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ public class ExportController extends AbstractController {
 	 */
 	public static class ExportParameters {
 		/** The expected format. */
-		private String format;
+		private String format = "XML";
 		/** The flag indicating whether to include resources. */
 		private boolean withResources;
 
@@ -78,15 +78,25 @@ public class ExportController extends AbstractController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public String showFileSelection(Model model) {
-		model.addAttribute("exportOptions", new ExportParameters());
-		return "manage/export-select"; // TODO: create the view
+		ExportParameters parameters = new ExportParameters();
+		parameters.setWithResources(true); // Set a default (cannot be set in the constructor)
+		model.addAttribute("exportOptions", parameters);
+		return "manage/export-select";
 	}
 
+	/**
+	 * Exports a file to a specified format.
+	 * 
+	 * @param params The export options.
+	 * @param request The HTTP request.
+	 * @param response The HTTP response.
+	 * @throws DemyoException In case of error during export.
+	 * @throws IOException In case of error during download.
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public void exportFile(ExportParameters params, HttpServletRequest request, HttpServletResponse response)
 			throws DemyoException, IOException {
-		File exportedFile = exportService.export(params.isWithResources());
-		// TODO: the export service should return an expected file name as well as the data
-		download(exportedFile, "demyo-export.dea", request, response);
+		Output exportedData = exportService.export(params.isWithResources());
+		download(exportedData.getFile(), exportedData.getFileName(), request, response);
 	}
 }

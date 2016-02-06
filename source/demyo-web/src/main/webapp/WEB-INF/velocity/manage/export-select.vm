@@ -1,0 +1,7 @@
+#setPageTitle('title.manage.export.select')
+
+#@form()
+#inputSelect('field.manage.export.format', 'exportOptions.format', [{"id":"XML", "identifyingName":"Demyo 2"}], {})
+#inputCheckbox('field.manage.export.withResources', 'exportOptions.withResources')
+#formButtons('button.export', 'button.reset')
+#end

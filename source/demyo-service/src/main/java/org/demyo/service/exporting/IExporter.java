@@ -1,4 +1,4 @@
-package org.demyo.service.impl;
+package org.demyo.service.exporting;
 
 import java.io.File;
 
@@ -14,7 +14,8 @@ public interface IExporter {
 	/**
 	 * Returns the expected extension of the exported file.
 	 * 
+	 * @param withResources Defines whether the extension applies to an export with or without resources.
 	 * @return The extension (without heading ".")
 	 */
-	String getExtension();
+	String getExtension(boolean withResources);
 }
