@@ -143,7 +143,7 @@ public class Demyo2Exporter implements IExporter {
 
 		xsw.writeEmptyElement("version");
 		xsw.writeAttribute("demyo", SystemConfiguration.getInstance().getVersion());
-		xsw.writeAttribute("schema", "1"); // TODO dynamic database schema version
+		xsw.writeAttribute("schema", String.valueOf(rawSqlDao.getSchemaVersion()));
 
 		xsw.writeEmptyElement("counts");
 		writeCount(xsw, "albums");

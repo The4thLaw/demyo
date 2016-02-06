@@ -36,4 +36,11 @@ public interface IRawSQLDao {
 	 * @return The data contained inside the table.
 	 */
 	List<Map<String, Object>> getRawRecords(String tableName);
+
+	/**
+	 * Gets the version of the Demyo schema.
+	 * 
+	 * @return The schema version.
+	 */
+	int getSchemaVersion();
 }

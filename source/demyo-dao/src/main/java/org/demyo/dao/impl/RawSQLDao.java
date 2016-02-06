@@ -85,4 +85,11 @@ public class RawSQLDao implements IRawSQLDao {
 	public List<Map<String, Object>> getRawRecords(String tableName) {
 		return jdbcTemplate.queryForList("SELECT * FROM " + tableName);
 	}
+
+	@Override
+	public int getSchemaVersion() {
+		return jdbcTemplate.queryForObject(
+				"select \"version\" from \"schema_version\" order by \"installed_rank\" desc LIMIT 1",
+				Integer.class);
+	}
 }
