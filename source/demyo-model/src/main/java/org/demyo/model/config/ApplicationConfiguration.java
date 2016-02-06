@@ -10,6 +10,7 @@ import org.demyo.common.config.SystemConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -71,6 +72,10 @@ public class ApplicationConfiguration {
 			LOGGER.warn("Failed to load the header configuration", e);
 		}
 		headerLinks = links;
+
+		// Set the locale JVM-wide. This is notably use for javax.validation messages
+		Locale.setDefault(language);
+		LocaleContextHolder.setLocale(language);
 	}
 
 	/**

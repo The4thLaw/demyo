@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.demyo.model.constraints.OneNotNull;
 import org.demyo.model.util.DefaultOrder;
 
 /**
@@ -36,7 +37,7 @@ import org.demyo.model.util.DefaultOrder;
 				@NamedAttributeNode("images") }),
 		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = { @NamedAttributeNode("artist"),
 				@NamedAttributeNode("images") }) })
-// TODO: Add constraint to have either Album or Series nullable, but not both
+@OneNotNull(fields = { "series.id", "album.id" })
 public class Derivative extends AbstractModel {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.EAGER)
