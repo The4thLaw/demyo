@@ -7,7 +7,8 @@
 			<meta>
 				<version>
 					<xsl:attribute name="demyo"><xsl:value-of select="@demyo-version"/></xsl:attribute>
-					<xsl:attribute name="schema"><xsl:value-of select="@schema-version"/></xsl:attribute>
+					<!-- Reset the schema version on conversion -->
+					<xsl:attribute name="schema">1</xsl:attribute>
 				</version>
 				
 				<counts>
