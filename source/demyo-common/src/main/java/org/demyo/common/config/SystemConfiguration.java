@@ -9,6 +9,7 @@ import org.demyo.common.exception.DemyoRuntimeException;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,8 +104,14 @@ public final class SystemConfiguration {
 			tempDirectory = new File(applicationDirectory, "temp");
 		} else {
 			if (SystemUtils.IS_OS_WINDOWS) {
-				userDirectory = new File(SystemUtils.USER_HOME, "Demyo");
-				tempDirectory = new File(userDirectory, "Temp");
+				// On Windows, try to send the settings to the Application Data folder
+				// rather than just the home, if possible
+				String baseDirectory = System.getenv("APPDATA");
+				if (StringUtils.isBlank(baseDirectory)) {
+					baseDirectory = SystemUtils.USER_HOME;
+				}
+				userDirectory = new File(baseDirectory, "Demyo");
+				tempDirectory = new File(userDirectory, "temp");
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
 				// https://developer.apple.com/library/mac/#documentation/General/Conceptual/
