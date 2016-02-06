@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+/**
+ * Implements the contract defined by {@link ISeriesCustomRepo}.
+ */
 /* package */class ISeriesRepoImpl implements ISeriesCustomRepo {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ISeriesRepoImpl.class);
 

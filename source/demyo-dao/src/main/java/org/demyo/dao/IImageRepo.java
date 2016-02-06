@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
  * This class provides methods to manipulate {@link Image}s.
  */
 @Repository
-public interface IImageRepo extends IModelRepo<Image> {
+public interface IImageRepo extends IModelRepo<Image>, IImageCustomRepo {
 	/**
 	 * Finds an {@link Image} based on its path.
 	 * 

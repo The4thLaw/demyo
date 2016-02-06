@@ -1,0 +1,20 @@
+#setPageTitle('title.add.image.detect')
+## TODO: translations
+## TODO: tabbed UI (also on upload page)
+
+<p>#_('page.Image.detect.explanation')</p>
+
+#@form()
+
+#set ($i = 0)
+#foreach ($path in $imagePaths)
+	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="path_$i">
+		<input type="checkbox" id="path_$i" name="paths" value="$path" class="mdl-checkbox__input" />
+  		<span class="mdl-checkbox__label">$path</span>
+	</label>
+	#set ($i = $i + 1)
+#end
+
+#formButtons('button.image.addDetected', 'button.reset')
+
+#end

@@ -5,6 +5,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
@@ -22,6 +29,10 @@ import org.demyo.service.IImageService;
 import org.demyo.utils.io.DIOUtils;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOCase;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -188,15 +199,67 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		Image image = new Image();
 		image.setUrl(UPLOAD_DIRECTORY_NAME + "/" + targetFile.getName());
 
-		// Infer a description (strip any path attributes)
+		image.setDescription(inferDescription(originalFileName));
+
+		return save(image);
+	}
+
+	@Override
+	public long addExistingImage(String path) {
+		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
+		File targetFile = new File(imagesDirectory, path);
+		if (!targetFile.toPath().startsWith(imagesDirectory.toPath())) {
+			throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, path
+					+ " is not a valid path");
+		}
+
+		// Create a new image with the right attributes
+		Image image = new Image();
+		image.setUrl(path);
+
+		image.setDescription(inferDescription(targetFile.getName()));
+
+		return save(image);
+	}
+
+	private static String inferDescription(String originalFileName) {
+		// Strip any path attributes
 		String description = new File(originalFileName).getName();
 		// Strip the extension
 		description = description.replaceAll("\\.[^.]+$", "");
 		// Convert underscores into spaces
 		description = description.replace('_', ' ');
-		image.setDescription(description);
 		LOGGER.debug("Uploaded file {} led to description: {}", originalFileName, description);
+		return description;
+	}
 
-		return save(image);
+	@Override
+	public List<String> findUnknownDiskImages() {
+		List<String> unknownFiles = new ArrayList<>();
+		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
+
+		// Find the files
+		Collection<File> foundFiles = FileUtils.listFiles(imagesDirectory,
+				new SuffixFileFilter(Arrays.asList(".jpg", ".jpeg", ".png", ".gif"), IOCase.INSENSITIVE),
+				TrueFileFilter.INSTANCE);
+
+		// Find the paths known in the database
+		Set<String> knownFiles = repo.findAllPaths();
+
+		// Filter out the known files
+		Path imagesDirectoryPath = imagesDirectory.toPath();
+		for (File file : foundFiles) {
+			String relativePath = imagesDirectoryPath.relativize(file.toPath()).toString();
+			boolean known = knownFiles.contains(relativePath);
+			LOGGER.trace("Is {} known? {}", relativePath, known);
+
+			if (!known) {
+				unknownFiles.add(relativePath);
+			}
+		}
+
+		Collections.sort(unknownFiles);
+
+		return unknownFiles;
 	}
 }

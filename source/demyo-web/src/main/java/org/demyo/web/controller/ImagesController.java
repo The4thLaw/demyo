@@ -3,19 +3,22 @@ package org.demyo.web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.demyo.common.config.SystemConfiguration;
-import org.demyo.model.Image;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.common.exception.DemyoRuntimeException;
+import org.demyo.model.Image;
 import org.demyo.service.IImageService;
 import org.demyo.service.IModelService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +61,8 @@ public class ImagesController extends AbstractModelController<Image> {
 			this.uploadedFiles = uploadedFiles;
 		}
 	}
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(ImagesController.class);
 
 	@Autowired
 	private IImageService imageService;
@@ -159,6 +164,40 @@ public class ImagesController extends AbstractModelController<Image> {
 
 		if (addedImages.isEmpty()) {
 			return "images/upload";
+		} else if (addedImages.size() == 1) {
+			return redirect("/images/view/" + addedImages.get(0));
+		} else {
+			model.addAttribute("id", addedImages);
+			return redirect("/images/list");
+		}
+	}
+
+	/**
+	 * Detects the list of all images that are currently on the disk, but not registered in Demyo.
+	 * 
+	 * @param model The model
+	 * @return The view name
+	 */
+	@RequestMapping(value = "/detect", method = RequestMethod.GET)
+	public String detectImagesOnDisk(Model model) {
+		model.addAttribute("imagePaths", imageService.findUnknownDiskImages());
+		return "images/detect";
+	}
+
+	@RequestMapping(value = "/detect", method = RequestMethod.POST)
+	public String addDetectedImages(HttpServletRequest request, Model model) {
+		String[] paths = request.getParameterValues("paths");
+		List<Long> addedImages = new ArrayList<>(paths.length);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Selected images: {}", Arrays.asList(paths));
+		}
+
+		for (String path : paths) {
+			addedImages.add(imageService.addExistingImage(path));
+		}
+
+		if (addedImages.isEmpty()) {
+			return redirect("/images/detect");
 		} else if (addedImages.size() == 1) {
 			return redirect("/images/view/" + addedImages.get(0));
 		} else {
