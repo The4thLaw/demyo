@@ -1,4 +1,17 @@
-#setPageTitle('title.add.image.upload')
+#setPageTitle('title.add.image')
+
+#set( $pageTabs = [
+		{
+			'url': "$link.contextPath/images/upload",
+			'label': 'title.add.image.upload',
+			'active': true
+		},
+		{
+			'url': "$link.contextPath/images/detect",
+			'label': 'title.add.image.detect',
+			'active': false
+		}
+	] )
 
 <p>#_('page.Image.upload.explanation')</p>
 

@@ -1,11 +1,23 @@
-#setPageTitle('title.add.image.detect')
-## TODO: translations
-## TODO: tabbed UI (also on upload page)
+#setPageTitle('title.add.image')
+
+#set( $pageTabs = [
+		{
+			'url': "$link.contextPath/images/upload",
+			'label': 'title.add.image.upload',
+			'active': false
+		},
+		{
+			'url': "$link.contextPath/images/detect",
+			'label': 'title.add.image.detect',
+			'active': true
+		}
+	] )
 
 <p>#_('page.Image.detect.explanation')</p>
 
 #@form()
 
+<div class="dem-columnized dem-columnized--2-cols" id="images-detect-list">
 #set ($i = 0)
 #foreach ($path in $imagePaths)
 	<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="path_$i">
@@ -14,6 +26,7 @@
 	</label>
 	#set ($i = $i + 1)
 #end
+</div>
 
 #formButtons('button.image.addDetected', 'button.reset')
 

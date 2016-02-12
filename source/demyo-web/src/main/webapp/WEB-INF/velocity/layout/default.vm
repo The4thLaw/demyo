@@ -67,6 +67,21 @@ $quickTasks.prepare($javascript)
 					<div>
 				#end
 			</div>
+			#if($!pageTabs)
+				<div class="mdl-layout__tab-bar mdl-js-ripple-effect">	
+				#foreach ($tab in $pageTabs)
+					<a href="$tab.url" class="mdl-layout__tab #if($tab.active)is-active#end">#_($tab.label)</a>
+				#end
+				</div>
+				## TODO: check MDL issue #4072 for a fix to the tab thing. Then, remove this hack.
+				<script type="text/javascript">
+					jQuery(function () {
+						jQuery('a.mdl-layout__tab').click(function () {
+							window.location.href = jQuery(this).attr('href');
+						});
+					});
+				</script>
+			#end
 		</header>
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">#_('menu.title')</span>

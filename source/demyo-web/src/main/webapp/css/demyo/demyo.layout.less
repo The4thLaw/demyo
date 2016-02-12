@@ -147,3 +147,14 @@ main.mdl-layout__content {
 	white-space: pre;
 	line-height: 1.1em;
 }
+
+.dem-columnized {
+	padding: 16px;
+	column-gap: 16px;
+}
+
+@media screen and (min-width: @tablet-breakpoint-inclusive) {
+	.dem-columnized--2-cols {
+		column-count: 2;
+	}
+}
