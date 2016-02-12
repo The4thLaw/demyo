@@ -29,8 +29,6 @@ import org.springframework.web.servlet.view.velocity.VelocityLayoutView;
  * This class caches the tool configuration so that most of the work is only done once.
  * </p>
  * 
- * @author $Author: xr $
- * @version $Revision: 1 $
  * @see https://velocity.apache.org/tools/devel/standalone.html
  */
 public class Velocity2ToolboxView extends VelocityLayoutView {

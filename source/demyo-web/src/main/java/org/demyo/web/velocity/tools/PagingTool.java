@@ -19,9 +19,6 @@ import org.springframework.data.domain.Slice;
 
 /**
  * Velocity tool for paging and text list management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1068 $
  */
 @ValidScope(value = Scope.APPLICATION)
 public class PagingTool {

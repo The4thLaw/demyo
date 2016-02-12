@@ -8,15 +8,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
-
 import org.demyo.common.config.SystemConfiguration;
-import org.demyo.dao.IRawSQLDao;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IImportService;
 import org.demyo.service.importing.IImporter;
 import org.demyo.utils.io.DIOUtils;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IImportService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1054 $
  */
 @Service
 public class ImportService implements IImportService {

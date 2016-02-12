@@ -11,9 +11,6 @@ import org.hibernate.sql.JoinType;
 /**
  * Wrapper class to set fetch modes for use with {@link Criteria#createAlias(String, String, JoinType)}. By
  * convention, the association is aliased to its name.
- * 
- * @author $Author: xr $
- * @version $Revision: 1063 $
  */
 public class JoinTypeHolder {
 	private Map<String, JoinType> joinTypes = new HashMap<>();

@@ -14,9 +14,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * Implements the contract defined by {@link ITranslationService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1 $
  */
 @Service
 public class TranslationService implements ITranslationService {

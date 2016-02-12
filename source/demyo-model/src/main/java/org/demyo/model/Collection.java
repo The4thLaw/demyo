@@ -17,9 +17,6 @@ import org.hibernate.validator.constraints.URL;
 
 /**
  * Represents a Collection of comics within a {@link Publisher}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  */
 @Entity
 @Table(name = "COLLECTIONS")

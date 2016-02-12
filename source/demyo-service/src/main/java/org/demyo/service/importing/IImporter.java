@@ -9,9 +9,6 @@ import org.demyo.common.exception.DemyoException;
  * <p>
  * All importers must be stateless.
  * </p>
- * 
- * @author $Author: xr $
- * @version $Revision: 1054 $
  */
 public interface IImporter {
 	/**

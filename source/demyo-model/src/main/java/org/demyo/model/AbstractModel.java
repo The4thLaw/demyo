@@ -7,9 +7,6 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * This class defines the base model fields.
- * 
- * @author $Author: xr $
- * @version $Revision: 1 $
  */
 @MappedSuperclass
 public abstract class AbstractModel implements IModel {

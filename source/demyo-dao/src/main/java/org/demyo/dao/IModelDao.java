@@ -11,8 +11,6 @@ import org.hibernate.criterion.Order;
 /**
  * Base interface for CRUD operations on models.
  * 
- * @author $Author: xr $
- * @version $Revision: 1071 $
  * @param <M>
  */
 public interface IModelDao<M extends IModel> {

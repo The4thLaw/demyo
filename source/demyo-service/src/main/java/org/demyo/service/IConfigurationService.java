@@ -1,7 +1,7 @@
 package org.demyo.service;
 
-import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.model.config.ApplicationConfiguration;
 
 /**
  * Service to manage the {@link ApplicationConfiguration}. To get instances of
@@ -15,9 +15,6 @@ import org.demyo.common.exception.DemyoException;
  * The location of the configuration file is defined by the {@link org.demyo.common.config.SystemConfiguration
  * SystemConfiguration}.
  * </p>
- * 
- * @author $Author: xr $
- * @version $Revision: 1064 $
  */
 public interface IConfigurationService {
 

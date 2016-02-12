@@ -11,9 +11,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents a type of Derivative.
- * 
- * @author $Author: xr $
- * @version $Revision: 1077 $
  */
 @Entity
 @Table(name = "DERIVATIVE_TYPES")

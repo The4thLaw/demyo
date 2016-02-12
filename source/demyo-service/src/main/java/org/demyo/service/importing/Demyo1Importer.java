@@ -34,9 +34,6 @@ import org.xml.sax.XMLReader;
 
 /**
  * Importer for Demyo 1.5 files.
- * 
- * @author $Author: xr $
- * @version $Revision: 1074 $
  */
 @Component
 public class Demyo1Importer extends Demyo2Importer {

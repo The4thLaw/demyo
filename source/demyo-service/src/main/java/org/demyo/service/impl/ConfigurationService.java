@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.demyo.common.config.SystemConfiguration;
-import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.common.exception.DemyoRuntimeException;
+import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * Implements the contract defined by {@link IConfigurationService}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1063 $
  */
 @Service
 public class ConfigurationService implements IConfigurationService {

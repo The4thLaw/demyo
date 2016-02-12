@@ -9,9 +9,6 @@ import java.lang.annotation.Target;
 
 /**
  * Specifies a default order for find queries.
- * 
- * @author $Author: xr $
- * @version $Revision: 1063 $
  */
 @Documented
 @Target(TYPE)

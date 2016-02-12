@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Base interface for all standard Demyo models.
- * 
- * @author Xavier 'Xr' Dalem
- * @version $Revision$
  */
 public interface IModel {
 	/**

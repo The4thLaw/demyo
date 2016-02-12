@@ -23,9 +23,6 @@ import org.hibernate.validator.constraints.URL;
 
 /**
  * Represents a Publisher of comics.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  */
 @Entity
 @Table(name = "PUBLISHERS")

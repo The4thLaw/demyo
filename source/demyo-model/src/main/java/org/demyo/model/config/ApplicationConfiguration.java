@@ -23,8 +23,6 @@ import com.fasterxml.jackson.databind.type.CollectionType;
  * its visible behaviour.
  * 
  * @see SystemConfiguration
- * @author $Author: xr $
- * @version $Revision: 1073 $
  */
 public class ApplicationConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);

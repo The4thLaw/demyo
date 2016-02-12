@@ -7,9 +7,6 @@ import org.demyo.service.importing.IImporter;
 
 /**
  * Service to manage file imports.
- * 
- * @author $Author: xr $
- * @version $Revision: 1054 $
  */
 public interface IImportService {
 

@@ -11,9 +11,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents a type of binding.
- * 
- * @author $Author: xr $
- * @version $Revision: 1080 $
  */
 @Entity
 @Table(name = "BINDINGS")

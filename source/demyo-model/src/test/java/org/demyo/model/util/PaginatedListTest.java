@@ -8,9 +8,6 @@ import org.junit.Test;
 
 /**
  * Tests for {@link PaginatedList}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1060 $
  */
 public class PaginatedListTest {
 	private static final List<Void> EMPTY_LIST = Collections.<Void> emptyList();

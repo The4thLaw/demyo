@@ -6,9 +6,10 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.demyo.service.impl.TranslationService;
+
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.config.ValidScope;
-import org.demyo.service.impl.TranslationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,9 +18,6 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Replacements based on description at http://stackoverflow.com/a/377484
  * </p>
- * 
- * @author $Author: xr $
- * @version $Revision: 1052 $
  */
 @ValidScope(value = Scope.APPLICATION)
 public class RteTool {

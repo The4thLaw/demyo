@@ -18,9 +18,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities to manage ZIP files.
- * 
- * @author $Author: xr $
- * @version $Revision: 1073 $
  */
 public final class ZipUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ZipUtils.class);

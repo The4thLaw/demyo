@@ -14,9 +14,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * General I/O utilities.
- * 
- * @author $Author: xr $
- * @version $Revision: 1058 $
  */
 // Starts with a 'D' for 'Demyo', to allow usage in parallel with Apache's version
 public final class DIOUtils {

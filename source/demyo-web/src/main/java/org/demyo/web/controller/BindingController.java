@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller for {@link Binding} management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1080 $
  */
 @Controller
 @RequestMapping("/bindings")

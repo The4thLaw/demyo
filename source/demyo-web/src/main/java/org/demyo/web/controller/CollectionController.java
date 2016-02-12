@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller for {@link Collection} management.
- * 
- * @author $Author: xr $
- * @version $Revision: 1084 $
  */
 @Controller
 @RequestMapping("/collections")

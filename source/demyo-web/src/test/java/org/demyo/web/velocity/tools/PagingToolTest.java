@@ -7,9 +7,6 @@ import org.junit.Test;
 
 /**
  * Tests for {@link PagingTool}.
- * 
- * @author $Author: xr $
- * @version $Revision: 1067 $
  */
 public class PagingToolTest {
 	private final PagingTool tool = new PagingTool();
