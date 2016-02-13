@@ -176,6 +176,11 @@ public abstract class AbstractController {
 	 */
 	protected void download(File file, String filename, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		if (!file.exists()) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			LOGGER.warn("File {} was not found, returning a 404", file);
+			return;
+		}
 		if (handleLastModified(file.lastModified(), request, response)) {
 			return;
 		}
