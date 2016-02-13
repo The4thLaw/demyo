@@ -102,7 +102,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			return pngThumb;
 		}
 		if (jpgThumb.exists()) {
-			return pngThumb;
+			return jpgThumb;
 		}
 
 		// No cache hit, generate thumbnail
