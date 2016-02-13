@@ -21,7 +21,7 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoRuntimeException;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IExportService;
 import org.demyo.utils.io.DIOUtils;
@@ -58,7 +58,7 @@ public class Demyo2Exporter implements IExporter {
 
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
-	public File export() {
+	public File export() throws DemyoException {
 		LOGGER.debug("Starting export in Demyo 2 format");
 
 		File out = SystemConfiguration.getInstance().createTempFile("demyo2-export-", ".xml");
@@ -131,9 +131,9 @@ public class Demyo2Exporter implements IExporter {
 
 			xsw.close();
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_IO_ERROR, e);
+			throw new DemyoException(DemyoErrorCode.EXPORT_IO_ERROR, e);
 		} catch (XMLStreamException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_XML_ERROR, e);
+			throw new DemyoException(DemyoErrorCode.EXPORT_XML_ERROR, e);
 		} finally {
 			DIOUtils.closeQuietly(xsw);
 			DIOUtils.closeQuietly(outputStream);

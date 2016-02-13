@@ -19,7 +19,6 @@ import javax.transaction.Transactional;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
-import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IImageRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
@@ -112,7 +111,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		try {
 			buffImage = ImageIO.read(image);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
 
 		// If the image has one dimension too small, constrain it to that
@@ -140,7 +139,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			// Ensure we don't store invalid contents
 			jpgThumb.delete();
 			pngThumb.delete();
-			throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_IO_ERROR, e);
+			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
 		} finally {
 			buffImage.flush();
 			buffThumb.flush();
@@ -155,19 +154,19 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				throw new DemyoException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath);
 			}
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
 	}
 
 	@Override
 	@Transactional
-	public long uploadImage(String originalFileName, File imageFile) {
+	public long uploadImage(String originalFileName, File imageFile) throws DemyoException {
 		// Determine the hash of the uploaded file
 		String hash;
 		try (FileInputStream data = new FileInputStream(imageFile)) {
 			hash = DigestUtils.sha256Hex(data);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_UPLOAD_ERROR, e);
+			throw new DemyoException(DemyoErrorCode.IMAGE_UPLOAD_ERROR, e);
 		}
 
 		// Determine the target file name
@@ -205,12 +204,11 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public long addExistingImage(String path) {
+	public long addExistingImage(String path) throws DemyoException {
 		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
 		File targetFile = new File(imagesDirectory, path);
 		if (!targetFile.toPath().startsWith(imagesDirectory.toPath())) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, path
-					+ " is not a valid path");
+			throw new DemyoException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, path + " is not a valid path");
 		}
 
 		// Create a new image with the right attributes

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
-import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.model.Image;
 import org.demyo.service.IImageService;
 import org.demyo.service.IModelService;
@@ -139,9 +138,10 @@ public class ImagesController extends AbstractModelController<Image> {
 	 * @param upload The content of the submitted form.
 	 * @param model The model.
 	 * @return The view name
+	 * @throws DemyoException In case of error during upload.
 	 */
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uploadFile(@ModelAttribute("imageUpload") FileUpload upload, Model model) {
+	public String uploadFile(@ModelAttribute("imageUpload") FileUpload upload, Model model) throws DemyoException {
 		SystemConfiguration config = SystemConfiguration.getInstance();
 		List<Long> addedImages = new ArrayList<>(upload.getUploadedFiles().size());
 		for (MultipartFile file : upload.getUploadedFiles()) {
@@ -154,7 +154,7 @@ public class ImagesController extends AbstractModelController<Image> {
 			try {
 				file.transferTo(temp);
 			} catch (IllegalStateException | IOException e) {
-				throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_UPLOAD_ERROR, e);
+				throw new DemyoException(DemyoErrorCode.IMAGE_UPLOAD_ERROR, e);
 			}
 			addedImages.add(imageService.uploadImage(file.getOriginalFilename(), temp));
 		}
@@ -181,8 +181,16 @@ public class ImagesController extends AbstractModelController<Image> {
 		return "images/detect";
 	}
 
+	/**
+	 * Adds the specified detected images.
+	 * 
+	 * @param request The HTTP request
+	 * @param model The model
+	 * @return The view name
+	 * @throws DemyoException In case of error while adding the specified images
+	 */
 	@RequestMapping(value = "/detect", method = RequestMethod.POST)
-	public String addDetectedImages(HttpServletRequest request, Model model) {
+	public String addDetectedImages(HttpServletRequest request, Model model) throws DemyoException {
 		String[] paths = request.getParameterValues("paths");
 		List<Long> addedImages = new ArrayList<>(paths.length);
 		if (LOGGER.isDebugEnabled()) {

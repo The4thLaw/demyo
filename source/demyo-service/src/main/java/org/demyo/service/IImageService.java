@@ -45,8 +45,9 @@ public interface IImageService extends IModelService<Image> {
 	 * @param originalFileName The name of the uploaded image.
 	 * @param imageFile The file stored on disk, temporarily.
 	 * @return The created or recovered image identifier.
+	 * @throws DemyoException In case of error during file upload.
 	 */
-	long uploadImage(String originalFileName, File imageFile);
+	long uploadImage(String originalFileName, File imageFile) throws DemyoException;
 
 	/**
 	 * Finds the list of all images that are currently on the disk, but not registered in Demyo.
@@ -60,7 +61,8 @@ public interface IImageService extends IModelService<Image> {
 	 * 
 	 * @param path The image to add.
 	 * @return The created image identifier.
+	 * @throws DemyoException In case of error during addition of the specified image.
 	 */
-	long addExistingImage(String path);
+	long addExistingImage(String path) throws DemyoException;
 
 }
