@@ -34,7 +34,9 @@ import org.hibernate.validator.constraints.URL;
 		@NamedEntityGraph(name = "Author.forView", attributeNodes = { @NamedAttributeNode("portrait"),
 				@NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
 				@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
-				@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album") },
+				@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album"),
+				@NamedAttributeNode(value = "albumsAsInker", subgraph = "Author.Album"),
+				@NamedAttributeNode(value = "albumsAsTranslator", subgraph = "Author.Album") },
 				subgraphs = { @NamedSubgraph(name = "Author.Album",
 						attributeNodes = { @NamedAttributeNode("series") }) }) })
 public class Author extends AbstractModel {
@@ -76,9 +78,36 @@ public class Author extends AbstractModel {
 	@SortComparator(AlbumAndSeriesComparator.class)
 	private SortedSet<Album> albumsAsColorist;
 
+	/** The {@link Album}s that this Author inked. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "inkers")
+	@SortComparator(AlbumAndSeriesComparator.class)
+	private SortedSet<Album> albumsAsInker;
+
+	/** The {@link Album}s that this Author translated. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "translators")
+	@SortComparator(AlbumAndSeriesComparator.class)
+	private SortedSet<Album> albumsAsTranslator;
+
 	@Override
 	public String getIdentifyingName() {
 		return getFullName();
+	}
+
+	/**
+	 * Returns the "full" author name, composed of his first name, last name and nickname.
+	 * 
+	 * @return The full name.
+	 */
+	public String getFullName() {
+		StringBuilder sb = new StringBuilder();
+		if (!StringUtils.isEmpty(firstName)) {
+			sb.append(firstName).append(' ');
+		}
+		if (!StringUtils.isEmpty(nickname)) {
+			sb.append("'").append(nickname).append("' ");
+		}
+		sb.append(name);
+		return sb.toString().trim();
 	}
 
 	/**
@@ -190,43 +219,92 @@ public class Author extends AbstractModel {
 	}
 
 	/**
-	 * Returns the "full" author name, composed of his first name, last name and nickname.
+	 * Gets the {@link Album}s that this Author wrote.
 	 * 
-	 * @return The full name.
+	 * @return the {@link Album}s that this Author wrote
 	 */
-	public String getFullName() {
-		StringBuilder sb = new StringBuilder();
-		if (!StringUtils.isEmpty(firstName)) {
-			sb.append(firstName).append(' ');
-		}
-		if (!StringUtils.isEmpty(nickname)) {
-			sb.append("'").append(nickname).append("' ");
-		}
-		sb.append(name);
-		return sb.toString().trim();
-	}
-
 	public SortedSet<Album> getAlbumsAsWriter() {
 		return albumsAsWriter;
 	}
 
+	/**
+	 * Sets the {@link Album}s that this Author wrote.
+	 * 
+	 * @param albumsAsWriter the new {@link Album}s that this Author wrote
+	 */
 	public void setAlbumsAsWriter(SortedSet<Album> albumsAsWriter) {
 		this.albumsAsWriter = albumsAsWriter;
 	}
 
+	/**
+	 * Gets the {@link Album}s that this Author drew.
+	 * 
+	 * @return the {@link Album}s that this Author drew
+	 */
 	public SortedSet<Album> getAlbumsAsArtist() {
 		return albumsAsArtist;
 	}
 
+	/**
+	 * Sets the {@link Album}s that this Author drew.
+	 * 
+	 * @param albumsAsArtist the new {@link Album}s that this Author drew
+	 */
 	public void setAlbumsAsArtist(SortedSet<Album> albumsAsArtist) {
 		this.albumsAsArtist = albumsAsArtist;
 	}
 
+	/**
+	 * Gets the {@link Album}s that this Author colored.
+	 * 
+	 * @return the {@link Album}s that this Author colored
+	 */
 	public SortedSet<Album> getAlbumsAsColorist() {
 		return albumsAsColorist;
 	}
 
+	/**
+	 * Sets the {@link Album}s that this Author colored.
+	 * 
+	 * @param albumsAsColorist the new {@link Album}s that this Author colored
+	 */
 	public void setAlbumsAsColorist(SortedSet<Album> albumsAsColorist) {
 		this.albumsAsColorist = albumsAsColorist;
+	}
+
+	/**
+	 * Gets the {@link Album}s that this Author inked.
+	 * 
+	 * @return the {@link Album}s that this Author inked
+	 */
+	public SortedSet<Album> getAlbumsAsInker() {
+		return albumsAsInker;
+	}
+
+	/**
+	 * Sets the {@link Album}s that this Author inked.
+	 * 
+	 * @param albumsAsInker the new {@link Album}s that this Author inked
+	 */
+	public void setAlbumsAsInker(SortedSet<Album> albumsAsInker) {
+		this.albumsAsInker = albumsAsInker;
+	}
+
+	/**
+	 * Gets the {@link Album}s that this Author translated.
+	 * 
+	 * @return the {@link Album}s that this Author translated
+	 */
+	public SortedSet<Album> getAlbumsAsTranslator() {
+		return albumsAsTranslator;
+	}
+
+	/**
+	 * Sets the {@link Album}s that this Author translated.
+	 * 
+	 * @param albumsAsTranslator the new {@link Album}s that this Author translated
+	 */
+	public void setAlbumsAsTranslator(SortedSet<Album> albumsAsTranslator) {
+		this.albumsAsTranslator = albumsAsTranslator;
 	}
 }

@@ -42,3 +42,13 @@ $quickTasks.add({
 	<h4 class="mdl-typography--subhead">#_('page.Author.works.asColorist')</h4>
 	#textCardListAlbums($author.albumsAsColorist false)
 #end
+
+#if (!$author.albumsAsInker.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Author.works.asInker')</h4>
+	#textCardListAlbums($author.albumsAsInker false)
+#end
+
+#if (!$author.albumsAsTranslator.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Author.works.asTranslator')</h4>
+	#textCardListAlbums($author.albumsAsTranslator false)
+#end

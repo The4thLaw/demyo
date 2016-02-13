@@ -53,6 +53,12 @@
 	#@mdlGridCell([4,0,0])
 		#inputSelectMultiple('field.Album.colorists', 'album.colorists', $authors)
 	#end
+	#@mdlGridCell([4,0,0])
+		#inputSelectMultiple('field.Album.inkers', 'album.inkers', $authors)
+	#end
+	#@mdlGridCell([4,0,0])
+		#inputSelectMultiple('field.Album.translators', 'album.translators', $authors)
+	#end
 </div>
 
 <div class="mdl-grid dem-field-set">

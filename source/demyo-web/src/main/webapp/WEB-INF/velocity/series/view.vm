@@ -56,11 +56,14 @@ $quickTasks.add({
 			#end
 		#end
 	#end
-	#set ($cond = !($series.albumWriters.empty && $series.albumArtists.empty && $series.albumColorists.empty))
+	#set ($cond = !($series.albumWriters.empty && $series.albumArtists.empty && $series.albumColorists.empty
+					&& $series.albumInkers.empty && $series.albumTranslators.empty))
 	#@mdlGridCellCond([6,4,4], $cond)
 		#entityFieldCsvList('field.Series.albumWriters', $series.albumWriters, '/authors/view/')
 		#entityFieldCsvList('field.Series.albumArtists', $series.albumArtists, '/authors/view/')
 		#entityFieldCsvList('field.Series.albumColorists', $series.albumColorists, '/authors/view/')
+		#entityFieldCsvList('field.Series.albumInkers', $series.albumInkers, '/authors/view/')
+		#entityFieldCsvList('field.Series.albumTranslators', $series.albumTranslators, '/authors/view/')
 	#end
 	#set ($cond = !($series.albumTags.empty && $series.relatedSeries.empty))
 	#@mdlGridCellCond([6,4,4], $cond)

@@ -36,7 +36,8 @@ import org.hibernate.validator.constraints.NotBlank;
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes = { @NamedAttributeNode("series"),
 		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover"),
 		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
-		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("images") })
+		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
+		@NamedAttributeNode("translators"), @NamedAttributeNode("images") })
 // TODO: prices
 // TODO: loans
 public class Album extends AbstractModel {
@@ -174,6 +175,20 @@ public class Album extends AbstractModel {
 			inverseJoinColumns = @JoinColumn(name = "colorist_id"))
 	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> colorists;
+
+	/** The {@link Author}s who inked this Album. */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "albums_inkers", joinColumns = @JoinColumn(name = "album_id"),
+			inverseJoinColumns = @JoinColumn(name = "inker_id"))
+	@SortComparator(AuthorComparator.class)
+	private SortedSet<Author> inkers;
+
+	/** The {@link Author}s who translated this Album. */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "albums_translators", joinColumns = @JoinColumn(name = "album_id"),
+			inverseJoinColumns = @JoinColumn(name = "translator_id"))
+	@SortComparator(AuthorComparator.class)
+	private SortedSet<Author> translators;
 
 	/** The {@link Image}s related to this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -639,6 +654,42 @@ public class Album extends AbstractModel {
 	 */
 	public void setColorists(SortedSet<Author> colorists) {
 		this.colorists = colorists;
+	}
+
+	/**
+	 * Gets the {@link Author}s who inked this Album.
+	 * 
+	 * @return the {@link Author}s who inked this Album
+	 */
+	public SortedSet<Author> getInkers() {
+		return inkers;
+	}
+
+	/**
+	 * Sets the {@link Author}s who inked this Album.
+	 * 
+	 * @param inkers the new {@link Author}s who inked this Album
+	 */
+	public void setInkers(SortedSet<Author> inkers) {
+		this.inkers = inkers;
+	}
+
+	/**
+	 * Gets the {@link Author}s who translated this Album.
+	 * 
+	 * @return the {@link Author}s who translated this Album
+	 */
+	public SortedSet<Author> getTranslators() {
+		return translators;
+	}
+
+	/**
+	 * Sets the {@link Author}s who translated this Album.
+	 * 
+	 * @param translators the new {@link Author}s who translated this Album
+	 */
+	public void setTranslators(SortedSet<Author> translators) {
+		this.translators = translators;
 	}
 
 	/**

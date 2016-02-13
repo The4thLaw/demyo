@@ -37,6 +37,7 @@ import org.hibernate.validator.constraints.URL;
 				@NamedAttributeNode(value = "albums", subgraph = "Series.Album") }, subgraphs = { @NamedSubgraph(
 				name = "Series.Album", attributeNodes = { @NamedAttributeNode("writers"),
 						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
+						@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"),
 						@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 						@NamedAttributeNode("tags"), @NamedAttributeNode("cover"), }) }),
 		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
@@ -131,6 +132,36 @@ public class Series extends AbstractModel {
 
 		for (Album a : albums) {
 			albumAuthors.addAll(a.getColorists());
+		}
+
+		return albumAuthors;
+	}
+
+	/**
+	 * Returns all the inkers who participated to the albums of this series.
+	 * 
+	 * @return the {@link Author} set.
+	 */
+	public SortedSet<Author> getAlbumInkers() {
+		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
+
+		for (Album a : albums) {
+			albumAuthors.addAll(a.getInkers());
+		}
+
+		return albumAuthors;
+	}
+
+	/**
+	 * Returns all the translators who participated to the albums of this series.
+	 * 
+	 * @return the {@link Author} set.
+	 */
+	public SortedSet<Author> getAlbumTranslators() {
+		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
+
+		for (Album a : albums) {
+			albumAuthors.addAll(a.getTranslators());
 		}
 
 		return albumAuthors;

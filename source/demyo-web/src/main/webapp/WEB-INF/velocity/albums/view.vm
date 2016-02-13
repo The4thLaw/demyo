@@ -57,6 +57,14 @@ $quickTasks.add({
 	#@mdlGridCellCond([4,0,0], $cond)
 		#entityFieldCsvList('field.Album.colorists', $album.colorists, '/authors/view/')
 	#end
+	#set ($cond = !($album.inkers.empty))
+	#@mdlGridCellCond([4,0,0], $cond)
+		#entityFieldCsvList('field.Album.inkers', $album.inkers, '/authors/view/')
+	#end
+	#set ($cond = !($album.translators.empty))
+	#@mdlGridCellCond([4,0,0], $cond)
+		#entityFieldCsvList('field.Album.translators', $album.translators, '/authors/view/')
+	#end
 </div>
 #end
 

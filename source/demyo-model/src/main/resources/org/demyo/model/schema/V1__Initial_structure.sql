@@ -132,6 +132,20 @@ CREATE TABLE albums_colorists (
 	CONSTRAINT fk_albums_colorists_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_colorists_author FOREIGN KEY (colorist_id) REFERENCES authors(id) ON DELETE CASCADE
 );
+CREATE TABLE albums_inkers (
+	album_id INT UNSIGNED NOT NULL,
+	inker_id INT UNSIGNED NOT NULL,
+	PRIMARY KEY(album_id, inker_id),
+	CONSTRAINT fk_albums_inkers_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
+	CONSTRAINT fk_albums_inkers_author FOREIGN KEY (inker_id) REFERENCES authors(id) ON DELETE CASCADE
+);
+CREATE TABLE albums_translators (
+	album_id INT UNSIGNED NOT NULL,
+	translator_id INT UNSIGNED NOT NULL,
+	PRIMARY KEY(album_id, translator_id),
+	CONSTRAINT fk_albums_translators_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
+	CONSTRAINT fk_albums_translators_author FOREIGN KEY (translator_id) REFERENCES authors(id) ON DELETE CASCADE
+);
 
 CREATE TABLE tags (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

@@ -103,6 +103,10 @@ public class Demyo2Exporter implements IExporter {
 									.getRawRecords("ALBUMS_ARTISTS")),
 							new ManyToManyRelation("colorists", "colorist", "ALBUM_ID", "COLORIST_ID", rawSqlDao
 									.getRawRecords("ALBUMS_COLORISTS")),
+							new ManyToManyRelation("inkers", "inker", "ALBUM_ID", "INKER_ID", rawSqlDao
+									.getRawRecords("ALBUMS_INKERS")),
+							new ManyToManyRelation("translators", "translator", "ALBUM_ID", "TRANSLATOR_ID",
+									rawSqlDao.getRawRecords("ALBUMS_TRANSLATORS")),
 							new ManyToManyRelation("album-tags", "album-tag", "ALBUM_ID", "TAG_ID", rawSqlDao
 									.getRawRecords("ALBUMS_TAGS")),
 							new ManyToManyRelation("album-images", "album-image", "ALBUM_ID", "IMAGE_ID",

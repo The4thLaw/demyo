@@ -90,6 +90,8 @@ public class AlbumController extends AbstractModelController<Album> {
 		registerCollectionEditor(binder, SortedSet.class, "writers", Author.class, authComp);
 		registerCollectionEditor(binder, SortedSet.class, "artists", Author.class, authComp);
 		registerCollectionEditor(binder, SortedSet.class, "colorists", Author.class, authComp);
+		registerCollectionEditor(binder, SortedSet.class, "inkers", Author.class, authComp);
+		registerCollectionEditor(binder, SortedSet.class, "translators", Author.class, authComp);
 		registerCollectionEditor(binder, SortedSet.class, "tags", Tag.class, new IdentifyingNameComparator());
 		registerCollectionEditor(binder, Set.class, "images", Image.class);
 	}
