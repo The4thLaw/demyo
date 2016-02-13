@@ -98,7 +98,7 @@ $quickTasks.prepare($javascript)
 				<div class="dem-app-menu__section" id="menu-section-albums">
 					#navMenuItem('menu-list-albums', 'albums/', 'menu.albums.browse', 'speech_bubble')
 					## TODO: use tabs to go to cover list at albums/covers/ _('menu.albums.browse_covers')
-					#navMenuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', '')
+					##navMenuItem('menu-lent-albums', 'albums/loans/', 'menu.albums.loans', '')
 					#navMenuItem('menu-add-album', 'albums/add', 'menu.albums.add', 'speech_bubble+add')
 					#navMenuItem('menu-list-series', 'series/', 'menu.series.browse', 'books')
 					#navMenuItem('menu-add-series', 'series/add', 'menu.series.add', 'books+add')
