@@ -1,4 +1,4 @@
-# Demyo [![GitHub version](https://badge.fury.io/gh/the4thlaw%2Fdemyo.svg)](https://badge.fury.io/gh/the4thlaw%2Fdemyo)
+# Demyo [![GitHub version](https://badge.fury.io/gh/the4thlaw%2Fdemyo.svg)](https://badge.fury.io/gh/the4thlaw%2Fdemyo) ![License](https://img.shields.io/badge/license-AGPL%20v3-blue.svg)
 ## Description
 Demyo is a Comic Manager intented for local usage trough a Web interface.
 
