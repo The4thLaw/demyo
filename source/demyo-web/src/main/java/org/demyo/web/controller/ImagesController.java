@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.HandlerMapping;
 
 /**
  * Controller for {@link Image} management.
@@ -103,9 +102,7 @@ public class ImagesController extends AbstractModelController<Image> {
 	@RequestMapping(value = "/thumbnail/{id}/**", method = RequestMethod.GET)
 	public void getThumbnailImage(@PathVariable("id") long id, HttpServletRequest request,
 			HttpServletResponse response) throws DemyoException, IOException {
-		String imagePath = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-		imagePath = imagePath.substring(("/images/thumbnail/" + id + "/").length());
-		File imageFile = imageService.getImageThumbnail(id, imagePath);
+		File imageFile = imageService.getImageThumbnail(id);
 		download(imageFile, request, response);
 	}
 

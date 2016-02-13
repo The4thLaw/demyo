@@ -94,7 +94,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public File getImageThumbnail(long id, String path) throws DemyoException {
+	public File getImageThumbnail(long id) throws DemyoException {
 		// Check cache (two possible formats)
 		File pngThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".png");
 		File jpgThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".jpg");
@@ -106,7 +106,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		// No cache hit, generate thumbnail
-		File image = getImageFile(path);
+		File image = getImageFile(getByIdForEdition(id));
 		long time = System.currentTimeMillis();
 		BufferedImage buffImage;
 		try {
