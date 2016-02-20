@@ -1,0 +1,2 @@
+ALTER TABLE albums
+	ADD COLUMN location VARCHAR(255) NULL;

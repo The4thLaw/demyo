@@ -115,6 +115,10 @@ public class Album extends AbstractModel {
 	@Column(name = "wishlist")
 	private boolean wishlist;
 
+	/** The physical location of this Album. */
+	@Column(name = "location")
+	private String location;
+
 	/** The {@link Binding} for this Album. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "binding_id")
@@ -456,6 +460,24 @@ public class Album extends AbstractModel {
 	 */
 	public void setWishlist(boolean wishlist) {
 		this.wishlist = wishlist;
+	}
+
+	/**
+	 * Gets the physical location of this Album.
+	 * 
+	 * @return the physical location of this Album
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * Sets the physical location of this Album.
+	 * 
+	 * @param location the new physical location of this Album
+	 */
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	/**
