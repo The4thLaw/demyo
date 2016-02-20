@@ -47,7 +47,11 @@ import org.springframework.data.domain.Sort;
 
 		// Set all counts one by one
 		for (Tag t : tags) {
-			t.setUsageCount(occurrences.get(t.getId()));
+			Integer usageCount = occurrences.get(t.getId());
+			if (usageCount == null) {
+				usageCount = 0;
+			}
+			t.setUsageCount(usageCount);
 		}
 
 		return tags;
