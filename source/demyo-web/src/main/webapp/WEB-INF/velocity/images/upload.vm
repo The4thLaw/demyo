@@ -17,7 +17,7 @@
 
 #@form()
 
-#inputFile('field.Image.multiUpload', 'imageUpload.uploadedFiles', {"multiple":true})
+#inputFile('field.Image.multiUpload', 'imageUpload.uploadedFiles', {'multiple':true, 'accept': '.png,.jpg,.jpeg,.gif'})
 #formButtons('button.image.upload', 'button.reset')
 
 #end

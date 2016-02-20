@@ -155,7 +155,7 @@
 	#if(!$!options.multiple)#set($dummy = $options.put("multiple", false))#end
 
 	#@formFieldOld($labelId, $path)
-		<input type="file" id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end #if($options.multiple)multiple#end />
+		<input type="file" id="$fieldId" name="$status.expression"#if($hasErrors) class="error"#end #if($options.multiple)multiple#end #if($options.accept)accept="$options.accept"#end />
 	#end
 #end
 
