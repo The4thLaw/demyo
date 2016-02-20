@@ -260,4 +260,14 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		return unknownFiles;
 	}
+
+	@Override
+	public void clearCachedThumbnails() {
+		LOGGER.debug("Clearing thumbnail cache");
+		File thumbnailDirectory = SystemConfiguration.getInstance().getThumbnailDirectory();
+		DIOUtils.deleteDirectory(thumbnailDirectory);
+		if (!thumbnailDirectory.mkdir()) {
+			LOGGER.warn("Failed to create directory {}", thumbnailDirectory);
+		}
+	}
 }

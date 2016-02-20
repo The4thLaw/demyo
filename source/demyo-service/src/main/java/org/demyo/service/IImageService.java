@@ -65,4 +65,9 @@ public interface IImageService extends IModelService<Image> {
 	 */
 	long addExistingImage(String path) throws DemyoException;
 
+	/**
+	 * Clears the thumbnail cache.
+	 */
+	void clearCachedThumbnails();
+
 }

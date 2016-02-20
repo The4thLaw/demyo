@@ -19,6 +19,7 @@ import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
+import org.demyo.service.IImageService;
 import org.demyo.service.IImportService;
 import org.demyo.utils.io.DIOUtils;
 import org.demyo.utils.io.ZipUtils;
@@ -44,6 +45,8 @@ public class Demyo2Importer implements IImporter {
 
 	@Autowired
 	private IImportService importService;
+	@Autowired
+	private IImageService imageService;
 	@Autowired
 	private IRawSQLDao rawSqlDao;
 
@@ -152,6 +155,8 @@ public class Demyo2Importer implements IImporter {
 
 		LOGGER.debug("Removing backup copy");
 		DIOUtils.deleteDirectory(backupCopyDestination);
+
+		imageService.clearCachedThumbnails();
 	}
 
 	/**
