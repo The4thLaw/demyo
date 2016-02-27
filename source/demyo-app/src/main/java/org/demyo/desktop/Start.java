@@ -2,6 +2,7 @@ package org.demyo.desktop;
 
 import java.awt.AWTException;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -37,7 +39,28 @@ import org.slf4j.LoggerFactory;
 public class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
+		try {
+			startDemyo(args);
+		} catch (Exception e) {
+			LOGGER.error("Failed to start Demyo", e);
+			if (!GraphicsEnvironment.isHeadless()) {
+				JOptionPane.showMessageDialog(null,
+						"Failed to start Demyo. More information may be available in the logs.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+
+		LOGGER.debug("Main method exiting");
+		// This should not be needed, but the EDT hangs on.
+		System.exit(0);
+	}
+
+	private static void startDemyo(String[] args) throws Exception {
+		if (!GraphicsEnvironment.isHeadless()) {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+
 		// Try to detect the application directory, based on the app JAR (the only reliable one since others may come
 		// from the exploded WAR).
 		if (System.getProperty("demyo.applicationDirectory") == null) {
@@ -79,14 +102,13 @@ public class Start {
 		WebAppContext webapp = new WebAppContext();
 		webapp.setContextPath("/");
 		webapp.setWar(SystemConfiguration.getInstance().getWarPath());
+		webapp.setThrowUnavailableOnStartupException(true);
 		new org.eclipse.jetty.plus.jndi.Resource("jdbc/demyoDataSource", ds);
 		server.setHandler(webapp);
 
 		server.start();
 
-		if (SystemTray.isSupported()) {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
+		if (!GraphicsEnvironment.isHeadless() && SystemTray.isSupported()) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -100,9 +122,6 @@ public class Start {
 
 		LOGGER.info("Demyo is now ready");
 		server.join();
-		LOGGER.debug("Main method exiting");
-		// This should not be needed, but the EDT hangs on.
-		System.exit(0);
 	}
 
 	private static void createAndShowGUI(final Server server) {
