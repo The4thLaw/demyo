@@ -1,6 +1,7 @@
 package org.demyo.desktop;
 
 import java.awt.AWTException;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.MenuItem;
@@ -14,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 
@@ -108,7 +111,7 @@ public class Start {
 
 		server.start();
 
-		if (!GraphicsEnvironment.isHeadless() && SystemTray.isSupported()) {
+		if (!GraphicsEnvironment.isHeadless()) {
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -125,8 +128,41 @@ public class Start {
 	}
 
 	private static void createAndShowGUI(final Server server) {
+		if (SystemTray.isSupported()) {
+			createSysTray(server);
+		}
+
+		if (Desktop.isDesktopSupported() && SystemConfiguration.getInstance().isAutoStartWebBrowser()) {
+			startBrowser();
+		}
+	}
+
+	private static void startBrowser() {
+		try {
+			Desktop.getDesktop().browse(
+					new URI("http://" + SystemConfiguration.getInstance().getHttpAddress() + ":"
+							+ SystemConfiguration.getInstance().getHttpPort()));
+		} catch (IOException | URISyntaxException e) {
+			LOGGER.warn("Failed to start the browser automatically", e);
+		}
+	}
+
+	private static void createSysTray(final Server server) {
 		final PopupMenu popup = new PopupMenu();
-		// TODO: localise this
+
+		// TODO: localise these. Use a ResourceBundle manually (store it in the demyo-app JAR)
+
+		if (Desktop.isDesktopSupported()) {
+			MenuItem browserItem = new MenuItem("Start Web browser");
+			browserItem.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					startBrowser();
+				}
+			});
+			popup.add(browserItem);
+		}
+
 		MenuItem exitItem = new MenuItem("Exit Demyo");
 		exitItem.addActionListener(new ActionListener() {
 			@Override

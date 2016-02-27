@@ -55,6 +55,8 @@ public final class SystemConfiguration {
 	private final File tempDirectory;
 	/** The directory to store image thumbnails. */
 	private final File thumbnailDirectory;
+	/** The flag indicating whether to start the Web browser automatically */
+	private final boolean autoStartWebBrowser;
 
 	/**
 	 * Instantiates a new system configuration.
@@ -97,6 +99,7 @@ public final class SystemConfiguration {
 		portable = config.getBoolean("portable");
 		httpAddress = config.getString("http.address");
 		httpPort = config.getInt("http.port");
+		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
 
 		// Prepare all paths
 		if (portable) {
@@ -327,5 +330,14 @@ public final class SystemConfiguration {
 	 */
 	public File getThumbnailDirectory() {
 		return thumbnailDirectory;
+	}
+
+	/**
+	 * Checks if is the flag indicating whether to start the Web browser automatically.
+	 * 
+	 * @return the flag indicating whether to start the Web browser automatically
+	 */
+	public boolean isAutoStartWebBrowser() {
+		return autoStartWebBrowser;
 	}
 }
