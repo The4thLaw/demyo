@@ -9,6 +9,8 @@ import org.demyo.model.Series;
  * A {@link Comparator} allowing to sort {@link Album}s based on their order in a specific {@link Series}.
  */
 public class AlbumComparator extends AbstractModelComparator<Album> {
+	private static final long serialVersionUID = 4093459448029858856L;
+
 	@Override
 	public int compare(Album a1, Album a2) {
 		int comparison;

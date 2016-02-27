@@ -18,9 +18,6 @@ public class DemyoException extends Exception implements IDemyoException {
 	 */
 	public DemyoException(DemyoErrorCode code, String... details) {
 		super(toMessage(code, details));
-		if (code == null) {
-			throw new IllegalArgumentException("Cannot create an exception with a null code");
-		}
 		this.code = code;
 	}
 
@@ -33,9 +30,6 @@ public class DemyoException extends Exception implements IDemyoException {
 	 */
 	public DemyoException(DemyoErrorCode code, Throwable cause, String... details) {
 		super(toMessage(code, details), cause);
-		if (code == null) {
-			throw new IllegalArgumentException("Cannot create an exception with a null code");
-		}
 		this.code = code;
 	}
 
@@ -47,6 +41,9 @@ public class DemyoException extends Exception implements IDemyoException {
 	 * @return An error message.
 	 */
 	/*package*/static String toMessage(DemyoErrorCode code, String... details) {
+		if (code == null) {
+			throw new IllegalArgumentException("Cannot create an exception with a null code");
+		}
 		if (details == null || details.length < 1) {
 			return code.toString();
 		}

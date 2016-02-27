@@ -1,5 +1,6 @@
 package org.demyo.model.util;
 
+import java.io.Serializable;
 import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
@@ -11,7 +12,9 @@ import org.demyo.model.IModel;
  * 
  * @param <M> The model type.
  */
-public abstract class AbstractModelComparator<M extends IModel> implements Comparator<M> {
+public abstract class AbstractModelComparator<M extends IModel> implements Comparator<M>, Serializable {
+	private static final long serialVersionUID = 6870681552272458176L;
+
 	/**
 	 * Performs a nullsafe comparison (according to their compare methods) of the provided elements. A
 	 * {@literal null} element is considered as smaller than a non-{@literal null} one.

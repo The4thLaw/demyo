@@ -16,9 +16,6 @@ public class DemyoRuntimeException extends RuntimeException implements IDemyoExc
 	 */
 	public DemyoRuntimeException(DemyoErrorCode code, String... details) {
 		super(DemyoException.toMessage(code, details));
-		if (code == null) {
-			throw new IllegalArgumentException("Cannot create an exception with a null code");
-		}
 		this.code = code;
 	}
 
@@ -31,9 +28,6 @@ public class DemyoRuntimeException extends RuntimeException implements IDemyoExc
 	 */
 	public DemyoRuntimeException(DemyoErrorCode code, Throwable cause, String... details) {
 		super(DemyoException.toMessage(code, details), cause);
-		if (code == null) {
-			throw new IllegalArgumentException("Cannot create an exception with a null code");
-		}
 		this.code = code;
 	}
 

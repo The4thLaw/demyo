@@ -8,6 +8,8 @@ import org.demyo.model.Author;
  * A {@link Comparator} allowing to sort {@link Author}s based on their name.
  */
 public class AuthorComparator extends AbstractModelComparator<Author> {
+	private static final long serialVersionUID = -3559656322037140067L;
+
 	@Override
 	public int compare(Author a1, Author a2) {
 		int comparison;

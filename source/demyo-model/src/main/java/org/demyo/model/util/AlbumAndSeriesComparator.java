@@ -7,6 +7,8 @@ import org.demyo.model.Series;
  * An {@link AlbumComparator} that also considers series.
  */
 public class AlbumAndSeriesComparator extends AlbumComparator {
+	private static final long serialVersionUID = -7116259624751687861L;
+
 	@Override
 	public int compare(Album a1, Album a2) {
 		Series s1 = a1.getSeries();
