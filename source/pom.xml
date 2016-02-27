@@ -266,6 +266,21 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.3</version>
+				<configuration>
+					<effort>max</effort>
+					<!-- Set to low to get issues with low confidence, medium to filter them out -->
+					<threshold>medium</threshold>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 	
 	<profiles>
 		<profile>
