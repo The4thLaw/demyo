@@ -33,6 +33,7 @@
 				<value>org/demyo/i18n/fields</value>
 				<value>org/demyo/i18n/menu</value>
 				<value>org/demyo/i18n/pages</value>
+				<value>org/demyo/i18n/javascript</value>
 				<value>org/demyo/i18n/special</value>
 				<value>org/demyo/i18n/widgets</value>
 			</list>

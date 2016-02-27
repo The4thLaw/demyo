@@ -3,6 +3,8 @@ var demyo = {};
 (function($) {
 	'use strict';
 	
+	demyo.l10n = new Array();
+	
 	demyo.maxDependenciesPerCard = 4;
 
 	demyo.registerMenu = function () {

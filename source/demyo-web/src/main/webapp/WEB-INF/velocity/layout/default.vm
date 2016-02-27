@@ -19,6 +19,12 @@ $quickTasks.prepare($javascript)
 #foreach($source in $javascript.scriptSources)
 		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
 #end
+		<script type="text/javascript">
+## TODO: do this in a nicer way
+demyo.l10n['quickTasks.confirm.title'] = '#_('javascript.quickTasks.confirm.title')';
+demyo.l10n['quickTasks.confirm.ok.label'] = '#_('javascript.quickTasks.confirm.ok.label')';
+demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confirm.cancel.label')';
+		</script>
 
 	</head>
 	<body><div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
