@@ -92,9 +92,6 @@ $quickTasks.add({
 			#entityFieldDate('field.Album.acquisitionDate', $album.acquisitionDate)
 		#end
 	#end
-	#@mdlGridCellCond([4,0,0], $album.location)
-		#entityFieldText('field.Album.location' $album.location)
-	#end
 </div>
 #end
 
@@ -115,6 +112,9 @@ $quickTasks.add({
 	#end
 	#@mdlGridCellCond([4,0,0], $album.pages)
 		#entityFieldText('field.Album.pages' $album.pages)
+	#end
+	#@mdlGridCellCond([4,0,0], $album.location)
+		#entityFieldText('field.Album.location' $album.location)
 	#end
 </div>
 

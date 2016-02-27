@@ -77,9 +77,6 @@
 	#@mdlGridCell([4,0,0])
 		#inputCheckbox('field.Album.wishlist', 'album.wishlist')
 	#end
-	#@mdlGridCell([4,0,0])
-		#inputText('field.Album.location', 'album.location')
-	#end
 </div>
 
 <div class="mdl-grid dem-field-set">
@@ -95,6 +92,9 @@
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputInteger('field.Album.pages', 'album.pages')
+	#end
+	#@mdlGridCell([4,0,0])
+		#inputText('field.Album.location', 'album.location')
 	#end
 </div>
 
