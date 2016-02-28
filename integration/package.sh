@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="2.0.0-alpha3"
+version="2.0.0-alpha4"
 
 rm -f demyo-v*.tar.bz2 Demyo*.exe
 
