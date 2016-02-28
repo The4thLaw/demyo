@@ -90,7 +90,7 @@ public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 		/**
 		 * Sets the icon.
 		 * 
-		 * @param iconSpec the new icon
+		 * @param icon The icon specification.
 		 */
 		public void setIcon(String icon) {
 			this.icon = icon;

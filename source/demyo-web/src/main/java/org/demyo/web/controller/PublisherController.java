@@ -32,7 +32,7 @@ public class PublisherController extends AbstractModelController<Publisher> {
 	@Autowired
 	private IImageService imageService;
 	@Autowired
-	ICollectionService collectionService;
+	private ICollectionService collectionService;
 
 	/**
 	 * Default constructor.

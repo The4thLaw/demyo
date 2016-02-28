@@ -43,7 +43,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Autowired
 	private IConfigurationService configurationService;
 	@Autowired
-	ISeriesRepo seriesRepo;
+	private ISeriesRepo seriesRepo;
 
 	/**
 	 * Default constructor.

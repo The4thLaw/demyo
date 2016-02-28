@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class Demyo2Exporter implements IExporter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Exporter.class);
 
-	private static ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
+	private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
 		@Override
 		protected DateFormat initialValue() {
 			return new SimpleDateFormat("yyyy-MM-dd");

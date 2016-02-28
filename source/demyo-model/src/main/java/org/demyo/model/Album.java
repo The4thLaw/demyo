@@ -41,7 +41,7 @@ import org.hibernate.validator.constraints.NotBlank;
 // TODO: prices
 // TODO: loans
 public class Album extends AbstractModel {
-	private static ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
+	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
 		@Override
 		protected NumberFormat initialValue() {
 			NumberFormat fmt = NumberFormat.getInstance();

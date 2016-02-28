@@ -10,17 +10,6 @@ import org.demyo.model.Image;
  * Service for management of {@link Image}s.
  */
 public interface IImageService extends IModelService<Image> {
-
-	/**
-	 * Gets the actual file for an image from the collection.
-	 * 
-	 * @param path The path to the image.
-	 * @return The image file.
-	 * @throws DemyoException In case of security or I/O error.
-	 */
-	@Deprecated
-	File getImageFile(String path) throws DemyoException;
-
 	/**
 	 * Gets the actual file for an image from the collection.
 	 * 

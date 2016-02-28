@@ -54,7 +54,7 @@ public class ExportService implements IExportService {
 	private static final String EXPORT_DIRECTORY_NAME = "exports";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExportService.class);
 
-	private static ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
+	private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
 		@Override
 		protected DateFormat initialValue() {
 			return new SimpleDateFormat("yyyy-MM-dd");

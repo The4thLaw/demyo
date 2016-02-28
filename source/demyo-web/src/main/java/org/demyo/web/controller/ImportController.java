@@ -70,6 +70,7 @@ public class ImportController extends AbstractController {
 	 * @param upload The file to import.
 	 * @param request The HTTP request.
 	 * @param response The HTTP response.
+	 * @return The view name.
 	 * @throws DemyoException If import fails.
 	 */
 	@RequestMapping(method = RequestMethod.POST)

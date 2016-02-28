@@ -32,7 +32,7 @@ public class SeriesController extends AbstractModelController<Series> {
 	@Autowired
 	private ISeriesService service;
 	@Autowired
-	IAlbumService albumService;
+	private IAlbumService albumService;
 
 	/**
 	 * Default constructor.

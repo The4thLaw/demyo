@@ -53,7 +53,7 @@ public class ImagesController extends AbstractModelController<Image> {
 		/**
 		 * Sets the uploaded files.
 		 * 
-		 * @param uploadedFile the new uploaded files
+		 * @param uploadedFiles the new uploaded files
 		 */
 		public void setUploadedFiles(List<MultipartFile> uploadedFiles) {
 			this.uploadedFiles = uploadedFiles;
