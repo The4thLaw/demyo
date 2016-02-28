@@ -31,30 +31,11 @@
 			};
 			
 			function processResults(data) {
-				var res = $(settings.resultLocation);
-				res.hide();
-				res.html(data);
-				loaded();
-
-				// Animation from https://jsfiddle.net/845x8jd5/6/
-				var cards = $('.mdl-card, h5', res);
-				cards.hide();
-				res.show();
-
-				res.slideDown(1000, function() {
-			        cards.each(function(i) {
-			            var card = $(this);
-			            card.show();
-			            card.delay(i*30).queue(function() {
-			                card.addClass('quickSearch-animate');
-			                card.dequeue();
-			            });
-			        });
-			    });
-				
-				
+				$(settings.resultLocation).html(data);
 				// Select the first result
 				$($('a:first-child', $(settings.resultLocation)).get(0)).focus();
+				// Done
+				loaded();
 			};
 			
 			function hideContent() {
