@@ -48,7 +48,13 @@ public class ApplicationConfiguration {
 	 * @param config The configuration to retrieve values from.
 	 */
 	public ApplicationConfiguration(Configuration config) {
-		language = Locale.forLanguageTag(config.getString("language"));
+		String languageCode = config.getString("language");
+		if (languageCode != null) {
+			language = Locale.forLanguageTag(languageCode);
+		} else {
+			language = Locale.getDefault();
+		}
+
 		pageSizeForText = config.getInt("paging.textPageSize");
 		pageSizeForImages = config.getInt("paging.imagePageSize");
 		pageSizeForAlbums = config.getInt("paging.albumPageSize");

@@ -136,13 +136,6 @@ SectionEnd
 Function DemyoInstallPost
 	# Store installation folder
 	WriteRegStr ${DEMYO_REG_ROOT} ${DEMYO_REG_KEY} "" $INSTDIR
-	
-	# Pre-set language in configuration
-	DetailPrint "Pre-setting language for Demyo"
-	FileOpen $0 "$INSTDIR\system.properties" a
-	FileSeek $0 0 END
-	FileWrite $0 "$\nlanguage.initial=$(CONFIG_Lang)"
-	FileClose $0
 FunctionEnd
 
 Function DemyoUpdatePre
