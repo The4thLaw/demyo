@@ -3,6 +3,7 @@ package org.demyo.common.config;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -214,7 +215,7 @@ public final class SystemConfiguration {
 
 		File temp;
 		try {
-			temp = File.createTempFile(prefix, suffix, directory);
+			temp = Files.createTempFile(directory.toPath(), prefix, suffix).toFile();
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}

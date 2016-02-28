@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 
@@ -138,29 +139,13 @@ public final class DIOUtils {
 	 * Creates a temporary directory at the specified location.
 	 * 
 	 * @param prefix The prefix string to be used in generating the file's name.
-	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which
-	 *        case the suffix <code>".tmp"</code> will be used. Note that {@code .d} will be appended in all cases.
 	 * @param directory The directory in which the file is to be created, or <code>null</code> if the default
 	 *        temporary-file directory is to be used
 	 * @return A {@link File} pointing to a temporary directory.
 	 * @throws IOException In case of error while creating the temporary directory.
 	 */
-	// TODO: This suffers from a notorious race condition, which could be used by malicious programs. However, the risk is
-	// quite low. Eventually, move to Java 7 and use java.nio.file.Files.createTempDirectory 
-	public static File createTempDirectory(String prefix, String suffix, File directory) throws IOException {
-
-		File tempFile = File.createTempFile(prefix, suffix, directory);
-		File tempDir = new File(tempFile.getParentFile(), tempFile.getName() + ".d");
-
-		if (!(tempFile.delete())) {
-			throw new IOException("Could not delete temp file: " + tempFile.getAbsolutePath());
-		}
-
-		if (!(tempDir.mkdir())) {
-			throw new IOException("Could not create temp directory: " + tempDir.getAbsolutePath());
-		}
-
-		return tempDir;
+	public static File createTempDirectory(String prefix, File directory) throws IOException {
+		return Files.createTempDirectory(directory.toPath(), prefix).toFile();
 	}
 
 	/**

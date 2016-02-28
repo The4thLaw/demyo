@@ -75,8 +75,8 @@ public class Demyo2Importer implements IImporter {
 	 * @throws IOException in case of error during extraction.
 	 */
 	protected File extractZip(File file) throws IOException {
-		File extractionDir = DIOUtils.createTempDirectory("extracted-import", null, SystemConfiguration
-				.getInstance().getTempDirectory());
+		File extractionDir = DIOUtils.createTempDirectory("extracted-import", SystemConfiguration.getInstance()
+				.getTempDirectory());
 		ZipUtils.extractZip(file, extractionDir);
 		return extractionDir;
 	}
