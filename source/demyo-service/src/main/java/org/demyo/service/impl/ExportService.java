@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ExportService implements IExportService {
 	/**
-	 * Defines the result of an export
+	 * Defines the result of an export.
 	 */
 	public static final class Output {
 		/** The {@link File} containing the data. */

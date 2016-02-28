@@ -39,7 +39,7 @@ import org.hibernate.validator.constraints.URL;
 						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
 						@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"),
 						@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-						@NamedAttributeNode("tags"), @NamedAttributeNode("cover"), }) }),
+						@NamedAttributeNode("tags"), @NamedAttributeNode("cover") }) }),
 		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
 public class Series extends AbstractModel {
 	/** The name. */
