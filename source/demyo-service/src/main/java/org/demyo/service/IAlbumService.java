@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.demyo.model.Album;
 import org.demyo.model.Series;
+import org.demyo.service.impl.IQuickSearchableService;
 
 /**
  * Service for management of {@link Album}s.
  */
-public interface IAlbumService extends IModelService<Album> {
+public interface IAlbumService extends IModelService<Album>, IQuickSearchableService<Album> {
 
 	/**
 	 * Finds a template {@link Album} for a given {@link Series}, with the aim of adding a new entry. The retrieved

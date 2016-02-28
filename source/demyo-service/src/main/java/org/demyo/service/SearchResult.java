@@ -1,0 +1,111 @@
+package org.demyo.service;
+
+import java.util.Collections;
+import java.util.List;
+
+import org.demyo.model.Album;
+import org.demyo.model.Author;
+import org.demyo.model.Collection;
+import org.demyo.model.Publisher;
+import org.demyo.model.Series;
+import org.demyo.model.Tag;
+
+/** Represents the results of a search across multiple model types. */
+public final class SearchResult {
+	/** The matching {@link Series}. */
+	private final List<Series> series;
+	/** The matching {@link Album}s. */
+	private final List<Album> albums;
+	/** The matching {@link Tag}s. */
+	private final List<Tag> tags;
+	/** The matching {@link Author}s. */
+	private final List<Author> authors;
+	/** The matching {@link Publisher}s. */
+	private final List<Publisher> publishers;
+	/** The matching {@link Collection}s. */
+	private final List<Collection> collections;
+
+	/** Creates a completely blank search result. */
+	public SearchResult() {
+		this.series = Collections.emptyList();
+		this.albums = Collections.emptyList();
+		this.tags = Collections.emptyList();
+		this.authors = Collections.emptyList();
+		this.publishers = Collections.emptyList();
+		this.collections = Collections.emptyList();
+	}
+
+	/**
+	 * Creates a search result with the provided matches.
+	 * 
+	 * @param series The matching {@link Series}.
+	 * @param albums The matching {@link Album}s.
+	 * @param tags The matching {@link Tag}s.
+	 * @param authors The matching {@link Author}s.
+	 * @param publishers The matching {@link Publisher}s.
+	 * @param collections The matching {@link Collection}s.
+	 */
+	public SearchResult(List<Series> series, List<Album> albums, List<Tag> tags, List<Author> authors,
+			List<Publisher> publishers, List<Collection> collections) {
+		this.series = series;
+		this.albums = albums;
+		this.tags = tags;
+		this.authors = authors;
+		this.publishers = publishers;
+		this.collections = collections;
+	}
+
+	/**
+	 * Gets the matching {@link Series}.
+	 * 
+	 * @return the matching {@link Series}
+	 */
+	public List<Series> getSeries() {
+		return series;
+	}
+
+	/**
+	 * Gets the matching {@link Album}s.
+	 * 
+	 * @return the matching {@link Album}s
+	 */
+	public List<Album> getAlbums() {
+		return albums;
+	}
+
+	/**
+	 * Gets the matching {@link Tag}s.
+	 * 
+	 * @return the matching {@link Tag}s
+	 */
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	/**
+	 * Gets the matching {@link Author}s.
+	 * 
+	 * @return the matching {@link Author}s
+	 */
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+	/**
+	 * Gets the matching {@link Publisher}s.
+	 * 
+	 * @return the matching {@link Publisher}s
+	 */
+	public List<Publisher> getPublishers() {
+		return publishers;
+	}
+
+	/**
+	 * Gets the matching {@link Collection}s.
+	 * 
+	 * @return the matching {@link Collection}s
+	 */
+	public List<Collection> getCollections() {
+		return collections;
+	}
+}

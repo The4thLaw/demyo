@@ -3,11 +3,12 @@ package org.demyo.service;
 import java.util.List;
 
 import org.demyo.model.Series;
+import org.demyo.service.impl.IQuickSearchableService;
 
 /**
  * Service for management of {@link Series}.
  */
-public interface ISeriesService extends IModelService<Series> {
+public interface ISeriesService extends IModelService<Series>, IQuickSearchableService<Series> {
 
 	/**
 	 * Finds all Series which are not the given one.
@@ -16,4 +17,5 @@ public interface ISeriesService extends IModelService<Series> {
 	 * @return The other Series.
 	 */
 	public List<Series> findOtherSeries(long id);
+
 }

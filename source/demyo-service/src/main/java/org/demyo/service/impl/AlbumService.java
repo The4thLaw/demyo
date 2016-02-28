@@ -3,6 +3,7 @@ package org.demyo.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IMetaSeriesRepo;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.SliceImpl;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,6 +121,12 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		List<Album> albums = repo.findBySeriesId(seriesId);
 		Collections.sort(albums, new AlbumComparator());
 		return albums;
+	}
+
+	@Async
+	@Override
+	public Future<List<Album>> quickSearch(String query, boolean exact) {
+		return quickSearch(query, exact, repo);
 	}
 
 	@Override

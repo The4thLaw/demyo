@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort.Order;
 /**
  * This interface defines a common set of operation on models.
  * 
- * @param <M>
+ * @param <M> The model type.
  */
 public interface IModelService<M extends IModel> {
 

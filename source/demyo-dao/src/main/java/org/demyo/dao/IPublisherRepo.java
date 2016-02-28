@@ -1,5 +1,7 @@
 package org.demyo.dao;
 
+import java.util.List;
+
 import org.demyo.model.Publisher;
 
 import org.springframework.data.domain.Pageable;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * This class provides methods to manipulate {@link Publisher}s.
  */
 @Repository
-public interface IPublisherRepo extends IModelRepo<Publisher> {
+public interface IPublisherRepo extends IModelRepo<Publisher>, IQuickSearchableRepo<Publisher> {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Publisher.forView")
 	public Publisher findOneForView(long id);
@@ -25,4 +27,12 @@ public interface IPublisherRepo extends IModelRepo<Publisher> {
 	@Override
 	@EntityGraph("Publisher.forIndex")
 	Slice<Publisher> findAll(Pageable pageable);
+
+	@Override
+	@Query("select x from #{#entityName} x where name=?1 order by name")
+	List<Publisher> quickSearchExact(String query);
+
+	@Override
+	@Query("select x from #{#entityName} x where name like ?1 order by name")
+	List<Publisher> quickSearchLike(String query);
 }

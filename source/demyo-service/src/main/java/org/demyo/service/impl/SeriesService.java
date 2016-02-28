@@ -1,6 +1,7 @@
 package org.demyo.service.impl;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.ISeriesRepo;
@@ -8,6 +9,7 @@ import org.demyo.model.Series;
 import org.demyo.service.ISeriesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,12 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	public long save(Series model) {
 		Series savedModel = repo.saveWithReverseRelations(model);
 		return savedModel.getId();
+	}
+
+	@Async
+	@Override
+	public Future<List<Series>> quickSearch(String query, boolean exact) {
+		return quickSearch(query, exact, repo);
 	}
 
 	@Override

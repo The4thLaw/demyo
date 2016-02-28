@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * This class provides methods to manipulate {@link Series}.
  */
 @Repository
-public interface ISeriesRepo extends IModelRepo<Series>, ISeriesCustomRepo {
+public interface ISeriesRepo extends IModelRepo<Series>, IQuickSearchableRepo<Series>, ISeriesCustomRepo {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Series.forView")
 	public Series findOneForView(long id);
@@ -23,4 +23,12 @@ public interface ISeriesRepo extends IModelRepo<Series>, ISeriesCustomRepo {
 	public Series findOneForEdition(long id);
 
 	public List<Series> findByIdNot(long id);
+
+	@Override
+	@Query("select x from #{#entityName} x where name=?1 order by name")
+	List<Series> quickSearchExact(String query);
+
+	@Override
+	@Query("select x from #{#entityName} x where name like ?1 order by name")
+	List<Series> quickSearchLike(String query);
 }

@@ -3,8 +3,10 @@ package org.demyo.service.impl;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.Future;
 
 import org.demyo.dao.IModelRepo;
+import org.demyo.dao.IQuickSearchableRepo;
 import org.demyo.model.IModel;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.service.IConfigurationService;
@@ -19,12 +21,13 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of base operations on models.
  * 
- * @param <M>
+ * @param <M> The model type.
  */
 public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
@@ -163,5 +166,20 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 */
 	protected Order[] getDefaultOrder() {
 		return defaultOrder;
+	}
+
+	/**
+	 * Base implementation of a quick search query on an {@link IQuickSearchableRepo}.
+	 * 
+	 * @param query The string to match
+	 * @param exact <code>true</code> if the search is for an exact match. <code>false</code> otherwise.
+	 * @param searchRepo The repository to search on.
+	 * @return The matches, as a future.
+	 */
+	protected Future<List<M>> quickSearch(String query, boolean exact, IQuickSearchableRepo<M> searchRepo) {
+		if (exact) {
+			return new AsyncResult<>(searchRepo.quickSearchExact(query));
+		}
+		return new AsyncResult<>(searchRepo.quickSearchLike(query));
 	}
 }

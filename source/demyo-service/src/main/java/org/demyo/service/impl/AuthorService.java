@@ -1,11 +1,15 @@
 package org.demyo.service.impl;
 
+import java.util.List;
+import java.util.concurrent.Future;
+
 import org.demyo.dao.IAuthorRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Author;
 import org.demyo.service.IAuthorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +32,12 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	@Override
 	public Author getByIdForView(long id) {
 		return repo.findOneForView(id);
+	}
+
+	@Async
+	@Override
+	public Future<List<Author>> quickSearch(String query, boolean exact) {
+		return quickSearch(query, exact, repo);
 	}
 
 	@Override

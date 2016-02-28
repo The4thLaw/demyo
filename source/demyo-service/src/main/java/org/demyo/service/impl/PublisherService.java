@@ -1,11 +1,15 @@
 package org.demyo.service.impl;
 
+import java.util.List;
+import java.util.concurrent.Future;
+
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IPublisherRepo;
 import org.demyo.model.Publisher;
 import org.demyo.service.IPublisherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +32,12 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	@Override
 	public Publisher getByIdForView(long id) {
 		return repo.findOneForView(id);
+	}
+
+	@Async
+	@Override
+	public Future<List<Publisher>> quickSearch(String query, boolean exact) {
+		return quickSearch(query, exact, repo);
 	}
 
 	@Override

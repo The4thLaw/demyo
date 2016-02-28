@@ -46,16 +46,17 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 				</nav>
 				#end
 				
-				##<!-- Quick search -->
-				##<div id="header-quicksearch" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right  mdl-layout--large-screen-only">
-				##	<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-header-field" id="quicksearch-header-icon">
-				##		<i class="dico">search</i>
-				##	</label>
-				##	<div class="mdl-tooltip" for="quicksearch-header-icon">#_('layout.quick_search')</div>
-				##	<div class="mdl-textfield__expandable-holder">
-  				##		<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
-				##	</div>
-  				##</div>
+				<!-- Quick search -->
+				<div id="header-quicksearch" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right  mdl-layout--large-screen-only">
+					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-header-field" id="quicksearch-header-icon">
+						<i class="dico">search</i>
+					</label>
+					<div class="mdl-tooltip" for="quicksearch-header-icon">#_('layout.quick_search')</div>
+					<div class="mdl-textfield__expandable-holder">
+  						<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
+					</div>
+  				</div>
+
   				#if (!$quickTasks.empty)
   					<div id="header-quick-tasks">
 						<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">

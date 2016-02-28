@@ -1,0 +1,29 @@
+#if (!$results.series.empty)
+	<h5>#_('title.index.series')</h5>
+	#textCardListStdBody($results.series "" "identifyingName" "/series/view/" false)
+#end
+
+#if (!$results.albums.empty)
+	<h5>#_('title.index.album')</h5>
+	#textCardListStdBody($results.albums "" "title" "/albums/view/" false)
+#end
+
+#if (!$results.tags.empty)
+	<h5>#_('title.index.tag')</h5>
+	#textCardListStdBody($results.tags "" "identifyingName" "/tags/view/" false)
+#end
+
+#if (!$results.authors.empty)
+	<h5>#_('title.index.author')</h5>
+	#textCardListStdBody($results.authors "" "identifyingName" "/authors/view/" false)
+#end
+
+#if (!$results.publishers.empty)
+	<h5>#_('title.index.publisher')</h5>
+	#textCardListStdBody($results.publishers "" "identifyingName" "/publishers/view/" false)
+#end
+
+#if (!$results.collections.empty)
+	<h5>#_('title.index.collection')</h5>
+	#textCardListStdBody($results.collections "" "identifyingName" "/collections/view/" false)
+#end

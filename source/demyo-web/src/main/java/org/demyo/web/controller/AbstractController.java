@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 public abstract class AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 	private static final String MODEL_KEY_LAYOUT = "layout";
-	private static final String LAYOUT_AJAX = "layout/ajax.vm";
+	private static final String LAYOUT_PLAIN = "layout/plain.vm";
 
 	@Autowired
 	private IConfigurationService configService;
@@ -71,12 +71,12 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Sets the layout to an ajax-compatible format.
+	 * Sets the layout to an AJAX-compatible format. This layout just dumps the view text as-is.
 	 * 
 	 * @param model The model to set the layout in.
 	 */
-	protected void setLayoutAjax(Model model) {
-		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_AJAX);
+	protected void setLayoutPlain(Model model) {
+		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_PLAIN);
 	}
 
 	/**
