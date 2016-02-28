@@ -133,7 +133,7 @@
 			#set ($inSeries = true)
 			
 			## When https://github.com/google/material-design-lite/issues/1096 is solved, perhaps we could add ripples here
-			<li><a href="$link.contextPath/albums/view/$album.id">$album.title</a></li>
+			<li #if($album.wishlist)class="dem-album--wishlist"#end><a href="$link.contextPath/albums/view/$album.id">$album.title</a></li>
 		#end
 	
 	#end
