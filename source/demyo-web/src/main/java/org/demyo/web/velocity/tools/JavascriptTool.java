@@ -73,6 +73,8 @@ public class JavascriptTool {
 				KNOWN_SCRIPTS.get("Chosen"), KNOWN_SCRIPTS.get("Demyo.Core")));
 		addScript(new Script("JQuery.HotKeys", "vendor/jquery.hotkeys.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.QuickTasks", "demyo_quicktasks.js", KNOWN_SCRIPTS.get("JQuery")));
+		addScript(new Script("Demyo.QuickSearch", "demyo_quicksearch.js", KNOWN_SCRIPTS.get("JQuery"),
+				KNOWN_SCRIPTS.get("Demyo.Core")));
 	}
 
 	private final Set<String> loadedScripts = new LinkedHashSet<String>();

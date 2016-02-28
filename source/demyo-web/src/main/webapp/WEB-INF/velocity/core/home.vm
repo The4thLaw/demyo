@@ -1,6 +1,6 @@
 #setPageTitle('title.home')
 
-<div class="mdl-grid">
+<div class="mdl-grid" id="widgets">
 
 	#@mdlGridCell([12,0,0])
 		<div class="mdl-card mdl-shadow--2dp dem-widget" id="widget-search">
@@ -10,8 +10,10 @@
 			<div class="mdl-card__supporting-text">
 				<p>#_('widget.search.description')</p>
 				<div class="mdl-textfield mdl-js-textfield">
-					<input class="mdl-textfield__input" type="text" id="quicksearch-widget-field" />
+					<input class="mdl-textfield__input" type="text" id="quicksearch-widget-field" data-dem-shortcut="82" />
 					<label class="mdl-textfield__label" for="quicksearch-widget-field">#_('widget.search.label')</label>
+				</div>
+				<div id="widget-search-results">
 				</div>
 			</div>
 		</div>

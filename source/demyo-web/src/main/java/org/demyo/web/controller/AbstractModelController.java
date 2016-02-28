@@ -121,6 +121,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 		M entity = getService().getByIdForEdition(id);
 		model.addAttribute(modelKey, entity);
 		fillModelForEdition(entity, model);
+		suppressQuickSearch(model);
 
 		return urlPrefix + "/add-edit";
 	}

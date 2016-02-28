@@ -72,6 +72,8 @@ var demyo = {};
 				if (trigger.is('a')) {
 					var url = trigger.attr('href');
 					window.location = url;
+				} else if (trigger.is('input')) {
+					trigger.focus();
 				} else {
 					trigger.click();
 				}

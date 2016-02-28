@@ -58,6 +58,11 @@
 		&:hover {
 			background: #fafafa;
 		}
+		
+		&:focus {
+			background: @color-accent;
+			color: @color-accent-contrast;
+		}
 	}
 	
 	&--with-dependencies {
@@ -120,4 +125,34 @@
 		margin-right: 0.5em;
 		margin-bottom: 0.5em;
 	}
+}
+
+
+// TODO: move this elsewhere
+#quickSearch-results {
+	.mdl-card {
+	    transform: scale(0);
+	    opacity: 0;
+	}
+	h5 {
+	   transform: scale(0);
+	   opacity: 0;
+	   transform-origin: 0 50%;
+	}
+	.quickSearch-animate {
+	    animation-duration: 0.5s;
+	    animation-name: quickSearch-pop;
+	    transform: scale(1);
+	    opacity: 1;
+	}
+}
+@keyframes quickSearch-pop {
+    from {
+        transform: rotate(0deg) scale(0);
+        opacity: 1;
+    }
+    to {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
 }

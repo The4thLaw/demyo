@@ -207,4 +207,13 @@ public abstract class AbstractController {
 			DIOUtils.closeQuietly(bis);
 		}
 	}
+
+	/**
+	 * Prevents the quick search from being displayed in toolbars.
+	 * 
+	 * @param model The view model.
+	 */
+	protected void suppressQuickSearch(Model model) {
+		model.addAttribute("suppressQuickSearch", true);
+	}
 }

@@ -16,6 +16,7 @@ $quickTasks.prepare($javascript)
 		<link rel="stylesheet/less" type="text/css" href="$link.contextPath/css/demyo.blue-pink.less">
 		<script type="text/javascript" src="$link.contextPath/js/vendor/less-2.5.3.min.js"></script>
 		$javascript.load('Demyo.Core') ## Always load the core
+		$javascript.load('Demyo.QuickSearch') ## Always load quick search
 #foreach($source in $javascript.scriptSources)
 		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
 #end
@@ -46,6 +47,7 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 				</nav>
 				#end
 				
+				#if (!$!suppressQuickSearch)
 				<!-- Quick search -->
 				<div id="header-quicksearch" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right  mdl-layout--large-screen-only">
 					<label class="mdl-button mdl-js-button mdl-button--icon" for="quicksearch-header-field" id="quicksearch-header-icon">
@@ -53,9 +55,10 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 					</label>
 					<div class="mdl-tooltip" for="quicksearch-header-icon">#_('layout.quick_search')</div>
 					<div class="mdl-textfield__expandable-holder">
-  						<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" />
+  						<input class="mdl-textfield__input" type="text" id="quicksearch-header-field" placeholder="#_('layout.quick_search.hint')" data-dem-shortcut="82" />
 					</div>
   				</div>
+  				#end
 
   				#if (!$quickTasks.empty)
   					<div id="header-quick-tasks">
@@ -92,6 +95,7 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 		</header>
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">#_('menu.title')</span>
+			#if (!$!suppressQuickSearch)
 			<!-- Quick search -->
 			<div class="mdl-textfield mdl-js-textfield mdl-layout--small-screen-only" id="menu-quicksearch">
 				<label for="quicksearch-menu-field" title="#_('layout.quick_search')">
@@ -99,6 +103,8 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 				</label>
 				<input class="mdl-textfield__input" type="text" id="quicksearch-menu-field" placeholder="#_('layout.quick_search.hint')" />
 			</div>
+			#end
+			
 			<nav class="mdl-navigation dem-app-menu" id="main-menu" role="menu">
 				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
 				<div class="dem-app-menu__title" id="menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.albums')</div>
@@ -153,6 +159,8 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 		<main class="mdl-layout__content">
 			<div id="page-content">
 				$screen_content
+			</div>
+			<div id="quickSearch-results">
 			</div>
 			## Keep the footer in the page content to avoid having it stick
 			<footer class="mdl-mini-footer">

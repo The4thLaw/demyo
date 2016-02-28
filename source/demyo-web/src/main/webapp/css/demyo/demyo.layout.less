@@ -86,8 +86,7 @@
 	}
 }
 
-#page-content {
-	position: relative; /* We will align the quick tasks on that */
+#page-content, #quickSearch-results {
 	padding: 0.5em;
 }
 
@@ -98,7 +97,7 @@ main.mdl-layout__content {
 	flex-direction: column;
 	flex-wrap: nowrap;
 	
-	#page-content {
+	#page-content, #quicksearch-results {
 		flex: 1;
 	}
 	
@@ -161,4 +160,8 @@ main.mdl-layout__content {
 	.dem-columnized--2-cols {
 		column-count: 2;
 	}
+}
+
+#widget-search {
+	position: relative; /* For progress indicator */
 }
