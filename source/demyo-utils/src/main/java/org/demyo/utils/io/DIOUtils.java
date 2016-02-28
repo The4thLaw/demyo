@@ -2,13 +2,18 @@ package org.demyo.utils.io;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +23,7 @@ import org.slf4j.LoggerFactory;
 // Starts with a 'D' for 'Demyo', to allow usage in parallel with Apache's version
 public final class DIOUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DIOUtils.class);
+	private static final int SNIFF_DEFAULT_BUFFER = 256;
 
 	private DIOUtils() {
 	}
@@ -139,7 +145,7 @@ public final class DIOUtils {
 	 * @return A {@link File} pointing to a temporary directory.
 	 * @throws IOException In case of error while creating the temporary directory.
 	 */
-	// This suffers from a notorious race condition, which could be used by malicious programs. However, the risk is
+	// TODO: This suffers from a notorious race condition, which could be used by malicious programs. However, the risk is
 	// quite low. Eventually, move to Java 7 and use java.nio.file.Files.createTempDirectory 
 	public static File createTempDirectory(String prefix, String suffix, File directory) throws IOException {
 
@@ -170,5 +176,43 @@ public final class DIOUtils {
 		} else {
 			return fileName.substring(lastDot + 1, fileName.length());
 		}
+	}
+
+	/**
+	 * Sniffs the first bytes of a file, and tries to match them to a specific pattern.
+	 * 
+	 * @param file The file to sniff
+	 * @param byteCount The maximum number of bytes to sniff
+	 * @param charset The excepted character set of the file
+	 * @param pattern The pattern to match
+	 * @return <code>true</code> if sniffing was successfull and the sniffed content matches the pattern.
+	 *         <code>false</code> otherwise.
+	 */
+	public static boolean sniffFile(File file, int byteCount, Charset charset, Pattern pattern) {
+		try (FileInputStream input = new FileInputStream(file)) {
+			byte[] buffer = new byte[byteCount];
+			int count = IOUtils.read(input, buffer);
+			LOGGER.debug("Sniffed the first {} bytes of {}", count, file);
+
+			String readString = new String(buffer, charset);
+			if (pattern.matcher(readString).matches()) {
+				return true;
+			}
+		} catch (IOException e) {
+			LOGGER.warn("Failed to sniff {}, assuming no match", file, e);
+		}
+		return false;
+	}
+
+	/**
+	 * Sniffs the first few bytes of a file, and tries to match them as UTF-8 to a specific pattern.
+	 * 
+	 * @param file The file to sniff
+	 * @param pattern The pattern to match
+	 * @return <code>true</code> if sniffing was successfull and the sniffed content matches the pattern.
+	 *         <code>false</code> otherwise.
+	 */
+	public static boolean sniffFile(File file, Pattern pattern) {
+		return sniffFile(file, SNIFF_DEFAULT_BUFFER, Charsets.UTF_8, pattern);
 	}
 }

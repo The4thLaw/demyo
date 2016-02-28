@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.xml.parsers.ParserConfigurationException;
@@ -58,6 +59,11 @@ public class Demyo2Importer implements IImporter {
 	@Override
 	public boolean supports(String originalFilename, File file) throws DemyoException {
 		String originalFilenameLc = originalFilename.toLowerCase();
+
+		if (originalFilenameLc.endsWith(".xml")) {
+			return DIOUtils.sniffFile(file, Pattern.compile(".*<library>.*<meta>.*<version.*", Pattern.DOTALL));
+		}
+
 		return originalFilenameLc.endsWith(".dea");
 	}
 
@@ -84,13 +90,21 @@ public class Demyo2Importer implements IImporter {
 		BufferedInputStream xmlBis = null;
 
 		try {
-			// Extract
-			try {
-				archiveDirectory = extractZip(file);
-			} catch (IOException e) {
-				throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
+			// Extract if needed
+			String originalFilenameLc = originalFilename.toLowerCase();
+			boolean isArchive = originalFilenameLc.endsWith(".zip");
+
+			File xmlFile;
+			if (isArchive) {
+				try {
+					archiveDirectory = extractZip(file);
+				} catch (IOException e) {
+					throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
+				}
+				xmlFile = new File(archiveDirectory, "demyo.xml");
+			} else {
+				xmlFile = file;
 			}
-			File xmlFile = new File(archiveDirectory, "demyo.xml");
 
 			stopWatch.split();
 			long splitTime = stopWatch.getSplitTime();
@@ -111,7 +125,9 @@ public class Demyo2Importer implements IImporter {
 			splitTime = stopWatch.getSplitTime() - splitTime;
 
 			// Move extracted images to the right directory
-			restoreImages(archiveDirectory, "images");
+			if (isArchive) {
+				restoreImages(archiveDirectory, "collection_images");
+			}
 			stopWatch.stop();
 
 			LOGGER.info("Import took {}ms: {}ms in database and {}ms in I/O operations", stopWatch.getTime(),
@@ -119,6 +135,10 @@ public class Demyo2Importer implements IImporter {
 		} catch (IOException ioe) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, ioe);
 		} catch (SAXException | ParserConfigurationException saxe) {
+			if (saxe.getCause() instanceof DemyoException) {
+				// Rethrow exceptions of the right type
+				throw (DemyoException) saxe.getCause();
+			}
 			throw new DemyoException(DemyoErrorCode.IMPORT_PARSE_ERROR, saxe);
 		} finally {
 			DIOUtils.closeQuietly(xmlBis);
@@ -193,7 +213,9 @@ public class Demyo2Importer implements IImporter {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes)
 				throws SAXException {
-			if ("image".equals(localName)) {
+			if ("version".equals(localName)) {
+				handleVersion(attributes);
+			} else if ("image".equals(localName)) {
 				createLine("images", attributes);
 			} else if ("publisher".equals(localName)) {
 				createLine("publishers", attributes);
@@ -261,6 +283,23 @@ public class Demyo2Importer implements IImporter {
 				derivativeImages.add(columns);
 			} else if ("derivative_price".equals(localName)) {
 				createLine("derivatives_prices", attributes);
+			}
+		}
+
+		private void handleVersion(Attributes attributes) throws SAXException {
+			int currentSchemaVersion = rawSqlDao.getSchemaVersion();
+			Integer importSchemaVersion = null;
+			for (int i = 0; i < attributes.getLength(); i++) {
+				if ("schema".equals(attributes.getLocalName(i))) {
+					importSchemaVersion = Integer.parseInt(attributes.getValue(i));
+				}
+			}
+			if (importSchemaVersion == null || importSchemaVersion > currentSchemaVersion) {
+				throw new SAXException(new DemyoException(DemyoErrorCode.IMPORT_WRONG_SCHEMA,
+						"The imported file schema is at version " + importSchemaVersion
+								+ " and seems to originate from an incompatible version of Demyo. "
+								+ "This version of Demyo can only import schema versions " + currentSchemaVersion
+								+ " and below."));
 			}
 		}
 

@@ -29,6 +29,8 @@ public enum DemyoErrorCode {
 	IMPORT_PARSE_ERROR(11002),
 	/** The system encountered an error while restoring the images. */
 	IMPORT_IMAGES_ERROR(11003),
+	/** This version of the schema is not supported by Demyo. */
+	IMPORT_WRONG_SCHEMA(11004),
 	/** The accessed image is trying to perform a directory traversal. */
 	IMAGE_DIRECTORY_TRAVERSAL(12000),
 	/** The accessed image does not exist. */

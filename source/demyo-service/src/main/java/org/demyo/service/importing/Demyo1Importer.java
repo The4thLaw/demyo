@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -47,7 +48,13 @@ public class Demyo1Importer extends Demyo2Importer {
 	@Override
 	public boolean supports(String originalFilename, File file) throws DemyoException {
 		String originalFilenameLc = originalFilename.toLowerCase();
-		return originalFilenameLc.endsWith(".xml") || originalFilenameLc.endsWith(".zip");
+
+		if (originalFilenameLc.endsWith(".xml")) {
+			return DIOUtils.sniffFile(file,
+					Pattern.compile(".*<library demyo-version=\"1\\..*\".*", Pattern.DOTALL));
+		}
+
+		return originalFilenameLc.endsWith(".zip");
 	}
 
 	@Override
