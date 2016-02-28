@@ -15,14 +15,14 @@ import org.springframework.stereotype.Repository;
 public interface ISeriesRepo extends IModelRepo<Series>, IQuickSearchableRepo<Series>, ISeriesCustomRepo {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Series.forView")
-	public Series findOneForView(long id);
+	Series findOneForView(long id);
 
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Series.forEdition")
-	public Series findOneForEdition(long id);
+	Series findOneForEdition(long id);
 
-	public List<Series> findByIdNot(long id);
+	List<Series> findByIdNot(long id);
 
 	@Override
 	@Query("select x from #{#entityName} x where name=?1 order by name")

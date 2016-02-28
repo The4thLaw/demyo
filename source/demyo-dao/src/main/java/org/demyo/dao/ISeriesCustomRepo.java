@@ -13,6 +13,6 @@ interface ISeriesCustomRepo {
 	 * @param s The Series to save.
 	 * @return The saved Series.
 	 */
-	public Series saveWithReverseRelations(Series s);
+	Series saveWithReverseRelations(Series s);
 
 }

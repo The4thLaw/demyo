@@ -11,5 +11,5 @@ import org.demyo.model.IModel;
  * @param <M> The model type.
  */
 public interface IQuickSearchableService<M extends IModel> {
-	public Future<List<M>> quickSearch(String query, boolean exact);
+	Future<List<M>> quickSearch(String query, boolean exact);
 }

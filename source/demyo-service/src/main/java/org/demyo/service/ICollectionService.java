@@ -16,5 +16,5 @@ public interface ICollectionService extends IModelService<Collection>, IQuickSea
 	 * @param publisherId The Publisher ID
 	 * @return The associated Collections
 	 */
-	public List<Collection> findByPublisherId(long publisherId);
+	List<Collection> findByPublisherId(long publisherId);
 }

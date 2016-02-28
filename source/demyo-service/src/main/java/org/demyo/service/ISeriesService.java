@@ -16,6 +16,6 @@ public interface ISeriesService extends IModelService<Series>, IQuickSearchableS
 	 * @param id The Series ID.
 	 * @return The other Series.
 	 */
-	public List<Series> findOtherSeries(long id);
+	List<Series> findOtherSeries(long id);
 
 }

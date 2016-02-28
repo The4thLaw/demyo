@@ -9,5 +9,5 @@ import org.demyo.model.Tag;
  */
 /*package*/interface ITagCustomRepo {
 	/** Finds all Tags, along with the number of times the tag has been used */
-	public List<Tag> findAllWithUsageCounts();
+	List<Tag> findAllWithUsageCounts();
 }

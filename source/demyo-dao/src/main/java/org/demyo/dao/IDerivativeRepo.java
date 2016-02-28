@@ -16,7 +16,7 @@ public interface IDerivativeRepo extends IModelRepo<Derivative> {
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Derivative.forEdition")
-	public Derivative findOneForEdition(long id);
+	Derivative findOneForEdition(long id);
 
 	@Override
 	@EntityGraph("Derivative.forIndex")

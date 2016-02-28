@@ -1,5 +1,8 @@
 package org.demyo.common.exception;
 
+/**
+ * Common interface for Demyo exceptions.
+ */
 public interface IDemyoException {
 
 	/**
@@ -10,6 +13,5 @@ public interface IDemyoException {
 	 * @return <code>true</code> if the exception is of the given code. <code>false</code> in all other
 	 *         occurrences.
 	 */
-	public abstract boolean is(DemyoErrorCode targetCode);
-
+	boolean is(DemyoErrorCode targetCode);
 }

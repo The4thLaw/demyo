@@ -39,9 +39,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Main entry point for Demyo operation.
  */
-public class Start {
+public final class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
 
+	private Start() {
+	}
+
+	/**
+	 * Startup method.
+	 * 
+	 * @param args The command line arguments.
+	 */
 	public static void main(String[] args) {
 		try {
 			startDemyo(args);

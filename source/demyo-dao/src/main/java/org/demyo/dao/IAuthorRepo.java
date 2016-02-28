@@ -16,11 +16,11 @@ public interface IAuthorRepo extends IModelRepo<Author>, IQuickSearchableRepo<Au
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Author.forEdition")
-	public Author findOneForEdition(long id);
+	Author findOneForEdition(long id);
 
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Author.forView")
-	public Author findOneForView(long id);
+	Author findOneForView(long id);
 
 	@Override
 	@Query("select x from #{#entityName} x where name=?1 or firstName=?1 or nickname=?1 "

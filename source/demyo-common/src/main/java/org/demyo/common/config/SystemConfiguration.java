@@ -31,7 +31,7 @@ public final class SystemConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SystemConfiguration.class);
 	private static final String SYSTEM_CONFIGURATION_FILENAME = "system.properties";
 
-	/** The version of Demyo */
+	/** The version of Demyo. */
 	private final String version;
 	/** The root directory for the Demyo installation. */
 	private final File applicationDirectory;
@@ -55,7 +55,7 @@ public final class SystemConfiguration {
 	private final File tempDirectory;
 	/** The directory to store image thumbnails. */
 	private final File thumbnailDirectory;
-	/** The flag indicating whether to start the Web browser automatically */
+	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
 
 	/**

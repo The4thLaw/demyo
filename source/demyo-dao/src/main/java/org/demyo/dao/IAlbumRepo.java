@@ -20,10 +20,10 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@EntityGraph("Album.forEdition")
 	// TODO: open a feature request to Spring Data to support some genericity in @EntityGraph: automatic context with
 	// the class name, or spEL support
-	public Album findOneForEdition(long id);
+	Album findOneForEdition(long id);
 
 	@EntityGraph("Album.forEdition")
-	public Album findTopBySeriesId(long id, Sort sort);
+	Album findTopBySeriesId(long id, Sort sort);
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.

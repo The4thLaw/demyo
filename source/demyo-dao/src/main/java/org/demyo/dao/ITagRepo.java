@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface ITagRepo extends IModelRepo<Tag>, IQuickSearchableRepo<Tag>, ITagCustomRepo {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Tag.forView")
-	public Tag findOneForView(long id);
+	Tag findOneForView(long id);
 
 	@Override
 	@Query("select x from #{#entityName} x where name=?1 order by name")

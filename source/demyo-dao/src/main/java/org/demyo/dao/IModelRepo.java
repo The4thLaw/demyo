@@ -28,7 +28,7 @@ public interface IModelRepo<M extends IModel> extends CrudRepository<M, Long> {
 	 * @return The fetched model.
 	 */
 	@Query("select x from #{#entityName} x where id=?1")
-	public M findOneForEdition(long id);
+	M findOneForEdition(long id);
 
 	/**
 	 * Returns a list of entities in the requested order.
@@ -41,7 +41,7 @@ public interface IModelRepo<M extends IModel> extends CrudRepository<M, Long> {
 	/**
 	 * Returns a {@link Slice} of entities meeting the paging restriction provided in the {@code Pageable} object.
 	 * 
-	 * @param pageable
+	 * @param pageable The pagination configuration
 	 * @return a page of entities
 	 */
 	Slice<M> findAll(Pageable pageable);

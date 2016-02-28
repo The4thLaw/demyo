@@ -17,12 +17,12 @@ import org.springframework.stereotype.Repository;
 public interface IPublisherRepo extends IModelRepo<Publisher>, IQuickSearchableRepo<Publisher> {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Publisher.forView")
-	public Publisher findOneForView(long id);
+	Publisher findOneForView(long id);
 
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Publisher.forEdition")
-	public Publisher findOneForEdition(long id);
+	Publisher findOneForEdition(long id);
 
 	@Override
 	@EntityGraph("Publisher.forIndex")
