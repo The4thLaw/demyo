@@ -32,7 +32,7 @@ public class OneNotNullValidator implements ConstraintValidator<OneNotNull, Obje
 			try {
 				fieldValue = PropertyUtils.getNestedProperty(value, field);
 			} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-				field = null;
+				fieldValue = null;
 				LOGGER.warn("Failed to get property {} on object; assuming null", field, e);
 			} catch (NestedNullException ne) {
 				// Support nested properties where part of the hierarchy is null
