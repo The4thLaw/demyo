@@ -46,7 +46,16 @@
 			placeholder_text_multiple: ' ',
 			width: '100%'
 		});
-		// TODO: if chosen is disabled in this device, stop here
+		
+		// Check if chosen is enabled
+		if ($('.chosen-container').length <= 0) {
+			// If not, mark the select elements as missing it, dirty, and add also a specific class to the label
+			elementSet.addClass('chosen-not-available');
+			elementSet.parents('.mdl-textfield').addClass('is-dirty')
+			$('~ label', elementSet).addClass('chosen-not-available');
+			return;
+		}
+		
 		elementSet.each(function () {
 			// Add a special class to all labels, to style them
 			$('label[for='+$(this).attr('id')+']').addClass('chosen-label')
