@@ -135,7 +135,7 @@
 <script type="text/javascript">
 jQuery(function () {
 	demyo.dependentSelect('#field_album_publisher_id', '#field_album_collection_id', function (val) {
-			return "$link.contextPath/publishers/" + val + "/collections";
+			return val == null ? null : "$link.contextPath/publishers/" + val + "/collections";
 		});
 });
 </script>

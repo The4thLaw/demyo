@@ -83,7 +83,7 @@
 <script type="text/javascript">
 jQuery(function () {
 	demyo.dependentSelect('#field_derivative_series_id', '#field_derivative_album_id', function (val) {
-			return "$link.contextPath/series/" + val + "/albums";
+			return val == null ? null : "$link.contextPath/series/" + val + "/albums";
 		});
 });
 </script>

@@ -104,6 +104,13 @@
 				sub.trigger('chosen:updated');
 				sub.change();
 			} else {
+				var builtUrl = urlBuilder(mainValue);
+				
+				if (builtUrl == null) {
+					// If the built URL is not valid, it means there's no use in trying the AJAX call
+					return;
+				}
+				
 				jQuery.ajax({
 					url: urlBuilder(mainValue),
 					contentType: 'application/json',
