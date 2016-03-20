@@ -44,10 +44,10 @@ $quickTasks.add({
 	#@mdlGridCellCond([6,4,4], $series.website)
 		#entityFieldUrl('field.Series.website', $series.website)
 	#end
-	#@mdlGridCell([6,4,4])
-		#entityFieldBoolean('field.Series.completed', $series.completed)
+	#@mdlGridCellCond([4,0,0], $series.completed)
+		#entityFieldBoolean('field.Series.completed', $series.location)
 	#end
-	#@mdlGridCell([6,4,4])
+	#@mdlGridCell([4,0,0])
 		#@entityField('field.Series.albumCount')
 			#if ($series.ownedAlbumCount == $series.totalAlbumCount)
 				#_p('field.Series.albumCount.count.full', $series.totalAlbumCount)
@@ -55,6 +55,9 @@ $quickTasks.add({
 				#_p('field.Series.albumCount.count.partial', [ $series.ownedAlbumCount, $series.totalAlbumCount ])
 			#end
 		#end
+	#end
+	#@mdlGridCellCond([4,0,0], $series.location)
+		#entityFieldText('field.Series.location', $series.location)
 	#end
 	#set ($cond = !($series.albumWriters.empty && $series.albumArtists.empty && $series.albumColorists.empty
 					&& $series.albumInkers.empty && $series.albumTranslators.empty))

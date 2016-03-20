@@ -472,6 +472,22 @@ public class Album extends AbstractModel {
 	}
 
 	/**
+	 * Gets the physical location of this Album, potentially guessing it from the Series.
+	 * 
+	 * @return If the Album has a location, it is returned. Else, if the Album belongs to a Series and that Series
+	 *         has a location, it is returned. Else, <code>null</code> is returned.
+	 */
+	public String getAggregatedLocation() {
+		if (location != null) {
+			return location;
+		}
+		if (series != null) {
+			return series.getLocation();
+		}
+		return null;
+	}
+
+	/**
 	 * Sets the physical location of this Album.
 	 * 
 	 * @param location the new physical location of this Album

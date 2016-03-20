@@ -10,13 +10,16 @@
 		#inputText('field.Series.name', 'series.name')
 	#end
 	#@mdlGridCell([6,4,0])
-		#inputText('field.Series.website', 'series.website')
-	#end
-	#@mdlGridCell([6,4,0])
 		#inputSelectMultiple('field.Series.relatedSeries', 'series.relatedSeries', $otherSeries)
 	#end
-	#@mdlGridCell([6,4,0])
+	#@mdlGridCell([4,4,0])
+		#inputText('field.Series.website', 'series.website')
+	#end
+	#@mdlGridCell([4,4,0])
 		#inputCheckbox('field.Series.completed', 'series.completed')
+	#end
+	#@mdlGridCell([4,0,0])
+		#inputText('field.Series.location', 'series.location')
 	#end
 </div>
 

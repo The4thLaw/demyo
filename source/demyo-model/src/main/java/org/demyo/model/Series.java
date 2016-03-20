@@ -60,6 +60,9 @@ public class Series extends AbstractModel {
 	/** The flag indicating whether the series is completed. */
 	@Column(name = "completed")
 	private Boolean completed;
+	/** The physical location of this Series. */
+	@Column(name = "location")
+	private String location;
 	/** The series related to this one. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"),
@@ -279,6 +282,24 @@ public class Series extends AbstractModel {
 	 */
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
+	}
+
+	/**
+	 * Gets the physical location of this Series.
+	 * 
+	 * @return the physical location of this Series
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * Sets the physical location of this Series.
+	 * 
+	 * @param location the new physical location of this Series
+	 */
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	/**
