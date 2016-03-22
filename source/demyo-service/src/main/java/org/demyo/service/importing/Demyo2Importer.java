@@ -191,6 +191,8 @@ public class Demyo2Importer implements IImporter {
 		private List<Map<String, String>> albumArtists = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> albumWriters = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> albumColorists = new ArrayList<Map<String, String>>();
+		private List<Map<String, String>> albumInkers = new ArrayList<Map<String, String>>();
+		private List<Map<String, String>> albumTranslators = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> albumTags = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> albumImages = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> derivativeImages = new ArrayList<Map<String, String>>();
@@ -204,6 +206,8 @@ public class Demyo2Importer implements IImporter {
 			allRelations.put("albums_artists", albumArtists);
 			allRelations.put("albums_writers", albumWriters);
 			allRelations.put("albums_colorists", albumColorists);
+			allRelations.put("albums_inkers", albumInkers);
+			allRelations.put("albums_translators", albumTranslators);
 			allRelations.put("albums_tags", albumTags);
 			allRelations.put("albums_images", albumImages);
 			allRelations.put("derivatives_images", derivativeImages);
@@ -253,6 +257,16 @@ public class Demyo2Importer implements IImporter {
 				columns.put("album_id", albumId);
 				columns.put("colorist_id", attributes.getValue("ref"));
 				albumColorists.add(columns);
+			} else if ("inker".equals(localName)) {
+				HashMap<String, String> columns = new HashMap<String, String>();
+				columns.put("album_id", albumId);
+				columns.put("inker_id", attributes.getValue("ref"));
+				albumInkers.add(columns);
+			} else if ("translator".equals(localName)) {
+				HashMap<String, String> columns = new HashMap<String, String>();
+				columns.put("album_id", albumId);
+				columns.put("translator_id", attributes.getValue("ref"));
+				albumTranslators.add(columns);
 			} else if ("album-tag".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<String, String>();
 				columns.put("album_id", albumId);
