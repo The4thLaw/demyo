@@ -8,7 +8,7 @@
 			}
 			
 			settings = $.extend({
-				delay: 500,
+				delay: 650,
 				url: '/search/quick',
 				contentToHide: '#page-content',
 				resultLocation: '#quickSearch-results',
