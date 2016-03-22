@@ -111,7 +111,7 @@
 			#end
 			#set ($lastSeries = -1)
 		
-			<div class="mdl-card mdl-shadow--2dp dem-model-card">
+			<div class="mdl-card mdl-shadow--2dp dem-model-card #if($album.wishlist)dem-album--wishlist#end">
 				<a class="dem-model-card__title" href="$link.contextPath/albums/view/$album.id">$album.title</a>
 			</div>
 		#else
