@@ -92,7 +92,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	@Transactional(readOnly = true)
 	public Album getAlbumTemplateForSeries(long seriesId) {
-		Sort sort = new Sort(Direction.DESC, "cycle", "number", "numberSuffix", "title");
+		Sort sort = new Sort(Direction.DESC, "cycle", "number", "numberSuffix", "firstEditionDate",
+				"currentEditionDate", "title");
 		Album last = repo.findTopBySeriesId(seriesId, sort);
 
 		Album template = new Album();
@@ -103,12 +104,15 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setCollection(last.getCollection());
 			template.setColorists(last.getColorists());
 			template.setHeight(last.getHeight());
+			template.setInkers(last.getInkers());
 			template.setPages(last.getPages());
 			template.setPublisher(last.getPublisher());
 			template.setSeries(last.getSeries());
 			template.setTags(last.getTags());
+			template.setTranslators(last.getTranslators());
 			template.setWidth(last.getWidth());
 			template.setWriters(last.getWriters());
+
 		} else {
 			template.setSeries(seriesRepo.findOne(seriesId));
 		}
