@@ -92,7 +92,7 @@ public class Demyo2Importer implements IImporter {
 		try {
 			// Extract if needed
 			String originalFilenameLc = originalFilename.toLowerCase();
-			boolean isArchive = originalFilenameLc.endsWith(".zip");
+			boolean isArchive = originalFilenameLc.endsWith(".dea");
 
 			File xmlFile;
 			if (isArchive) {
@@ -126,7 +126,7 @@ public class Demyo2Importer implements IImporter {
 
 			// Move extracted images to the right directory
 			if (isArchive) {
-				restoreImages(archiveDirectory, "collection_images");
+				restoreImages(archiveDirectory, "images");
 			}
 			stopWatch.stop();
 
