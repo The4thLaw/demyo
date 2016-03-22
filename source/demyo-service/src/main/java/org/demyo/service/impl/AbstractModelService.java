@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.persistence.Transient;
+
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IQuickSearchableRepo;
 import org.demyo.model.IModel;
@@ -131,8 +133,10 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 		// For example, this happens when trying to save an Album that has no binding. It is still applicable with
 		// Spring Data
 		for (Method meth : modelClass.getMethods()) {
-			if (IModel.class.isAssignableFrom(meth.getReturnType()) && meth.getName().startsWith("get")
-					&& !"getClass".equals(meth.getName()) && meth.getParameterTypes().length == 0) {
+			boolean isModelGetter = IModel.class.isAssignableFrom(meth.getReturnType())
+					&& meth.getName().startsWith("get") && meth.getParameterTypes().length == 0;
+			boolean isTransientMethod = meth.getAnnotation(Transient.class) != null;
+			if (isModelGetter && !"getClass".equals(meth.getName()) && !isTransientMethod) {
 				// This is a standard getter method for a linked model
 				try {
 					IModel other = (IModel) meth.invoke(model);

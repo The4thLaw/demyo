@@ -18,6 +18,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -139,8 +140,14 @@ public class Derivative extends AbstractModel {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns the main image associated to a Derivative. The one that is supposed to represent it.
+	 * 
+	 * @return An Image, or <code>null</code> if no image is associated to this Derivative.
+	 */
+	@Transient
 	public Image getMainImage() {
-		if (images.size() == 0) {
+		if (images == null || images.isEmpty()) {
 			return null;
 		}
 		return images.iterator().next();
