@@ -44,8 +44,8 @@ $quickTasks.add({
 	#@mdlGridCellCond([6,4,4], $series.website)
 		#entityFieldUrl('field.Series.website', $series.website)
 	#end
-	#@mdlGridCellCond([4,0,0], $series.completed)
-		#entityFieldBoolean('field.Series.completed', $series.location)
+	#@mdlGridCell([4,0,0])
+		#entityFieldBoolean('field.Series.completed', $series.completed)
 	#end
 	#@mdlGridCell([4,0,0])
 		#@entityField('field.Series.albumCount')
