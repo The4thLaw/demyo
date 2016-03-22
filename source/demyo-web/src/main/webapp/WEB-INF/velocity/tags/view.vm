@@ -6,7 +6,7 @@ $quickTasks.add({
 	"icon": "tag+add"
 })
 $quickTasks.add({
-	"id" : "qt-delete-author",
+	"id" : "qt-delete-tag",
 	"url" : "../delete/$tag.id",
 	"icon": "tag+delete",
 	"confirm" : true
