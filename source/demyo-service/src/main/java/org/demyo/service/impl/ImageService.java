@@ -257,6 +257,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		DIOUtils.deleteDirectory(thumbnailDirectory);
 		if (!thumbnailDirectory.mkdir()) {
 			LOGGER.warn("Failed to create directory {}", thumbnailDirectory);
+		} else {
+			LOGGER.debug("Recreated thumbnail directory at {}", thumbnailDirectory);
 		}
 	}
 }
