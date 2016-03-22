@@ -22,7 +22,6 @@ $(function() {
 			
 			// Register the events
 			$('.confirm', dialog).click(function () {
-				alert('confirmed');
 				$('<form method="post" action="'+url+'" style="display:none;"></form>')
 					.insertBefore('#menu-quick-tasks')
 					.submit();
