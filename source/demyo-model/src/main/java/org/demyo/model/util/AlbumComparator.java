@@ -30,6 +30,21 @@ public class AlbumComparator extends AbstractModelComparator<Album> {
 			return comparison;
 		}
 
+		// If both albums have dates, sort them that way. If not, there's not enough information to make guesses, so
+		// leave them by title
+		if (a1.getFirstEditionDate() != null && a2.getFirstEditionDate() != null) {
+			comparison = nullSafeComparison(a1.getFirstEditionDate(), a2.getFirstEditionDate());
+			if (comparison != 0) {
+				return comparison;
+			}
+		}
+		if (a1.getCurrentEditionDate() != null && a2.getCurrentEditionDate() != null) {
+			comparison = nullSafeComparison(a1.getCurrentEditionDate(), a2.getCurrentEditionDate());
+			if (comparison != 0) {
+				return comparison;
+			}
+		}
+
 		comparison = nullSafeCollatingComparison(a1.getTitle(), a2.getTitle());
 		if (comparison != 0) {
 			return comparison;
