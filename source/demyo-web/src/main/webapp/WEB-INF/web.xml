@@ -47,9 +47,9 @@
          <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name> 
-            <param-value>
-                /WEB-INF/spring/demyo-context.xml
-            </param-value>
+            <param-value></param-value>
+            <!-- The context is already loaded by the listener, as per the context param.
+            Loading it twice leads at least to Hibernate warning HHH000436. -->
         </init-param>
         <load-on-startup>10</load-on-startup>
     </servlet>
