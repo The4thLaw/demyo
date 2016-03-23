@@ -55,9 +55,9 @@ public class CollectionController extends AbstractModelController<Collection> {
 	}
 
 	@Override
-	@RequestMapping(value = { "/delete/{id}" }, method = RequestMethod.POST)
-	public String delete(@PathVariable long id, HttpServletRequest request, HttpServletResponse response) {
-		getService().delete(id);
+	@RequestMapping(value = { "/delete/{modelId}" }, method = RequestMethod.POST)
+	public String delete(@PathVariable long modelId, HttpServletRequest request, HttpServletResponse response) {
+		getService().delete(modelId);
 		return redirect("/publishers/"); // There's no index for Collections
 	}
 }

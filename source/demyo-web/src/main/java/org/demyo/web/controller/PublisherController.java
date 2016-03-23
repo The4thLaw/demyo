@@ -42,10 +42,10 @@ public class PublisherController extends AbstractModelController<Publisher> {
 	}
 
 	@JsonView(ModelView.Minimal.class)
-	@RequestMapping(value = "/{id}/collections", method = RequestMethod.GET, consumes = "application/json",
-			produces = "application/json")
+	@RequestMapping(value = "/{publisherId}/collections", method = RequestMethod.GET,
+			consumes = "application/json", produces = "application/json")
 	public @ResponseBody
-	List<Collection> getCollectionsForPublisher(@PathVariable("id") long publisherId) {
+	List<Collection> getCollectionsForPublisher(@PathVariable("publisherId") long publisherId) {
 		return collectionService.findByPublisherId(publisherId);
 	}
 

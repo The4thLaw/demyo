@@ -75,16 +75,16 @@ public class ImagesController extends AbstractModelController<Image> {
 	/**
 	 * Gets an image file. The path is retrieved from the database.
 	 * 
-	 * @param id The image ID.
+	 * @param imageId The image ID.
 	 * @param request The HTTP request.
 	 * @param response The HTTP response.
 	 * @throws DemyoException If the image is not readable, not found, etc.
 	 * @throws IOException If the image cannot be sent to the client.
 	 */
-	@RequestMapping(value = "/full/{id}/**", method = RequestMethod.GET)
-	public void getFullImage(@PathVariable("id") long id, HttpServletRequest request, HttpServletResponse response)
-			throws DemyoException, IOException {
-		Image image = imageService.getByIdForEdition(id);
+	@RequestMapping(value = "/full/{imageId}/**", method = RequestMethod.GET)
+	public void getFullImage(@PathVariable("imageId") long imageId, HttpServletRequest request,
+			HttpServletResponse response) throws DemyoException, IOException {
+		Image image = imageService.getByIdForEdition(imageId);
 		File imageFile = imageService.getImageFile(image);
 		download(imageFile, request, response);
 	}
@@ -92,16 +92,16 @@ public class ImagesController extends AbstractModelController<Image> {
 	/**
 	 * Gets the thumbnail for an image. The path is retrieved from the URL.
 	 * 
-	 * @param id The image ID.
+	 * @param imageId The image ID.
 	 * @param request The HTTP request.
 	 * @param response The HTTP response.
 	 * @throws DemyoException If the image is not readable, not found, thumbnail generation fails, etc.
 	 * @throws IOException If the image cannot be sent to the client.
 	 */
-	@RequestMapping(value = "/thumbnail/{id}/**", method = RequestMethod.GET)
-	public void getThumbnailImage(@PathVariable("id") long id, HttpServletRequest request,
+	@RequestMapping(value = "/thumbnail/{imageId}/**", method = RequestMethod.GET)
+	public void getThumbnailImage(@PathVariable("imageId") long imageId, HttpServletRequest request,
 			HttpServletResponse response) throws DemyoException, IOException {
-		File imageFile = imageService.getImageThumbnail(id);
+		File imageFile = imageService.getImageThumbnail(imageId);
 		download(imageFile, request, response);
 	}
 

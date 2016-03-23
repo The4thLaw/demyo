@@ -42,10 +42,10 @@ public class SeriesController extends AbstractModelController<Series> {
 	}
 
 	@JsonView(ModelView.Minimal.class)
-	@RequestMapping(value = "/{id}/albums", method = RequestMethod.GET, consumes = "application/json",
+	@RequestMapping(value = "/{seriesId}/albums", method = RequestMethod.GET, consumes = "application/json",
 			produces = "application/json")
 	public @ResponseBody
-	List<Album> getAlbumsForSeries(@PathVariable("id") long seriesId) {
+	List<Album> getAlbumsForSeries(@PathVariable("seriesId") long seriesId) {
 		return albumService.findBySeriesId(seriesId);
 	}
 

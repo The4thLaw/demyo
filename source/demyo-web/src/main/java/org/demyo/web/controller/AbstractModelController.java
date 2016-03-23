@@ -97,13 +97,13 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	/**
 	 * Views the desired entity.
 	 * 
-	 * @param id The ID of the entity to view.
+	 * @param modelId The ID of the entity to view.
 	 * @param model The view model.
 	 * @return The view name.
 	 */
-	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
-	public String view(@PathVariable long id, Model model) {
-		M entity = getService().getByIdForView(id);
+	@RequestMapping(value = "/view/{modelId}", method = RequestMethod.GET)
+	public String view(@PathVariable long modelId, Model model) {
+		M entity = getService().getByIdForView(modelId);
 		model.addAttribute(modelKey, entity);
 
 		return urlPrefix + "/view";
@@ -112,13 +112,13 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	/**
 	 * Edits the desired entity.
 	 * 
-	 * @param id The ID of the entity to edit.
+	 * @param modelId The ID of the entity to edit.
 	 * @param model The view model.
 	 * @return The view name.
 	 */
-	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-	public String edit(@PathVariable long id, Model model) {
-		M entity = getService().getByIdForEdition(id);
+	@RequestMapping(value = "/edit/{modelId}", method = RequestMethod.GET)
+	public String edit(@PathVariable long modelId, Model model) {
+		M entity = getService().getByIdForEdition(modelId);
 		model.addAttribute(modelKey, entity);
 		fillModelForEdition(entity, model);
 		suppressQuickSearch(model);
@@ -156,7 +156,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	 * @param response The HTTP response.
 	 * @return The view name.
 	 */
-	@RequestMapping(value = { "/add", "/edit/{id}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/add", "/edit/{modelId}" }, method = RequestMethod.POST)
 	public String save(@Valid M entity, BindingResult result, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (result.hasErrors()) {
@@ -174,14 +174,14 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	/**
 	 * Deletes an entity.
 	 * 
-	 * @param id The ID of the entity to delete.
+	 * @param modelId The ID of the entity to delete.
 	 * @param request The HTTP request.
 	 * @param response The HTTP response.
 	 * @return The view name.
 	 */
-	@RequestMapping(value = { "/delete/{id}" }, method = RequestMethod.POST)
-	public String delete(@PathVariable long id, HttpServletRequest request, HttpServletResponse response) {
-		getService().delete(id);
+	@RequestMapping(value = { "/delete/{modelId}" }, method = RequestMethod.POST)
+	public String delete(@PathVariable long modelId, HttpServletRequest request, HttpServletResponse response) {
+		getService().delete(modelId);
 		return redirect("/" + urlPrefix + "/");
 	}
 
