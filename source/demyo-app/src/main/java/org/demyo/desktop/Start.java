@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -147,9 +148,14 @@ public final class Start {
 
 	private static void startBrowser() {
 		try {
+			String bindAddress = SystemConfiguration.getInstance().getHttpAddress();
+			if (InetAddress.getByName(bindAddress).isAnyLocalAddress()) {
+				// Windows at least doesn't like to open a page at 0.0.0.0. Switch to loopback
+				bindAddress = InetAddress.getLoopbackAddress().getHostAddress();
+				LOGGER.debug("Switching browser address to {}", bindAddress);
+			}
 			Desktop.getDesktop().browse(
-					new URI("http://" + SystemConfiguration.getInstance().getHttpAddress() + ":"
-							+ SystemConfiguration.getInstance().getHttpPort()));
+					new URI("http://" + bindAddress + ":" + SystemConfiguration.getInstance().getHttpPort()));
 		} catch (IOException | URISyntaxException e) {
 			LOGGER.warn("Failed to start the browser automatically", e);
 		}
