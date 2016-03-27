@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Demyo-Icons';
-    src:    url('../fonts/Demyo-Icons.eot?aeivk2');
-    src:    url('../fonts/Demyo-Icons.eot?aeivk2#iefix') format('embedded-opentype'),
-        url('../fonts/Demyo-Icons.ttf?aeivk2') format('truetype'),
-        url('../fonts/Demyo-Icons.woff?aeivk2') format('woff'),
-        url('../fonts/Demyo-Icons.svg?aeivk2#Demyo-Icons') format('svg');
+    src:    url('../fonts/Demyo-Icons.eot?5h7is2');
+    src:    url('../fonts/Demyo-Icons.eot?5h7is2#iefix') format('embedded-opentype'),
+        url('../fonts/Demyo-Icons.ttf?5h7is2') format('truetype'),
+        url('../fonts/Demyo-Icons.woff?5h7is2') format('woff'),
+        url('../fonts/Demyo-Icons.svg?5h7is2#Demyo-Icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -33,6 +33,12 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.dico-import_contacts:before {
+    content: "\e0e0";
+}
+.dico-picture_in_picture_alt:before {
+    content: "\e911";
+}
 .dico-location_on:before {
     content: "\e052";
 }
@@ -41,12 +47,6 @@
 }
 .dico-airplanemode_active:before {
     content: "\e091";
-}
-.dico-storage:before {
-    content: "\e0bc";
-}
-.dico-insert_drive_file:before {
-    content: "\e0e7";
 }
 .dico-mode_edit:before {
     content: "\e0ee";
@@ -72,11 +72,8 @@
 .dico-broken:before {
     content: "\e142";
 }
-.dico-color_lens:before {
-    content: "\e14c";
-}
-.dico-photo:before {
-    content: "\e1a2";
+.dico-camera:before {
+    content: "\e145";
 }
 .dico-person-location:before {
     content: "\e1f2";
@@ -89,9 +86,6 @@
 }
 .dico-more_vert:before {
     content: "\e210";
-}
-.dico-location_city:before {
-    content: "\e247";
 }
 .dico-person:before {
     content: "\e253";
@@ -129,20 +123,14 @@
 .dico-shopping_cart:before {
     content: "\e2df";
 }
+.dico-store:before {
+    content: "\e2e3";
+}
 .dico-thumbs:before {
     content: "\e302";
 }
 .dico-help_outline:before {
     content: "\e30f";
-}
-.dico-th-large:before {
-    content: "\f009";
-}
-.dico-th:before {
-    content: "\f00a";
-}
-.dico-th-list:before {
-    content: "\f00b";
 }
 .dico-tag:before {
     content: "\f02b";

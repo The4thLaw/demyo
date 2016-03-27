@@ -2,11 +2,13 @@
 
 $quickTasks.add({
 	"id" : "qt-edit-binding",
-	"url" : "../edit/$binding.id"
+	"url" : "../edit/$binding.id",
+	"icon" : "closed_book+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-binding",
 	"url" : "../delete/$binding.id",
+	"icon" : "closed_book+delete",
 	"confirm" : true
 })
 

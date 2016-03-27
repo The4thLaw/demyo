@@ -16,7 +16,7 @@ $quickTasks.add({
 $quickTasks.add({
 	"id" : "qt-add-album-to-series",
 	"url" : "../../albums/add/?toSeries=$series.id",
-	"icon": "speech_bubble+add"
+	"icon": "open_book+add"
 })
 #set ($hasWishlistAlbums = $series.ownedAlbumCount != $series.totalAlbumCount)
 #if ($hasWishlistAlbums)
@@ -98,7 +98,7 @@ $quickTasks.add({
 					<div class="mdl-tooltip" for="button-quick-tasks-album-$album.id">#_("quickTasks.title")</div>
 					<div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks-album-$album.id">
 						<a class="mdl-menu__item" href="$link.contextPath/albums/edit/$album.id">
-							#icon('speech_bubble+edit')#_('quickTasks.edit.album')
+							#icon('open_book+edit')#_('quickTasks.edit.album')
 						</a>
 					</div>
 				</div>

@@ -3,12 +3,12 @@
 $quickTasks.add({
 	"id" : "qt-edit-album",
 	"url" : "../edit/$album.id",
-	"icon": "speech_bubble+edit"
+	"icon": "open_book+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-album",
 	"url" : "../delete/$album.id",
-	"icon": "speech_bubble+delete",
+	"icon": "open_book+delete",
 	"confirm" : true
 })
 ##TODO: QT to add a derivative to the Album

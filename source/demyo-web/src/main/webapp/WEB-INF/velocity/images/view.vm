@@ -3,12 +3,12 @@
 $quickTasks.add({
 	"id" : "qt-edit-image",
 	"url" : "../edit/$image.id",
-	"icon" : "image_file+edit"
+	"icon" : "camera+edit"
 })
 $quickTasks.add({
 	"id" : "qt-delete-image",
 	"url" : "../delete/$image.id",
-	"icon" : "image_file+delete",
+	"icon" : "camera+delete",
 	"confirm" : true
 })
 

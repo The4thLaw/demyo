@@ -3,12 +3,12 @@
 $quickTasks.add({
 	"id" : "qt-edit-publisher",
 	"url" : "../edit/$publisher.id",
-	"icon": "city+edit"
+	"icon": "store+edit"
 })
 $quickTasks.add({ 
 	"id" : "qt-delete-publisher",
 	"url" : "../delete/$publisher.id",
-	"icon": "city+delete",
+	"icon": "store+delete",
 	"confirm" : true
 })
 ## TODO: quick task to add a collection to this publisher
