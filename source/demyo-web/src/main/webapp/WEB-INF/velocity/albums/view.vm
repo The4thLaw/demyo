@@ -31,13 +31,13 @@ $quickTasks.add({
 
 
 <div class="mdl-grid">
-	#@mdlGridCell([6,4,4])
+	#@mdlGridCell([4,0,0])
 		#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 	#end
-	#@mdlGridCellCond([6,4,4], $album.collection)
+	#@mdlGridCellCond([4,0,0], $album.collection)
 		#entityFieldLinkedModel('field.Album.collection' $album.collection)
 	#end
-	#@mdlGridCellCond([6,4,4], $album.isbn)
+	#@mdlGridCellCond([4,0,0], $album.isbn)
 		#entityFieldText('field.Album.isbn' $album.isbn)
 	#end
 </div>
