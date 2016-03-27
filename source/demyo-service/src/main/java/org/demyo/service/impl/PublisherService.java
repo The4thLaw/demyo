@@ -9,6 +9,8 @@ import org.demyo.model.Publisher;
 import org.demyo.service.IPublisherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,12 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	 */
 	public PublisherService() {
 		super(Publisher.class);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Slice<Publisher> findPaginated(int currentPage, Order... orders) {
+		return repo.findAllForIndex(getPageable(currentPage, orders));
 	}
 
 	@Transactional(rollbackFor = Throwable.class)

@@ -114,6 +114,19 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Transactional(readOnly = true)
 	@Override
 	public Slice<M> findPaginated(int currentPage, Order... orders) {
+		Pageable pageable = getPageable(currentPage, orders);
+		return getRepo().findAll(pageable);
+	}
+
+	/**
+	 * Gets a Spring Data {@link Pageable} object from the current page and orders.
+	 * 
+	 * @param currentPage The page number (starting at 1).
+	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no
+	 *        default ordering is defined, the ordering is defined by the database.
+	 * @return The {@link Pageable} instance
+	 */
+	protected Pageable getPageable(int currentPage, Order... orders) {
 		// Adjust the page number: Spring Data counts from 0
 		currentPage--;
 
@@ -123,7 +136,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 		Sort sort = orders.length == 0 ? null : new Sort(orders);
 		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
 				.getPageSizeForText(), sort);
-		return getRepo().findAll(pageable);
+		return pageable;
 	}
 
 	@Transactional(rollbackFor = Throwable.class)

@@ -10,6 +10,11 @@ import javax.persistence.MappedSuperclass;
  */
 @MappedSuperclass
 public abstract class AbstractModel implements IModel {
+	/**
+	 * The batch size for lazy loading of collections.
+	 */
+	protected static final int BATCH_SIZE = 15;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "id")

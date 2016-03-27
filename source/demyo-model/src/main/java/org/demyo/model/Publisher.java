@@ -17,6 +17,7 @@ import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
@@ -28,7 +29,6 @@ import org.hibernate.validator.constraints.URL;
 @Table(name = "PUBLISHERS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
 @NamedEntityGraphs({
-		@NamedEntityGraph(name = "Publisher.forIndex", attributeNodes = @NamedAttributeNode("collections")),
 		@NamedEntityGraph(name = "Publisher.forView", attributeNodes = { @NamedAttributeNode("collections"),
 				@NamedAttributeNode("logo") }),
 		@NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo")) })
@@ -55,6 +55,7 @@ public class Publisher extends AbstractModel {
 	private Image logo;
 	/** The collections belonging to this publisher. */
 	@OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
+	@BatchSize(size = BATCH_SIZE)
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Collection> collections;
 
