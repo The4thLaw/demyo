@@ -7,7 +7,10 @@ import org.demyo.service.IConfigurationService;
 import org.demyo.service.IDerivativeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IDerivativeService}.
@@ -24,6 +27,12 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	 */
 	public DerivativeService() {
 		super(Derivative.class);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Slice<Derivative> findPaginated(int currentPage, Order... orders) {
+		return repo.findAllForIndex(getPageable(currentPage, orders));
 	}
 
 	@Override

@@ -12,13 +12,12 @@ import org.springframework.stereotype.Repository;
  * This class provides methods to manipulate {@link Derivative}s.
  */
 @Repository
-public interface IDerivativeRepo extends IModelRepo<Derivative> {
+public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCustomRepo {
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Derivative.forEdition")
 	Derivative findOneForEdition(long id);
 
 	@Override
-	@EntityGraph("Derivative.forIndex")
 	Slice<Derivative> findAll(Pageable pageable);
 }

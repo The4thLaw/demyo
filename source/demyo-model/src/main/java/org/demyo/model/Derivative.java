@@ -25,6 +25,8 @@ import javax.validation.constraints.NotNull;
 import org.demyo.model.constraints.OneNotNull;
 import org.demyo.model.util.DefaultOrder;
 
+import org.hibernate.annotations.BatchSize;
+
 /**
  * Derivatives of {@link Album}s or {@link Series}.
  */
@@ -33,11 +35,8 @@ import org.demyo.model.util.DefaultOrder;
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"),
 		@DefaultOrder.Order(property = "album.cycle"), @DefaultOrder.Order(property = "album.number"),
 		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes = { @NamedAttributeNode("artist"),
-				@NamedAttributeNode("images") }),
-		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = { @NamedAttributeNode("artist"),
-				@NamedAttributeNode("images") }) })
+@NamedEntityGraphs({ @NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = {
+		@NamedAttributeNode("artist"), @NamedAttributeNode("images") }) })
 @OneNotNull(fields = { "series.id", "album.id" })
 public class Derivative extends AbstractModel {
 	/** The parent {@link Series}. */
@@ -53,6 +52,7 @@ public class Derivative extends AbstractModel {
 	/** The {@link Author} who worked on this Derivative. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artist_id")
+	@BatchSize(size = BATCH_SIZE)
 	private Author artist;
 
 	/** The {@link DerivativeType type} of this Derivative. */
@@ -122,6 +122,7 @@ public class Derivative extends AbstractModel {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "derivatives_images", joinColumns = @JoinColumn(name = "derivative_id"),
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
+	@BatchSize(size = BATCH_SIZE)
 	private Set<Image> images;
 
 	@Override
