@@ -27,7 +27,7 @@
 #end
 
 #@thumbCardListCustomBody($derivativeList "identifyingName" false)
-	<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--thumb">
+	<div class="mdl-card mdl-shadow--2dp dem-model-card dem-model-card--thumb #if($entity.mainImage)expandable#end">
 		#if($entity.mainImage)
 			#@thumbnail($entity.mainImage, {})
 				<button class="mdl-button mdl-js-button mdl-button--icon dem-thumb-legend__expander">
