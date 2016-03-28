@@ -16,7 +16,7 @@ $quickTasks.add({
 
 #thumbnail($album.cover, {'classes':'model-identification'})
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCell([6,4,4])
 		#entityFieldText('field.Album.identifyingName' $album.identifyingName)
 	#end
@@ -30,7 +30,7 @@ $quickTasks.add({
 </div>
 
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCell([4,0,0])
 		#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 	#end
@@ -44,7 +44,7 @@ $quickTasks.add({
 
 
 #if (!($album.writers.empty && $album.artists.empty && $album.colorists.empty))
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#set ($cond = !($album.writers.empty))
 	#@mdlGridCellCond([4,0,0], $cond)
 		#entityFieldCsvList('field.Album.writers', $album.writers, '/authors/view/')
@@ -70,7 +70,7 @@ $quickTasks.add({
 
 
 #if($album.firstEditionDate || $album.currentEditionDate || $album.wishlist || $album.acquisitionDate)
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#if ($album.firstEditionDate && $album.currentEditionDate && $album.firstEditionDate == $album.currentEditionDate)
 		#@mdlGridCell([4,0,0])
 			#@entityField('field.Album.firstEditionDate')
@@ -96,7 +96,7 @@ $quickTasks.add({
 #end
 
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCellCond([4,0,0], $album.binding)
 		#entityFieldLinkedModel('field.Album.binding' $album.binding)
 	#end
@@ -119,7 +119,7 @@ $quickTasks.add({
 </div>
 
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	## TODO: price history
 	#@mdlGridCellCond([6,4,0], $album.purchasePrice)
 		#entityFieldNumber('field.Album.purchasePrice' $album.purchasePrice) ## TODO: append currency
@@ -129,7 +129,7 @@ $quickTasks.add({
 
 ## TODO: borrower
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCellCond([6,4,0], $album.summary)
 		#entityFieldRichText('field.Album.summary', $album.summary)
 	#end

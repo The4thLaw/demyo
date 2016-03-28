@@ -14,7 +14,7 @@ $quickTasks.add({
 
 #thumbnail($derivative.mainImage, {'classes':'model-identification'})
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCell([6,4,4])
 		#entityFieldLinkedModel('field.Derivative.series' $derivative.series)
 		#entityFieldLinkedModel('field.Derivative.album' $derivative.album)
@@ -26,7 +26,7 @@ $quickTasks.add({
 	#end
 </div>
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCell([6,4,4])
 		#entityFieldLinkedModel('field.Derivative.type' $derivative.type)
 		#entityFieldText('field.Derivative.colours' $derivative.colours)
@@ -44,7 +44,7 @@ $quickTasks.add({
 	#end
 </div>
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCell([6,4,4])
 		#if ($derivative.number && $derivative.total)
 			#entityFieldText('field.Derivative.numberOverTotal' "#number($derivative.number) / #number($derivative.total)")
@@ -63,7 +63,7 @@ $quickTasks.add({
 	#end
 </div>
 
-<div class="mdl-grid">
+<div class="mdl-grid dem-field-set">
 	#@mdlGridCellCond([6,4,4], $derivative.acquisitionDate)
 		#entityFieldDate('field.Derivative.acquisitionDate', $derivative.acquisitionDate)
 	#end
