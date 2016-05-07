@@ -27,6 +27,7 @@
 		<org.hibernate.version>4.3.11.Final</org.hibernate.version>
 		<com.fasterxml.jackson.version>2.6.3</com.fasterxml.jackson.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.rootdir>${project.basedir}</project.rootdir>
 	</properties>
 
 	<dependencies>
@@ -279,6 +280,25 @@
 					<threshold>medium</threshold>
 				</configuration>
 				<!-- TODO: ignore the following: EI_EXPOSE_REP, EI_EXPOSE_REP2, RV_RETURN_VALUE_IGNORED_BAD_PRACTICE -->
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<rulesUri>file://${project.rootdir}/maven-version-rules.xml</rulesUri>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>dependency-updates-report</report>
+							<report>plugin-updates-report</report>
+							<report>property-updates-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<!-- TODO: configure with http://stackoverflow.com/a/22174801 to avoid beta versions.
+				Warning: don't ignore alpha/beta for Demyo itself (the rule set should not  -->
 			</plugin>
 		</plugins>
 	</reporting>

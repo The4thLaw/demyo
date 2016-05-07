@@ -9,6 +9,10 @@
 	<artifactId>demyo-service</artifactId>
 	<name>Demyo: Service</name>
 	<description>Service classes</description>
+	
+	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
+	</properties>
 
 	<dependencies>
 		<dependency>

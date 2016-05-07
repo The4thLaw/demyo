@@ -10,6 +10,10 @@
 	<packaging>war</packaging>
 	<name>Demyo: Web Application</name>
 	<description>Spring controllers for the Web application.</description>
+	
+	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
+	</properties>
 
 	<dependencies>
 		<dependency>

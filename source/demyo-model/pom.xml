@@ -9,6 +9,10 @@
 	<artifactId>demyo-model</artifactId>
 	<name>Demyo: Model</name>
 	<description>Model classes</description>
+	
+	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
+	</properties>
 
 	<dependencies>
 		<dependency>

@@ -9,6 +9,10 @@
 	<artifactId>demyo-common</artifactId>
 	<name>Demyo: Common</name>
 	<description>Common classes that are needed in both the Web and Desktop parts, with minimal dependencies.</description>
+	
+	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
+	</properties>
 
 	<dependencies>
 		<dependency>

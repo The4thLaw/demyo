@@ -9,6 +9,10 @@
 	<artifactId>demyo-utils</artifactId>
 	<name>Demyo: Utils</name>
 	<description>Utility classes</description>
+	
+	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
+	</properties>
 
 	<dependencies>
 		<dependency>
