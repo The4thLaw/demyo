@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.demyo</groupId>
 		<artifactId>demyo</artifactId>
-		<version>2.0.0-alpha5</version>
+		<version>2.0.0-alpha6</version>
 	</parent>
 	<artifactId>demyo-utils</artifactId>
 	<name>Demyo: Utils</name>
