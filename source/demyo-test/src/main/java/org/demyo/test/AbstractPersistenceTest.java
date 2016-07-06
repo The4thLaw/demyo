@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 public abstract class AbstractPersistenceTest {
+	protected static final int DEFAULT_PAGE_SIZE = 10;
 
 	/**
 	 * Initializes the JNDI data source.

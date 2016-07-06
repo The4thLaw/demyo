@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+           http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<context:component-scan base-package="org.demyo" />
+	<jpa:repositories base-package="org.demyo.dao" />
+
+	<!-- Detect @PersistenceUnit / @PersistenceContext annotations -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/demyoDataSource" />
+	
+	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="locations">
+			<array>
+				<value>org/demyo/model/schema</value>
+			</array>
+		</property>
+	</bean>
+	
+	<!-- Must be run after Flyway to ensure the database is compatible with the code -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" depends-on="flyway">
+
+		<!-- Entity packages -->
+		<property name="packagesToScan">
+			<list>
+				<value>org.demyo.model</value>
+				<value>org.demyo.model.*</value>
+				<value>org.demyo.model.**.*</value>
+			</list>
+		</property>
+
+		<!-- Datasource definition -->
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- Persistence Provider -->
+		<property name="persistenceProvider">
+			<bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
+		</property>
+
+		<!-- JPA/Hibernate Configuration -->
+		<property name="jpaPropertyMap">
+			<map>
+				<!--<entry key="hibernate.archive.autodetection" value="class, hbm" />-->
+				<entry key="hibernate.show_sql" value="${config.hibernate.debug}" />
+				<entry key="hibernate.format_sql" value="${config.hibernate.debug}" />
+				<!-- If enabled, Hibernate will collect statistics useful for performance tuning. -->
+				<entry key="generate_statistics" value="false" />
+				<!-- If turned on, Hibernate will generate comments inside the SQL, for easier debugging. -->
+				<entry key="hibernate.use_sql_comments" value="false" />
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+				<!-- <entry key="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.WeblogicTransactionManagerLookup" 
+					/> -->
+				<!-- <entry key="hibernate.cache.use_query_cache" value="true" /> <entry 
+					key="hibernate.cache.use_second_level_cache" value="true" /> <entry key="hibernate.cache.region.factory_class" 
+					value="net.sf.ehcache.hibernate.EhCacheRegionFactory" /> -->
+			</map>
+		</property>
+	</bean>
+
+	<!-- JPA Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- Exception translation bean post processor -->
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+</beans>

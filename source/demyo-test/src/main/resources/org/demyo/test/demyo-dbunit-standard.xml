@@ -1,0 +1,18 @@
+<dataset>
+	<publishers id="1" name="Delcourt" />
+	<publishers id="2" name="Dargaud" />
+
+	<series id="1" name="XIII" website="http://www.treize.com/"
+		summary="XIII is guy suffering from amnesia." comment="Comment for XIII."/>
+	<series id="2" name="Sillage" />
+	
+	<albums id="1" series_id="1" number="3" publisher_id="2" title="Toutes les larmes de l'enfer" />
+	<albums id="2" publisher_id="1" title="Bludzee" />
+
+	<derivative_types id="1" name="Offset" />
+	<derivative_types id="2" name="Serigraphy" />
+
+	<derivatives id="1" derivative_type_id="1" series_id="1" album_id="1" description="Offset for XIII #3."/>
+	<derivatives id="2" derivative_type_id="1" series_id="2" description="Offset for Sillage, no album."/>
+	<derivatives id="3" derivative_type_id="2" album_id="2" description="Serigraphy for Bludzee, a One Shot."/>
+</dataset>

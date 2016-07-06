@@ -169,7 +169,6 @@
 				<version>1.3.168</version>
 			</dependency>
 
-			<!-- Test dependencies (TODO: check what is actually needed. Maybe not mockito or dbunit) -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
