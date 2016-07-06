@@ -4,11 +4,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -39,6 +45,14 @@ public abstract class AbstractMvcTest {
 
 	/** The HTMLUnit Web Client. */
 	private WebClient webClient;
+
+	@BeforeClass
+	public static void setupDataSource() throws NamingException {
+		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
+		DataSource ds = new DriverManagerDataSource("jdbc:h2:/tmp/demyo_tests;DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
+		builder.bind("jdbc/demyoDataSource", ds);
+		// TODO: determine how to reset
+	}
 
 	/**
 	 * Sets up the HTMLUnit Web Client.

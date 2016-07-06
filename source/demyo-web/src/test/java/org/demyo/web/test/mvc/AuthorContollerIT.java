@@ -2,15 +2,11 @@ package org.demyo.web.test.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import java.io.IOException;
 
 import org.demyo.web.controller.AuthorController;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -19,22 +15,13 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
  * Integration tests for {@link AuthorController}.
  */
 public class AuthorContollerIT extends AbstractMvcTest {
-
-	@BeforeClass
-	public static void setupDataSource() throws NamingException {
-		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
-		DataSource ds = new DriverManagerDataSource("jdbc:h2:/tmp/demyo_tests;DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
-		builder.bind("jdbc/demyoDataSource", ds);
-		// TODO: determine how to reset
-	}
-
 	/**
 	 * Tests an add/edit/delete sequence.
 	 * 
-	 * @throws Exception in case of error.
+	 * @throws IOException in case of IO error.
 	 */
 	@Test
-	public void testAll() throws Exception {
+	public void testAll() throws IOException {
 		HtmlPage page = getWebClient().getPage("http://localhost/authors/add");
 
 		// Set some values and save
