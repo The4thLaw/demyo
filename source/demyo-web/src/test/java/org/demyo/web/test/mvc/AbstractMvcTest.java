@@ -4,19 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+import org.demyo.test.AbstractPersistenceTest;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
 import org.springframework.web.context.WebApplicationContext;
@@ -34,10 +28,9 @@ import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 /**
  * Base class for MVC integration tests.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/demyo-context.xml")
 @WebAppConfiguration
-public abstract class AbstractMvcTest {
+public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMvcTest.class);
 
 	@Autowired
@@ -45,14 +38,6 @@ public abstract class AbstractMvcTest {
 
 	/** The HTMLUnit Web Client. */
 	private WebClient webClient;
-
-	@BeforeClass
-	public static void setupDataSource() throws NamingException {
-		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
-		DataSource ds = new DriverManagerDataSource("jdbc:h2:/tmp/demyo_tests;DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
-		builder.bind("jdbc/demyoDataSource", ds);
-		// TODO: determine how to reset
-	}
 
 	/**
 	 * Sets up the HTMLUnit Web Client.
