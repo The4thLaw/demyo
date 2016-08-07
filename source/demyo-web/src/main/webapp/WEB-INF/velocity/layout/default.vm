@@ -166,7 +166,7 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 			## Keep the footer in the page content to avoid having it stick
 			<footer class="mdl-mini-footer">
 				<div class="mdl-mini-footer__middle-section">
-					<div class="mdl-logo">Demyo vTODO/div>
+					<div class="mdl-logo">Demyo v$appVersion</div>
 				</div>
 			</footer>
 		</main>

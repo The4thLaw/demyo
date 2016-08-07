@@ -11,6 +11,7 @@ import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
 import org.demyo.service.IConfigurationService;
@@ -97,6 +98,7 @@ public abstract class AbstractController {
 	@ModelAttribute
 	private void initConfiguration(Model model) {
 		model.addAttribute("appConfig", configService.getConfiguration());
+		model.addAttribute("appVersion", SystemConfiguration.getInstance().getVersion());
 	}
 
 	/**
