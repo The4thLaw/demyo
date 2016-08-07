@@ -71,6 +71,7 @@ public abstract class AbstractController {
 		model.addObject("exception", ex);
 		model.addObject(MODEL_KEY_I18N_SERV, translationService);
 		model.addObject(MODEL_KEY_CONFIG, configService.getConfiguration());
+		model.addObject(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		return model;
 	}
 
