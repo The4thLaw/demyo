@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.demyo.dao.IDerivativeTypeRepo;
 import org.demyo.model.Derivative;
 import org.demyo.service.impl.DerivativeService;
 
@@ -22,8 +21,6 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 public class DerivativeServiceIT extends AbstractServiceTest {
 	@Autowired
 	private IDerivativeService service;
-	@Autowired
-	private IDerivativeTypeRepo dtRepo;
 
 	/**
 	 * Ensures proper ordering of the derivatives. Relates to commit dbf3768818bb8ec1271b51e2a753c71f2d89979f .
