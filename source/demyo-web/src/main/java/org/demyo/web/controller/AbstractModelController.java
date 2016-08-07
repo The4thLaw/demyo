@@ -60,15 +60,15 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	 * Alias for index acting on the index without slash and redirecting the user to the index with a trailing
 	 * slash (and redirecting all parameters).
 	 * 
+	 * @param model The view model to clear.
 	 * @param request The HTTP request.
 	 * @param attribs The redirection attributes
 	 * @return The redirection URL.
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String indexAlias(HttpServletRequest request, RedirectAttributes attribs) {
+	public String indexAlias(Model model, HttpServletRequest request, RedirectAttributes attribs) {
 		attribs.addAllAttributes(request.getParameterMap());
-		return redirect("/" + urlPrefix + "/");
+		return redirect(model, "/" + urlPrefix + "/");
 	}
 
 	/**
@@ -168,21 +168,23 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 
 		long id = getService().save(entity);
 
-		return redirect("/" + urlPrefix + "/view/" + id);
+		return redirect(model, "/" + urlPrefix + "/view/" + id);
 	}
 
 	/**
 	 * Deletes an entity.
 	 * 
 	 * @param modelId The ID of the entity to delete.
+	 * @param model The view model to clear.
 	 * @param request The HTTP request.
 	 * @param response The HTTP response.
 	 * @return The view name.
 	 */
 	@RequestMapping(value = { "/delete/{modelId}" }, method = RequestMethod.POST)
-	public String delete(@PathVariable long modelId, HttpServletRequest request, HttpServletResponse response) {
+	public String delete(@PathVariable long modelId, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
 		getService().delete(modelId);
-		return redirect("/" + urlPrefix + "/");
+		return redirect(model, "/" + urlPrefix + "/");
 	}
 
 	@InitBinder

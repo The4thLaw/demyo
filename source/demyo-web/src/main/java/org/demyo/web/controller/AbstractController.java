@@ -33,6 +33,9 @@ import org.springframework.web.servlet.ModelAndView;
 public abstract class AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 	private static final String MODEL_KEY_LAYOUT = "layout";
+	private static final String MODEL_KEY_CONFIG = "appConfig";
+	private static final String MODEL_KEY_VERSION = "appVersion";
+	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
 
 	@Autowired
@@ -66,8 +69,8 @@ public abstract class AbstractController {
 		LOGGER.error("Uncaught error reached the exception handler", ex);
 		ModelAndView model = new ModelAndView("core/exception");
 		model.addObject("exception", ex);
-		model.addObject("demyoTranslationService", translationService);
-		model.addObject("appConfig", configService.getConfiguration());
+		model.addObject(MODEL_KEY_I18N_SERV, translationService);
+		model.addObject(MODEL_KEY_CONFIG, configService.getConfiguration());
 		return model;
 	}
 
@@ -87,7 +90,7 @@ public abstract class AbstractController {
 	 */
 	@ModelAttribute
 	private void initTranslationService(Model model) {
-		model.addAttribute("demyoTranslationService", translationService);
+		model.addAttribute(MODEL_KEY_I18N_SERV, translationService);
 	}
 
 	/**
@@ -97,8 +100,8 @@ public abstract class AbstractController {
 	 */
 	@ModelAttribute
 	private void initConfiguration(Model model) {
-		model.addAttribute("appConfig", configService.getConfiguration());
-		model.addAttribute("appVersion", SystemConfiguration.getInstance().getVersion());
+		model.addAttribute(MODEL_KEY_CONFIG, configService.getConfiguration());
+		model.addAttribute(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 	}
 
 	/**
@@ -108,7 +111,7 @@ public abstract class AbstractController {
 	 * @param response The HTTP response.
 	 * @param relativeUrl An URL, relative to the context, to redirect to.
 	 * @return Always <code>null</code>.
-	 * @deprecated Use {@link #redirect(String)} instead.
+	 * @deprecated Use {@link #redirect(Model, String)} instead.
 	 */
 	@Deprecated
 	protected String redirect(HttpServletRequest request, HttpServletResponse response, String relativeUrl) {
@@ -123,10 +126,12 @@ public abstract class AbstractController {
 	/**
 	 * Sends an HTTP redirect.
 	 * 
+	 * @param model The Spring model, to remove any unwanted redirect parameters.
 	 * @param relativeUrl An URL, relative to the context, to redirect to.
 	 * @return The redirection URL.
 	 */
-	protected String redirect(String relativeUrl) {
+	protected String redirect(Model model, String relativeUrl) {
+		model.asMap().remove(MODEL_KEY_VERSION);
 		// Note: spring is aware of the context path
 		return "redirect:" + relativeUrl;
 	}

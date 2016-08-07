@@ -68,20 +68,21 @@ public class ImportController extends AbstractController {
 	 * Imports the selected file.
 	 * 
 	 * @param upload The file to import.
+	 * @param model The model to clear.
 	 * @param request The HTTP request.
 	 * @param response The HTTP response.
 	 * @return The view name.
 	 * @throws DemyoException If import fails.
 	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public String importFile(@ModelAttribute("importFile") FileUpload upload, HttpServletRequest request,
-			HttpServletResponse response) throws DemyoException {
+	public String importFile(@ModelAttribute("importFile") FileUpload upload, Model model,
+			HttpServletRequest request, HttpServletResponse response) throws DemyoException {
 		try {
 			importService.importFile(upload.getUploadedFile().getOriginalFilename(), upload.getUploadedFile()
 					.getInputStream());
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
 		}
-		return redirect("/");
+		return redirect(model, "/");
 	}
 }

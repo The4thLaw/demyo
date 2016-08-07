@@ -162,10 +162,10 @@ public class ImagesController extends AbstractModelController<Image> {
 		if (addedImages.isEmpty()) {
 			return "images/upload";
 		} else if (addedImages.size() == 1) {
-			return redirect("/images/view/" + addedImages.get(0));
+			return redirect(model, "/images/view/" + addedImages.get(0));
 		} else {
 			model.addAttribute("id", addedImages);
-			return redirect("/images/list");
+			return redirect(model, "/images/list");
 		}
 	}
 
@@ -202,12 +202,12 @@ public class ImagesController extends AbstractModelController<Image> {
 		}
 
 		if (addedImages.isEmpty()) {
-			return redirect("/images/detect");
+			return redirect(model, "/images/detect");
 		} else if (addedImages.size() == 1) {
-			return redirect("/images/view/" + addedImages.get(0));
+			return redirect(model, "/images/view/" + addedImages.get(0));
 		} else {
 			model.addAttribute("id", addedImages);
-			return redirect("/images/list");
+			return redirect(model, "/images/list");
 		}
 	}
 

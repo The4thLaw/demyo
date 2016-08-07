@@ -6,7 +6,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -122,12 +121,10 @@ public class PagingTool {
 	 *         with a "?" or "&".
 	 * @throws UnsupportedEncodingException If encoding the parameters fails.
 	 */
-	@SuppressWarnings("unchecked")
 	private StringBuilder getBaseUrlForPageLinks(HttpServletRequest request) throws UnsupportedEncodingException {
 		StringBuilder baseUrl = new StringBuilder(request.getRequestURI());
 		baseUrl.append('?');
-		for (Map.Entry<String, String[]> entry : (Set<Map.Entry<String, String[]>>) request.getParameterMap()
-				.entrySet()) {
+		for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
 			String param = entry.getKey();
 			if (param.startsWith("from") || param.startsWith("with")) {
 				baseUrl.append(param).append('=').append(URLEncoder.encode(entry.getValue()[0], "UTF-8"))
