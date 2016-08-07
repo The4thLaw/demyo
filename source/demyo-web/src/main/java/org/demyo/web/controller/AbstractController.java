@@ -16,7 +16,6 @@ import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
-import org.demyo.utils.io.DIOUtils;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -193,8 +192,6 @@ public abstract class AbstractController {
 			return;
 		}
 
-		FileInputStream fis = null;
-		BufferedInputStream bis = null;
 		response.setDateHeader("Last-Modified", file.lastModified());
 		response.setContentLength((int) file.length());
 		response.setContentType(mimeTypes.getContentType(file));
@@ -205,14 +202,10 @@ public abstract class AbstractController {
 			response.setHeader("Content-disposition", "attachment; filename=" + targetFilename);
 		}
 
-		try {
-			fis = new FileInputStream(file);
-			bis = new BufferedInputStream(fis);
+		try (FileInputStream fis = new FileInputStream(file);
+				BufferedInputStream bis = new BufferedInputStream(fis)) {
 			IOUtils.copy(bis, response.getOutputStream());
 			response.flushBuffer();
-		} finally {
-			DIOUtils.closeQuietly(fis);
-			DIOUtils.closeQuietly(bis);
 		}
 	}
 
