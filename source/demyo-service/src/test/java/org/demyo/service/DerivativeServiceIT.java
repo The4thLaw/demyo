@@ -26,7 +26,7 @@ public class DerivativeServiceIT extends AbstractServiceTest {
 	 * Ensures proper ordering of the derivatives. Relates to commit dbf3768818bb8ec1271b51e2a753c71f2d89979f .
 	 */
 	@Test
-	@Transactional
+	@Transactional(readOnly = true)
 	public void testOrdering() {
 		List<Derivative> derivs = service.findPaginated(1).getContent();
 		assertThat(derivs.get(0).getAlbum().getTitle()).isEqualTo("Bludzee");
