@@ -1,4 +1,4 @@
-package org.demyo.service;
+package org.demyo.service.impl;
 
 import org.demyo.test.AbstractPersistenceTest;
 

@@ -1,10 +1,11 @@
-package org.demyo.service;
+package org.demyo.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
 import org.demyo.model.Derivative;
+import org.demyo.service.IDerivativeService;
 import org.demyo.service.impl.DerivativeService;
 
 import org.junit.Test;

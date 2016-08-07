@@ -3,7 +3,6 @@ package org.demyo.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.demyo.model.Tag;
-import org.demyo.service.AbstractServiceTest;
 import org.demyo.service.ITagService;
 
 import org.junit.Test;
