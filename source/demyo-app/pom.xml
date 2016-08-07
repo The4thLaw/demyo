@@ -13,6 +13,7 @@ Includes the Web server, H2 server, and startup program.</description>
 	<properties>
 		<org.eclipse.jetty.version>8.1.7.v20120910</org.eclipse.jetty.version>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
+		<windows.version>2.0.0.6</windows.version>
 	</properties>
 	<dependencies>
 		<!-- Needed for SystemConfiguration -->
@@ -91,6 +92,58 @@ Includes the Web server, H2 server, and startup program.</description>
 									<overWriteReleases>true</overWriteReleases>
 									<overWriteSnapshots>true</overWriteSnapshots>
 									<prependGroupId>true</prependGroupId>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<plugin>
+						<groupId>com.akathist.maven.plugins.launch4j</groupId>
+						<artifactId>launch4j-maven-plugin</artifactId>
+						<version>1.7.11</version>
+						<executions>
+							<execution>
+								<id>launch4j-gui</id>
+								<phase>package</phase>
+								<goals>
+									<goal>launch4j</goal>
+								</goals>
+								<configuration>
+									<headerType>gui</headerType>
+									<outfile>${project.build.directory}/Demyo.exe</outfile>
+									<jar>lib/${finalName}.jar</jar>
+									<dontWrapJar>true</dontWrapJar>
+									<errTitle>Demyo</errTitle>
+									<chdir>.</chdir>
+									<icon>../../integration/windows/demyo.ico</icon>
+									<classPath>
+										<mainClass>org.demyo.desktop.Start</mainClass>
+										<addDependencies>false</addDependencies><!-- We use lib/* instead -->
+										<postCp>lib/*</postCp>
+									</classPath>
+									<jre>
+										<minVersion>1.7.0</minVersion>
+										<maxVersion>1.8.0</maxVersion>
+										<opts>
+											<opt>-Ddemyo.applicationDirectory="%EXEDIR%"</opt>
+										</opts>
+									</jre>
+									<splash>
+										<file>src/main/resources/org/demyo/desktop/splash.bmp</file>
+										<waitForWindow>true</waitForWindow>
+										<timeout>60</timeout>
+									</splash>
+									<versionInfo>
+										<fileVersion>${windows.version}</fileVersion>
+										<txtFileVersion>${project.version}</txtFileVersion>
+										<fileDescription>Demyo Comic Manager v${project.version}, Windows executable</fileDescription>
+										<copyright>2007-2016 Xavier Dalem</copyright>
+										<productVersion>${windows.version}</productVersion>
+										<txtProductVersion>${project.version}</txtProductVersion>
+										<productName>Demyo</productName>
+										<internalName>${finalName}.jar</internalName>
+										<originalFilename>Demyo.exe</originalFilename>
+									</versionInfo>
 								</configuration>
 							</execution>
 						</executions>

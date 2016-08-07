@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
+import java.awt.SplashScreen;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
@@ -133,6 +134,15 @@ public final class Start {
 		}
 
 		LOGGER.info("Demyo is now ready");
+		SplashScreen splash = SplashScreen.getSplashScreen();
+		if (splash != null) {
+			try {
+				splash.close();
+				LOGGER.debug("Successfully closed the splash screen");
+			} catch (IllegalStateException e) {
+				LOGGER.debug("Splash screen already closed; no big deal");
+			}
+		}
 		server.join();
 	}
 

@@ -2,7 +2,6 @@
 
 # TODO: One fine day, add an uninstall option to remove user settings as well
 # TODO: enable portable mode (should be exclusive with Desktop shortcut)
-# TODO: Once an exe file to start is available, use it instead of the .bat file
 # TODO: detect Demyo 1 installation in updates (add a specific key for major version. If the key is not present, exit with error)
 # TODO: ensure that the "Start Demyo" command at the end is performed with the right user
 # Similar to:
@@ -90,6 +89,7 @@ Section "Demyo" COMP_Demyo
 	SetOutPath "$INSTDIR"
 
 	File Demyo.bat
+	File "..\..\source\demyo-app\target\Demyo.exe"
 	File /oname=Readme.txt ..\..\README.md
 	File /oname=License.txt ..\..\LICENSE
 	DetailPrint "Changing newline characters"
@@ -103,7 +103,7 @@ Section "Demyo" COMP_Demyo
 	
 	SetOutPath "$INSTDIR\lib"
 	File "..\..\source\demyo-app\target\demyo-app*.jar"
-	FILE "..\..\source\demyo-app\target\dependencies\*.jar"
+	File "..\..\source\demyo-app\target\dependencies\*.jar"
 	
 	SetOutPath "$INSTDIR"
 	File /oname=Demyo.ico demyo.ico
@@ -151,7 +151,7 @@ Function DemyoUpdatePost
 FunctionEnd
 
 Section /o $(COMP_NAME_DesktopShortcut) COMP_DesktopShortcut
-	CreateShortCut "$DESKTOP\$(SHELL_Launch_Demyo).lnk" "$INSTDIR\$(SHELL_Launch_Demyo).bat" "" "$INSTDIR\Demyo.ico" 0
+	CreateShortCut "$DESKTOP\$(SHELL_Launch_Demyo).lnk" "$INSTDIR\Demyo.exe" "" "$INSTDIR\Demyo.ico" 0
 SectionEnd
 
 Section $(COMP_NAME_JavaAds) COMP_JavaAds
@@ -220,13 +220,13 @@ Function CreateShortcutsIn
 	SetShellVarContext current
 	Pop $0 # Output directory
 	CreateDirectory "$0"
-	CreateShortCut "$0\$(SHELL_Launch_Demyo).lnk" "$INSTDIR\Demyo.bat" "" "$INSTDIR\Demyo.ico" 0
+	CreateShortCut "$0\$(SHELL_Launch_Demyo).lnk" "$INSTDIR\Demyo.exe" "" "$INSTDIR\Demyo.ico" 0
 	CreateShortCut "$0\$(SHELL_Official_website).lnk" "$INSTDIR\$(SHELL_Official_website).url"
 	CreateShortCut "$0\$(SHELL_Uninstall).lnk" "$INSTDIR\$(SHELL_Uninstall).exe"
 FunctionEnd
 
 Function FinishLaunchDemyo
-	ExecShell "open" "$INSTDIR\$(SHELL_Launch_Demyo).bat"
+	ExecShell "open" "$INSTDIR\$(SHELL_Launch_Demyo).exe"
 FunctionEnd
 
 # Localisation
