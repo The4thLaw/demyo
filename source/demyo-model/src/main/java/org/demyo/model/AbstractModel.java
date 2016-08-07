@@ -2,6 +2,7 @@ package org.demyo.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -16,7 +17,7 @@ public abstract class AbstractModel implements IModel {
 	protected static final int BATCH_SIZE = 15;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 

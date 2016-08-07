@@ -52,7 +52,7 @@ public class OneNotNullValidator implements ConstraintValidator<OneNotNull, Obje
 		// Now, we need to add the errors on all fields
 		for (String field : fieldNames) {
 			context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate())
-					.addNode(field).addConstraintViolation().disableDefaultConstraintViolation();
+					.addPropertyNode(field).addConstraintViolation().disableDefaultConstraintViolation();
 		}
 
 		return false;

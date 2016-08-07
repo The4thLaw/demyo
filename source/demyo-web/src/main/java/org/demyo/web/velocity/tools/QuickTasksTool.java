@@ -43,7 +43,7 @@ public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 		 * @param properties The quick task attributes.
 		 * @throws DemyoException If the quick task configuration is invalid.
 		 */
-		public QuickTask(Map<?, ?> properties) throws DemyoException {
+		public QuickTask(Map<String, ?> properties) throws DemyoException {
 			try {
 				BeanUtils.populate(this, properties);
 			} catch (IllegalAccessException | InvocationTargetException e) {
@@ -175,7 +175,7 @@ public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 	 * @param config The quick task specification (see attributes of {@link QuickTask}).
 	 * @throws DemyoException If the quick task configuration is invalid.
 	 */
-	public void add(Map<?, ?> config) throws DemyoException {
+	public void add(Map<String, ?> config) throws DemyoException {
 		LOGGER.trace("Registering quick task: {}", config);
 		tasks.add(new QuickTask(config));
 	}

@@ -31,6 +31,8 @@ import org.springframework.web.servlet.view.velocity.VelocityLayoutView;
  * 
  * @see https://velocity.apache.org/tools/devel/standalone.html
  */
+@SuppressWarnings("deprecation")
+// Force acceptance of Velocity, even though Spring 4.3 does not like it any more
 public class Velocity2ToolboxView extends VelocityLayoutView {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Velocity2ToolboxView.class);
 

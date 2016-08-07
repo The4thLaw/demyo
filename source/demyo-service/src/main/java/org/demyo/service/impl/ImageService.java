@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
-import javax.transaction.Transactional;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -148,7 +147,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	@Transactional
+	@org.springframework.transaction.annotation.Transactional
 	public long uploadImage(String originalFileName, File imageFile) throws DemyoException {
 		// Determine the hash of the uploaded file
 		String hash;

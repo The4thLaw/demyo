@@ -71,11 +71,16 @@
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity-tools</artifactId>
 			<version>2.0</version>
-			<!-- Conflicts with v3.0.1 -->
 			<exclusions>
+				<!-- Conflicts with v3.0.1 -->
 				<exclusion>
 					<artifactId>servlet-api</artifactId>
 					<groupId>javax.servlet</groupId>
+				</exclusion>
+				<!-- Conflicts with v1.6.1 -->
+				<exclusion>
+					<artifactId>dom4j</artifactId>
+					<groupId>dom4j</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
