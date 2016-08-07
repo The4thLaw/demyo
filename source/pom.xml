@@ -109,18 +109,18 @@
 				<artifactId>hibernate-validator</artifactId>
 				<version>5.2.4.Final</version>
 			</dependency>
-			<!-- TODO: check these when updating Jetty: Jetty should provide them -->
+			<!-- Jetty 9.2+ provides whatever is needed at runtime -->
 			<dependency>
 				<groupId>javax.el</groupId>
 				<artifactId>javax.el-api</artifactId>
-				<version>2.2.4</version>
-				<scope>runtime</scope>
+				<version>2.2.5</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.web</groupId>
 				<artifactId>javax.el</artifactId>
-				<version>2.2.4</version>
-				<scope>runtime</scope>
+				<version>2.2.6</version>
+				<scope>test</scope>
 			</dependency>
 
 			<dependency>
@@ -194,6 +194,12 @@
 				<version>1.4.192</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-test</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>

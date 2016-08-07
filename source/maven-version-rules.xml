@@ -7,4 +7,13 @@
 		<ignoreVersion type="regex">(?i).*beta.*</ignoreVersion>
 		<ignoreVersion type="regex">.*CR\d*</ignoreVersion>
 	</ignoreVersions>
+	<rules>
+		<!-- Ignore betas for javax.el -->
+		<rule groupId="javax.el" artifactId="javax.el-api">
+			<ignoreVersion type="regex">(?i).*-b.*</ignoreVersion>
+		</rule>
+		<rule groupId="org.glassfish.web" artifactId="javax.el">
+			<ignoreVersion type="regex">(?i).*-b.*</ignoreVersion>
+		</rule>
+	</rules>
 </ruleset>
