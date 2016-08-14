@@ -109,18 +109,17 @@
 				<artifactId>hibernate-validator</artifactId>
 				<version>5.2.4.Final</version>
 			</dependency>
-			<!-- Jetty 9.2+ provides whatever is needed at runtime -->
 			<dependency>
 				<groupId>javax.el</groupId>
 				<artifactId>javax.el-api</artifactId>
 				<version>2.2.5</version>
-				<scope>provided</scope>
+				<scope>runtime</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish.web</groupId>
 				<artifactId>javax.el</artifactId>
 				<version>2.2.6</version>
-				<scope>test</scope>
+				<scope>runtime</scope>
 			</dependency>
 
 			<dependency>
