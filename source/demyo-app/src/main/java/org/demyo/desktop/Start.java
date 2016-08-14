@@ -174,8 +174,6 @@ public final class Start {
 	private static void createSysTray(final Server server) {
 		final PopupMenu popup = new PopupMenu();
 
-		// TODO: localise these. Use a ResourceBundle manually (store it in the demyo-app JAR)
-
 		if (Desktop.isDesktopSupported()) {
 			MenuItem browserItem = new MenuItem("Start Web browser");
 			browserItem.addActionListener(new ActionListener() {

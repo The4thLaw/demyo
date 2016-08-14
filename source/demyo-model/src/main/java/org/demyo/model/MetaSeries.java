@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "V_META_SERIES")
 public class MetaSeries extends AbstractModel {
-	// TODO: entity graphs
 	/** The {@link Series}. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "series_id")

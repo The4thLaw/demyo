@@ -45,7 +45,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implements the contract defined by {@link IImageService}.
  */
-// TODO: delete the file as well on image deletion
+// TODO: delete the file as well on image deletion (if in autoupload folder)
 @Service
 public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
