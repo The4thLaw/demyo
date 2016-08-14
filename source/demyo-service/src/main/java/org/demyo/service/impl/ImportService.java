@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
@@ -17,6 +19,7 @@ import org.demyo.service.importing.IImporter;
 import org.demyo.utils.io.DIOUtils;
 
 import org.apache.commons.io.IOUtils;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +45,7 @@ public class ImportService implements IImportService {
 
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
-	public void importFile(String originalFilename, InputStream content) throws DemyoException {
+	public void importFile(@NotEmpty String originalFilename, @NotNull InputStream content) throws DemyoException {
 		File importFile = null;
 		FileOutputStream fos = null;
 		BufferedOutputStream bos = null;

@@ -3,6 +3,8 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.validation.constraints.NotNull;
+
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Series;
@@ -41,7 +43,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
-	public long save(Series model) {
+	public long save(@NotNull Series model) {
 		Series savedModel = repo.saveWithReverseRelations(model);
 		return savedModel.getId();
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IQuickSearchableRepo;
@@ -141,7 +142,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
-	public long save(M model) {
+	public long save(@NotNull M model) {
 		// Before saving, we must remove any linked models that have a null id. These are models that should not exist.
 		// For example, this happens when trying to save an Album that has no binding. It is still applicable with
 		// Spring Data

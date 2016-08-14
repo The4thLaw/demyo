@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
 
+import javax.validation.constraints.NotNull;
+
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
@@ -70,7 +72,7 @@ public class ExportService implements IExportService {
 	}
 
 	@Override
-	public void registerExporter(IExporter exporter) {
+	public void registerExporter(@NotNull IExporter exporter) {
 		LOGGER.debug("Registering exporter of type: {}", exporter.getClass().getCanonicalName());
 		exporters.add(exporter);
 	}

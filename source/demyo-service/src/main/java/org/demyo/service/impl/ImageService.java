@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.validation.constraints.NotNull;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -31,6 +32,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -38,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IImageService}.
@@ -70,7 +73,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public File getImageFile(Image imageModel) throws DemyoException {
+	public File getImageFile(@NotNull Image imageModel) throws DemyoException {
 		String path = imageModel.getUrl();
 		File image = new File(SystemConfiguration.getInstance().getImagesDirectory(), path);
 		validateImagePath(image);
@@ -147,8 +150,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	@org.springframework.transaction.annotation.Transactional
-	public long uploadImage(String originalFileName, File imageFile) throws DemyoException {
+	@Transactional
+	public long uploadImage(@NotEmpty String originalFileName, @NotNull File imageFile) throws DemyoException {
 		// Determine the hash of the uploaded file
 		String hash;
 		try (FileInputStream data = new FileInputStream(imageFile)) {
@@ -192,7 +195,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public long addExistingImage(String path) throws DemyoException {
+	public long addExistingImage(@NotEmpty String path) throws DemyoException {
 		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
 		File targetFile = new File(imagesDirectory, path);
 		if (!targetFile.toPath().startsWith(imagesDirectory.toPath())) {

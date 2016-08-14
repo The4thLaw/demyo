@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import org.demyo.service.ITranslationService;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ public class TranslationService implements ITranslationService {
 	private MessageSource messageSource;
 
 	@Override
-	public String translate(String labelId) {
+	public String translate(@NotEmpty String labelId) {
 		return translate(labelId, NO_PARAMS);
 	}
 
 	@Override
-	public String translate(String labelId, Object[] params) {
+	public String translate(@NotEmpty String labelId, Object[] params) {
 		if (params.length == 1 && params[0] instanceof ArrayList<?>) {
 			// Unbox ArrayList provided by velocity
 			params = ((ArrayList<?>) params[0]).toArray();

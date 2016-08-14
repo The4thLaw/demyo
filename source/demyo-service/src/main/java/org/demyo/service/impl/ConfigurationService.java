@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.validation.constraints.NotNull;
+
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
@@ -34,7 +36,7 @@ public class ConfigurationService implements IConfigurationService {
 	}
 
 	@Override
-	public synchronized void save(ApplicationConfiguration newConfig) throws DemyoException {
+	public synchronized void save(@NotNull ApplicationConfiguration newConfig) throws DemyoException {
 		PropertiesConfiguration configProps = getFromDisk(); // Load from disk to keep the layout
 		newConfig.fillConfiguration(configProps);
 		try {
