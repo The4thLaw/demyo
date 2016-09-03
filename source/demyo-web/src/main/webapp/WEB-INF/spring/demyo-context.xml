@@ -27,6 +27,7 @@
 		<property name="basenames">
 			<list>
 				<value>org/demyo/i18n/core</value>
+				<value>org/demyo/i18n/desktop</value>
 				<value>org/demyo/i18n/fields</value>
 				<value>org/demyo/i18n/menu</value>
 				<value>org/demyo/i18n/pages</value>

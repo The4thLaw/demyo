@@ -25,6 +25,6 @@ public abstract class AbstractPersistenceTest {
 	public static void setupDataSource() throws NamingException {
 		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
 		DataSource ds = new DriverManagerDataSource("jdbc:h2:mem:demyo_tests;DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
-		builder.bind("jdbc/demyoDataSource", ds);
+		builder.bind("org.demyo.services.dataSource", ds);
 	}
 }
