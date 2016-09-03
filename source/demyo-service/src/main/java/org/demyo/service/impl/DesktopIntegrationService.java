@@ -20,6 +20,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.common.desktop.DesktopUtils;
 
 import org.imgscalr.Scalr;
@@ -34,6 +35,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class DesktopIntegrationService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DesktopIntegrationService.class);
+
+	@Autowired
+	private DesktopCallbacks desktop;
 
 	@Autowired
 	private TranslationService translationService;
@@ -60,7 +64,6 @@ public class DesktopIntegrationService {
 			public void run() {
 				createSysTray();
 			}
-
 		});
 	}
 
@@ -79,12 +82,21 @@ public class DesktopIntegrationService {
 		}
 
 		MenuItem exitItem = new MenuItem(translationService.translate("desktop.tray.exit.label"));
-		exitItem.setActionCommand(DesktopUtils.STOP_SERVER_CMD);
+		exitItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LOGGER.info("Stopping Demyo");
+				for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
+					SystemTray.getSystemTray().remove(icon);
+				}
+
+				desktop.stopServer();
+			}
+		});
 		popup.add(exitItem);
 
 		URL iconUrl = getClass().getResource("/org/demyo/common/desktop/app-icon.png");
 		assert (iconUrl != null);
-		//ImageIcon icon = new ImageIcon(iconUrl, "Demyo tray icon");
 		BufferedImage iconBI;
 		try {
 			iconBI = ImageIO.read(iconUrl);
@@ -100,7 +112,6 @@ public class DesktopIntegrationService {
 		iconBI = Scalr.resize(iconBI, trayIconSize.width, trayIconSize.height, Scalr.OP_ANTIALIAS);
 
 		TrayIcon trayIcon = new TrayIcon(iconBI, translationService.translate("desktop.tray.mainIcon.tooltip"));
-		trayIcon.setActionCommand(DesktopUtils.MAIN_TRAY_ICON_CMD);
 		trayIcon.setPopupMenu(popup);
 		try {
 			tray.add(trayIcon);

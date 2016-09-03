@@ -2,21 +2,17 @@ package org.demyo.desktop;
 
 import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.awt.SplashScreen;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 
+import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
 import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.common.desktop.DesktopUtils;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -102,6 +98,7 @@ public final class Start {
 		webapp.setWar(SystemConfiguration.getInstance().getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
 		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.dataSource", ds);
+		setDesktopCallbacks(server);
 		server.setHandler(webapp);
 
 		server.start();
@@ -109,7 +106,6 @@ public final class Start {
 		if (Desktop.isDesktopSupported() && SystemConfiguration.getInstance().isAutoStartWebBrowser()) {
 			DesktopUtils.startBrowser();
 		}
-		setStopAction(server);
 
 		LOGGER.info("Demyo is now ready");
 		closeSplashScreen();
@@ -117,54 +113,28 @@ public final class Start {
 	}
 
 	/**
-	 * Sets the stop action on the systray.
+	 * Sets the required {@link DesktopCallbacks} for the application.
 	 * <p>
-	 * This is needed because the Spring desktop integration service does not have access to the Jetty server
-	 * instance.
+	 * The callbacks are published to JNDI under <code>org.demyo.services.desktop</code>.
+	 * </p>
+	 * <p>
+	 * This method must be called before starting the server.
 	 * </p>
 	 * 
-	 * @param server The Jetty server.
+	 * @param server The Jetty server
+	 * @throws NamingException In case registering the JNDI attribute fails.
 	 */
-	private static void setStopAction(final Server server) {
-		if (!Desktop.isDesktopSupported()) {
-			return;
-		}
-
-		SystemTray tray = SystemTray.getSystemTray();
-		for (TrayIcon icon : tray.getTrayIcons()) {
-			if (!DesktopUtils.MAIN_TRAY_ICON_CMD.equals(icon.getActionCommand())) {
-				continue;
-			}
-			LOGGER.debug("Found main tray icon");
-			PopupMenu menu = icon.getPopupMenu();
-			for (int i = 0; i < menu.getItemCount(); i++) {
-				MenuItem item = menu.getItem(i);
-				if (!DesktopUtils.STOP_SERVER_CMD.equals(item.getActionCommand())) {
-					continue;
+	private static void setDesktopCallbacks(final Server server) throws NamingException {
+		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.desktop", new DesktopCallbacks() {
+			@Override
+			public void stopServer() {
+				try {
+					server.stop();
+				} catch (Exception ex) {
+					LOGGER.warn("Error while stopping server", ex);
 				}
-				LOGGER.debug("Found stop server menu entry");
-				item.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						LOGGER.info("Stopping Demyo");
-						for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
-							SystemTray.getSystemTray().remove(icon);
-						}
-						// This should not be needed, but the EDT is still running :/
-						/*for (Window w : Window.getWindows()) {
-							LOGGER.debug("Disposing of window {}", w);
-							w.dispose();
-						}*/
-
-						try {
-							server.stop();
-						} catch (Exception ex) {
-							LOGGER.warn("Error while stopping server", ex);
-						}
-					}
-				});
 			}
-		}
+		});
 	}
 
 	private static void closeSplashScreen() {

@@ -20,6 +20,7 @@
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
 			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.demyo</groupId>
@@ -30,6 +31,10 @@
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-service</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.demyo</groupId>
+			<artifactId>demyo-test</artifactId>
 		</dependency>
 
 		<dependency>

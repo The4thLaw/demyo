@@ -15,9 +15,6 @@ import org.slf4j.LoggerFactory;
  * Utilities for Desktop integration.
  */
 public final class DesktopUtils {
-	public static final String MAIN_TRAY_ICON_CMD = "demyo-tray-icon";
-	public static final String STOP_SERVER_CMD = "demyo-tray-stop-server";
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(DesktopUtils.class);
 
 	private DesktopUtils() {

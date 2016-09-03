@@ -8,7 +8,8 @@
 	</parent>
 	<artifactId>demyo-common</artifactId>
 	<name>Demyo: Common</name>
-	<description>Common classes that are needed in both the Web and Desktop parts, with minimal dependencies.</description>
+	<description>Common classes that are needed in both the Web and Desktop parts, with minimal dependencies.
+This package should be loaded by the container (e.g. demyo-app) and defined with the scope &quot;provided&quot; by all other depending packages, in order to have consistent class definitions between the container and the Web application, and to be able to pass interface implementations between them.</description>
 	
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
