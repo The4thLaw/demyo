@@ -41,3 +41,15 @@
 #images-detect-list .mdl-checkbox {
 	height: auto;
 }
+
+/* Avoid showing the date helper text in Chrome until the field is focused */
+input[type=date]::-webkit-datetime-edit-fields-wrapper {
+	color: transparent;
+	transition: color .2s;
+	transition-delay: .2s;
+}
+input[type=date]:focus::-webkit-datetime-edit-fields-wrapper {
+	color: @color-input-label;
+	transition-delay: 0s;
+	transition-duration: 0s;
+}
