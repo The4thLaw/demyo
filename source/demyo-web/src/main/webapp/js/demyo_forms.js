@@ -131,9 +131,67 @@
 			}
 		};
 		
+		
 		// Bind event and trigger it already
 		main.change(refresher);
 		refresher();
+	};
+	
+	demyo.bindRepeatableParts = function () {
+		$('.dem-repeatable-list').each(function () {
+			var part = this;
+			
+			// Load and remove template from DOM so that it is not submitted
+			var template = $('.dem-repeatable-template', this);
+			var templateHtml = '<div class="dem-repeatable-item">' + template.html() + '</div>';
+			template.remove();
+			
+			var removerCallback = function () {
+				$($(this).parents('.dem-repeatable-item').get(0)).remove();
+				demyo.renumberRepeatablePart(part);
+				return false;
+			};
+			
+			// Bind handler for removal of a specific part
+			$('.dem-repeatable-remover').click(removerCallback);
+			
+			// Bind addition handler
+			$('.dem-repeatable-adder').click(function () {
+				$(this).before(templateHtml);
+				var addedElement = $('.dem-repeatable-item', part).last();
+				
+				// Register component to MDL, and all its children too
+				componentHandler.upgradeElement(addedElement.get(0));
+				$('*', addedElement).each(function () {
+					componentHandler.upgradeElement(this);	
+				});
+				
+				// Register remover
+				$('.dem-repeatable-remover', addedElement).click(removerCallback);
+				
+				demyo.renumberRepeatablePart(part);
+				
+				return false;	
+			});
+		});
+	};
+	
+	demyo.renumberRepeatablePart = function (part) {
+		var renumber = function (value, i) {
+			return value.replace(/\[[0-9]*\]/, '[' + i + ']');
+		};
+		
+		$('.dem-repeatable-item').each(function (itemNumber) {
+			$('input', this).each(function () {
+				var $this = $(this);
+				$this.attr('id', renumber($this.attr('id'), itemNumber));
+				$this.attr('name', renumber($this.attr('name'), itemNumber));
+			});
+			$('label', this).each(function () {
+				var $this = $(this);
+				$this.attr('for', renumber($this.attr('for'), itemNumber));
+			});
+		});
 	};
 
 })(jQuery);
@@ -142,4 +200,5 @@ jQuery(function () {
 	demyo.bindValidationHandlers();
 	demyo.bindColourInputs();
 	demyo.bindSelectInputs();
+	demyo.bindRepeatableParts();
 });
