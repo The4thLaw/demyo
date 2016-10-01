@@ -8,6 +8,9 @@
 	
 	<albums id="1" series_id="1" number="3" publisher_id="2" title="Toutes les larmes de l'enfer" />
 	<albums id="2" publisher_id="1" title="Bludzee" />
+	
+	<albums_prices album_id="1" date="2016-01-10" price="10" />
+	<albums_prices album_id="1" date="2016-01-15" price="1.5" />
 
 	<derivative_types id="1" name="Offset" />
 	<derivative_types id="2" name="Serigraphy" />

@@ -17,12 +17,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.util.AuthorComparator;
+import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.IdentifyingNameComparator;
 
 import org.hibernate.annotations.SortComparator;
@@ -37,7 +39,7 @@ import org.hibernate.validator.constraints.NotBlank;
 		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover"),
 		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
 		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
-		@NamedAttributeNode("translators"), @NamedAttributeNode("images") })
+		@NamedAttributeNode("translators"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") })
 // TODO: prices
 // TODO: loans
 public class Album extends AbstractModel {
@@ -110,6 +112,12 @@ public class Album extends AbstractModel {
 	@Column(name = "purchase_price")
 	@Min(0)
 	private BigDecimal purchasePrice;
+
+	/** The prices applicable to the album. */
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "ALBUM_ID")
+	@SortComparator(ComparableComparator.class)
+	private SortedSet<AlbumPrice> prices;
 
 	/** The flag indicating whether an item is part of the wishlist. */
 	@Column(name = "wishlist")
@@ -442,6 +450,24 @@ public class Album extends AbstractModel {
 	 */
 	public void setPurchasePrice(BigDecimal purchasePrice) {
 		this.purchasePrice = purchasePrice;
+	}
+
+	/**
+	 * Gets the prices applicable to the album.
+	 * 
+	 * @return the prices applicable to the album
+	 */
+	public SortedSet<AlbumPrice> getPrices() {
+		return prices;
+	}
+
+	/**
+	 * Sets the prices applicable to the album.
+	 * 
+	 * @param prices the new prices applicable to the album
+	 */
+	public void setPrices(SortedSet<AlbumPrice> prices) {
+		this.prices = prices;
 	}
 
 	/**
