@@ -3,6 +3,7 @@ package org.demyo.common.exception;
 /**
  * Exhaustive list of error codes in Demyo.
  */
+// TODO: all codes should start from 0
 public enum DemyoErrorCode {
 	/*
 	 * 10xxx: system errors
@@ -58,7 +59,11 @@ public enum DemyoErrorCode {
 	/** An assumption about the database could not be met. */
 	EXPORT_DB_CONSISTENCY_ERROR(16002),
 	/** The system encountered a parse error during export. */
-	EXPORT_XML_ERROR(16002);
+	EXPORT_XML_ERROR(16002),
+	/** ORM: A mapped property is invalid. */
+	ORM_INVALID_PROPERTY(17000),
+	/** ORM: The PreSave method doesn't have a valid signature. */
+	ORM_INVALID_PRESAVE(17001);
 
 	private final int numericCode;
 

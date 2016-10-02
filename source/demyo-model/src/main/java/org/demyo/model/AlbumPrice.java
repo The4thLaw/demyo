@@ -17,7 +17,6 @@ import org.demyo.model.AlbumPrice.AlbumPriceId;
 /**
  * Defines a dated price for an {@link Album}.
  */
-// TODO: consider adding a generated ID. It's not working great at the moment.
 @Entity
 @Table(name = "ALBUMS_PRICES")
 @IdClass(AlbumPriceId.class)

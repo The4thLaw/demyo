@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import javax.validation.constraints.NotNull;
-
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IMetaSeriesRepo;
 import org.demyo.dao.IModelRepo;
@@ -141,17 +139,14 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		return repo;
 	}
 
-	// TODO: remove?
-	@Transactional(rollbackFor = Throwable.class)
 	@Override
-	public long save(@NotNull Album model) {
-		model.setPricesFromList();
-		if (model.getId() != null) {
-			// TODO: special method, protected, to get with delete-oprhan fields
-			Album loaded = getByIdForEdition(model.getId());
-			BeanUtils.copyProperties(model, loaded);
-			model = loaded;
+	protected Album reloadIfNeeded(Album model) {
+		if (model.getId() == null) {
+			return model;
 		}
-		return super.save(model);
+
+		Album loaded = getByIdForEdition(model.getId());
+		BeanUtils.copyProperties(model, loaded);
+		return loaded;
 	}
 }

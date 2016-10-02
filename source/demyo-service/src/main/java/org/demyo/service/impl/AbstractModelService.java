@@ -2,16 +2,20 @@ package org.demyo.service.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IQuickSearchableRepo;
 import org.demyo.model.IModel;
 import org.demyo.model.util.DefaultOrder;
+import org.demyo.model.util.PreSave;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelService;
 
@@ -44,6 +48,10 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 */
 	private final Order[] defaultOrder;
 
+	private final Method[] getterMethods;
+	private final Method[] setterMethods;
+	private final Method[] preSaveMethods;
+
 	/**
 	 * Creates an abstract model service.
 	 * 
@@ -52,22 +60,73 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	protected AbstractModelService(Class<M> modelClass) {
 		this.modelClass = modelClass;
 
-		// Detect default order
+		this.defaultOrder = loadDefaultOrder();
+
+		// Detect methods to clear linked models or to call before save
+		List<Method> getters = new ArrayList<>();
+		List<Method> setters = new ArrayList<>();
+		List<Method> preSave = new ArrayList<>();
+		for (Method meth : modelClass.getMethods()) {
+			boolean isModelGetter = IModel.class.isAssignableFrom(meth.getReturnType())
+					&& meth.getName().startsWith("get") && meth.getParameterTypes().length == 0;
+			boolean isTransientMethod = meth.getAnnotation(Transient.class) != null;
+			if (isModelGetter && !"getClass".equals(meth.getName()) && !isTransientMethod) {
+				// This is a standard getter method for a linked model
+				getters.add(meth);
+				Method setter;
+				try {
+					setter = modelClass.getMethod(meth.getName().replaceFirst("get", "set"), meth.getReturnType());
+				} catch (NoSuchMethodException | SecurityException e) {
+					throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PROPERTY, e,
+							"No setter for getter", meth.getName());
+				}
+				setters.add(setter);
+			}
+
+			loadPreSaveMethod(preSave, meth);
+		}
+
+		getterMethods = getters.toArray(new Method[getters.size()]);
+		setterMethods = setters.toArray(new Method[setters.size()]);
+		preSaveMethods = preSave.toArray(new Method[preSave.size()]);
+
+		LOGGER.debug("Default order set for {}", modelClass);
+	}
+
+	private Order[] loadDefaultOrder() {
+		Order[] loadedOrder;
+
 		DefaultOrder defaultOrderAnnotation = modelClass.getAnnotation(DefaultOrder.class);
 		if (defaultOrderAnnotation != null && defaultOrderAnnotation.expression().length > 0) {
 			org.demyo.model.util.DefaultOrder.Order[] defaultOrderExpression = defaultOrderAnnotation.expression();
 
-			defaultOrder = new Order[defaultOrderExpression.length];
+			loadedOrder = new Order[defaultOrderExpression.length];
 
 			// Convert the default order to expressions that can be handled later. Preserve the order of the annotation.
 			for (int i = 0; i < defaultOrderExpression.length; i++) {
 				org.demyo.model.util.DefaultOrder.Order order = defaultOrderExpression[i];
-				defaultOrder[i] = new Order(order.asc() ? Direction.ASC : Direction.DESC, order.property());
+				loadedOrder[i] = new Order(order.asc() ? Direction.ASC : Direction.DESC, order.property());
 			}
 		} else {
-			defaultOrder = null;
+			loadedOrder = null;
 		}
-		LOGGER.debug("Default order set for {}", modelClass);
+
+		return loadedOrder;
+	}
+
+	private static void loadPreSaveMethod(List<Method> preSave, Method meth) {
+		if (meth.getAnnotation(PreSave.class) != null) {
+			if (meth.getParameterTypes().length != 0) {
+				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE,
+						"@PreSave methods cannot have parameters", meth.getName());
+			}
+			if (!meth.getReturnType().equals(Void.TYPE)) {
+				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE,
+						"@PreSave methods cannot have return values", meth.getName(), meth.getReturnType()
+								.toString());
+			}
+			preSave.add(meth);
+		}
 	}
 
 	/**
@@ -143,33 +202,56 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public long save(@NotNull M model) {
+		// Call PreSave methods
+		for (Method meth : preSaveMethods) {
+			try {
+				meth.invoke(model, new Object[] {});
+				LOGGER.debug("Called @PreSave method {}", meth);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE, e,
+						"Calling @PreSave method failed", meth.getName());
+			}
+		}
+
+		model = reloadIfNeeded(model);
+
 		// Before saving, we must remove any linked models that have a null id. These are models that should not exist.
 		// For example, this happens when trying to save an Album that has no binding. It is still applicable with
 		// Spring Data
-		// TODO: pre-compute the list of methods
-		for (Method meth : modelClass.getMethods()) {
-			boolean isModelGetter = IModel.class.isAssignableFrom(meth.getReturnType())
-					&& meth.getName().startsWith("get") && meth.getParameterTypes().length == 0;
-			boolean isTransientMethod = meth.getAnnotation(Transient.class) != null;
-			if (isModelGetter && !"getClass".equals(meth.getName()) && !isTransientMethod) {
-				// This is a standard getter method for a linked model
-				try {
-					IModel other = (IModel) meth.invoke(model);
-					if (other != null && other.getId() == null) {
-						Method setter = modelClass.getMethod(meth.getName().replaceFirst("get", "set"),
-								meth.getReturnType());
-						setter.invoke(model, new Object[] { null });
-						LOGGER.debug("Cleared linked model: {}.{}()", modelClass.getName(), meth.getName());
-					}
-				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-						| NoSuchMethodException | SecurityException e) {
-					LOGGER.warn("Failed to clear linked model", e);
+		for (int i = 0; i < getterMethods.length; i++) {
+			Method getter = getterMethods[i];
+			try {
+				IModel other = (IModel) getter.invoke(model);
+				if (other != null && other.getId() == null) {
+					Method setter = setterMethods[i];
+					setter.invoke(model, new Object[] { null });
+					LOGGER.debug("Cleared linked model: {}.{}()", modelClass.getName(), getter.getName());
 				}
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+					| SecurityException e) {
+				LOGGER.warn("Failed to clear linked model", e);
 			}
 		}
 
 		M savedModel = getRepo().save(model);
 		return savedModel.getId();
+	}
+
+	/**
+	 * Reloads the model from the database if needed. For example, this is required if the model manages orphaned
+	 * collections of child entities.
+	 * <p>
+	 * This method is responsible of applying the properties from the provided model to the returned model.
+	 * </p>
+	 * <p>
+	 * By default, this method returns the provided object without any modification.
+	 * </p>
+	 * 
+	 * @param model The model that would be saved.
+	 * @return The model to save.
+	 */
+	protected M reloadIfNeeded(M model) {
+		return model;
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
