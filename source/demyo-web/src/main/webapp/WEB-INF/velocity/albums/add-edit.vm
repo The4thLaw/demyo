@@ -124,7 +124,6 @@
 		#inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
 	#end
 	#@mdlGridCell([6,4,0])
-		## TODO: price history
 		<div class="dem-prices-edit-list dem-repeatable-list">
 		#foreach($price in $album.priceList)
 			#set($priceNum = $velocityCount - 1)

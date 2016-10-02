@@ -141,21 +141,12 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 	@Override
 	protected Album reloadIfNeeded(Album model) {
-		if (model.getId() != null) {
-			Album loaded = getByIdForEdition(model.getId());
-			BeanUtils.copyProperties(model, loaded);
-			model = loaded;
+		if (model.getId() == null) {
+			return model;
 		}
-		// TODO: clean this
 
-		// Set the Album reference in the child to the exact same entity as the parent.
-		// Do this after reloading from the database
-		/*if (model.getPrices() != null) {
-			for (AlbumPrice price : model.getPrices()) {
-				price.setAlbumId(model);
-			}
-		}*/
-
-		return model;
+		Album loaded = getByIdForEdition(model.getId());
+		BeanUtils.copyProperties(model, loaded);
+		return loaded;
 	}
 }
