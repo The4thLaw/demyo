@@ -32,11 +32,11 @@ public class AlbumServiceIT extends AbstractServiceTest {
 		assertThat(a.getPrices()).hasSize(2);
 		Iterator<AlbumPrice> priceIterator = a.getPrices().iterator();
 		AlbumPrice price1 = priceIterator.next();
-		assertThat(price1.getAlbumId()).isEqualTo(1);
+		assertThat(price1.getAlbumId().getId()).isEqualTo(1);
 		assertThat(new Date(price1.getDate().getTime())).isEqualTo("2016-01-10");
 		assertThat(price1.getPrice()).isEqualTo("10.0");
 		AlbumPrice price2 = priceIterator.next();
-		assertThat(price2.getAlbumId()).isEqualTo(1);
+		assertThat(price2.getAlbumId().getId()).isEqualTo(1);
 		assertThat(new Date(price2.getDate().getTime())).isEqualTo("2016-01-15");
 		assertThat(price2.getPrice()).isEqualTo("1.5");
 	}

@@ -6,8 +6,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -24,6 +27,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Entity
 @Table(name = "ALBUMS_PRICES")
 @IdClass(AlbumPriceId.class)
+// TODO: rename fields
+// TODO: consider refactoring to share some aspects with the DerivativePrice
 public class AlbumPrice implements Comparable<AlbumPrice> {
 	/**
 	 * Embedded class for the ID.
@@ -73,10 +78,10 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	}
 
 	/** The parent {@link Album} ID. */
-	@Column(name = "album_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "album_id")
 	@Id
-	@NotNull
-	private Long albumId;
+	private Album albumId;
 
 	/** The date at which the price was applicable. */
 	@Column(name = "date")
@@ -92,9 +97,11 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 
 	@Override
 	public int compareTo(AlbumPrice o) {
-		int comparison;
+		int comparison = 0;
 
-		comparison = AbstractModelComparator.nullSafeComparison(albumId, o.albumId);
+		if (albumId != null) {
+			comparison = AbstractModelComparator.nullSafeComparison(albumId.getId(), o.albumId.getId());
+		}
 		if (comparison != 0) {
 			return comparison;
 		}
@@ -114,7 +121,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	 * 
 	 * @return the parent {@link Album} ID
 	 */
-	public Long getAlbumId() {
+	public Album getAlbumId() {
 		return albumId;
 	}
 
@@ -123,7 +130,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	 * 
 	 * @param albumId the new parent {@link Album} ID
 	 */
-	public void setAlbumId(Long albumId) {
+	public void setAlbumId(Album albumId) {
 		this.albumId = albumId;
 	}
 

@@ -488,6 +488,7 @@ public class Album extends AbstractModel {
 		}
 		if (prices != null) {
 			this.prices.addAll(prices);
+			setAlbumInPrices();
 		}
 		priceList = null;
 	}
@@ -522,6 +523,22 @@ public class Album extends AbstractModel {
 			}
 			prices.clear();
 			prices.addAll(priceList);
+			setAlbumInPrices();
+		}
+	}
+
+	/**
+	 * Sets the Album reference in the child prices to the exact same entity as the parent.
+	 * <p>
+	 * Must be performed before saving to ensure that Hibernate can merge in one go, but it can also be done more
+	 * frequently. The cost is not huge.
+	 * </p>
+	 */
+	private void setAlbumInPrices() {
+		if (prices != null) {
+			for (AlbumPrice price : prices) {
+				price.setAlbumId(this);
+			}
 		}
 	}
 
