@@ -119,16 +119,19 @@ $quickTasks.add({
 </div>
 
 
+#if ($album.purchasePrice || !$album.prices.empty)
 <div class="mdl-grid dem-field-set">
 	## TODO: price history
 	#@mdlGridCellCond([6,4,0], $album.purchasePrice)
 		#entityFieldNumber('field.Album.purchasePrice' $album.purchasePrice) ## TODO: append currency
 	#end
 </div>
+#end
 
 
 ## TODO: borrower
 
+#if ($album.summary || $album.comment)
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCellCond([6,4,0], $album.summary)
 		#entityFieldRichText('field.Album.summary', $album.summary)
@@ -137,6 +140,7 @@ $quickTasks.add({
 		#entityFieldRichText('field.Album.comment', $album.comment)
 	#end
 </div>
+#end
 
 ## TODO: list of derivatives
 ## TODO: list of other images
