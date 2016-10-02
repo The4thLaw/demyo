@@ -3,6 +3,8 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.demyo.dao.IAuthorRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Author;
@@ -31,7 +33,11 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public Author getByIdForView(long id) {
-		return repo.findOneForView(id);
+		Author entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Author for ID " + id);
+		}
+		return entity;
 	}
 
 	@Async

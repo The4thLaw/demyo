@@ -7,6 +7,7 @@ import java.util.List;
 import org.demyo.test.AbstractPersistenceTest;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +36,11 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 /**
  * Base class for MVC integration tests.
+ * 
+ * <p>
+ * Both WebClient and WebDriver are accepted depending on the scope of the actions. WebClient provides low-level
+ * access to some details (e.g. HTTP statuses) while WebDriver provides powerful CSS selectors.
+ * </p>
  */
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/demyo-context.xml")
 @WebAppConfiguration
@@ -49,6 +55,14 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private WebClient webClient;
 	/** The Selenium Web Driver. */
 	private WebDriver webDriver;
+
+	/**
+	 * Sets tests to headless mode to ensure that desktop integration is disabled.
+	 */
+	@BeforeClass
+	public static void setHeadless() {
+		System.setProperty("java.awt.headless", "true");
+	}
 
 	/**
 	 * Sets up the HTMLUnit Web Client.

@@ -3,6 +3,7 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 
 import org.demyo.dao.IModelRepo;
@@ -33,7 +34,11 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public Series getByIdForView(long id) {
-		return repo.findOneForView(id);
+		Series entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Series for ID " + id);
+		}
+		return entity;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,24 +56,32 @@ public abstract class AbstractController {
 
 	@ExceptionHandler
 	private ModelAndView demyoExceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
-		boolean statusSet = false;
+		LOGGER.error("Uncaught error reached the exception handler", ex);
+
 		if (ex instanceof IDemyoException) {
 			IDemyoException ide = (IDemyoException) ex;
 			if (ide.is(DemyoErrorCode.IMAGE_NOT_FOUND)) {
-				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				statusSet = true;
+				return demyo404Handler(ex, response);
 			}
 		}
-		if (!statusSet) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		}
-		LOGGER.error("Uncaught error reached the exception handler", ex);
-		ModelAndView model = new ModelAndView("core/exception");
+
+		return handleError(ex, response, "core/exception", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	}
+
+	private ModelAndView handleError(Exception ex, HttpServletResponse response, String viewName, int status) {
+		response.setStatus(status);
+		ModelAndView model = new ModelAndView(viewName);
 		model.addObject("exception", ex);
 		model.addObject(MODEL_KEY_I18N_SERV, translationService);
 		model.addObject(MODEL_KEY_CONFIG, configService.getConfiguration());
 		model.addObject(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		return model;
+	}
+
+	@ExceptionHandler(value = EntityNotFoundException.class)
+	@GetMapping("/errors/404")
+	private ModelAndView demyo404Handler(Exception ex, HttpServletResponse response) throws Exception {
+		return handleError(ex, response, "core/404", HttpServletResponse.SC_NOT_FOUND);
 	}
 
 	/**

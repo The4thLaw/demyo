@@ -3,6 +3,8 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IPublisherRepo;
 import org.demyo.model.Publisher;
@@ -39,7 +41,11 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public Publisher getByIdForView(long id) {
-		return repo.findOneForView(id);
+		Publisher entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Publisher for ID " + id);
+		}
+		return entity;
 	}
 
 	@Async

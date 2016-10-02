@@ -4,17 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.demyo.web.controller.AuthorController;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 /**
  * Integration tests for {@link AuthorController}.
  */
-// TODO: migrate to WebDriver like AlbumControllerIT to have a single way of doing things?
 public class AuthorControllerIT extends AbstractMvcTest {
 	/**
 	 * Tests an add/edit/delete sequence.
@@ -63,7 +66,11 @@ public class AuthorControllerIT extends AbstractMvcTest {
 		// Check redirect after delete
 		assertThat(page.getUrl().toString()).matches(".*/authors/$");
 
-		// TODO: this should return a 404. Currently returns a 500.
-		//getWebClient().getPage(viewUrl);
+		try {
+			getWebClient().getPage(viewUrl);
+			Assertions.fail("Should have gotten a 404 error");
+		} catch (FailingHttpStatusCodeException e) {
+			assertThat(e.getStatusCode()).isEqualTo(HttpServletResponse.SC_NOT_FOUND);
+		}
 	}
 }

@@ -3,6 +3,8 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.ITagRepo;
 import org.demyo.model.Tag;
@@ -34,7 +36,11 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public Tag getByIdForView(long id) {
-		return repo.findOneForView(id);
+		Tag entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Tag for ID " + id);
+		}
+		return entity;
 	}
 
 	@Transactional(readOnly = true)

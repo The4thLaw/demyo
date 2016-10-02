@@ -1,0 +1,8 @@
+#setPageTitle('title.exception.404')
+
+<h1 class="mdl-typography--title">#_('core.exception.explanation.404.title')</h1>
+<p>#_('core.exception.explanation.404.detail')</p>
+
+<div class="dem-exception-message">
+	$!exception.message
+</div>

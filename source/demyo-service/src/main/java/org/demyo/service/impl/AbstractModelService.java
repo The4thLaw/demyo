@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -146,7 +147,12 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Transactional(rollbackFor = Throwable.class)
 	@Override
 	public M getByIdForEdition(long id) {
-		return getRepo().findOneForEdition(id);
+		// While waiting for DATAJPA-118...
+		M entity = getRepo().findOneForEdition(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No " + modelClass.getSimpleName() + " for ID " + id);
+		}
+		return entity;
 	}
 
 	@Transactional(readOnly = true)
