@@ -132,7 +132,7 @@
 				#inputHidden("album.priceList[$priceNum].albumId")
 				#inputDate('field.Album.prices.date', "album.priceList[$priceNum].date")
 				#inputFloat('field.Album.prices.price', "album.priceList[$priceNum].price") ## TODO: append currency
-				<button class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover"><i class="dico">delete</i></button>
+				<span class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover"><i class="dico">delete</i></span>
 			</div>
 		#end
 			<div class="dem-repeatable-template">
@@ -145,9 +145,9 @@
 					<input type="number" step="any" id="field_album_priceList[]_price" name="priceList[].price" class="mdl-textfield__input float" />
 					<label class="mdl-textfield__label" for="field_album_priceList[]_price">#_('field.Album.prices.price')</label>
 				</div>
-				<button class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover" type="button"><i class="dico">delete</i></button>
+				<span class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover" type="button"><i class="dico">delete</i></span>
 			</div>
-			<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent dem-repeatable-adder"><i class="dico">add</i></button>
+			<span class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent dem-repeatable-adder"><i class="dico">add</i></span>
 		</div>
 	#end
 </div>
