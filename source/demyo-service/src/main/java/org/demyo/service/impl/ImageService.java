@@ -45,7 +45,6 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implements the contract defined by {@link IImageService}.
  */
-// TODO [P1]: delete the file as well on image deletion (if in autoupload folder)
 @Service
 public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
@@ -261,6 +260,25 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			LOGGER.warn("Failed to create directory {}", thumbnailDirectory);
 		} else {
 			LOGGER.debug("Recreated thumbnail directory at {}", thumbnailDirectory);
+		}
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@Override
+	public void delete(long id) {
+		Image image = getRepo().findOne(id);
+		super.delete(id);
+		String path = image.getUrl();
+		if (path.startsWith(UPLOAD_DIRECTORY_NAME)) {
+			LOGGER.info("Image {} was uploaded automatically as {}; deleting it now that it is no longer used",
+					id, path);
+			try {
+				if (!getImageFile(image).delete()) {
+					LOGGER.warn("Failed to delete the image at {}", path);
+				}
+			} catch (DemyoException e) {
+				LOGGER.warn("Failed to delete the image at {}", path, e);
+			}
 		}
 	}
 }
