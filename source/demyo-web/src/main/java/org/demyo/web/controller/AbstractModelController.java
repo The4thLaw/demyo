@@ -34,7 +34,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * 
  * @param <M> The model type.
  */
-// TODO: Protect all access against XSS
+// TODO [P2]: Protect all access against XSS
 public abstract class AbstractModelController<M extends IModel> extends AbstractController {
 	private final Class<M> modelClass;
 	private final String urlPrefix;

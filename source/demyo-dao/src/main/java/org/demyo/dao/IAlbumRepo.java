@@ -18,8 +18,8 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
-	// TODO: open a feature request to Spring Data to support some genericity in @EntityGraph: automatic context with
-	// the class name, or spEL support
+	// TODO [P3]: open a feature request to Spring Data to support some genericity in @EntityGraph: automatic context
+	// with the class name, or spEL support
 	Album findOneForEdition(long id);
 
 	@EntityGraph("Album.forEdition")

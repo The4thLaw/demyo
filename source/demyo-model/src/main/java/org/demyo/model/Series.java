@@ -79,7 +79,7 @@ public class Series extends AbstractModel {
 		return name;
 	}
 
-	// TODO (Java 8): refactor all aggregator methods to use a single method with lamba expressions
+	// TODO [Java 8]: refactor all aggregator methods to use a single method with lamba expressions
 	/**
 	 * Returns all tags used by the albums of this series.
 	 * 

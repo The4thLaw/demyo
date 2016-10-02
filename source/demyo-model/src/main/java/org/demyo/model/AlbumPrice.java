@@ -25,7 +25,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Entity
 @Table(name = "ALBUMS_PRICES")
 @IdClass(AlbumPriceId.class)
-// TODO: consider refactoring to share some aspects with the DerivativePrice
+// TODO [P1]: consider refactoring to share some aspects with the DerivativePrice
 public class AlbumPrice implements Comparable<AlbumPrice> {
 	/** The parent {@link Album} ID. */
 	@ManyToOne(fetch = FetchType.LAZY)

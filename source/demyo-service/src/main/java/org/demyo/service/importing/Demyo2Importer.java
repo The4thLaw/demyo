@@ -213,7 +213,7 @@ public class Demyo2Importer implements IImporter {
 			allRelations.put("derivatives_images", derivativeImages);
 		}
 
-		// TODO: manage meta version to warn if the schema version is different, except if it's Demyo 1.5 or earlier
+		// TODO [P2]: manage meta version to warn if the schema version is different, except if it's Demyo 1.5 or earlier
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes)
 				throws SAXException {

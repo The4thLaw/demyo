@@ -46,7 +46,7 @@ import org.hibernate.validator.constraints.NotBlank;
 		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
 		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
 		@NamedAttributeNode("translators"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") })
-// TODO: loans
+// TODO [P2]: loans
 public class Album extends AbstractModel {
 	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
 		@Override

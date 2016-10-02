@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @see ApplicationConfiguration
  */
-// TODO: eventually, we will need to move logs to a proper directory. Do this after switching to logback
+// TODO [P2]: eventually, we will need to move logs to a proper directory. Do this after switching to logback
 public final class SystemConfiguration {
 	/**
 	 * Singleton holder following the solution of Bill Pugh.
