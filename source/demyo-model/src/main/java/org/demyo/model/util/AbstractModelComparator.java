@@ -24,7 +24,7 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 	 * @return a negative integer, zero, or a positive integer as the first object is less than, equal to, or
 	 *         greater than the second object.
 	 */
-	protected static <T> int nullSafeComparison(Comparable<T> c1, T c2) {
+	public static <T> int nullSafeComparison(Comparable<T> c1, T c2) {
 		if (c1 == null && c2 == null) {
 			return 0;
 		}

@@ -13,6 +13,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.demyo.model.AlbumPrice.AlbumPriceId;
+import org.demyo.model.util.AbstractModelComparator;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Defines a dated price for an {@link Album}.
@@ -90,7 +94,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	public int compareTo(AlbumPrice o) {
 		int comparison;
 
-		comparison = albumId.compareTo(o.albumId);
+		comparison = AbstractModelComparator.nullSafeComparison(albumId, o.albumId);
 		if (comparison != 0) {
 			return comparison;
 		}
@@ -170,12 +174,19 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 			return false;
 		}
 		AlbumPrice otherPrice = (AlbumPrice) other;
-		return albumId.equals(otherPrice.albumId) && date.equals(otherPrice.date)
-				&& price.equals(otherPrice.price);
+		EqualsBuilder builder = new EqualsBuilder();
+		builder.append(albumId, otherPrice.albumId);
+		builder.append(date, otherPrice.date);
+		builder.append(price, otherPrice.price);
+		return builder.build();
 	}
 
 	@Override
 	public int hashCode() {
-		return albumId.hashCode() ^ date.hashCode() ^ price.hashCode();
+		HashCodeBuilder builder = new HashCodeBuilder();
+		builder.append(albumId);
+		builder.append(date);
+		builder.append(price);
+		return builder.build();
 	}
 }
