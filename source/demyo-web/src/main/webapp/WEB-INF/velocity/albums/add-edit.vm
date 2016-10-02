@@ -147,12 +147,11 @@
 				</div>
 				<span class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover" type="button"><i class="dico">delete</i></span>
 			</div>
-			<span class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent dem-repeatable-adder"><i class="dico">add</i></span>
+			<span id="prices-adder" class="mdl-button mdl-js-button mdl-button--icon mdl-button--accent dem-repeatable-adder"><i class="dico">add</i></span>
+			<div class="mdl-tooltip" for="prices-adder">#_("button.album.addPrice")</div>
 		</div>
 	#end
 </div>
-
-## TODO: add tooltip for the add button
 
 #saveButtons
 
