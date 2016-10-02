@@ -7,12 +7,19 @@ import java.util.List;
 import org.demyo.test.AbstractPersistenceTest;
 
 import org.junit.Before;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.htmlunit.MockMvcWebClientBuilder;
+import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDriverBuilder;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.gargoylesoftware.htmlunit.HttpMethod;
@@ -24,12 +31,14 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 /**
  * Base class for MVC integration tests.
  */
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/demyo-context.xml")
 @WebAppConfiguration
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
 public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMvcTest.class);
 
@@ -38,6 +47,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 
 	/** The HTMLUnit Web Client. */
 	private WebClient webClient;
+	/** The Selenium Web Driver. */
+	private WebDriver webDriver;
 
 	/**
 	 * Sets up the HTMLUnit Web Client.
@@ -47,6 +58,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	@Before
 	public void setupWebClient() throws Exception {
 		webClient = MockMvcWebClientBuilder.webAppContextSetup(wac).build();
+		webDriver = MockMvcHtmlUnitDriverBuilder.webAppContextSetup(wac).build();
 	}
 
 	/**
@@ -56,6 +68,15 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 */
 	protected WebClient getWebClient() {
 		return webClient;
+	}
+
+	/**
+	 * Gets the Selenium Web Driver.
+	 * 
+	 * @return the Selenium Web Driver
+	 */
+	protected WebDriver getWebDriver() {
+		return webDriver;
 	}
 
 	/**
@@ -114,6 +135,13 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	}
 
 	/**
+	 * Submits the main model edit form on the page.
+	 */
+	protected final void submitMainModelForm() {
+		css1("form.dem-model-form input[type='submit']").click();
+	}
+
+	/**
 	 * Clicks a link on a page.
 	 * 
 	 * @param page The page.
@@ -137,5 +165,48 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 		String deleteHref = page.<HtmlAnchor> getHtmlElementById(id).getHrefAttribute();
 		String fullDeleteUrl = page.getUrl().toString() + "/../" + deleteHref;
 		return getWebClient().getPage(new WebRequest(new URL(fullDeleteUrl), HttpMethod.POST));
+	}
+
+	/**
+	 * Uses the WebDriver to fetch one element matching a particular CSS selector (the first one).
+	 * 
+	 * @param selector The CSS selector to use.
+	 * @return The matching element.
+	 */
+	protected WebElement css1(String selector) {
+		return getWebDriver().findElement(By.cssSelector(selector));
+	}
+
+	/**
+	 * Uses the WebDriver to fetch multiple elements matching a particular CSS selector.
+	 * 
+	 * @param selector The CSS selector to use.
+	 * @return The matching elements.
+	 */
+	protected List<WebElement> cssM(String selector) {
+		return getWebDriver().findElements(By.cssSelector(selector));
+	}
+
+	/**
+	 * Sets the value of a specific by changing its DOM value attribute. Workaround when
+	 * {@link WebElement#sendKeys(CharSequence...)} does not work.
+	 * 
+	 * @param fieldId The field ID.
+	 * @param value The escaped value.
+	 */
+	protected void setFieldValue(String fieldId, String value) {
+		getJavaScriptExecutor().executeScript("document.getElementById('" + fieldId + "').value='" + value + "'");
+	}
+
+	/**
+	 * Gets the {@link JavascriptExecutor} if the current {@link WebDriver} supports it. Fails if it doesn't.
+	 * 
+	 * @return the {@link JavascriptExecutor}.
+	 */
+	protected JavascriptExecutor getJavaScriptExecutor() {
+		if (!(webDriver instanceof JavascriptExecutor)) {
+			throw new RuntimeException("The WebDriver " + webDriver + " does not support JavaScript execution");
+		}
+		return (JavascriptExecutor) webDriver;
 	}
 }

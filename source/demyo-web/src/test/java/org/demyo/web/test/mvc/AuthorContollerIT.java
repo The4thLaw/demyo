@@ -14,6 +14,8 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 /**
  * Integration tests for {@link AuthorController}.
  */
+// TODO: fix name of this class
+// TODO: migrate to WebDriver like AlbumControllerIT to have a single way of doing things?
 public class AuthorContollerIT extends AbstractMvcTest {
 	/**
 	 * Tests an add/edit/delete sequence.

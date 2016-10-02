@@ -98,6 +98,10 @@
 			<groupId>net.sourceforge.htmlunit</groupId>
 			<artifactId>htmlunit</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>htmlunit-driver</artifactId>
+		</dependency>
 		
 		<!-- Some dependencies related to JEE, provided by the container.
 			We need to declare them for unit tests to work -->

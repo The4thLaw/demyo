@@ -16,7 +16,7 @@ $quickTasks.add({
 
 #thumbnail($album.cover, {'classes':'model-identification'})
 
-<div class="mdl-grid dem-field-set">
+<div class="mdl-grid dem-field-set" id="album-identification">
 	#@mdlGridCell([6,4,4])
 		#entityFieldText('field.Album.identifyingName' $album.identifyingName)
 	#end

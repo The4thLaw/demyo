@@ -106,12 +106,12 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 			return comparison;
 		}
 
-		comparison = date.compareTo(o.date);
+		comparison = AbstractModelComparator.nullSafeComparison(date, o.date);
 		if (comparison != 0) {
 			return comparison;
 		}
 
-		comparison = price.compareTo(o.price);
+		comparison = AbstractModelComparator.nullSafeComparison(price, o.price);
 
 		return comparison;
 	}
@@ -172,7 +172,8 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 
 	@Override
 	public String toString() {
-		return "AlbumPrice(album_id=" + albumId + ", date=" + date + ", price=" + price + ")";
+		return "AlbumPrice(album_id=" + (albumId != null ? albumId.getId() : null) + ", date=" + date + ", price="
+				+ price + ")";
 	}
 
 	@Override
