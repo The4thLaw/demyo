@@ -537,7 +537,7 @@ public class Album extends AbstractModel {
 	private void setAlbumInPrices() {
 		if (prices != null) {
 			for (AlbumPrice price : prices) {
-				price.setAlbumId(this);
+				price.setAlbum(this);
 			}
 		}
 	}

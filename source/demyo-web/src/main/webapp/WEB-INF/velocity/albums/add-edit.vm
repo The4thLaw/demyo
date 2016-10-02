@@ -129,14 +129,14 @@
 		#foreach($price in $album.priceList)
 			#set($priceNum = $velocityCount - 1)
 			<div class="dem-repeatable-item">
-				#inputHidden("album.priceList[$priceNum].albumId.id")
+				#inputHidden("album.priceList[$priceNum].album.id")
 				#inputDate('field.Album.prices.date', "album.priceList[$priceNum].date")
 				#inputFloat('field.Album.prices.price', "album.priceList[$priceNum].price") ## TODO: append currency
 				<span class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover"><i class="dico">delete</i></span>
 			</div>
 		#end
 			<div class="dem-repeatable-template">
-				<input type="hidden" id="field_album_priceList[]_albumId_id" name="priceList[].albumId.id" value="$!album.id" />
+				<input type="hidden" id="field_album_priceList[]_album_id" name="priceList[].album.id" value="$!album.id" />
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 					<input type="date" id="field_album_priceList[]_date" name="priceList[].date" class="mdl-textfield__input date" />
 					<label class="mdl-textfield__label" for="field_album_priceList[]_date">#_('field.Album.prices.date')</label>

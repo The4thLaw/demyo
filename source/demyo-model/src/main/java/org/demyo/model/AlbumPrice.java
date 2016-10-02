@@ -1,6 +1,5 @@
 package org.demyo.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.demyo.model.AlbumPrice.AlbumPriceId;
 import org.demyo.model.util.AbstractModelComparator;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,61 +25,13 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Entity
 @Table(name = "ALBUMS_PRICES")
 @IdClass(AlbumPriceId.class)
-// TODO: rename fields
 // TODO: consider refactoring to share some aspects with the DerivativePrice
 public class AlbumPrice implements Comparable<AlbumPrice> {
-	/**
-	 * Embedded class for the ID.
-	 */
-	public static class AlbumPriceId implements Serializable {
-		private static final long serialVersionUID = -8902912798213320698L;
-
-		private Long albumId;
-		private Date date;
-
-		/**
-		 * Default constructor.
-		 */
-		public AlbumPriceId() {
-
-		}
-
-		/**
-		 * Creates an ID based on the provided fields.
-		 * 
-		 * @param albumId The Album ID
-		 * @param date The date for the price
-		 */
-		public AlbumPriceId(Long albumId, Date date) {
-			this.albumId = albumId;
-			this.date = date;
-		}
-
-		@Override
-		public boolean equals(Object other) {
-			if (!(other instanceof AlbumPriceId)) {
-				return false;
-			}
-			AlbumPriceId otherId = (AlbumPriceId) other;
-			return albumId.equals(otherId.albumId) && date.equals(otherId.date);
-		}
-
-		@Override
-		public int hashCode() {
-			return albumId.hashCode() ^ date.hashCode();
-		}
-
-		@Override
-		public String toString() {
-			return "AlbumPriceId(album_id=" + albumId + ", date=" + date + ")";
-		}
-	}
-
 	/** The parent {@link Album} ID. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "album_id")
 	@Id
-	private Album albumId;
+	private Album album;
 
 	/** The date at which the price was applicable. */
 	@Column(name = "date")
@@ -99,8 +49,8 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	public int compareTo(AlbumPrice o) {
 		int comparison = 0;
 
-		if (albumId != null) {
-			comparison = AbstractModelComparator.nullSafeComparison(albumId.getId(), o.albumId.getId());
+		if (album != null) {
+			comparison = AbstractModelComparator.nullSafeComparison(album.getId(), o.album.getId());
 		}
 		if (comparison != 0) {
 			return comparison;
@@ -117,21 +67,21 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	}
 
 	/**
-	 * Gets the parent {@link Album} ID.
+	 * Gets the parent {@link Album}.
 	 * 
-	 * @return the parent {@link Album} ID
+	 * @return the parent {@link Album}
 	 */
-	public Album getAlbumId() {
-		return albumId;
+	public Album getAlbum() {
+		return album;
 	}
 
 	/**
-	 * Sets the parent {@link Album} ID.
+	 * Sets the parent {@link Album}.
 	 * 
-	 * @param albumId the new parent {@link Album} ID
+	 * @param album the new parent {@link Album}
 	 */
-	public void setAlbumId(Album albumId) {
-		this.albumId = albumId;
+	public void setAlbum(Album album) {
+		this.album = album;
 	}
 
 	/**
@@ -172,7 +122,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 
 	@Override
 	public String toString() {
-		return "AlbumPrice(album_id=" + (albumId != null ? albumId.getId() : null) + ", date=" + date + ", price="
+		return "AlbumPrice(album_id=" + (album != null ? album.getId() : null) + ", date=" + date + ", price="
 				+ price + ")";
 	}
 
@@ -183,7 +133,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 		}
 		AlbumPrice otherPrice = (AlbumPrice) other;
 		EqualsBuilder builder = new EqualsBuilder();
-		builder.append(albumId, otherPrice.albumId);
+		builder.append(album, otherPrice.album);
 		builder.append(date, otherPrice.date);
 		builder.append(price, otherPrice.price);
 		return builder.build();
@@ -192,7 +142,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	@Override
 	public int hashCode() {
 		HashCodeBuilder builder = new HashCodeBuilder();
-		builder.append(albumId);
+		builder.append(album);
 		builder.append(date);
 		builder.append(price);
 		return builder.build();
