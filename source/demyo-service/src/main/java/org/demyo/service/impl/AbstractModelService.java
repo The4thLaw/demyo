@@ -146,6 +146,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 		// Before saving, we must remove any linked models that have a null id. These are models that should not exist.
 		// For example, this happens when trying to save an Album that has no binding. It is still applicable with
 		// Spring Data
+		// TODO: pre-compute the list of methods
 		for (Method meth : modelClass.getMethods()) {
 			boolean isModelGetter = IModel.class.isAssignableFrom(meth.getReturnType())
 					&& meth.getName().startsWith("get") && meth.getParameterTypes().length == 0;

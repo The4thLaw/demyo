@@ -6,11 +6,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -20,6 +17,7 @@ import org.demyo.model.AlbumPrice.AlbumPriceId;
 /**
  * Defines a dated price for an {@link Album}.
  */
+// TODO: consider adding a generated ID. It's not working great at the moment.
 @Entity
 @Table(name = "ALBUMS_PRICES")
 @IdClass(AlbumPriceId.class)
@@ -30,7 +28,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	public static class AlbumPriceId implements Serializable {
 		private static final long serialVersionUID = -8902912798213320698L;
 
-		private Long album;
+		private Long albumId;
 		private Date date;
 
 		/**
@@ -43,11 +41,11 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 		/**
 		 * Creates an ID based on the provided fields.
 		 * 
-		 * @param album The Album ID
+		 * @param albumId The Album ID
 		 * @param date The date for the price
 		 */
-		public AlbumPriceId(Long album, Date date) {
-			this.album = album;
+		public AlbumPriceId(Long albumId, Date date) {
+			this.albumId = albumId;
 			this.date = date;
 		}
 
@@ -57,21 +55,25 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 				return false;
 			}
 			AlbumPriceId otherId = (AlbumPriceId) other;
-			return album.equals(otherId.album) && date.equals(otherId.date);
+			return albumId.equals(otherId.albumId) && date.equals(otherId.date);
 		}
 
 		@Override
 		public int hashCode() {
-			return album.hashCode() ^ date.hashCode();
+			return albumId.hashCode() ^ date.hashCode();
+		}
+
+		@Override
+		public String toString() {
+			return "AlbumPriceId(album_id=" + albumId + ", date=" + date + ")";
 		}
 	}
 
-	/** The parent {@link Album}. */
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "album_id")
+	/** The parent {@link Album} ID. */
+	@Column(name = "album_id")
 	@Id
 	@NotNull
-	private Album album;
+	private Long albumId;
 
 	/** The date at which the price was applicable. */
 	@Column(name = "date")
@@ -89,7 +91,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	public int compareTo(AlbumPrice o) {
 		int comparison;
 
-		comparison = album.getId().compareTo(o.album.getId());
+		comparison = albumId.compareTo(o.albumId);
 		if (comparison != 0) {
 			return comparison;
 		}
@@ -105,21 +107,21 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	}
 
 	/**
-	 * Gets the parent {@link Album}.
+	 * Gets the parent {@link Album} ID.
 	 * 
-	 * @return the parent {@link Album}
+	 * @return the parent {@link Album} ID
 	 */
-	public Album getAlbum() {
-		return album;
+	public Long getAlbumId() {
+		return albumId;
 	}
 
 	/**
-	 * Sets the parent {@link Album}.
+	 * Sets the parent {@link Album} ID.
 	 * 
-	 * @param album the new parent {@link Album}
+	 * @param albumId the new parent {@link Album} ID
 	 */
-	public void setAlbum(Album album) {
-		this.album = album;
+	public void setAlbumId(Long albumId) {
+		this.albumId = albumId;
 	}
 
 	/**
@@ -160,6 +162,21 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 
 	@Override
 	public String toString() {
-		return "AlbumPrice(album_id=" + album.getId() + ", date=" + date + ", price=" + price + ")";
+		return "AlbumPrice(album_id=" + albumId + ", date=" + date + ", price=" + price + ")";
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof AlbumPrice)) {
+			return false;
+		}
+		AlbumPrice otherPrice = (AlbumPrice) other;
+		return albumId.equals(otherPrice.albumId) && date.equals(otherPrice.date)
+				&& price.equals(otherPrice.price);
+	}
+
+	@Override
+	public int hashCode() {
+		return albumId.hashCode() ^ date.hashCode() ^ price.hashCode();
 	}
 }

@@ -4,10 +4,14 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +23,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -26,6 +31,7 @@ import org.demyo.model.constraints.ISBN;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.IdentifyingNameComparator;
+import org.demyo.model.util.PreSave;
 
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
@@ -40,7 +46,6 @@ import org.hibernate.validator.constraints.NotBlank;
 		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
 		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
 		@NamedAttributeNode("translators"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") })
-// TODO: prices
 // TODO: loans
 public class Album extends AbstractModel {
 	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
@@ -114,10 +119,14 @@ public class Album extends AbstractModel {
 	private BigDecimal purchasePrice;
 
 	/** The prices applicable to the album. */
-	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "ALBUM_ID")
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// Not insertable or updatable: managed by the child entity
+	@JoinColumn(name = "album_id", insertable = false, updatable = false)
 	@SortComparator(ComparableComparator.class)
 	private SortedSet<AlbumPrice> prices;
+
+	@Transient
+	private List<AlbumPrice> priceList;
 
 	/** The flag indicating whether an item is part of the wishlist. */
 	@Column(name = "wishlist")
@@ -467,7 +476,53 @@ public class Album extends AbstractModel {
 	 * @param prices the new prices applicable to the album
 	 */
 	public void setPrices(SortedSet<AlbumPrice> prices) {
-		this.prices = prices;
+		if (prices == null && this.prices == null) {
+			return;
+		}
+
+		// To keep the delete-orphan, preserve any Set set by the entity manager
+		if (this.prices == null) {
+			this.prices = new TreeSet<>();
+		} else {
+			this.prices.clear();
+		}
+		if (prices != null) {
+			this.prices.addAll(prices);
+		}
+		priceList = null;
+	}
+
+	/**
+	 * Gets the {@link AlbumPrice}s as a list. Use this only for MVC binding.
+	 * 
+	 * @see #setPricesFromList()
+	 * @return The same as {@link #getPrices()}, but as a List.
+	 */
+	@Transient
+	public List<AlbumPrice> getPriceList() {
+		if (priceList == null) {
+			priceList = new ArrayList<>();
+			if (prices != null && !prices.isEmpty()) {
+				priceList.addAll(prices);
+			}
+		}
+		return priceList;
+	}
+
+	/**
+	 * Sets the prices from the list modified by the MVC binder. Automatically called by the model services.
+	 * 
+	 * @see #getPriceList()
+	 */
+	@PreSave
+	public void setPricesFromList() {
+		if (priceList != null) {
+			if (prices == null) {
+				prices = new TreeSet<>();
+			}
+			prices.clear();
+			prices.addAll(priceList);
+		}
 	}
 
 	/**
