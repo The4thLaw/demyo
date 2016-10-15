@@ -1,6 +1,7 @@
 package org.demyo.service;
 
-import org.demyo.common.exception.DemyoException;
+import java.util.Map;
+
 import org.demyo.model.config.ApplicationConfiguration;
 
 /**
@@ -11,17 +12,11 @@ import org.demyo.model.config.ApplicationConfiguration;
  * Avoid changing values in the configuration, as it might be shared with others parts of the application
  * immediately.
  * </p>
- * <p>
- * The location of the configuration file is defined by the {@link org.demyo.common.config.SystemConfiguration
- * SystemConfiguration}.
- * </p>
  */
 public interface IConfigurationService {
 
 	/**
-	 * Gets the application configuration. If the configuration is not yet known by the application, it is loaded
-	 * from the file system. If there is no such file on the file system, it is created with default values. If the
-	 * configuration was loaded recently, the known instance is returned.
+	 * Gets the application configuration. It is cached, so calls to this method are inexpensive.
 	 * 
 	 * 
 	 * @return The application configuration.
@@ -29,11 +24,17 @@ public interface IConfigurationService {
 	ApplicationConfiguration getConfiguration();
 
 	/**
-	 * Saves the current values to disk. Note that the saved values are the ones from the passed argument, and not
-	 * the potentially cached ones.
+	 * Saves the provided values to the store.
 	 * 
 	 * @param config The configuration values to save.
-	 * @throws DemyoException if the configuration cannot be saved.
 	 */
-	void save(ApplicationConfiguration config) throws DemyoException;
+	void save(ApplicationConfiguration config);
+
+	/**
+	 * Saves the provided values to the store. If a value is missing from the provided map, its current value is
+	 * preserved.
+	 * 
+	 * @param config The configuration values to save.
+	 */
+	void save(Map<String, String> config);
 }

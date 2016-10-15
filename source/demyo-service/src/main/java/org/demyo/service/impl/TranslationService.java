@@ -3,6 +3,7 @@ package org.demyo.service.impl;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -23,7 +24,7 @@ public class TranslationService implements ITranslationService {
 	private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
 	@Autowired
-	private ConfigurationService configService;
+	private IConfigurationService configService;
 
 	@Autowired
 	private MessageSource messageSource;

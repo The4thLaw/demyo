@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.demyo.common.config.SystemConfiguration;
 
-import org.apache.commons.configuration.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -28,41 +30,50 @@ public class ApplicationConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);
 
 	/** The language in which the application is displayed. */
-	private final Locale language;
+	private Locale language;
 	/** The list of quick links in the header. */
-	private final List<HeaderLink> headerLinks;
+	private List<HeaderLink> headerLinks;
 	/** The number of items per page of textual entries. */
-	private final int pageSizeForText;
+	private int pageSizeForText;
 	/** The number of items per page of images. */
-	private final int pageSizeForImages;
+	private int pageSizeForImages;
 	/** The number of series per page of albums. */
-	private final int pageSizeForAlbums;
+	private int pageSizeForAlbums;
 	/** The maximum thumbnail width in pixels. */
-	private final int thumbnailWidth;
+	private int thumbnailWidth;
 	/** The maximum thumbnail height in pixels. */
-	private final int thumbnailHeight;
+	private int thumbnailHeight;
 
 	/**
 	 * Creates an application configuration from a configuration file.
 	 * 
 	 * @param config The configuration to retrieve values from.
 	 */
-	public ApplicationConfiguration(Configuration config) {
-		String languageCode = config.getString("language");
+	public ApplicationConfiguration(Map<String, String> config) {
+		merge(config);
+	}
+
+	/**
+	 * Merges the current application configuration with the provided one.
+	 * 
+	 * @param config The configuration to retrieve values from.
+	 */
+	public void merge(Map<String, String> config) {
+		String languageCode = getString(config, "language");
 		if (languageCode != null) {
 			language = Locale.forLanguageTag(languageCode);
 		} else {
 			language = Locale.getDefault();
 		}
 
-		pageSizeForText = config.getInt("paging.textPageSize");
-		pageSizeForImages = config.getInt("paging.imagePageSize");
-		pageSizeForAlbums = config.getInt("paging.albumPageSize");
-		thumbnailWidth = config.getInt("thumbnail.width");
-		thumbnailHeight = config.getInt("thumbnail.height");
+		pageSizeForText = getInt(config, "paging.textPageSize");
+		pageSizeForImages = getInt(config, "paging.imagePageSize");
+		pageSizeForAlbums = getInt(config, "paging.albumPageSize");
+		thumbnailWidth = getInt(config, "thumbnail.width");
+		thumbnailHeight = getInt(config, "thumbnail.height");
 
 		// Load the header links as JSON data
-		String headerLinksSpec = config.getString("header.quickLinks", "[]");
+		String headerLinksSpec = getString(config, "header.quickLinks", "[]");
 		JsonFactory jsonFactory = new JsonFactory();
 		ObjectMapper jsonMapper = new ObjectMapper(jsonFactory);
 		CollectionType jsonType = jsonMapper.getTypeFactory().constructCollectionType(ArrayList.class,
@@ -82,17 +93,37 @@ public class ApplicationConfiguration {
 		LocaleContextHolder.setLocale(language);
 	}
 
+	private static String getString(Map<String, String> config, String key) {
+		return getString(config, key, null);
+	}
+
+	private static String getString(Map<String, String> config, String key, String defaultValue) {
+		String value = config.get(key);
+		if (value == null) {
+			value = defaultValue;
+		}
+		return value;
+	}
+
+	private static int getInt(Map<String, String> config, String key) {
+		return Integer.valueOf(config.get(key));
+	}
+
 	/**
-	 * Stores all business values from this class in the given configuration.
+	 * Returns a map of all values as strings.
 	 * 
-	 * @param config The configuration to fill.
+	 * @return The map.
 	 */
-	public void fillConfiguration(Configuration config) {
-		config.setProperty("language", language.toString());
-		config.setProperty("paging.textPageSize", pageSizeForText);
-		config.setProperty("paging.imagePageSize", pageSizeForImages);
-		config.setProperty("thumbnail.width", thumbnailWidth);
-		config.setProperty("thumbnail.height", thumbnailHeight);
+	public SortedMap<String, String> asMap() {
+		SortedMap<String, String> config = new TreeMap<>();
+
+		config.put("language", language.toString());
+		config.put("paging.textPageSize", String.valueOf(pageSizeForText));
+		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
+		config.put("thumbnail.width", String.valueOf(thumbnailWidth));
+		config.put("thumbnail.height", String.valueOf(thumbnailHeight));
+
+		return config;
 	}
 
 	/**
@@ -131,6 +162,11 @@ public class ApplicationConfiguration {
 		return pageSizeForImages;
 	}
 
+	/**
+	 * Gets the number of series per page of albums.
+	 * 
+	 * @return the number of series per page of albums
+	 */
 	public int getPageSizeForAlbums() {
 		return pageSizeForAlbums;
 	}

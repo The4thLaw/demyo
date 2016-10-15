@@ -1,10 +1,10 @@
 package org.demyo.model.config;
 
-import org.apache.commons.configuration.BaseConfiguration;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 
 /**
@@ -16,29 +16,17 @@ public class ApplicationConfigurationTest {
 	 */
 	@Test
 	public void testInitialisationFromStrings() {
-		Configuration configStrings = new BaseConfiguration();
-		configStrings.setProperty("language", "en");
-		configStrings.setProperty("paging.textPageSize", 50);
-		configStrings.setProperty("paging.imagePageSize", 25);
-		configStrings.setProperty("paging.albumPageSize", 10);
-		configStrings.setProperty("thumbnail.width", 200);
-		configStrings.setProperty("thumbnail.height", 300);
-		configStrings
-				.setProperty("header.quickLinks",
-						"[ { \"urlFromRoot\": \"albums/\"\\, \"iconSpec\": \"speech_bubble\"\\, \"label\": \"menu.albums.browse\" } ]");
+		Map<String, String> configStrings = new HashMap<>();
+		configStrings.put("language", "en");
+		configStrings.put("paging.textPageSize", "50");
+		configStrings.put("paging.imagePageSize", "25");
+		configStrings.put("paging.albumPageSize", "10");
+		configStrings.put("thumbnail.width", "200");
+		configStrings.put("thumbnail.height", "300");
+		configStrings.put("header.quickLinks", "[ { \"urlFromRoot\": \"albums/\","
+				+ " \"iconSpec\": \"speech_bubble\", \"label\": \"menu.albums.browse\" } ]");
 		ApplicationConfiguration config = new ApplicationConfiguration(configStrings);
-		Assert.assertEquals(1, config.getHeaderLinks().size());
-	}
+		assertThat(config.getHeaderLinks()).hasSize(1);
 
-	/**
-	 * Tests that the default configuration file can be loaded.
-	 * 
-	 * @throws ConfigurationException In case of error while loading the default configuration.
-	 */
-	@Test
-	public void testInitialisationFromDefaultConfig() throws ConfigurationException {
-		ApplicationConfiguration config = new ApplicationConfiguration(new PropertiesConfiguration(
-				ApplicationConfiguration.class.getResource("/org/demyo/model/config/demyo-config.properties")));
-		Assert.assertEquals(2, config.getHeaderLinks().size());
 	}
 }
