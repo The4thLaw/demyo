@@ -31,6 +31,8 @@ public class ApplicationConfiguration {
 
 	/** The language in which the application is displayed. */
 	private Locale language;
+	/** The specification for list of quick links in the header. */
+	private String headerLinksSpec;
 	/** The list of quick links in the header. */
 	private List<HeaderLink> headerLinks;
 	/** The number of items per page of textual entries. */
@@ -73,7 +75,7 @@ public class ApplicationConfiguration {
 		thumbnailHeight = getInt(config, "thumbnail.height");
 
 		// Load the header links as JSON data
-		String headerLinksSpec = getString(config, "header.quickLinks", "[]");
+		headerLinksSpec = getString(config, "header.quickLinks", "[]");
 		JsonFactory jsonFactory = new JsonFactory();
 		ObjectMapper jsonMapper = new ObjectMapper(jsonFactory);
 		CollectionType jsonType = jsonMapper.getTypeFactory().constructCollectionType(ArrayList.class,
@@ -122,6 +124,7 @@ public class ApplicationConfiguration {
 		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
 		config.put("thumbnail.width", String.valueOf(thumbnailWidth));
 		config.put("thumbnail.height", String.valueOf(thumbnailHeight));
+		config.put("header.quickLinks", headerLinksSpec);
 
 		return config;
 	}

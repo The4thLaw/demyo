@@ -6,7 +6,6 @@ import java.util.SortedSet;
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
-import org.demyo.model.Series;
 import org.demyo.model.Tag;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -28,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller for {@link Album} management.
+ */
 @Controller
 @RequestMapping("/albums")
 public class AlbumController extends AbstractModelController<Album> {
@@ -57,7 +59,7 @@ public class AlbumController extends AbstractModelController<Album> {
 	 * Adds an {@link Album}.
 	 * 
 	 * @param model The view model.
-	 * @param seriesId The ID of the {@link Series} to add the album to.
+	 * @param seriesId The ID of the {@link org.demyo.model.Series Series} to add the album to.
 	 * @return The view name.
 	 */
 	// params attributes allows overriding the parent /add
