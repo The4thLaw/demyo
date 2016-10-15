@@ -1,6 +1,5 @@
 #setPageTitle('title.configuration.advanced')
 
-## TODO: warning with button to confirm
 <div id="configuration-warning">
 	<h4>#_('configuration.warning.title')</h4>
 	<p>#_('configuration.warning.details')</p>

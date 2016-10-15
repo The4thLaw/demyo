@@ -68,7 +68,7 @@ $quickTasks.add({
 </div>
 #end
 
-
+## TODO: change label if first edition
 #if($album.firstEditionDate || $album.currentEditionDate || $album.wishlist || $album.acquisitionDate)
 <div class="mdl-grid dem-field-set">
 	#if ($album.firstEditionDate && $album.currentEditionDate && $album.firstEditionDate == $album.currentEditionDate)
