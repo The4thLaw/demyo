@@ -20,7 +20,7 @@ LangString COMP_DESC_JavaAds ${LANG_ENGLISH} "Disables the advertisements and sp
 LangString SHELL_Website_URL ${LANG_ENGLISH} "http://www.demyo.org/en/"
 LangString SHELL_Launch_Demyo ${LANG_ENGLISH} "Launch Demyo"
 LangString SHELL_Official_website ${LANG_ENGLISH} "Official website"
-LangString SHELL_Uninstall ${LANG_ENGLISH} "Uninstall"
+LangString SHELL_Uninstall ${LANG_ENGLISH} "Uninstall Demyo"
 #
 LangString CONFIG_Lang ${LANG_ENGLISH} "en"
 LangString CONFIG_Currency ${LANG_ENGLISH} "$$"
