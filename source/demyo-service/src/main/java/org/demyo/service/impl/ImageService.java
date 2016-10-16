@@ -112,7 +112,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				: config.getThumbnailHeight();
 
 		// Resize
-		BufferedImage buffThumb = Scalr.resize(buffImage, Method.BALANCED, Mode.AUTOMATIC, desiredMaxWidth,
+		BufferedImage buffThumb = Scalr.resize(buffImage, Method.AUTOMATIC, Mode.AUTOMATIC, desiredMaxWidth,
 				desiredMaxHeight, Scalr.OP_ANTIALIAS);
 		LOGGER.debug("Thumbnail generated in {}ms", System.currentTimeMillis() - time);
 
