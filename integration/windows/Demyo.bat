@@ -1,1 +1,1 @@
-java -cp lib/* org.demyo.desktop.Start
+java %JAVA_OPTIONS% -cp lib/* org.demyo.desktop.Start

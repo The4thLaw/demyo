@@ -1,3 +1,3 @@
 #!/bin/bash
 cd $(dirname $0)
-java -cp 'lib/*' org.demyo.desktop.Start
+java $JAVA_OPTIONS -cp 'lib/*' org.demyo.desktop.Start
