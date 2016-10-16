@@ -236,8 +236,11 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		// Filter out the known files
 		Path imagesDirectoryPath = imagesDirectory.toPath();
+		LOGGER.trace("Known files: {}", knownFiles);
 		for (File file : foundFiles) {
 			String relativePath = imagesDirectoryPath.relativize(file.toPath()).toString();
+			// Normalize file separators so that collections imported and exported between OS's still work
+			relativePath = relativePath.replace(File.separatorChar, '/');
 			boolean known = knownFiles.contains(relativePath);
 			LOGGER.trace("Is {} known? {}", relativePath, known);
 
