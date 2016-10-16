@@ -138,6 +138,9 @@ public final class Start {
 	}
 
 	private static void closeSplashScreen() {
+		if (GraphicsEnvironment.isHeadless()) {
+			return;
+		}
 		SplashScreen splash = SplashScreen.getSplashScreen();
 		if (splash != null) {
 			try {
