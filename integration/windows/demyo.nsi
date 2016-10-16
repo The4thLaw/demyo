@@ -226,7 +226,7 @@ Function CreateShortcutsIn
 FunctionEnd
 
 Function FinishLaunchDemyo
-	ExecShell "open" "$INSTDIR\$(SHELL_Launch_Demyo).exe"
+	ExecShell "open" "$INSTDIR\Demyo.exe"
 FunctionEnd
 
 # Localisation
