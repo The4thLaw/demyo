@@ -48,8 +48,6 @@ public final class SystemConfiguration {
 	private final File userDirectory;
 	/** The file to store the database. */
 	private final File databaseFile;
-	/** The file to store the application configuration. */
-	private final File configurationFile;
 	/** The directory to store user images. */
 	private final File imagesDirectory;
 	/** The directory to store temporary files. */
@@ -133,7 +131,6 @@ public final class SystemConfiguration {
 		imagesDirectory = new File(userDirectory, "images");
 		thumbnailDirectory = new File(userDirectory, "thumbnails");
 		databaseFile = new File(userDirectory, "demyo.h2.db");
-		configurationFile = new File(userDirectory, "demyo-config.properties");
 		createDirectoryIfNeeded(userDirectory);
 		createDirectoryIfNeeded(imagesDirectory);
 		createDirectoryIfNeeded(tempDirectory);
@@ -233,7 +230,6 @@ public final class SystemConfiguration {
 		sb.append("\n\tWAR path: ").append(warPath);
 		sb.append("\n\tuser directory: ").append(userDirectory);
 		sb.append("\n\tdatabase file: ").append(databaseFile);
-		sb.append("\n\tconfiguration file: ").append(configurationFile);
 		sb.append("\n\timages directory: ").append(imagesDirectory);
 		sb.append("\n\ttemporary directory: ").append(tempDirectory);
 		return sb.toString();
@@ -300,10 +296,6 @@ public final class SystemConfiguration {
 	 */
 	public File getDatabaseFile() {
 		return databaseFile;
-	}
-
-	public File getConfigurationFile() {
-		return configurationFile;
 	}
 
 	/**
