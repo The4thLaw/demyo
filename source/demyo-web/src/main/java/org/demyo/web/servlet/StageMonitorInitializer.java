@@ -13,6 +13,9 @@ import org.stagemonitor.web.WebPlugin;
 /**
  * Specific component to ensure the StageMonitor plugin is initialised.
  */
+// TODO: rename with lower "M"
+// TODO: Try to have more details on DispatcherServlet#render
+// TODO: Fix ITs
 @Component
 public class StageMonitorInitializer implements WebApplicationInitializer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StageMonitorInitializer.class);
