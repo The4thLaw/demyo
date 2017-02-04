@@ -30,6 +30,7 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 	/** The parent {@link Album} ID. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "album_id")
+	@NotNull
 	@Id
 	private Album album;
 
