@@ -3,12 +3,17 @@ package org.demyo.web.test.mvc;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.demyo.web.test.mvc.WebDriverAssertions.assertThat;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.demyo.web.controller.AlbumController;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -42,13 +47,18 @@ public class AlbumControllerIT extends AbstractMvcTest {
 
 	/**
 	 * Tests adding an Album.
+	 * 
+	 * @throws IOException
 	 */
 	@Test
-	public void testAddPage() {
+	public void testAddPage() throws IOException {
 		getWebDriver().get("http://localhost/albums/add");
 
 		// Set a title
 		css1("#field_album_title").sendKeys("My new album");
+
+		// Set the publisher
+		new Select(css1("#field_album_publisher_id")).selectByValue("1");
 
 		// Add prices
 		assertThat(cssM(".dem-repeatable-item")).isEmpty();
@@ -65,6 +75,8 @@ public class AlbumControllerIT extends AbstractMvcTest {
 
 		submitMainModelForm();
 
+		//System.err.println(getWebDriver().getPageSource());
+		FileUtils.write(new File("/tmp/foo.html"), getWebDriver().getPageSource(), StandardCharsets.UTF_8);
 		assertThat(getWebDriver().getCurrentUrl()).startsWith("http://localhost/albums/view/");
 
 		assertAlbumTitle("My new album");

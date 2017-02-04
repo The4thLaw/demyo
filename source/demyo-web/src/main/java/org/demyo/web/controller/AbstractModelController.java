@@ -14,6 +14,8 @@ import javax.validation.Valid;
 import org.demyo.model.IModel;
 import org.demyo.service.IModelService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -36,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 // TODO [P2]: Protect all access against XSS
 public abstract class AbstractModelController<M extends IModel> extends AbstractController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelController.class);
 	private final Class<M> modelClass;
 	private final String urlPrefix;
 	private final String modelKey;
@@ -160,6 +163,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	public String save(@Valid M entity, BindingResult result, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (result.hasErrors()) {
+			LOGGER.debug("There were validation errors: {}", result);
 			postProcessValidationError(entity, result);
 			model.addAttribute(modelKey, entity);
 			fillModelForEdition(entity, model);

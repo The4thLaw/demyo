@@ -13,6 +13,7 @@
 	
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
+		<org.stagemonitor.version>0.31.0</org.stagemonitor.version>
 	</properties>
 
 	<dependencies>
@@ -117,27 +118,6 @@
 			<version>1.4.01</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.stagemonitor</groupId>
-			<artifactId>stagemonitor-web</artifactId>
-			<version>0.28.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.stagemonitor</groupId>
-			<artifactId>stagemonitor-dispatcher</artifactId>
-			<version>0.28.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.stagemonitor</groupId>
-			<artifactId>stagemonitor-jvm</artifactId>
-			<version>0.28.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.stagemonitor</groupId>
-			<artifactId>stagemonitor-os</artifactId>
-			<version>0.28.0</version>
-		</dependency>
 	</dependencies>
 	
 	<build>
@@ -174,4 +154,35 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.stagemonitor</groupId>
+					<artifactId>stagemonitor-web</artifactId>
+					<version>${org.stagemonitor.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.stagemonitor</groupId>
+					<artifactId>stagemonitor-dispatcher</artifactId>
+					<version>${org.stagemonitor.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.stagemonitor</groupId>
+					<artifactId>stagemonitor-jvm</artifactId>
+					<version>${org.stagemonitor.version}</version>
+				</dependency>
+				<dependency>
+					<groupId>org.stagemonitor</groupId>
+					<artifactId>stagemonitor-os</artifactId>
+					<version>${org.stagemonitor.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

@@ -271,6 +271,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.19.1</version>
+				<configuration>
+					<classpathDependencyExcludes>
+						<classpathDependencyExcludes>org.stagemonitor:*</classpathDependencyExcludes>
+					</classpathDependencyExcludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
