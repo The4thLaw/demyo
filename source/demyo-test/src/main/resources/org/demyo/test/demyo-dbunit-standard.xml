@@ -3,7 +3,7 @@
 	<publishers id="2" name="Dargaud" />
 
 	<series id="1" name="XIII" website="http://www.treize.com/"
-		summary="XIII is guy suffering from amnesia." comment="Comment for XIII."/>
+		summary="XIII is a guy suffering from amnesia." comment="Comment for XIII."/>
 	<series id="2" name="Sillage" />
 	
 	<albums id="1" series_id="1" number="3" publisher_id="2" title="Toutes les larmes de l'enfer" />

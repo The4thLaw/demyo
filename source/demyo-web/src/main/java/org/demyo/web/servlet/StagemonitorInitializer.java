@@ -15,7 +15,6 @@ import org.springframework.web.WebApplicationInitializer;
  * Specific component to ensure the stagemonitor plugin is initialised. Has no compile-time dependencies on
  * stagemonitor, and no requirement at runtime.
  */
-// TODO: Fix ITs
 @Component
 public class StagemonitorInitializer implements WebApplicationInitializer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StagemonitorInitializer.class);

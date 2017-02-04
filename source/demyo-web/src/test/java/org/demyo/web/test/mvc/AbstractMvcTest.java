@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
@@ -50,6 +51,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 
 	@Autowired
 	private WebApplicationContext wac;
+	@Autowired
+	private CacheManager cacheManager;
 
 	/** The HTMLUnit Web Client. */
 	private WebClient webClient;
@@ -73,6 +76,17 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	public void setupWebClient() throws Exception {
 		webClient = MockMvcWebClientBuilder.webAppContextSetup(wac).build();
 		webDriver = MockMvcHtmlUnitDriverBuilder.webAppContextSetup(wac).build();
+	}
+
+	/**
+	 * Clears all caches.
+	 */
+	@Before
+	public void clearCaches() {
+		// We must clear all caches for each test case, else the reloads by DBUnit break the tests
+		for (String cacheName : cacheManager.getCacheNames()) {
+			cacheManager.getCache(cacheName).clear();
+		}
 	}
 
 	/**

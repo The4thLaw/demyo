@@ -33,7 +33,7 @@ public class MenuIT extends AbstractMvcTest {
 		HtmlNav menu = page.<HtmlNav> getHtmlElementById("main-menu");
 		DomNodeList<HtmlElement> anchors = menu.getElementsByTagName("a");
 		for (HtmlElement anchor : anchors) {
-			LOGGER.warn("Testing {}", ((HtmlAnchor) anchor).getHrefAttribute());
+			LOGGER.debug("Testing {}", ((HtmlAnchor) anchor).getHrefAttribute());
 			HtmlPage newPage = (HtmlPage) anchor.click();
 			assertThat(newPage.getWebResponse().getStatusCode()).isEqualTo(HttpStatus.OK.value());
 
