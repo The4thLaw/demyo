@@ -33,7 +33,7 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 		super(Tag.class);
 	}
 
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(readOnly = true)
 	@Override
 	public Tag getByIdForView(long id) {
 		Tag entity = repo.findOneForView(id);

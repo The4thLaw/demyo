@@ -39,6 +39,7 @@ import org.imgscalr.Scalr.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -148,8 +149,9 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 	}
 
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
-	@Transactional
 	public long uploadImage(@NotEmpty String originalFileName, @NotNull File imageFile) throws DemyoException {
 		// Determine the hash of the uploaded file
 		String hash;
@@ -193,6 +195,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		return save(image);
 	}
 
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long addExistingImage(@NotEmpty String path) throws DemyoException {
 		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
@@ -267,6 +271,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public void delete(long id) {
 		Image image = getRepo().findOne(id);

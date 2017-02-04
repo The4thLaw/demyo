@@ -23,6 +23,8 @@ import org.demyo.service.IModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -164,6 +166,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	}
 
 	@Transactional(readOnly = true)
+	@Cacheable(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public List<M> findAll() {
 		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
@@ -206,6 +209,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long save(@NotNull M model) {
 		// Call PreSave methods
@@ -261,6 +265,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public void delete(long id) {
 		getRepo().delete(id);
@@ -283,6 +288,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * @param searchRepo The repository to search on.
 	 * @return The matches, as a future.
 	 */
+	// Note: caching cannot be supported here. See https://jira.spring.io/browse/SPR-12967
 	protected Future<List<M>> quickSearch(String query, boolean exact, IQuickSearchableRepo<M> searchRepo) {
 		if (exact) {
 			return new AsyncResult<>(searchRepo.quickSearchExact(query));

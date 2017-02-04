@@ -12,6 +12,7 @@ import org.demyo.model.Series;
 import org.demyo.service.ISeriesService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long save(@NotNull Series model) {
 		Series savedModel = repo.saveWithReverseRelations(model);

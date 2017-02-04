@@ -23,6 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,8 +44,11 @@ public class ImportService implements IImportService {
 		importers.add(importer);
 	}
 
-	@Override
 	@Transactional(rollbackFor = Throwable.class)
+	// Don't forget to clear the caches when importing.
+	// If the number of caches grows, see http://stackoverflow.com/a/41022526
+	@CacheEvict(cacheNames = "ModelLists", allEntries = true)
+	@Override
 	public void importFile(@NotEmpty String originalFilename, @NotNull InputStream content) throws DemyoException {
 		File importFile = null;
 		FileOutputStream fos = null;
