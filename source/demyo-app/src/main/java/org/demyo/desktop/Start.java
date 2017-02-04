@@ -97,6 +97,7 @@ public final class Start {
 		webapp.setContextPath("/");
 		webapp.setWar(SystemConfiguration.getInstance().getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
+		webapp.setTempDirectory(new File(SystemConfiguration.getInstance().getTempDirectory(), "jetty"));
 		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.dataSource", ds);
 		setDesktopCallbacks(server);
 		server.setHandler(webapp);
