@@ -93,6 +93,15 @@ public final class SystemConfiguration {
 		} catch (ConfigurationException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NOT_READABLE, e);
 		}
+
+		// Allow overrides from command line
+		for (String key : new String[] { "war.path", "portable", "http.address", "http.port" }) {
+			String value = System.getProperty("demyo." + key);
+			if (value != null) {
+				config.setProperty(key, value);
+			}
+		}
+
 		version = config.getString("version");
 		warPath = config.getString("war.path");
 		portable = config.getBoolean("portable");
