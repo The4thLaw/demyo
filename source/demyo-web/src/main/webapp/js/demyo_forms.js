@@ -199,12 +199,22 @@
 		
 		console.log('Initialising TinyMCE in language ' + lang);
 		
+		// The following does not seem to be needed any more
 		//$('textarea.richtext').css('opacity', 0);
-		// TODO: tweak editor config. Available plugings: autoresize, charmap, code, link,
-		// nonbreaking, paste, tabfocus, textcolor, visualchars, lists, table
+		// TODO: set the content_security_policy ?
 		tinymce.init({
-			selector: "textarea.richtext",
-			language: lang
+			selector: 'textarea.richtext',
+			plugins: 'autolink autoresize charmap code colorpicker link lists nonbreaking paste tabfocus table textcolor textpattern visualchars',
+			language: lang,
+			menu: {
+				edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+				insert: {title: 'Insert', items: 'link charmap nonbreaking'},
+				format: {title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat unlink'},
+				table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+				tools: {title: 'Tools', items: 'visualaid visualchars openlink | code'}
+			},
+			toolbar: 'bold italic underline forecolor backcolor | bullist numlist outdent indent blockquote | link',
+			statusbar: false
 		});
 	};
 	
