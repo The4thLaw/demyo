@@ -6,8 +6,8 @@
 $(function() {
 	
 	$('#menu-quick-tasks [data-qt-confirm]').each(function() {
-		$this = $(this);
-		url = $this.attr('href');
+		var $this = $(this);
+		var url = $this.attr('href');
 		$this.click(function(e) {
 			e.preventDefault();
 			
