@@ -35,7 +35,7 @@
 <script type="text/javascript">
 function updatePreview() {
 	jQuery('\#tag-preview > a').text(jQuery('#field_tag_name').val());
-	jQuery('\#tag-preview').css({
+	jQuery('\#tag-preview, \#tag-preview > a').css({
 		'color': getColour('#field_tag_fgColour'),
 		'background-color': getColour('#field_tag_bgColour')
 	});

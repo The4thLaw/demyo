@@ -47,6 +47,9 @@ public abstract class AbstractController {
 
 	private MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
 
+	/**
+	 * Default constructor.
+	 */
 	protected AbstractController() {
 		// May be missing from some systems at least
 		mimeTypes.addMimeTypes("image/png png");

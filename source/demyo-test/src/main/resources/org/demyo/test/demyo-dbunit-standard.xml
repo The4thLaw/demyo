@@ -23,7 +23,7 @@
 	
 	<tags id="1" name="action" />
 	<tags id="2" name="humour" />
-	<tags id="3" name="science-fiction" />
+	<tags id="3" name="science-fiction" fgColour="#ffffff" bgColour="#ff0000" />
 	
 	<albums_tags album_id="1" tag_id="1" />
 	<albums_tags album_id="1" tag_id="3" />
