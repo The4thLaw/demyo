@@ -100,6 +100,9 @@ $quickTasks.add({
 						<a class="mdl-menu__item" href="$link.contextPath/albums/edit/$album.id">
 							#icon('open_book+edit')#_('quickTasks.edit.album')
 						</a>
+						<a class="mdl-menu__item" href="$link.contextPath/albums/delete/$album.id" data-qt-confirm="#_('quickTasks.delete.album.confirm')">
+							#icon('open_book+delete')#_('quickTasks.delete.album')
+						</a>
 					</div>
 				</div>
 				<div class="dem-album-card__details">

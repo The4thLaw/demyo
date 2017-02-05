@@ -5,7 +5,7 @@
 (function($) {
 $(function() {
 	
-	$('#menu-quick-tasks [data-qt-confirm]').each(function() {
+	$('a[data-qt-confirm]').each(function() {
 		var $this = $(this);
 		var url = $this.attr('href');
 		$this.click(function(e) {
