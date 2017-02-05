@@ -56,6 +56,11 @@ public final class SystemConfiguration {
 	private final File thumbnailDirectory;
 	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
+	/**
+	 * The flag indicating whether LESS stylesheets should be loaded asynchronously. Should never be true in
+	 * production, but needed for some tests.
+	 */
+	private boolean loadLessInAsync;
 
 	/**
 	 * Instantiates a new system configuration.
@@ -341,5 +346,23 @@ public final class SystemConfiguration {
 	 */
 	public boolean isAutoStartWebBrowser() {
 		return autoStartWebBrowser;
+	}
+
+	/**
+	 * Checks if is the flag indicating whether LESS stylesheets should be loaded asynchronously.
+	 * 
+	 * @return the flag indicating whether LESS stylesheets should be loaded asynchronously
+	 */
+	public boolean isLoadLessInAsync() {
+		return loadLessInAsync;
+	}
+
+	/**
+	 * Sets the flag indicating whether LESS stylesheets should be loaded asynchronously.
+	 * 
+	 * @param loadLessInAsync the new flag indicating whether LESS stylesheets should be loaded asynchronously
+	 */
+	public void setLoadLessInAsync(boolean loadLessInAsync) {
+		this.loadLessInAsync = loadLessInAsync;
 	}
 }

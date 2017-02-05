@@ -37,6 +37,7 @@ public abstract class AbstractController {
 	private static final String MODEL_KEY_CONFIG = "appConfig";
 	private static final String MODEL_KEY_VERSION = "appVersion";
 	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
+	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
 
 	@Autowired
@@ -142,6 +143,7 @@ public abstract class AbstractController {
 	 */
 	protected String redirect(Model model, String relativeUrl) {
 		model.asMap().remove(MODEL_KEY_VERSION);
+		model.asMap().remove(MODEL_KEY_ASYNC_LESS);
 		// Note: spring is aware of the context path
 		return "redirect:" + relativeUrl;
 	}
@@ -226,5 +228,15 @@ public abstract class AbstractController {
 	 */
 	protected void suppressQuickSearch(Model model) {
 		model.addAttribute("suppressQuickSearch", true);
+	}
+
+	/**
+	 * Sets the flag {@link SystemConfiguration#isLoadLessInAsync()} in the model, as $loadLessInAsync.
+	 * 
+	 * @param model The view model
+	 */
+	@ModelAttribute
+	private void setLoadLessInAsync(Model model) {
+		model.addAttribute(MODEL_KEY_ASYNC_LESS, SystemConfiguration.getInstance().isLoadLessInAsync());
 	}
 }

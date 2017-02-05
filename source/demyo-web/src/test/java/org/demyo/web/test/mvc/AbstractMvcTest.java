@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
+import org.demyo.common.config.SystemConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.test.AbstractPersistenceTest;
 
@@ -64,11 +65,17 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private WebDriver webDriver;
 
 	/**
-	 * Sets tests to headless mode to ensure that desktop integration is disabled.
+	 * Sets flags specific for ITs.
+	 * <ul>
+	 * <li>Async loading for LESS</li>
+	 * <li>Headless mode</li>
+	 * </ul>
 	 */
 	@BeforeClass
-	public static void setHeadless() {
+	public static void setITFlags() {
 		System.setProperty("java.awt.headless", "true");
+		// Required for IT's since Less 2.7.2: else the body is hidden
+		SystemConfiguration.getInstance().setLoadLessInAsync(true);
 	}
 
 	/**
