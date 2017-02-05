@@ -193,6 +193,43 @@
 			});
 		});
 	};
+	
+	demyo.initTinyMCE = function () {
+		var lang = $('body').data('tinymce-lang');
+		
+		console.log('Initialising TinyMCE in language ' + lang);
+		
+		//$('textarea.richtext').css('opacity', 0);
+		// TODO: tweak editor config. Available plugings: autoresize, charmap, code, link,
+		// nonbreaking, paste, tabfocus, textcolor, visualchars, lists, table
+		tinymce.init({
+			selector: "textarea.richtext",
+			language: lang
+		});
+	};
+	
+	demyo.prepareTinyMCE = function () {
+		if ($('textarea.richtext').length <= 0) {
+			console.log('No richtext fields to upgrade');
+			return;
+		}
+		// Material starts initialising its components on load. We need to be ready to catch the event before it starts
+		// sending them, or trigger it if we're already too late (behaviour can depend on the version of jQuery)
+		
+		// Bind events
+		console.log('Binding initialisation events for TinyMCE');
+		document.addEventListener('mdl-componentupgraded', function(e) {
+			//In case other element are upgraded before the layout  
+			if (typeof e.target.MaterialLayout !== 'undefined') {
+				demyo.initTinyMCE();
+			}
+		});
+		
+		if ($('.mdl-layout').is('.is-upgraded')) {
+			// Fire it already, the upgrade has already happened
+			demyo.initTinyMCE();
+		}
+	};
 
 })(jQuery);
 
@@ -201,4 +238,6 @@ jQuery(function () {
 	demyo.bindColourInputs();
 	demyo.bindSelectInputs();
 	demyo.bindRepeatableParts();
+	demyo.prepareTinyMCE();
 });
+

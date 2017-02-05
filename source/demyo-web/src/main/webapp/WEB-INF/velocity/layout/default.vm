@@ -24,7 +24,7 @@ $quickTasks.prepare($javascript)
 		<link href="$link.contextPath/css/demyo-icons.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/vendor/dialog-polyfill.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/vendor/chosen.less" rel="stylesheet/less" type="text/css">
-		<link href="$link.contextPath/css/vendor/material.blue-pink.min.css" rel="stylesheet" type="text/css">
+		<link href="$link.contextPath/css/vendor/material.blue-pink-1.3.0.min.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/demyo.blue-pink.less" rel="stylesheet/less" type="text/css">
 		<script type="text/javascript" src="$link.contextPath/js/vendor/less-2.7.2.min.js"></script>
 		$javascript.load('Demyo.Core') ## Always load the core
@@ -34,13 +34,14 @@ $quickTasks.prepare($javascript)
 #end
 		<script type="text/javascript">
 ## TODO: do this in a nicer way
-demyo.l10n['quickTasks.confirm.title'] = '#_('javascript.quickTasks.confirm.title')';
-demyo.l10n['quickTasks.confirm.ok.label'] = '#_('javascript.quickTasks.confirm.ok.label')';
-demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confirm.cancel.label')';
+demyo.l10n['quickTasks.confirm.title'] = '#_("javascript.quickTasks.confirm.title")';
+demyo.l10n['quickTasks.confirm.ok.label'] = '#_("javascript.quickTasks.confirm.ok.label")';
+demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confirm.cancel.label")';
 		</script>
 
 	</head>
-	<body><div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	<body data-tinymce-lang="#_('javascript.l10n.tinyMCE')">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__drawer-button" data-dem-shortcut="77" id="menu-icon">#icon('menu')</div>
 			<div class="mdl-tooltip" for="menu-icon">#_('menu.title')</div>
@@ -182,25 +183,6 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_('javascript.quickTasks.confi
 				</div>
 			</footer>
 		</main>
-		
-		#if ($javascript.isLoaded("TinyMCE"))
-		<script type="text/javascript">
-			jQuery(function() {
-				jQuery('textarea.richtext').css('opacity', 0); // Hide the rich text areas already
-				document.addEventListener('mdl-componentupgraded', function(e) {
-					//In case other element are upgraded before the layout  
-					if (typeof e.target.MaterialLayout !== 'undefined') {
-						## TODO: tweak editor config. Available plugings: autoresize, charmap, code, link,
-						## nonbreaking, paste, tabfocus, textcolor, visualchars, lists, table
-						tinymce.init({
-							selector: "textarea.richtext",
-							language: '#_("javascript.l10n.tinyMCE")'
-						});
-  					}
-				});
-			});
-		</script>
-		#end
-
-	</div></body>
+	</div>
+	</body>
 </html>
