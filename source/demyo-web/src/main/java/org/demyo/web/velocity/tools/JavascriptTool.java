@@ -62,10 +62,11 @@ public class JavascriptTool {
 		KNOWN_SCRIPTS = new HashMap<String, Script>();
 
 		addScript(new Script("TinyMCE", "vendor/tinymce/tinymce.min.js"));
-		addScript(new Script("Dialog-Polyfill", "vendor/dialog-polyfill.js"));
+		addScript(new Script("Dialog-Polyfill", "vendor/dialog-polyfill-0.4.6.js"));
 		addScript(new Script("Material", "vendor/material.min.js", KNOWN_SCRIPTS.get("Dialog-Polyfill")));
 		addScript(new Script("PrefixFree", "vendor/prefixfree.min.js"));
-		addScript(new Script("JQuery", "vendor/jquery-1.9.1.js"));
+		addScript(new Script("JQuery-Core", "vendor/jquery-3.1.1.min.js"));
+		addScript(new Script("JQuery", "vendor/jquery-migrate-3.0.0.js", KNOWN_SCRIPTS.get("JQuery-Core")));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery"),
 				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
 		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
