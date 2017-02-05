@@ -63,7 +63,7 @@ public class JavascriptTool {
 
 		addScript(new Script("TinyMCE", "vendor/tinymce/tinymce.min.js"));
 		addScript(new Script("Dialog-Polyfill", "vendor/dialog-polyfill-0.4.6.js"));
-		addScript(new Script("Material", "vendor/material.min.js", KNOWN_SCRIPTS.get("Dialog-Polyfill")));
+		addScript(new Script("Material", "vendor/material-1.3.0.js", KNOWN_SCRIPTS.get("Dialog-Polyfill")));
 		addScript(new Script("PrefixFree", "vendor/prefixfree.min.js"));
 		addScript(new Script("JQuery-Core", "vendor/jquery-3.1.1.min.js"));
 		addScript(new Script("JQuery", "vendor/jquery-migrate-3.0.0.js", KNOWN_SCRIPTS.get("JQuery-Core")));
