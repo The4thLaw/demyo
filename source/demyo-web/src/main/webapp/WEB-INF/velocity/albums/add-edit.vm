@@ -69,6 +69,10 @@
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputDate('field.Album.currentEditionDate', 'album.currentEditionDate')
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="field_Album_currentEditionDate_same">
+			<input type="checkbox" id="field_Album_currentEditionDate_same" class="mdl-checkbox__input"#if ($album.id && $album.firstEditionDate && $album.firstEditionDate == $album.currentEditionDate) checked="checked"#end />
+			<span class="mdl-checkbox__label">#_('field.Album.currentEditionDate.sameAsFirst')</span>
+		</label>
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
@@ -157,9 +161,35 @@
 #end
 
 <script type="text/javascript">
+function firstToCurrentEdition() {
+	var val = jQuery('#field_album_firstEditionDate').val();
+	jQuery('#field_album_currentEditionDate').val(val);
+	jQuery('#field_album_currentEditionDate').change();
+	if (val) {
+		jQuery('#field_album_currentEditionDate').parent().addClass('is-dirty');
+	} else {
+		jQuery('#field_album_currentEditionDate').parent().removeClass('is-dirty');
+	}
+}
+
+function currentEditionDateHandler() {
+	if (jQuery('#field_Album_currentEditionDate_same').is(':checked')) {
+		firstToCurrentEdition();
+		jQuery('#field_album_firstEditionDate').on('change', firstToCurrentEdition);
+		jQuery('#field_album_currentEditionDate').prop('readonly', true);
+	} else {
+		// Unbind copier and allow writing to field
+		jQuery('#field_album_firstEditionDate').off('change', firstToCurrentEdition);
+		jQuery('#field_album_currentEditionDate').prop('readonly', false);
+	}
+}
+
 jQuery(function () {
 	demyo.dependentSelect('#field_album_publisher_id', '#field_album_collection_id', function (val) {
-			return val == null ? null : "$link.contextPath/publishers/" + val + "/collections";
-		});
+		return val == null ? null : "$link.contextPath/publishers/" + val + "/collections";
+	});
+	
+	jQuery('#field_Album_currentEditionDate_same').change(currentEditionDateHandler);
+	currentEditionDateHandler();
 });
 </script>
