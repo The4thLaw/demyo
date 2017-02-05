@@ -26,7 +26,7 @@ $quickTasks.prepare($javascript)
 		<link href="$link.contextPath/css/vendor/chosen.less" rel="stylesheet/less" type="text/css">
 		<link href="$link.contextPath/css/vendor/material.blue-pink.min.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/demyo.blue-pink.less" rel="stylesheet/less" type="text/css">
-		<script type="text/javascript" src="$link.contextPath/js/vendor/less-2.5.3.min.js"></script>
+		<script type="text/javascript" src="$link.contextPath/js/vendor/less.min.js"></script>
 		$javascript.load('Demyo.Core') ## Always load the core
 		$javascript.load('Demyo.QuickSearch') ## Always load quick search
 #foreach($source in $javascript.scriptSources)
