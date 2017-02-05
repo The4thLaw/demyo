@@ -96,7 +96,10 @@
       <property name="tokens" value="INSTANCE_INIT,STATIC_INIT,METHOD_DEF,CTOR_DEF"/>
     </module>
     <module name="DefaultComesLast"/>
-    <module name="DeclarationOrder"/>
+    <module name="DeclarationOrder">
+      <property name="severity" value="ignore"/>
+      <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+    </module>
     <module name="EqualsAvoidNull"/>
     <module name="FallThrough"/>
     <module name="ModifiedControlVariable"/>
