@@ -20,6 +20,11 @@
 			<artifactId>commons-io</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.demyo</groupId>
+			<artifactId>demyo-test</artifactId>
+		</dependency>
+		
 		<!-- Used to access the context -->
 		<dependency>
 			<groupId>org.springframework</groupId>

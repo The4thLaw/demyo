@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.demyo.web.controller.AlbumController;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
@@ -77,6 +78,9 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	public void testEditPage() {
 		getWebDriver().get("http://localhost/albums/edit/1");
 
+		// For some reason we need to call this manually, else the template is left behind
+		getJavaScriptExecutor().executeScript("demyo.bindRepeatableParts()");
+
 		assertThat(css1("#field_album_priceList\\[0\\]_date")).hasAttributeEqualTo("value", "2016-01-10");
 		assertThat(css1("#field_album_priceList\\[0\\]_price")).hasAttributeEqualTo("value", "10.0");
 		assertThat(css1("#field_album_priceList\\[1\\]_date")).hasAttributeEqualTo("value", "2016-01-15");
@@ -88,6 +92,36 @@ public class AlbumControllerIT extends AbstractMvcTest {
 
 		// Check the Album name
 		assertAlbumTitle("3 - Toutes les larmes de l'enfer");
+	}
+
+	/**
+	 * Tests that it is possible to add an album to an empty Series.
+	 * 
+	 * @see commit b01c5e7240866ee82ccb3dd6928f0fc245381754
+	 */
+	@Test
+	public void testAddToEmptySeries() {
+		getWebDriver().get("http://localhost/series/view/2");
+
+		// First, ensure the Series is really empty. Else, it doesn't make sense
+		List<WebElement> matches = cssM(".dem-album-card");
+		Assertions.assertThat(matches).isEmpty();
+
+		// Display the menu and click an entry
+		css1("#button-quick-tasks").click();
+		css1("#qt-add-album-to-series").click();
+
+		// Set a title
+		css1("#field_album_title").sendKeys("My new album for a previously empty series");
+
+		// For some reason we need to call this manually, else the template is left behind
+		getJavaScriptExecutor().executeScript("demyo.bindRepeatableParts()");
+
+		submitMainModelForm();
+
+		assertThat(getWebDriver().getCurrentUrl()).startsWith("http://localhost/albums/view/");
+
+		assertAlbumTitle("My new album for a previously empty series");
 	}
 
 	private void assertAlbumTitle(String title) {

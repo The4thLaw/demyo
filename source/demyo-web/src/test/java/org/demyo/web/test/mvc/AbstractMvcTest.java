@@ -3,7 +3,9 @@ package org.demyo.web.test.mvc;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
+import org.demyo.service.IConfigurationService;
 import org.demyo.test.AbstractPersistenceTest;
 
 import org.junit.Before;
@@ -53,6 +55,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private WebApplicationContext wac;
 	@Autowired
 	private CacheManager cacheManager;
+	@Autowired
+	private IConfigurationService config;
 
 	/** The HTMLUnit Web Client. */
 	private WebClient webClient;
@@ -65,6 +69,15 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	@BeforeClass
 	public static void setHeadless() {
 		System.setProperty("java.awt.headless", "true");
+	}
+
+	/**
+	 * Sets a common base (English) for labels in views.
+	 */
+	@Before
+	public void setLanguage() {
+		// Have a common base for labels
+		config.getConfiguration().setLanguage(Locale.ENGLISH);
 	}
 
 	/**

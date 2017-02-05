@@ -19,6 +19,7 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 	 * Performs a nullsafe comparison (according to their compare methods) of the provided elements. A
 	 * {@literal null} element is considered as smaller than a non-{@literal null} one.
 	 * 
+	 * @param <T> The type of item to compare.
 	 * @param c1 The first element for comparison
 	 * @param c2 The second element for comparison
 	 * @return a negative integer, zero, or a positive integer as the first object is less than, equal to, or
@@ -64,6 +65,7 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 	 * Performs a null-safe, collation-aware comparison of the provided strings. A {@literal null} string is
 	 * considered as smaller than a non-{@literal null} one.
 	 * 
+	 * @param <T> The type of item to compare.
 	 * @param s1 The first string for comparison
 	 * @param s2 The second string for comparison
 	 * @return a negative integer, zero, or a positive integer as the first string is less than, equal to, or

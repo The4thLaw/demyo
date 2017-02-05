@@ -1,6 +1,8 @@
 <dataset>
 	<publishers id="1" name="Delcourt" />
 	<publishers id="2" name="Dargaud" />
+	
+	<collections id="1" publisher_id="1" name="Série B" />
 
 	<series id="1" name="XIII" website="http://www.treize.com/"
 		summary="XIII is a guy suffering from amnesia." comment="Comment for XIII."/>

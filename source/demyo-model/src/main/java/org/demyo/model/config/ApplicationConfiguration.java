@@ -62,11 +62,13 @@ public class ApplicationConfiguration {
 	 */
 	public void merge(Map<String, String> config) {
 		String languageCode = getString(config, "language");
+		Locale theLanguage;
 		if (languageCode != null) {
-			language = Locale.forLanguageTag(languageCode);
+			theLanguage = Locale.forLanguageTag(languageCode);
 		} else {
-			language = Locale.getDefault();
+			theLanguage = Locale.getDefault();
 		}
+		setLanguage(theLanguage);
 
 		pageSizeForText = getInt(config, "paging.textPageSize");
 		pageSizeForImages = getInt(config, "paging.imagePageSize");
@@ -89,10 +91,6 @@ public class ApplicationConfiguration {
 			LOGGER.warn("Failed to load the header configuration", e);
 		}
 		headerLinks = links;
-
-		// Set the locale JVM-wide. This is notably use for javax.validation messages
-		Locale.setDefault(language);
-		LocaleContextHolder.setLocale(language);
 	}
 
 	private static String getString(Map<String, String> config, String key) {
@@ -136,6 +134,19 @@ public class ApplicationConfiguration {
 	 */
 	public Locale getLanguage() {
 		return language;
+	}
+
+	/**
+	 * Sets the language in which the application is displayed.
+	 * 
+	 * @param language the new language in which the application is displayed
+	 */
+	public void setLanguage(Locale language) {
+		this.language = language;
+
+		// Set the locale JVM-wide. This is notably use for javax.validation messages
+		Locale.setDefault(language);
+		LocaleContextHolder.setLocale(language);
 	}
 
 	/**
