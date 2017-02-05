@@ -23,9 +23,9 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.
 	 * 
-	 * @param seriesId The Series ID
+	 * @param seriesId The Series ID. Can be <code>null</code> to find Albums without Series
 	 * @return The associated Albums
 	 */
-	List<Album> findBySeriesId(long seriesId);
+	List<Album> findBySeriesId(Long seriesId);
 
 }

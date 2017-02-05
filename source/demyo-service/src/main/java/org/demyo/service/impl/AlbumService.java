@@ -122,7 +122,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
-	public List<Album> findBySeriesId(long seriesId) {
+	public List<Album> findBySeriesId(Long seriesId) {
 		List<Album> albums = repo.findBySeriesId(seriesId);
 		Collections.sort(albums, new AlbumComparator());
 		return albums;

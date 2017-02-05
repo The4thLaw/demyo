@@ -100,35 +100,35 @@
 		var refresher = function () {
 			var mainValue = main.val();
 			if (mainValue == '') {
+				mainValue = null;
+			}
+			
+			var builtUrl = urlBuilder(mainValue);
+			
+			if (builtUrl == null) {
+				console.log('No dependent entries for main value "' + mainValue + '";')
 				sub.html('<option value=""></option>');
 				sub.trigger('chosen:updated');
 				sub.change();
-			} else {
-				var builtUrl = urlBuilder(mainValue);
-				
-				if (builtUrl == null) {
-					// If the built URL is not valid, it means there's no use in trying the AJAX call
-					return;
-				}
-				
-				jQuery.ajax({
-					url: urlBuilder(mainValue),
-					contentType: 'application/json',
-					dataType: 'json',
-					success: function (data, status, jqXHR) {
-						console.log('Successfully got the list of dependent items (HTTP ' + jqXHR.status + ')')
-						sub.html('<option value=""></option>');
-						jQuery(data).each(function (index, value) {
-							sub.append('<option value="' + value.id + '" '
-									+ ((value.id == initialSubValue)?'selected="selected"':'')
-									+ '>' + value.identifyingName + '</option>');
-						});
-						// Trigger events
-						sub.trigger('chosen:updated');
-						sub.change();
-					}
-				});
 			}
+			
+			jQuery.ajax({
+				url: urlBuilder(mainValue),
+				contentType: 'application/json',
+				dataType: 'json',
+				success: function (data, status, jqXHR) {
+					console.log('Successfully got the list of dependent items (HTTP ' + jqXHR.status + ')')
+					sub.html('<option value=""></option>');
+					jQuery(data).each(function (index, value) {
+						sub.append('<option value="' + value.id + '" '
+								+ ((value.id == initialSubValue)?'selected="selected"':'')
+								+ '>' + value.identifyingName + '</option>');
+					});
+					// Trigger events
+					sub.trigger('chosen:updated');
+					sub.change();
+				}
+			});
 		};
 		
 		

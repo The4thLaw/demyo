@@ -22,16 +22,23 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	// with the class name, or spEL support
 	Album findOneForEdition(long id);
 
+	/**
+	 * Finds the first Album for a given Series.
+	 * 
+	 * @param id The Series ID
+	 * @param sort The order to determine the "first"
+	 * @return The matching Album
+	 */
 	@EntityGraph("Album.forEdition")
 	Album findTopBySeriesId(long id, Sort sort);
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.
 	 * 
-	 * @param seriesId The Series ID
+	 * @param seriesId The Series ID. Can be <code>null</code> to find Albums without Series
 	 * @return The associated Albums
 	 */
-	List<Album> findBySeriesId(long seriesId);
+	List<Album> findBySeriesId(Long seriesId);
 
 	@Override
 	@Query("select x from #{#entityName} x where title=?1 and wishlist = false order by title")

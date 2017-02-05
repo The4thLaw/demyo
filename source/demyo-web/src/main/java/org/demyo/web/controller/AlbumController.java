@@ -1,11 +1,13 @@
 package org.demyo.web.controller;
 
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
+import org.demyo.model.ModelView;
 import org.demyo.model.Tag;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -26,6 +28,9 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Controller for {@link Album} management.
@@ -53,6 +58,19 @@ public class AlbumController extends AbstractModelController<Album> {
 	 */
 	public AlbumController() {
 		super(Album.class, "albums", "album");
+	}
+
+	/**
+	 * Finds the Albums without Series.
+	 * 
+	 * @return The list of Albums.
+	 */
+	@JsonView(ModelView.Minimal.class)
+	@RequestMapping(value = "/withoutSeries", method = RequestMethod.GET, consumes = "application/json",
+			produces = "application/json")
+	@ResponseBody
+	public List<Album> getAlbumsWithoutSeries() {
+		return service.findBySeriesId(null);
 	}
 
 	/**

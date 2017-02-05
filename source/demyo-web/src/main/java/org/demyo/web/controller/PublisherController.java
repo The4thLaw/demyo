@@ -41,11 +41,17 @@ public class PublisherController extends AbstractModelController<Publisher> {
 		super(Publisher.class, "publishers", "publisher");
 	}
 
+	/**
+	 * Finds the Collections for a given Publisher.
+	 * 
+	 * @param publisherId The Publisher ID
+	 * @return The Publisher's Collections
+	 */
 	@JsonView(ModelView.Minimal.class)
 	@RequestMapping(value = "/{publisherId}/collections", method = RequestMethod.GET,
 			consumes = "application/json", produces = "application/json")
-	public @ResponseBody
-	List<Collection> getCollectionsForPublisher(@PathVariable("publisherId") long publisherId) {
+	@ResponseBody
+	public List<Collection> getCollectionsForPublisher(@PathVariable("publisherId") long publisherId) {
 		return collectionService.findByPublisherId(publisherId);
 	}
 

@@ -41,11 +41,17 @@ public class SeriesController extends AbstractModelController<Series> {
 		super(Series.class, "series", "series");
 	}
 
+	/**
+	 * Finds the Albums for a given Series.
+	 * 
+	 * @param seriesId The Series ID
+	 * @return The list of associated Albums
+	 */
 	@JsonView(ModelView.Minimal.class)
 	@RequestMapping(value = "/{seriesId}/albums", method = RequestMethod.GET, consumes = "application/json",
 			produces = "application/json")
-	public @ResponseBody
-	List<Album> getAlbumsForSeries(@PathVariable("seriesId") long seriesId) {
+	@ResponseBody
+	public List<Album> getAlbumsForSeries(@PathVariable("seriesId") long seriesId) {
 		return albumService.findBySeriesId(seriesId);
 	}
 
