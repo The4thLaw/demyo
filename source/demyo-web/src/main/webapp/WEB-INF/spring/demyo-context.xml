@@ -73,9 +73,10 @@
 			<props>
 				<!--Doesn't work with Spring's macros... -->
 				<prop key="runtime.references.strict">true</prop>
-
 				<prop key="velocimacro.arguments.strict">true</prop>
 				<prop key="velocimacro.library">macros/common.vm,macros/forms.vm,macros/form-values.vm,macros/i18n.vm,macros/images.vm,macros/lists.vm</prop>
+				<!-- Only use for development of macros -->
+				<!-- <prop key="velocimacro.library.autoreload">true</prop>  -->
 			</props>
 		</property>
 	</bean>
@@ -87,8 +88,7 @@
 		<property name="viewClass"
 			value="org.demyo.web.velocity.view.Velocity2ToolboxView" />
 		<property name="toolboxConfigLocation" value="WEB-INF/velocity/velocity-tools.xml" />
-		<!--<property name="exposeSpringMacroHelpers" value="true" />-->
-		<!--<property name="exposeRequestAttributes" value="true" />-->
-		<!--<property name="exposeSessionAttributes" value="true" />-->
+		<!-- Only use for development -->
+		<!-- <property name="cache" value="false" /> -->
 	</bean>
 </beans>
