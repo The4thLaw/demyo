@@ -9,7 +9,6 @@ import org.demyo.dao.IAuthorRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Author;
 import org.demyo.service.IAuthorService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,8 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		super(Author.class);
 	}
 
-	@Transactional(rollbackFor = Throwable.class)
 	@Override
+	@Transactional(readOnly = true)
 	public Author getByIdForView(long id) {
 		Author entity = repo.findOneForView(id);
 		if (entity == null) {
@@ -42,6 +41,7 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 
 	@Async
 	@Override
+	@Transactional(readOnly = true)
 	public Future<List<Author>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}

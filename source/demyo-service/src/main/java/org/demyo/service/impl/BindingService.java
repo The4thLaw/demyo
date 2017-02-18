@@ -25,8 +25,8 @@ public class BindingService extends AbstractModelService<Binding> implements IBi
 		super(Binding.class);
 	}
 
-	@Transactional(readOnly = true)
 	@Override
+	@Transactional(readOnly = true)
 	public Binding getByIdForView(long id) {
 		Binding entity = repo.findOneForView(id);
 		if (entity == null) {

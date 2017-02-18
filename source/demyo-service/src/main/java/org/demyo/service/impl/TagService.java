@@ -9,7 +9,6 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.ITagRepo;
 import org.demyo.model.Tag;
 import org.demyo.service.ITagService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -51,6 +50,7 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 
 	@Async
 	@Override
+	@Transactional(readOnly = true)
 	public Future<List<Tag>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}

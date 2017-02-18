@@ -7,12 +7,12 @@ import org.demyo.dao.ICollectionRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Collection;
 import org.demyo.service.ICollectionService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link ICollectionService}.
@@ -30,6 +30,7 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Collection> findByPublisherId(long publisherId) {
 		Order[] defaultOrder = getDefaultOrder();
 		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
@@ -38,6 +39,7 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 
 	@Async
 	@Override
+	@Transactional(readOnly = true)
 	public Future<List<Collection>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}

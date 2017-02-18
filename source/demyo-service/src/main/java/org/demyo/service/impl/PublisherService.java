@@ -9,7 +9,6 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IPublisherRepo;
 import org.demyo.model.Publisher;
 import org.demyo.service.IPublisherService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Order;
@@ -38,8 +37,8 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 		return repo.findAllForIndex(getPageable(currentPage, orders));
 	}
 
-	@Transactional(rollbackFor = Throwable.class)
 	@Override
+	@Transactional(readOnly = true)
 	public Publisher getByIdForView(long id) {
 		Publisher entity = repo.findOneForView(id);
 		if (entity == null) {

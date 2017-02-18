@@ -10,7 +10,6 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Series;
 import org.demyo.service.ISeriesService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
@@ -32,7 +31,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 		super(Series.class);
 	}
 
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(readOnly = true)
 	@Override
 	public Series getByIdForView(long id) {
 		Series entity = repo.findOneForView(id);
@@ -42,6 +41,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 		return entity;
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<Series> findOtherSeries(long id) {
 		return repo.findByIdNot(id);
@@ -55,6 +55,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 		return savedModel.getId();
 	}
 
+	@Transactional(readOnly = true)
 	@Async
 	@Override
 	public Future<List<Series>> quickSearch(String query, boolean exact) {

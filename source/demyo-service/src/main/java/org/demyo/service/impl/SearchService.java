@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Collection;
@@ -19,9 +21,6 @@ import org.demyo.service.IPublisherService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
 import org.demyo.service.SearchResult;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

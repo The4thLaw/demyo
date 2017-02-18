@@ -19,7 +19,6 @@ import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.PreSave;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementation of base operations on models.
  * 
- * @param <M> The model type.
+ * @param <M>
+ *            The model type.
  */
 public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
@@ -58,7 +58,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * Creates an abstract model service.
 	 * 
-	 * @param modelClass The class of the model to work on.
+	 * @param modelClass
+	 *            The class of the model to work on.
 	 */
 	protected AbstractModelService(Class<M> modelClass) {
 		this.modelClass = modelClass;
@@ -80,8 +81,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 				try {
 					setter = modelClass.getMethod(meth.getName().replaceFirst("get", "set"), meth.getReturnType());
 				} catch (NoSuchMethodException | SecurityException e) {
-					throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PROPERTY, e,
-							"No setter for getter", meth.getName());
+					throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PROPERTY, e, "No setter for getter",
+							meth.getName());
 				}
 				setters.add(setter);
 			}
@@ -125,8 +126,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 			}
 			if (!meth.getReturnType().equals(Void.TYPE)) {
 				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE,
-						"@PreSave methods cannot have return values", meth.getName(), meth.getReturnType()
-								.toString());
+						"@PreSave methods cannot have return values", meth.getName(), meth.getReturnType().toString());
 			}
 			preSave.add(meth);
 		}
@@ -140,13 +140,13 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	protected abstract IModelRepo<M> getRepo();
 
 	/** {@inheritDoc} By default, this method delegates to {@link #getByIdForEdition(long)}. */
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(readOnly = true)
 	@Override
 	public M getByIdForView(long id) {
 		return getByIdForEdition(id);
 	}
 
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(readOnly = true)
 	@Override
 	public M getByIdForEdition(long id) {
 		// While waiting for DATAJPA-118...
@@ -176,8 +176,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * The default implementation uses the amount of items per page of text. If the service needs to change that
-	 * amount (e.g. for pages of images), it should override this method.
+	 * The default implementation uses the amount of items per page of text. If the service needs to change that amount
+	 * (e.g. for pages of images), it should override this method.
 	 * </p>
 	 */
 	@Transactional(readOnly = true)
@@ -190,9 +190,11 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * Gets a Spring Data {@link Pageable} object from the current page and orders.
 	 * 
-	 * @param currentPage The page number (starting at 1).
-	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no
-	 *        default ordering is defined, the ordering is defined by the database.
+	 * @param currentPage
+	 *            The page number (starting at 1).
+	 * @param orders
+	 *            Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
+	 *            ordering is defined, the ordering is defined by the database.
 	 * @return The {@link Pageable} instance
 	 */
 	protected Pageable getPageable(int currentPage, Order... orders) {
@@ -203,8 +205,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 			orders = defaultOrder;
 		}
 		Sort sort = orders.length == 0 ? null : new Sort(orders);
-		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
-				.getPageSizeForText(), sort);
+		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration().getPageSizeForText(),
+				sort);
 		return pageable;
 	}
 
@@ -218,8 +220,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 				meth.invoke(model, new Object[] {});
 				LOGGER.debug("Called @PreSave method {}", meth);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE, e,
-						"Calling @PreSave method failed", meth.getName());
+				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE, e, "Calling @PreSave method failed",
+						meth.getName());
 			}
 		}
 
@@ -257,7 +259,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * By default, this method returns the provided object without any modification.
 	 * </p>
 	 * 
-	 * @param model The model that would be saved.
+	 * @param model
+	 *            The model that would be saved.
 	 * @return The model to save.
 	 */
 	protected M reloadIfNeeded(M model) {
@@ -283,9 +286,12 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * Base implementation of a quick search query on an {@link IQuickSearchableRepo}.
 	 * 
-	 * @param query The string to match
-	 * @param exact <code>true</code> if the search is for an exact match. <code>false</code> otherwise.
-	 * @param searchRepo The repository to search on.
+	 * @param query
+	 *            The string to match
+	 * @param exact
+	 *            <code>true</code> if the search is for an exact match. <code>false</code> otherwise.
+	 * @param searchRepo
+	 *            The repository to search on.
 	 * @return The matches, as a future.
 	 */
 	// Note: caching cannot be supported here. See https://jira.spring.io/browse/SPR-12967

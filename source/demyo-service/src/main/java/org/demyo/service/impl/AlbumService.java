@@ -14,7 +14,6 @@ import org.demyo.model.MetaSeries;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IConfigurationService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -59,8 +58,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	 * This specific implementation pages by series.
 	 * </p>
 	 */
-	@Transactional(readOnly = true)
 	@Override
+	@Transactional(readOnly = true)
 	public Slice<Album> findPaginated(int currentPage, Order... orders) {
 		// Adjust the page number: Spring Data counts from 0
 		currentPage--;
@@ -68,8 +67,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		if (orders.length > 0) {
 			throw new UnsupportedOperationException("It is not possible to override the order for pages of albums");
 		}
-		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration()
-				.getPageSizeForAlbums());
+		Pageable pageable = new PageRequest(currentPage,
+				configurationService.getConfiguration().getPageSizeForAlbums());
 
 		Slice<MetaSeries> metaSlice = metaSeriesRepo.findAll(pageable);
 
@@ -78,8 +77,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		// Add all albums
 		for (MetaSeries meta : metaSlice) {
 			if (meta.getSeries() != null) {
-				LOGGER.debug("Adding all {} albums from {}", meta.getSeries().getAlbums().size(), meta.getSeries()
-						.getIdentifyingName());
+				LOGGER.debug("Adding all {} albums from {}", meta.getSeries().getAlbums().size(),
+						meta.getSeries().getIdentifyingName());
 				albumList.addAll(meta.getSeries().getAlbums());
 			} else {
 				LOGGER.debug("Adding one shot album: {}", meta.getAlbum().getIdentifyingName());
@@ -122,6 +121,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Album> findBySeriesId(Long seriesId) {
 		List<Album> albums = repo.findBySeriesId(seriesId);
 		Collections.sort(albums, new AlbumComparator());
@@ -130,6 +130,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 	@Async
 	@Override
+	@Transactional(readOnly = true)
 	public Future<List<Album>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
@@ -140,6 +141,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	protected Album reloadIfNeeded(Album model) {
 		if (model.getId() == null) {
 			return model;

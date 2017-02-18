@@ -16,6 +16,11 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOCase;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
@@ -26,12 +31,6 @@ import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IImageService;
 import org.demyo.utils.io.DIOUtils;
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOCase;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
@@ -84,6 +83,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public File getImageThumbnail(long id) throws DemyoException {
 		// Check cache (two possible formats)
 		File pngThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".png");
@@ -107,8 +107,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		// If the image has one dimension too small, constrain it to that
 		ApplicationConfiguration config = configService.getConfiguration();
-		int desiredMaxWidth = config.getThumbnailWidth() > buffImage.getWidth() ? buffImage.getWidth() : config
-				.getThumbnailWidth();
+		int desiredMaxWidth = config.getThumbnailWidth() > buffImage.getWidth() ? buffImage.getWidth()
+				: config.getThumbnailWidth();
 		int desiredMaxHeight = config.getThumbnailHeight() > buffImage.getHeight() ? buffImage.getHeight()
 				: config.getThumbnailHeight();
 
@@ -226,6 +226,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<String> findUnknownDiskImages() {
 		List<String> unknownFiles = new ArrayList<>();
 		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
@@ -278,8 +279,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		super.delete(id);
 		String path = image.getUrl();
 		if (path.startsWith(UPLOAD_DIRECTORY_NAME)) {
-			LOGGER.info("Image {} was uploaded automatically as {}; deleting it now that it is no longer used",
-					id, path);
+			LOGGER.info("Image {} was uploaded automatically as {}; deleting it now that it is no longer used", id,
+					path);
 			try {
 				if (!getImageFile(image).delete()) {
 					LOGGER.warn("Failed to delete the image at {}", path);
