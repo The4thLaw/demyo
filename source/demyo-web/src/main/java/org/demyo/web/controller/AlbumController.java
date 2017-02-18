@@ -19,7 +19,6 @@ import org.demyo.service.IModelService;
 import org.demyo.service.IPublisherService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
-
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -76,8 +75,10 @@ public class AlbumController extends AbstractModelController<Album> {
 	/**
 	 * Adds an {@link Album}.
 	 * 
-	 * @param model The view model.
-	 * @param seriesId The ID of the {@link org.demyo.model.Series Series} to add the album to.
+	 * @param model
+	 *            The view model.
+	 * @param seriesId
+	 *            The ID of the {@link org.demyo.model.Series Series} to add the album to.
 	 * @return The view name.
 	 */
 	// params attributes allows overriding the parent /add
@@ -115,10 +116,4 @@ public class AlbumController extends AbstractModelController<Album> {
 		registerCollectionEditor(binder, SortedSet.class, "tags", Tag.class, new IdentifyingNameComparator());
 		registerCollectionEditor(binder, Set.class, "images", Image.class);
 	}
-
-	/*@RequestMapping("/ajax")
-	public String listAjax(Model model) {
-		setLayoutAjax(model);
-		return "albums/list";
-	}*/
 }

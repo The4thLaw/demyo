@@ -120,9 +120,7 @@
 		#if ($options.allowEmpty)
 			<option value=""></option>
 		#end
-		#foreach ($value in $values)
-			<option value="$value.id"#if ($!status.value && $status.value == $value.id) selected="selected"#end>$value.identifyingName</option>
-		#end
+		$form.selectOptions($values, $!status.value)
 		#if ($values.empty && $!options.ajaxLoaded && $!status.value)
 			## Preload with a default value that the JavaScript helper can use
 			<!-- Default value for an AJAX-loaded option list -->
@@ -135,17 +133,7 @@
 #macro(inputSelectMultiple $labelId $path $values)
 	#@formField($labelId, $path)
 		<select id="$fieldId" name="$status.expression" multiple="multiple"#if($hasErrors) class="error"#end>
-		#foreach ($value in $values)
-			#set ($selected = false)
-			#if ($!status.value && !$hasErrors) ## When such a field has errors, the value is a String
-				#foreach ($item in $status.value)
-					#if ($item.id == $value.id)
-						#set ($selected = true)
-					#end
-				#end
-			#end
-			<option value="$value.id"#if ($selected) selected="selected"#end>$value.identifyingName</option>
-		#end
+			$form.selectOptions($values, $!status.value)
 		</select>
 	#end
 #end
