@@ -30,14 +30,14 @@
 		<appender-ref ref="demyoAppender" />
 	</logger>
 	
-	<!--<logger name="org.hibernate.SQL" additivity="false">
+	<!-- <logger name="org.hibernate.SQL" additivity="false">
 		<level value="trace" />
 		<appender-ref ref="console" />
-	</logger>
-	<logger name="org.hibernate.type" additivity="false">
+	</logger> -->
+	<!-- <logger name="org.hibernate.type" additivity="false">
 		<level value="trace" />
 		<appender-ref ref="console" />
-	</logger>-->
+	</logger> -->
 	
 	<root>
 		<priority value="warn" />
