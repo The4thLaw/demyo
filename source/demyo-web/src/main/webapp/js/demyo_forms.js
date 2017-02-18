@@ -53,6 +53,12 @@
 			elementSet.addClass('chosen-not-available');
 			elementSet.parents('.mdl-textfield').addClass('is-dirty')
 			$('~ label', elementSet).addClass('chosen-not-available');
+
+			// We also need to take care about a nasty iOS issue, where the first element is always selected but not marked as such
+			if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+				elementSet.filter('[multiple]').prepend('<optgroup disabled hidden></optgroup>');
+			}
+
 			return;
 		}
 		
