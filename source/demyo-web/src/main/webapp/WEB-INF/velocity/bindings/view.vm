@@ -14,4 +14,7 @@ $quickTasks.add({
 
 #@entityField('field.Binding.identifyingName')$binding.identifyingName#end
 
-## TODO: albums from this binding
+#if (!$binding.albums.empty)
+	<h3 class="mdl-typography--title">#_('field.Binding.albums')</h3>
+	#textCardListAlbums($binding.albums false)
+#end
