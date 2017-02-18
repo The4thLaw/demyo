@@ -52,8 +52,8 @@ public class FormToolTest {
 		String result = tool.selectOptions(possibleValues,
 				Arrays.asList(possibleValues.get(j++), possibleValues.get(j++)));
 
-		assertThat(result).contains("<option value='1'selected='selected'>Series 1</option>");
-		assertThat(result).contains("<option value='2'selected='selected'>Series 2</option>");
+		assertThat(result).contains("<option value='1' selected='selected'>Series 1</option>");
+		assertThat(result).contains("<option value='2' selected='selected'>Series 2</option>");
 		for (int i = ++j; i <= NUM_MODELS; i++) {
 			assertThat(result).contains("<option value='" + i + "'>Series " + i + "</option>");
 		}
