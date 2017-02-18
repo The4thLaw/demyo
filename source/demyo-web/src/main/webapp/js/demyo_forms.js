@@ -246,6 +246,40 @@
 			demyo.initTinyMCE();
 		}
 	};
+	
+	$.fn.extend({
+		disableIf: function(settings) {
+			if (!this.length) {
+				return this;
+			}
+			var self = this;
+			
+			var $elems = $(settings.selector);
+			if ($elems.length > 1) {
+				console.log('Cannot bind a disableIf to more than one source element');
+				return this;
+			}
+			if (!$elems.length) {
+				console.log('No source element to bind the disableIf to')
+				return this;
+			}
+			
+			var changeHandler = function () {
+				var checked = $(this).is(':checked');
+				self.prop('disabled', checked);
+				if (checked) {
+					self.parent().addClass('is-disabled');
+				} else {
+					self.parent().removeClass('is-disabled');
+				}
+			};
+
+			$elems.change(changeHandler);
+			
+			// Trigger initially
+			changeHandler.call($elems.get());
+		}
+	});
 
 })(jQuery);
 

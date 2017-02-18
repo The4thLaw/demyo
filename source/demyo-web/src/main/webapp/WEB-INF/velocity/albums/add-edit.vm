@@ -68,14 +68,13 @@
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputDate('field.Album.currentEditionDate', 'album.currentEditionDate')
-		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="field_Album_currentEditionDate_same">
-			<input type="checkbox" id="field_Album_currentEditionDate_same" class="mdl-checkbox__input"#if ($album.id && $album.firstEditionDate && $album.firstEditionDate == $album.currentEditionDate) checked="checked"#end />
+		<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="field_album_currentEditionDate_same">
+			<input type="checkbox" id="field_album_currentEditionDate_same" class="mdl-checkbox__input"#if ($album.id && $album.firstEditionDate && $album.firstEditionDate == $album.currentEditionDate) checked="checked"#end />
 			<span class="mdl-checkbox__label">#_('field.Album.currentEditionDate.sameAsFirst')</span>
 		</label>
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
-		## TODO: disable if wishlist
 	#end
 	#@mdlGridCell([4,0,0])
 		#inputCheckbox('field.Album.wishlist', 'album.wishlist')
@@ -172,7 +171,7 @@ function firstToCurrentEdition() {
 }
 
 function currentEditionDateHandler() {
-	if (jQuery('#field_Album_currentEditionDate_same').is(':checked')) {
+	if (jQuery('#field_album_currentEditionDate_same').is(':checked')) {
 		firstToCurrentEdition();
 		jQuery('#field_album_firstEditionDate').on('change', firstToCurrentEdition);
 		jQuery('#field_album_currentEditionDate').prop('readonly', true);
@@ -188,7 +187,9 @@ jQuery(function () {
 		return val == null ? null : "$link.contextPath/publishers/" + val + "/collections";
 	});
 	
-	jQuery('#field_Album_currentEditionDate_same').change(currentEditionDateHandler);
+	jQuery('#field_album_currentEditionDate_same').change(currentEditionDateHandler);
 	currentEditionDateHandler();
+	
+	jQuery('#field_album_acquisitionDate').disableIf({selector: '#field_album_wishlist'});
 });
 </script>
