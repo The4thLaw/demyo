@@ -34,7 +34,7 @@ public class FormToolTest {
 		for (int i = 1; i < NUM_MODELS; i++) {
 			assertThat(result).contains("<option value='" + i + "'>Series " + i + "</option>");
 		}
-		assertThat(result).contains("<option value='5'selected='selected'>Series 5</option>");
+		assertThat(result).contains("<option value='5' selected='selected'>Series 5</option>");
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class FormToolTest {
 		for (int i = 1; i < NUM_MODELS; i++) {
 			assertThat(result).contains("<option value='id_" + i + "'>Map " + i + "</option>");
 		}
-		assertThat(result).contains("<option value='id_5'selected='selected'>Map 5</option>");
+		assertThat(result).contains("<option value='id_5' selected='selected'>Map 5</option>");
 	}
 
 	private static Series createSeries(long id) {

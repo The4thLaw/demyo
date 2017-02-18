@@ -77,7 +77,7 @@ public class FormTool {
 
 			sb.append("<option value='").append(id).append("'");
 			if (id.equals(selectedId)) {
-				sb.append("selected='selected'");
+				sb.append(" selected='selected'");
 			}
 			sb.append('>').append(name).append("</option>");
 		}
@@ -108,7 +108,7 @@ public class FormTool {
 			boolean selected = selectedIds.contains(id);
 			sb.append("<option value='").append(id).append("'");
 			if (selected) {
-				sb.append("selected='selected'");
+				sb.append(" selected='selected'");
 			}
 			sb.append('>').append(name).append("</option>");
 		}
