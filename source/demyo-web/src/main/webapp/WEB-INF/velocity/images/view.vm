@@ -20,4 +20,29 @@ $quickTasks.add({
 	</p>
 </div>
 
-## TODO: where is this image used?
+<h3 class="mdl-typography--title">#_('page.Image.usedIn')</h3>
+
+#if (!$image.allAlbums.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Image.usedIn.albums')</h4>
+	#textCardListAlbums($image.allAlbums false)
+#end
+
+#if (!$image.derivatives.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Image.usedIn.derivatives')</h4>
+	#textCardListStdBody($image.derivatives '' 'identifyingName' '/derivatives/view/' false)
+#end
+
+#if (!$image.authors.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Image.usedIn.authors')</h4>
+	#textCardListStdBody($image.authors '' 'identifyingName' '/authors/view/' false)
+#end
+
+#if (!$image.publishers.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Image.usedIn.publishers')</h4>
+	#textCardListStdBody($image.publishers '' 'identifyingName' '/publishers/view/' false)
+#end
+
+#if (!$image.collections.empty)
+	<h4 class="mdl-typography--subhead">#_('page.Image.usedIn.collections')</h4>
+	#textCardListStdBody($image.collections '' 'identifyingName' '/collections/view/' false)
+#end

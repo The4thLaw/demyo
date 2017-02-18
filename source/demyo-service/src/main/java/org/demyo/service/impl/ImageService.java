@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -64,6 +65,16 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		uploadDirectory = new File(SystemConfiguration.getInstance().getImagesDirectory(), UPLOAD_DIRECTORY_NAME);
 		uploadDirectory.mkdirs();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Image getByIdForView(long id) {
+		Image entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Image for ID " + id);
+		}
+		return entity;
 	}
 
 	@Override
