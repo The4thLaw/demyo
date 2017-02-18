@@ -1,5 +1,6 @@
 package org.demyo.web.config;
 
+import org.demyo.web.servlet.StagemonitorInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,21 +19,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		LOGGER.debug("Configuring Spring Security");
 
+		boolean allowUnsafeEval = StagemonitorInitializer.isStagemonitorAvailable();
+		if (allowUnsafeEval) {
+			LOGGER.warn("Stagemonitor is available, the CSP will allow unsafe-eval for JavaScript");
+		}
+
+		// Using recommendations from https://content-security-policy.com/
+		String csp = "default-src 'none'; connect-src 'self'; font-src 'self'; ";
+		// Data is used by Material Design for e.g. the check mark in checkboxes
+		csp += "img-src 'self' data:; ";
+		// unsafe-inline is required, notably because of LESS on the server side
+		csp += "script-src 'self' 'unsafe-inline' "//
+				+ (allowUnsafeEval ? "'unsafe-eval'" : "")//
+				+ "; style-src 'self' 'unsafe-inline';";
+
 		LOGGER.debug("Configuring headers");
 		http.headers()
-		// Don't use the defaults
+				// Don't use the defaults
 				.defaultsDisabled()
-				// Don't use their cache control directives. We don't have really sensitive control yet
+				// Don't use their cache control directives. We don't have
+				// really sensitive control yet
 				.contentTypeOptions()
 				// Don't care for HSTS: It's not supported by Demyo yet anyway
 				// Do the following even though we will implement CSP afterwards
-				.and().frameOptions().sameOrigin().xssProtection().block(true)
-				// Using recommendations from https://content-security-policy.com/
-				.and().contentSecurityPolicy("default-src 'none'; connect-src 'self'; font-src 'self'; " +
-				// Data is used by Material Design for e.g. the check mark in checkboxes
-						"img-src 'self' data:; "
-						// unsafe-inline is required, probably because of LESS on the server side
-						+ "script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';");
+				.and().frameOptions().sameOrigin().xssProtection().block(true).and().contentSecurityPolicy(csp);
 
 		// Disable CSRF protection for now
 		http.csrf().disable();

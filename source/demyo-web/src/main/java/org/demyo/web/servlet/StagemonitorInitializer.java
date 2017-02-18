@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.WebApplicationInitializer;
 
 /**
- * Specific component to ensure the stagemonitor plugin is initialised. Has no compile-time dependencies on
- * stagemonitor, and no requirement at runtime.
+ * Specific component to ensure the stagemonitor plugin is initialised. Has no
+ * compile-time dependencies on stagemonitor, and no requirement at runtime.
  */
 @Component
 public class StagemonitorInitializer implements WebApplicationInitializer {
@@ -30,6 +30,21 @@ public class StagemonitorInitializer implements WebApplicationInitializer {
 		onStartup(servletContext);
 	}
 
+	/**
+	 * Checks whether Stagemonitor is in the classpath. Does not check for
+	 * potential issues with the initialisation.
+	 * 
+	 * @return <code>true</code> if the
+	 */
+	public static boolean isStagemonitorAvailable() {
+		try {
+			Class.forName("org.stagemonitor.web.WebPlugin");
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public void onStartup(ServletContext ctx) {
 		try {
@@ -42,7 +57,8 @@ public class StagemonitorInitializer implements WebApplicationInitializer {
 		} catch (InstantiationException | IllegalAccessException | ClassCastException e) {
 			LOGGER.warn("stagemonitor is in the classpath but I can't instantiate it, continuing happily", e);
 		} catch (ServletException | UnsupportedOperationException e) {
-			// UnsupportedOperationException could happen in integration tests, for example. We could exclude
+			// UnsupportedOperationException could happen in integration tests,
+			// for example. We could exclude
 			// stagemonitor for failsafe tests but Eclipse does not comply
 			LOGGER.warn("stagemonitor is in the classpath but I can't configure it, continuing happily", e);
 		}
