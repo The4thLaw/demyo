@@ -3,7 +3,6 @@ package org.demyo.service;
 import java.util.List;
 
 import org.demyo.model.Series;
-import org.demyo.service.impl.IQuickSearchableService;
 
 /**
  * Service for management of {@link Series}.

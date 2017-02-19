@@ -1,6 +1,6 @@
 package org.demyo.web.controller;
 
-import org.demyo.service.impl.ISearchService;
+import org.demyo.service.ISearchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

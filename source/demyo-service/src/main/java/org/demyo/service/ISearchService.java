@@ -1,6 +1,4 @@
-package org.demyo.service.impl;
-
-import org.demyo.service.SearchResult;
+package org.demyo.service;
 
 /**
  * Defines various methods to search for models.

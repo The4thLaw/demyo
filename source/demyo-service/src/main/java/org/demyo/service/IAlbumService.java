@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.demyo.model.Album;
 import org.demyo.model.Series;
-import org.demyo.service.impl.IQuickSearchableService;
 
 /**
  * Service for management of {@link Album}s.

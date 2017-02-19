@@ -1,4 +1,4 @@
-package org.demyo.service.impl;
+package org.demyo.service;
 
 import java.util.List;
 import java.util.concurrent.Future;

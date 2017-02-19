@@ -18,6 +18,7 @@ import org.demyo.service.IAlbumService;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.ICollectionService;
 import org.demyo.service.IPublisherService;
+import org.demyo.service.ISearchService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
 import org.demyo.service.SearchResult;
