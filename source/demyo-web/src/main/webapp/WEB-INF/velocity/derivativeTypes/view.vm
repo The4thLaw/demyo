@@ -14,5 +14,5 @@ $quickTasks.add({
 
 #@entityField('field.DerivativeType.identifyingName')$derivativeType.identifyingName#end
 #@entityField('field.DerivativeType.derivatives')
-<a href="$link.contextPath/derivatives/?withType=$derivativeType.id">#_('page.DerivativeType.viewDerivatives')</a>
+	<a href="$link.contextPath/derivatives/?withType=$derivativeType.id">#_('page.DerivativeType.viewDerivatives')</a>
 #end

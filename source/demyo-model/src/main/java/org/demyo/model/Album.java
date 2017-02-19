@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.ComparableComparator;
+import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.PreSave;
 
@@ -41,6 +42,8 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 @Entity
 @Table(name = "ALBUMS")
+@DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"), @DefaultOrder.Order(property = "cycle"),
+		@DefaultOrder.Order(property = "number"), @DefaultOrder.Order(property = "numberSuffix") })
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes = { @NamedAttributeNode("series"),
 		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover"),
 		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
@@ -171,49 +174,49 @@ public class Album extends AbstractModel {
 
 	/** The {@link Tag}s labelling this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Tag> tags;
 
 	/** The {@link Author}s who wrote this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_writers", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_writers", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "writer_id"))
 	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> writers;
 
 	/** The {@link Author}s who drew this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_artists", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_artists", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "artist_id"))
 	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> artists;
 
 	/** The {@link Author}s who colored this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_colorists", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_colorists", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "colorist_id"))
 	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> colorists;
 
 	/** The {@link Author}s who inked this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_inkers", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_inkers", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "inker_id"))
 	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> inkers;
 
 	/** The {@link Author}s who translated this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_translators", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_translators", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "translator_id"))
 	@SortComparator(AuthorComparator.class)
 	private SortedSet<Author> translators;
 
 	/** The {@link Image}s related to this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_images", joinColumns = @JoinColumn(name = "album_id"),
+	@JoinTable(name = "albums_images", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	private Set<Image> images;
 
@@ -572,8 +575,8 @@ public class Album extends AbstractModel {
 	/**
 	 * Gets the physical location of this Album, potentially guessing it from the Series.
 	 * 
-	 * @return If the Album has a location, it is returned. Else, if the Album belongs to a Series and that Series
-	 *         has a location, it is returned. Else, <code>null</code> is returned.
+	 * @return If the Album has a location, it is returned. Else, if the Album belongs to a Series and that Series has a
+	 *         location, it is returned. Else, <code>null</code> is returned.
 	 */
 	public String getAggregatedLocation() {
 		if (location != null) {

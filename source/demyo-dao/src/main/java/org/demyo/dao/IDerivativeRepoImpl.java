@@ -17,7 +17,7 @@ public class IDerivativeRepoImpl implements IDerivativeCustomRepo {
 	private IDerivativeRepo repo;
 
 	@Override
-	public Slice<Derivative> findAllForIndex(Pageable pageable, Predicate filter) {
+	public Slice<Derivative> findAllForIndex(Predicate filter, Pageable pageable) {
 		Slice<Derivative> slice = repo.findAll(filter, pageable);
 		// See IPublisherRepoImpl for rationale behind this
 		for (Derivative deriv : slice) {

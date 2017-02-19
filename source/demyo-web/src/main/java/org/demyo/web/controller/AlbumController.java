@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
 import org.demyo.model.ModelView;
+import org.demyo.model.QAlbum;
 import org.demyo.model.Tag;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -21,6 +24,7 @@ import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -30,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.querydsl.core.types.Predicate;
 
 /**
  * Controller for {@link Album} management.
@@ -37,6 +42,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Controller
 @RequestMapping("/albums")
 public class AlbumController extends AbstractModelController<Album> {
+	private static final String REQUEST_PARAM_BINDING = "withBinding";
+
 	@Autowired
 	private IAlbumService service;
 	@Autowired
@@ -65,8 +72,8 @@ public class AlbumController extends AbstractModelController<Album> {
 	 * @return The list of Albums.
 	 */
 	@JsonView(ModelView.Minimal.class)
-	@RequestMapping(value = "/withoutSeries", method = RequestMethod.GET, consumes = "application/json",
-			produces = "application/json")
+	@RequestMapping(value = "/withoutSeries", method = RequestMethod.GET, //
+			consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<Album> getAlbumsWithoutSeries() {
 		return service.findBySeriesId(null);
@@ -75,10 +82,8 @@ public class AlbumController extends AbstractModelController<Album> {
 	/**
 	 * Adds an {@link Album}.
 	 * 
-	 * @param model
-	 *            The view model.
-	 * @param seriesId
-	 *            The ID of the {@link org.demyo.model.Series Series} to add the album to.
+	 * @param model The view model.
+	 * @param seriesId The ID of the {@link org.demyo.model.Series Series} to add the album to.
 	 * @return The view name.
 	 */
 	// params attributes allows overriding the parent /add
@@ -88,6 +93,26 @@ public class AlbumController extends AbstractModelController<Album> {
 		fillModelForEdition(null, model);
 
 		return "albums/add-edit";
+	}
+
+	@Override
+	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
+	public String index(@RequestParam(value = "page", required = false) Integer currentPage,
+			@RequestParam(value = "startsWith", required = false) Character startsWith, Model model,
+			HttpServletRequest request) {
+		currentPage = getCurrentPage(currentPage, startsWith);
+
+		Long bindingId = getLongParam(request, REQUEST_PARAM_BINDING);
+		Predicate filter = null;
+		if (bindingId != null) {
+			filter = QAlbum.album.binding.id.eq(bindingId);
+		}
+
+		Slice<Album> entities = service.findPaginated(currentPage, filter);
+
+		model.addAttribute("albumList", entities);
+
+		return "albums/index";
 	}
 
 	@Override

@@ -33,6 +33,8 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.Predicate;
+
 /**
  * Implementation of base operations on models.
  * 
@@ -183,6 +185,20 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	public Slice<M> findPaginated(int currentPage, Order... orders) {
 		Pageable pageable = getPageable(currentPage, orders);
 		return getRepo().findAll(pageable);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * The default implementation uses the amount of items per page of text. If the service needs to change that amount
+	 * (e.g. for pages of images), it should override this method.
+	 * </p>
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public Slice<M> findPaginated(int currentPage, Predicate predicate, Order... orders) {
+		Pageable pageable = getPageable(currentPage, orders);
+		return getRepo().findAll(predicate, pageable);
 	}
 
 	/**

@@ -29,6 +29,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.Predicate;
+
 /**
  * Implements the contract defined by {@link IAlbumService}.
  */
@@ -87,6 +89,38 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		}
 
 		return new SliceImpl<Album>(albumList, pageable, metaSlice.hasNext());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Slice<Album> findPaginated(int currentPage, Predicate predicate, Order... orders) {
+		Pageable pageable = getPageable(currentPage, orders);
+
+		return repo.findAllForIndex(predicate, pageable);
+
+		/*if (orders.length > 0) {
+			throw new UnsupportedOperationException("It is not possible to override the order for pages of albums");
+		}
+		Pageable pageable = new PageRequest(currentPage,
+				configurationService.getConfiguration().getPageSizeForAlbums());
+		
+		Slice<Album> metaSlice = repo.findAll(predicate, pageable);
+		
+		// At the very least, there will be that many elements
+		List<Album> albumList = new ArrayList<Album>(metaSlice.getNumberOfElements());
+		// Add all albums
+		for (MetaSeries meta : metaSlice) {
+			if (meta.getSeries() != null) {
+				LOGGER.debug("Adding all {} albums from {}", meta.getSeries().getAlbums().size(),
+						meta.getSeries().getIdentifyingName());
+				albumList.addAll(meta.getSeries().getAlbums());
+			} else {
+				LOGGER.debug("Adding one shot album: {}", meta.getAlbum().getIdentifyingName());
+				albumList.add(meta.getAlbum());
+			}
+		}
+		
+		return new SliceImpl<Album>(albumList, pageable, metaSlice.hasNext());*/
 	}
 
 	@Override

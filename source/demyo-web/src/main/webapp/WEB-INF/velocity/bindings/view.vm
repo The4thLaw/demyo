@@ -13,8 +13,6 @@ $quickTasks.add({
 })
 
 #@entityField('field.Binding.identifyingName')$binding.identifyingName#end
-
-#if (!$binding.albums.empty)
-	<h3 class="mdl-typography--title">#_('field.Binding.albums')</h3>
-	#textCardListAlbums($binding.albums false)
+#@entityField('field.Binding.albums')
+<a href="$link.contextPath/albums/?withBinding=$binding.id">#_('page.Binding.viewAlbums')</a>
 #end

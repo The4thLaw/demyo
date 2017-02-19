@@ -30,13 +30,13 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@Override
 	@Transactional(readOnly = true)
 	public Slice<Derivative> findPaginated(int currentPage, Order... orders) {
-		return repo.findAllForIndex(getPageable(currentPage, orders), null);
+		return findPaginated(currentPage, null, orders);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Slice<Derivative> findPaginated(int currentPage, Predicate filter, Order... orders) {
-		return repo.findAllForIndex(getPageable(currentPage, orders), filter);
+	public Slice<Derivative> findPaginated(int currentPage, Predicate predicate, Order... orders) {
+		return repo.findAllForIndex(predicate, getPageable(currentPage, orders));
 	}
 
 	@Override

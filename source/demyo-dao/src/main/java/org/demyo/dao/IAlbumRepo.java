@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  * This class provides methods to manipulate {@link Album}s.
  */
 @Repository
-public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album> {
+public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
