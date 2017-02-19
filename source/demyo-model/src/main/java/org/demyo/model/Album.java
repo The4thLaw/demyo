@@ -24,6 +24,7 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -126,8 +127,10 @@ public class Album extends AbstractModel {
 	// Not insertable or updatable: managed by the child entity
 	@JoinColumn(name = "album_id", insertable = false, updatable = false)
 	@SortComparator(ComparableComparator.class)
+	@Valid
 	private SortedSet<AlbumPrice> prices;
 
+	@Valid
 	@Transient
 	private List<AlbumPrice> priceList;
 

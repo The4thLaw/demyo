@@ -123,8 +123,8 @@ public class AlbumPrice implements Comparable<AlbumPrice> {
 
 	@Override
 	public String toString() {
-		return "AlbumPrice(album_id=" + (album != null ? album.getId() : null) + ", date=" + date + ", price="
-				+ price + ")";
+		return "AlbumPrice(album_id=" + (album != null ? album.getId() : null) + ", date=" + date + ", price=" + price
+				+ ")";
 	}
 
 	@Override

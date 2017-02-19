@@ -22,6 +22,7 @@ import org.demyo.service.IModelService;
 import org.demyo.service.IPublisherService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
+
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
