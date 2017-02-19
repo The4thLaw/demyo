@@ -21,9 +21,16 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 	/**
 	 * Gets the model to which this price is linked.
 	 * 
-	 * @return The model.
+	 * @return The model
 	 */
 	protected abstract M getModel();
+
+	/**
+	 * Sets the reference to the model in the price.
+	 * 
+	 * @param model The model to set
+	 */
+	protected abstract void setModel(M model);
 
 	@Override
 	public int compareTo(P o) {

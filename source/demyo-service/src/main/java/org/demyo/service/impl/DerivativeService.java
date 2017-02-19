@@ -4,6 +4,8 @@ import org.demyo.dao.IDerivativeRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Derivative;
 import org.demyo.service.IDerivativeService;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Order;
@@ -42,5 +44,17 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@Override
 	protected IModelRepo<Derivative> getRepo() {
 		return repo;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	protected Derivative reloadIfNeeded(Derivative model) {
+		if (model.getId() == null) {
+			return model;
+		}
+
+		Derivative loaded = getByIdForEdition(model.getId());
+		BeanUtils.copyProperties(model, loaded);
+		return loaded;
 	}
 }

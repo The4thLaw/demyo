@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,7 +31,6 @@ import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.model.util.PreSave;
 
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
@@ -51,7 +48,7 @@ import org.hibernate.validator.constraints.NotBlank;
 		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
 		@NamedAttributeNode("translators"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") })
 // TODO [P2]: loans
-public class Album extends AbstractModel {
+public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
 		@Override
 		protected NumberFormat initialValue() {
@@ -122,17 +119,13 @@ public class Album extends AbstractModel {
 	@Min(0)
 	private BigDecimal purchasePrice;
 
-	/** The prices applicable to the album. */
+	/** The prices applicable to the Album. */
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	// Not insertable or updatable: managed by the child entity
 	@JoinColumn(name = "album_id", insertable = false, updatable = false)
 	@SortComparator(ComparableComparator.class)
 	@Valid
 	private SortedSet<AlbumPrice> prices;
-
-	@Valid
-	@Transient
-	private List<AlbumPrice> priceList;
 
 	/** The flag indicating whether an item is part of the wishlist. */
 	@Column(name = "wishlist")
@@ -222,6 +215,11 @@ public class Album extends AbstractModel {
 	@JoinTable(name = "albums_images", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	private Set<Image> images;
+
+	@Override
+	protected Album self() {
+		return this;
+	}
 
 	@Override
 	public String getIdentifyingName() {
@@ -467,85 +465,21 @@ public class Album extends AbstractModel {
 		this.purchasePrice = purchasePrice;
 	}
 
-	/**
-	 * Gets the prices applicable to the album.
-	 * 
-	 * @return the prices applicable to the album
-	 */
+	@Override
 	public SortedSet<AlbumPrice> getPrices() {
 		return prices;
 	}
 
-	/**
-	 * Sets the prices applicable to the album.
-	 * 
-	 * @param prices the new prices applicable to the album
-	 */
-	public void setPrices(SortedSet<AlbumPrice> prices) {
-		if (prices == null && this.prices == null) {
-			return;
-		}
-
-		// To keep the delete-orphan, preserve any Set set by the entity manager
-		if (this.prices == null) {
-			this.prices = new TreeSet<>();
-		} else {
-			this.prices.clear();
-		}
-		if (prices != null) {
-			this.prices.addAll(prices);
-			setAlbumInPrices();
-		}
-		priceList = null;
+	@Override
+	protected void setPricesRaw(SortedSet<AlbumPrice> pricesArg) {
+		this.prices = pricesArg;
 	}
 
-	/**
-	 * Gets the {@link AlbumPrice}s as a list. Use this only for MVC binding.
-	 * 
-	 * @see #setPricesFromList()
-	 * @return The same as {@link #getPrices()}, but as a List.
-	 */
+	@Override
 	@Transient
+	// Must override so that Spring know the concrete type
 	public List<AlbumPrice> getPriceList() {
-		if (priceList == null) {
-			priceList = new ArrayList<>();
-			if (prices != null && !prices.isEmpty()) {
-				priceList.addAll(prices);
-			}
-		}
-		return priceList;
-	}
-
-	/**
-	 * Sets the prices from the list modified by the MVC binder. Automatically called by the model services.
-	 * 
-	 * @see #getPriceList()
-	 */
-	@PreSave
-	public void setPricesFromList() {
-		if (priceList != null) {
-			if (prices == null) {
-				prices = new TreeSet<>();
-			}
-			prices.clear();
-			prices.addAll(priceList);
-			setAlbumInPrices();
-		}
-	}
-
-	/**
-	 * Sets the Album reference in the child prices to the exact same entity as the parent.
-	 * <p>
-	 * Must be performed before saving to ensure that Hibernate can merge in one go, but it can also be done more
-	 * frequently. The cost is not huge.
-	 * </p>
-	 */
-	private void setAlbumInPrices() {
-		if (prices != null) {
-			for (AlbumPrice price : prices) {
-				price.setAlbum(this);
-			}
-		}
+		return super.getPriceList();
 	}
 
 	/**

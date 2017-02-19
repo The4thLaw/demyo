@@ -15,30 +15,30 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * Defines a dated price for an {@link Album}.
+ * Defines a dated price for an {@link Derivative}.
  */
 @Entity
-@Table(name = "ALBUMS_PRICES")
-@IdClass(AlbumPriceId.class)
-public class AlbumPrice extends AbstractPrice<AlbumPrice, Album> {
+@Table(name = "DERIVATIVES_PRICES")
+@IdClass(DerivativePriceId.class)
+public class DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> {
 	/** The date at which the price was applicable. */
 	@Column(name = "date")
 	@Id
 	@NotNull
 	private Date date;
 
-	/** The price the album was worth at the given date. */
+	/** The price the derivative was worth at the given date. */
 	@Column(name = "price")
 	@Min(0)
 	@NotNull
 	private BigDecimal price;
 
-	/** The parent {@link Album} ID. */
+	/** The parent {@link Derivative} ID. */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "album_id")
+	@JoinColumn(name = "derivative_id")
 	@NotNull
 	@Id
-	private Album album;
+	private Derivative derivative;
 
 	@Override
 	public Date getDate() {
@@ -61,30 +61,30 @@ public class AlbumPrice extends AbstractPrice<AlbumPrice, Album> {
 	}
 
 	/**
-	 * Gets the parent {@link Album}.
+	 * Gets the parent {@link Derivative}.
 	 * 
-	 * @return the parent {@link Album}
+	 * @return the parent {@link Derivative}
 	 */
-	public Album getAlbum() {
-		return album;
+	public Derivative getDerivative() {
+		return derivative;
 	}
 
 	/**
-	 * Sets the parent {@link Album}.
+	 * Sets the parent {@link Derivative}.
 	 * 
-	 * @param album the new parent {@link Album}
+	 * @param derivative the new parent {@link Derivative}
 	 */
-	public void setAlbum(Album album) {
-		this.album = album;
+	public void setDerivative(Derivative derivative) {
+		this.derivative = derivative;
 	}
 
 	@Override
-	protected Album getModel() {
-		return getAlbum();
+	protected Derivative getModel() {
+		return getDerivative();
 	}
 
 	@Override
-	protected void setModel(Album model) {
-		setAlbum(model);
+	protected void setModel(Derivative model) {
+		setDerivative(model);
 	}
 }

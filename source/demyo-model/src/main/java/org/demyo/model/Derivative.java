@@ -5,8 +5,11 @@ package org.demyo.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,15 +20,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.demyo.model.constraints.OneNotNull;
+import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
 
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.SortComparator;
 
 /**
  * Derivatives of {@link Album}s or {@link Series}.
@@ -35,10 +42,13 @@ import org.hibernate.annotations.BatchSize;
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"),
 		@DefaultOrder.Order(property = "album.cycle"), @DefaultOrder.Order(property = "album.number"),
 		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
-@NamedEntityGraphs({ @NamedEntityGraph(name = "Derivative.forEdition", attributeNodes = {
-		@NamedAttributeNode("artist"), @NamedAttributeNode("images") }) })
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
+{ @NamedAttributeNode("artist"),
+		@NamedAttributeNode("images"),
+		@NamedAttributeNode("prices") }) })
 @OneNotNull(fields = { "series.id", "album.id" })
-public class Derivative extends AbstractModel {
+public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "series_id")
@@ -118,12 +128,25 @@ public class Derivative extends AbstractModel {
 	@Min(0)
 	private BigDecimal purchasePrice;
 
+	/** The prices applicable to the Derivative. */
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+	// Not insertable or updatable: managed by the child entity
+	@JoinColumn(name = "derivative_id", insertable = false, updatable = false)
+	@SortComparator(ComparableComparator.class)
+	@Valid
+	private SortedSet<DerivativePrice> prices;
+
 	/** The {@link Image}s related to this Derivative. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "derivatives_images", joinColumns = @JoinColumn(name = "derivative_id"),
+	@JoinTable(name = "derivatives_images", joinColumns = @JoinColumn(name = "derivative_id"), //
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	@BatchSize(size = BATCH_SIZE)
 	private Set<Image> images;
+
+	@Override
+	protected Derivative self() {
+		return this;
+	}
 
 	@Override
 	public String getIdentifyingName() {
@@ -458,6 +481,23 @@ public class Derivative extends AbstractModel {
 	 */
 	public void setPurchasePrice(BigDecimal purchasePrice) {
 		this.purchasePrice = purchasePrice;
+	}
+
+	@Override
+	public SortedSet<DerivativePrice> getPrices() {
+		return prices;
+	}
+
+	@Override
+	protected void setPricesRaw(SortedSet<DerivativePrice> pricesArg) {
+		this.prices = pricesArg;
+	}
+
+	@Override
+	@Transient
+	// Must override so that Spring know the concrete type
+	public List<DerivativePrice> getPriceList() {
+		return super.getPriceList();
 	}
 
 	/**
