@@ -13,7 +13,6 @@ import javax.validation.Valid;
 
 import org.demyo.model.IModel;
 import org.demyo.service.IModelService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyEditorRegistry;
@@ -39,6 +38,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 // TODO [P2]: Protect all access against XSS
 public abstract class AbstractModelController<M extends IModel> extends AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelController.class);
+
 	private final Class<M> modelClass;
 	private final String urlPrefix;
 	private final String modelKey;
@@ -47,8 +47,8 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	 * Creates the controller.
 	 * 
 	 * @param modelClass The concrete class of the managed model.
-	 * @param urlPrefix The prefix used for URLs directed to this controller. As a convention, it is also the name
-	 *        of the folder where views are stored.
+	 * @param urlPrefix The prefix used for URLs directed to this controller. As a convention, it is also the name of
+	 *            the folder where views are stored.
 	 * @param modelKey The key to store the entity in the view model.
 	 */
 	protected AbstractModelController(Class<M> modelClass, String urlPrefix, String modelKey) {
@@ -60,8 +60,8 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	// Stub implementations for the common CRUD methods
 
 	/**
-	 * Alias for index acting on the index without slash and redirecting the user to the index with a trailing
-	 * slash (and redirecting all parameters).
+	 * Alias for index acting on the index without slash and redirecting the user to the index with a trailing slash
+	 * (and redirecting all parameters).
 	 * 
 	 * @param model The view model to clear.
 	 * @param request The HTTP request.
@@ -80,21 +80,38 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	 * @param currentPage The current page number (starting from 1). Can be missing.
 	 * @param model The view model.
 	 * @param startsWith The letter to which to jump.
+	 * @param request the HTTP request (e.g. for direct access to parameters).
 	 * @return The view name.
 	 */
+	// We need to provide direct access to the request because we cannot vary the mapping based on optional request
+	// parameters
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
-	public String index(@RequestParam(value = "page", required = false) Integer currentPage, @RequestParam(
-			value = "startsWith", required = false) Character startsWith, Model model) {
-		if (startsWith != null) {
-			currentPage = getService().getFirstPageForLetter(startsWith);
-		} else if (currentPage == null) {
-			currentPage = 1;
-		}
+	public String index(@RequestParam(value = "page", required = false) Integer currentPage,
+			@RequestParam(value = "startsWith", required = false) Character startsWith, Model model,
+			HttpServletRequest request) {
+		currentPage = getCurrentPage(currentPage, startsWith);
+
 		Slice<M> entities = getService().findPaginated(currentPage);
 
 		model.addAttribute(modelKey + "List", entities);
 
 		return urlPrefix + "/index";
+	}
+
+	/**
+	 * Gets the actual current page.
+	 * 
+	 * @param currentPage The current page parameter, as passed from the request.
+	 * @param startsWith The letter with which the models should start.
+	 * @return The page number to actually consider.
+	 */
+	protected int getCurrentPage(Integer currentPage, Character startsWith) {
+		if (startsWith != null) {
+			return getService().getFirstPageForLetter(startsWith);
+		} else if (currentPage == null) {
+			return 1;
+		}
+		return currentPage;
 	}
 
 	/**
@@ -221,8 +238,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	}
 
 	/**
-	 * If there is an error on {@code origFieldName}, this method adds exactly the same error on
-	 * {@code destFieldName}.
+	 * If there is an error on {@code origFieldName}, this method adds exactly the same error on {@code destFieldName}.
 	 * 
 	 * @param result The result of the binding and validation.
 	 * @param origFieldName The field name to copy the error from.
@@ -237,8 +253,8 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	}
 
 	/**
-	 * Registers a {@link CustomCollectionEditor} to translate a multiple select bind value into a collection of
-	 * the proper model elements.
+	 * Registers a {@link CustomCollectionEditor} to translate a multiple select bind value into a collection of the
+	 * proper model elements.
 	 * 
 	 * @param binder The binder to register the editor into.
 	 * @param collectionClass The class of the collection.
@@ -252,18 +268,19 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	}
 
 	/**
-	 * Registers a {@link CustomCollectionEditor} to translate a multiple select bind value into a sorted
-	 * collection of the proper model elements.
+	 * Registers a {@link CustomCollectionEditor} to translate a multiple select bind value into a sorted collection of
+	 * the proper model elements.
 	 * 
 	 * @param binder The binder to register the editor into.
 	 * @param collectionClass The class of the collection.
 	 * @param propertyPath The path of the property to convert.
 	 * @param collectionModelClass The class of the model in the collection.
+	 * @param comparator The comparator to use for {@link SortedSet}s.
 	 * @param <C> The class of the collection.
 	 */
 	protected <C extends Collection<?>> void registerCollectionEditor(PropertyEditorRegistry binder,
-			final Class<C> collectionClass, String propertyPath,
-			final Class<? extends IModel> collectionModelClass, final Comparator<?> comparator) {
+			final Class<C> collectionClass, String propertyPath, final Class<? extends IModel> collectionModelClass,
+			final Comparator<?> comparator) {
 		if (collectionClass.isInstance(SortedSet.class) && comparator == null) {
 			throw new NullPointerException("comparator cannot be null if the collection is sorted");
 		}

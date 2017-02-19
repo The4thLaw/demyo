@@ -36,8 +36,8 @@ public class PagingTool {
 	}
 
 	/**
-	 * Returns the first letter of the given string, stripped of its accents or other diacritics. If the first
-	 * character is not a letter, returns '#'.
+	 * Returns the first letter of the given string, stripped of its accents or other diacritics. If the first character
+	 * is not a letter, returns '#'.
 	 * 
 	 * @param s The string to parse.
 	 * @return The first letter, or substitute character.
@@ -66,7 +66,6 @@ public class PagingTool {
 	 */
 	public String pageLinks(Page<?> list, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
-		//return pageLinks(list.getNumber() + 1, list.getTotalPages(), request, jsTool);
 		return pageLinks((Slice<?>) list, request, jsTool);
 	}
 
@@ -113,12 +112,12 @@ public class PagingTool {
 	}
 
 	/**
-	 * Gets the base URL to make direct links to pages. This method takes the convention of forwarding all
-	 * parameters starting with "with" or "from".
+	 * Gets the base URL to make direct links to pages. This method takes the convention of forwarding all parameters
+	 * starting with "with" or "from".
 	 * 
 	 * @param request The HTTP request.
-	 * @return The base URL, ready to support an additional "page" parameter, for example. The URL will always end
-	 *         with a "?" or "&".
+	 * @return The base URL, ready to support an additional "page" parameter, for example. The URL will always end with
+	 *         a "?" or "&".
 	 * @throws UnsupportedEncodingException If encoding the parameters fails.
 	 */
 	private StringBuilder getBaseUrlForPageLinks(HttpServletRequest request) throws UnsupportedEncodingException {
@@ -135,8 +134,8 @@ public class PagingTool {
 	}
 
 	/**
-	 * Gets the numbers of the pages to link to. Uses a moving window of {@link #PAGES_COUNT_AROUND} pages around
-	 * the current page, and always displays {@link #PAGES_COUNT_BOUNDS} pages at the start of the list.
+	 * Gets the numbers of the pages to link to. Uses a moving window of {@link #PAGES_COUNT_AROUND} pages around the
+	 * current page, and always displays {@link #PAGES_COUNT_BOUNDS} pages at the start of the list.
 	 * 
 	 * @param current The number of the current page.
 	 * @param max The maximum number of pages.

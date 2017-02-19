@@ -3,7 +3,6 @@ package org.demyo.service;
 import java.util.List;
 
 import org.demyo.model.IModel;
-
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Order;
 
@@ -46,23 +45,12 @@ public interface IModelService<M extends IModel> {
 	List<M> findAll();
 
 	/**
-	 * Finds all entities from this model that match the given criteria. Does not resolve any lazy link, and does
-	 * not paginate results.
-	 * 
-	 * @param criterion A potential criterion to restrict the set of entities. May be <code>null</code> for no
-	 *        restriction.
-	 * @return The list of entities.
-	 */
-	// If needed use QueryDSL, see JpaSpecificationExecutor
-	//List<M> findAll(Criterion criterion);
-
-	/**
-	 * Finds the list of entities for the given page for a given criterion. The number of entities per page is
-	 * defined by the service, depending on the configuration.
+	 * Finds the list of entities for the given page for a given criterion. The number of entities per page is defined
+	 * by the service, depending on the configuration.
 	 * 
 	 * @param currentPage The page number (starting at 1).
-	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no
-	 *        default ordering is defined, the ordering is defined by the database.
+	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
+	 *            ordering is defined, the ordering is defined by the database.
 	 * @return The list of entities.
 	 */
 	Slice<M> findPaginated(int currentPage, Order... orders);

@@ -19,15 +19,12 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
-import org.demyo.service.IImportService;
 import org.demyo.utils.io.DIOUtils;
-
-import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -40,18 +37,12 @@ import org.xml.sax.XMLReader;
 public class Demyo1Importer extends Demyo2Importer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo1Importer.class);
 
-	@Autowired
-	private IImportService importService;
-
-	// Registering to the import service is inherited from parent class
-
 	@Override
 	public boolean supports(String originalFilename, File file) throws DemyoException {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file,
-					Pattern.compile(".*<library demyo-version=\"1\\..*\".*", Pattern.DOTALL));
+			return DIOUtils.sniffFile(file, Pattern.compile(".*<library demyo-version=\"1\\..*\".*", Pattern.DOTALL));
 		}
 
 		return originalFilenameLc.endsWith(".zip");
@@ -116,8 +107,8 @@ public class Demyo1Importer extends Demyo2Importer {
 			}
 			stopWatch.stop();
 
-			LOGGER.info("Import took {}ms: {}ms in database and {}ms in I/O operations", stopWatch.getTime(),
-					splitTime, stopWatch.getTime() - splitTime);
+			LOGGER.info("Import took {}ms: {}ms in database and {}ms in I/O operations", stopWatch.getTime(), splitTime,
+					stopWatch.getTime() - splitTime);
 		} catch (IOException ioe) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, ioe);
 		} catch (SAXException | TransformerException | ParserConfigurationException e) {

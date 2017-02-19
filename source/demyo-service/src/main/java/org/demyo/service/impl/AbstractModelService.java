@@ -36,8 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Implementation of base operations on models.
  * 
- * @param <M>
- *            The model type.
+ * @param <M> The model type.
  */
 public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
@@ -58,8 +57,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * Creates an abstract model service.
 	 * 
-	 * @param modelClass
-	 *            The class of the model to work on.
+	 * @param modelClass The class of the model to work on.
 	 */
 	protected AbstractModelService(Class<M> modelClass) {
 		this.modelClass = modelClass;
@@ -190,10 +188,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * Gets a Spring Data {@link Pageable} object from the current page and orders.
 	 * 
-	 * @param currentPage
-	 *            The page number (starting at 1).
-	 * @param orders
-	 *            Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
+	 * @param currentPage The page number (starting at 1).
+	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
 	 *            ordering is defined, the ordering is defined by the database.
 	 * @return The {@link Pageable} instance
 	 */
@@ -259,8 +255,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * By default, this method returns the provided object without any modification.
 	 * </p>
 	 * 
-	 * @param model
-	 *            The model that would be saved.
+	 * @param model The model that would be saved.
 	 * @return The model to save.
 	 */
 	protected M reloadIfNeeded(M model) {
@@ -286,12 +281,9 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	/**
 	 * Base implementation of a quick search query on an {@link IQuickSearchableRepo}.
 	 * 
-	 * @param query
-	 *            The string to match
-	 * @param exact
-	 *            <code>true</code> if the search is for an exact match. <code>false</code> otherwise.
-	 * @param searchRepo
-	 *            The repository to search on.
+	 * @param query The string to match
+	 * @param exact <code>true</code> if the search is for an exact match. <code>false</code> otherwise.
+	 * @param searchRepo The repository to search on.
 	 * @return The matches, as a future.
 	 */
 	// Note: caching cannot be supported here. See https://jira.spring.io/browse/SPR-12967

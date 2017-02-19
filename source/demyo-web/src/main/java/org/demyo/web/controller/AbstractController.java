@@ -12,13 +12,12 @@ import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
-
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +92,7 @@ public abstract class AbstractController {
 	 * 
 	 * @param model The model to set the layout in.
 	 */
-	protected void setLayoutPlain(Model model) {
+	protected final void setLayoutPlain(Model model) {
 		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_PLAIN);
 	}
 
@@ -163,7 +162,8 @@ public abstract class AbstractController {
 	 * @param response The HTTP response.
 	 * @return <code>true</code> if the method sent a "Not Modified" HTTP response.
 	 */
-	protected boolean handleLastModified(long reference, HttpServletRequest request, HttpServletResponse response) {
+	protected final boolean handleLastModified(long reference, HttpServletRequest request,
+			HttpServletResponse response) {
 		long ifModifiedSince = request.getDateHeader("If-Modified-Since");
 		if (ifModifiedSince >= 0 && ifModifiedSince >= reference) {
 			response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
@@ -181,8 +181,7 @@ public abstract class AbstractController {
 	 * @param response The HTTP response.
 	 * @throws IOException In case of error while sending the file to the client.
 	 */
-	protected void download(File file, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	protected void download(File file, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		download(file, null, request, response);
 	}
 
@@ -196,7 +195,7 @@ public abstract class AbstractController {
 	 * @param response The HTTP response.
 	 * @throws IOException In case of error while sending the file to the client.
 	 */
-	protected void download(File file, String filename, HttpServletRequest request, HttpServletResponse response)
+	protected final void download(File file, String filename, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		if (!file.exists()) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -217,8 +216,7 @@ public abstract class AbstractController {
 			response.setHeader("Content-disposition", "attachment; filename=" + targetFilename);
 		}
 
-		try (FileInputStream fis = new FileInputStream(file);
-				BufferedInputStream bis = new BufferedInputStream(fis)) {
+		try (FileInputStream fis = new FileInputStream(file); BufferedInputStream bis = new BufferedInputStream(fis)) {
 			IOUtils.copy(bis, response.getOutputStream());
 			response.flushBuffer();
 		}
@@ -229,7 +227,7 @@ public abstract class AbstractController {
 	 * 
 	 * @param model The view model.
 	 */
-	protected void suppressQuickSearch(Model model) {
+	protected final void suppressQuickSearch(Model model) {
 		model.addAttribute("suppressQuickSearch", true);
 	}
 
@@ -241,5 +239,25 @@ public abstract class AbstractController {
 	@ModelAttribute
 	private void setLoadLessInAsync(Model model) {
 		model.addAttribute(MODEL_KEY_ASYNC_LESS, SystemConfiguration.getInstance().isLoadLessInAsync());
+	}
+
+	/**
+	 * Gets the value of a parameter as a Long.
+	 * 
+	 * @param request The request.
+	 * @param name The name of the parameter.
+	 * @return The value, or <code>null</code> if the parameter is absent or the value is not a Long.
+	 */
+	protected final Long getLongParam(HttpServletRequest request, String name) {
+		String value = request.getParameter(name);
+		if (value == null) {
+			return null;
+		}
+		try {
+			return Long.parseLong(value);
+		} catch (NumberFormatException e) {
+			LOGGER.warn("Wrong parameter with name '{}': {}", name, value, e);
+		}
+		return null;
 	}
 }

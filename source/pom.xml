@@ -37,6 +37,7 @@
 		<org.springframework.version>4.3.2.RELEASE</org.springframework.version>
 		<org.hibernate.version>5.1.0.Final</org.hibernate.version> <!-- Last Java 7 version -->
 		<com.fasterxml.jackson.version>2.8.1</com.fasterxml.jackson.version>
+		<com.querydsl.version>4.1.1</com.querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -168,6 +169,17 @@
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
 				<version>1.10.2.RELEASE</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-core</artifactId>
+				<version>${com.querydsl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${com.querydsl.version}</version>
 			</dependency>
 
 			<dependency>
