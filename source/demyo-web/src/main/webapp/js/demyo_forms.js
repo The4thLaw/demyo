@@ -149,6 +149,11 @@
 			
 			// Load and remove template from DOM so that it is not submitted
 			var template = $('.dem-repeatable-template', this);
+			// Downgrade if needed, else future upgrades won't work
+			componentHandler.downgradeElements(template.get(0));
+			$('*', template).each(function () {
+				componentHandler.downgradeElements(this);
+			});
 			var templateHtml = '<div class="dem-repeatable-item">' + template.html() + '</div>';
 			template.remove();
 			
