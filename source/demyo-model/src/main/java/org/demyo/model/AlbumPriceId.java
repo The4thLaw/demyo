@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Specific class for the ID.
+ * Specific class for the {@link AlbumPrice} ID.
  */
 public class AlbumPriceId implements Serializable {
 	private static final long serialVersionUID = -8902912798213320698L;
