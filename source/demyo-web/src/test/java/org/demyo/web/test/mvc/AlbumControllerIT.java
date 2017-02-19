@@ -73,13 +73,20 @@ public class AlbumControllerIT extends AbstractMvcTest {
 
 	/**
 	 * Tests editing an album.
+	 * 
+	 * @throws InterruptedException In case the thread waiting for JavaScript execution is interrupted.
 	 */
 	@Test
-	public void testEditPage() {
+	public void testEditPage() throws InterruptedException {
 		getWebDriver().get("http://localhost/albums/edit/1");
 
+		// Wait for JavaScript to execute
+		// TODO [Java 8]: Make a lambda that returns a boolean to check whether the page is ready, and use some kind of
+		// poller to avoid waiting a fixed time
+		Thread.sleep(250L);
+
 		// For some reason we need to call this manually, else the template is left behind
-		getJavaScriptExecutor().executeScript("demyo.bindRepeatableParts()");
+		// getJavaScriptExecutor().executeScript("demyo.bindRepeatableParts()");
 
 		assertThat(css1("#field_album_priceList\\[0\\]_date")).hasAttributeEqualTo("value", "2016-01-10");
 		assertThat(css1("#field_album_priceList\\[0\\]_price")).hasAttributeEqualTo("value", "10.0");
@@ -97,10 +104,12 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	/**
 	 * Tests that it is possible to add an album to an empty Series.
 	 * 
+	 * @throws InterruptedException In case the thread waiting for JavaScript execution is interrupted.
+	 * 
 	 * @see commit b01c5e7240866ee82ccb3dd6928f0fc245381754
 	 */
 	@Test
-	public void testAddToEmptySeries() {
+	public void testAddToEmptySeries() throws InterruptedException {
 		getWebDriver().get("http://localhost/series/view/2");
 
 		// First, ensure the Series is really empty. Else, it doesn't make sense
@@ -109,6 +118,9 @@ public class AlbumControllerIT extends AbstractMvcTest {
 
 		// Display the menu and click an entry
 		css1("#button-quick-tasks").click();
+		// TODO [Java 8]: Make a lambda that returns a boolean to check whether the page is ready, and use some kind of
+		// poller to avoid waiting a fixed time
+		Thread.sleep(100L);
 		css1("#qt-add-album-to-series").click();
 
 		// Set a title

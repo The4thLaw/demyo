@@ -17,16 +17,23 @@ public class DerivativeControllerIT extends AbstractMvcTest {
 
 	/**
 	 * Tests adding a Derivative without Series.
+	 * 
+	 * @throws InterruptedException In case the thread waiting for JavaScript execution is interrupted.
 	 */
 	@Test
-	public void testAddPageNoSeries() {
+	public void testAddPageNoSeries() throws InterruptedException {
 		getWebDriver().get("http://localhost/derivatives/add");
+
+		// Wait for JavaScript to execute
+		// TODO [Java 8]: Make a lambda that returns a boolean to check whether the page is ready, and use some kind of
+		// poller to avoid waiting a fixed time
+		Thread.sleep(250L);
 
 		// We need to add the option manually: interacting with Chosen here is a pain and the callbacks for the
 		// dependent select don't fire
-		// Still better than nothing: we make sure that the controller doesn't reject Derivatives with empty Series 
-		getJavaScriptExecutor().executeScript(
-				"$('#field_derivative_album_id').append('<option value=\"2\">2</option>')");
+		// Still better than nothing: we make sure that the controller doesn't reject Derivatives with empty Series
+		getJavaScriptExecutor().executeScript("$('#field_derivative_album_id').html('')"
+				+ ".append('<option value=\"2\" selected=\"selected\">2</option>')");
 		// Set the Album to a one shot
 		setFieldValue("field_derivative_album_id", "2");
 

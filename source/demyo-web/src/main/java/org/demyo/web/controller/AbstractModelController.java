@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 import org.demyo.model.IModel;
 import org.demyo.service.IModelService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyEditorRegistry;
@@ -180,7 +181,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	public String save(@Valid M entity, BindingResult result, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
 		if (result.hasErrors()) {
-			LOGGER.debug("There were validation errors: {}", result);
+			LOGGER.error("There were validation errors: {}", result);
 			postProcessValidationError(entity, result);
 			model.addAttribute(modelKey, entity);
 			fillModelForEdition(entity, model);
