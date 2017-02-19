@@ -110,15 +110,6 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@ISBN
 	private String isbn;
 
-	/** The date of acquisition. */
-	@Column(name = "acquisition_date")
-	private Date acquisitionDate;
-
-	/** The price the album was purchased for. */
-	@Column(name = "purchase_price")
-	@Min(0)
-	private BigDecimal purchasePrice;
-
 	/** The prices applicable to the Album. */
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
 	// Not insertable or updatable: managed by the child entity
@@ -427,42 +418,6 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
-	}
-
-	/**
-	 * Gets the date of acquisition.
-	 * 
-	 * @return the date of acquisition
-	 */
-	public Date getAcquisitionDate() {
-		return acquisitionDate;
-	}
-
-	/**
-	 * Sets the date of acquisition.
-	 * 
-	 * @param acquisitionDate the new date of acquisition
-	 */
-	public void setAcquisitionDate(Date acquisitionDate) {
-		this.acquisitionDate = acquisitionDate;
-	}
-
-	/**
-	 * Gets the price the album was purchased for.
-	 * 
-	 * @return the price the album was purchased for
-	 */
-	public BigDecimal getPurchasePrice() {
-		return purchasePrice;
-	}
-
-	/**
-	 * Sets the price the album was purchased for.
-	 * 
-	 * @param purchasePrice the new price the album was purchased for
-	 */
-	public void setPurchasePrice(BigDecimal purchasePrice) {
-		this.purchasePrice = purchasePrice;
 	}
 
 	@Override

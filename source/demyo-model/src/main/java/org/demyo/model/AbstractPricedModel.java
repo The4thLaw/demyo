@@ -1,13 +1,17 @@
 package org.demyo.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 import org.demyo.model.util.PreSave;
 
@@ -22,12 +26,57 @@ import org.apache.commons.collections.CollectionUtils;
 @MappedSuperclass
 public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M extends AbstractPricedModel<P, M>>
 		extends AbstractModel {
+	/** The date of acquisition. */
+	@Column(name = "acquisition_date")
+	private Date acquisitionDate;
+
+	/** The price the album was purchased for. */
+	@Column(name = "purchase_price")
+	@Min(0)
+	private BigDecimal purchasePrice;
+
 	/**
 	 * The prices as a transient list, which is easier for Spring.
 	 */
 	@Valid
 	@Transient
 	protected List<P> priceList;
+
+	/**
+	 * Gets the date of acquisition.
+	 * 
+	 * @return the date of acquisition
+	 */
+	public Date getAcquisitionDate() {
+		return acquisitionDate;
+	}
+
+	/**
+	 * Sets the date of acquisition.
+	 * 
+	 * @param acquisitionDate the new date of acquisition
+	 */
+	public void setAcquisitionDate(Date acquisitionDate) {
+		this.acquisitionDate = acquisitionDate;
+	}
+
+	/**
+	 * Gets the price the album was purchased for.
+	 * 
+	 * @return the price the album was purchased for
+	 */
+	public BigDecimal getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	/**
+	 * Sets the price the album was purchased for.
+	 * 
+	 * @param purchasePrice the new price the album was purchased for
+	 */
+	public void setPurchasePrice(BigDecimal purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
 
 	/**
 	 * Gets the prices applicable to the Model.

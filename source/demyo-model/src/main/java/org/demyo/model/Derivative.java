@@ -4,7 +4,6 @@
 package org.demyo.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -118,15 +117,6 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	@Column(name = "depth")
 	@Min(0)
 	private BigDecimal depth;
-
-	/** The date of acquisition. */
-	@Column(name = "acquisition_date")
-	private Date acquisitionDate;
-
-	/** The price the album was purchased for. */
-	@Column(name = "purchase_price")
-	@Min(0)
-	private BigDecimal purchasePrice;
 
 	/** The prices applicable to the Derivative. */
 	@OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
@@ -445,42 +435,6 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	 */
 	public void setDepth(BigDecimal depth) {
 		this.depth = depth;
-	}
-
-	/**
-	 * Gets the date of acquisition.
-	 * 
-	 * @return the date of acquisition
-	 */
-	public Date getAcquisitionDate() {
-		return acquisitionDate;
-	}
-
-	/**
-	 * Sets the date of acquisition.
-	 * 
-	 * @param acquisitionDate the new date of acquisition
-	 */
-	public void setAcquisitionDate(Date acquisitionDate) {
-		this.acquisitionDate = acquisitionDate;
-	}
-
-	/**
-	 * Gets the price the album was purchased for.
-	 * 
-	 * @return the price the album was purchased for
-	 */
-	public BigDecimal getPurchasePrice() {
-		return purchasePrice;
-	}
-
-	/**
-	 * Sets the price the album was purchased for.
-	 * 
-	 * @param purchasePrice the new price the album was purchased for
-	 */
-	public void setPurchasePrice(BigDecimal purchasePrice) {
-		this.purchasePrice = purchasePrice;
 	}
 
 	@Override
