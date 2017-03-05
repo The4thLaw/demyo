@@ -8,13 +8,14 @@ import java.util.Locale;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.test.AbstractPersistenceTest;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,16 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
  * Base class for MVC integration tests.
  * 
  * <p>
- * Both WebClient and WebDriver are accepted depending on the scope of the actions. WebClient provides low-level
- * access to some details (e.g. HTTP statuses) while WebDriver provides powerful CSS selectors.
+ * Both WebClient and WebDriver are accepted depending on the scope of the actions. WebClient provides low-level access
+ * to some details (e.g. HTTP statuses) while WebDriver provides powerful CSS selectors.
  * </p>
  */
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/demyo-context.xml")
 @WebAppConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
 public abstract class AbstractMvcTest extends AbstractPersistenceTest {
+	private static final int MAX_TIMEOUT = 1;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMvcTest.class);
 
 	@Autowired
@@ -90,7 +93,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Sets up the HTMLUnit Web Client.
 	 * 
-	 * @throws Exception in case of error during setup.
+	 * @throws Exception
+	 *             in case of error during setup.
 	 */
 	@Before
 	public void setupWebClient() throws Exception {
@@ -103,7 +107,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 */
 	@Before
 	public void clearCaches() {
-		// We must clear all caches for each test case, else the reloads by DBUnit break the tests
+		// We must clear all caches for each test case, else the reloads by
+		// DBUnit break the tests
 		for (String cacheName : cacheManager.getCacheNames()) {
 			cacheManager.getCache(cacheName).clear();
 		}
@@ -130,7 +135,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Returns the main model edit form on the page.
 	 * 
-	 * @param page The page to get the form from.
+	 * @param page
+	 *            The page to get the form from.
 	 * @return The form, or <code>null</code> if no form was found.
 	 */
 	protected final HtmlForm getMainModelForm(HtmlPage page) {
@@ -151,34 +157,42 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Sets a text input on a page.
 	 * 
-	 * @param page The page.
-	 * @param fieldId The field ID.
-	 * @param value The value to set.
+	 * @param page
+	 *            The page.
+	 * @param fieldId
+	 *            The field ID.
+	 * @param value
+	 *            The value to set.
 	 */
 	protected final void setHtmlTextInput(HtmlPage page, String fieldId, String value) {
-		page.<HtmlTextInput> getHtmlElementById(fieldId).setValueAttribute(value);
+		page.<HtmlTextInput>getHtmlElementById(fieldId).setValueAttribute(value);
 	}
 
 	/**
 	 * Sets a text area on a page.
 	 * 
-	 * @param page The page.
-	 * @param fieldId The field ID.
-	 * @param value The value to set.
+	 * @param page
+	 *            The page.
+	 * @param fieldId
+	 *            The field ID.
+	 * @param value
+	 *            The value to set.
 	 */
 	protected final void setHtmlTextArea(HtmlPage page, String fieldId, String value) {
-		page.<HtmlTextArea> getHtmlElementById(fieldId).setText(value);
+		page.<HtmlTextArea>getHtmlElementById(fieldId).setText(value);
 	}
 
 	/**
 	 * Submits a form.
 	 * 
-	 * @param form The form to submit.
+	 * @param form
+	 *            The form to submit.
 	 * @return The page to which the form redirects.
-	 * @throws IOException If an IO error occurs
+	 * @throws IOException
+	 *             If an IO error occurs
 	 */
 	protected final HtmlPage submitForm(HtmlForm form) throws IOException {
-		HtmlSubmitInput submit = form.<HtmlSubmitInput> getOneHtmlElementByAttribute("input", "type", "submit");
+		HtmlSubmitInput submit = form.<HtmlSubmitInput>getOneHtmlElementByAttribute("input", "type", "submit");
 		return submit.click();
 	}
 
@@ -192,25 +206,31 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Clicks a link on a page.
 	 * 
-	 * @param page The page.
-	 * @param id The link ID.
+	 * @param page
+	 *            The page.
+	 * @param id
+	 *            The link ID.
 	 * @return The page to which the link redirects.
-	 * @throws IOException If an IO error occurs
+	 * @throws IOException
+	 *             If an IO error occurs
 	 */
 	protected HtmlPage clickLinkById(HtmlPage page, String id) throws IOException {
-		return page.<HtmlAnchor> getHtmlElementById("qt-edit-author").click();
+		return page.<HtmlAnchor>getHtmlElementById("qt-edit-author").click();
 	}
 
 	/**
 	 * Deletes a model by using the delete URL given by the quick task.
 	 * 
-	 * @param page The view page for the model.
-	 * @param id The ID of the delete quicktask.
+	 * @param page
+	 *            The view page for the model.
+	 * @param id
+	 *            The ID of the delete quicktask.
 	 * @return The page to which the action redirects.
-	 * @throws IOException If an IO error occurs
+	 * @throws IOException
+	 *             If an IO error occurs
 	 */
 	protected HtmlPage deleteWithQuickTask(HtmlPage page, String id) throws IOException {
-		String deleteHref = page.<HtmlAnchor> getHtmlElementById(id).getHrefAttribute();
+		String deleteHref = page.<HtmlAnchor>getHtmlElementById(id).getHrefAttribute();
 		String fullDeleteUrl = page.getUrl().toString() + "/../" + deleteHref;
 		return getWebClient().getPage(new WebRequest(new URL(fullDeleteUrl), HttpMethod.POST));
 	}
@@ -218,7 +238,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Uses the WebDriver to fetch one element matching a particular CSS selector (the first one).
 	 * 
-	 * @param selector The CSS selector to use.
+	 * @param selector
+	 *            The CSS selector to use.
 	 * @return The matching element.
 	 */
 	protected WebElement css1(String selector) {
@@ -228,7 +249,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Uses the WebDriver to fetch multiple elements matching a particular CSS selector.
 	 * 
-	 * @param selector The CSS selector to use.
+	 * @param selector
+	 *            The CSS selector to use.
 	 * @return The matching elements.
 	 */
 	protected List<WebElement> cssM(String selector) {
@@ -239,8 +261,10 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 * Sets the value of a specific by changing its DOM value attribute. Workaround when
 	 * {@link WebElement#sendKeys(CharSequence...)} does not work.
 	 * 
-	 * @param fieldId The field ID.
-	 * @param value The escaped value.
+	 * @param fieldId
+	 *            The field ID.
+	 * @param value
+	 *            The escaped value.
 	 */
 	protected void setFieldValue(String fieldId, String value) {
 		getJavaScriptExecutor().executeScript("document.getElementById('" + fieldId + "').value='" + value + "'");
@@ -256,5 +280,26 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 			throw new RuntimeException("The WebDriver " + webDriver + " does not support JavaScript execution");
 		}
 		return (JavascriptExecutor) webDriver;
+	}
+
+	/**
+	 * Waits for an element to be clickable.
+	 * 
+	 * @param element
+	 *            The element to wait for.
+	 */
+	protected void waitClickable(WebElement element) {
+		new WebDriverWait(webDriver, MAX_TIMEOUT).until(ExpectedConditions.elementToBeClickable(element));
+	}
+
+	/**
+	 * Wait for a long amount of time.
+	 */
+	protected void waitLong() {
+		try {
+			Thread.sleep(750L);
+		} catch (InterruptedException e) {
+			LOGGER.warn("Sleep interrupted", e);
+		}
 	}
 }
