@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.demyo.service.IConfigurationService;
+import javax.servlet.http.HttpServletRequest;
 
+import org.demyo.service.IConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Controller for the home page.
+ * Controller for the home, manifest and about pages.
  */
 @Controller
 public class HomeController extends AbstractController {
@@ -33,6 +34,24 @@ public class HomeController extends AbstractController {
 	public String viewHome(Model model) {
 		suppressQuickSearch(model);
 		return "core/home";
+	}
+
+	/**
+	 * Displays the about page.
+	 * 
+	 * @param model The view model
+	 * @return The view name
+	 */
+	@RequestMapping("/about")
+	public String viewAbout(HttpServletRequest request, Model model) {
+		suppressQuickSearch(model);
+		model.addAttribute("javaVersion", System.getProperty("java.version"));
+		model.addAttribute("javaVendor", System.getProperty("java.vendor"));
+		model.addAttribute("osName", System.getProperty("os.name"));
+		model.addAttribute("osVersion", System.getProperty("os.version"));
+		model.addAttribute("osArch", System.getProperty("os.arch"));
+		model.addAttribute("userAgent", request.getHeader("User-Agent"));
+		return "core/about";
 	}
 
 	/**

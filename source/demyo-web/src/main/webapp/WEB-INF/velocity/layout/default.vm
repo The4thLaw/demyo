@@ -21,6 +21,8 @@ $quickTasks.prepare($javascript)
 		<meta name="robots" content="noindex,nofollow"> ## In case someone exposes it publicly by mistake
 		<meta name="referrer" content="never"> ## Don't send info to linked sites, this is supposed to be a private application
 		
+		<link rel="copyright" href="$link.contextPath/about">
+		
 		<link href="$link.contextPath/css/demyo-icons.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/vendor/dialog-polyfill.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/vendor/chosen.less" rel="stylesheet/less" type="text/css">
@@ -173,7 +175,7 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confi
 					##navMenuItem('menu-configure', 'configure', 'menu.manage.configure', 'settings')
 					##navMenuItem('menu-orphans', 'library/orphans/', 'menu.manage.orphans', 'unlink')
 					##navMenuItem('menu-help', 'help/', 'menu.manage.help', 'help')
-					##navMenuItem('menu-about', 'about/', 'menu.manage.about', 'info')
+					#navMenuItem('menu-about', 'about/', 'menu.manage.about', 'info')
 				</div>
 			</nav>
 		</div>

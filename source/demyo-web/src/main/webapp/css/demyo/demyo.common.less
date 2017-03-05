@@ -15,7 +15,7 @@ a {
 		text-decoration: none;
 	}
 	
-	&.dem-user-provided {
+	&.dem-user-provided, &[href^='http://'], &[href^='https://'] {
 		color: @color-accent;
 	}
 }
