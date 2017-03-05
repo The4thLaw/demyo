@@ -19,6 +19,24 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 public class AlbumControllerIT extends AbstractMvcTest {
 
+	private static final String NEW_ALBUM_TITLE = "My new album";
+
+	/**
+	 * Tests that the index is complete and in the right order.
+	 */
+	@Test
+	public void testIndex() { // Will run after add
+		getWebDriver().get("http://localhost/albums/");
+
+		List<WebElement> titles = cssM(".dem-model-card__title");
+		assertThat(titles).hasSize(4);
+		int i = 0;
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Bludzee");
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace(NEW_ALBUM_TITLE);
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("XIII");
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Z_test");
+	}
+
 	/**
 	 * Tests that the information on the view page is correct.
 	 */
@@ -48,7 +66,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		getWebDriver().get("http://localhost/albums/add");
 
 		// Set a title
-		css1("#field_album_title").sendKeys("My new album");
+		css1("#field_album_title").sendKeys(NEW_ALBUM_TITLE);
 
 		// Add prices
 		assertThat(cssM(".dem-repeatable-item")).isEmpty();
@@ -67,7 +85,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 
 		assertThat(getWebDriver().getCurrentUrl()).startsWith("http://localhost/albums/view/");
 
-		assertAlbumTitle("My new album");
+		assertAlbumTitle(NEW_ALBUM_TITLE);
 	}
 
 	/**
@@ -125,9 +143,8 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		// Set a title
 		css1("#field_album_title").sendKeys("My new album for a previously empty series");
 
-		// For some reason we need to call this manually, else the template is
-		// left behind
-		getJavaScriptExecutor().executeScript("demyo.bindRepeatableParts()");
+		// Wait for JavaScript to execute. Could be smarter and instead check that element has indeed disappeared
+		waitLong();
 
 		submitMainModelForm();
 

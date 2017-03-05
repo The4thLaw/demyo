@@ -289,6 +289,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 *            The element to wait for.
 	 */
 	protected void waitClickable(WebElement element) {
+		LOGGER.debug("Waiting for element to become clickable: {}", element);
 		new WebDriverWait(webDriver, MAX_TIMEOUT).until(ExpectedConditions.elementToBeClickable(element));
 	}
 
