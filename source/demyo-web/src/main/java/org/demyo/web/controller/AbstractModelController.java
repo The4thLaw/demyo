@@ -1,9 +1,7 @@
 package org.demyo.web.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -13,18 +11,14 @@ import javax.validation.Valid;
 
 import org.demyo.model.IModel;
 import org.demyo.service.IModelService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Slice;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -207,13 +201,6 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 			HttpServletResponse response) {
 		getService().delete(modelId);
 		return redirect(model, "/" + urlPrefix + "/");
-	}
-
-	@InitBinder
-	private void initBinder(PropertyEditorRegistry binder) {
-		StringTrimmerEditor stringtrimmer = new StringTrimmerEditor(true);
-		binder.registerCustomEditor(String.class, stringtrimmer);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 
 	// Utilities used by the stubs

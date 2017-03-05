@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.persistence.EntityNotFoundException;
@@ -20,10 +22,14 @@ import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -259,5 +265,12 @@ public abstract class AbstractController {
 			LOGGER.warn("Wrong parameter with name '{}': {}", name, value, e);
 		}
 		return null;
+	}
+
+	@InitBinder
+	private void initBinder(PropertyEditorRegistry binder) {
+		StringTrimmerEditor stringtrimmer = new StringTrimmerEditor(true);
+		binder.registerCustomEditor(String.class, stringtrimmer);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true));
 	}
 }
