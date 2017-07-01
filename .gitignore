@@ -1,4 +1,5 @@
 .project
+**/.DS_Store
 integration/*.exe
 integration/*.tar.bz2
 source/.settings/
