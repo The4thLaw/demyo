@@ -107,4 +107,6 @@ jQuery(function () {
 			$('.mdl-layout__content').focus();
 		}
 	});
+	
+	$.stayInWebApp();
 });

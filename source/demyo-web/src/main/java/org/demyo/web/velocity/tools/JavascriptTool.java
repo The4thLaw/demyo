@@ -20,8 +20,7 @@ public class JavascriptTool {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JavascriptTool.class);
 
 	/**
-	 * This class represents a Javascript file: its location, dependencies and
-	 * potential CSS annex.
+	 * This class represents a Javascript file: its location, dependencies and potential CSS annex.
 	 */
 	private static class Script {
 		private final String id;
@@ -32,14 +31,9 @@ public class JavascriptTool {
 		/**
 		 * Creates a script reference.
 		 * 
-		 * @param id
-		 *            The identifier for the script
-		 * @param file
-		 *            The file to load (with extension, relative to script
-		 *            directory)
-		 * @param dependencies
-		 *            The identifiers of the other scripts on which this one
-		 *            depends
+		 * @param id The identifier for the script
+		 * @param file The file to load (with extension, relative to script directory)
+		 * @param dependencies The identifiers of the other scripts on which this one depends
 		 */
 		Script(String id, String file, Script... dependencies) {
 			this(id, file, null, dependencies);
@@ -48,17 +42,10 @@ public class JavascriptTool {
 		/**
 		 * Creates a script reference.
 		 * 
-		 * @param id
-		 *            The identifier for the script
-		 * @param file
-		 *            The file to load (with extension, relative to script
-		 *            directory)
-		 * @param css
-		 *            Potential CSS file to load as well when this script is
-		 *            included
-		 * @param dependencies
-		 *            The identifiers of the other scripts on which this one
-		 *            depends
+		 * @param id The identifier for the script
+		 * @param file The file to load (with extension, relative to script directory)
+		 * @param css Potential CSS file to load as well when this script is included
+		 * @param dependencies The identifiers of the other scripts on which this one depends
 		 */
 		Script(String id, String file, String css, Script... dependencies) {
 			this.id = id;
@@ -95,8 +82,9 @@ public class JavascriptTool {
 		addScript(new Script("PrefixFree", "vendor/prefixfree.min.js"));
 		addScript(new Script("JQuery-Core", "vendor/jquery-3.1.1.min.js"));
 		addScript(new Script("JQuery", "vendor/jquery-migrate-3.0.0.js", KNOWN_SCRIPTS.get("JQuery-Core")));
-		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery"), KNOWN_SCRIPTS.get("Material"),
-				KNOWN_SCRIPTS.get("PrefixFree")));
+		addScript(new Script("JQuery.StayInWebApp", "vendor/jquery.stayInWebApp.js", KNOWN_SCRIPTS.get("JQuery")));
+		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery.StayInWebApp"),
+				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
 		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.Forms", "demyo_forms.js", KNOWN_SCRIPTS.get("JQuery"), KNOWN_SCRIPTS.get("Chosen"),
 				KNOWN_SCRIPTS.get("Demyo.Core")));
@@ -122,8 +110,7 @@ public class JavascriptTool {
 	/**
 	 * Registers a script as needing to be loaded in the page.
 	 * 
-	 * @param id
-	 *            The ID of the script in the registry.
+	 * @param id The ID of the script in the registry.
 	 */
 	public void load(String id) {
 		if (isLoaded(id)) {
@@ -147,18 +134,15 @@ public class JavascriptTool {
 	/**
 	 * Checks whether a script has been loaded.
 	 * 
-	 * @param id
-	 *            The ID of the script in the registry.
-	 * @return <code>true</code> if the script is loaded. <code>false</code> if
-	 *         it's not, or if it doesn't exist.
+	 * @param id The ID of the script in the registry.
+	 * @return <code>true</code> if the script is loaded. <code>false</code> if it's not, or if it doesn't exist.
 	 */
 	public boolean isLoaded(String id) {
 		return loadedScripts.contains(id);
 	}
 
 	/**
-	 * Gets a list of all script source locations, relative to the Javascript
-	 * directory.
+	 * Gets a list of all script source locations, relative to the Javascript directory.
 	 * 
 	 * @return The script source locations.
 	 */
@@ -171,8 +155,7 @@ public class JavascriptTool {
 	}
 
 	/**
-	 * Gets a list of all script CSS annex locations, relative to the css
-	 * directory.
+	 * Gets a list of all script CSS annex locations, relative to the css directory.
 	 * 
 	 * @return The CSS annex locations.
 	 */
