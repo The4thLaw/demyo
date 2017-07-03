@@ -17,6 +17,8 @@
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/icons/**" location="/icons/" />
+	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
 	<!--
 		TODO: gzip the resources uzing the GzipResourceResolver
 		(maybe use a mvn plugin to zip them all automatically?)

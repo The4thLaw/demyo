@@ -23,7 +23,7 @@ Var SETUP_MODE # install / update
 Name Demyo
 
 # Branding
-!define MUI_ICON ../../branding/Paw_icon.ico
+!define MUI_ICON Demyo.ico
 !define MUI_HEADERIMAGE
 	!define MUI_HEADERIMAGE_BITMAP nsis-header.bmp
 	!define MUI_HEADERIMAGE_UNBITMAP nsis-header.bmp
@@ -106,7 +106,7 @@ Section "Demyo" COMP_Demyo
 	File "..\..\source\demyo-app\target\dependencies\*.jar"
 	
 	SetOutPath "$INSTDIR"
-	File /oname=Demyo.ico ../../branding/Paw_icon.ico
+	File /oname=Demyo.ico Demyo.ico
 	
 	# URLs
 	WriteINIStr "$INSTDIR\$(SHELL_Official_website).url" "InternetShortcut" "URL" $(SHELL_Website_URL) # Website
