@@ -13,6 +13,8 @@ import javax.persistence.MappedSuperclass;
 public abstract class AbstractModel implements IModel {
 	/**
 	 * The batch size for lazy loading of collections.
+	 * 
+	 * @see http://stackoverflow.com/a/27055702/109813
 	 */
 	protected static final int BATCH_SIZE = 15;
 
