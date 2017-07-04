@@ -1,5 +1,6 @@
 package org.demyo.web.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.demyo.service.IConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class HomeController extends AbstractController {
 	private MessageSource messageSource;
 	@Autowired
 	private IConfigurationService config;
+
+	@Value("#{servletContext.contextPath}")
+	private String servletContextPath;
 
 	/**
 	 * Displays the home page.
@@ -74,7 +79,19 @@ public class HomeController extends AbstractController {
 		manifest.put("display", "standalone");
 		manifest.put("lang", language.toLanguageTag());
 		manifest.put("orientation", "portrait-primary");
-		manifest.put("start_url", "/");
+		manifest.put("start_url", servletContextPath);
+		manifest.put("icons",
+				Arrays.asList(getManifestIcon(16), getManifestIcon(32), getManifestIcon(48), getManifestIcon(64),
+						getManifestIcon(144), getManifestIcon(192), getManifestIcon(196), getManifestIcon(270),
+						getManifestIcon(558)));
 		return manifest;
+	}
+
+	private Map<String, Object> getManifestIcon(int size) {
+		Map<String, Object> icon = new HashMap<>();
+		icon.put("src", servletContextPath + "/icons/demyo-" + size + ".png");
+		icon.put("sizes", size + "x" + size);
+		icon.put("type", "image/png");
+		return icon;
 	}
 }
