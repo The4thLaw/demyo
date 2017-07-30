@@ -58,6 +58,8 @@ public abstract class AbstractController {
 	protected AbstractController() {
 		// May be missing from some systems at least
 		mimeTypes.addMimeTypes("image/png png");
+		mimeTypes.addMimeTypes("image/jpeg jpg");
+		mimeTypes.addMimeTypes("image/jpeg jpeg");
 
 		// Note: intentionally, there is no specific MIME type for DEA export files.
 		// The HTTP spec discourages vendor-specific MIME types
