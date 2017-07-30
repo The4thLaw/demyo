@@ -121,9 +121,25 @@ $quickTasks.add({
 
 #if ($album.purchasePrice || !$album.prices.empty)
 <div class="mdl-grid dem-field-set">
-	## TODO: price history
 	#@mdlGridCellCond([6,4,0], $album.purchasePrice)
 		#entityFieldNumber('field.Album.purchasePrice' $album.purchasePrice) ## TODO: append currency
+	#end
+	#set ($cond = !($album.prices.empty))
+	#@mdlGridCellCond([6,4,0], $cond)
+		#@entityField('field.Album.prices.history')
+			<table class="mdl-data-table mdl-js-data-table">
+				<tr>
+					<th class="mdl-data-table__cell--non-numeric">#_('field.Album.prices.date')</th>
+					<th>#_('field.Album.prices.price')</th> ## TODO: append currency
+				</tr>
+				#foreach($price in $album.prices)
+					<tr>
+						<td class="mdl-data-table__cell--non-numeric">#date($price.date)</td>
+						<td>#number($price.price)</td>
+					</tr>
+				#end
+			</table>
+		#end
 	#end
 </div>
 #end
