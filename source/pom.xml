@@ -41,6 +41,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.versionCodename>Malika\u00ef</project.versionCodename>
 	</properties>
 
 	<dependencies>

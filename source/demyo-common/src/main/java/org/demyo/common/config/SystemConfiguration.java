@@ -5,15 +5,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoRuntimeException;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 
 /**
  * Demyo system configuration. These are things that the user cannot change through the application.
@@ -34,6 +34,8 @@ public final class SystemConfiguration {
 
 	/** The version of Demyo. */
 	private final String version;
+	/** The version codename of Demyo. */
+	private final String codename;
 	/** The root directory for the Demyo installation. */
 	private final File applicationDirectory;
 	/** Path to the WAR file containing the Demyo Web app. */
@@ -57,8 +59,8 @@ public final class SystemConfiguration {
 	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
 	/**
-	 * The flag indicating whether LESS stylesheets should be loaded asynchronously. Should never be true in
-	 * production, but needed for some tests.
+	 * The flag indicating whether LESS stylesheets should be loaded asynchronously. Should never be true in production,
+	 * but needed for some tests.
 	 */
 	private boolean loadLessInAsync;
 
@@ -108,6 +110,7 @@ public final class SystemConfiguration {
 		}
 
 		version = config.getString("version");
+		codename = config.getString("codename");
 		warPath = config.getString("war.path");
 		portable = config.getBoolean("portable");
 		httpAddress = config.getString("http.address");
@@ -131,9 +134,10 @@ public final class SystemConfiguration {
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
 				// https://developer.apple.com/library/mac/#documentation/General/Conceptual/
-				//		MOSXAppProgrammingGuide/AppRuntime/AppRuntime.html
-				userDirectory = new File(SystemUtils.USER_HOME + File.separator + "Library" + File.separator
-						+ "Application Support", "Demyo");
+				// MOSXAppProgrammingGuide/AppRuntime/AppRuntime.html
+				userDirectory = new File(
+						SystemUtils.USER_HOME + File.separator + "Library" + File.separator + "Application Support",
+						"Demyo");
 				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo");
 			} else {
 				userDirectory = new File(SystemUtils.USER_HOME, ".demyo");
@@ -183,11 +187,9 @@ public final class SystemConfiguration {
 	}
 
 	/**
-	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on
-	 * exit.
+	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on exit.
 	 * 
-	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters
-	 *        long
+	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
 	 * @return The created file.
 	 */
 	public File createTempFile(String prefix) {
@@ -195,13 +197,11 @@ public final class SystemConfiguration {
 	}
 
 	/**
-	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on
-	 * exit.
+	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on exit.
 	 * 
-	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters
-	 *        long
-	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which
-	 *        case the suffix <code>".tmp"</code> will be used
+	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
+	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which case
+	 *            the suffix <code>".tmp"</code> will be used
 	 * @return The created file.
 	 */
 	public File createTempFile(String prefix, String suffix) {
@@ -211,12 +211,11 @@ public final class SystemConfiguration {
 	/**
 	 * Creates a temporary file in the specified directory. The file is marked as to be deleted on exit.
 	 * 
-	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters
-	 *        long
-	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which
-	 *        case the suffix <code>".tmp"</code> will be used
+	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
+	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which case
+	 *            the suffix <code>".tmp"</code> will be used
 	 * @param directory The directory in which the file is to be created, or <code>null</code> if the default
-	 *        temporary-file directory is to be used
+	 *            temporary-file directory is to be used
 	 * @return The created file.
 	 */
 	public File createTempFile(String prefix, String suffix, File directory) {
@@ -256,6 +255,15 @@ public final class SystemConfiguration {
 	 */
 	public String getVersion() {
 		return version;
+	}
+
+	/**
+	 * Gets the version codename of Demyo.
+	 *
+	 * @return the version codename of Demyo
+	 */
+	public String getCodename() {
+		return codename;
 	}
 
 	/**

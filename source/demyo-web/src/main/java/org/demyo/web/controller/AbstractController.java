@@ -41,6 +41,7 @@ public abstract class AbstractController {
 	private static final String MODEL_KEY_LAYOUT = "layout";
 	private static final String MODEL_KEY_CONFIG = "appConfig";
 	private static final String MODEL_KEY_VERSION = "appVersion";
+	private static final String MODEL_KEY_CODENAME = "appCodename";
 	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
 	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
@@ -86,6 +87,7 @@ public abstract class AbstractController {
 		model.addObject(MODEL_KEY_I18N_SERV, translationService);
 		model.addObject(MODEL_KEY_CONFIG, configService.getConfiguration());
 		model.addObject(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
+		model.addObject(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
 		return model;
 	}
 
@@ -123,6 +125,7 @@ public abstract class AbstractController {
 	private void initConfiguration(Model model) {
 		model.addAttribute(MODEL_KEY_CONFIG, configService.getConfiguration());
 		model.addAttribute(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
+		model.addAttribute(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
 	}
 
 	/**

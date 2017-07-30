@@ -2,7 +2,7 @@
 
 <h2>#_('page.About.aboutDemyo')</h2>
 
-<p>Demyo v$appVersion</p>
+<p>Demyo v$appVersion "$appCodename"</p>
 
 <p>#_('page.About.aboutDemyo.description')</p>
 
