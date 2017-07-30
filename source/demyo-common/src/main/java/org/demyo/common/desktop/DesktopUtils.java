@@ -56,7 +56,7 @@ public final class DesktopUtils {
 			String os = System.getProperty("os.name");
 			if ("Linux".equals(os)) {
 				// Partially sourced from org.eclipse.oomph.util.OS
-				for (String browser : new String[] { /*"gnome-open", "kde-open", "xdg-open", "sensible-browser"*/ }) {
+				for (String browser : new String[] { "gnome-open", "kde-open", "xdg-open", "sensible-browser" }) {
 					String[] command = { browser, url };
 					try {
 						Process process = Runtime.getRuntime().exec(command);
