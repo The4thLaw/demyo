@@ -11,22 +11,22 @@
 <p>#_('page.About.aboutLibs.description')</p>
 <ul>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://harvesthq.github.io/chosen/">Chosen</a>', 'Chosen Team', '<a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>'])</li>
-	<li><a href="https://github.com/GoogleChrome/dialog-polyfill/">Dialog Polyfill</a>, &copy; Chromium Authors, licensed under the <a href="https://github.com/GoogleChrome/dialog-polyfill/blob/master/LICENSE">BSD 3-clause license</a>.</li>
-	<li><a href="https://getmdl.io/">Material Design Lite</a>, &copy; Google, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</li>
-	<li><a href="https://www.eclipse.org/jetty/">Jetty</a>, &copy; Eclipse Foundation, dual licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a> and the <a href="https://eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a>.</li>
-	<li><a href="https://jquery.com/">JQuery</a>, &copy; JQuery Team, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</li>
-	<li><a href="http://lesscss.org/">Less</a>, &copy; Less Team, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</li>
-	<li><a href="https://leaverou.github.io/prefixfree/">PrefixFree</a>, &copy; Lea Verou, licensed under the <a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>.</li>
-	<li><a href="https://spring.io/">Spring Framework</a>, &copy; Pivotal Software, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.</li>
-	<li><a href="https://www.tinymce.com/">TinyMCE</a>, &copy; Ephox Corporation, licensed under the <a href="https://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>.</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://github.com/GoogleChrome/dialog-polyfill/">Dialog Polyfill</a>,', 'Chromium Authors', '<a href="https://github.com/GoogleChrome/dialog-polyfill/blob/master/LICENSE">BSD 3-clause license</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://getmdl.io/">Material Design Lite</a>', 'Google', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://www.eclipse.org/jetty/">Jetty</a>', 'Eclipse Foundation', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a> &amp; <a href="https://eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://jquery.com/">JQuery</a>', 'JQuery Team', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="http://lesscss.org/">Less</a>', 'Less Team', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://leaverou.github.io/prefixfree/">PrefixFree</a>', 'Lea Verou', '<a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://spring.io/">Spring Framework</a>', 'Pivotal Software', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://www.tinymce.com/">TinyMCE</a>', 'Ephox Corporation', '<a href="https://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>'])</li>
 </ul>
 
 <p>#_('page.About.aboutLibs.env')</p>
 <ul>
 	<li><a href="https://www.debian.org/">Debian</a>.</li>
-	<li><a href="http://openjdk.java.net/">OpenJDK</a>, &copy: Oracle Corporation, licensed under the <a href="https://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License v2</a>.</li>
-	<li><a href="https://eclipse.org/">Eclipse</a>, &copy; Eclipse Foundation, licensed under the <a href="https://eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a>.</li>
-	<li><a href="https://maven.apache.org/">Apache Maven</a>, &copy; Apache Software Foundation, licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>.
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="http://openjdk.java.net/">OpenJDK</a>', 'Oracle Corporation', '<a href="https://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License v2</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://eclipse.org/">Eclipse</a>', 'Eclipse Foundation', '<a href="https://eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://maven.apache.org/">Apache Maven</a>', 'Apache Software Foundation', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
 </ul>
 
 <h2>#_('page.About.aboutInstall')</h2>
