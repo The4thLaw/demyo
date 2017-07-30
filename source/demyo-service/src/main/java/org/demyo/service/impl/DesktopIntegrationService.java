@@ -1,7 +1,6 @@
 package org.demyo.service.impl;
 
 import java.awt.AWTException;
-import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.MenuItem;
@@ -22,7 +21,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.common.desktop.DesktopUtils;
-
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +51,9 @@ public class DesktopIntegrationService {
 		}
 
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			String lfClass = UIManager.getSystemLookAndFeelClassName();
+			UIManager.setLookAndFeel(lfClass);
+			LOGGER.info("Look and Feel set to system ({})", lfClass);
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
 			LOGGER.warn("Failed to set the Look and Feel", e);
@@ -70,16 +70,14 @@ public class DesktopIntegrationService {
 	private void createSysTray() {
 		final PopupMenu popup = new PopupMenu();
 
-		if (Desktop.isDesktopSupported()) {
-			MenuItem browserItem = new MenuItem(translationService.translate("desktop.tray.browser.label"));
-			browserItem.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					DesktopUtils.startBrowser();
-				}
-			});
-			popup.add(browserItem);
-		}
+		MenuItem browserItem = new MenuItem(translationService.translate("desktop.tray.browser.label"));
+		browserItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DesktopUtils.startBrowser();
+			}
+		});
+		popup.add(browserItem);
 
 		MenuItem exitItem = new MenuItem(translationService.translate("desktop.tray.exit.label"));
 		exitItem.addActionListener(new ActionListener() {

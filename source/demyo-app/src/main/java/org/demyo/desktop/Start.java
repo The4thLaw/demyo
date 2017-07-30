@@ -1,6 +1,5 @@
 package org.demyo.desktop;
 
-import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
 import java.awt.SplashScreen;
 import java.io.File;
@@ -16,7 +15,6 @@ import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.common.desktop.DesktopUtils;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
@@ -66,8 +64,8 @@ public final class Start {
 				throw new DemyoRuntimeException(DemyoErrorCode.SYS_APPDIR_NOT_FOUND, e);
 			}
 			// Go two directories above: from JAR to lib dir to app dir
-			System.setProperty("demyo.applicationDirectory", new File(decodedPath).getParentFile().getParentFile()
-					.getAbsolutePath());
+			System.setProperty("demyo.applicationDirectory",
+					new File(decodedPath).getParentFile().getParentFile().getAbsolutePath());
 		}
 
 		File databaseFile = SystemConfiguration.getInstance().getDatabaseFile();
@@ -104,7 +102,7 @@ public final class Start {
 
 		server.start();
 
-		if (Desktop.isDesktopSupported() && SystemConfiguration.getInstance().isAutoStartWebBrowser()) {
+		if (SystemConfiguration.getInstance().isAutoStartWebBrowser()) {
 			DesktopUtils.startBrowser();
 		}
 
