@@ -8,7 +8,7 @@
 			}
 			
 			settings = $.extend({
-				delay: 650,
+				delay: 400,
 				url: '/search/quick',
 				contentToHide: '#page-content',
 				resultLocation: '#quickSearch-results',
@@ -74,6 +74,7 @@
 			this.keyup(function () {
 				var $input = $(this);
 				
+				// Use a debounce to avoid running too many queries in parallel
 				if (this.timer) {
 					clearTimeout(this.timer);
 				}
