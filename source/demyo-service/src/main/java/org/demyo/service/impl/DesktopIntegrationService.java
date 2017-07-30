@@ -109,6 +109,8 @@ public class DesktopIntegrationService {
 		LOGGER.debug("Tray icon size is (w x h): {} x {}", trayIconSize.width, trayIconSize.height);
 		iconBI = Scalr.resize(iconBI, trayIconSize.width, trayIconSize.height, Scalr.OP_ANTIALIAS);
 
+		// Won't be transparent :/
+		// See http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6453521
 		TrayIcon trayIcon = new TrayIcon(iconBI, translationService.translate("desktop.tray.mainIcon.tooltip"));
 		trayIcon.setPopupMenu(popup);
 		try {
