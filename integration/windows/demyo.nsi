@@ -3,7 +3,6 @@
 !include "MUI2.nsh"
 
 # TODO: One fine day, add an uninstall option to remove user settings as well
-# TODO: ensure that the "Start Demyo" command at the end is performed with the right user
 
 # Variables and defines
 !addplugindir plugins
