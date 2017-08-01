@@ -24,3 +24,5 @@ LangString SHELL_Uninstall ${LANG_FRENCH} "Désinstaller Demyo"
 #
 LangString CONFIG_Lang ${LANG_FRENCH} "fr"
 LangString CONFIG_Currency ${LANG_FRENCH} "¤"
+#
+LangString INSTALL_NoUpgradeFromDemyo1 ${LANG_FRENCH} "Il semble que 1.x soit installé. Les versions ne peuvent coexister et les données ne seront pas récupérées. La procédure pour récupérer les données est de procéder à un export depuis Demyo 1.5 et de ré-importer ce fichier dans la nouvelle version de Demyo."

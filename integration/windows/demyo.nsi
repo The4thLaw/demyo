@@ -1,22 +1,14 @@
+!define MUI_CUSTOMFUNCTION_GUIINIT onPostInit
+
 !include "MUI2.nsh"
 
 # TODO: One fine day, add an uninstall option to remove user settings as well
-# TODO: enable portable mode (should be exclusive with Desktop shortcut)
-# TODO: detect Demyo 1 installation in updates (add a specific key for major version. If the key is not present, exit with error)
 # TODO: ensure that the "Start Demyo" command at the end is performed with the right user
-# Similar to:
-#ClearErrors
-#		ReadRegStr $R0 HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion" CurrentVersion
-#		IfErrors WinVistaCheckDone 0
-#			StrCmp $R0 '6.0' IsWinVista # Win Vista
-#			StrCmp $R0 '6.1' IsWinVista WinVistaCheckDone # Win 7
-#			IsWinVista:
-#				StrCpy $INSTDIR "C:\Demyo"
-#			WinVistaCheckDone:
 
 # Variables and defines
 !define DEMYO_REG_ROOT "HKCU"
 !define DEMYO_REG_KEY "Software\Demyo"
+!define DEMYO_REG_VALUE_VERSION "Version"
 Var STARTMENU_FOLDER
 Var SETUP_MODE # install / update
 
@@ -136,6 +128,7 @@ SectionEnd
 Function DemyoInstallPost
 	# Store installation folder
 	WriteRegStr ${DEMYO_REG_ROOT} ${DEMYO_REG_KEY} "" $INSTDIR
+	WriteRegStr ${DEMYO_REG_ROOT} ${DEMYO_REG_KEY} ${DEMYO_REG_VALUE_VERSION} "2.0"
 FunctionEnd
 
 Function DemyoUpdatePre
@@ -199,11 +192,29 @@ Function .onInit
 	IntOp $0 ${SF_SELECTED} | ${SF_RO}
 	IntOp $0 $0 | ${SF_BOLD}
 	SectionSetFlags ${COMP_Demyo} $0
-	
+FunctionEnd
+
+# This is needed in order to have the right language
+# See https://stackoverflow.com/a/14305762/109813
+Function onPostInit
 	# Check if we update or install
 	ClearErrors
 	ReadRegStr $0 ${DEMYO_REG_ROOT} ${DEMYO_REG_KEY} ""
 	IfErrors notYetInstalled 0
+		# If it's an update, check if it's from Demyo 1
+		ClearErrors
+		ReadRegStr $0 ${DEMYO_REG_ROOT} ${DEMYO_REG_KEY} ${DEMYO_REG_VALUE_VERSION}
+		# In case of error reading, it's from Demyo 1
+		IfErrors isDemyo1 0
+			# If needed, we could do the following
+			# StrCmp $R0 '2.0' isDemyo2
+			# StrCmp $R0 '3.0' isDemyo3
+			Goto isNotDemyo1
+		isDemyo1:
+			MessageBox MB_OK "$(INSTALL_NoUpgradeFromDemyo1)"
+			Abort
+		isNotDemyo1:
+
 		StrCpy $SETUP_MODE "update"
 		Goto installCheckDone
 	notYetInstalled:
