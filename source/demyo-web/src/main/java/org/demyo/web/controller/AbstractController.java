@@ -15,11 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.IDemyoException;
-import org.demyo.service.IConfigurationService;
-import org.demyo.service.ITranslationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyEditorRegistry;
@@ -32,6 +27,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.IDemyoException;
+import org.demyo.service.IConfigurationService;
+import org.demyo.service.ITranslationService;
 
 /**
  * Base controller for Demyo.
@@ -156,6 +157,7 @@ public abstract class AbstractController {
 	 */
 	protected String redirect(Model model, String relativeUrl) {
 		model.asMap().remove(MODEL_KEY_VERSION);
+		model.asMap().remove(MODEL_KEY_CODENAME);
 		model.asMap().remove(MODEL_KEY_ASYNC_LESS);
 		// Note: spring is aware of the context path
 		return "redirect:" + relativeUrl;
