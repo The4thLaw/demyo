@@ -6,6 +6,7 @@
 # TODO: ensure that the "Start Demyo" command at the end is performed with the right user
 
 # Variables and defines
+!addplugindir plugins
 !define DEMYO_REG_ROOT "HKCU"
 !define DEMYO_REG_KEY "Software\Demyo"
 !define DEMYO_REG_VALUE_VERSION "Version"
@@ -237,7 +238,7 @@ Function CreateShortcutsIn
 FunctionEnd
 
 Function FinishLaunchDemyo
-	ExecShell "open" "$INSTDIR\Demyo.exe"
+	ShellExecAsUser::ShellExecAsUser "open" "$INSTDIR\Demyo.exe"
 FunctionEnd
 
 # Localisation
