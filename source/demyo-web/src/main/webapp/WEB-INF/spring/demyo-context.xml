@@ -48,7 +48,7 @@
 	
 	<jee:jndi-lookup id="desktopCallbacks" jndi-name="org.demyo.services.desktop" />
 
-	<bean id="demyo.core.messageSource"
+	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -63,6 +63,7 @@
 			</list>
 		</property>
 	</bean>
+	<alias name="messageSource" alias="demyo.core.messageSource"/>
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
