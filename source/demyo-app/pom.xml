@@ -115,7 +115,7 @@ Includes the Web server, H2 server, and startup program.</description>
 									<dontWrapJar>true</dontWrapJar>
 									<errTitle>Demyo</errTitle>
 									<chdir>.</chdir>
-									<icon>../../branding/Paw_icon.ico</icon>
+									<icon>../../integration/windows/Demyo.ico</icon>
 									<classPath>
 										<mainClass>org.demyo.desktop.Start</mainClass>
 										<addDependencies>false</addDependencies><!-- We use lib/* instead -->
