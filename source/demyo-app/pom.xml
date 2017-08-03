@@ -58,14 +58,14 @@ Includes the Web server, H2 server, and startup program.</description>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>log4j.xml</include>
+					<include>logback.groovy</include>
 				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>false</filtering>
 				<excludes>
-					<exclude>log4j.xml</exclude>
+					<exclude>logback.groovy</exclude>
 				</excludes>
 			</resource>
 		</resources>
