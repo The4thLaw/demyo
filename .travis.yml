@@ -6,6 +6,9 @@ jdk:
   - oraclejdk8
   - openjdk7
   - openjdk8
+# Demyo sources are in a sub-directory
+before_script:
+  cd source
 cache:
   directories:
     - $HOME/.m2
