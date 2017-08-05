@@ -1,0 +1,11 @@
+language: java
+# Needed for openjdk8
+dist: trusty
+jdk:
+	- oraclejdk7
+	- oraclejdk8
+	- openjdk7
+	- openjdk8
+cache:
+	directories:
+		- $HOME/.m2
