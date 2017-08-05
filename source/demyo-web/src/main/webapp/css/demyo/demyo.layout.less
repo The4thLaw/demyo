@@ -2,6 +2,11 @@
  * Demyo: Layout
  */
 
+/* Override fonts from Material Design. Notably, Helvetica is not always antialiased on Linux and looks very ugly */
+html, body, .mdl-layout__title, .mdl-layout-title, h1, h2 {
+	font-family: "Roboto","Arial",sans-serif;
+}
+
 #header-quick-links {
 	.mdl-button--icon {
 		margin-right: 0.75em;
