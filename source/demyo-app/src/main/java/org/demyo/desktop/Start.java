@@ -10,16 +10,17 @@ import java.net.URLDecoder;
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.desktop.DesktopCallbacks;
-import org.demyo.common.desktop.DesktopUtils;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoRuntimeException;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.desktop.DesktopCallbacks;
+import org.demyo.common.desktop.DesktopUtils;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 
 /**
  * Main entry point for Demyo operation.
@@ -68,7 +69,8 @@ public final class Start {
 					new File(decodedPath).getParentFile().getParentFile().getAbsolutePath());
 		}
 
-		File databaseFile = SystemConfiguration.getInstance().getDatabaseFile();
+		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
+		File databaseFile = sysConfig.getDatabaseFile();
 		boolean isNewDatabase = !databaseFile.exists();
 		// To debug, use java -cp h2-*.jar org.h2.tools.Console
 		String databaseFilePath = databaseFile.getAbsolutePath().replaceAll("\\.h2\\.db$", "");
@@ -85,24 +87,33 @@ public final class Start {
 			ds.getConnection().createStatement().execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
 		}
 
-		String httpAddress = SystemConfiguration.getInstance().getHttpAddress();
-		int httpPort = SystemConfiguration.getInstance().getHttpPort();
+		String httpAddress = sysConfig.getHttpAddress();
+		int httpPort = sysConfig.getHttpPort();
 		LOGGER.info("Starting server on {}:{} ...", httpAddress, httpPort);
 
 		final Server server = new Server(new InetSocketAddress(httpAddress, httpPort));
 
 		WebAppContext webapp = new WebAppContext();
 		webapp.setContextPath("/");
-		webapp.setWar(SystemConfiguration.getInstance().getWarPath());
+		webapp.setWar(sysConfig.getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
-		webapp.setTempDirectory(new File(SystemConfiguration.getInstance().getTempDirectory(), "jetty"));
+		webapp.setTempDirectory(new File(sysConfig.getTempDirectory(), "jetty"));
+
+		// Paths must end with the file separator
+		String extraClasspath = sysConfig.getSystemPluginDirectory().getAbsolutePath() + File.separator + ","
+				+ sysConfig.getUserPluginDirectory() + File.separator;
+		LOGGER.info("Setting extra classpath for Jetty: {}", extraClasspath);
+		// TODO: extract to a plugin manager to list the jars
+		// webapp.setExtraClasspath(extraClasspath);
+		// webapp.setExtraClasspath("/home/user/.demyo/plugins/demyo-plugin-books-2.1.0-alpha1-SNAPSHOT.jar");
+
 		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.dataSource", ds);
 		setDesktopCallbacks(server);
 		server.setHandler(webapp);
 
 		server.start();
 
-		if (SystemConfiguration.getInstance().isAutoStartWebBrowser()) {
+		if (sysConfig.isAutoStartWebBrowser()) {
 			DesktopUtils.startBrowser();
 		}
 

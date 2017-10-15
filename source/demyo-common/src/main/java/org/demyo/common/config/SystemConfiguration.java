@@ -56,6 +56,10 @@ public final class SystemConfiguration {
 	private final File tempDirectory;
 	/** The directory to store image thumbnails. */
 	private final File thumbnailDirectory;
+	/** The directory where system-wide plugins are located. */
+	private final File systemPluginDirectory;
+	/** The directory where user-specific directories are located. */
+	private final File userPluginDirectory;
 	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
 	/**
@@ -116,6 +120,7 @@ public final class SystemConfiguration {
 		httpAddress = config.getString("http.address");
 		httpPort = config.getInt("http.port");
 		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
+		systemPluginDirectory = new File(applicationDirectory, "plugins");
 
 		// Prepare all paths
 		if (portable) {
@@ -146,6 +151,8 @@ public final class SystemConfiguration {
 				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo");
 			}
 		}
+
+		userPluginDirectory = new File(userDirectory, "plugins");
 		imagesDirectory = new File(userDirectory, "images");
 		thumbnailDirectory = new File(userDirectory, "thumbnails");
 		databaseFile = new File(userDirectory, "demyo.h2.db");
@@ -153,6 +160,7 @@ public final class SystemConfiguration {
 		createDirectoryIfNeeded(imagesDirectory);
 		createDirectoryIfNeeded(tempDirectory);
 		createDirectoryIfNeeded(thumbnailDirectory);
+		createDirectoryIfNeeded(userPluginDirectory);
 
 		// Debug our configuration
 		if (LOGGER.isDebugEnabled()) {
@@ -245,6 +253,8 @@ public final class SystemConfiguration {
 		sb.append("\n\tdatabase file: ").append(databaseFile);
 		sb.append("\n\timages directory: ").append(imagesDirectory);
 		sb.append("\n\ttemporary directory: ").append(tempDirectory);
+		sb.append("\n\tsystem plugin directory: ").append(systemPluginDirectory);
+		sb.append("\n\tuser plugin directory directory: ").append(userPluginDirectory);
 		return sb.toString();
 	}
 
@@ -372,5 +382,23 @@ public final class SystemConfiguration {
 	 */
 	public void setLoadLessInAsync(boolean loadLessInAsync) {
 		this.loadLessInAsync = loadLessInAsync;
+	}
+
+	/**
+	 * Gets the directory where system-wide plugins are located.
+	 *
+	 * @return the directory where system-wide plugins are located
+	 */
+	public File getSystemPluginDirectory() {
+		return systemPluginDirectory;
+	}
+
+	/**
+	 * Gets the directory where user-specific directories are located.
+	 *
+	 * @return the directory where user-specific directories are located
+	 */
+	public File getUserPluginDirectory() {
+		return userPluginDirectory;
 	}
 }
