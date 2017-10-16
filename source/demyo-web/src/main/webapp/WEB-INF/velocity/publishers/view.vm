@@ -11,7 +11,11 @@ $quickTasks.add({
 	"icon": "store+delete",
 	"confirm" : true
 })
-## TODO: quick task to add a collection to this publisher
+$quickTasks.add({
+	"id" : "qt-add-collection-to-publisher",
+	"url" : "../../collections/add/?toPublisher=$publisher.id",
+	"icon": "picture_in_picture+add"
+})
 
 #thumbnail($publisher.logo, {'classes':'model-identification'})
 <div class="mdl-grid">

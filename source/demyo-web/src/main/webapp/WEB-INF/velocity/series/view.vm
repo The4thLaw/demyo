@@ -31,7 +31,6 @@ $quickTasks.add({
 		"icon": "gift+eye_slashed"
 	})
 #end
-##TODO: QT to add an album to the series
 ##TODO: QT to add a derivative to the series
 ##TODO: QT to lend albums if at least one album
 ##TODO: QT to tag all albums if at least one album

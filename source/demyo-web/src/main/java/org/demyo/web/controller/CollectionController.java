@@ -3,12 +3,6 @@ package org.demyo.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.demyo.model.Collection;
-import org.demyo.service.ICollectionService;
-import org.demyo.service.IImageService;
-import org.demyo.service.IModelService;
-import org.demyo.service.IPublisherService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +10,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import org.demyo.model.Collection;
+import org.demyo.service.ICollectionService;
+import org.demyo.service.IImageService;
+import org.demyo.service.IModelService;
+import org.demyo.service.IPublisherService;
 
 /**
  * Controller for {@link Collection} management.
@@ -35,6 +36,24 @@ public class CollectionController extends AbstractModelController<Collection> {
 	 */
 	public CollectionController() {
 		super(Collection.class, "collections", "collection");
+	}
+
+	/**
+	 * Adds a {@link Collection}.
+	 * 
+	 * @param model The view model.
+	 * @param publisherId The ID of the {@link org.demyo.model.Publisher Publisher} to add the collection to.
+	 * @return The view name.
+	 */
+	// params attributes allows overriding the parent /add
+	@RequestMapping(value = "/add", params = { "toPublisher" }, method = RequestMethod.GET)
+	public String add(Model model, @RequestParam(name = "toPublisher", required = true) long publisherId) {
+		Collection collection = new Collection();
+		collection.setPublisher(publisherService.getByIdForEdition(publisherId));
+		model.addAttribute("collection", collection);
+		fillModelForEdition(null, model);
+
+		return "collections/add-edit";
 	}
 
 	@Override
