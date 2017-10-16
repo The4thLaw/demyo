@@ -51,6 +51,12 @@ Includes the Web server, H2 server, and startup program.</description>
 			<artifactId>imgscalr-lib</artifactId>
 		</dependency>
 		
+		<!-- Used for plugins -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		
 		<!-- Logging (managed by the app package, provided by it at runtime) -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

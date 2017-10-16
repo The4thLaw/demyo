@@ -99,13 +99,12 @@ public final class Start {
 		webapp.setThrowUnavailableOnStartupException(true);
 		webapp.setTempDirectory(new File(sysConfig.getTempDirectory(), "jetty"));
 
-		// Paths must end with the file separator
-		String extraClasspath = sysConfig.getSystemPluginDirectory().getAbsolutePath() + File.separator + ","
-				+ sysConfig.getUserPluginDirectory() + File.separator;
+		// Set paths to plugins
+		PluginManager pluginMgr = new PluginManager(sysConfig.getSystemPluginDirectory(),
+				sysConfig.getUserPluginDirectory());
+		String extraClasspath = pluginMgr.getPluginPaths();
 		LOGGER.info("Setting extra classpath for Jetty: {}", extraClasspath);
-		// TODO: extract to a plugin manager to list the jars
-		// webapp.setExtraClasspath(extraClasspath);
-		// webapp.setExtraClasspath("/home/user/.demyo/plugins/demyo-plugin-books-2.1.0-alpha1-SNAPSHOT.jar");
+		webapp.setExtraClasspath(extraClasspath);
 
 		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.dataSource", ds);
 		setDesktopCallbacks(server);
