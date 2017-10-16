@@ -43,7 +43,8 @@ $quickTasks.add({
 </div>
 
 
-#if (!($album.writers.empty && $album.artists.empty && $album.colorists.empty))
+#if (!($album.writers.empty && $album.artists.empty && $album.colorists.empty
+		&& $album.inkers.empty && $album.translators.empty))
 <div class="mdl-grid dem-field-set">
 	#set ($cond = !($album.writers.empty))
 	#@mdlGridCellCond([4,0,0], $cond)
