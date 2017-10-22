@@ -27,6 +27,10 @@
 			https://github.com/spring-projects/spring-framework/blob/master/spring-webmvc/src/test/resources/org/springframework/web/servlet/config/mvc-config-resources-chain-no-auto.xml
 	-->
 	
+	<mvc:interceptors>
+		<bean id="readerInterceptor" class="org.demyo.web.interceptors.ReaderInterceptor"/>
+	</mvc:interceptors>
+	
 	<!--
 	Cache management
 	We can rely on a pure memory implementation for now, without advanced features:
