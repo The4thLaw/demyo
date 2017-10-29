@@ -1,10 +1,13 @@
 package org.demyo.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,6 +52,30 @@ public class ReaderController extends AbstractModelController<Reader> {
 		setLayoutMinimal(model);
 		setShadedBody(model);
 		return "readers/index";
+	}
+
+	/**
+	 * Saves changes to a new or updated entity.
+	 * 
+	 * @param entity The entity to save.
+	 * @param result The result of the binding and validation.
+	 * @param model The view model.
+	 * @param request The HTTP request.
+	 * @param response The HTTP response.
+	 * @return The view name.
+	 */
+	@Override
+	@RequestMapping(value = { "/add", "/edit/{modelId}" }, method = RequestMethod.POST)
+	public String save(@Valid Reader entity, BindingResult result, Model model, HttpServletRequest request,
+			HttpServletResponse response) {
+		// Override to be able to redirect elsewhere
+		super.save(entity, result, model, request, response);
+
+		if (result.hasErrors()) {
+			return "readers/add-edit";
+		}
+
+		return redirect(model, "/readers/index");
 	}
 
 	/**

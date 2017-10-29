@@ -6,7 +6,7 @@
 	#foreach($reader in $readerList)
 		<div class="mdl-list__item">
 			<a class="mdl-list__item-primary-content" href="$link.contextPath/readers/select/${reader.id}">
-				<span class="dem-reader-icon">$reader.name.charAt(0)</span>
+				<span class="dem-reader-icon" #if($!reader.colour)style="background: $reader.colour"#end>$reader.name.charAt(0)</span>
 				<span>$reader.name</span>
 			</a>
 			<span class="mdl-list__item-secondary-action" href="#">
