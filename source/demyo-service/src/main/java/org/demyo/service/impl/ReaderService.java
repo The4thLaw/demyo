@@ -1,7 +1,10 @@
 package org.demyo.service.impl;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
@@ -17,13 +20,6 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Autowired
 	private IReaderRepo repo;
 
-	private final ThreadLocal<Reader> currentReader = new ThreadLocal<Reader>() {
-		@Override
-		protected Reader initialValue() {
-			return null;
-		}
-	};
-
 	/**
 	 * Default constructor.
 	 */
@@ -32,13 +28,28 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	}
 
 	@Override
-	public void setCurrentReader(Reader r) {
-		currentReader.set(r);
+	public boolean readerExists(long readerId) {
+		return repo.exists(readerId);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
-	public Reader getCurrentReader() {
-		return currentReader.get();
+	public Reader getByIdForView(long id) {
+		Reader entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Reader for ID " + id);
+		}
+		return entity;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Reader getUniqueReader() {
+		if (repo.count() != 1) {
+			return null;
+		}
+		long uniqueId = repo.findAll().iterator().next().getId();
+		return getByIdForView(uniqueId);
 	}
 
 	@Override

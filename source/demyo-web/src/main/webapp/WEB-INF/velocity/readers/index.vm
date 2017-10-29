@@ -1,0 +1,35 @@
+#setPageTitle('title.index.readers')
+
+<div id="dem-reader-list-page">
+
+<div id="dem-reader-list" class="mdl-list mdl-card mdl-shadow--2dp">
+	#foreach($reader in $readerList)
+		<div class="mdl-list__item">
+			<a class="mdl-list__item-primary-content" href="$link.contextPath/readers/select/${reader.id}">
+				<span class="dem-reader-icon">$reader.name.charAt(0)</span>
+				<span>$reader.name</span>
+			</a>
+			<span class="mdl-list__item-secondary-action" href="#">
+				<button id="reader-list-actions-${reader.id}" class="mdl-button mdl-js-button mdl-button--icon">
+					<i class="dico">ellipsis_v</i>
+				</button>
+			</span>
+			<div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="reader-list-actions-${reader.id}">
+				<a class="mdl-menu__item" href="$link.contextPath/readers/edit/${reader.id}">
+					#icon('edit')#_('page.Reader.actions.edit')
+				</a>
+				<a class="mdl-menu__item" href="$link.contextPath/readers/favourites/${reader.id}">
+					#icon('edit')#_('page.Reader.actions.favourites')
+				</a>
+				<a class="mdl-menu__item" href="$link.contextPath/readers/reading-list/${reader.id}">
+					#icon('edit')#_('page.Reader.actions.readingList')
+				</a>
+			</div>
+		</div>
+	#end
+</div>
+
+<a href="$link.contextPath/readers/add" id="dem-reader-list-add" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+	#_('page.Reader.actions.add')
+</a>
+

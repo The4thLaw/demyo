@@ -45,7 +45,9 @@ public abstract class AbstractController {
 	private static final String MODEL_KEY_CODENAME = "appCodename";
 	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
 	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
+	private static final String MODEL_KEY_BODY_CLASSES = "bodyClasses";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
+	private static final String LAYOUT_MINIMAL = "layout/minimal.vm";
 
 	@Autowired
 	private IConfigurationService configService;
@@ -99,12 +101,30 @@ public abstract class AbstractController {
 	}
 
 	/**
+	 * Sets the body to be shaded, e.g. because the content should contrast more with the background.
+	 * 
+	 * @param model The model to change.
+	 */
+	protected final void setShadedBody(Model model) {
+		model.addAttribute(MODEL_KEY_BODY_CLASSES, "dem-shaded-body");
+	}
+
+	/**
 	 * Sets the layout to an AJAX-compatible format. This layout just dumps the view text as-is.
 	 * 
 	 * @param model The model to set the layout in.
 	 */
 	protected final void setLayoutPlain(Model model) {
 		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_PLAIN);
+	}
+
+	/**
+	 * Sets the layout to one that does not include a menu, quicksearch, etc: just an application bar.
+	 * 
+	 * @param model The model to set the layout in.
+	 */
+	protected final void setLayoutMinimal(Model model) {
+		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_MINIMAL);
 	}
 
 	/**

@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SortComparator;
@@ -25,7 +28,11 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "READERS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-// TODO [P2]: loans
+@NamedEntityGraph(name = "Reader.forView", attributeNodes = { //
+		@NamedAttributeNode("favouriteSeries"), //
+		@NamedAttributeNode(value = "favouriteAlbums", subgraph = "Series.Album"), //
+		@NamedAttributeNode(value = "readingList", subgraph = "Series.Album") }, //
+		subgraphs = { @NamedSubgraph(name = "Series.Album", attributeNodes = { @NamedAttributeNode("series") }) })
 public class Reader extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")

@@ -6,22 +6,19 @@ import org.demyo.model.Reader;
  * Service for management of {@link Reader}s.
  */
 public interface IReaderService extends IModelService<Reader> {
+	/**
+	 * Checks if the provided Reader exists.
+	 * 
+	 * @param readerId The Reader identifier to check.
+	 * @return <code>true</code> iif the reader exists.
+	 */
+	boolean readerExists(long readerId);
 
 	/**
-	 * Gets the currently logged in {@link Reader}.
+	 * Gets the only Reader from the database.If there is not exactly one Reader, return <code>null</code>.
 	 * 
-	 * @return The currently logged in {@link Reader} (can be <code>null</code>).
+	 * @return The unique Reader, or <code>null</code>.
 	 */
-	Reader getCurrentReader();
-
-	/**
-	 * Sets the current {@link Reader} in the context of the request.
-	 * <p>
-	 * This method should be called at least once per request.
-	 * </p>
-	 * 
-	 * @param r The {@link Reader} (can be <code>null</code>).
-	 */
-	void setCurrentReader(Reader r);
+	Reader getUniqueReader();
 
 }
