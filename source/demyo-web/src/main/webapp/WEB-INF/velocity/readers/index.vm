@@ -19,10 +19,10 @@
 					#icon('edit')#_('page.Reader.actions.edit')
 				</a>
 				<a class="mdl-menu__item" href="$link.contextPath/readers/favourites/${reader.id}">
-					#icon('edit')#_('page.Reader.actions.favourites')
+					#icon('heart')#_('page.Reader.actions.favourites')
 				</a>
 				<a class="mdl-menu__item" href="$link.contextPath/readers/reading-list/${reader.id}">
-					#icon('edit')#_('page.Reader.actions.readingList')
+					#icon('list+eye')#_('page.Reader.actions.readingList')
 				</a>
 			</div>
 		</div>
@@ -32,4 +32,6 @@
 <a href="$link.contextPath/readers/add" id="dem-reader-list-add" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
 	#_('page.Reader.actions.add')
 </a>
+
+</div>
 
