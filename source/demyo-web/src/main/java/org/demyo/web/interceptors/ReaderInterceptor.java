@@ -22,7 +22,7 @@ import org.demyo.service.IReaderService;
  * </p>
  */
 public class ReaderInterceptor implements HandlerInterceptor {
-	private static final int COOKIE_EXPIRATION = 365 * 24 * 60;
+	private static final int COOKIE_EXPIRATION = 365 * 24 * 60 * 60;
 	private static final String READER_COOKIE = "demyo_reader_id";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReaderInterceptor.class);
 
@@ -43,7 +43,7 @@ public class ReaderInterceptor implements HandlerInterceptor {
 		if (path.matches("^/readers/select/(\\d+)$")) {
 			Long readerId = parseReaderId(path.replaceAll("^/readers/select/", ""));
 			LOGGER.debug("Selecting reader {}", readerId);
-			hasReader = loadReaderIfExists(readerId);
+			hasReader = loadReaderIfExists(readerId, request, response);
 			// The controller will take care of the redirection
 		}
 
@@ -53,8 +53,8 @@ public class ReaderInterceptor implements HandlerInterceptor {
 			String cookieValue = cookie == null ? null : cookie.getValue();
 			Long readerId = parseReaderId(cookieValue);
 
-			// If the reader is selected and exists
-			hasReader = loadReaderIfExists(readerId);
+			// If the reader is selected and exists. Also refreshes the cookie
+			hasReader = loadReaderIfExists(readerId, request, response);
 		}
 
 		// If the user is selected properly, continue
@@ -71,7 +71,7 @@ public class ReaderInterceptor implements HandlerInterceptor {
 		if (uniqueReader != null) {
 			LOGGER.debug("Loaded the unique available reader");
 			// We have a unique reader we can use. Set it, and set the cookie
-			setReader(response, uniqueReader);
+			setReader(request, response, uniqueReader);
 		} else {
 			// We have multiple readers, the user should select by himself, except if we are already on the right page
 			if (!path.matches("^/readers(/(index)?)?")) {
@@ -82,7 +82,7 @@ public class ReaderInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
-	private boolean loadReaderIfExists(Long readerId) {
+	private boolean loadReaderIfExists(Long readerId, HttpServletRequest request, HttpServletResponse response) {
 		if (readerId != null && service.readerExists(readerId)) {
 			// He does. Perhaps we already loaded the reader
 			Reader currentReader = context.getCurrentReader();
@@ -90,7 +90,7 @@ public class ReaderInterceptor implements HandlerInterceptor {
 				// Do nothing
 				LOGGER.debug("Reader {} is already loaded in the session", readerId);
 			} else {
-				loadReader(readerId);
+				loadReader(readerId, request, response);
 			}
 			return true;
 		}
@@ -112,22 +112,22 @@ public class ReaderInterceptor implements HandlerInterceptor {
 	/**
 	 * Sets the reader in the context and cookie.
 	 */
-	private void setReader(HttpServletResponse response, Reader reader) {
+	private void setReader(HttpServletRequest request, HttpServletResponse response, Reader reader) {
 		Cookie cookieToSet = new Cookie(READER_COOKIE, reader.getId().toString());
 		cookieToSet.setMaxAge(COOKIE_EXPIRATION);
+		cookieToSet.setPath(request.getContextPath() + "/");
 		response.addCookie(cookieToSet);
 		context.setCurrentReader(reader);
 	}
 
 	/**
 	 * Loads the reader and sets it in the context.
-	 * 
-	 * @param readerId The {@link Reader} to load.
 	 */
-	private void loadReader(Long readerId) {
+	private void loadReader(Long readerId, HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.debug("Loading reader {}", readerId);
 		Reader reader = service.getByIdForView(readerId);
 		context.setCurrentReader(reader);
+		setReader(request, response, reader);
 	}
 
 	@Override
