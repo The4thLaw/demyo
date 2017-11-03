@@ -11,7 +11,7 @@ import org.demyo.service.IReaderContext;
  * Implements the contract defined by {@link IReaderContext}.
  */
 @Component
-@Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Scope(scopeName = "session", proxyMode = ScopedProxyMode.INTERFACES)
 public class ReaderContext implements IReaderContext {
 
 	private Reader reader;

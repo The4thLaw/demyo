@@ -18,10 +18,10 @@
 				<a class="mdl-menu__item" href="$link.contextPath/readers/edit/${reader.id}">
 					#icon('edit')#_('page.Reader.actions.edit')
 				</a>
-				<a class="mdl-menu__item" href="$link.contextPath/readers/favourites/${reader.id}">
+				<a class="mdl-menu__item" href="$link.contextPath/readers/${reader.id}/favourites/">
 					#icon('heart')#_('page.Reader.actions.favourites')
 				</a>
-				<a class="mdl-menu__item" href="$link.contextPath/readers/reading-list/${reader.id}">
+				<a class="mdl-menu__item" href="$link.contextPath/readers/${reader.id}/reading-list/">
 					#icon('list+eye')#_('page.Reader.actions.readingList')
 				</a>
 			</div>

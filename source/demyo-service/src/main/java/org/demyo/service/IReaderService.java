@@ -1,6 +1,8 @@
 package org.demyo.service;
 
+import org.demyo.model.Album;
 import org.demyo.model.Reader;
+import org.demyo.model.Series;
 
 /**
  * Service for management of {@link Reader}s.
@@ -21,4 +23,17 @@ public interface IReaderService extends IModelService<Reader> {
 	 */
 	Reader getUniqueReader();
 
+	/**
+	 * Adds a {@link Series} to the favourites of the currently selected {@link Reader}.
+	 * 
+	 * @param seriesId The {@link Series} ID.
+	 */
+	void addFavouriteSeries(long seriesId);
+
+	/**
+	 * Adds an {@link Album} to the favourites of the currently selected {@link Reader}.
+	 * 
+	 * @param albumId The {@link Album} ID.
+	 */
+	void addFavouriteAlbum(long albumId);
 }

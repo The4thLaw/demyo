@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+## Set the reader service
+$readerContext.setReaderService($demyoReaderService)
 	<head>
 #if($!pageTitle)
 		<title>$pageTitle - Demyo</title>

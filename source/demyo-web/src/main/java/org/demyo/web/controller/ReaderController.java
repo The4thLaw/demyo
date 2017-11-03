@@ -5,15 +5,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.demyo.model.Album;
 import org.demyo.model.Reader;
+import org.demyo.model.Series;
 import org.demyo.service.IModelService;
 import org.demyo.service.IReaderService;
 
@@ -92,6 +97,36 @@ public class ReaderController extends AbstractModelController<Reader> {
 	@RequestMapping(value = "/select/{readerId}", method = RequestMethod.GET)
 	public String select(@PathVariable long readerId, Model model) {
 		return redirect(model, "/");
+	}
+
+	/**
+	 * JSON method to add a favourite {@link Series} for the current reader.
+	 * 
+	 * @param series The Series to add.
+	 * @return Always <code>true</code>.
+	 */
+	@RequestMapping(value = "/favourites/series", method = RequestMethod.POST, //
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public boolean addFavouriteSeries(@RequestBody Series series) {
+		service.addFavouriteSeries(series.getId());
+		return true;
+	}
+
+	/**
+	 * JSON method to add a favourite {@link Album} for the current reader.
+	 * 
+	 * @param album The Album to add.
+	 * @return Always <code>true</code>.
+	 */
+	// $.ajax({type:'POST', url:'/readers/favourites/albums', data: JSON.stringify({ id: 1 }), success: function(ret) {
+	// alert('hello'); }, contentType: 'application/json'});
+	@RequestMapping(value = "/favourites/albums", method = RequestMethod.POST, //
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public boolean addFavouriteAlbum(@RequestBody Album album) {
+		service.addFavouriteAlbum(album.getId());
+		return true;
 	}
 
 	@Override

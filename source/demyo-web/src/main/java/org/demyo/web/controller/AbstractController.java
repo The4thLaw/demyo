@@ -32,6 +32,7 @@ import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
 import org.demyo.service.IConfigurationService;
+import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
 /**
@@ -44,6 +45,7 @@ public abstract class AbstractController {
 	private static final String MODEL_KEY_VERSION = "appVersion";
 	private static final String MODEL_KEY_CODENAME = "appCodename";
 	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
+	private static final String MODEL_KEY_READER_SERV = "demyoReaderService";
 	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
 	private static final String MODEL_KEY_BODY_CLASSES = "bodyClasses";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
@@ -53,6 +55,8 @@ public abstract class AbstractController {
 	private IConfigurationService configService;
 	@Autowired
 	private ITranslationService translationService;
+	@Autowired
+	private IReaderService readerService;
 
 	private MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
 
@@ -135,6 +139,16 @@ public abstract class AbstractController {
 	@ModelAttribute
 	private void initTranslationService(Model model) {
 		model.addAttribute(MODEL_KEY_I18N_SERV, translationService);
+	}
+
+	/**
+	 * Sets the reader service into the model.
+	 * 
+	 * @param model The view model.
+	 */
+	@ModelAttribute
+	private void initReaderService(Model model) {
+		model.addAttribute(MODEL_KEY_READER_SERV, readerService);
 	}
 
 	/**

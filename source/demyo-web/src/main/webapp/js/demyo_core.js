@@ -89,7 +89,18 @@ var demyo = {};
 		    $('.dem-thumb-legend__details', $this.parent()).slideDown('fast');
 		    $this.fadeOut('fast', function() {$(this).remove()} );
 		});
-	}
+	};
+	
+	demyo.postJSON = function (url, data, success, error) {
+		return $.ajax({
+			type:'POST',
+			url: url,
+			data: JSON.stringify(data),
+			success: success,
+			error: error,
+			contentType: 'application/json'
+		});
+	};
 	
 })(jQuery);
 

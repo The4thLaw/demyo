@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.model.Reader;
+import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ISeriesService;
 
@@ -19,6 +20,8 @@ import org.demyo.service.ISeriesService;
 public class ReaderService extends AbstractModelService<Reader> implements IReaderService {
 	@Autowired
 	private IReaderRepo repo;
+	@Autowired
+	private IReaderContext context;
 
 	/**
 	 * Default constructor.
@@ -50,6 +53,30 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		}
 		long uniqueId = repo.findAll().iterator().next().getId();
 		return getByIdForView(uniqueId);
+	}
+
+	@Transactional
+	@Override
+	public void addFavouriteSeries(long seriesId) {
+		long readerId = context.getCurrentReader().getId();
+		// Remove to avoid duplicates
+		repo.deleteFavouriteSeries(readerId, seriesId);
+		// Add the actual favourite
+		repo.insertFavouriteSeries(readerId, seriesId);
+		// Clear the context so that it's reloaded for next request
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void addFavouriteAlbum(long albumId) {
+		long readerId = context.getCurrentReader().getId();
+		// Remove to avoid duplicates
+		repo.deleteFavouriteAlbum(readerId, albumId);
+		// Add the actual favourite
+		repo.insertFavouriteAlbum(readerId, albumId);
+		// Clear the context so that it's reloaded for next request
+		context.clearCurrentReader();
 	}
 
 	@Override
