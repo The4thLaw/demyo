@@ -5,6 +5,7 @@ import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 
 /**
@@ -25,10 +26,19 @@ public class ReaderContextTool {
 	/**
 	 * Sets the reader service to use.
 	 * 
-	 * @param service The reader service.
+	 * @param readerService The reader service.
 	 */
-	public void setReaderService(IReaderService service) {
+	public void setReaderService(IReaderService readerService) {
 		LOGGER.debug("Setting the reader service");
-		this.service = service;
+		this.service = readerService;
+	}
+
+	/**
+	 * Gets the current reader context.
+	 * 
+	 * @return The {@link IReaderContext context}.
+	 */
+	public IReaderContext getContext() {
+		return service.getContext();
 	}
 }

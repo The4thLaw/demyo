@@ -5,15 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import org.demyo.dao.IAlbumRepo;
-import org.demyo.dao.IMetaSeriesRepo;
-import org.demyo.dao.IModelRepo;
-import org.demyo.dao.ISeriesRepo;
-import org.demyo.model.Album;
-import org.demyo.model.MetaSeries;
-import org.demyo.model.util.AlbumComparator;
-import org.demyo.service.IAlbumService;
-import org.demyo.service.IConfigurationService;
+import javax.persistence.EntityNotFoundException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -30,6 +23,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Predicate;
+
+import org.demyo.dao.IAlbumRepo;
+import org.demyo.dao.IMetaSeriesRepo;
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ISeriesRepo;
+import org.demyo.model.Album;
+import org.demyo.model.MetaSeries;
+import org.demyo.model.util.AlbumComparator;
+import org.demyo.service.IAlbumService;
+import org.demyo.service.IConfigurationService;
 
 /**
  * Implements the contract defined by {@link IAlbumService}.
@@ -52,6 +55,16 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	 */
 	public AlbumService() {
 		super(Album.class);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Album getByIdForView(long id) {
+		Album entity = repo.findOneForView(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Album for ID " + id);
+		}
+		return entity;
 	}
 
 	/**

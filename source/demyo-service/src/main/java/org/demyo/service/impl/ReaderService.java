@@ -31,6 +31,11 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	}
 
 	@Override
+	public IReaderContext getContext() {
+		return context;
+	}
+
+	@Override
 	public boolean readerExists(long readerId) {
 		return repo.exists(readerId);
 	}

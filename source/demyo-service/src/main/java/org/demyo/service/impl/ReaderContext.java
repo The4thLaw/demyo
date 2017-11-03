@@ -1,10 +1,15 @@
 package org.demyo.service.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import org.demyo.model.Album;
 import org.demyo.model.Reader;
+import org.demyo.model.Series;
 import org.demyo.service.IReaderContext;
 
 /**
@@ -15,6 +20,8 @@ import org.demyo.service.IReaderContext;
 public class ReaderContext implements IReaderContext {
 
 	private Reader reader;
+	private Set<Long> favouriteSeriesIds;
+	private Set<Long> favouriteAlbumIds;
 
 	@Override
 	public Reader getCurrentReader() {
@@ -27,11 +34,32 @@ public class ReaderContext implements IReaderContext {
 			throw new IllegalArgumentException("null reader");
 		}
 		reader = r;
+		favouriteSeriesIds = new HashSet<>();
+		favouriteAlbumIds = new HashSet<>();
+
+		for (Series s : r.getFavouriteSeries()) {
+			favouriteSeriesIds.add(s.getId());
+		}
+		for (Album a : r.getFavouriteAlbums()) {
+			favouriteAlbumIds.add(a.getId());
+		}
 	}
 
 	@Override
 	public void clearCurrentReader() {
 		reader = null;
+		favouriteSeriesIds = null;
+		favouriteAlbumIds = null;
+	}
+
+	@Override
+	public boolean isFavouriteSeries(Series s) {
+		return favouriteSeriesIds.contains(s.getId());
+	}
+
+	@Override
+	public boolean isFavouriteAlbum(Album a) {
+		return favouriteAlbumIds.contains(a.getId());
 	}
 
 }

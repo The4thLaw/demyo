@@ -1,5 +1,21 @@
 #setPageTitleParams('title.view.album' $album.title)
 
+## TODO: only show one of the two (hide in JS)
+## TODO: vertical-align to middle
+## TODO: figure out why tooltips don't work
+## TODO: actual behaviour
+$quickTasks.add({
+	"id" : "qt-fave-album",
+	"url" : "#",
+	"icon": "heart",
+	"overflow": false
+})
+$quickTasks.add({
+	"id" : "qt-unfave-album",
+	"url" : "#",
+	"icon": "heart_outline",
+	"overflow": false
+})
 $quickTasks.add({
 	"id" : "qt-edit-album",
 	"url" : "../edit/$album.id",

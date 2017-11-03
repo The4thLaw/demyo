@@ -1,13 +1,9 @@
 package org.demyo.web.velocity.tools;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.velocity.tools.Scope;
@@ -15,11 +11,14 @@ import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+
 /**
  * Velocity tool for the page quick tasks. This tool preserves the order in which the tasks are added.
  */
 @ValidScope(value = Scope.REQUEST)
-public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
+public class QuickTasksTool {
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuickTasksTool.class);
 
 	/**
@@ -36,6 +35,8 @@ public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 		private String label;
 		/** The flag to determine whether clicking on this item requires confirmation. */
 		private boolean confirm;
+		/** The flag to determine whether the tasks will be displayed at the top level or overflowed to the menu. */
+		private boolean overflow = true;
 
 		/**
 		 * Creates a quick task from a Map of its attributes.
@@ -158,9 +159,30 @@ public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 		public void setConfirm(boolean confirm) {
 			this.confirm = confirm;
 		}
+
+		/**
+		 * Checks if is flag to determine whether the tasks will be displayed at the top level or overflowed to the
+		 * menu.
+		 *
+		 * @return the flag to determine whether the tasks will be displayed at the top level or overflowed to the menu
+		 */
+		public boolean isOverflow() {
+			return overflow;
+		}
+
+		/**
+		 * Sets the flag to determine whether the tasks will be displayed at the top level or overflowed to the menu.
+		 *
+		 * @param overflow the new flag to determine whether the tasks will be displayed at the top level or overflowed
+		 *            to the menu
+		 */
+		public void setOverflow(boolean overflow) {
+			this.overflow = overflow;
+		}
 	}
 
-	private final List<QuickTask> tasks = new LinkedList<QuickTask>();
+	private final List<QuickTask> tasks = new LinkedList<>();
+	private final List<QuickTask> overflow = new LinkedList<>();
 
 	/**
 	 * Default constructor.
@@ -177,28 +199,32 @@ public class QuickTasksTool implements Iterable<QuickTasksTool.QuickTask> {
 	 */
 	public void add(Map<String, ?> config) throws DemyoException {
 		LOGGER.trace("Registering quick task: {}", config);
-		tasks.add(new QuickTask(config));
+		QuickTask task = new QuickTask(config);
+		if (task.isOverflow()) {
+			overflow.add(task);
+		} else {
+			tasks.add(task);
+		}
 	}
 
 	/**
-	 * Prepares the quick tasks. Should be called before starting to render the page (and, in particular, before
-	 * loading the Javascript).
+	 * Prepares the quick tasks. Should be called before starting to render the page (and, in particular, before loading
+	 * the Javascript).
 	 * 
 	 * @param js The {@link JavascriptTool} in the current request.
 	 */
 	public void prepare(JavascriptTool js) {
-		if (tasks.isEmpty()) {
+		if (tasks.isEmpty() || overflow.isEmpty()) {
 			return;
 		}
 		js.load("Demyo.QuickTasks");
 	}
 
-	@Override
-	public Iterator<QuickTask> iterator() {
-		return tasks.iterator();
+	public List<QuickTask> getOverflow() {
+		return overflow;
 	}
 
-	public boolean isEmpty() {
-		return tasks.isEmpty();
+	public List<QuickTask> getTasks() {
+		return tasks;
 	}
 }

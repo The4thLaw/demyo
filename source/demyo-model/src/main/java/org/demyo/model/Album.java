@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,14 +27,14 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.SortComparator;
+import org.hibernate.validator.constraints.NotBlank;
+
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
-
-import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents Albums. Albums are the core elements in Demyo. They may belong to a {@link Series} or not.
@@ -42,11 +43,20 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "ALBUMS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"), @DefaultOrder.Order(property = "cycle"),
 		@DefaultOrder.Order(property = "number"), @DefaultOrder.Order(property = "numberSuffix") })
-@NamedEntityGraph(name = "Album.forEdition", attributeNodes = { @NamedAttributeNode("series"),
-		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"), @NamedAttributeNode("cover"),
-		@NamedAttributeNode("binding"), @NamedAttributeNode("tags"), @NamedAttributeNode("writers"),
-		@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
-		@NamedAttributeNode("translators"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") })
+@NamedEntityGraphs({ //
+		@NamedEntityGraph(name = "Album.forView", attributeNodes =
+		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+				@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
+				@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
+				@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
+				@NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites") }), //
+		@NamedEntityGraph(name = "Album.forEdition", attributeNodes =
+		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+				@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
+				@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
+				@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
+				@NamedAttributeNode("prices") })//
+})
 // TODO [P2]: loans
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
@@ -206,6 +216,11 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_images", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	private Set<Image> images;
+
+	/** The {@link Reader} who favourited this Album. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAlbums")
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Reader> readersFavourites;
 
 	@Override
 	protected Album self() {

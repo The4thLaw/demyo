@@ -36,4 +36,11 @@ public interface IReaderService extends IModelService<Reader> {
 	 * @param albumId The {@link Album} ID.
 	 */
 	void addFavouriteAlbum(long albumId);
+
+	/**
+	 * Gets the current reader context.
+	 * 
+	 * @return The {@link IReaderContext context}.
+	 */
+	IReaderContext getContext();
 }
