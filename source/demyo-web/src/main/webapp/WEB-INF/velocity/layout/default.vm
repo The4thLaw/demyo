@@ -35,30 +35,30 @@ $quickTasks.prepare($javascript)
   				#if (!$quickTasks.tasks.empty || !$quickTasks.overflow.empty)
   					<!-- Quick tasks -->
   					<div id="header-quick-tasks">
-  						#if (!$quickTasks.tasks.empty)
-							<nav class="mdl-navigation">
-								#foreach ($task in $quickTasks.tasks)
-									<a href="$task.url" class="mdl-button mdl-js-button mdl-button--icon" id="$task.id">#icon($task.icon)</a>
-									<div class="mdl-tooltip" for="$task.id">#_($task.label)</div>
-								#end
-							</nav>
-						#end
-
-		  				#if (!$quickTasks.overflow.empty)
-								<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">
-									#icon('ellipsis_v')
-								</button>
-								<div class="mdl-tooltip" for="button-quick-tasks">#_("quickTasks.title")</div>
-			
-								<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
-									#foreach ($task in $quickTasks.overflow)
-										<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
-											#icon($task.icon)#_($task.label)
-										</a>
+						<nav class="mdl-navigation">
+	  						#if (!$quickTasks.tasks.empty)
+									#foreach ($task in $quickTasks.tasks)
+										<a href="$task.url" class="mdl-button mdl-js-button mdl-button--icon" id="$task.id">#icon($task.icon)</a>
+										<div class="mdl-tooltip" for="$task.id">#_($task.label)</div>
 									#end
-								</div>
-							<div>
-						#end
+							#end
+	
+			  				#if (!$quickTasks.overflow.empty)
+									<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">
+										#icon('ellipsis_v')
+									</button>
+									<div class="mdl-tooltip" for="button-quick-tasks">#_("quickTasks.title")</div>
+				
+									<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
+										#foreach ($task in $quickTasks.overflow)
+											<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
+												#icon($task.icon)#_($task.label)
+											</a>
+										#end
+									</div>
+								<div>
+							#end
+						</nav>
 				#end
 			</div>
 			#if($!pageTabs)

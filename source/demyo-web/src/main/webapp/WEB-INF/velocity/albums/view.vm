@@ -1,19 +1,19 @@
 #setPageTitleParams('title.view.album' $album.title)
 
+$javascript.load('Demyo.Readers')
+
 ## TODO: only show one of the two (hide in JS)
-## TODO: vertical-align to middle
-## TODO: figure out why tooltips don't work
 ## TODO: actual behaviour
 $quickTasks.add({
 	"id" : "qt-fave-album",
-	"url" : "#",
-	"icon": "heart",
+	"url" : "$link.contextPath/readers/favourites/albums/$album.id",
+	"icon": "heart_outline",
 	"overflow": false
 })
 $quickTasks.add({
 	"id" : "qt-unfave-album",
-	"url" : "#",
-	"icon": "heart_outline",
+	"url" : "$link.contextPath/readers/favourites/albums/$album.id",
+	"icon": "heart",
 	"overflow": false
 })
 $quickTasks.add({
@@ -31,6 +31,8 @@ $quickTasks.add({
 ##TODO: QT to lend album
 
 #thumbnail($album.cover, {'classes':'model-identification'})
+
+<input type="hidden" id="is_favourite" value="$demyoReaderService.context.isFavouriteAlbum($album)">
 
 <div class="mdl-grid dem-field-set" id="album-identification">
 	#@mdlGridCell([6,4,4])

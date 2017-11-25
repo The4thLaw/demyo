@@ -88,6 +88,8 @@ public class JavascriptTool {
 		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.Forms", "demyo_forms.js", KNOWN_SCRIPTS.get("JQuery"), KNOWN_SCRIPTS.get("Chosen"),
 				KNOWN_SCRIPTS.get("Demyo.Core")));
+		addScript(new Script("Demyo.Readers", "demyo_readers.js", KNOWN_SCRIPTS.get("JQuery"),
+				KNOWN_SCRIPTS.get("Demyo.Core")));
 		addScript(new Script("JQuery.HotKeys", "vendor/jquery.hotkeys.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.QuickTasks", "demyo_quicktasks.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.QuickSearch", "demyo_quicksearch.js", KNOWN_SCRIPTS.get("JQuery"),

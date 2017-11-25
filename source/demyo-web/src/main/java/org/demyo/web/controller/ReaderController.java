@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ import org.demyo.service.IReaderService;
 @Controller
 @RequestMapping("/readers")
 public class ReaderController extends AbstractModelController<Reader> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReaderController.class);
 
 	@Autowired
 	private IReaderService service;
@@ -116,16 +119,30 @@ public class ReaderController extends AbstractModelController<Reader> {
 	/**
 	 * JSON method to add a favourite {@link Album} for the current reader.
 	 * 
-	 * @param album The Album to add.
+	 * @param albumId The Album to add.
 	 * @return Always <code>true</code>.
 	 */
-	// $.ajax({type:'POST', url:'/readers/favourites/albums', data: JSON.stringify({ id: 1 }), success: function(ret) {
-	// alert('hello'); }, contentType: 'application/json'});
-	@RequestMapping(value = "/favourites/albums", method = RequestMethod.POST, //
+	@RequestMapping(value = "/favourites/albums/{albumId}", method = RequestMethod.POST, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public boolean addFavouriteAlbum(@RequestBody Album album) {
-		service.addFavouriteAlbum(album.getId());
+	public boolean addFavouriteAlbum(@PathVariable long albumId) {
+		LOGGER.debug("Adding favourite album {}", albumId);
+		service.addFavouriteAlbum(albumId);
+		return true;
+	}
+
+	/**
+	 * JSON method to remove a favourite {@link Album} for the current reader.
+	 * 
+	 * @param albumId The Album to remove.
+	 * @return Always <code>true</code>.
+	 */
+	@RequestMapping(value = "/favourites/albums/{albumId}", method = RequestMethod.DELETE, //
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public boolean removeFavouriteAlbum(@PathVariable long albumId) {
+		LOGGER.debug("Removing favourite album {}", albumId);
+		// service.addFavouriteAlbum(album.getId());
 		return true;
 	}
 
