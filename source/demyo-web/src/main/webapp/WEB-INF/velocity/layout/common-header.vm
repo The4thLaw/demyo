@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
-## Set the reader service
-$readerContext.setReaderService($demyoReaderService)
+## Set the reader service. Can be missing if we are on an exception page
+#if ($!demyoReaderService)
+	$readerContext.setReaderService($demyoReaderService)
+#end
 	<head>
 #if($!pageTitle)
 		<title>$pageTitle - Demyo</title>

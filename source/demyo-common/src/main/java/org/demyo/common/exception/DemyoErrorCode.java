@@ -64,7 +64,9 @@ public enum DemyoErrorCode {
 	/** ORM: The PreSave method doesn't have a valid signature. */
 	ORM_INVALID_PRESAVE(17001),
 	/** Web: Forms: The select options are of an unknown type. */
-	WEB_FORM_INVALID_OPTIONS(18000);
+	WEB_FORM_INVALID_OPTIONS(18000),
+	/** Cannot delete the last reader. */
+	READER_CANNOT_DELETE_LAST(19000);
 
 	private final int numericCode;
 

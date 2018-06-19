@@ -1,5 +1,7 @@
 package org.demyo.web.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -56,7 +58,9 @@ public class ReaderController extends AbstractModelController<Reader> {
 	public String index(@RequestParam(value = "page", required = false) Integer currentPage,
 			@RequestParam(value = "startsWith", required = false) Character startsWith, Model model,
 			HttpServletRequest request) {
-		model.addAttribute("readerList", service.findAll());
+		List<Reader> readers = service.findAll();
+		model.addAttribute("readerList", readers);
+		model.addAttribute("canDelete", readers.size() > 1);
 		setLayoutMinimal(model);
 		setShadedBody(model);
 		return "readers/index";

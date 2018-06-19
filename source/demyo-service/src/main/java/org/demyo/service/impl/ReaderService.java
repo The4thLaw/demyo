@@ -3,9 +3,12 @@ package org.demyo.service.impl;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.model.Reader;
@@ -82,6 +85,18 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		repo.insertFavouriteAlbum(readerId, albumId);
 		// Clear the context so that it's reloaded for next request
 		context.clearCurrentReader();
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public void delete(long id) {
+		// Override to ensure we don't delete the last reader
+		if (getRepo().count() < 2) {
+			throw new DemyoRuntimeException(DemyoErrorCode.READER_CANNOT_DELETE_LAST,
+					"Cannot delete the last reader in the database");
+		}
+		super.delete(id);
 	}
 
 	@Override

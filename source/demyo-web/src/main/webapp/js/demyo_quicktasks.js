@@ -23,7 +23,7 @@ $(function() {
 			// Register the events
 			$('.confirm', dialog).click(function () {
 				$('<form method="post" action="'+url+'" style="display:none;"></form>')
-					.insertBefore('#menu-quick-tasks')
+					.insertBefore('#page-content')
 					.submit();
 			})
 			$('.cancel', dialog).click(function () {
