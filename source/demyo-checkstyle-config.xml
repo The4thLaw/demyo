@@ -11,7 +11,6 @@
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
-    <module name="FileContentsHolder"/>
     <module name="JavadocMethod">
       <property name="scope" value="package"/>
       <property name="suppressLoadErrors" value="true"/>
@@ -111,6 +110,7 @@
     <module name="JavaNCSS"/>
     <module name="NPathComplexity"/>
     <module name="OuterTypeFilename"/>
+    <module name="SuppressionCommentFilter"/>
   </module>
   <module name="JavadocPackage"/>
   <module name="NewlineAtEndOfFile"/>
@@ -125,5 +125,4 @@
     <property name="format" value="^\s*System\.(out|err)\.print.*$"/>
     <property name="message" value="Cannot print to standard output. Use a logger instead."/>
   </module>
-  <module name="SuppressionCommentFilter"/>
 </module>
