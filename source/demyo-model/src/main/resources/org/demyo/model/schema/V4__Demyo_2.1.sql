@@ -20,7 +20,7 @@ CREATE TABLE readers (
 	name VARCHAR(255) NOT NULL,
 	colour CHAR(7) DEFAULT NULL
 );
-CREATE INDEX ON publishers(name);
+CREATE INDEX ON readers(name);
 
 -- Create a default reader
 
