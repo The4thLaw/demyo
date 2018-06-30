@@ -1,4 +1,5 @@
 .project
+.recommenders
 **/.DS_Store
 integration/*.exe
 integration/*.tar.bz2
