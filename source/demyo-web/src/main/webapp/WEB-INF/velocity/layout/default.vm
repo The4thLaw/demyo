@@ -90,6 +90,12 @@ $quickTasks.prepare($javascript)
 			#end
 			
 			<nav class="mdl-navigation dem-app-menu" id="main-menu" role="menu">
+				#set ($reader = $demyoReaderService.context.currentReader)
+				<a id="menu-switch-reader" href="$link.contextPath/readers/" class="mdl-navigation__link">
+					<span class="dem-reader-icon" #if($!reader.colour)style="background: $reader.colour"#end>$reader.name.charAt(0)</span>
+					<span>$reader.name</span>
+				</a>
+				<div class="mdl-tooltip" for="menu-switch-reader">#_('menu.reader.switch.tooltip')</div>
 				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
 				<div class="dem-app-menu__title" id="menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.comics')</div>
 				<div class="dem-app-menu__section" id="menu-section-albums">
