@@ -217,10 +217,15 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	private Set<Image> images;
 
-	/** The {@link Reader} who favourited this Album. */
+	/** The {@link Reader}s who favourited this Album. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAlbums")
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Reader> readersFavourites;
+
+	/** The {@link Reader}s who have this Album in their reading list. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "readingList")
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Reader> readersReadingList;
 
 	@Override
 	protected Album self() {
