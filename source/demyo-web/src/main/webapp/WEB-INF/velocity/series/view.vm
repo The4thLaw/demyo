@@ -1,5 +1,19 @@
 #setPageTitleParams('title.view.series' $series.identifyingName)
 
+$javascript.load('Demyo.Readers')
+
+$quickTasks.add({
+	"id" : "qt-fave-series",
+	"url" : "$link.contextPath/readers/favourites/series/$series.id",
+	"icon": "heart_outline",
+	"overflow": false
+})
+$quickTasks.add({
+	"id" : "qt-unfave-series",
+	"url" : "$link.contextPath/readers/favourites/series/$series.id",
+	"icon": "heart",
+	"overflow": false
+})
 $quickTasks.add({
 	"id" : "qt-edit-series",
 	"url" : "../edit/$series.id",
@@ -35,6 +49,8 @@ $quickTasks.add({
 ##TODO: QT to lend albums if at least one album
 ##TODO: QT to tag all albums if at least one album
 ##TODO: QT to remove a tag if at least one album
+
+<input type="hidden" id="is_favourite" value="$demyoReaderService.context.isFavouriteSeries($series)">
 
 <div class="mdl-grid">
 	#@mdlGridCell([6,4,4])

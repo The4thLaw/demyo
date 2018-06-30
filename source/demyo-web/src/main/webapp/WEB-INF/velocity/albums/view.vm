@@ -2,8 +2,6 @@
 
 $javascript.load('Demyo.Readers')
 
-## TODO: only show one of the two (hide in JS)
-## TODO: actual behaviour
 $quickTasks.add({
 	"id" : "qt-fave-album",
 	"url" : "$link.contextPath/readers/favourites/albums/$album.id",
