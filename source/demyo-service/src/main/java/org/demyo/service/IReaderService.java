@@ -11,31 +11,55 @@ public interface IReaderService extends IModelService<Reader> {
 	/**
 	 * Checks if the provided Reader exists.
 	 * 
-	 * @param readerId The Reader identifier to check.
+	 * @param readerId
+	 *            The Reader identifier to check.
 	 * @return <code>true</code> iif the reader exists.
 	 */
 	boolean readerExists(long readerId);
 
 	/**
-	 * Gets the only Reader from the database.If there is not exactly one Reader, return <code>null</code>.
+	 * Gets the only Reader from the database.If there is not exactly one Reader,
+	 * return <code>null</code>.
 	 * 
 	 * @return The unique Reader, or <code>null</code>.
 	 */
 	Reader getUniqueReader();
 
 	/**
-	 * Adds a {@link Series} to the favourites of the currently selected {@link Reader}.
+	 * Adds a {@link Series} to the favourites of the currently selected
+	 * {@link Reader}.
 	 * 
-	 * @param seriesId The {@link Series} ID.
+	 * @param seriesId
+	 *            The {@link Series} ID.
 	 */
 	void addFavouriteSeries(long seriesId);
 
 	/**
-	 * Adds an {@link Album} to the favourites of the currently selected {@link Reader}.
+	 * Removes a {@link Series} from the favourites of the currently selected
+	 * {@link Reader}.
 	 * 
-	 * @param albumId The {@link Album} ID.
+	 * @param seriesId
+	 *            The {@link Series} ID.
+	 */
+	void removeFavouriteSeries(long seriesId);
+
+	/**
+	 * Adds an {@link Album} to the favourites of the currently selected
+	 * {@link Reader}.
+	 * 
+	 * @param albumId
+	 *            The {@link Album} ID.
 	 */
 	void addFavouriteAlbum(long albumId);
+
+	/**
+	 * Removes an {@link Album} from the favourites of the currently selected
+	 * {@link Reader}.
+	 * 
+	 * @param albumId
+	 *            The {@link Album} ID.
+	 */
+	void removeFavouriteAlbum(long albumId);
 
 	/**
 	 * Gets the current reader context.

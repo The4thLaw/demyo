@@ -2,6 +2,8 @@ package org.demyo.service.impl;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ import org.demyo.service.ISeriesService;
  */
 @Service
 public class ReaderService extends AbstractModelService<Reader> implements IReaderService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReaderService.class);
+
 	@Autowired
 	private IReaderRepo repo;
 	@Autowired
@@ -66,6 +70,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Transactional
 	@Override
 	public void addFavouriteSeries(long seriesId) {
+		LOGGER.debug("Adding favourite series {}", seriesId);
+
 		long readerId = context.getCurrentReader().getId();
 		// Remove to avoid duplicates
 		repo.deleteFavouriteSeries(readerId, seriesId);
@@ -77,12 +83,38 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional
 	@Override
+	public void removeFavouriteSeries(long seriesId) {
+		LOGGER.debug("Removing favourite series {}", seriesId);
+
+		long readerId = context.getCurrentReader().getId();
+		// Remove to avoid duplicates
+		repo.deleteFavouriteSeries(readerId, seriesId);
+		// Clear the context so that it's reloaded for next request
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
 	public void addFavouriteAlbum(long albumId) {
+		LOGGER.debug("Adding favourite album {}", albumId);
+
 		long readerId = context.getCurrentReader().getId();
 		// Remove to avoid duplicates
 		repo.deleteFavouriteAlbum(readerId, albumId);
 		// Add the actual favourite
 		repo.insertFavouriteAlbum(readerId, albumId);
+		// Clear the context so that it's reloaded for next request
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void removeFavouriteAlbum(long albumId) {
+		LOGGER.debug("Removing favourite album {}", albumId);
+
+		long readerId = context.getCurrentReader().getId();
+		// Remove to avoid duplicates
+		repo.deleteFavouriteAlbum(readerId, albumId);
 		// Clear the context so that it's reloaded for next request
 		context.clearCurrentReader();
 	}

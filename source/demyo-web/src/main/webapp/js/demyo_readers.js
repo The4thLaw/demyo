@@ -55,7 +55,8 @@
 			$('#qt-unfave-series').hide();
 		}
 		
-		$('#qt-fave-album, #qt-fave-series, #qt-unfave-album, #qt-unfave-series').click(demyo.readers.addOrRemoveFavourite)
+		$('#qt-fave-album, #qt-fave-series, #qt-unfave-album, #qt-unfave-series')
+			.click(demyo.readers.addOrRemoveFavourite);
 	};
 	
 })(jQuery);
