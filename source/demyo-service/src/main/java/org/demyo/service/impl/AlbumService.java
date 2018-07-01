@@ -197,6 +197,9 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			// Check if the album is leaving the wishlist
 			Album oldAlbum = repo.findOne(newAlbum.getId());
 			isLeavingWishlist = oldAlbum.isWishlist() && !newAlbum.isWishlist();
+			if (isLeavingWishlist) {
+				LOGGER.debug("The saved album is leaving the wishlist");
+			}
 		}
 
 		long id = super.save(newAlbum);
@@ -206,6 +209,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			// It was probably a mistake from the user that it wasn't part of the wishlist in the first place
 			// If it's a new album, there's no need to delete it: it couldn't possibly have been part of the
 			// wishlist
+			LOGGER.debug("Removing the album from the reading list of all users");
 			readerRepo.deleteFromAllReadingLists(id);
 
 		} else if (// Add it to the reading list of all users if...
@@ -213,6 +217,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		(isNewAlbum && !newAlbum.isWishlist())
 				// Not a new album, but was part of the wishlist and is no longer part of it
 				|| isLeavingWishlist) {
+			LOGGER.debug("Adding the album to the reading list of all users");
 			readerRepo.insertInAllReadingLists(id);
 		}
 

@@ -90,7 +90,8 @@ public interface IReaderRepo extends IModelRepo<Reader> {
 	 * @param albumId The {@link Album} ID.
 	 */
 	@Modifying
-	@Query(value = "insert into readers_reading_list (select ?1, id from readers)", nativeQuery = true)
+	@Query(value = "insert into readers_reading_list (album_id, reader_id) (select ?1, id from readers)", //
+			nativeQuery = true)
 	void insertInAllReadingLists(long albumId);
 
 	/**
@@ -99,6 +100,6 @@ public interface IReaderRepo extends IModelRepo<Reader> {
 	 * @param albumId The {@link Album} ID.
 	 */
 	@Modifying
-	@Query(value = "delete from readers_reading_list where album_id=?2", nativeQuery = true)
+	@Query(value = "delete from readers_reading_list where album_id=?1", nativeQuery = true)
 	void deleteFromAllReadingLists(long albumId);
 }
