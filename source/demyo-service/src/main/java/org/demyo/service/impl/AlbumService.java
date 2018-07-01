@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -27,6 +29,7 @@ import com.querydsl.core.types.Predicate;
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IMetaSeriesRepo;
 import org.demyo.dao.IModelRepo;
+import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.MetaSeries;
@@ -49,6 +52,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	private IConfigurationService configurationService;
 	@Autowired
 	private ISeriesRepo seriesRepo;
+	@Autowired
+	private IReaderRepo readerRepo;
 
 	/**
 	 * Default constructor.
@@ -179,5 +184,38 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		Album loaded = getByIdForEdition(model.getId());
 		BeanUtils.copyProperties(model, loaded);
 		return loaded;
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public long save(@NotNull Album newAlbum) {
+		boolean isNewAlbum = newAlbum.getId() == null;
+		boolean isLeavingWishlist = false;
+
+		if (!isNewAlbum) {
+			// Check if the album is leaving the wishlist
+			Album oldAlbum = repo.findOne(newAlbum.getId());
+			isLeavingWishlist = oldAlbum.isWishlist() && !newAlbum.isWishlist();
+		}
+
+		long id = super.save(newAlbum);
+
+		if (newAlbum.isWishlist() && !isNewAlbum) {
+			// If an existing album becomes part of the wishlist, remove it from the reading list of all users
+			// It was probably a mistake from the user that it wasn't part of the wishlist in the first place
+			// If it's a new album, there's no need to delete it: it couldn't possibly have been part of the
+			// wishlist
+			readerRepo.deleteFromAllReadingLists(id);
+
+		} else if (// Add it to the reading list of all users if...
+		// New album, not part of the wishlist
+		(isNewAlbum && !newAlbum.isWishlist())
+				// Not a new album, but was part of the wishlist and is no longer part of it
+				|| isLeavingWishlist) {
+			readerRepo.insertInAllReadingLists(id);
+		}
+
+		return id;
 	}
 }

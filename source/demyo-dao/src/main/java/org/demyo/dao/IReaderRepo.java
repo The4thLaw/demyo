@@ -63,4 +63,42 @@ public interface IReaderRepo extends IModelRepo<Reader> {
 	@Modifying
 	@Query(value = "insert into readers_favourite_albums (reader_id, album_id) VALUES (?1, ?2)", nativeQuery = true)
 	void insertFavouriteAlbum(long readerId, long albumId);
+
+	/**
+	 * Adds an {@link Album} to the reading list of the given {@link Reader}.
+	 * 
+	 * @param readerId The {@link Reader} ID.
+	 * @param albumId The {@link Album} ID.
+	 */
+	@Modifying
+	@Query(value = "insert into readers_reading_list (reader_id, album_id) VALUES (?1, ?2)", nativeQuery = true)
+	void insertInReadingList(long readerId, long albumId);
+
+	/**
+	 * Removes an {@link Album} from the reading list of the given {@link Reader}.
+	 * 
+	 * @param readerId The {@link Reader} ID.
+	 * @param albumId The {@link Album} ID.
+	 */
+	@Modifying
+	@Query(value = "delete from readers_reading_list where reader_id=?1 and album_id=?2", nativeQuery = true)
+	void deleteFromReadingList(long readerId, long albumId);
+
+	/**
+	 * Adds an {@link Album} to the reading list of all {@link Reader}s.
+	 * 
+	 * @param albumId The {@link Album} ID.
+	 */
+	@Modifying
+	@Query(value = "insert into readers_reading_list (select ?1, id from readers)", nativeQuery = true)
+	void insertInAllReadingLists(long albumId);
+
+	/**
+	 * Removes an {@link Album} from the reading list of all {@link Reader}s.
+	 * 
+	 * @param albumId The {@link Album} ID.
+	 */
+	@Modifying
+	@Query(value = "delete from readers_reading_list where album_id=?2", nativeQuery = true)
+	void deleteFromAllReadingLists(long albumId);
 }
