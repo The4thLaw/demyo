@@ -3,7 +3,7 @@ var demyo = {};
 (function($) {
 	'use strict';
 	
-	demyo.l10n = new Array();
+	demyo.l10n = [];
 	
 	demyo.maxDependenciesPerCard = 4;
 
@@ -37,8 +37,8 @@ var demyo = {};
 			var hiddenDeps = $('li:nth-child(n+' + demyo.maxDependenciesPerCard + ')', depList);
 			hiddenDeps.hide();
 			
-			card.append('<div class="mdl-card__actions dem-dependencies-exander">'
-					+ '<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"><i class="dico">ellipsis_h</i></button></div>');
+			card.append('<div class="mdl-card__actions dem-dependencies-exander">' +
+					'<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"><i class="dico">ellipsis_h</i></button></div>');
 			
 			$('.dem-dependencies-exander > button', card).click(function () {
 				$('.dem-dependencies-exander', card).remove();
@@ -87,7 +87,7 @@ var demyo = {};
 		$('.dem-thumb-legend__expander').click(function() {
 		    var $this = $(this);
 		    $('.dem-thumb-legend__details', $this.parent()).slideDown('fast');
-		    $this.fadeOut('fast', function() {$(this).remove()} );
+		    $this.fadeOut('fast', function() {$(this).remove();} );
 		});
 	};
 	
@@ -111,6 +111,11 @@ var demyo = {};
 			error: error,
 			contentType: 'application/json'
 		});
+	};
+	
+	demyo.showToast = function (message) {
+		var data = {message: message};
+		demyo.toastContainer.MaterialSnackbar.showSnackbar(data);
 	};
 	
 })(jQuery);
@@ -120,6 +125,7 @@ jQuery(function () {
 	demyo.registerCollapsibleCards();
 	demyo.registerShortcuts();
 	demyo.registerThumbExpanders();
+	demyo.toastContainer = document.getElementById('main-toast');
 	// The MDL layout with fixed header seems to steal focus at some point.
 	// Fix it so that users can scroll and use shortcut keys directly when landing on the page
 	// Known not to work on Chrome at least, because the <div> elements do not accept focus. Still better than nothing

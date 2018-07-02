@@ -61,6 +61,10 @@
 demyo.l10n['quickTasks.confirm.title'] = '#_("javascript.quickTasks.confirm.title")';
 demyo.l10n['quickTasks.confirm.ok.label'] = '#_("javascript.quickTasks.confirm.ok.label")';
 demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confirm.cancel.label")';
+demyo.l10n['readers.confirm.favourite.add'] = '#_("readers.confirm.favourite.add")';
+demyo.l10n['readers.confirm.favourite.remove'] = '#_("readers.confirm.favourite.remove")';
+demyo.l10n['readers.confirm.readingList.add'] = '#_("readers.confirm.readingList.add")';
+demyo.l10n['readers.confirm.readingList.remove'] = '#_("readers.confirm.readingList.remove")';
 		</script>
 
 	</head>

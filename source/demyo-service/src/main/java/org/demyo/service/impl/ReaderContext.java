@@ -22,6 +22,7 @@ public class ReaderContext implements IReaderContext {
 	private Reader reader;
 	private Set<Long> favouriteSeriesIds;
 	private Set<Long> favouriteAlbumIds;
+	private Set<Long> readingListIds;
 
 	@Override
 	public Reader getCurrentReader() {
@@ -36,12 +37,16 @@ public class ReaderContext implements IReaderContext {
 		reader = r;
 		favouriteSeriesIds = new HashSet<>();
 		favouriteAlbumIds = new HashSet<>();
+		readingListIds = new HashSet<>();
 
 		for (Series s : r.getFavouriteSeries()) {
 			favouriteSeriesIds.add(s.getId());
 		}
 		for (Album a : r.getFavouriteAlbums()) {
 			favouriteAlbumIds.add(a.getId());
+		}
+		for (Album a : r.getReadingList()) {
+			readingListIds.add(a.getId());
 		}
 	}
 
@@ -60,6 +65,11 @@ public class ReaderContext implements IReaderContext {
 	@Override
 	public boolean isFavouriteAlbum(Album a) {
 		return favouriteAlbumIds.contains(a.getId());
+	}
+
+	@Override
+	public boolean isAlbumInReadingList(Album a) {
+		return readingListIds.contains(a.getId());
 	}
 
 }

@@ -45,4 +45,12 @@ public interface IReaderContext {
 	 * @return <code>true</code> if the {@link Album} is a favourite.
 	 */
 	boolean isFavouriteAlbum(Album a);
+
+	/**
+	 * Checks if the provided {@link Album} is in the reading list of the currently selected {@link Reader}.
+	 * 
+	 * @param a The {@link Album} to check.
+	 * @return <code>true</code> if the {@link Album} is in the reading list.
+	 */
+	boolean isAlbumInReadingList(Album a);
 }

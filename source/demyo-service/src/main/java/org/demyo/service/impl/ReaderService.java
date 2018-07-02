@@ -119,6 +119,27 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		context.clearCurrentReader();
 	}
 
+	@Transactional
+	@Override
+	public void addAlbumToReadingList(long albumId) {
+		LOGGER.debug("Adding album {} to the reading list", albumId);
+
+		long readerId = context.getCurrentReader().getId();
+		repo.deleteFromReadingList(readerId, albumId);
+		repo.insertInReadingList(readerId, albumId);
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void removeAlbumFromReadingList(long albumId) {
+		LOGGER.debug("Removing album {} from the reading list", albumId);
+
+		long readerId = context.getCurrentReader().getId();
+		repo.deleteFromReadingList(readerId, albumId);
+		context.clearCurrentReader();
+	}
+
 	@Transactional(rollbackFor = Throwable.class)
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override

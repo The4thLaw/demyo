@@ -4,13 +4,13 @@ $javascript.load('Demyo.Readers')
 
 $quickTasks.add({
 	"id" : "qt-fave-series",
-	"url" : "$link.contextPath/readers/favourites/series/$series.id",
+	"url" : "$link.contextPath/readers/current/favourites/series/$series.id",
 	"icon": "heart_outline",
 	"overflow": false
 })
 $quickTasks.add({
 	"id" : "qt-unfave-series",
-	"url" : "$link.contextPath/readers/favourites/series/$series.id",
+	"url" : "$link.contextPath/readers/current/favourites/series/$series.id",
 	"icon": "heart",
 	"overflow": false
 })

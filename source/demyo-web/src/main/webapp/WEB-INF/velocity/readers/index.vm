@@ -6,7 +6,7 @@ $javascript.load('Demyo.QuickTasks')
 <div id="dem-reader-list" class="mdl-list mdl-card mdl-shadow--2dp">
 	#foreach($reader in $readerList)
 		<div class="mdl-list__item">
-			<a class="mdl-list__item-primary-content" href="$link.contextPath/readers/select/${reader.id}" id="select-reader-${reader.id}">
+			<a class="mdl-list__item-primary-content" href="$link.contextPath/readers/${reader.id}/select" id="select-reader-${reader.id}">
 				<span class="dem-reader-icon" #if($!reader.colour)style="background: $reader.colour"#end>$reader.name.charAt(0)</span>
 				<span>$reader.name</span>
 			</a>

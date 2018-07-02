@@ -104,7 +104,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 	 * @return The view name.
 	 */
 	// We need this method in order not to get a 404
-	@RequestMapping(value = "/select/{readerId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{readerId}/select", method = RequestMethod.GET)
 	public String select(@PathVariable long readerId, Model model) {
 		return redirect(model, "/");
 	}
@@ -115,7 +115,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 	 * @param seriesId The Series to add.
 	 * @return Always <code>true</code>.
 	 */
-	@RequestMapping(value = "/favourites/series/{seriesId}", method = RequestMethod.POST, //
+	@RequestMapping(value = "/current/favourites/series/{seriesId}", method = RequestMethod.POST, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public boolean addFavouriteSeries(@PathVariable long seriesId) {
@@ -129,7 +129,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 	 * @param seriesId The Series to remove.
 	 * @return Always <code>true</code>.
 	 */
-	@RequestMapping(value = "/favourites/series/{seriesId}", method = RequestMethod.DELETE, //
+	@RequestMapping(value = "/current/favourites/series/{seriesId}", method = RequestMethod.DELETE, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public boolean removeFavouriteSeries(@PathVariable long seriesId) {
@@ -143,7 +143,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 	 * @param albumId The Album to add.
 	 * @return Always <code>true</code>.
 	 */
-	@RequestMapping(value = "/favourites/albums/{albumId}", method = RequestMethod.POST, //
+	@RequestMapping(value = "/current/favourites/albums/{albumId}", method = RequestMethod.POST, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public boolean addFavouriteAlbum(@PathVariable long albumId) {
@@ -157,7 +157,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 	 * @param albumId The Album to remove.
 	 * @return Always <code>true</code>.
 	 */
-	@RequestMapping(value = "/favourites/albums/{albumId}", method = RequestMethod.DELETE, //
+	@RequestMapping(value = "/current/favourites/albums/{albumId}", method = RequestMethod.DELETE, //
 			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public boolean removeFavouriteAlbum(@PathVariable long albumId) {
@@ -212,6 +212,34 @@ public class ReaderController extends AbstractModelController<Reader> {
 		model.addAttribute("albumList", entities);
 
 		return "albums/index";
+	}
+
+	/**
+	 * JSON method to add an {@link Album} to the reading list of the current reader.
+	 * 
+	 * @param albumId The Album to add.
+	 * @return Always <code>true</code>.
+	 */
+	@RequestMapping(value = "/current/readingList/albums/{albumId}", method = RequestMethod.POST, //
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public boolean addAlbumToReadingList(@PathVariable long albumId) {
+		service.addAlbumToReadingList(albumId);
+		return true;
+	}
+
+	/**
+	 * JSON method to add an {@link Album} to the reading list of the current reader.
+	 * 
+	 * @param albumId The Album to add.
+	 * @return Always <code>true</code>.
+	 */
+	@RequestMapping(value = "/current/readingList/albums/{albumId}", method = RequestMethod.DELETE, //
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public boolean removeAlbumFromReadingList(@PathVariable long albumId) {
+		service.removeAlbumFromReadingList(albumId);
+		return true;
 	}
 
 	@Override
