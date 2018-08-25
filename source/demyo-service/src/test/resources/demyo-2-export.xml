@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<library>
+  <meta>
+    <version demyo="2.1.0" schema="4"/>
+    <counts albums="3" albums_prices="2" authors="0" bindings="0" borrowers="0" collections="1" derivatives="3" derivative_types="2" derivatives_prices="0" images="0" loan-history="0" publishers="2" series="2" sources="0" tags="3"/>
+  </meta>
+  <publishers>
+    <publisher id="1" name="Delcourt"/>
+    <publisher id="2" name="Dargaud"/>
+  </publishers>
+  <collections>
+    <collection id="1" name="Série B" publisher_id="1"/>
+  </collections>
+  <tags>
+    <tag id="1" name="action"/>
+    <tag id="2" name="humour"/>
+    <tag id="3" name="science-fiction" fgcolour="#ffffff" bgcolour="#ff0000"/>
+  </tags>
+  <series-list>
+    <series id="1" name="XIII" summary="XIII is a guy suffering from amnesia." completed="false" comment="Comment for XIII." website="http://www.treize.com/"/>
+    <series id="2" name="Sillage" completed="false"/>
+  </series-list>
+  <albums>
+    <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false">
+      <album-tags>
+        <album-tag ref="1"/>
+        <album-tag ref="3"/>
+      </album-tags>
+    </album>
+    <album id="2" title="Bludzee" publisher_id="1" wishlist="false">
+      <album-tags>
+        <album-tag ref="2"/>
+      </album-tags>
+    </album>
+    <album id="3" title="Z_test" publisher_id="1" wishlist="false"/>
+  </albums>
+  <album_prices>
+    <album_price album_id="1" date="2016-01-10" price="10.0"/>
+    <album_price album_id="1" date="2016-01-15" price="1.5"/>
+  </album_prices>
+  <derivative_types>
+    <derivative_type id="1" name="Offset"/>
+    <derivative_type id="2" name="Serigraphy"/>
+  </derivative_types>
+  <derivatives>
+    <derivative id="1" series_id="1" album_id="1" derivative_type_id="1" signed="true" authors_copy="false" restricted_sale="false" description="Offset for XIII #3."/>
+    <derivative id="2" series_id="2" derivative_type_id="1" signed="true" authors_copy="false" restricted_sale="false" description="Offset for Sillage, no album."/>
+    <derivative id="3" album_id="2" derivative_type_id="2" signed="true" authors_copy="false" restricted_sale="false" description="Serigraphy for Bludzee, a One Shot."/>
+  </derivatives>
+  <readers>
+    <reader id="2" name="Xavier" colour="#FF69B4">
+      <favourite-series-list>
+        <favourite-series ref="2"/>
+      </favourite-series-list>
+      <favourite-albums>
+        <favourite-album ref="1"/>
+      </favourite-albums>
+      <reading-list>
+        <reading-list-entry ref="3"/>
+      </reading-list>
+    </reader>
+  </readers>
+</library>

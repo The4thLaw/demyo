@@ -36,7 +36,6 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 	 * @throws DemyoException In case of export error.
 	 * @throws IOException In case of I/O error.
 	 */
-	// TODO: Add more checks
 	@Test
 	public void testExportCompleteness() throws DemyoException, IOException {
 		File expFile = exporter.export();
