@@ -186,6 +186,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 		Slice<Album> entities = albumService.findPaginated(currentPage, filter);
 
 		model.addAttribute("albumList", entities);
+		model.addAttribute("preventAdd", true);
 
 		return "albums/index";
 	}
@@ -210,6 +211,7 @@ public class ReaderController extends AbstractModelController<Reader> {
 		Slice<Album> entities = albumService.findPaginated(currentPage, filter);
 
 		model.addAttribute("albumList", entities);
+		model.addAttribute("preventAdd", true);
 
 		return "albums/index";
 	}
