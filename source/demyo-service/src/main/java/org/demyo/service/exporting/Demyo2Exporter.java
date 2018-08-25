@@ -12,12 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javanet.staxutils.IndentingXMLStreamWriter;
-
 import javax.annotation.PostConstruct;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -26,11 +30,7 @@ import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IExportService;
 import org.demyo.utils.io.DIOUtils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import javanet.staxutils.IndentingXMLStreamWriter;
 
 /**
  * {@link IExporter} using the native Demyo 2 format.
@@ -68,8 +68,7 @@ public class Demyo2Exporter implements IExporter {
 		try {
 			outputStream = new FileOutputStream(out);
 
-			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(
-					new OutputStreamWriter(outputStream, "utf-8"));
+			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(new OutputStreamWriter(outputStream, "utf-8"));
 			xsw = new IndentingXMLStreamWriter(xsw);
 
 			xsw.writeStartDocument();
@@ -87,28 +86,25 @@ public class Demyo2Exporter implements IExporter {
 
 			// Series
 			exportModel(xsw, "series-list", "series", "SERIES",
-					new ManyToManyRelation[] { new ManyToManyRelation("related_series-list", "related_series",
-							"MAIN", "SUB", rawSqlDao.getRawRecords("SERIES_RELATIONS")) });
+					new ManyToManyRelation[]
+					{ new ManyToManyRelation("related_series-list", "related_series", "MAIN", "SUB",
+							rawSqlDao.getRawRecords("SERIES_RELATIONS")) });
 
 			// Albums
-			exportModel(
-					xsw,
-					"albums",
-					"album",
-					"ALBUMS",
-					new ManyToManyRelation[] {
-							new ManyToManyRelation("writers", "writer", "ALBUM_ID", "WRITER_ID", rawSqlDao
-									.getRawRecords("ALBUMS_WRITERS")),
-							new ManyToManyRelation("artists", "artist", "ALBUM_ID", "ARTIST_ID", rawSqlDao
-									.getRawRecords("ALBUMS_ARTISTS")),
-							new ManyToManyRelation("colorists", "colorist", "ALBUM_ID", "COLORIST_ID", rawSqlDao
-									.getRawRecords("ALBUMS_COLORISTS")),
-							new ManyToManyRelation("inkers", "inker", "ALBUM_ID", "INKER_ID", rawSqlDao
-									.getRawRecords("ALBUMS_INKERS")),
+			exportModel(xsw, "albums", "album", "ALBUMS",
+					new ManyToManyRelation[]
+					{ new ManyToManyRelation("writers", "writer", "ALBUM_ID", "WRITER_ID",
+							rawSqlDao.getRawRecords("ALBUMS_WRITERS")),
+							new ManyToManyRelation("artists", "artist", "ALBUM_ID", "ARTIST_ID",
+									rawSqlDao.getRawRecords("ALBUMS_ARTISTS")),
+							new ManyToManyRelation("colorists", "colorist", "ALBUM_ID", "COLORIST_ID",
+									rawSqlDao.getRawRecords("ALBUMS_COLORISTS")),
+							new ManyToManyRelation("inkers", "inker", "ALBUM_ID", "INKER_ID",
+									rawSqlDao.getRawRecords("ALBUMS_INKERS")),
 							new ManyToManyRelation("translators", "translator", "ALBUM_ID", "TRANSLATOR_ID",
 									rawSqlDao.getRawRecords("ALBUMS_TRANSLATORS")),
-							new ManyToManyRelation("album-tags", "album-tag", "ALBUM_ID", "TAG_ID", rawSqlDao
-									.getRawRecords("ALBUMS_TAGS")),
+							new ManyToManyRelation("album-tags", "album-tag", "ALBUM_ID", "TAG_ID",
+									rawSqlDao.getRawRecords("ALBUMS_TAGS")),
 							new ManyToManyRelation("album-images", "album-image", "ALBUM_ID", "IMAGE_ID",
 									rawSqlDao.getRawRecords("ALBUMS_IMAGES")) });
 
@@ -120,10 +116,21 @@ public class Demyo2Exporter implements IExporter {
 
 			// Derivatives
 			exportModel(xsw, "derivatives", "derivative", "DERIVATIVES",
-					new ManyToManyRelation[] { new ManyToManyRelation("derivative-images", "derivative-image",
-							"DERIVATIVE_ID", "IMAGE_ID", rawSqlDao.getRawRecords("DERIVATIVES_IMAGES")) });
+					new ManyToManyRelation[]
+					{ new ManyToManyRelation("derivative-images", "derivative-image", "DERIVATIVE_ID", "IMAGE_ID",
+							rawSqlDao.getRawRecords("DERIVATIVES_IMAGES")) });
 
 			exportModel(xsw, "derivative_prices", "derivative_price", "DERIVATIVES_PRICES");
+
+			// Readers
+			exportModel(xsw, "readers", "reader", "READERS",
+					new ManyToManyRelation[]
+					{ new ManyToManyRelation("favourite-series-list", "favourite-series", "READER_ID", "SERIES_ID",
+							rawSqlDao.getRawRecords("READERS_FAVOURITE_SERIES")),
+							new ManyToManyRelation("favourite-albums", "favourite-album", "READER_ID", "ALBUM_ID",
+									rawSqlDao.getRawRecords("READERS_FAVOURITE_ALBUMS")),
+							new ManyToManyRelation("reading-list", "reading-list-entry", "READER_ID", "ALBUM_ID",
+									rawSqlDao.getRawRecords("READERS_READING_LIST")) });
 
 			xsw.writeEndElement();
 
