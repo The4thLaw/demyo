@@ -10,14 +10,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
-import org.demyo.dao.IRawSQLDao;
-import org.demyo.service.IImportService;
-import org.demyo.service.importing.IImporter;
-import org.demyo.utils.io.DIOUtils;
-
 import org.apache.commons.io.IOUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
@@ -26,6 +18,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IRawSQLDao;
+import org.demyo.service.IImportService;
+import org.demyo.service.IReaderContext;
+import org.demyo.service.importing.IImporter;
+import org.demyo.utils.io.DIOUtils;
 
 /**
  * Implements the contract defined by {@link IImportService}.
@@ -36,6 +37,8 @@ public class ImportService implements IImportService {
 
 	@Autowired
 	private IRawSQLDao rawSqlDao;
+	@Autowired
+	private IReaderContext readerContext;
 	private List<IImporter> importers = new ArrayList<IImporter>();
 
 	@Override
@@ -55,8 +58,8 @@ public class ImportService implements IImportService {
 		BufferedOutputStream bos = null;
 		try {
 			// Copy the file to some place we know, so that importers can peek
-			importFile = File.createTempFile("demyo-import", ".tmp", SystemConfiguration.getInstance()
-					.getTempDirectory());
+			importFile = File.createTempFile("demyo-import", ".tmp",
+					SystemConfiguration.getInstance().getTempDirectory());
 			fos = new FileOutputStream(importFile);
 			bos = new BufferedOutputStream(fos);
 			IOUtils.copy(content, bos);
@@ -87,6 +90,7 @@ public class ImportService implements IImportService {
 			DIOUtils.closeQuietly(content);
 			DIOUtils.closeQuietly(bos);
 			DIOUtils.closeQuietly(fos);
+			readerContext.clearCurrentReader();
 		}
 	}
 }

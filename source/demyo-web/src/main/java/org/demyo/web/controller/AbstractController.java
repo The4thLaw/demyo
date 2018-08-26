@@ -32,6 +32,7 @@ import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
 import org.demyo.service.IConfigurationService;
+import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
 /**
@@ -44,13 +45,18 @@ public abstract class AbstractController {
 	private static final String MODEL_KEY_VERSION = "appVersion";
 	private static final String MODEL_KEY_CODENAME = "appCodename";
 	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
+	private static final String MODEL_KEY_READER_SERV = "demyoReaderService";
 	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
+	private static final String MODEL_KEY_BODY_CLASSES = "bodyClasses";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
+	private static final String LAYOUT_MINIMAL = "layout/minimal.vm";
 
 	@Autowired
 	private IConfigurationService configService;
 	@Autowired
 	private ITranslationService translationService;
+	@Autowired
+	private IReaderService readerService;
 
 	private MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
 
@@ -99,12 +105,30 @@ public abstract class AbstractController {
 	}
 
 	/**
+	 * Sets the body to be shaded, e.g. because the content should contrast more with the background.
+	 * 
+	 * @param model The model to change.
+	 */
+	protected final void setShadedBody(Model model) {
+		model.addAttribute(MODEL_KEY_BODY_CLASSES, "dem-shaded-body");
+	}
+
+	/**
 	 * Sets the layout to an AJAX-compatible format. This layout just dumps the view text as-is.
 	 * 
 	 * @param model The model to set the layout in.
 	 */
 	protected final void setLayoutPlain(Model model) {
 		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_PLAIN);
+	}
+
+	/**
+	 * Sets the layout to one that does not include a menu, quicksearch, etc: just an application bar.
+	 * 
+	 * @param model The model to set the layout in.
+	 */
+	protected final void setLayoutMinimal(Model model) {
+		model.addAttribute(MODEL_KEY_LAYOUT, LAYOUT_MINIMAL);
 	}
 
 	/**
@@ -115,6 +139,16 @@ public abstract class AbstractController {
 	@ModelAttribute
 	private void initTranslationService(Model model) {
 		model.addAttribute(MODEL_KEY_I18N_SERV, translationService);
+	}
+
+	/**
+	 * Sets the reader service into the model.
+	 * 
+	 * @param model The view model.
+	 */
+	@ModelAttribute
+	private void initReaderService(Model model) {
+		model.addAttribute(MODEL_KEY_READER_SERV, readerService);
 	}
 
 	/**

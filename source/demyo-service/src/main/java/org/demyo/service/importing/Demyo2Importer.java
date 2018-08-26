@@ -16,15 +16,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
-import org.demyo.dao.IRawSQLDao;
-import org.demyo.service.IImageService;
-import org.demyo.service.IImportService;
-import org.demyo.utils.io.DIOUtils;
-import org.demyo.utils.io.ZipUtils;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
@@ -36,6 +27,15 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IRawSQLDao;
+import org.demyo.service.IImageService;
+import org.demyo.service.IImportService;
+import org.demyo.utils.io.DIOUtils;
+import org.demyo.utils.io.ZipUtils;
 
 /**
  * Importer for Demyo 2.x files.
@@ -75,8 +75,8 @@ public class Demyo2Importer implements IImporter {
 	 * @throws IOException in case of error during extraction.
 	 */
 	protected File extractZip(File file) throws IOException {
-		File extractionDir = DIOUtils.createTempDirectory("extracted-import", SystemConfiguration.getInstance()
-				.getTempDirectory());
+		File extractionDir = DIOUtils.createTempDirectory("extracted-import",
+				SystemConfiguration.getInstance().getTempDirectory());
 		ZipUtils.extractZip(file, extractionDir);
 		return extractionDir;
 	}
@@ -130,8 +130,8 @@ public class Demyo2Importer implements IImporter {
 			}
 			stopWatch.stop();
 
-			LOGGER.info("Import took {}ms: {}ms in database and {}ms in I/O operations", stopWatch.getTime(),
-					splitTime, stopWatch.getTime() - splitTime);
+			LOGGER.info("Import took {}ms: {}ms in database and {}ms in I/O operations", stopWatch.getTime(), splitTime,
+					stopWatch.getTime() - splitTime);
 		} catch (IOException ioe) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, ioe);
 		} catch (SAXException | ParserConfigurationException saxe) {
@@ -186,6 +186,7 @@ public class Demyo2Importer implements IImporter {
 		private String seriesId = null;
 		private String albumId = null;
 		private String derivativeId = null;
+		private String readerId = null;
 
 		private List<Map<String, String>> relatedSeries = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> albumArtists = new ArrayList<Map<String, String>>();
@@ -196,6 +197,9 @@ public class Demyo2Importer implements IImporter {
 		private List<Map<String, String>> albumTags = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> albumImages = new ArrayList<Map<String, String>>();
 		private List<Map<String, String>> derivativeImages = new ArrayList<Map<String, String>>();
+		private List<Map<String, String>> readerFavouriteSeries = new ArrayList<Map<String, String>>();
+		private List<Map<String, String>> readerFavouriteAlbums = new ArrayList<Map<String, String>>();
+		private List<Map<String, String>> readerReadingList = new ArrayList<Map<String, String>>();
 		private Map<String, List<Map<String, String>>> allRelations = new HashMap<String, List<Map<String, String>>>();
 
 		/**
@@ -211,9 +215,13 @@ public class Demyo2Importer implements IImporter {
 			allRelations.put("albums_tags", albumTags);
 			allRelations.put("albums_images", albumImages);
 			allRelations.put("derivatives_images", derivativeImages);
+			allRelations.put("readers_favourite_series", readerFavouriteSeries);
+			allRelations.put("readers_favourite_albums", readerFavouriteAlbums);
+			allRelations.put("readers_reading_list", readerReadingList);
 		}
 
-		// TODO [P2]: manage meta version to warn if the schema version is different, except if it's Demyo 1.5 or earlier
+		// TODO [P2]: manage meta version to warn if the schema version is different, except if it's Demyo 1.5 or
+		// earlier
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes)
 				throws SAXException {
@@ -297,6 +305,24 @@ public class Demyo2Importer implements IImporter {
 				derivativeImages.add(columns);
 			} else if ("derivative_price".equals(localName)) {
 				createLine("derivatives_prices", attributes);
+			} else if ("reader".equals(localName)) {
+				readerId = attributes.getValue("id");
+				createLine("readers", attributes);
+			} else if ("favourite-series".equals(localName)) {
+				HashMap<String, String> columns = new HashMap<String, String>();
+				columns.put("reader_id", readerId);
+				columns.put("series_id", attributes.getValue("ref"));
+				readerFavouriteSeries.add(columns);
+			} else if ("favourite-album".equals(localName)) {
+				HashMap<String, String> columns = new HashMap<String, String>();
+				columns.put("reader_id", readerId);
+				columns.put("album_id", attributes.getValue("ref"));
+				readerFavouriteAlbums.add(columns);
+			} else if ("reading-list-entry".equals(localName)) {
+				HashMap<String, String> columns = new HashMap<String, String>();
+				columns.put("reader_id", readerId);
+				columns.put("album_id", attributes.getValue("ref"));
+				readerReadingList.add(columns);
 			}
 		}
 
@@ -325,6 +351,8 @@ public class Demyo2Importer implements IImporter {
 				albumId = null;
 			} else if ("derivatives".equals(localName)) {
 				derivativeId = null;
+			} else if ("readers".equals(localName)) {
+				readerId = null;
 			} else if ("library".equals(localName)) {
 				persistRelations();
 			}

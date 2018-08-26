@@ -10,11 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
-import org.demyo.dao.IRawSQLDao;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import org.demyo.dao.IRawSQLDao;
 
 /**
  * Implements the contract defined by {@link IRawSQLDao}.
@@ -47,9 +47,9 @@ public class RawSQLDao implements IRawSQLDao {
 		// grep "CREATE TABLE" create-tables.sql | sed 's/CREATE TABLE /"/' | sed 's/ (/",/' | tac
 		for (String table : new String[] { "searches", "albums_borrowers", "borrowers", "derivatives_images",
 				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
-				"albums_colorists", "albums_writers", "albums_artists", "albums_images", "albums_prices",
-				"albums", "bindings", "series_relations", "series", "authors", "collections", "publishers",
-				"images" }) {
+				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
+				"albums_writers", "albums_artists", "albums_images", "albums_prices", "albums", "bindings",
+				"series_relations", "series", "authors", "collections", "publishers", "images", "readers" }) {
 			executeUpdate("DELETE FROM " + table);
 		}
 	}
@@ -89,7 +89,6 @@ public class RawSQLDao implements IRawSQLDao {
 	@Override
 	public int getSchemaVersion() {
 		return jdbcTemplate.queryForObject(
-				"select \"version\" from \"schema_version\" order by \"installed_rank\" desc LIMIT 1",
-				Integer.class);
+				"select \"version\" from \"schema_version\" order by \"installed_rank\" desc LIMIT 1", Integer.class);
 	}
 }

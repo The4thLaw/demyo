@@ -2,19 +2,29 @@ package org.demyo.dao;
 
 import java.util.List;
 
-import org.demyo.model.Album;
-import org.demyo.model.Series;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import org.demyo.model.Album;
+import org.demyo.model.Series;
 
 /**
  * This class provides methods to manipulate {@link Album}s.
  */
 @Repository
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
+	/**
+	 * Returns a model for vies.
+	 * 
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	@EntityGraph("Album.forView")
+	Album findOneForView(long id);
+
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
@@ -39,6 +49,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 * @return The associated Albums
 	 */
 	List<Album> findBySeriesId(Long seriesId);
+
+	/**
+	 * Finds the {@link Album}s belonging to a specific {@link Series} but not in the wishlist.
+	 * 
+	 * @param seriesId The Series ID.
+	 * @return The associated Albums
+	 */
+	List<Album> findBySeriesIdAndWishlistFalse(Long seriesId);
 
 	@Override
 	@Query("select x from #{#entityName} x where title=?1 and wishlist = false order by title")

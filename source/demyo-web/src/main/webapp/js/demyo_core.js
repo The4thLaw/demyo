@@ -3,7 +3,7 @@ var demyo = {};
 (function($) {
 	'use strict';
 	
-	demyo.l10n = new Array();
+	demyo.l10n = [];
 	
 	demyo.maxDependenciesPerCard = 4;
 
@@ -37,8 +37,8 @@ var demyo = {};
 			var hiddenDeps = $('li:nth-child(n+' + demyo.maxDependenciesPerCard + ')', depList);
 			hiddenDeps.hide();
 			
-			card.append('<div class="mdl-card__actions dem-dependencies-exander">'
-					+ '<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"><i class="dico">ellipsis_h</i></button></div>');
+			card.append('<div class="mdl-card__actions dem-dependencies-exander">' +
+					'<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"><i class="dico">ellipsis_h</i></button></div>');
 			
 			$('.dem-dependencies-exander > button', card).click(function () {
 				$('.dem-dependencies-exander', card).remove();
@@ -87,9 +87,53 @@ var demyo = {};
 		$('.dem-thumb-legend__expander').click(function() {
 		    var $this = $(this);
 		    $('.dem-thumb-legend__details', $this.parent()).slideDown('fast');
-		    $this.fadeOut('fast', function() {$(this).remove()} );
+		    $this.fadeOut('fast', function() {$(this).remove();} );
 		});
-	}
+	};
+	
+	demyo.postJSON = function (url, data, success, error) {
+		return $.ajax({
+			type:'POST',
+			url: url,
+			data: JSON.stringify(data),
+			success: success,
+			error: error,
+			contentType: 'application/json'
+		});
+	};
+	
+	demyo.postJSON = function (url, data, success, error) {
+		return $.ajax({
+			type:'POST',
+			url: url,
+			data: JSON.stringify(data),
+			success: success,
+			error: error,
+			contentType: 'application/json'
+		});
+	};
+	
+	demyo.showToast = function (message) {
+		var data = {message: message};
+		demyo.toastContainer.MaterialSnackbar.showSnackbar(data);
+	};
+	
+	demyo.registerLinksAsPost = function () {
+		$('a[data-as-post=true]').each(function() {
+			var $this = $(this);
+			var url = $this.attr('href');
+			$this.click(function(e) {
+				e.preventDefault();
+				
+				$('<form method="post" action="'+url+'" style="display:none;"></form>')
+					.insertBefore('#page-content')
+					.submit();
+				
+				return false;
+			});
+		});
+		
+	};
 	
 })(jQuery);
 
@@ -98,6 +142,8 @@ jQuery(function () {
 	demyo.registerCollapsibleCards();
 	demyo.registerShortcuts();
 	demyo.registerThumbExpanders();
+	demyo.registerLinksAsPost();
+	demyo.toastContainer = document.getElementById('main-toast');
 	// The MDL layout with fixed header seems to steal focus at some point.
 	// Fix it so that users can scroll and use shortcut keys directly when landing on the page
 	// Known not to work on Chrome at least, because the <div> elements do not accept focus. Still better than nothing

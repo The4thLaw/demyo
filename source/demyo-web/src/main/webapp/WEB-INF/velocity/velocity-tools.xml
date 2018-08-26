@@ -9,6 +9,7 @@
 		<tool class="org.apache.velocity.tools.generic.NumberTool" />
 		<tool class="org.apache.velocity.tools.generic.EscapeTool" />
 		<tool class="org.demyo.web.velocity.tools.FormTool" />
+		<tool class="org.demyo.web.velocity.tools.ReaderContextTool" />
 	</toolbox>
 	<toolbox scope="request">
 		<tool class="org.apache.velocity.tools.generic.ContextTool" />

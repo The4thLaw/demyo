@@ -44,6 +44,10 @@
 			<xsl:apply-templates select="sources"/>
 			<xsl:apply-templates select="derivatives"/>
 			<xsl:apply-templates select="derivative_prices"/>
+			
+			<readers>
+				<reader id="1" name="Demyo" />
+			</readers>
 		</library>
 	</xsl:template>
 	

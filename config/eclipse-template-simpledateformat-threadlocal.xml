@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="ThreadLocal for SimpleDateFormat" enabled="true" name="threadlocal-simpledateformat">${:import(java.text.SimpleDateFormat)}&#13;
+/** Threadsafe DateFormat in {@code ${format}} format. */&#13;
+private static final ThreadLocal&lt;SimpleDateFormat&gt; ${variableName} = new ThreadLocal&lt;SimpleDateFormat&gt;(){&#13;
+	@Override&#13;
+	protected SimpleDateFormat initialValue() {&#13;
+		return new SimpleDateFormat("${format}");&#13;
+	}&#13;
+};</template></templates>

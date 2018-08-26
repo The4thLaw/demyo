@@ -1,4 +1,5 @@
 .project
+.recommenders
 **/.DS_Store
 integration/*.exe
 integration/*.tar.bz2
@@ -17,3 +18,4 @@ source/demyo-utils/.classpath
 source/demyo-utils/.settings/
 source/demyo-web/.classpath
 source/demyo-web/.settings/
+/.metadata/

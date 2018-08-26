@@ -1,67 +1,5 @@
 $quickTasks.prepare($javascript)
-<!DOCTYPE html>
-<html>
-	<head>
-#if($!pageTitle)
-		<title>$pageTitle - Demyo</title>
-#else
-		<title>Demyo</title>
-#end
-		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<meta name="application-name" content="Demyo">
-		<meta name="mobile-web-app-capable" content="yes">
-		<link rel="manifest" href="/manifest.json">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-title" content="Demyo">
-		<meta name="msapplication-starturl" content="/">
-		
-		<meta name="robots" content="noindex,nofollow"> ## In case someone exposes it publicly by mistake
-		<meta name="referrer" content="never"> ## Don't send info to linked sites, this is supposed to be a private application
-		
-		<link rel="copyright" href="$link.contextPath/about">
-		
-		<link href="$link.contextPath/css/demyo-icons.css" rel="stylesheet" type="text/css">
-		<link href="$link.contextPath/css/vendor/dialog-polyfill.css" rel="stylesheet" type="text/css">
-		<link href="$link.contextPath/css/vendor/chosen.less" rel="stylesheet/less" type="text/css">
-		<link href="$link.contextPath/css/vendor/material.blue-pink-1.3.0.min.css" rel="stylesheet" type="text/css">
-		<link href="$link.contextPath/css/demyo.blue-pink.less" rel="stylesheet/less" type="text/css">
-		
-		#foreach ($size in [76, 120, 152, 180])
-			<link rel="apple-touch-icon-precomposed" sizes="${size}x${size}" href="$link.contextPath/icons/demyo-${size}-whitebg.png">##
-		#end
-		
-		#foreach ($size in [16, 24, 32, 48, 64, 144, 192, 196, 270, 558])
-			<link rel="icon" sizes="${size}x${size}" href="$link.contextPath/icons/demyo-${size}.png" >##
-		#end
-		
-		<meta name="msapplication-TileColor" content="#FFFFFF">
-		<meta name="msapplication-TileImage" content="$link.contextPath/icons/demyo-144.png">
-		
-#if ($loadLessInAsync)
-		<script type="text/javascript">
-			less = {
-				async: true
-			}
-		</script>
-#end
-		<script type="text/javascript" src="$link.contextPath/js/vendor/less-2.7.2.min.js"></script>
-		$javascript.load('Demyo.Core') ## Always load the core
-		$javascript.load('Demyo.QuickSearch') ## Always load quick search
-#foreach($source in $javascript.scriptSources)
-		<script type="text/javascript" src="$link.contextPath/js/$source"></script>
-#end
-		<script type="text/javascript">
-## TODO: do this in a nicer way
-demyo.l10n['quickTasks.confirm.title'] = '#_("javascript.quickTasks.confirm.title")';
-demyo.l10n['quickTasks.confirm.ok.label'] = '#_("javascript.quickTasks.confirm.ok.label")';
-demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confirm.cancel.label")';
-		</script>
-
-	</head>
-	<body data-tinymce-lang="#_('javascript.l10n.tinyMCE')">
+#parse('layout/common-header.vm')
 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 		<header class="mdl-layout__header">
 			<div class="mdl-layout__drawer-button" data-dem-shortcut="77" id="menu-icon">#icon('menu')</div>
@@ -93,22 +31,34 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confi
 					</div>
   				</div>
   				#end
-
-  				#if (!$quickTasks.empty)
+  				
+  				#if (!$quickTasks.tasks.empty || !$quickTasks.overflow.empty)
+  					<!-- Quick tasks -->
   					<div id="header-quick-tasks">
-						<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">
-							#icon('ellipsis_v')
-						</button>
-						<div class="mdl-tooltip" for="button-quick-tasks">#_("quickTasks.title")</div>
+						<nav class="mdl-navigation">
+	  						#if (!$quickTasks.tasks.empty)
+									#foreach ($task in $quickTasks.tasks)
+										<a href="$task.url" class="mdl-button mdl-js-button mdl-button--icon" id="$task.id">#icon($task.icon)</a>
+										<div class="mdl-tooltip" for="$task.id">#_($task.label)</div>
+									#end
+							#end
 	
-						<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
-						#foreach ($task in $quickTasks)
-								<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
-									#icon($task.icon)#_($task.label)
-								</a>
-						#end
-						</div>
-					<div>
+			  				#if (!$quickTasks.overflow.empty)
+									<button id="button-quick-tasks" class="mdl-button mdl-js-button mdl-button--icon">
+										#icon('ellipsis_v')
+									</button>
+									<div class="mdl-tooltip" for="button-quick-tasks">#_("quickTasks.title")</div>
+				
+									<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
+										#foreach ($task in $quickTasks.overflow)
+											<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end #if($task.requiresPost)data-as-post="true"#end href="$task.url">
+												#icon($task.icon)#_($task.label)
+											</a>
+										#end
+									</div>
+								<div>
+							#end
+						</nav>
 				#end
 			</div>
 			#if($!pageTabs)
@@ -140,6 +90,12 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confi
 			#end
 			
 			<nav class="mdl-navigation dem-app-menu" id="main-menu" role="menu">
+				#set ($reader = $demyoReaderService.context.currentReader)
+				<a id="menu-switch-reader" href="$link.contextPath/readers/" class="mdl-navigation__link">
+					<span class="dem-reader-icon" #if($!reader.colour)style="background: $reader.colour"#end>$reader.name.charAt(0)</span>
+					<span>$reader.name</span>
+				</a>
+				<div class="mdl-tooltip" for="menu-switch-reader">#_('menu.reader.switch.tooltip')</div>
 				#navMenuItem('menu-home', '', 'menu.main.home', 'home')
 				<div class="dem-app-menu__title" id="menu-header-albums" data-dem-collapses="#menu-section-albums">#_('menu.section.comics')</div>
 				<div class="dem-app-menu__section" id="menu-section-albums">
@@ -204,6 +160,10 @@ demyo.l10n['quickTasks.confirm.cancel.label'] = '#_("javascript.quickTasks.confi
 				</div>
 			</footer>
 		</main>
+	</div>
+	<div id="main-toast" class="mdl-js-snackbar mdl-snackbar">
+		<div class="mdl-snackbar__text"></div>
+ 		<button class="mdl-snackbar__action" type="button"></button>
 	</div>
 	</body>
 </html>

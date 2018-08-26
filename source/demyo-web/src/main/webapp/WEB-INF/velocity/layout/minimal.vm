@@ -1,0 +1,21 @@
+#parse('layout/common-header.vm')
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<span class="mdl-layout-title">#if($!pageTitle)$pageTitle#end</span>
+			</div>
+		</header>
+		<main class="mdl-layout__content">
+			<div id="page-content">
+				$screen_content
+			</div>
+			## Keep the footer in the page content to avoid having it stick
+			<footer class="mdl-mini-footer">
+				<div class="mdl-mini-footer__middle-section">
+					<div class="mdl-logo">Demyo "$appCodename" <!-- v$appVersion --></div>
+				</div>
+			</footer>
+		</main>
+	</div>
+	</body>
+</html>

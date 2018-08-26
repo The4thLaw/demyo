@@ -1,13 +1,13 @@
 package org.demyo.service.impl;
 
-import org.demyo.test.AbstractPersistenceTest;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+
+import org.demyo.test.AbstractPersistenceTest;
 
 /**
  * Base class for Spring Data Repository tests.

@@ -77,7 +77,9 @@ public final class Start {
 
 		LOGGER.info("Starting database...");
 		JdbcDataSource ds = new JdbcDataSource();
-		ds.setURL("jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
+		String url = "jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE";
+		LOGGER.debug("Database URL is {}", url);
+		ds.setURL(url);
 		ds.setUser("demyo");
 		ds.setPassword("demyo");
 

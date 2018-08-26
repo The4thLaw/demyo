@@ -1,5 +1,27 @@
 #setPageTitleParams('title.view.series' $series.identifyingName)
 
+$javascript.load('Demyo.Readers')
+
+$quickTasks.add({
+	"id" : "qt-fave-series",
+	"url" : "$link.contextPath/readers/current/favourites/series/$series.id",
+	"icon": "heart_outline",
+	"overflow": false
+})
+$quickTasks.add({
+	"id" : "qt-unfave-series",
+	"url" : "$link.contextPath/readers/current/favourites/series/$series.id",
+	"icon": "heart",
+	"overflow": false
+})
+#if ($readingListIsRelevant)
+$quickTasks.add({
+	"id" : "qt-add-series-to-readingList",
+	"url" : "$link.contextPath/readers/current/readingList/series/$series.id",
+	"icon": "bookmark",
+	"requiresPost": true
+})
+#end
 $quickTasks.add({
 	"id" : "qt-edit-series",
 	"url" : "../edit/$series.id",
@@ -35,6 +57,8 @@ $quickTasks.add({
 ##TODO: QT to lend albums if at least one album
 ##TODO: QT to tag all albums if at least one album
 ##TODO: QT to remove a tag if at least one album
+
+<input type="hidden" id="is_favourite" value="$demyoReaderService.context.isFavouriteSeries($series)">
 
 <div class="mdl-grid">
 	#@mdlGridCell([6,4,4])
@@ -108,6 +132,24 @@ $quickTasks.add({
 					## TODO: have some JavaScript to avoid loading images (defer loading) if the layout is small
 					## TODO: open thumbnails using colorbox or equivalent.
 					#thumbnail($album.cover, {})
+					#set ($isRL = $demyoReaderService.context.isAlbumInReadingList($album))
+					#set ($isFave = $demyoReaderService.context.isFavouriteAlbum($album))
+					#if ($isRL || $isFave)
+					<div class="dem-form-value__field">
+						#if ($isRL)
+							<div class="dem-note">
+								<i class="dico">bookmark</i>
+								<span class="dem-note__text">#_('field.Album.inReadingList')</span>
+							</div>
+						#end
+						#if ($isFave)
+							<div class="dem-note dem-note--accent">
+								<i class="dico">heart</i>
+								<span class="dem-note__text">#_('field.Album.isYourFavourite')</span>
+							</div>
+						#end
+					</div>
+					#end
 					#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 					#entityFieldLinkedModel('field.Album.collection' $album.collection)
 					#entityFieldCsvList('field.Album.writers', $album.writers, "/authors/view/")

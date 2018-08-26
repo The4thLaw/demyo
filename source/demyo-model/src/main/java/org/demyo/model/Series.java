@@ -17,14 +17,14 @@ import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SortComparator;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
-
-import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 /**
  * Represents a Series.
@@ -33,13 +33,14 @@ import org.hibernate.validator.constraints.URL;
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraphs({
-		@NamedEntityGraph(name = "Series.forView", attributeNodes = { @NamedAttributeNode("relatedSeries"),
-				@NamedAttributeNode(value = "albums", subgraph = "Series.Album") }, subgraphs = { @NamedSubgraph(
-				name = "Series.Album", attributeNodes = { @NamedAttributeNode("writers"),
-						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-						@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"),
-						@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-						@NamedAttributeNode("tags"), @NamedAttributeNode("cover") }) }),
+		@NamedEntityGraph(name = "Series.forView", attributeNodes =
+		{ @NamedAttributeNode("relatedSeries"),
+				@NamedAttributeNode(value = "albums", subgraph = "Series.Album") }, subgraphs =
+				{ @NamedSubgraph(name = "Series.Album", attributeNodes = { @NamedAttributeNode("writers"),
+						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
+						@NamedAttributeNode("translators"), @NamedAttributeNode("publisher"),
+						@NamedAttributeNode("collection"), @NamedAttributeNode("tags"),
+						@NamedAttributeNode("cover") }) }),
 		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
 public class Series extends AbstractModel {
 	/** The name. */
@@ -65,21 +66,28 @@ public class Series extends AbstractModel {
 	private String location;
 	/** The series related to this one. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"),
+	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"), //
 			inverseJoinColumns = @JoinColumn(name = "sub"))
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Series> relatedSeries;
+
 	/** The albums belonging to this series. */
 	@OneToMany(mappedBy = "series", fetch = FetchType.LAZY)
 	@SortComparator(AlbumComparator.class)
 	private SortedSet<Album> albums;
+
+	/** The {@link Reader}s who favourited this Series. */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteSeries")
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Reader> readersFavourites;
 
 	@Override
 	public String getIdentifyingName() {
 		return name;
 	}
 
-	// TODO [Java 8]: refactor all aggregator methods to use a single method with lamba expressions
+	// TODO [Java 8]: refactor all aggregator methods to use a single method with
+	// lamba expressions
 	/**
 	 * Returns all tags used by the albums of this series.
 	 * 

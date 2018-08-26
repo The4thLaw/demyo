@@ -1,0 +1,19 @@
+#setPageTitleCond($reader.id 'title.edit.reader', 'title.add.reader')
+
+#@form()
+
+#inputHidden('reader.id')
+
+<div class="mdl-grid dem-field-set">
+	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Series.identification')</h6>#end
+	#@mdlGridCell([6,4,0])
+		#inputText('field.Reader.name', 'reader.name')
+	#end
+	#@mdlGridCell([6,4,0])
+		#inputColour('field.Reader.colour', 'reader.colour')
+	#end
+</div>
+
+#saveButtons
+
+#end

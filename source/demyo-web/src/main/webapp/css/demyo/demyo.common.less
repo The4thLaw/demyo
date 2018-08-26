@@ -42,6 +42,10 @@ a {
 	}
 }
 
+.mdl-button--colored .dico-stack .dico-overlay {
+	text-shadow: -1px -1px rgb(255,64,129), 0px -1px rgb(255,64,129), 1px -1px rgb(255,64,129), -1px 1px rgb(255,64,129), 0px 1px rgb(255,64,129), 1px 1px rgb(255,64,129);
+}
+
 .dico-placeholder {
 	display: inline-block;
 	width: 1em;
@@ -135,6 +139,26 @@ figure.thumb {
 		float: none;
 		text-align: center;
 	}
+}
+
+.dem-main-fab {
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+}
+
+.dem-note {
+    font-size: 85%;
+    
+    .dico {
+        color: @color-primary;
+        font-size: 115%;
+        vertical-align: text-top;
+    }
+}
+
+.dem-note--accent .dico {
+    color: @color-accent;
 }
 
 #widgets .mdl-card__supporting-text {
