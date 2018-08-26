@@ -132,6 +132,24 @@ $quickTasks.add({
 					## TODO: have some JavaScript to avoid loading images (defer loading) if the layout is small
 					## TODO: open thumbnails using colorbox or equivalent.
 					#thumbnail($album.cover, {})
+					#set ($isRL = $demyoReaderService.context.isAlbumInReadingList($album))
+					#set ($isFave = $demyoReaderService.context.isFavouriteAlbum($album))
+					#if ($isRL || $isFave)
+					<div class="dem-form-value__field">
+						#if ($isRL)
+							<div class="dem-note">
+								<i class="dico">bookmark</i>
+								<span class="dem-note__text">#_('field.Album.inReadingList')</span>
+							</div>
+						#end
+						#if ($isFave)
+							<div class="dem-note dem-note--accent">
+								<i class="dico">heart</i>
+								<span class="dem-note__text">#_('field.Album.isYourFavourite')</span>
+							</div>
+						#end
+					</div>
+					#end
 					#entityFieldLinkedModel('field.Album.publisher' $album.publisher)
 					#entityFieldLinkedModel('field.Album.collection' $album.collection)
 					#entityFieldCsvList('field.Album.writers', $album.writers, "/authors/view/")
