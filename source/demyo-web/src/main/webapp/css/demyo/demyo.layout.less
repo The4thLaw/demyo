@@ -20,7 +20,7 @@ html, body, .mdl-layout__title, .mdl-layout-title, h1, h2, h3, h4, h5, h6, .mdl-
 	margin-left: 0.75em;
 }
 
-#header-quick-tasks > .mdl-navigation * {
+#header-quick-tasks > .mdl-navigation > *, #header-quick-tasks > .mdl-navigation > a *, #header-quick-tasks > .mdl-navigation > button * {
     vertical-align: middle;
 }
 
@@ -141,7 +141,7 @@ main.mdl-layout__content {
 	&__button {
 		margin-top: 1em;
 		display: block;
-		.dico { // Copied from MDL
+		> .mdl-button > .dico { // Copied from MDL
 			position: absolute;
 		    top: 50%;
 		    left: 50%;
@@ -186,6 +186,7 @@ main.mdl-layout__content {
 }
 
 /* Always show the stagemonitor widget on top if provided */
-#stagemonitor-overlay-show {
+body #stagemonitor-overlay-show {
 	z-index: 999;
+	right: 10em;
 }

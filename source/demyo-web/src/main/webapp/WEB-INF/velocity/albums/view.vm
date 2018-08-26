@@ -14,11 +14,14 @@ $quickTasks.add({
 	"icon": "heart",
 	"overflow": false
 })
+#if (!$album.wishlist)
+## Only allow adding albums not in the wishlist. They will be added automatically when acquired
 $quickTasks.add({
 	"id" : "qt-add-readingList",
 	"url" : "$link.contextPath/readers/current/readingList/albums/$album.id",
-	"icon": "eye"
-}) ## TODO: change the icon
+	"icon": "bookmark"
+})
+#end
 $quickTasks.add({
 	"id" : "qt-edit-album",
 	"url" : "../edit/$album.id",
@@ -33,10 +36,17 @@ $quickTasks.add({
 ##TODO: QT to add a derivative to the Album
 ##TODO: QT to lend album
 
-<button id="fab-remove-readingList" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored dem-main-fab">
-  <i class="dico">eye</i>
-</button>
-## TODO: tooltip for this
+#if (!$album.wishlist)
+## No need to include the button to remove if we cannot add dynamically
+#@fabs()
+	<a href="$link.contextPath/readers/current/readingList/albums/$album.id" id="fab-remove-readingList" class="dem-fabs__button">
+		<button id="fab-remove-readingList-button" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored dem-main-fab">
+			#icon('bookmark+delete')
+		</button>
+		<div class="mdl-tooltip" for="fab-remove-readingList-button">#_("button.album.removeFromReadingList")</div>
+	</a>
+#end
+#end
 
 #thumbnail($album.cover, {'classes':'model-identification'})
 

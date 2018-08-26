@@ -21,7 +21,7 @@ $javascript.load('Demyo.QuickTasks')
 					#icon('heart')#_('page.Reader.actions.favourites')
 				</a>
 				<a class="mdl-menu__item" href="$link.contextPath/readers/${reader.id}/readingList/">
-					#icon('list+eye')#_('page.Reader.actions.readingList')
+					#icon('bookmarks')#_('page.Reader.actions.readingList')
 				</a>
 				<a class="mdl-menu__item" href="$link.contextPath/readers/edit/${reader.id}">
 					#icon('edit')#_('page.Reader.actions.edit')

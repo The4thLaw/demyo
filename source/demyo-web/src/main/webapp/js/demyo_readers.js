@@ -84,9 +84,11 @@
 				if (isAdd) {
 					$('#qt-add-readingList').hide();
 					$('#fab-remove-readingList').show();
+					demyo.showToast(demyo.l10n['readers.confirm.readingList.add']);
 				} else {
 					$('#fab-remove-readingList').hide();
 					$('#qt-add-readingList').show();
+					demyo.showToast(demyo.l10n['readers.confirm.readingList.remove']);
 				}
 				$self.removeClass('dem-animate-progress');
 			},
@@ -99,9 +101,23 @@
 		return false;
 	};
 	
+	demyo.readers.bindReadingListToggles = function () {
+		var isReadingList = $('#is_readingList').val() == 'true';
+		if (isReadingList) {
+			$('#qt-add-readingList').hide();
+			$('#fab-remove-readingList').show();
+		} else {
+			$('#qt-add-readingList').show();
+			$('#fab-remove-readingList').hide();
+		}
+		
+		$('#qt-add-readingList, #fab-remove-readingList').click(demyo.readers.addOrRemoveReadingList);
+	};
+	
 })(jQuery);
 
 jQuery(function () {
 	demyo.readers.bindFavouriteToggles();
+	demyo.readers.bindReadingListToggles();
 });
 
