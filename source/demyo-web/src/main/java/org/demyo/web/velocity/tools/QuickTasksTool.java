@@ -35,6 +35,8 @@ public class QuickTasksTool {
 		private String label;
 		/** The flag to determine whether clicking on this item requires confirmation. */
 		private boolean confirm;
+		/** The flag to determine whether clicking on this item requires emulating a POST. */
+		private boolean requiresPost;
 		/** The flag to determine whether the tasks will be displayed at the top level or overflowed to the menu. */
 		private boolean overflow = true;
 
@@ -143,7 +145,7 @@ public class QuickTasksTool {
 		}
 
 		/**
-		 * Checks if is the flag to determine whether clicking on this item requires confirmation.
+		 * Checks the flag to determine whether clicking on this item requires confirmation.
 		 * 
 		 * @return the flag to determine whether clicking on this item requires confirmation
 		 */
@@ -158,6 +160,24 @@ public class QuickTasksTool {
 		 */
 		public void setConfirm(boolean confirm) {
 			this.confirm = confirm;
+		}
+
+		/**
+		 * Checks flag to determine whether clicking on this item requires emulating a POST.
+		 *
+		 * @return the flag to determine whether clicking on this item requires emulating a POST
+		 */
+		public boolean isRequiresPost() {
+			return requiresPost;
+		}
+
+		/**
+		 * Sets the flag to determine whether clicking on this item requires emulating a POST.
+		 *
+		 * @param requiresPost the new flag to determine whether clicking on this item requires emulating a POST
+		 */
+		public void setRequiresPost(boolean requiresPost) {
+			this.requiresPost = requiresPost;
 		}
 
 		/**
@@ -181,7 +201,9 @@ public class QuickTasksTool {
 		}
 	}
 
+	/** The non-overflowing QuickTask items. */
 	private final List<QuickTask> tasks = new LinkedList<>();
+	/** The overflowing QuickTask items. */
 	private final List<QuickTask> overflow = new LinkedList<>();
 
 	/**
@@ -220,10 +242,20 @@ public class QuickTasksTool {
 		js.load("Demyo.QuickTasks");
 	}
 
+	/**
+	 * Gets the overflowing QuickTask items.
+	 *
+	 * @return the overflowing QuickTask items
+	 */
 	public List<QuickTask> getOverflow() {
 		return overflow;
 	}
 
+	/**
+	 * Gets the non-overflowing QuickTask items.
+	 *
+	 * @return the non-overflowing QuickTask items
+	 */
 	public List<QuickTask> getTasks() {
 		return tasks;
 	}

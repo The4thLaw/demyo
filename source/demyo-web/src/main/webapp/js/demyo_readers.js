@@ -82,12 +82,12 @@
 			contentType: 'application/json',
 			success: function() {
 				if (isAdd) {
-					$('#qt-add-readingList').hide();
+					$('#qt-add-album-to-readingList').hide();
 					$('#fab-remove-readingList').show();
 					demyo.showToast(demyo.l10n['readers.confirm.readingList.add']);
 				} else {
 					$('#fab-remove-readingList').hide();
-					$('#qt-add-readingList').show();
+					$('#qt-add-album-to-readingList').show();
 					demyo.showToast(demyo.l10n['readers.confirm.readingList.remove']);
 				}
 				$self.removeClass('dem-animate-progress');
@@ -104,14 +104,14 @@
 	demyo.readers.bindReadingListToggles = function () {
 		var isReadingList = $('#is_readingList').val() == 'true';
 		if (isReadingList) {
-			$('#qt-add-readingList').hide();
+			$('#qt-add-album-to-readingList').hide();
 			$('#fab-remove-readingList').show();
 		} else {
-			$('#qt-add-readingList').show();
+			$('#qt-add-album-to-readingList').show();
 			$('#fab-remove-readingList').hide();
 		}
 		
-		$('#qt-add-readingList, #fab-remove-readingList').click(demyo.readers.addOrRemoveReadingList);
+		$('#qt-add-album-to-readingList, #fab-remove-readingList').click(demyo.readers.addOrRemoveReadingList);
 	};
 	
 })(jQuery);

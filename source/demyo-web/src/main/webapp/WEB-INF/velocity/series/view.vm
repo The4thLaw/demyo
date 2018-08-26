@@ -14,6 +14,14 @@ $quickTasks.add({
 	"icon": "heart",
 	"overflow": false
 })
+#if ($readingListIsRelevant)
+$quickTasks.add({
+	"id" : "qt-add-series-to-readingList",
+	"url" : "$link.contextPath/readers/current/readingList/series/$series.id",
+	"icon": "bookmark",
+	"requiresPost": true
+})
+#end
 $quickTasks.add({
 	"id" : "qt-edit-series",
 	"url" : "../edit/$series.id",

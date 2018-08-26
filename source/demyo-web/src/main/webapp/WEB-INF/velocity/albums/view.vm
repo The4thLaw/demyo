@@ -17,7 +17,7 @@ $quickTasks.add({
 #if (!$album.wishlist)
 ## Only allow adding albums not in the wishlist. They will be added automatically when acquired
 $quickTasks.add({
-	"id" : "qt-add-readingList",
+	"id" : "qt-add-album-to-readingList",
 	"url" : "$link.contextPath/readers/current/readingList/albums/$album.id",
 	"icon": "bookmark"
 })

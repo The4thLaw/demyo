@@ -1,5 +1,7 @@
 package org.demyo.service.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.slf4j.Logger;
@@ -11,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
+import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
+import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
@@ -29,6 +33,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	private IReaderRepo repo;
 	@Autowired
 	private IReaderContext context;
+	@Autowired
+	private IAlbumRepo albumRepo;
 
 	/**
 	 * Default constructor.
@@ -125,9 +131,13 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		LOGGER.debug("Adding album {} to the reading list", albumId);
 
 		long readerId = context.getCurrentReader().getId();
+		addAlbumToReadingList(albumId, readerId);
+		context.clearCurrentReader();
+	}
+
+	private void addAlbumToReadingList(long albumId, long readerId) {
 		repo.deleteFromReadingList(readerId, albumId);
 		repo.insertInReadingList(readerId, albumId);
-		context.clearCurrentReader();
 	}
 
 	@Transactional
@@ -137,6 +147,20 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 		long readerId = context.getCurrentReader().getId();
 		repo.deleteFromReadingList(readerId, albumId);
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void addSeriesToReadingList(long seriesId) {
+		LOGGER.debug("Adding albums from series {} to the reading list", seriesId);
+
+		long readerId = context.getCurrentReader().getId();
+		List<Album> albums = albumRepo.findBySeriesIdAndWishlistFalse(seriesId);
+		for (Album a : albums) {
+			addAlbumToReadingList(a.getId(), readerId);
+		}
+
 		context.clearCurrentReader();
 	}
 

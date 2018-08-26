@@ -71,4 +71,11 @@ public interface IReaderService extends IModelService<Reader> {
 	 * @param albumId The {@link Album} ID.
 	 */
 	void removeAlbumFromReadingList(long albumId);
+
+	/**
+	 * Adds an entire {@link Series} to the reading list of the current {@link Reader}.
+	 * 
+	 * @param seriesId The {@link Series} ID.
+	 */
+	void addSeriesToReadingList(long seriesId);
 }

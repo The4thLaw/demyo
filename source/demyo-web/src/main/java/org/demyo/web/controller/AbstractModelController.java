@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.demyo.model.IModel;
-import org.demyo.service.IModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyEditorRegistry;
@@ -24,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import org.demyo.model.IModel;
+import org.demyo.service.IModelService;
 
 /**
  * Base controller for management of models.
@@ -121,7 +122,19 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 		M entity = getService().getByIdForView(modelId);
 		model.addAttribute(modelKey, entity);
 
+		onView(entity, model);
+
 		return urlPrefix + "/view";
+	}
+
+	/**
+	 * Callback to implement if the controller wishes to add some information to the view action.
+	 * 
+	 * @param entity The entity that is going to be displayed.
+	 * @param model The view model.
+	 */
+	protected void onView(M entity, Model model) {
+		// Do nothing by default
 	}
 
 	/**

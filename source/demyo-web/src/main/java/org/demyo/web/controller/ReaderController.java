@@ -244,6 +244,19 @@ public class ReaderController extends AbstractModelController<Reader> {
 		return true;
 	}
 
+	/**
+	 * JSON method to add an entire {@link Series} to the reading list of the current reader.
+	 * 
+	 * @param seriesId The Series to add.
+	 * @param model The view model.
+	 * @return The view name.
+	 */
+	@RequestMapping(value = "/current/readingList/series/{seriesId}", method = RequestMethod.POST)
+	public String addSeriesToReadingList(@PathVariable long seriesId, Model model) {
+		service.addSeriesToReadingList(seriesId);
+		return redirect(model, "/series/view/" + seriesId);
+	}
+
 	@Override
 	protected IModelService<Reader> getService() {
 		return service;

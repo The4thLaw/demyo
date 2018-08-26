@@ -51,7 +51,7 @@ $quickTasks.prepare($javascript)
 				
 									<div id="menu-quick-tasks" class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="button-quick-tasks">
 										#foreach ($task in $quickTasks.overflow)
-											<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end href="$task.url">
+											<a class="mdl-menu__item" id="$task.id" #if($task.confirm)data-qt-confirm="#_($task.confirmLabel)"#end #if($task.requiresPost)data-as-post="true"#end href="$task.url">
 												#icon($task.icon)#_($task.label)
 											</a>
 										#end

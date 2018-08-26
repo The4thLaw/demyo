@@ -50,6 +50,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 */
 	List<Album> findBySeriesId(Long seriesId);
 
+	/**
+	 * Finds the {@link Album}s belonging to a specific {@link Series} but not in the wishlist.
+	 * 
+	 * @param seriesId The Series ID.
+	 * @return The associated Albums
+	 */
+	List<Album> findBySeriesIdAndWishlistFalse(Long seriesId);
+
 	@Override
 	@Query("select x from #{#entityName} x where title=?1 and wishlist = false order by title")
 	List<Album> quickSearchExact(String query);

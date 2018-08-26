@@ -118,6 +118,23 @@ var demyo = {};
 		demyo.toastContainer.MaterialSnackbar.showSnackbar(data);
 	};
 	
+	demyo.registerLinksAsPost = function () {
+		$('a[data-as-post=true]').each(function() {
+			var $this = $(this);
+			var url = $this.attr('href');
+			$this.click(function(e) {
+				e.preventDefault();
+				
+				$('<form method="post" action="'+url+'" style="display:none;"></form>')
+					.insertBefore('#page-content')
+					.submit();
+				
+				return false;
+			});
+		});
+		
+	};
+	
 })(jQuery);
 
 jQuery(function () {
@@ -125,6 +142,7 @@ jQuery(function () {
 	demyo.registerCollapsibleCards();
 	demyo.registerShortcuts();
 	demyo.registerThumbExpanders();
+	demyo.registerLinksAsPost();
 	demyo.toastContainer = document.getElementById('main-toast');
 	// The MDL layout with fixed header seems to steal focus at some point.
 	// Fix it so that users can scroll and use shortcut keys directly when landing on the page

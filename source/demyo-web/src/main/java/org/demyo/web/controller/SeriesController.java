@@ -3,14 +3,6 @@ package org.demyo.web.controller;
 import java.util.List;
 import java.util.SortedSet;
 
-import org.demyo.model.Album;
-import org.demyo.model.ModelView;
-import org.demyo.model.Series;
-import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.service.IAlbumService;
-import org.demyo.service.IModelService;
-import org.demyo.service.ISeriesService;
-
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.annotation.JsonView;
+
+import org.demyo.model.Album;
+import org.demyo.model.ModelView;
+import org.demyo.model.Series;
+import org.demyo.model.util.IdentifyingNameComparator;
+import org.demyo.service.IAlbumService;
+import org.demyo.service.IModelService;
+import org.demyo.service.ISeriesService;
 
 /**
  * Controller for {@link Series} management.
@@ -41,6 +41,17 @@ public class SeriesController extends AbstractModelController<Series> {
 		super(Series.class, "series", "series");
 	}
 
+	@Override
+	protected void onView(Series series, Model model) {
+		boolean hasAlbumsNotInWishlist = false;
+		for (Album a : series.getAlbums()) {
+			if (!a.isWishlist()) {
+				hasAlbumsNotInWishlist = true;
+			}
+		}
+		model.addAttribute("readingListIsRelevant", hasAlbumsNotInWishlist);
+	}
+
 	/**
 	 * Finds the Albums for a given Series.
 	 * 
@@ -48,8 +59,8 @@ public class SeriesController extends AbstractModelController<Series> {
 	 * @return The list of associated Albums
 	 */
 	@JsonView(ModelView.Minimal.class)
-	@RequestMapping(value = "/{seriesId}/albums", method = RequestMethod.GET, consumes = "application/json",
-			produces = "application/json")
+	@RequestMapping(value = "/{seriesId}/albums", method = RequestMethod.GET, //
+			consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<Album> getAlbumsForSeries(@PathVariable("seriesId") long seriesId) {
 		return albumService.findBySeriesId(seriesId);
