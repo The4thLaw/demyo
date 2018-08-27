@@ -79,7 +79,6 @@ public class PagingTool {
 	 * @return The page links (as an HTML fragment).
 	 * @throws UnsupportedEncodingException If encoding the parameters fails.
 	 */
-	// TODO [TBD]: allow to generate letters on the fly or not (boolean parameter)
 	public String pageLinks(Slice<?> slice, HttpServletRequest request, JavascriptTool jsTool)
 			throws UnsupportedEncodingException {
 		int current = slice.getNumber() + 1; // Slices starts at 0

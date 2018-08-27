@@ -57,7 +57,6 @@ import org.demyo.model.util.IdentifyingNameComparator;
 				@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
 				@NamedAttributeNode("prices") })//
 })
-// TODO [P2]: loans
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
 		@Override

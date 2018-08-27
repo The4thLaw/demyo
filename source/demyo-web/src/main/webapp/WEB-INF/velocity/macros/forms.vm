@@ -71,7 +71,6 @@
 #macro(inputColour $labelId $path) 
 	#@formFieldOld($labelId, $path)
 		<input type="color" id="$fieldId" name="$status.expression" value="$!status.value"#if($hasErrors) class="error"#end />
-		## TODO: use a polyfill for IE11
 		
 		<label class="dem-colour-remover mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="${fieldId}_colour_remover">
 			<input type="checkbox" id="${fieldId}_colour_remover" class="mdl-checkbox__input" data-for="$fieldId" #if(!$!status.value || $!status.value.empty)checked="checked"#end/>
@@ -93,7 +92,6 @@
 #end
 
 #macro(inputDate $labelId $path)
-	## TODO: polyfill if not supported
 	#@formField($labelId, $path)
 		<input type="date" id="$fieldId" name="$status.expression" value="$!status.value" class="mdl-textfield__input date" />
 	#end

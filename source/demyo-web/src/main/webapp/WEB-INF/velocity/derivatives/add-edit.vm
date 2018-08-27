@@ -69,7 +69,7 @@
 	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Derivative.acquisition')</h6>#end
 	#@mdlGridCell([6,4,0])
 		#inputDate('field.Derivative.acquisitionDate', 'derivative.acquisitionDate')
-		#inputFloat('field.Derivative.purchasePrice', 'derivative.purchasePrice') ## TODO: append currency
+		#inputFloat('field.Derivative.purchasePrice', 'derivative.purchasePrice')
 	#end
 	#@mdlGridCell([6,4,0])
 		<div class="dem-prices-edit-list dem-repeatable-list">
@@ -78,7 +78,7 @@
 				<div class="dem-repeatable-item">
 					#inputHidden("derivative.priceList[$priceNum].derivative.id")
 					#inputDate('field.Derivative.prices.date', "derivative.priceList[$priceNum].date")
-					#inputFloat('field.Derivative.prices.price', "derivative.priceList[$priceNum].price") ## TODO: append currency
+					#inputFloat('field.Derivative.prices.price', "derivative.priceList[$priceNum].price")
 					<span class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover"><i class="dico">delete</i></span>
 				</div>
 			#end

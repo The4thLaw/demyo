@@ -106,7 +106,6 @@ $quickTasks.add({
 </div>
 #end
 
-## TODO: change label if first edition
 #if($album.firstEditionDate || $album.currentEditionDate || $album.wishlist || $album.acquisitionDate)
 <div class="mdl-grid dem-field-set">
 	#if ($album.firstEditionDate && $album.currentEditionDate && $album.firstEditionDate == $album.currentEditionDate)
@@ -160,7 +159,7 @@ $quickTasks.add({
 #if ($album.purchasePrice || !$album.prices.empty)
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCellCond([6,4,0], $album.purchasePrice)
-		#entityFieldNumber('field.Album.purchasePrice' $album.purchasePrice) ## TODO: append currency
+		#entityFieldNumber('field.Album.purchasePrice' $album.purchasePrice)
 	#end
 	#set ($cond = !($album.prices.empty))
 	#@mdlGridCellCond([6,4,0], $cond)
@@ -168,7 +167,7 @@ $quickTasks.add({
 			<table class="mdl-data-table mdl-js-data-table">
 				<tr>
 					<th class="mdl-data-table__cell--non-numeric">#_('field.Album.prices.date')</th>
-					<th>#_('field.Album.prices.price')</th> ## TODO: append currency
+					<th>#_('field.Album.prices.price')</th>
 				</tr>
 				#foreach($price in $album.prices)
 					<tr>
@@ -182,9 +181,6 @@ $quickTasks.add({
 </div>
 #end
 
-
-## TODO: borrower
-
 #if ($album.summary || $album.comment)
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCellCond([6,4,0], $album.summary)
@@ -197,4 +193,3 @@ $quickTasks.add({
 #end
 
 ## TODO: list of derivatives
-## TODO: list of other images

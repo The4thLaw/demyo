@@ -20,7 +20,6 @@ import org.demyo.common.exception.DemyoRuntimeException;
  * 
  * @see ApplicationConfiguration
  */
-// TODO [P2]: eventually, we will need to move logs to a proper directory. Do this after switching to logback
 public final class SystemConfiguration {
 	/**
 	 * Singleton holder following the solution of Bill Pugh.

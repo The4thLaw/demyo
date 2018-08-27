@@ -69,7 +69,7 @@ $quickTasks.add({
 		#entityFieldDate('field.Derivative.acquisitionDate', $derivative.acquisitionDate)
 	#end
 	#@mdlGridCellCond([6,4,0], $derivative.purchasePrice)
-		#entityFieldNumber('field.Derivative.purchasePrice', $derivative.purchasePrice) ## TODO: append currency
+		#entityFieldNumber('field.Derivative.purchasePrice', $derivative.purchasePrice)
 	#end
 	#set ($cond = !($derivative.prices.empty))
 	#@mdlGridCellCond([6,4,0], $cond)
@@ -77,7 +77,7 @@ $quickTasks.add({
 			<table class="mdl-data-table mdl-js-data-table">
 				<tr>
 					<th class="mdl-data-table__cell--non-numeric">#_('field.Derivative.prices.date')</th>
-					<th>#_('field.Derivative.prices.price')</th> ## TODO: append currency
+					<th>#_('field.Derivative.prices.price')</th>
 				</tr>
 				#foreach($price in $derivative.prices)
 					<tr>
@@ -90,5 +90,3 @@ $quickTasks.add({
 	#end
 </div>
 #end
-
-##TODO: list of images

@@ -31,7 +31,6 @@ import org.demyo.service.IModelService;
  * 
  * @param <M> The model type.
  */
-// TODO [P2]: Protect all access against XSS
 public abstract class AbstractModelController<M extends IModel> extends AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelController.class);
 

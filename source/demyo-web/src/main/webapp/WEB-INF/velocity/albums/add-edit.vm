@@ -123,7 +123,7 @@
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCell([12,0,0])<h6>#_('fieldset.Album.prices')</h6>#end
 	#@mdlGridCell([6,4,0])
-		#inputFloat('field.Album.purchasePrice', 'album.purchasePrice') ## TODO: append currency
+		#inputFloat('field.Album.purchasePrice', 'album.purchasePrice')
 	#end
 	#@mdlGridCell([6,4,0])
 		<div class="dem-prices-edit-list dem-repeatable-list">
@@ -132,7 +132,7 @@
 			<div class="dem-repeatable-item">
 				#inputHidden("album.priceList[$priceNum].album.id")
 				#inputDate('field.Album.prices.date', "album.priceList[$priceNum].date")
-				#inputFloat('field.Album.prices.price', "album.priceList[$priceNum].price") ## TODO: append currency
+				#inputFloat('field.Album.prices.price', "album.priceList[$priceNum].price")
 				<span class="mdl-button mdl-js-button mdl-button--icon mdl-button-primary dem-repeatable-remover"><i class="dico">delete</i></span>
 			</div>
 		#end
