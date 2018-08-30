@@ -97,6 +97,8 @@
 		<property name="viewClass"
 			value="org.demyo.web.velocity.view.Velocity2ToolboxView" />
 		<property name="toolboxConfigLocation" value="WEB-INF/velocity/velocity-tools.xml" />
+		<!-- The following is needed to redirect with relative paths, hence avoiding to redirect HTTPS to HTTP -->
+		<property name="redirectHttp10Compatible" value="false" />
 		<!-- Only use for development -->
 		<!-- <property name="cache" value="false" /> -->
 	</bean>
