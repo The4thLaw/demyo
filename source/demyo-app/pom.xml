@@ -104,7 +104,6 @@ Includes the Web server, H2 server, and startup program.</description>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-dependency-plugin</artifactId>
-						<version>2.10</version>
 						<executions>
 							<execution>
 								<id>copy-dependencies</id>
