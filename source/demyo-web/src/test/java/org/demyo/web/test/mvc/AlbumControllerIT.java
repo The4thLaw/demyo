@@ -6,18 +6,64 @@ import static org.demyo.web.test.mvc.WebDriverAssertions.assertThat;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
-import org.demyo.web.controller.AlbumController;
 import org.junit.Test;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+import org.demyo.model.Album;
+import org.demyo.model.Reader;
+import org.demyo.model.Series;
+import org.demyo.service.IReaderContext;
+import org.demyo.service.IReaderService;
+import org.demyo.web.controller.AlbumController;
 
 /**
  * Integration tests for {@link AlbumController}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 public class AlbumControllerIT extends AbstractMvcTest {
+	@Component
+	@Primary
+	public static class MockReaderContext implements IReaderContext {
+		private Reader reader;
+
+		@Override
+		public Reader getCurrentReader() {
+			return reader;
+		}
+
+		@Override
+		public void setCurrentReader(Reader r) {
+			this.reader = r;
+		}
+
+		@Override
+		public void clearCurrentReader() {
+			// Do nothing, preserve whatever was set by the unit tests
+		}
+
+		@Override
+		public boolean isFavouriteSeries(Series s) {
+			return false;
+		}
+
+		@Override
+		public boolean isFavouriteAlbum(Album a) {
+			return false;
+		}
+
+		@Override
+		public boolean isAlbumInReadingList(Album a) {
+			return false;
+		}
+
+	}
 
 	private static final String NEW_ALBUM_TITLE = "My new album";
 
@@ -58,14 +104,34 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		assertThat(tags.get(1)).textContent().isEqualToIgnoringWhitespace("science-fiction");
 	}
 
+	@Autowired
+	// private IReaderContext readerContext;
+	private IReaderService readerService;
+
 	/**
 	 * Tests adding an Album.
 	 */
 	@Test
 	public void testAddPage() {
+
+		// TODO: put this in the init of the MVC controller.
+		// Check if we can override the starting domain to be able to set the cookie without accessing the home page
+		// first. Unlikely since HtmlUnit relies on lastPage() to get the domain.
+		Reader mockReader = new Reader();
+		mockReader.setId(-1L);
+		mockReader.setName("Mock Reader");
+		readerService.getContext().setCurrentReader(mockReader);
+
+		getWebDriver().get("http://localhost/");
+
+		// getWebDriver().manage().addCookie(new Cookie("demyo_reader_id", "2"));
+		getWebDriver().manage().addCookie(new Cookie.Builder("demyo_reader_id", "2").domain("localhost")
+				.isHttpOnly(false).isSecure(false).path("/").build());
+
 		getWebDriver().get("http://localhost/albums/add");
 
 		// Set a title
+		System.err.println(getWebDriver().getPageSource());
 		css1("#field_album_title").sendKeys(NEW_ALBUM_TITLE);
 
 		// Add prices
@@ -91,8 +157,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	/**
 	 * Tests editing an album.
 	 * 
-	 * @throws InterruptedException
-	 *             In case the thread waiting for JavaScript execution is interrupted.
+	 * @throws InterruptedException In case the thread waiting for JavaScript execution is interrupted.
 	 */
 	@Test
 	public void testEditPage() throws InterruptedException {
@@ -121,8 +186,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	/**
 	 * Tests that it is possible to add an album to an empty Series.
 	 * 
-	 * @throws InterruptedException
-	 *             In case the thread waiting for JavaScript execution is interrupted.
+	 * @throws InterruptedException In case the thread waiting for JavaScript execution is interrupted.
 	 * 
 	 * @see commit b01c5e7240866ee82ccb3dd6928f0fc245381754
 	 */
