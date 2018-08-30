@@ -117,6 +117,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		// TODO: put this in the init of the MVC controller.
 		// Check if we can override the starting domain to be able to set the cookie without accessing the home page
 		// first. Unlikely since HtmlUnit relies on lastPage() to get the domain.
+		// Maybe check with a newer version of Selenium / HtmlUnit, else open a bug report
 		Reader mockReader = new Reader();
 		mockReader.setId(-1L);
 		mockReader.setName("Mock Reader");

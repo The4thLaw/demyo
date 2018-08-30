@@ -8,6 +8,9 @@ jdk:
 # Demyo sources are in a sub-directory
 before_script:
   cd source
+# The standard script does not run integration tests
+script:
+  mvn verify -B
 cache:
   directories:
     - $HOME/.m2
