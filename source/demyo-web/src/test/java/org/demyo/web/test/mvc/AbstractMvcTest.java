@@ -34,6 +34,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+import com.gargoylesoftware.htmlunit.util.Cookie;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -112,6 +113,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	public void setCurrentReader() {
 		// We must set a reader to set the relevant cookies and avoid issues with a missing reader context
 		getWebDriver().get("http://localhost/readers/2/select");
+		// WebClient is less touchy than WebDriver: we can directly set the cookie
+		getWebClient().getCookieManager().addCookie(new Cookie("localhost", "demyo_reader_id", "2"));
 	}
 
 	/**
