@@ -95,6 +95,7 @@ public abstract class AbstractController {
 		model.addObject(MODEL_KEY_CONFIG, configService.getConfiguration());
 		model.addObject(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		model.addObject(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
+		model.addObject(MODEL_KEY_READER_SERV, readerService);
 		return model;
 	}
 
