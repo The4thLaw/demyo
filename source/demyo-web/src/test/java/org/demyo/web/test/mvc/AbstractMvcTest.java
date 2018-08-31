@@ -5,9 +5,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.service.IConfigurationService;
-import org.demyo.test.AbstractPersistenceTest;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
@@ -38,6 +35,10 @@ import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import com.gargoylesoftware.htmlunit.html.HtmlTextArea;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.service.IConfigurationService;
+import org.demyo.test.AbstractPersistenceTest;
 
 /**
  * Base class for MVC integration tests.
@@ -93,13 +94,24 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Sets up the HTMLUnit Web Client.
 	 * 
-	 * @throws Exception
-	 *             in case of error during setup.
+	 * @throws Exception in case of error during setup.
 	 */
 	@Before
 	public void setupWebClient() throws Exception {
 		webClient = MockMvcWebClientBuilder.webAppContextSetup(wac).build();
 		webDriver = MockMvcHtmlUnitDriverBuilder.webAppContextSetup(wac).build();
+	}
+
+	/**
+	 * Sets a reader in the current Web driver.
+	 * <p>
+	 * This is required so that the layout does not crash due to an uninitialized reader context.
+	 * </p>
+	 */
+	@Before
+	public void setCurrentReader() {
+		// We must set a reader to set the relevant cookies and avoid issues with a missing reader context
+		getWebDriver().get("http://localhost/readers/2/select");
 	}
 
 	/**
@@ -135,8 +147,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Returns the main model edit form on the page.
 	 * 
-	 * @param page
-	 *            The page to get the form from.
+	 * @param page The page to get the form from.
 	 * @return The form, or <code>null</code> if no form was found.
 	 */
 	protected final HtmlForm getMainModelForm(HtmlPage page) {
@@ -157,12 +168,9 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Sets a text input on a page.
 	 * 
-	 * @param page
-	 *            The page.
-	 * @param fieldId
-	 *            The field ID.
-	 * @param value
-	 *            The value to set.
+	 * @param page The page.
+	 * @param fieldId The field ID.
+	 * @param value The value to set.
 	 */
 	protected final void setHtmlTextInput(HtmlPage page, String fieldId, String value) {
 		page.<HtmlTextInput>getHtmlElementById(fieldId).setValueAttribute(value);
@@ -171,12 +179,9 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Sets a text area on a page.
 	 * 
-	 * @param page
-	 *            The page.
-	 * @param fieldId
-	 *            The field ID.
-	 * @param value
-	 *            The value to set.
+	 * @param page The page.
+	 * @param fieldId The field ID.
+	 * @param value The value to set.
 	 */
 	protected final void setHtmlTextArea(HtmlPage page, String fieldId, String value) {
 		page.<HtmlTextArea>getHtmlElementById(fieldId).setText(value);
@@ -185,11 +190,9 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Submits a form.
 	 * 
-	 * @param form
-	 *            The form to submit.
+	 * @param form The form to submit.
 	 * @return The page to which the form redirects.
-	 * @throws IOException
-	 *             If an IO error occurs
+	 * @throws IOException If an IO error occurs
 	 */
 	protected final HtmlPage submitForm(HtmlForm form) throws IOException {
 		HtmlSubmitInput submit = form.<HtmlSubmitInput>getOneHtmlElementByAttribute("input", "type", "submit");
@@ -206,13 +209,10 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Clicks a link on a page.
 	 * 
-	 * @param page
-	 *            The page.
-	 * @param id
-	 *            The link ID.
+	 * @param page The page.
+	 * @param id The link ID.
 	 * @return The page to which the link redirects.
-	 * @throws IOException
-	 *             If an IO error occurs
+	 * @throws IOException If an IO error occurs
 	 */
 	protected HtmlPage clickLinkById(HtmlPage page, String id) throws IOException {
 		return page.<HtmlAnchor>getHtmlElementById("qt-edit-author").click();
@@ -221,13 +221,10 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Deletes a model by using the delete URL given by the quick task.
 	 * 
-	 * @param page
-	 *            The view page for the model.
-	 * @param id
-	 *            The ID of the delete quicktask.
+	 * @param page The view page for the model.
+	 * @param id The ID of the delete quicktask.
 	 * @return The page to which the action redirects.
-	 * @throws IOException
-	 *             If an IO error occurs
+	 * @throws IOException If an IO error occurs
 	 */
 	protected HtmlPage deleteWithQuickTask(HtmlPage page, String id) throws IOException {
 		String deleteHref = page.<HtmlAnchor>getHtmlElementById(id).getHrefAttribute();
@@ -238,8 +235,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Uses the WebDriver to fetch one element matching a particular CSS selector (the first one).
 	 * 
-	 * @param selector
-	 *            The CSS selector to use.
+	 * @param selector The CSS selector to use.
 	 * @return The matching element.
 	 */
 	protected WebElement css1(String selector) {
@@ -249,8 +245,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Uses the WebDriver to fetch multiple elements matching a particular CSS selector.
 	 * 
-	 * @param selector
-	 *            The CSS selector to use.
+	 * @param selector The CSS selector to use.
 	 * @return The matching elements.
 	 */
 	protected List<WebElement> cssM(String selector) {
@@ -261,10 +256,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 * Sets the value of a specific by changing its DOM value attribute. Workaround when
 	 * {@link WebElement#sendKeys(CharSequence...)} does not work.
 	 * 
-	 * @param fieldId
-	 *            The field ID.
-	 * @param value
-	 *            The escaped value.
+	 * @param fieldId The field ID.
+	 * @param value The escaped value.
 	 */
 	protected void setFieldValue(String fieldId, String value) {
 		getJavaScriptExecutor().executeScript("document.getElementById('" + fieldId + "').value='" + value + "'");
@@ -285,8 +278,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	/**
 	 * Waits for an element to be clickable.
 	 * 
-	 * @param element
-	 *            The element to wait for.
+	 * @param element The element to wait for.
 	 */
 	protected void waitClickable(WebElement element) {
 		LOGGER.debug("Waiting for element to become clickable: {}", element);
