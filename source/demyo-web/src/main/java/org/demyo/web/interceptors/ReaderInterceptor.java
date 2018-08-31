@@ -40,8 +40,8 @@ public class ReaderInterceptor implements HandlerInterceptor {
 		boolean hasReader = false;
 
 		// Special behaviour to avoid making a controll
-		if (path.matches("^/readers/select/(\\d+)$")) {
-			Long readerId = parseReaderId(path.replaceAll("^/readers/select/", ""));
+		if (path.matches("^/readers/(\\d+)/select$")) {
+			Long readerId = parseReaderId(path.replaceAll("^/readers/(\\d+)/select$", "$1"));
 			LOGGER.debug("Selecting reader {}", readerId);
 			hasReader = loadReaderIfExists(readerId, request, response);
 			// The controller will take care of the redirection
