@@ -74,6 +74,7 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 	
