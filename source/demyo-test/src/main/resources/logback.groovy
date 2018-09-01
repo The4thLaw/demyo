@@ -10,6 +10,12 @@ appender("demyo", RollingFileAppender ) {
 	encoder(PatternLayoutEncoder) {
 		pattern = "%d{dd.MM.yyyy HH:mm:ss} [%-5level] %logger{36}:%L - %msg%n"
 	}
+    rollingPolicy(TimeBasedRollingPolicy) {
+		fileNamePattern = "target/logs/archives/demyo.%d.log.zip"
+		// Keep 30 days
+		maxHistory = 30
+		compressionMode = "ZIP"
+	}
 }
 
 appender("3rdParty", RollingFileAppender ) {
@@ -17,6 +23,12 @@ appender("3rdParty", RollingFileAppender ) {
 	append = true
 	encoder(PatternLayoutEncoder) {
 		pattern = "%d{dd.MM.yyyy HH:mm:ss} [%-5level] %logger{36}:%L - %msg%n"
+	}
+    rollingPolicy(TimeBasedRollingPolicy) {
+		fileNamePattern = "target/logs/archives/3rd-party.%d.log.zip"
+		// Keep 30 days
+		maxHistory = 30
+		compressionMode = "ZIP"
 	}
 }
   
