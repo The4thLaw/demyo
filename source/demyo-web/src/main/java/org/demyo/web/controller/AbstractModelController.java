@@ -186,6 +186,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 	@RequestMapping(value = { "/add", "/edit/{modelId}" }, method = RequestMethod.POST)
 	public String save(@Valid M entity, BindingResult result, Model model, HttpServletRequest request,
 			HttpServletResponse response) {
+		LOGGER.debug("Requested to save entity: {}", entity);
 		if (result.hasErrors()) {
 			LOGGER.error("There were validation errors: {}", result);
 			postProcessValidationError(entity, result);
