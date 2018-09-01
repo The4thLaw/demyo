@@ -282,7 +282,7 @@ public abstract class AbstractModelController<M extends IModel> extends Abstract
 			final Class<C> collectionClass, String propertyPath, final Class<? extends IModel> collectionModelClass,
 			final Comparator<?> comparator) {
 		if (collectionClass.isInstance(SortedSet.class) && comparator == null) {
-			throw new NullPointerException("comparator cannot be null if the collection is sorted");
+			throw new NullPointerException("Comparator cannot be null if the collection is sorted");
 		}
 
 		binder.registerCustomEditor(collectionClass, propertyPath, new CustomCollectionEditor(collectionClass) {
