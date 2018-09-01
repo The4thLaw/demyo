@@ -3,7 +3,9 @@
 ## Description
 Demyo is a Comic Manager intented for local usage trough a Web interface.
 
-This project is the Java port / upgrade of the existing PHP software available at http://www.demyo.org/en/ .
+Check the features and screenshots, and download the releases on the official website at https://www.demyo.org/ .
+
+This project is the Java port / upgrade of a PHP software whose releases are still available on the same website.
 
 ## Contributing
 I don't have time to manage a team. However, you can submit pull requests for translations in unsupported languages and for bug fixes and I'll be glad to review them.
