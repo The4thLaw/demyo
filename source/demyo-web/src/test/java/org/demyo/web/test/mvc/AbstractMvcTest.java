@@ -40,6 +40,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.test.AbstractPersistenceTest;
+import org.demyo.test.utils.Predicate;
 
 /**
  * Base class for MVC integration tests.
@@ -53,6 +54,8 @@ import org.demyo.test.AbstractPersistenceTest;
 @WebAppConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
 public abstract class AbstractMvcTest extends AbstractPersistenceTest {
+	private static final long DEFAULT_WAITFOR_TIMEOUT = 10000L;
+
 	private static final int MAX_TIMEOUT = 1;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMvcTest.class);
@@ -296,6 +299,36 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 			Thread.sleep(750L);
 		} catch (InterruptedException e) {
 			LOGGER.warn("Sleep interrupted", e);
+		}
+	}
+
+	/**
+	 * Waits for a predicate to be true, or for a default timeout to be reached.
+	 * 
+	 * @param p The predicate to test.
+	 */
+	protected void waitFor(Predicate p) {
+		waitFor(p, DEFAULT_WAITFOR_TIMEOUT);
+	}
+
+	/**
+	 * Waits for a predicate to be true, or for a default timeout to be reached.
+	 * 
+	 * @param p The predicate to test.
+	 * @param timeout The maximum timeout, in milliseconds.
+	 */
+	protected void waitFor(Predicate p, long timeout) {
+		long startTime = System.currentTimeMillis();
+		while (!p.test()) {
+			try {
+				Thread.sleep(100L);
+			} catch (InterruptedException e) {
+				LOGGER.warn("Sleep interrupted", e);
+			}
+			long currentTime = System.currentTimeMillis();
+			if (currentTime - startTime > timeout) {
+				throw new RuntimeException("Waiting timed out after " + timeout + " ms");
+			}
 		}
 	}
 }

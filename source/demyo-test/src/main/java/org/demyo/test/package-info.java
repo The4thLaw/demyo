@@ -1,5 +1,4 @@
 /**
- * Utility classes for Demyo tests.
+ * General classes for Demyo tests.
  */
 package org.demyo.test;
-
