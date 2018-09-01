@@ -11,8 +11,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +167,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 			LOGGER.error("An element was found but is not a form in specified page: {}", page.getUrl().toString());
 			return null;
 		}
+		// See the long comment in #submitMainModelForm()
+		((HtmlForm) form).removeAttribute("enctype");
 		return (HtmlForm) form;
 	}
 
@@ -210,6 +210,20 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 * Submits the main model edit form on the page.
 	 */
 	protected final void submitMainModelForm() {
+		/* HTMLUnit doesn't like that forms without files use multipart/form-data,
+		 * something that we do everywhere
+		 * Starting with Spring 4.3.5 (due to https://jira.spring.io/browse/SPR-14916), the submission fails
+		 * with:
+		 * org.apache.commons.fileupload.FileUploadException:
+		 * 		the request was rejected because no multipart boundary was found
+		 */
+		getJavaScriptExecutor().executeScript(//
+				// HTMLUnit doesn't support forEach on NodeList
+				"Array.prototype.forEach.call(document.querySelectorAll('form.dem-model-form'), " + //
+						"function (e) {\n" + //
+						"  e.removeAttribute('enctype');\n" + //
+						"});");
+
 		css1("form.dem-model-form input[type='submit']").click();
 	}
 
@@ -289,7 +303,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 */
 	protected void waitClickable(WebElement element) {
 		LOGGER.debug("Waiting for element to become clickable: {}", element);
-		new WebDriverWait(webDriver, MAX_TIMEOUT).until(ExpectedConditions.elementToBeClickable(element));
+		// new WebDriverWait(webDriver, MAX_TIMEOUT).until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	/**
