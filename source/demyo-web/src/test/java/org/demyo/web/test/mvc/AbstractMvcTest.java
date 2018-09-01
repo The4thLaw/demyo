@@ -54,6 +54,7 @@ import org.demyo.test.utils.Predicate;
 @WebAppConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
 public abstract class AbstractMvcTest extends AbstractPersistenceTest {
+	private static final long WAITFOR_SLEEPTIME = 100L;
 	private static final long DEFAULT_WAITFOR_TIMEOUT = 10000L;
 
 	private static final int MAX_TIMEOUT = 1;
@@ -292,17 +293,6 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	}
 
 	/**
-	 * Wait for a long amount of time.
-	 */
-	protected void waitLong() {
-		try {
-			Thread.sleep(750L);
-		} catch (InterruptedException e) {
-			LOGGER.warn("Sleep interrupted", e);
-		}
-	}
-
-	/**
 	 * Waits for a predicate to be true, or for a default timeout to be reached.
 	 * 
 	 * @param p The predicate to test.
@@ -321,7 +311,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 		long startTime = System.currentTimeMillis();
 		while (!p.test()) {
 			try {
-				Thread.sleep(100L);
+				Thread.sleep(WAITFOR_SLEEPTIME);
 			} catch (InterruptedException e) {
 				LOGGER.warn("Sleep interrupted", e);
 			}
