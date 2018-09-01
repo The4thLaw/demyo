@@ -7,7 +7,6 @@ import org.junit.Test;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
-import org.demyo.test.utils.Predicate;
 import org.demyo.web.controller.DerivativeController;
 
 /**
@@ -24,14 +23,7 @@ public class DerivativeControllerIT extends AbstractMvcTest {
 	@Test
 	public void testAddPageNoSeries() throws InterruptedException {
 		getWebDriver().get("http://localhost/derivatives/add");
-
-		// Wait for JavaScript to execute
-		waitFor(new Predicate() {
-			@Override
-			public boolean test() {
-				return cssM(".dem-repeatable-template").isEmpty();
-			}
-		});
+		waitForRepeatablePartInit();
 
 		// We need to add the option manually: interacting with Chosen here is a pain and the callbacks for the
 		// dependent select don't fire

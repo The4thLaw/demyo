@@ -12,7 +12,6 @@ import org.openqa.selenium.WebElement;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
-import org.demyo.test.utils.Predicate;
 import org.demyo.web.controller.AlbumController;
 
 /**
@@ -65,6 +64,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	@Test
 	public void testAddPage() {
 		getWebDriver().get("http://localhost/albums/add");
+		waitForRepeatablePartInit();
 
 		// Set a title
 		css1("#field_album_title").sendKeys(NEW_ALBUM_TITLE);
@@ -95,14 +95,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	@Test
 	public void testEditPage() {
 		getWebDriver().get("http://localhost/albums/edit/1");
-
-		// Wait for JavaScript to execute
-		waitFor(new Predicate() {
-			@Override
-			public boolean test() {
-				return cssM(".dem-repeatable-template").isEmpty();
-			}
-		});
+		waitForRepeatablePartInit();
 
 		assertThat(css1("#field_album_priceList\\[0\\]_date")).hasAttributeEqualTo("value", "2016-01-10");
 		assertThat(css1("#field_album_priceList\\[0\\]_price")).hasAttributeEqualTo("value", "10.0");
@@ -139,14 +132,7 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		// Set a title
 		css1("#field_album_title").sendKeys("My new album for a previously empty series");
 
-		// Wait for JavaScript to execute
-		waitFor(new Predicate() {
-			@Override
-			public boolean test() {
-				return cssM(".dem-repeatable-template").isEmpty();
-			}
-		});
-
+		waitForRepeatablePartInit();
 		submitMainModelForm();
 
 		assertThat(getWebDriver().getCurrentUrl()).startsWith("http://localhost/albums/view/");

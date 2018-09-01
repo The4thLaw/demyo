@@ -57,7 +57,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private static final long WAITFOR_SLEEPTIME = 100L;
 	private static final long DEFAULT_WAITFOR_TIMEOUT = 10000L;
 
-	private static final int MAX_TIMEOUT = 1;
+	private static final int MAX_TIMEOUT = 5;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractMvcTest.class);
 
@@ -320,5 +320,20 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 				throw new RuntimeException("Waiting timed out after " + timeout + " ms");
 			}
 		}
+	}
+
+	/**
+	 * Wait for the repeatable parts to be initialized.
+	 * <p>
+	 * Posting a form before the repeatable template is remove can cause binding issues.
+	 * </p>
+	 */
+	protected void waitForRepeatablePartInit() {
+		waitFor(new Predicate() {
+			@Override
+			public boolean test() {
+				return cssM(".dem-repeatable-template").isEmpty();
+			}
+		});
 	}
 }
