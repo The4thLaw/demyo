@@ -1,3 +1,6 @@
+envCi = System.getenv("CI");
+isCi = envCi != null && envCi.length() != 0;
+
 appender("console", ConsoleAppender) {
 	encoder(PatternLayoutEncoder) {
 		pattern = "%d{dd.MM.yyyy HH:mm:ss} [%-5level] %logger{36}:%L - %msg%n"
@@ -31,7 +34,15 @@ appender("3rdParty", RollingFileAppender ) {
 		compressionMode = "ZIP"
 	}
 }
-  
-logger("org.demyo", DEBUG, ["demyo"], false)
 
-root(WARN, ["3rdParty"])
+if (isCi) {
+    logger("org.demyo", DEBUG, ["console", "demyo"], false)
+    
+    logger("com.gargoylesoftware.htmlunit", ERROR, ["console", "3rdParty"], false)
+    root(WARN, ["console", "3rdParty"])
+} else {
+    logger("org.demyo", DEBUG, ["demyo"], false)
+    
+    logger("com.gargoylesoftware.htmlunit", ERROR, ["3rdParty"], false)
+    root(WARN, ["3rdParty"])
+}
