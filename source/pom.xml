@@ -268,7 +268,9 @@
 			<dependency>
 				<groupId>org.seleniumhq.selenium</groupId>
 				<artifactId>htmlunit-driver</artifactId>
-				<version>2.23.2</version><!-- Latest Java 7 version is 2.x -->
+				<!-- Last Java version. After that (2.23+), it pulls selenium-support 3.14.0,
+					which relies on Java 8 Function in FluentWait -->
+				<version>2.22</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
