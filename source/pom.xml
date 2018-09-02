@@ -113,9 +113,8 @@
 			<!-- Used for logback groovy configuration -->
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
-				<artifactId>groovy-all</artifactId>
+				<artifactId>groovy</artifactId>
 				<version>2.5.2</version>
-				<type>pom</type> 
 			</dependency>
 			
 			<dependency>

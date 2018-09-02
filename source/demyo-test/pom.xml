@@ -85,8 +85,7 @@
 		<!-- Used for logback groovy configuration -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<type>pom</type>
+			<artifactId>groovy</artifactId>
 		</dependency>
 	</dependencies>
 </project>
