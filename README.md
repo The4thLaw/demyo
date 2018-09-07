@@ -8,13 +8,17 @@ Check the features and screenshots, and download the releases on the official we
 This project is the Java port / upgrade of a PHP software whose releases are still available on the same website.
 
 ## Contributing
-I don't have time to manage a team. However, you can submit pull requests for translations in unsupported languages and for bug fixes and I'll be glad to review them.
+I don't really have time to manage a team. Still, there are two kinds of contributions that are particularly appreciated and for which I would gladly review pull requests:
+ - Translations in languages other than English and French
+ - Bug fixes
 
-Of course, you can also submit issues and feature requests.
+If you want to translate Demyo in your own language and don't know how to do it technically, feel free to open an issue to offer your help. There are user-friendly tools which are free for Open Source projects, and I could look into them.
+
+Of course, you can also submit issues and feature requests, even if you don't have the knowledge to implement them.
 
 ## License
 Demyo Comic Manager
-Copyright (C) 2007-2017 Xavier Dalem
+Copyright (C) 2007-2018 Xavier Dalem
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation; version 3 of the License.
 
