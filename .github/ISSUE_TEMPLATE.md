@@ -1,7 +1,13 @@
+## Description
+
 (Describe your issue or feature request here:
 For bugs, specify what you were doing when the issue appeared. If possible, provide an export of your library.
 For feature requests, specify what you would like to see.
 In both cases, the more details, the better.)
+
+## Environment
+
+(This section is optional for feature requests, fill only what is relevant, if any)
 
 My configuration is:
  - **Demyo version(s) in which the issue occurs**: 
