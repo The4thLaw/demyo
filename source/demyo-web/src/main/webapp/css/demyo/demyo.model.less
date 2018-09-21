@@ -32,8 +32,12 @@
 		margin-right: 0;
 	}
 }
-div.mdl-layout.is-small-screen .dem-album-card .thumb {
-	display: none;
+// MDL adds a .is-small-screen at 1024px, except the landscape iPad reports exactly that (2048 @ 2x) and we'd
+// like it displayed there. 1000px is chosen arbitrarily and tested to work
+@media only screen and (max-width: 1000px){
+	.dem-album-card .thumb {
+		display: none;
+	}
 }
 
 .dem-album--wishlist {
