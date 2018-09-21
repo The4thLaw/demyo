@@ -1,6 +1,11 @@
 (function($) {
 	'use strict';
 	
+	var contextRoot = $('head').data('context-root');
+	if (!contextRoot.match(/.*\/$/)) {
+		contextRoot += '/';
+	}
+	
 	$.fn.extend({
 		demyo_quickSearch: function(settings) {
 			if (!this.length) {
@@ -9,14 +14,14 @@
 			
 			settings = $.extend({
 				delay: 400,
-				url: '/search/quick',
+				url: contextRoot + '/search/quick',
 				contentToHide: '#page-content',
 				resultLocation: '#quickSearch-results',
 				fadeSpeed: 'fast',
 				reportProgressOn: '.mdl-layout__content'
 			}, settings);
 
-			if (settings.contentToHide == '') {
+			if (settings.contentToHide === '') {
 				settings.contentToHide = '#no-such-element';
 			}
 			
@@ -81,8 +86,8 @@
 				
 				this.timer = setTimeout(function() {
 						query($input.val());
-					}, settings.delay)
-			})
+					}, settings.delay);
+			});
 		}
 	});
 })(jQuery);

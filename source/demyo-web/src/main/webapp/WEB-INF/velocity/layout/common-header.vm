@@ -4,7 +4,7 @@
 #if ($!demyoReaderService)
 	$readerContext.setReaderService($demyoReaderService)
 #end
-	<head>
+	<head data-context-root="$link.contextPath">
 #if($!pageTitle)
 		<title>$pageTitle - Demyo</title>
 #else

@@ -39,6 +39,8 @@ public final class SystemConfiguration {
 	private final File applicationDirectory;
 	/** Path to the WAR file containing the Demyo Web app. */
 	private final String warPath;
+	/** Context root for the deployment of the WAR file. */
+	private final String contextRoot;
 	/** The flag indicating whether Demyo is being used in portable mode or not. */
 	private final boolean portable;
 	/** The listening address for the HTTP server. */
@@ -105,7 +107,7 @@ public final class SystemConfiguration {
 		}
 
 		// Allow overrides from command line
-		for (String key : new String[] { "war.path", "portable", "http.address", "http.port" }) {
+		for (String key : new String[] { "war.path", "war.contextRoot", "portable", "http.address", "http.port" }) {
 			String value = System.getProperty("demyo." + key);
 			if (value != null) {
 				config.setProperty(key, value);
@@ -115,6 +117,7 @@ public final class SystemConfiguration {
 		version = config.getString("version");
 		codename = config.getString("codename");
 		warPath = config.getString("war.path");
+		contextRoot = config.getString("war.contextRoot");
 		portable = config.getBoolean("portable");
 		httpAddress = config.getString("http.address");
 		httpPort = config.getInt("http.port");
@@ -248,6 +251,7 @@ public final class SystemConfiguration {
 		sb.append("\n\tHTTP port: ").append(httpPort);
 		sb.append("\n\tapplication directory: ").append(applicationDirectory);
 		sb.append("\n\tWAR path: ").append(warPath);
+		sb.append("\n\tcontext root: ").append(contextRoot);
 		sb.append("\n\tuser directory: ").append(userDirectory);
 		sb.append("\n\tdatabase file: ").append(databaseFile);
 		sb.append("\n\timages directory: ").append(imagesDirectory);
@@ -291,6 +295,15 @@ public final class SystemConfiguration {
 	 */
 	public String getWarPath() {
 		return warPath;
+	}
+
+	/**
+	 * Gets the context root for the deployment of the WAR file.
+	 *
+	 * @return the context root for the deployment of the WAR file
+	 */
+	public String getContextRoot() {
+		return contextRoot;
 	}
 
 	/**

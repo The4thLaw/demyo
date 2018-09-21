@@ -91,12 +91,13 @@ public final class Start {
 
 		String httpAddress = sysConfig.getHttpAddress();
 		int httpPort = sysConfig.getHttpPort();
-		LOGGER.info("Starting server on {}:{} ...", httpAddress, httpPort);
+		String contextRoot = sysConfig.getContextRoot();
+		LOGGER.info("Starting server on {}:{}{} ...", httpAddress, httpPort, contextRoot);
 
 		final Server server = new Server(new InetSocketAddress(httpAddress, httpPort));
 
 		WebAppContext webapp = new WebAppContext();
-		webapp.setContextPath("/");
+		webapp.setContextPath(contextRoot);
 		webapp.setWar(sysConfig.getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
 		webapp.setTempDirectory(new File(sysConfig.getTempDirectory(), "jetty"));

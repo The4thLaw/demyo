@@ -10,9 +10,10 @@ import java.net.URISyntaxException;
 
 import javax.swing.JOptionPane;
 
-import org.demyo.common.config.SystemConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.demyo.common.config.SystemConfiguration;
 
 /**
  * Utilities for Desktop integration.
@@ -34,13 +35,14 @@ public final class DesktopUtils {
 		}
 
 		try {
-			String bindAddress = SystemConfiguration.getInstance().getHttpAddress();
+			SystemConfiguration config = SystemConfiguration.getInstance();
+			String bindAddress = config.getHttpAddress();
 			if (InetAddress.getByName(bindAddress).isAnyLocalAddress()) {
 				// Windows at least doesn't like to open a page at 0.0.0.0. Switch to loopback
 				bindAddress = InetAddress.getLoopbackAddress().getHostAddress();
 				LOGGER.debug("Switching browser address to {}", bindAddress);
 			}
-			startBrowser("http://" + bindAddress + ":" + SystemConfiguration.getInstance().getHttpPort());
+			startBrowser("http://" + bindAddress + ":" + config.getHttpPort() + config.getContextRoot());
 		} catch (IOException | URISyntaxException e) {
 			LOGGER.warn("Failed to start the browser", e);
 		}
