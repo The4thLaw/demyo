@@ -73,6 +73,8 @@ input[type=date]:focus::-webkit-datetime-edit-fields-wrapper {
  * Actually, what this does is hiding the value until there is a value... */
 :not(.is-dirty) > input.date:not(:focus) {
     color: transparent;
+    /** Without this, the format still shows (the letters, but not the slashes) if the value is cleared via JS */
+    text-indent: -9999em;
 }
 
 /* Special styling for read-only fields */
