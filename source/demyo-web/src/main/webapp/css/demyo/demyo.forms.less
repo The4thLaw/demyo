@@ -68,6 +68,13 @@ input[type=date]:focus::-webkit-datetime-edit-fields-wrapper {
 	transition-duration: 0s;
 }
 
+/* Same, but for Firefox: if the field is not dirty (= doesn't have a value) and is not focused, hide the text
+ * Focus part is needed to show the format when the user is filling the date.
+ * Actually, what this does is hiding the value until there is a value... */
+:not(.is-dirty) > input.date:not(:focus) {
+    color: transparent;
+}
+
 /* Special styling for read-only fields */
 input[readonly] {
 	color: rgba(0, 0, 0, 0.26);
