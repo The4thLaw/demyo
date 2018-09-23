@@ -5,6 +5,8 @@ $quickTasks.prepare($javascript)
 			<div class="mdl-layout__drawer-button" data-dem-shortcut="77" id="menu-icon">#icon('menu')</div>
 			<div class="mdl-tooltip" for="menu-icon">#_('menu.title')</div>
 			<div class="mdl-layout__header-row">
+				<a href="javascript:history.back()" class="mdl-button mdl-js-button mdl-button--icon" id="app-mode-back-button">#icon('arrow_back')</a>
+			
 				<span class="mdl-layout-title">#if($!pageTitle)$pageTitle#end</span>
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>

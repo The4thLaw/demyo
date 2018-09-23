@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Demyo-Icons';
-    src:    url('../fonts/Demyo-Icons.eot?1xjag3');
-    src:    url('../fonts/Demyo-Icons.eot?1xjag3#iefix') format('embedded-opentype'),
-        url('../fonts/Demyo-Icons.ttf?1xjag3') format('truetype'),
-        url('../fonts/Demyo-Icons.woff?1xjag3') format('woff'),
-        url('../fonts/Demyo-Icons.svg?1xjag3#Demyo-Icons') format('svg');
+    src:    url('../fonts/Demyo-Icons.eot?7nv12n');
+    src:    url('../fonts/Demyo-Icons.eot?7nv12n#iefix') format('embedded-opentype'),
+        url('../fonts/Demyo-Icons.ttf?7nv12n') format('truetype'),
+        url('../fonts/Demyo-Icons.woff?7nv12n') format('woff'),
+        url('../fonts/Demyo-Icons.svg?7nv12n#Demyo-Icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -36,6 +36,9 @@
 
 .dico-bookmarks:before {
     content: "\e900";
+}
+.dico-arrow_back:before {
+    content: "\e5c4";
 }
 .dico-bookmark:before {
     content: "\e8e6";

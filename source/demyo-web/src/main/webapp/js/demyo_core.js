@@ -135,6 +135,14 @@ var demyo = {};
 		
 	};
 	
+	// https://stackoverflow.com/a/40932368/109813
+	demyo.handleAppMode = function () {
+		if ((window.navigator.standalone === true) || // iOS
+			(window.matchMedia('(display-mode: standalone)').matches)) { // Chrome
+			$('body').addClass('is-app-mode');
+		}
+	};
+	
 })(jQuery);
 
 jQuery(function () {
@@ -143,6 +151,7 @@ jQuery(function () {
 	demyo.registerShortcuts();
 	demyo.registerThumbExpanders();
 	demyo.registerLinksAsPost();
+	demyo.handleAppMode();
 	demyo.toastContainer = document.getElementById('main-toast');
 	// The MDL layout with fixed header seems to steal focus at some point.
 	// Fix it so that users can scroll and use shortcut keys directly when landing on the page

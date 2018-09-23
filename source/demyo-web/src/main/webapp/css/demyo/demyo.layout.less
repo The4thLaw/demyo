@@ -25,10 +25,20 @@ html, body, .mdl-layout__title, .mdl-layout-title, h1, h2, h3, h4, h5, h6, .mdl-
     vertical-align: middle;
 }
 
-#header-quick-links, #header-quicksearch {
+#header-quick-links, #header-quicksearch, #app-mode-back-button {
 	.dico {
 		vertical-align: middle;
 	}
+}
+
+#app-mode-back-button {
+    margin-left: -0.5em;
+    margin-right: 0.5em;
+    display: none;
+}
+
+.is-app-mode #app-mode-back-button {
+    display: inline;
 }
 
 #menu-quicksearch {
