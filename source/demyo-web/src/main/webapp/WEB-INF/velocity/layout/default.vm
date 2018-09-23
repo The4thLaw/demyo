@@ -78,7 +78,6 @@ $quickTasks.prepare($javascript)
 			#end
 		</header>
 		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">#_('menu.title')</span>
 			#if (!$!suppressQuickSearch)
 			<!-- Quick search -->
 			<div class="mdl-textfield mdl-js-textfield mdl-layout--small-screen-only" id="menu-quicksearch">
