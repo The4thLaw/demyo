@@ -32,13 +32,19 @@ html, body, .mdl-layout__title, .mdl-layout-title, h1, h2, h3, h4, h5, h6, .mdl-
 }
 
 #app-mode-back-button {
-    margin-left: -0.5em;
     margin-right: 0.5em;
     display: none;
+    vertical-align: baseline;
 }
 
-.is-app-mode #app-mode-back-button {
-    display: inline;
+.is-app-mode {
+    #app-mode-back-button {
+        display: inline;
+    }
+    
+    .mdl-layout__header-row {
+        padding-left: 60px;
+    }
 }
 
 #menu-quicksearch {

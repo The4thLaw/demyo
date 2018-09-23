@@ -18,26 +18,27 @@
 <a id="$id" href="$link.contextPath/$urlFromRoot" class="mdl-navigation__link">#icon($icon)#_("$labelId")</a>##
 #end
 
+## Note: indenting is a bit weird to avoid extra spaces in the mdl-layout-title, where spaces are 'pre'
 #macro(icon $iconSpec)
-	#if ($!iconSpec && $iconSpec != '')
-		#set( $sepIndex = $iconSpec.indexOf('+') )
-		#if ($sepIndex >= 0)
-			#set( $overlayStart = $sepIndex + 1 )
-			#set ($overlay = $iconSpec.substring($overlayStart, $iconSpec.length()))
-			#if ($overlay == "add")
-				## Regular "add" is too thin for overlays
-				#set ($overlay = "plus")
-			#end
-			<span class="dico-stack">
-				<i class="dico">$iconSpec.substring(0, $sepIndex)</i>
-				<i class="dico dico-overlay">$overlay</i>
-			</span>
-		#else
-			<i class="dico">$iconSpec</i>
-		#end
-	#else
-		<i class="dico dico-placeholder"></i>
+#if ($!iconSpec && $iconSpec != '')
+#set( $sepIndex = $iconSpec.indexOf('+') )
+#if ($sepIndex >= 0)
+	#set( $overlayStart = $sepIndex + 1 )
+	#set ($overlay = $iconSpec.substring($overlayStart, $iconSpec.length()))
+	#if ($overlay == "add")
+		## Regular "add" is too thin for overlays
+		#set ($overlay = "plus")
 	#end
+	<span class="dico-stack">
+		<i class="dico">$iconSpec.substring(0, $sepIndex)</i>
+		<i class="dico dico-overlay">$overlay</i>
+	</span>
+#else
+<i class="dico">$iconSpec</i>##
+#end
+#else
+<i class="dico dico-placeholder"></i>
+#end
 #end
 
 #macro(fab $url $iconSpec)
