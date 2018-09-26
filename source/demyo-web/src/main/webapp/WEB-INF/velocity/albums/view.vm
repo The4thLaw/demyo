@@ -36,6 +36,11 @@ $quickTasks.add({
 })
 ##TODO: QT to add a derivative to the Album
 ##TODO: QT to lend album
+$quickTasks.add({
+	"id" : "qt-add-images-to-album",
+	"url" : "#",
+	"icon": "camera+add"
+})
 
 #if (!$album.wishlist)
 ## No need to include the button to remove if we cannot add dynamically
