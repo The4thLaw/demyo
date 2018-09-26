@@ -83,6 +83,7 @@ public class JavascriptTool {
 		addScript(new Script("JQuery-Core", "vendor/jquery-3.1.1.min.js"));
 		addScript(new Script("JQuery", "vendor/jquery-migrate-3.0.0.js", KNOWN_SCRIPTS.get("JQuery-Core")));
 		addScript(new Script("JQuery.StayInWebApp", "vendor/jquery.stayInWebApp.js", KNOWN_SCRIPTS.get("JQuery")));
+		addScript(new Script("Filepond", "vendor/filepond.min.js"));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery.StayInWebApp"),
 				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
 		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
@@ -94,6 +95,8 @@ public class JavascriptTool {
 		addScript(new Script("Demyo.QuickTasks", "demyo_quicktasks.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Demyo.QuickSearch", "demyo_quicksearch.js", KNOWN_SCRIPTS.get("JQuery"),
 				KNOWN_SCRIPTS.get("Demyo.Core")));
+		addScript(new Script("Demyo.DragAndDrop", "demyo_draganddrop.js", KNOWN_SCRIPTS.get("JQuery"),
+				KNOWN_SCRIPTS.get("Demyo.Core"), KNOWN_SCRIPTS.get("Filepond")));
 	}
 
 	private final Set<String> loadedScripts = new LinkedHashSet<String>();

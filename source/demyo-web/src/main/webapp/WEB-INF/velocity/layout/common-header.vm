@@ -31,6 +31,7 @@
 		<link href="$link.contextPath/css/vendor/chosen.less" rel="stylesheet/less" type="text/css">
 		<link href="$link.contextPath/css/vendor/material.blue-pink-1.3.0.min.css" rel="stylesheet" type="text/css">
 		<link href="$link.contextPath/css/demyo.blue-pink.less" rel="stylesheet/less" type="text/css">
+		<link href="$link.contextPath/css/vendor/filepond.min.css" rel="stylesheet" type="text/css">
 		
 		#foreach ($size in [76, 120, 152, 180])
 			<link rel="apple-touch-icon-precomposed" sizes="${size}x${size}" href="$link.contextPath/icons/demyo-${size}-whitebg.png">##
