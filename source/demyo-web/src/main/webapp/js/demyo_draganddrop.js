@@ -42,7 +42,6 @@ $(function () {
 		$('.confirm', dialog).click(function () {
 			$('form', dialog).submit();
 			dialog.get(0).close();
-			dialog.remove();
 		});
 		$('.cancel', dialog).click(function () {
 			dialog.get(0).close();
