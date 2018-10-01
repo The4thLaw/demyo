@@ -13,16 +13,13 @@ $(function() {
 			
 			// Create MDL-style HTML5 dialog
 			var dialog = $('<dialog class="mdl-dialog"></dialog>');
-			dialog.append('<h4 class="mdl-dialog__title">' + 'TODO: title' + '</h4>');
-			dialog.append('<div class="mdl-dialog__content">' +
-					'<div class="dem-form-value__field">' +
-						'<label class="dem-form__label">' + 'TODO: cover' + '</label>' +
-						'<div class="dem-form__value">TODO: filepond</div>' +
-					'</div>'
-				);
+			dialog.append('<h4 class="mdl-dialog__title">' + demyo.l10n['quickTasks.confirm.title'] + '</h4>');
+			dialog.append('<div class="mdl-dialog__content"><p>' + $this.data('qt-confirm') + '</p></div>');
 			dialog.append('<div class="mdl-dialog__actions">' +
-					'<button type="button" class="mdl-button mdl-button--primary confirm">' + 'TODO: OK' + '</button>' +
-					'<button type="button" class="mdl-button mdl-button--primary cancel">' + 'TODO: Cancel' + '</button>' +
+					'<button type="button" class="mdl-button mdl-button--primary confirm">' +
+					demyo.l10n['quickTasks.confirm.ok.label'] + '</button>' +
+					'<button type="button" class="mdl-button mdl-button--primary cancel">' +
+					demyo.l10n['quickTasks.confirm.cancel.label'] + '</button>' +
 					'</div>');
 			
 			// Register the events
@@ -30,10 +27,11 @@ $(function() {
 				$('<form method="post" action="'+url+'" style="display:none;"></form>')
 					.insertBefore('#page-content')
 					.submit();
-			})
+			});
 			$('.cancel', dialog).click(function () {
 				dialog.get(0).close();
-			})
+				dialog.remove();
+			});
 			
 			// Append the dialog to the body
 			$('body').append(dialog);
@@ -45,8 +43,8 @@ $(function() {
 			dialog.get(0).showModal();
 			
 			return false;
-		})
+		});
 	});
 	
-})
+});
 })(jQuery);
