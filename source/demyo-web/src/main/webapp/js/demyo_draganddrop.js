@@ -8,7 +8,6 @@ $(function () {
 	}
 	
 	FilePond.registerPlugin(
-	    FilePondPluginImagePreview,
 	    FilePondPluginFileValidateType
 	);
 	FilePond.setOptions({
@@ -19,8 +18,6 @@ $(function () {
 		acceptedFileTypes: ['image/*']
 	});
 	// TODO: set labels: https://pqina.nl/filepond/docs/patterns/api/filepond-instance/ + https://pqina.nl/filepond/docs/patterns/plugins/file-validate-type/#properties
-	// TODO: restrict file type
-	// TODO: plugins (most notably image preview)
 	
 	$('#qt-add-images-to-album').click(function () {		
 		var dialog = $('<dialog id="filepond-dialog" class="mdl-dialog"><form method="post" action="' +

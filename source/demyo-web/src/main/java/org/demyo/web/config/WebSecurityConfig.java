@@ -26,15 +26,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 
 		// Using recommendations from https://content-security-policy.com/
-		String csp = "default-src 'none'; font-src 'self'; ";
-		// Blob is used by the FilePond image preview plugin
-		csp += "connect-src 'self' blob:; ";
+		String csp = "default-src 'none'; connect-src 'self'; font-src 'self'; ";
 		// Data is used by Material Design for e.g. the check mark in checkboxes
-		// Blob is used by the FilePond image preview plugin
-		csp += "img-src 'self' data: blob:; ";
+		csp += "img-src 'self' data:; ";
 		// unsafe-inline is required, notably because of LESS on the server side
-		// Blob is used by the FilePond image preview plugin
-		csp += "script-src 'self' blob: 'unsafe-inline' "//
+		csp += "script-src 'self' 'unsafe-inline' "//
 				+ (allowUnsafeEval ? "'unsafe-eval'" : "")//
 				+ "; style-src 'self' 'unsafe-inline';";
 
