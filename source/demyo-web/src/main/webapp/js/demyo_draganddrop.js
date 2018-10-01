@@ -1,4 +1,5 @@
 (function($) {
+$(function () {
 	'use strict';
 	
 	var contextRoot = $('head').data('context-root');
@@ -6,21 +7,28 @@
 		contextRoot += '/';
 	}
 	
+	FilePond.setOptions({
+		server: {
+			process: contextRoot + 'api/filepond/process',
+			revert: contextRoot + 'api/filepond/revert'
+		}
+	});
+	// TODO: set labels: https://pqina.nl/filepond/docs/patterns/api/filepond-instance/ + https://pqina.nl/filepond/docs/patterns/plugins/file-validate-type/#properties
+	// TODO: restrict file type
+	// TODO: plugins (most notably image preview)
 	
-})(jQuery);
-
-jQuery(function () {
-	$('#qt-add-images-to-album').click(function () {
-		var dialog = $('<dialog class="mdl-dialog"></dialog>');
+	$('#qt-add-images-to-album').click(function () {		
+		var dialog = $('<dialog id="filepond-dialog" class="mdl-dialog"><form method="post" action="' +
+				window.location.href + '/filepond"></form></dialog>');
 		dialog.append('<h4 class="mdl-dialog__title">' + 'TODO: title' + '</h4>');
 		dialog.append('<div class="mdl-dialog__content">' +
 				'<div class="dem-form-value__field">' +
 					'<label class="dem-form__label">' + 'TODO: cover' + '</label>' +
-					'<div class="dem-form__value">TODO: filepond</div>' +
+					'<div class="dem-form__value"><input type="file" name="filePondMainImage" class="filepond"></div>' +
 				'</div>' +
 				'<div class="dem-form-value__field">' +
 					'<label class="dem-form__label">' + 'TODO: other images' + '</label>' +
-					'<div class="dem-form__value">TODO: filepond</div>' +
+					'<div class="dem-form__value"><input type="file" name="filePondOtherImage" class="filepond" multiple></div>' +
 				'</div>'
 			);
 		dialog.append('<div class="mdl-dialog__actions">' +
@@ -30,22 +38,25 @@ jQuery(function () {
 		
 		// Register the events
 		$('.confirm', dialog).click(function () {
-			$('<form method="post" action="'+url+'" style="display:none;"></form>')
-				.insertBefore('#page-content')
-				.submit();
-		})
+			$('form', dialog).submit();
+			dialog.get(0).close();
+		});
 		$('.cancel', dialog).click(function () {
 			dialog.get(0).close();
-		})
+		});
 		
 		// Append the dialog to the body
 		$('body').append(dialog);
 		
+		// Register FilePond
+		FilePond.parse(dialog.get(0));
+		
 		// Register and show the dialog
-		if (!dialog.showModal) {
+		if (!dialog.get(0).showModal) {
 			dialogPolyfill.registerDialog(dialog.get(0));
 		}
 		dialog.get(0).showModal();
 		return false;
 	});
 });
+})(jQuery);

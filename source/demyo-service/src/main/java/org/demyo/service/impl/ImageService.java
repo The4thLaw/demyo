@@ -22,16 +22,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
-import org.demyo.dao.IImageRepo;
-import org.demyo.dao.IModelRepo;
-import org.demyo.model.Image;
-import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.service.IConfigurationService;
-import org.demyo.service.IImageService;
-import org.demyo.utils.io.DIOUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
@@ -42,6 +32,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IImageRepo;
+import org.demyo.dao.IModelRepo;
+import org.demyo.model.Image;
+import org.demyo.model.config.ApplicationConfiguration;
+import org.demyo.service.IConfigurationService;
+import org.demyo.service.IImageService;
+import org.demyo.utils.io.DIOUtils;
 
 /**
  * Implements the contract defined by {@link IImageService}.
@@ -55,7 +56,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	private IImageRepo repo;
 	@Autowired
 	private IConfigurationService configService;
-	private File uploadDirectory;
+	private final File uploadDirectory;
 
 	/**
 	 * Default constructor.
