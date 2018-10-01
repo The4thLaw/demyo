@@ -48,6 +48,10 @@ public abstract class AbstractController {
 	private static final String MODEL_KEY_READER_SERV = "demyoReaderService";
 	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
 	private static final String MODEL_KEY_BODY_CLASSES = "bodyClasses";
+	/** The view model key for the main image uploaded through FilePond. */
+	protected static final String MODEL_KEY_FILEPOND_MAIN = "filePondMainImage";
+	/** The view model key for the other images uploaded through FilePond. */
+	protected static final String MODEL_KEY_FILEPOND_OTHER = "filePondOtherImage";
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
 	private static final String LAYOUT_MINIMAL = "layout/minimal.vm";
 

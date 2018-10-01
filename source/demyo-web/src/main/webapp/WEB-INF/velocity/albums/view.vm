@@ -56,6 +56,7 @@ $quickTasks.add({
 
 #thumbnail($album.cover, {'classes':'model-identification'})
 
+<input type="hidden" id="album_id" value="$album.id">
 <input type="hidden" id="is_favourite" value="$demyoReaderService.context.isFavouriteAlbum($album)">
 <input type="hidden" id="is_readingList" value="$demyoReaderService.context.isAlbumInReadingList($album)">
 
