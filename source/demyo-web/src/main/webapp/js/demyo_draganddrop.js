@@ -7,11 +7,16 @@ $(function () {
 		contextRoot += '/';
 	}
 	
+	FilePond.registerPlugin(
+	    FilePondPluginImagePreview,
+	    FilePondPluginFileValidateType
+	);
 	FilePond.setOptions({
 		server: {
 			process: contextRoot + 'api/filepond/process',
 			revert: contextRoot + 'api/filepond/revert'
-		}
+		},
+		acceptedFileTypes: ['image/*']
 	});
 	// TODO: set labels: https://pqina.nl/filepond/docs/patterns/api/filepond-instance/ + https://pqina.nl/filepond/docs/patterns/plugins/file-validate-type/#properties
 	// TODO: restrict file type
