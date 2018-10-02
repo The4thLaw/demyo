@@ -24,8 +24,14 @@ $(function () {
 	// TODO: this should be extracted to a method:
 	// handleDndUpload(selector, formAction, withMainImage, withOtherImages, labels)
 	$('#qt-add-images-to-album').click(function () {
+		var dialog = $('#filepond-dialog');
+		if (dialog.length) {
+			console.log('The DnD dialog already exists, not doing anything');
+			return;
+		}
+		
 		var albumId = $('#album_id').val();
-		var dialog = $('<dialog id="filepond-dialog" class="mdl-dialog"></dialog>');
+		dialog = $('<dialog id="filepond-dialog" class="mdl-dialog"></dialog>');
 		var form = $('<form method="post" action="' + contextRoot + 'albums/' + albumId + '/filepond"></form>');
 		form.append('<h4 class="mdl-dialog__title">' + 'TODO: title' + '</h4>');
 		form.append('<div class="mdl-dialog__content">' +
