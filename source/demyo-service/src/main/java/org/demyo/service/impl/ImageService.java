@@ -41,6 +41,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
+import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
 import org.demyo.utils.io.DIOUtils;
 
@@ -56,6 +57,9 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	private IImageRepo repo;
 	@Autowired
 	private IConfigurationService configService;
+	@Autowired
+	private IFilePondService filePondService;
+
 	private final File uploadDirectory;
 
 	/**
@@ -301,5 +305,21 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				LOGGER.warn("Failed to delete the image at {}", path, e);
 			}
 		}
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	public void recoverImageFromFilePond(String baseImageName, boolean alwaysNumber, String... filePondIds) {
+		if (filePondIds == null || filePondIds.length == 0) {
+			return;
+		}
+
+		// TODO:
+		// If alwaysNumber is false and more than one, error
+		// Loop on IDs. if !alwaysNumber, check if exists in set. if alwaysNumber, add the number (start at 1)
+		// and check if exists
+
+		List<Image> existingImages = repo.findByDescriptionLike(baseImageName + '%');
+
 	}
 }

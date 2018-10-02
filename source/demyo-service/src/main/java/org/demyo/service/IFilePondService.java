@@ -1,7 +1,10 @@
 package org.demyo.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.demyo.common.exception.DemyoException;
 
 /**
  * Service for backend integration of FilePond.
@@ -25,4 +28,13 @@ public interface IFilePondService {
 	 * @param id The identifier of the file to remove.
 	 */
 	void revert(String id);
+
+	/**
+	 * Gets the physical file for the provided ID.
+	 * 
+	 * @param id The identifier issued by {@link #process(String, InputStream)}.
+	 * @return The file. Guaranteed to exist.
+	 * @throws DemyoException If the file doesn't exist.
+	 */
+	File getFileForId(String id) throws DemyoException;
 }

@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IFilePondService;
 import org.demyo.utils.io.DIOUtils;
 
@@ -74,6 +76,18 @@ public class FilePondService implements IFilePondService {
 		}
 
 		LOGGER.debug("Successfully deleted {}", file.getAbsolutePath());
+	}
+
+	@Override
+	public File getFileForId(String id) throws DemyoException {
+		File file = new File(uploadDirectory, id);
+
+		if (!file.exists()) {
+			LOGGER.warn("{} doesn't exist", file.getAbsolutePath());
+			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_MISSING, id + " doesn't exist");
+		}
+
+		return file;
 	}
 
 }
