@@ -260,6 +260,25 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	}
 
 	/**
+	 * Returns the base name that can be used for automatic image descriptions.
+	 * 
+	 * @return The name.
+	 */
+	public String getBaseNameForImages() {
+		if (series == null) {
+			return title;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(series.getIdentifyingName())//
+				.append(" ")//
+				.append(getIdentifyingName());
+
+		return sb.toString();
+	}
+
+	/**
 	 * Gets the parent {@link Series}.
 	 * 
 	 * @return the parent {@link Series}

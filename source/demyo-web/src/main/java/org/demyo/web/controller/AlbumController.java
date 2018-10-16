@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.querydsl.core.types.Predicate;
 
+import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
@@ -130,15 +131,19 @@ public class AlbumController extends AbstractModelController<Album> {
 	 * @param otherImageIds The ID for alternate images.
 	 * @param model The view model.
 	 * @return The view name.
+	 * @throws DemyoException In case of error during recovery of the FilePond images.
 	 */
 	@PostMapping("/{modelId}/filepond")
 	public String saveFromFilePond(@PathVariable long modelId,
 			@RequestParam(value = MODEL_KEY_FILEPOND_MAIN, required = false) String mainImageId,
-			@RequestParam(value = MODEL_KEY_FILEPOND_OTHER, required = false) String[] otherImageIds, Model model) {
+			@RequestParam(value = MODEL_KEY_FILEPOND_OTHER, required = false) String[] otherImageIds, Model model)
+			throws DemyoException {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Saving from FilePond: main image = '{}', other images = {}", mainImageId,
 					otherImageIds != null ? Arrays.asList(otherImageIds) : null);
 		}
+
+		service.recoverFromFilePond(modelId, mainImageId, otherImageIds);
 
 		return redirect(model, "/albums/view/" + modelId);
 	}

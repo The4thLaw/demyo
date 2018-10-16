@@ -3,9 +3,6 @@ package org.demyo.service.impl;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.demyo.service.IConfigurationService;
-import org.demyo.service.ITranslationService;
-
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
+
+import org.demyo.service.IConfigurationService;
+import org.demyo.service.ITranslationService;
 
 /**
  * Implements the contract defined by {@link ITranslationService}.
@@ -53,6 +53,11 @@ public class TranslationService implements ITranslationService {
 				return labelId + " (" + locale + ")";
 			}
 		}
+	}
+
+	@Override
+	public String translateVargs(@NotEmpty String labelId, Object... params) {
+		return translate(labelId, params);
 	}
 
 	private Locale getLocale() {

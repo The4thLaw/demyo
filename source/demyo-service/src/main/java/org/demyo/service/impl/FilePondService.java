@@ -20,6 +20,7 @@ import org.demyo.utils.io.DIOUtils;
 /**
  * Implements the contract defined by {@link IFilePondService}.
  */
+// TODO: at startup and periodically, clear the images.
 @Service
 public class FilePondService implements IFilePondService {
 

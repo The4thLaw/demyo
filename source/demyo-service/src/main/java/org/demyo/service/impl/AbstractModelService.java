@@ -10,15 +10,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoRuntimeException;
-import org.demyo.dao.IModelRepo;
-import org.demyo.dao.IQuickSearchableRepo;
-import org.demyo.model.IModel;
-import org.demyo.model.util.DefaultOrder;
-import org.demyo.model.util.PreSave;
-import org.demyo.service.IConfigurationService;
-import org.demyo.service.IModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +25,16 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Predicate;
+
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.IQuickSearchableRepo;
+import org.demyo.model.IModel;
+import org.demyo.model.util.DefaultOrder;
+import org.demyo.model.util.PreSave;
+import org.demyo.service.IConfigurationService;
+import org.demyo.service.IModelService;
 
 /**
  * Implementation of base operations on models.
@@ -226,6 +227,16 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long save(@NotNull M model) {
+		return saveAndGetModel(model).getId();
+	}
+
+	/**
+	 * Saves the given model.
+	 * 
+	 * @param model The model to save.
+	 * @return The saved entity.
+	 */
+	protected M saveAndGetModel(@NotNull M model) {
 		// Call PreSave methods
 		for (Method meth : preSaveMethods) {
 			try {
@@ -258,7 +269,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 		}
 
 		M savedModel = getRepo().save(model);
-		return savedModel.getId();
+		return savedModel;
 	}
 
 	/**
