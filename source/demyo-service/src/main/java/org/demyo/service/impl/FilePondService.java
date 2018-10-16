@@ -4,11 +4,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.filefilter.AbstractFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -20,10 +25,12 @@ import org.demyo.utils.io.DIOUtils;
 /**
  * Implements the contract defined by {@link IFilePondService}.
  */
-// TODO: at startup and periodically, clear the images.
 @Service
 public class FilePondService implements IFilePondService {
 
+	private static final int AUTOCLEAN_DELAY = 1000 * 60;
+	private static final int AUTOCLEAN_PERIOD = 1000 * 60 * 60 * 24;
+	private static final long AUTOCLEAN_MIN_AGE = 1000 * 60 * 60;
 	private static final Logger LOGGER = LoggerFactory.getLogger(FilePondService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "filepond";
 
@@ -35,6 +42,25 @@ public class FilePondService implements IFilePondService {
 	public FilePondService() {
 		uploadDirectory = new File(SystemConfiguration.getInstance().getTempDirectory(), UPLOAD_DIRECTORY_NAME);
 		uploadDirectory.mkdirs();
+	}
+
+	/**
+	 * Cleans the FilePond upload directory. Removes files older than {@link #AUTOCLEAN_MIN_AGE}.
+	 */
+	@Scheduled(initialDelay = AUTOCLEAN_DELAY, fixedRate = AUTOCLEAN_PERIOD)
+	public void cleanFilePondDirectory() {
+		LOGGER.debug("Auto-cleaning FilePond directory...");
+		Collection<File> filesToDelete = FileUtils.listFiles(uploadDirectory, new AbstractFileFilter() {
+			@Override
+			public boolean accept(File file) {
+				return System.currentTimeMillis() - file.lastModified() > AUTOCLEAN_MIN_AGE;
+			}
+
+		}, TrueFileFilter.INSTANCE);
+
+		for (File f : filesToDelete) {
+			LOGGER.debug("Auto-cleaning FilePond file: {}", f);
+		}
 	}
 
 	@Override
