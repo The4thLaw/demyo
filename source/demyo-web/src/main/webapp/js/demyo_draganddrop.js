@@ -20,6 +20,8 @@ $(function () {
 	// TODO: set labels: https://pqina.nl/filepond/docs/patterns/api/filepond-instance/ + https://pqina.nl/filepond/docs/patterns/plugins/file-validate-type/#properties
 	// TODO: when cancelling, revert all files
 	// TODO: set labels here
+
+	// TODO: add handler on the body element (if one of the quicktasks exists)
 	
 	// TODO: this should be extracted to a method:
 	// handleDndUpload(selector, formAction, withMainImage, withOtherImages, labels)
