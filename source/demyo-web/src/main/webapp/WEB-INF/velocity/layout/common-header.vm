@@ -67,6 +67,9 @@ demyo.l10n['readers.confirm.favourite.remove'] = '#_("readers.confirm.favourite.
 demyo.l10n['readers.confirm.readingList.add'] = '#_("readers.confirm.readingList.add")';
 demyo.l10n['readers.confirm.readingList.remove'] = '#_("readers.confirm.readingList.remove")';
 ## Drag and drop
+demyo.l10n['field.Album.cover'] = '#_("field.Album.cover")';
+demyo.l10n['field.Album.images'] = '#_("field.Album.images")';
+demyo.l10n['field.Derivative.images'] = '#_("field.Derivative.images")';
 demyo.l10n['draganddrop.dialog.title'] = '#_("draganddrop.dialog.title")';
 demyo.l10n['draganddrop.button.confirm'] = '#_("draganddrop.button.confirm")';
 demyo.l10n['draganddrop.button.cancel'] = '#_("draganddrop.button.cancel")';

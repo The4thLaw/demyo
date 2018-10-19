@@ -106,8 +106,8 @@ $(function () {
 			true,
 			true,
 			{
-				mainImageLabel: 'TODO: cover',
-				otherImagesLabel: 'TODO: other images',
+				mainImageLabel: demyo.l10n['field.Album.cover'],
+				otherImagesLabel: demyo.l10n['field.Album.images']
 			}
 		);
 	});
