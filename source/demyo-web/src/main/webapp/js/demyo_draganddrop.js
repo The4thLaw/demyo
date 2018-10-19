@@ -97,8 +97,21 @@ $(function () {
 		return false;
 	};
 
-	// TODO: add handler on the body element (if one of the quicktasks exists)
+	// Add a marker class to all DnD handlers for convenience in the next steps
+	$('#qt-add-images-to-album').addClass('dnd-handler');
+
+	// If there is a handler, activate it when something is dragged over the page body
+	if ($('.dnd-handler').length > 0) {
+		$('body')[0].addEventListener("dragenter", (e) => {
+			e.preventDefault();
+			if ($('#filepond-dialog').length <= 0) {
+				$('.dnd-handler').click();
+			}
+			// Else do nothing: the dialog is already displayed
+		});
+	}
 	
+	// Specific handler for Albums
 	$('#qt-add-images-to-album').click(() => {
 		var albumId = $('#album_id').val();
 		return dndUploadHandler(
