@@ -16,7 +16,7 @@ $(function() {
 			dialog.append('<h4 class="mdl-dialog__title">' + demyo.l10n['quickTasks.confirm.title'] + '</h4>');
 			dialog.append('<div class="mdl-dialog__content"><p>' + $this.data('qt-confirm') + '</p></div>');
 			dialog.append('<div class="mdl-dialog__actions">' +
-					'<button type="button" class="mdl-button mdl-button--primary confirm">' +
+					'<button type="button" class="mdl-button mdl-button--accent mdl-button--raised confirm">' +
 					demyo.l10n['quickTasks.confirm.ok.label'] + '</button>' +
 					'<button type="button" class="mdl-button mdl-button--primary cancel">' +
 					demyo.l10n['quickTasks.confirm.cancel.label'] + '</button>' +
