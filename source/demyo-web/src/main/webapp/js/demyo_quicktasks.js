@@ -30,7 +30,6 @@ $(function() {
 			});
 			$('.cancel', dialog).click(function () {
 				dialog.get(0).close();
-				dialog.remove();
 			});
 			
 			// Append the dialog to the body
@@ -40,6 +39,9 @@ $(function() {
 			if (!dialog.showModal) {
 				dialogPolyfill.registerDialog(dialog.get(0));
 			}
+			dialog.on('close', () => {
+				dialog.remove();
+			});
 			dialog.get(0).showModal();
 			
 			return false;
