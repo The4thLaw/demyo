@@ -8,7 +8,7 @@ $(function () {
 	}
 	
 	FilePond.registerPlugin(
-	    FilePondPluginFileValidateType
+		FilePondPluginFileValidateType
 	);
 	FilePond.setOptions({
 		server: {
@@ -82,12 +82,6 @@ $(function () {
 		});
 		$('.cancel', dialog).click(function () {
 			dialog.get(0).close();
-			ponds.forEach(function (item) {
-				// TODO: this doesn't seem to revert the files
-				// Maybe this is related to https://github.com/pqina/filepond/issues/47 ?
-				item.removeFiles();
-			});
-			dialog.remove();
 		});
 		
 		// Append the dialog to the body
@@ -97,6 +91,14 @@ $(function () {
 		if (!dialog.get(0).showModal) {
 			dialogPolyfill.registerDialog(dialog.get(0));
 		}
+		dialog.on('close', () => {
+			ponds.forEach(function (item) {
+				// TODO: this doesn't seem to revert the files
+				// Maybe this is related to https://github.com/pqina/filepond/issues/47 ?
+				item.removeFiles();
+			});
+			dialog.remove();
+		})
 		dialog.get(0).showModal();
 		return false;
 	});
