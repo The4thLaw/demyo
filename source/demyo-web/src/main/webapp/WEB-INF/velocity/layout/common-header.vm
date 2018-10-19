@@ -66,6 +66,31 @@ demyo.l10n['readers.confirm.favourite.add'] = '#_("readers.confirm.favourite.add
 demyo.l10n['readers.confirm.favourite.remove'] = '#_("readers.confirm.favourite.remove")';
 demyo.l10n['readers.confirm.readingList.add'] = '#_("readers.confirm.readingList.add")';
 demyo.l10n['readers.confirm.readingList.remove'] = '#_("readers.confirm.readingList.remove")';
+## Drag and drop
+demyo.l10n['draganddrop.dialog.title'] = '#_("draganddrop.dialog.title")';
+demyo.l10n['draganddrop.button.confirm'] = '#_("draganddrop.button.confirm")';
+demyo.l10n['draganddrop.button.cancel'] = '#_("draganddrop.button.cancel")';
+demyo.l10n['draganddrop.filepond.fileValidateTypeLabelExpectedTypes'] = '#_("draganddrop.filepond.fileValidateTypeLabelExpectedTypes")';
+demyo.l10n['draganddrop.filepond.labelButtonAbortItemLoad'] = '#_("draganddrop.filepond.labelButtonAbortItemLoad")';
+demyo.l10n['draganddrop.filepond.labelButtonAbortItemProcessing'] = '#_("draganddrop.filepond.labelButtonAbortItemProcessing")';
+demyo.l10n['draganddrop.filepond.labelButtonProcessItem'] = '#_("draganddrop.filepond.labelButtonProcessItem")';
+demyo.l10n['draganddrop.filepond.labelButtonRemoveItem'] = '#_("draganddrop.filepond.labelButtonRemoveItem")';
+demyo.l10n['draganddrop.filepond.labelButtonRetryItemLoad'] = '#_("draganddrop.filepond.labelButtonRetryItemLoad")';
+demyo.l10n['draganddrop.filepond.labelButtonRetryItemProcessing'] = '#_("draganddrop.filepond.labelButtonRetryItemProcessing")';
+demyo.l10n['draganddrop.filepond.labelButtonUndoItemProcessing'] = '#_("draganddrop.filepond.labelButtonUndoItemProcessing")';
+demyo.l10n['draganddrop.filepond.labelFileLoadError'] = '#_("draganddrop.filepond.labelFileLoadError")';
+demyo.l10n['draganddrop.filepond.labelFileLoading'] = '#_("draganddrop.filepond.labelFileLoading")';
+demyo.l10n['draganddrop.filepond.labelFileProcessing'] = '#_("draganddrop.filepond.labelFileProcessing")';
+demyo.l10n['draganddrop.filepond.labelFileProcessingAborted'] = '#_("draganddrop.filepond.labelFileProcessingAborted")';
+demyo.l10n['draganddrop.filepond.labelFileProcessingComplete'] = '#_("draganddrop.filepond.labelFileProcessingComplete")';
+demyo.l10n['draganddrop.filepond.labelFileProcessingError'] = '#_("draganddrop.filepond.labelFileProcessingError")';
+demyo.l10n['draganddrop.filepond.labelFileSizeNotAvailable'] = '#_("draganddrop.filepond.labelFileSizeNotAvailable")';
+demyo.l10n['draganddrop.filepond.labelFileTypeNotAllowed'] = '#_("draganddrop.filepond.labelFileTypeNotAllowed")';
+demyo.l10n['draganddrop.filepond.labelFileWaitingForSize'] = '#_("draganddrop.filepond.labelFileWaitingForSize")';
+demyo.l10n['draganddrop.filepond.labelIdle'] = '#_("draganddrop.filepond.labelIdle")';
+demyo.l10n['draganddrop.filepond.labelTapToCancel'] = '#_("draganddrop.filepond.labelTapToCancel")';
+demyo.l10n['draganddrop.filepond.labelTapToRetry'] = '#_("draganddrop.filepond.labelTapToRetry")';
+demyo.l10n['draganddrop.filepond.labelTapToUndo'] = '#_("draganddrop.filepond.labelTapToUndo")';
 		</script>
 
 	</head>
