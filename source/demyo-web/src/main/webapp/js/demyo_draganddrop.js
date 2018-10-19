@@ -39,30 +39,24 @@ $(function () {
 		labelTapToRetry: demyo.l10n['draganddrop.filepond.labelTapToRetry'],
 		labelTapToUndo: demyo.l10n['draganddrop.filepond.labelTapToUndo']
 	});
-	// TODO: when cancelling, revert all files
 
-	// TODO: add handler on the body element (if one of the quicktasks exists)
-	
-	// TODO: this should be extracted to a method:
-	// handleDndUpload(selector, formAction, withMainImage, withOtherImages, labels)
-	$('#qt-add-images-to-album').click(function () {
+	var dndUploadHandler = (formAction, withMainImage, withOtherImages, labels) => {
 		var dialog = $('#filepond-dialog');
 		if (dialog.length) {
 			console.log('The DnD dialog already exists, not doing anything');
 			return;
 		}
 		
-		var albumId = $('#album_id').val();
 		dialog = $('<dialog id="filepond-dialog" class="mdl-dialog"></dialog>');
-		var form = $('<form method="post" action="' + contextRoot + 'albums/' + albumId + '/filepond"></form>');
+		var form = $('<form method="post" action="' + formAction + '"></form>');
 		form.append('<h4 class="mdl-dialog__title">' + demyo.l10n['draganddrop.dialog.title'] + '</h4>');
 		form.append('<div class="mdl-dialog__content">' +
 				'<div class="dem-form-value__field">' +
-					'<label class="dem-form__label">' + 'TODO: cover' + '</label>' +
+					'<label class="dem-form__label">' + labels.mainImageLabel + '</label>' +
 					'<div class="dem-form__value"><input type="file" name="filePondMainImage" class="filepond"></div>' +
 				'</div>' +
 				'<div class="dem-form-value__field">' +
-					'<label class="dem-form__label">' + 'TODO: other images' + '</label>' +
+					'<label class="dem-form__label">' + labels.otherImagesLabel + '</label>' +
 					'<div class="dem-form__value"><input type="file" name="filePondOtherImage" class="filepond" multiple></div>' +
 				'</div>'
 			);
@@ -98,9 +92,24 @@ $(function () {
 				item.removeFiles();
 			});
 			dialog.remove();
-		})
+		});
 		dialog.get(0).showModal();
 		return false;
+	};
+
+	// TODO: add handler on the body element (if one of the quicktasks exists)
+	
+	$('#qt-add-images-to-album').click(() => {
+		var albumId = $('#album_id').val();
+		return dndUploadHandler(
+			contextRoot + 'albums/' + albumId + '/filepond',
+			true,
+			true,
+			{
+				mainImageLabel: 'TODO: cover',
+				otherImagesLabel: 'TODO: other images',
+			}
+		);
 	});
 });
 })(jQuery);
