@@ -233,6 +233,22 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	@Override
 	public String getIdentifyingName() {
+		StringBuilder sb = getQualifiedNumber();
+
+		if (sb.length() > 0) {
+			sb.append(" - ");
+		}
+		sb.append(title);
+
+		return sb.toString();
+	}
+
+	/**
+	 * Returns a formatted version of the combined cycle, number and suffix.
+	 * 
+	 * @return A working StringBuilder. Never <code>null</code>.
+	 */
+	private StringBuilder getQualifiedNumber() {
 		StringBuilder sb = new StringBuilder();
 
 		if (cycle != null) {
@@ -246,17 +262,11 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 		}
 		if (numberSuffix != null) {
 			if (sb.length() > 0) {
-				sb.append(" - ");
+				sb.append(" ");
 			}
 			sb.append(numberSuffix);
 		}
-
-		if (sb.length() > 0) {
-			sb.append(" - ");
-		}
-		sb.append(title);
-
-		return sb.toString();
+		return sb;
 	}
 
 	/**
@@ -273,7 +283,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 		sb.append(series.getIdentifyingName())//
 				.append(" ")//
-				.append(getIdentifyingName());
+				.append(getQualifiedNumber());
 
 		return sb.toString();
 	}
