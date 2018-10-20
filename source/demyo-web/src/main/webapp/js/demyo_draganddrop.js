@@ -72,7 +72,6 @@ $(function () {
 		// Register the events
 		$('.confirm', dialog).click(function () {
 			$('form', dialog).submit();
-			dialog.get(0).close();
 		});
 		$('.cancel', dialog).click(function () {
 			dialog.get(0).close();
@@ -86,11 +85,8 @@ $(function () {
 			dialogPolyfill.registerDialog(dialog.get(0));
 		}
 		dialog.on('close', () => {
-			ponds.forEach(function (item) {
-				// TODO: this doesn't seem to revert the files
-				// Maybe this is related to https://github.com/pqina/filepond/issues/47 ?
-				item.removeFiles();
-			});
+			// FilePond doesn't seem to expose an API to revert the files so we do it with a bit of a hack
+			$('.filepond--action-revert-item-processing').click();
 			dialog.remove();
 		});
 		dialog.get(0).showModal();
