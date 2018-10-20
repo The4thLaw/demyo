@@ -40,7 +40,7 @@ $(function () {
 		labelTapToUndo: demyo.l10n['draganddrop.filepond.labelTapToUndo']
 	});
 
-	var dndUploadHandler = (formAction, withMainImage, withOtherImages, labels) => {
+	var dndUploadHandler = function(formAction, withMainImage, withOtherImages, labels) {
 		var dialog = $('#filepond-dialog');
 		if (dialog.length) {
 			console.log('The DnD dialog already exists, not doing anything');
@@ -84,7 +84,7 @@ $(function () {
 		if (!dialog.get(0).showModal) {
 			dialogPolyfill.registerDialog(dialog.get(0));
 		}
-		dialog.on('close', () => {
+		dialog.on('close', function() {
 			// FilePond doesn't seem to expose an API to revert the files so we do it with a bit of a hack
 			$('.filepond--action-revert-item-processing').click();
 			dialog.remove();
@@ -98,7 +98,7 @@ $(function () {
 
 	// If there is a handler, activate it when something is dragged over the page body
 	if ($('.dnd-handler').length > 0) {
-		$('body')[0].addEventListener("dragenter", (e) => {
+		$('body')[0].addEventListener("dragenter", function(e) {
 			e.preventDefault();
 			if ($('#filepond-dialog').length <= 0) {
 				$('.dnd-handler').click();
@@ -108,7 +108,7 @@ $(function () {
 	}
 	
 	// Specific handler for Albums
-	$('#qt-add-images-to-album').click(() => {
+	$('#qt-add-images-to-album').click(function() {
 		var albumId = $('#album_id').val();
 		return dndUploadHandler(
 			contextRoot + 'albums/' + albumId + '/filepond',
