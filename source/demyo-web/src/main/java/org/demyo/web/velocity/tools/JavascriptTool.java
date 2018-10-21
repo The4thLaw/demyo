@@ -76,15 +76,20 @@ public class JavascriptTool {
 	static {
 		KNOWN_SCRIPTS = new HashMap<String, Script>();
 
-		addScript(new Script("TinyMCE", "vendor/tinymce/tinymce.min.js"));
+		// Polyfills
+		addScript(new Script("Filepond-Polyfill", "vendor/filepond-polyfill.min.js"));
 		addScript(new Script("Dialog-Polyfill", "vendor/dialog-polyfill-0.4.6.js"));
-		addScript(new Script("Material", "vendor/material-1.3.0.js", KNOWN_SCRIPTS.get("Dialog-Polyfill")));
+		addScript(new Script("Promise-Polyfill", "vendor/es6-promise.auto.min.js"));
 		addScript(new Script("PrefixFree", "vendor/prefixfree.min.js"));
+		// Dependencies
+		addScript(new Script("TinyMCE", "vendor/tinymce/tinymce.min.js"));
+		addScript(new Script("Material", "vendor/material-1.3.0.js", KNOWN_SCRIPTS.get("Dialog-Polyfill")));
 		addScript(new Script("JQuery-Core", "vendor/jquery-3.1.1.min.js"));
 		addScript(new Script("JQuery", "vendor/jquery-migrate-3.0.0.js", KNOWN_SCRIPTS.get("JQuery-Core")));
 		addScript(new Script("JQuery.StayInWebApp", "vendor/jquery.stayInWebApp.js", KNOWN_SCRIPTS.get("JQuery")));
 		addScript(new Script("Filepond-Plugin-Validate", "vendor/filepond-plugin-file-validate-type.min.js"));
-		addScript(new Script("Filepond", "vendor/filepond.min.js", KNOWN_SCRIPTS.get("Filepond-Plugin-Validate")));
+		addScript(new Script("Filepond", "vendor/filepond.min.js", KNOWN_SCRIPTS.get("Filepond-Plugin-Validate"),
+				KNOWN_SCRIPTS.get("Filepond-Polyfill"), KNOWN_SCRIPTS.get("Promise-Polyfill")));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery.StayInWebApp"),
 				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
 		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
