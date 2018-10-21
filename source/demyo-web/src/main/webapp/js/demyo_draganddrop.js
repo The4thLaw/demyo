@@ -50,16 +50,22 @@ $(function () {
 		dialog = $('<dialog id="filepond-dialog" class="mdl-dialog"></dialog>');
 		var form = $('<form method="post" action="' + formAction + '"></form>');
 		form.append('<h4 class="mdl-dialog__title">' + demyo.l10n['draganddrop.dialog.title'] + '</h4>');
-		form.append('<div class="mdl-dialog__content">' +
-				'<div class="dem-form-value__field">' +
+		var content = $('<div class="mdl-dialog__content"></div>');
+		if (withMainImage) {
+			content.append('<div class="dem-form-value__field">' +
 					'<label class="dem-form__label">' + labels.mainImageLabel + '</label>' +
 					'<div class="dem-form__value"><input type="file" name="filePondMainImage" class="filepond"></div>' +
-				'</div>' +
-				'<div class="dem-form-value__field">' +
+				'</div>'
+			);
+		}
+		if (withOtherImages) {
+			content.append('<div class="dem-form-value__field">' +
 					'<label class="dem-form__label">' + labels.otherImagesLabel + '</label>' +
 					'<div class="dem-form__value"><input type="file" name="filePondOtherImage" class="filepond" multiple></div>' +
 				'</div>'
 			);
+		}
+		form.append(content);
 		dialog.append(form);
 		dialog.append('<div class="mdl-dialog__actions">' +
 				'<button type="button" class="mdl-button mdl-button--primary cancel">' + demyo.l10n['draganddrop.button.cancel'] + '</button>' +
@@ -94,7 +100,7 @@ $(function () {
 	};
 
 	// Add a marker class to all DnD handlers for convenience in the next steps
-	$('#qt-add-images-to-album').addClass('dnd-handler');
+	$('#qt-add-images-to-album, #qt-add-images-to-derivative').addClass('dnd-handler');
 
 	// If there is a handler, activate it when something is dragged over the page body
 	if ($('.dnd-handler').length > 0) {
@@ -117,6 +123,19 @@ $(function () {
 			{
 				mainImageLabel: demyo.l10n['field.Album.cover'],
 				otherImagesLabel: demyo.l10n['field.Album.images']
+			}
+		);
+	});
+	
+	// Specific handler for Derivatives
+	$('#qt-add-images-to-derivative').click(function() {
+		var derivativeId = $('#derivative_id').val();
+		return dndUploadHandler(
+			contextRoot + 'derivatives/' + derivativeId + '/filepond',
+			false,
+			true,
+			{
+				otherImagesLabel: demyo.l10n['field.Derivative.images']
 			}
 		);
 	});

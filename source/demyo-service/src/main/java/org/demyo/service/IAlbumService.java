@@ -29,13 +29,15 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	List<Album> findBySeriesId(Long seriesId);
 
 	/**
-	 * Recovers images from FilePond and use them for the specified Album. The cover replaces any existing one. The
-	 * other images are added to the current one.
+	 * Recovers images from FilePond and uses them for the specified Album.
+	 * <p>
+	 * The cover replaces any existing one. The other images are added to the current one.
+	 * </p>
 	 * 
 	 * @param albumId The ID of the Album to change.
 	 * @param coverFilePondId The FilePond ID of the cover to recover.
 	 * @param otherFilePondIds The FilePond IDs of the other images to recover.
-	 * @throws DemyoException In ase of error during recovery.
+	 * @throws DemyoException In case of error during recovery.
 	 */
 	void recoverFromFilePond(long albumId, String coverFilePondId, String[] otherFilePondIds) throws DemyoException;
 
