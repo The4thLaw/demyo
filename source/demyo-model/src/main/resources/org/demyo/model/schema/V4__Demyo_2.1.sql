@@ -22,10 +22,6 @@ CREATE TABLE readers (
 );
 CREATE INDEX ON readers(name);
 
--- Create a default reader
-
-INSERT INTO readers(name) VALUES ('Demyo');
-
 -- Each reader has favourites series and albums
 
 CREATE TABLE readers_favourite_series (

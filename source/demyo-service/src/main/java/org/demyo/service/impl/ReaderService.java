@@ -21,6 +21,7 @@ import org.demyo.model.Reader;
 import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ISeriesService;
+import org.demyo.service.ITranslationService;
 
 /**
  * Implements the contract defined by {@link ISeriesService}.
@@ -35,6 +36,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	private IReaderContext context;
 	@Autowired
 	private IAlbumRepo albumRepo;
+	@Autowired
+	private ITranslationService translationService;
 
 	/**
 	 * Default constructor.
@@ -66,9 +69,20 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Transactional(readOnly = true)
 	@Override
 	public Reader getUniqueReader() {
-		if (repo.count() != 1) {
+		long count = repo.count();
+		if (count == 0) {
+			// Creating the reader here, rather than in the migration script, has some advantages:
+			// - It allows generating a reader with a locale-sensitive default name
+			// - It acts as a failsafe if the Reader somehow got missing
+			// - It deals with imports of Demyo 1.x and 2.0, which didn't have this data
+			Reader defaultReader = new Reader();
+			defaultReader.setName(translationService.translate("field.Reader.name.default"));
+			save(defaultReader);
+		} else if (count != 1) {
 			return null;
 		}
+		// TODO: this won't be very efficient if there is a large number of readers.
+		// It would be best to find with a limit
 		long uniqueId = repo.findAll().iterator().next().getId();
 		return getByIdForView(uniqueId);
 	}
