@@ -343,14 +343,18 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			while (true) {
 				if (!alwaysNumber) {
 					currentDescription = baseImageName;
-					alwaysNumber = true;
 				} else {
 					currentDescription = baseImageName + " " + currentNumber;
-					currentNumber++;
 				}
 				if (!imageNames.contains(currentDescription)) {
 					break;
 				}
+				// If we were numbering already, increase the counter. If not, we want to start at 1
+				if (alwaysNumber) {
+					currentNumber++;
+				}
+				// Next time, we should consider numbering no matter what
+				alwaysNumber = true;
 				LOGGER.debug("{} already exists, searching further", currentDescription);
 			}
 			LOGGER.debug("Found a suitable image name: {}", currentDescription);
