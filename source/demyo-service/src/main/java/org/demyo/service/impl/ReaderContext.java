@@ -39,14 +39,20 @@ public class ReaderContext implements IReaderContext {
 		favouriteAlbumIds = new HashSet<>();
 		readingListIds = new HashSet<>();
 
-		for (Series s : r.getFavouriteSeries()) {
-			favouriteSeriesIds.add(s.getId());
+		if (r.getFavouriteSeries() != null) {
+			for (Series s : r.getFavouriteSeries()) {
+				favouriteSeriesIds.add(s.getId());
+			}
 		}
-		for (Album a : r.getFavouriteAlbums()) {
-			favouriteAlbumIds.add(a.getId());
+		if (r.getFavouriteAlbums() != null) {
+			for (Album a : r.getFavouriteAlbums()) {
+				favouriteAlbumIds.add(a.getId());
+			}
 		}
-		for (Album a : r.getReadingList()) {
-			readingListIds.add(a.getId());
+		if (r.getReadingList() != null) {
+			for (Album a : r.getReadingList()) {
+				readingListIds.add(a.getId());
+			}
 		}
 	}
 
