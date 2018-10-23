@@ -87,9 +87,9 @@ public class JavascriptTool {
 		addScript(new Script("JQuery-Core", "vendor/jquery-3.1.1.min.js"));
 		addScript(new Script("JQuery", "vendor/jquery-migrate-3.0.0.js", KNOWN_SCRIPTS.get("JQuery-Core")));
 		addScript(new Script("JQuery.StayInWebApp", "vendor/jquery.stayInWebApp.js", KNOWN_SCRIPTS.get("JQuery")));
-		addScript(new Script("Filepond-Plugin-Validate", "vendor/filepond-plugin-file-validate-type.min.js"));
-		addScript(new Script("Filepond", "vendor/filepond.min.js", KNOWN_SCRIPTS.get("Filepond-Plugin-Validate"),
+		addScript(new Script("Filepond-Plugin-Validate", "vendor/filepond-plugin-file-validate-type.min.js",
 				KNOWN_SCRIPTS.get("Filepond-Polyfill"), KNOWN_SCRIPTS.get("Promise-Polyfill")));
+		addScript(new Script("Filepond", "vendor/filepond.min.js", KNOWN_SCRIPTS.get("Filepond-Plugin-Validate")));
 		addScript(new Script("Demyo.Core", "demyo_core.js", KNOWN_SCRIPTS.get("JQuery.StayInWebApp"),
 				KNOWN_SCRIPTS.get("Material"), KNOWN_SCRIPTS.get("PrefixFree")));
 		addScript(new Script("Chosen", "vendor/chosen.jquery.min.js", KNOWN_SCRIPTS.get("JQuery")));
