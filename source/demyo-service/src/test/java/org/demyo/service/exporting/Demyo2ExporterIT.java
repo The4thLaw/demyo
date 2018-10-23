@@ -43,7 +43,6 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 		expFile.delete();
 		LOGGER.error(expContent);
 
-		assertThat(expContent).contains("<reader id=\"1\" name=\"Demyo\"/>");
 		assertThat(expContent).contains("<reader id=\"2\" name=\"Sarah\" colour=\"#FF69B4\">");
 		assertThat(expContent).contains("<favourite-series ref=\"1\"/>");
 		assertThat(expContent).contains("<reading-list-entry ref=\"2\"/>");
