@@ -11,11 +11,12 @@
 <p>#_('page.About.aboutLibs.description')</p>
 <ul>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://harvesthq.github.io/chosen/">Chosen</a>', 'Chosen Team', '<a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>'])</li>
-	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://github.com/GoogleChrome/dialog-polyfill/">Dialog Polyfill</a>,', 'Chromium Authors', '<a href="https://github.com/GoogleChrome/dialog-polyfill/blob/master/LICENSE">BSD 3-clause license</a>'])</li>
-	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://getmdl.io/">Material Design Lite</a>', 'Google', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://github.com/GoogleChrome/dialog-polyfill/">Dialog Polyfill</a>', 'Chromium Authors', '<a href="https://github.com/GoogleChrome/dialog-polyfill/blob/master/LICENSE">BSD 3-clause license</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://pqina.nl/filepond/">FilePond</a>', 'Rik Schennink', '<a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>'])</li>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://www.eclipse.org/jetty/">Jetty</a>', 'Eclipse Foundation', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a> &amp; <a href="https://eclipse.org/org/documents/epl-v10.php">Eclipse Public License</a>'])</li>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://jquery.com/">JQuery</a>', 'JQuery Team', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="http://lesscss.org/">Less</a>', 'Less Team', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
+	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://getmdl.io/">Material Design Lite</a>', 'Google', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://leaverou.github.io/prefixfree/">PrefixFree</a>', 'Lea Verou', '<a href="https://www.opensource.org/licenses/mit-license.php">MIT License</a>'])</li>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://spring.io/">Spring Framework</a>', 'Pivotal Software', '<a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>'])</li>
 	<li>#_p('page.About.aboutLibs.lib', ['<a href="https://www.tinymce.com/">TinyMCE</a>', 'Ephox Corporation', '<a href="https://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public License</a>'])</li>
