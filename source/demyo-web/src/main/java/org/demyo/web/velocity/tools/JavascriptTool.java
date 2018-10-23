@@ -78,7 +78,7 @@ public class JavascriptTool {
 
 		// Polyfills
 		addScript(new Script("Filepond-Polyfill", "vendor/filepond-polyfill.min.js"));
-		addScript(new Script("Dialog-Polyfill", "vendor/dialog-polyfill-0.4.6.js"));
+		addScript(new Script("Dialog-Polyfill", "vendor/dialog-polyfill.js"));
 		addScript(new Script("Promise-Polyfill", "vendor/es6-promise.auto.min.js"));
 		addScript(new Script("PrefixFree", "vendor/prefixfree.min.js"));
 		// Dependencies
