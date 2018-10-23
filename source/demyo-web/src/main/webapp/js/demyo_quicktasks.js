@@ -39,7 +39,7 @@ $(function() {
 			if (!dialog.showModal) {
 				dialogPolyfill.registerDialog(dialog.get(0));
 			}
-			dialog.on('close', () => {
+			dialog.on('close', function() {
 				dialog.remove();
 			});
 			dialog.get(0).showModal();
