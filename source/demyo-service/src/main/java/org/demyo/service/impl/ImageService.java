@@ -346,12 +346,12 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				} else {
 					currentDescription = baseImageName + " " + currentNumber;
 				}
-				if (!imageNames.contains(currentDescription)) {
-					break;
-				}
 				// If we were numbering already, increase the counter. If not, we want to start at 1
 				if (alwaysNumber) {
 					currentNumber++;
+				}
+				if (!imageNames.contains(currentDescription)) {
+					break;
 				}
 				// Next time, we should consider numbering no matter what
 				alwaysNumber = true;
