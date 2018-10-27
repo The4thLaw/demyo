@@ -39,6 +39,10 @@ public enum DemyoErrorCode {
 	IMAGE_UPLOAD_ERROR(12002),
 	/** Error while processing an image. */
 	IMAGE_IO_ERROR(12003),
+	/** The temporary image from FilePond doesn't exist. */
+	IMAGE_FILEPOND_MISSING(12004),
+	/** If there is more than one image, alwaysNumber should be set to <code>true</code>. */
+	IMAGE_FILEPOND_RENUMBER_MORE_THAN_ONE(12005),
 	/** The system could not save the configuration. */
 	CONFIG_CANNOT_SAVE(13000),
 	/** The system could not load the configuration. */

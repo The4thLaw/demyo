@@ -1,6 +1,7 @@
 #setPageTitleParams('title.view.album' $album.title)
 
 $javascript.load('Demyo.Readers')
+$javascript.load('Demyo.DragAndDrop')
 
 $quickTasks.add({
 	"id" : "qt-fave-album",
@@ -35,6 +36,11 @@ $quickTasks.add({
 })
 ##TODO: QT to add a derivative to the Album
 ##TODO: QT to lend album
+$quickTasks.add({
+	"id" : "qt-add-images-to-album",
+	"url" : "#",
+	"icon": "camera+add"
+})
 
 #if (!$album.wishlist)
 ## No need to include the button to remove if we cannot add dynamically
@@ -50,6 +56,7 @@ $quickTasks.add({
 
 #thumbnail($album.cover, {'classes':'model-identification'})
 
+<input type="hidden" id="album_id" value="$album.id">
 <input type="hidden" id="is_favourite" value="$demyoReaderService.context.isFavouriteAlbum($album)">
 <input type="hidden" id="is_readingList" value="$demyoReaderService.context.isAlbumInReadingList($album)">
 

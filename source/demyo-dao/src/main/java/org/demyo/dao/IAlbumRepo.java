@@ -16,7 +16,7 @@ import org.demyo.model.Series;
 @Repository
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	/**
-	 * Returns a model for vies.
+	 * Returns a model for the view page.
 	 * 
 	 * @param id The identifier of the model.
 	 * @return The fetched model.

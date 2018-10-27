@@ -8,6 +8,7 @@ import java.util.concurrent.Future;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -26,16 +27,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Predicate;
 
+import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IMetaSeriesRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
+import org.demyo.model.Image;
 import org.demyo.model.MetaSeries;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IConfigurationService;
+import org.demyo.service.IImageService;
+import org.demyo.service.ITranslationService;
 
 /**
  * Implements the contract defined by {@link IAlbumService}.
@@ -54,6 +59,10 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	private ISeriesRepo seriesRepo;
 	@Autowired
 	private IReaderRepo readerRepo;
+	@Autowired
+	private IImageService imageService;
+	@Autowired
+	private ITranslationService translationService;
 
 	/**
 	 * Default constructor.
@@ -222,5 +231,28 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		}
 
 		return id;
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public void recoverFromFilePond(long albumId, String coverFilePondId, String[] otherFilePondIds)
+			throws DemyoException {
+		Album album = getByIdForEdition(albumId);
+		String baseName = album.getBaseNameForImages();
+
+		if (!StringUtils.isBlank(coverFilePondId)) {
+			String coverBaseName = translationService.translateVargs("special.filepond.Album.baseCoverName", baseName);
+			Image cover = imageService.recoverImagesFromFilePond(coverBaseName, false, coverFilePondId).get(0);
+			album.setCover(cover);
+		}
+
+		if (otherFilePondIds != null && otherFilePondIds.length > 0) {
+			String imageBaseName = translationService.translateVargs("special.filepond.Album.baseImageName", baseName);
+			List<Image> images = imageService.recoverImagesFromFilePond(imageBaseName, true, otherFilePondIds);
+			album.getImages().addAll(images);
+		}
+
+		save(album);
 	}
 }

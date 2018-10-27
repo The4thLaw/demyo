@@ -59,4 +59,17 @@ public interface IImageService extends IModelService<Image> {
 	 */
 	void clearCachedThumbnails();
 
+	/**
+	 * Retrieves images from FilePond and stores them in the database.
+	 * 
+	 * @param baseImageName The base image description to use. Depending on <code>alwaysNumber</code>, may be suffixed
+	 *            by a number.
+	 * @param alwaysNumber Whether to always suffix the base image name or not.
+	 * @param filePondIds The IDs of the FilePond files to recover.
+	 * @return The recovered images.
+	 * @throws DemyoException In case of issue while retrieving the files.
+	 */
+	List<Image> recoverImagesFromFilePond(String baseImageName, boolean alwaysNumber, String... filePondIds)
+			throws DemyoException;
+
 }

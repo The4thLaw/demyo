@@ -1,9 +1,8 @@
-// v0.4.6 - 2017-01-24
 (function() {
 
   // nb. This is for IE10 and lower _only_.
   var supportCustomEvent = window.CustomEvent;
-  if (!supportCustomEvent || typeof supportCustomEvent == 'object') {
+  if (!supportCustomEvent || typeof supportCustomEvent === 'object') {
     supportCustomEvent = function CustomEvent(event, x) {
       x = x || {};
       var ev = document.createEvent('CustomEvent');
@@ -63,7 +62,7 @@
    * @param {Element} el to blur
    */
   function safeBlur(el) {
-    if (el && el.blur && el != document.body) {
+    if (el && el.blur && el !== document.body) {
       el.blur();
     }
   }
@@ -75,11 +74,22 @@
    */
   function inNodeList(nodeList, node) {
     for (var i = 0; i < nodeList.length; ++i) {
-      if (nodeList[i] == node) {
+      if (nodeList[i] === node) {
         return true;
       }
     }
     return false;
+  }
+
+  /**
+   * @param {HTMLFormElement} el to check
+   * @return {boolean} whether this form has method="dialog"
+   */
+  function isFormMethodDialog(el) {
+    if (!el || !el.hasAttribute('method')) {
+      return false;
+    }
+    return el.getAttribute('method').toLowerCase() === 'dialog';
   }
 
   /**
@@ -118,6 +128,7 @@
       }.bind(this);
       var timeout;
       var delayModel = function(ev) {
+        if (ev.target !== dialog) { return; }  // not for a child element
         var cand = 'DOMNodeRemoved';
         removed |= (ev.type.substr(0, cand.length) === cand);
         window.clearTimeout(timeout);
@@ -360,7 +371,7 @@
         }
         var cssTop = rule.style.getPropertyValue('top');
         var cssBottom = rule.style.getPropertyValue('bottom');
-        if ((cssTop && cssTop != 'auto') || (cssBottom && cssBottom != 'auto')) {
+        if ((cssTop && cssTop !== 'auto') || (cssBottom && cssBottom !== 'auto')) {
           return true;
         }
       }
@@ -370,7 +381,7 @@
 
   dialogPolyfill.needsCentering = function(dialog) {
     var computedStyle = window.getComputedStyle(dialog);
-    if (computedStyle.position != 'absolute') {
+    if (computedStyle.position !== 'absolute') {
       return false;
     }
 
@@ -378,9 +389,10 @@
     // WebKit/Blink, checking computedStyle.top == 'auto' is sufficient, but
     // Firefox returns the used value. So we do this crazy thing instead: check
     // the inline style and then go through CSS rules.
-    if ((dialog.style.top != 'auto' && dialog.style.top != '') ||
-        (dialog.style.bottom != 'auto' && dialog.style.bottom != ''))
+    if ((dialog.style.top !== 'auto' && dialog.style.top !== '') ||
+        (dialog.style.bottom !== 'auto' && dialog.style.bottom !== '')) {
       return false;
+    }
     return !dialogPolyfill.isInlinePositionSetByStylesheet(dialog);
   };
 
@@ -388,7 +400,7 @@
    * @param {!Element} element to force upgrade
    */
   dialogPolyfill.forceRegisterDialog = function(element) {
-    if (element.showModal) {
+    if (window.HTMLDialogElement || element.showModal) {
       console.warn('This browser already supports <dialog>, the polyfill ' +
           'may not work correctly', element);
     }
@@ -424,9 +436,10 @@
     this.overlay = document.createElement('div');
     this.overlay.className = '_dialog_overlay';
     this.overlay.addEventListener('click', function(e) {
+      this.forwardTab_ = undefined;
       e.stopPropagation();
       checkDOM([]);  // sanity-check DOM
-    });
+    }.bind(this));
 
     this.handleKey_ = this.handleKey_.bind(this);
     this.handleFocus_ = this.handleFocus_.bind(this);
@@ -445,10 +458,8 @@
               continue;
             } else if (c.localName === 'dialog') {
               removed.push(c);
-            } else {
-              var q = c.querySelector('dialog');
-              q && removed.push(q);
             }
+            removed = removed.concat(c.querySelectorAll('dialog'));
           }
         });
         removed.length && checkDOM(removed);
@@ -522,12 +533,15 @@
     event.stopPropagation();
     safeBlur(/** @type {Element} */ (event.target));
 
-    var dialog = this.pendingDialogStack[0].dialog;
+    if (this.forwardTab_ === undefined) { return; }  // move focus only from a tab key
+
+    var dpi = this.pendingDialogStack[0];
+    var dialog = dpi.dialog;
     var position = dialog.compareDocumentPosition(event.target);
     if (position & Node.DOCUMENT_POSITION_PRECEDING) {
-      if (this.forwardTab_) {
+      if (this.forwardTab_) {  // forward
         dpi.focus_();
-      } else {
+      } else {  // backwards
         document.documentElement.focus();
       }
     } else {
@@ -596,7 +610,7 @@
    */
   dialogPolyfill.DialogManager.prototype.removeDialog = function(dpi) {
     var index = this.pendingDialogStack.indexOf(dpi);
-    if (index == -1) { return; }
+    if (index === -1) { return; }
 
     this.pendingDialogStack.splice(index, 1);
     if (this.pendingDialogStack.length === 0) {
@@ -606,33 +620,107 @@
   };
 
   dialogPolyfill.dm = new dialogPolyfill.DialogManager();
+  dialogPolyfill.formSubmitter = null;
+  dialogPolyfill.useValue = null;
 
   /**
-   * Global form 'dialog' method handler. Closes a dialog correctly on submit
-   * and possibly sets its return value.
+   * Installs global handlers, such as click listers and native method overrides. These are needed
+   * even if a no dialog is registered, as they deal with <form method="dialog">.
    */
-  document.addEventListener('submit', function(ev) {
-    var target = ev.target;
-    if (!target || !target.hasAttribute('method')) { return; }
-    if (target.getAttribute('method').toLowerCase() !== 'dialog') { return; }
-    ev.preventDefault();
+  if (window.HTMLDialogElement === undefined) {
 
-    var dialog = findNearestDialog(/** @type {Element} */ (ev.target));
-    if (!dialog) { return; }
-
-    // FIXME: The original event doesn't contain the element used to submit the
-    // form (if any). Look in some possible places.
-    var returnValue;
-    var cands = [document.activeElement, ev.explicitOriginalTarget];
-    var els = ['BUTTON', 'INPUT'];
-    cands.some(function(cand) {
-      if (cand && cand.form == ev.target && els.indexOf(cand.nodeName.toUpperCase()) != -1) {
-        returnValue = cand.value;
-        return true;
+    /**
+     * If HTMLFormElement translates method="DIALOG" into 'get', then replace the descriptor with
+     * one that returns the correct value.
+     */
+    var testForm = document.createElement('form');
+    testForm.setAttribute('method', 'dialog');
+    if (testForm.method !== 'dialog') {
+      var methodDescriptor = Object.getOwnPropertyDescriptor(HTMLFormElement.prototype, 'method');
+      if (methodDescriptor) {
+        // nb. Some older iOS and older PhantomJS fail to return the descriptor. Don't do anything
+        // and don't bother to update the element.
+        var realGet = methodDescriptor.get;
+        methodDescriptor.get = function() {
+          if (isFormMethodDialog(this)) {
+            return 'dialog';
+          }
+          return realGet.call(this);
+        };
+        var realSet = methodDescriptor.set;
+        methodDescriptor.set = function(v) {
+          if (typeof v === 'string' && v.toLowerCase() === 'dialog') {
+            return this.setAttribute('method', v);
+          }
+          return realSet.call(this, v);
+        };
+        Object.defineProperty(HTMLFormElement.prototype, 'method', methodDescriptor);
       }
-    });
-    dialog.close(returnValue);
-  }, true);
+    }
+
+    /**
+     * Global 'click' handler, to capture the <input type="submit"> or <button> element which has
+     * submitted a <form method="dialog">. Needed as Safari and others don't report this inside
+     * document.activeElement.
+     */
+    document.addEventListener('click', function(ev) {
+      dialogPolyfill.formSubmitter = null;
+      dialogPolyfill.useValue = null;
+      if (ev.defaultPrevented) { return; }  // e.g. a submit which prevents default submission
+
+      var target = /** @type {Element} */ (ev.target);
+      if (!target || !isFormMethodDialog(target.form)) { return; }
+
+      var valid = (target.type === 'submit' && ['button', 'input'].indexOf(target.localName) > -1);
+      if (!valid) {
+        if (!(target.localName === 'input' && target.type === 'image')) { return; }
+        // this is a <input type="image">, which can submit forms
+        dialogPolyfill.useValue = ev.offsetX + ',' + ev.offsetY;
+      }
+
+      var dialog = findNearestDialog(target);
+      if (!dialog) { return; }
+
+      dialogPolyfill.formSubmitter = target;
+    }, false);
+
+    /**
+     * Replace the native HTMLFormElement.submit() method, as it won't fire the
+     * submit event and give us a chance to respond.
+     */
+    var nativeFormSubmit = HTMLFormElement.prototype.submit;
+    var replacementFormSubmit = function () {
+      if (!isFormMethodDialog(this)) {
+        return nativeFormSubmit.call(this);
+      }
+      var dialog = findNearestDialog(this);
+      dialog && dialog.close();
+    };
+    HTMLFormElement.prototype.submit = replacementFormSubmit;
+
+    /**
+     * Global form 'dialog' method handler. Closes a dialog correctly on submit
+     * and possibly sets its return value.
+     */
+    document.addEventListener('submit', function(ev) {
+      var form = /** @type {HTMLFormElement} */ (ev.target);
+      if (!isFormMethodDialog(form)) { return; }
+      ev.preventDefault();
+
+      var dialog = findNearestDialog(form);
+      if (!dialog) { return; }
+
+      // Forms can only be submitted via .submit() or a click (?), but anyway: sanity-check that
+      // the submitter is correct before using its value as .returnValue.
+      var s = dialogPolyfill.formSubmitter;
+      if (s && s.form === form) {
+        dialog.close(dialogPolyfill.useValue || s.value);
+      } else {
+        dialog.close();
+      }
+      dialogPolyfill.formSubmitter = null;
+    }, true);
+  }
 
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;

@@ -26,12 +26,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.SortComparator;
+
 import org.demyo.model.constraints.OneNotNull;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
-
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.SortComparator;
 
 /**
  * Derivatives of {@link Album}s or {@link Series}.
@@ -43,9 +43,7 @@ import org.hibernate.annotations.SortComparator;
 		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
 @NamedEntityGraphs({
 		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
-{ @NamedAttributeNode("artist"),
-		@NamedAttributeNode("images"),
-		@NamedAttributeNode("prices") }) })
+		{ @NamedAttributeNode("artist"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") }) })
 @OneNotNull(fields = { "series.id", "album.id" })
 public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
 	/** The parent {@link Series}. */
@@ -147,6 +145,26 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 		if (album != null) {
 			sb.append(album.getIdentifyingName()).append(" - ");
 		}
+		sb.append(type.getIdentifyingName());
+		if (source != null) {
+			sb.append(" ").append(source.getIdentifyingName());
+		}
+		return sb.toString();
+	}
+
+	public String getBaseNameForImages() {
+		StringBuilder sb = new StringBuilder();
+
+		if (album != null) {
+			sb.append(album.getBaseNameForImages());
+		} else if (series != null) {
+			sb.append(series.getIdentifyingName());
+		}
+
+		if (sb.length() > 0) {
+			sb.append(" - ");
+		}
+
 		sb.append(type.getIdentifyingName());
 		if (source != null) {
 			sb.append(" ").append(source.getIdentifyingName());

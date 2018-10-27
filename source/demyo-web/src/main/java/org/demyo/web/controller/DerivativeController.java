@@ -1,9 +1,27 @@
 package org.demyo.web.controller;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.PropertyEditorRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.querydsl.core.types.Predicate;
+
+import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
 import org.demyo.model.Image;
 import org.demyo.model.QDerivative;
@@ -14,17 +32,6 @@ import org.demyo.service.IDerivativeTypeService;
 import org.demyo.service.IImageService;
 import org.demyo.service.IModelService;
 import org.demyo.service.ISeriesService;
-import org.springframework.beans.PropertyEditorRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.querydsl.core.types.Predicate;
 
 /**
  * Controller for {@link Derivative} management.
@@ -32,6 +39,7 @@ import com.querydsl.core.types.Predicate;
 @Controller
 @RequestMapping("/derivatives")
 public class DerivativeController extends AbstractModelController<Derivative> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(DerivativeController.class);
 	private static final String REQUEST_PARAM_DERIV_TYPE = "withType";
 
 	@Autowired
@@ -72,6 +80,29 @@ public class DerivativeController extends AbstractModelController<Derivative> {
 		model.addAttribute("derivativeList", entities);
 
 		return "derivatives/index";
+	}
+
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Album.
+	 * 
+	 * @param modelId The Derivative ID.
+	 * @param otherImageIds The ID for alternate images.
+	 * @param model The view model.
+	 * @return The view name.
+	 * @throws DemyoException In case of error during recovery of the FilePond images.
+	 */
+	@PostMapping("/{modelId}/filepond")
+	public String saveFromFilePond(@PathVariable long modelId,
+			@RequestParam(value = MODEL_KEY_FILEPOND_OTHER, required = false) String[] otherImageIds, Model model)
+			throws DemyoException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Saving from FilePond: other images = {}",
+					otherImageIds != null ? Arrays.asList(otherImageIds) : null);
+		}
+
+		service.recoverFromFilePond(modelId, otherImageIds);
+
+		return redirect(model, "/derivatives/view/" + modelId);
 	}
 
 	@Override

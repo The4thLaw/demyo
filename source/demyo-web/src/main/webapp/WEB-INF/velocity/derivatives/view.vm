@@ -1,5 +1,7 @@
 #setPageTitleParams('title.view.derivative' $derivative.identifyingName)
 
+$javascript.load('Demyo.DragAndDrop')
+
 $quickTasks.add({
 	"id" : "qt-edit-derivative",
 	"url" : "../edit/$derivative.id",
@@ -11,8 +13,15 @@ $quickTasks.add({
 	"icon" : "image+delete",
 	"confirm" : true
 })
+$quickTasks.add({
+	"id" : "qt-add-images-to-derivative",
+	"url" : "#",
+	"icon": "camera+add"
+})
 
 #thumbnail($derivative.mainImage, {'classes':'model-identification'})
+
+<input type="hidden" id="derivative_id" value="$derivative.id">
 
 <div class="mdl-grid dem-field-set">
 	#@mdlGridCell([6,4,4])

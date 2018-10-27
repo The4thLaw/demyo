@@ -1,11 +1,31 @@
 package org.demyo.web.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.PropertyEditorRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.annotation.JsonView;
+import com.querydsl.core.types.Predicate;
+
+import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Image;
@@ -23,26 +43,13 @@ import org.demyo.service.IPublisherService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
 
-import org.springframework.beans.PropertyEditorRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.annotation.JsonView;
-import com.querydsl.core.types.Predicate;
-
 /**
  * Controller for {@link Album} management.
  */
 @Controller
 @RequestMapping("/albums")
 public class AlbumController extends AbstractModelController<Album> {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AlbumController.class);
 	private static final String REQUEST_PARAM_BINDING = "withBinding";
 
 	@Autowired
@@ -114,6 +121,31 @@ public class AlbumController extends AbstractModelController<Album> {
 		model.addAttribute("albumList", entities);
 
 		return "albums/index";
+	}
+
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Album.
+	 * 
+	 * @param modelId The Album ID.
+	 * @param mainImageId The ID for the cover.
+	 * @param otherImageIds The ID for alternate images.
+	 * @param model The view model.
+	 * @return The view name.
+	 * @throws DemyoException In case of error during recovery of the FilePond images.
+	 */
+	@PostMapping("/{modelId}/filepond")
+	public String saveFromFilePond(@PathVariable long modelId,
+			@RequestParam(value = MODEL_KEY_FILEPOND_MAIN, required = false) String mainImageId,
+			@RequestParam(value = MODEL_KEY_FILEPOND_OTHER, required = false) String[] otherImageIds, Model model)
+			throws DemyoException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Saving from FilePond: main image = '{}', other images = {}", mainImageId,
+					otherImageIds != null ? Arrays.asList(otherImageIds) : null);
+		}
+
+		service.recoverFromFilePond(modelId, mainImageId, otherImageIds);
+
+		return redirect(model, "/albums/view/" + modelId);
 	}
 
 	@Override

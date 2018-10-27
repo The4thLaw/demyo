@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,16 +23,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
-import org.demyo.dao.IImageRepo;
-import org.demyo.dao.IModelRepo;
-import org.demyo.model.Image;
-import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.service.IConfigurationService;
-import org.demyo.service.IImageService;
-import org.demyo.utils.io.DIOUtils;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
@@ -42,6 +33,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.common.config.SystemConfiguration;
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IImageRepo;
+import org.demyo.dao.IModelRepo;
+import org.demyo.model.Image;
+import org.demyo.model.config.ApplicationConfiguration;
+import org.demyo.service.IConfigurationService;
+import org.demyo.service.IFilePondService;
+import org.demyo.service.IImageService;
+import org.demyo.utils.io.DIOUtils;
 
 /**
  * Implements the contract defined by {@link IImageService}.
@@ -55,7 +58,10 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	private IImageRepo repo;
 	@Autowired
 	private IConfigurationService configService;
-	private File uploadDirectory;
+	@Autowired
+	private IFilePondService filePondService;
+
+	private final File uploadDirectory;
 
 	/**
 	 * Default constructor.
@@ -164,6 +170,10 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long uploadImage(@NotEmpty String originalFileName, @NotNull File imageFile) throws DemyoException {
+		return uploadImage(originalFileName, null, imageFile).getId();
+	}
+
+	private Image uploadImage(String originalFileName, String description, File imageFile) throws DemyoException {
 		// Determine the hash of the uploaded file
 		String hash;
 		try (FileInputStream data = new FileInputStream(imageFile)) {
@@ -187,7 +197,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 			if (foundImage != null) {
 				LOGGER.debug("Already existing image found with ID {}", foundImage.getId());
-				return foundImage.getId();
+				return foundImage;
 			}
 			LOGGER.debug("Already existing image was not found in the database. Uploading it as a new one...");
 			targetFile.delete();
@@ -201,9 +211,13 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		Image image = new Image();
 		image.setUrl(UPLOAD_DIRECTORY_NAME + "/" + targetFile.getName());
 
-		image.setDescription(inferDescription(originalFileName));
+		if (description == null) {
+			image.setDescription(inferDescription(originalFileName));
+		} else {
+			image.setDescription(description);
+		}
 
-		return save(image);
+		return saveAndGetModel(image);
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
@@ -300,5 +314,54 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				LOGGER.warn("Failed to delete the image at {}", path, e);
 			}
 		}
+	}
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	public List<Image> recoverImagesFromFilePond(String baseImageName, boolean alwaysNumber, String... filePondIds)
+			throws DemyoException {
+		if (filePondIds == null || filePondIds.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<Image> newImages = new ArrayList<>();
+
+		if (filePondIds.length > 1 && !alwaysNumber) {
+			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_RENUMBER_MORE_THAN_ONE);
+		}
+
+		List<Image> existingImages = repo.findByDescriptionLike(baseImageName + '%');
+		Set<String> imageNames = new HashSet<>(existingImages.size());
+		for (Image img : existingImages) {
+			imageNames.add(img.getDescription());
+		}
+
+		int currentNumber = 1;
+		for (String id : filePondIds) {
+			String currentDescription;
+			while (true) {
+				if (!alwaysNumber) {
+					currentDescription = baseImageName;
+				} else {
+					currentDescription = baseImageName + " " + currentNumber;
+				}
+				// If we were numbering already, increase the counter. If not, we want to start at 1
+				if (alwaysNumber) {
+					currentNumber++;
+				}
+				if (!imageNames.contains(currentDescription)) {
+					break;
+				}
+				// Next time, we should consider numbering no matter what
+				alwaysNumber = true;
+				LOGGER.debug("{} already exists, searching further", currentDescription);
+			}
+			LOGGER.debug("Found a suitable image name: {}", currentDescription);
+			File fpFile = filePondService.getFileForId(id);
+			newImages.add(uploadImage(fpFile.getName(), currentDescription, fpFile));
+		}
+
+		return newImages;
 	}
 }
