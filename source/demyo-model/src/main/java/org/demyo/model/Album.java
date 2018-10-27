@@ -6,7 +6,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 
 import javax.persistence.CascadeType;
@@ -27,6 +26,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -214,7 +214,9 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_images", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
-	private Set<Image> images;
+	@BatchSize(size = BATCH_SIZE)
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Image> images;
 
 	/** The {@link Reader}s who favourited this Album. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAlbums")
@@ -776,7 +778,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 * 
 	 * @return the {@link Image}s related to this Album
 	 */
-	public Set<Image> getImages() {
+	public SortedSet<Image> getImages() {
 		return images;
 	}
 
@@ -785,7 +787,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 * 
 	 * @param images the new {@link Image}s related to this Album
 	 */
-	public void setImages(Set<Image> images) {
+	public void setImages(SortedSet<Image> images) {
 		this.images = images;
 	}
 }

@@ -5,7 +5,6 @@ package org.demyo.model;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 
 import javax.persistence.CascadeType;
@@ -32,6 +31,7 @@ import org.hibernate.annotations.SortComparator;
 import org.demyo.model.constraints.OneNotNull;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
+import org.demyo.model.util.IdentifyingNameComparator;
 
 /**
  * Derivatives of {@link Album}s or {@link Series}.
@@ -129,7 +129,8 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	@JoinTable(name = "derivatives_images", joinColumns = @JoinColumn(name = "derivative_id"), //
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	@BatchSize(size = BATCH_SIZE)
-	private Set<Image> images;
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Image> images;
 
 	@Override
 	protected Derivative self() {
@@ -152,6 +153,11 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 		return sb.toString();
 	}
 
+	/**
+	 * Returns the base name that can be used for automatic image descriptions.
+	 * 
+	 * @return The name.
+	 */
 	public String getBaseNameForImages() {
 		StringBuilder sb = new StringBuilder();
 
@@ -477,7 +483,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	 * 
 	 * @return the {@link Image}s related to this Derivative
 	 */
-	public Set<Image> getImages() {
+	public SortedSet<Image> getImages() {
 		return images;
 	}
 
@@ -486,7 +492,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	 * 
 	 * @param images the new {@link Image}s related to this Derivative
 	 */
-	public void setImages(Set<Image> images) {
+	public void setImages(SortedSet<Image> images) {
 		this.images = images;
 	}
 }

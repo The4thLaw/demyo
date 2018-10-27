@@ -199,4 +199,11 @@ $quickTasks.add({
 </div>
 #end
 
+#if (!$!album.images.isEmpty())
+	<div class="dem-field-set">
+		<h3 class="mdl-typography--title">#_('page.Album.gallery')</h3>
+		#thumbGalleryPlain($album.images)
+	</div>
+#end
+
 ## TODO: list of derivatives

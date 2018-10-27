@@ -99,3 +99,12 @@ $quickTasks.add({
 	#end
 </div>
 #end
+
+## Only show the gallery if there are at least two images. The first image is already shown above.
+#if ($!derivative.images.size() > 1)
+	<div class="dem-field-set">
+		<h3 class="mdl-typography--title">#_('page.Derivative.gallery')</h3>
+		#thumbGalleryPlain($derivative.images)
+	</div>
+#end
+

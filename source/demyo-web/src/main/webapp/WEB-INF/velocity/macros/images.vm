@@ -10,3 +10,20 @@
 </figure>
 #end
 #end
+
+#macro(thumbGalleryPlain $imageList)
+	#@thumbGalleryCustomBody($imageList)
+		#@thumbnail($entity, {})#end
+	#end
+#end
+
+#macro(thumbGalleryCustomBody $entityList)
+	<div class="dem-gallery">
+	#foreach ($entity in $entityList)
+		## A bit hacky, but we need this kind of flexibility to expose this to the bodyContent
+		#set ($temp = $context.this.put("entity", $entity))
+		
+		$bodyContent
+	#end
+	</div>
+#end
