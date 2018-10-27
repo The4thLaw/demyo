@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.demyo.web.test.mvc.WebDriverAssertions.assertThat;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -87,6 +88,29 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		assertThat(getWebDriver().getCurrentUrl()).startsWith("http://localhost/albums/view/");
 
 		assertAlbumTitle(NEW_ALBUM_TITLE);
+	}
+
+	/**
+	 * Tests that the relevant errors are displayed when saving an empty Album.
+	 */
+	@Test
+	// We must start by clearing the publishers so that there is no default value
+	@DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.DELETE_ALL)
+	public void testAddEmptyAlbum() {
+		getWebDriver().get("http://localhost/albums/add");
+		waitForRepeatablePartInit();
+
+		submitMainModelForm();
+
+		assertThat(getWebDriver().getCurrentUrl()).startsWith("http://localhost/albums/add");
+
+		String pageSource = getWebDriver().getPageSource();
+		assertThat(pageSource).matches(Pattern.compile(
+				".*Title.*?</label>.*?<span class=\"" + "mdl-textfield__error\">.*?This field cannot be empty.*",
+				Pattern.DOTALL));
+		assertThat(pageSource).matches(Pattern.compile(
+				".*Publisher.*?</label>.*?<span class=\"" + "mdl-textfield__error\">.*?This field cannot be empty.*",
+				Pattern.DOTALL));
 	}
 
 	/**

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -161,6 +162,11 @@ public class AlbumController extends AbstractModelController<Album> {
 		model.addAttribute("bindings", bindingService.findAll());
 		model.addAttribute("tags", tagService.findAll());
 		model.addAttribute("images", imageService.findAll());
+	}
+
+	@Override
+	protected void postProcessValidationError(Album entity, BindingResult result) {
+		translateError(result, "publisher", "publisher.id");
 	}
 
 	@InitBinder
