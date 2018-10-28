@@ -49,3 +49,10 @@ CREATE TABLE readers_reading_list (
 	CONSTRAINT fk_readers_reading_list_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE
 );
 
+/**
+ * Marked as first edition
+ * https://github.com/The4thLaw/demyo/issues/11
+ */
+
+ALTER TABLE albums
+	ADD COLUMN marked_as_first_edition BOOLEAN DEFAULT 'false';

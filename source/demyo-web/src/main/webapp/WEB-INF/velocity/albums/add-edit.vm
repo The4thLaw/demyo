@@ -74,6 +74,9 @@
 		</label>
 	#end
 	#@mdlGridCell([4,0,0])
+		#inputCheckbox('field.Album.markedAsFirstEdition', 'album.markedAsFirstEdition')
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
 	#end
 	#@mdlGridCell([4,0,0])
