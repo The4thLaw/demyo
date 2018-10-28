@@ -114,6 +114,10 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@Column(name = "this_edition")
 	private Date currentEditionDate;
 
+	/** The flag indicating the Album was explicitly marked as being a first edition. */
+	@Column(name = "marked_as_first_edition")
+	private boolean markedAsFirstEdition;
+
 	/** The ISBN. */
 	@Column(name = "isbn")
 	@ISBN
@@ -450,6 +454,24 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	public void setCurrentEditionDate(Date currentEditionDate) {
 		this.currentEditionDate = currentEditionDate;
+	}
+
+	/**
+	 * Checks the flag indicating the Album was explicitly marked as being a first edition.
+	 *
+	 * @return the flag indicating the Album was explicitly marked as being a first edition
+	 */
+	public boolean isMarkedAsFirstEdition() {
+		return markedAsFirstEdition;
+	}
+
+	/**
+	 * Sets the flag indicating the Album was explicitly marked as being a first edition.
+	 *
+	 * @param markedAsFirstEdition the new flag indicating the Album was explicitly marked as being a first edition
+	 */
+	public void setMarkedAsFirstEdition(boolean markedAsFirstEdition) {
+		this.markedAsFirstEdition = markedAsFirstEdition;
 	}
 
 	/**

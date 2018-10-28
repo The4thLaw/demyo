@@ -119,7 +119,11 @@ $quickTasks.add({
 		#@mdlGridCell([4,0,0])
 			#@entityField('field.Album.firstEditionDate')
 				$date.format("#_('special.date.format')", $album.firstEditionDate, $appConfig.language)
-				#_('field.Album.isFirstEdition')
+				#if($album.markedAsFirstEdition)
+					#_('field.Album.markedAsFirstEdition.view')
+				#else
+					#_('field.Album.isFirstEdition')
+				#end
 			#end
 		#end
 	#elseif ($album.firstEditionDate || $album.currentEditionDate)

@@ -74,6 +74,9 @@
 		</label>
 	#end
 	#@mdlGridCell([4,0,0])
+		#inputCheckbox('field.Album.markedAsFirstEdition', 'album.markedAsFirstEdition')
+	#end
+	#@mdlGridCell([4,0,0])
 		#inputDate('field.Album.acquisitionDate', 'album.acquisitionDate')
 	#end
 	#@mdlGridCell([4,0,0])
@@ -182,6 +185,22 @@ function currentEditionDateHandler() {
 	}
 }
 
+function markedAsFirstEditionHandler() {
+	var matCb = jQuery('#field_album_currentEditionDate_same').parent().get(0).MaterialCheckbox;
+	if (jQuery('#field_album_markedAsFirstEdition').is(':checked')) {
+		if (jQuery('#field_album_currentEditionDate_same').is(':checked')) {
+			console.log('"Same as first edition" is checked already, no need to do it');
+		} else {
+			// Simulate click to get all handlers
+			jQuery('#field_album_currentEditionDate_same').click();
+		}
+		// Disable the "Same as first edition" field
+		matCb.disable()
+	} else {
+		matCb.enable();
+	}
+}
+
 jQuery(function () {
 	demyo.dependentSelect('#field_album_publisher_id', '#field_album_collection_id', function (val) {
 		return val == null ? null : "$link.contextPath/publishers/" + val + "/collections";
@@ -189,6 +208,13 @@ jQuery(function () {
 	
 	jQuery('#field_album_currentEditionDate_same').change(currentEditionDateHandler);
 	currentEditionDateHandler();
+
+	jQuery('#field_album_markedAsFirstEdition').change(markedAsFirstEditionHandler);
+	
+	// We must wait for the material checkbox to be upgrated
+	jQuery('#field_album_markedAsFirstEdition').parent().get(0).addEventListener('mdl-componentupgraded', function(e) {
+		markedAsFirstEditionHandler();
+	});
 	
 	jQuery('#field_album_acquisitionDate').disableIf({selector: '#field_album_wishlist'});
 });
