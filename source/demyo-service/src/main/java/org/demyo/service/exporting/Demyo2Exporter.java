@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,7 +68,7 @@ public class Demyo2Exporter implements IExporter {
 		try {
 			outputStream = new FileOutputStream(out);
 
-			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(new OutputStreamWriter(outputStream, "utf-8"));
+			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(outputStream, StandardCharsets.UTF_8.toString());
 			xsw = new IndentingXMLStreamWriter(xsw);
 
 			xsw.writeStartDocument();
