@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.demyo.common.config.SystemConfiguration;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,14 +18,42 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import org.demyo.common.config.SystemConfiguration;
+
 /**
- * Demyo application configuration. These are things that the user can change through the application and impact
- * its visible behaviour.
+ * Demyo application configuration. These are things that the user can change through the application and impact its
+ * visible behaviour.
  * 
  * @see SystemConfiguration
  */
 public class ApplicationConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);
+
+	private static final int DEFAULT_PAGE_SIZE_TEXT = 60;
+	private static final int DEFAULT_PAGE_SIZE_IMAGES = 15;
+	private static final int DEFAULT_PAGE_SIZE_ALBUMS = 20;
+	private static final int DEFAULT_THUMB_WIDTH = 220;
+	private static final int DEFAULT_THUMB_HEIGHT = 200;
+
+	/**
+	 * Gets a default configuration with default values.
+	 * 
+	 * @return the default configuration.
+	 */
+	public static ApplicationConfiguration getDefaultConfiguration() {
+		ApplicationConfiguration config = new ApplicationConfiguration();
+
+		config.setLanguage(Locale.getDefault());
+		config.headerLinksSpec = "[]";
+		config.headerLinks = new ArrayList<>();
+		config.pageSizeForText = DEFAULT_PAGE_SIZE_TEXT;
+		config.pageSizeForImages = DEFAULT_PAGE_SIZE_IMAGES;
+		config.pageSizeForAlbums = DEFAULT_PAGE_SIZE_ALBUMS;
+		config.thumbnailWidth = DEFAULT_THUMB_WIDTH;
+		config.thumbnailHeight = DEFAULT_THUMB_HEIGHT;
+
+		return config;
+	}
 
 	/** The language in which the application is displayed. */
 	private Locale language;
@@ -45,6 +71,12 @@ public class ApplicationConfiguration {
 	private int thumbnailWidth;
 	/** The maximum thumbnail height in pixels. */
 	private int thumbnailHeight;
+
+	/**
+	 * Default construtor with no values.
+	 */
+	private ApplicationConfiguration() {
+	}
 
 	/**
 	 * Creates an application configuration from a configuration file.
@@ -86,7 +118,7 @@ public class ApplicationConfiguration {
 		try {
 			LOGGER.debug("Header links: {}", headerLinksSpec);
 			JsonParser jsonParser = jsonFactory.createParser(headerLinksSpec);
-			links = jsonMapper.<List<HeaderLink>> readValue(jsonParser, jsonType);
+			links = jsonMapper.<List<HeaderLink>>readValue(jsonParser, jsonType);
 		} catch (RuntimeJsonMappingException | IOException e) {
 			LOGGER.warn("Failed to load the header configuration", e);
 		}
