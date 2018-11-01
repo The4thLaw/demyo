@@ -152,6 +152,7 @@ public class ApplicationConfiguration {
 		config.put("language", language.toString());
 		config.put("paging.textPageSize", String.valueOf(pageSizeForText));
 		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
+		config.put("paging.albumPageSize", String.valueOf(pageSizeForAlbums));
 		config.put("thumbnail.width", String.valueOf(thumbnailWidth));
 		config.put("thumbnail.height", String.valueOf(thumbnailHeight));
 		config.put("header.quickLinks", headerLinksSpec);
