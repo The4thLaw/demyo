@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,13 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@Transactional(readOnly = true)
 	public Slice<Derivative> findPaginated(int currentPage, Predicate predicate, Order... orders) {
 		return repo.findAllForIndex(predicate, getPageable(currentPage, orders));
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Derivative> findAllForStickers() {
+		Sort sort = new Sort(getDefaultOrder());
+		return repo.findAllForStickers(sort);
 	}
 
 	@Override

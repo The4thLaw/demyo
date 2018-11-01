@@ -1,5 +1,7 @@
 package org.demyo.service;
 
+import java.util.List;
+
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
 
@@ -18,4 +20,11 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * @throws DemyoException In case of error during recovery.
 	 */
 	void recoverFromFilePond(long derivativeId, String[] otherFilePondIds) throws DemyoException;
+
+	/**
+	 * Finds all Derivatives in a format and order suitable for the sticker sheet.
+	 * 
+	 * @return The Derivatives
+	 */
+	List<Derivative> findAllForStickers();
 }

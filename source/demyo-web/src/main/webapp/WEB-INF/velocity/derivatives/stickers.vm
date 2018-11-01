@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>#_('title.index.derivative.stickers')</title>
+        <style type="text/css">
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	color: black;
+	font-family: sans-serif;
+	font-size: 12pt;
+}
+
+#stickers {
+	font-size: 6pt;
+}
+
+#stickers .sticker {
+	display: inline-block;
+	border: 0.2mm dotted #ddd;
+	padding: 1mm;
+	margin: 2.5mm;
+}
+
+#stickers .sticker div {
+	min-width: 3cm;
+	border: 0.2mm solid black;
+	padding: 1mm 3mm 1mm 3mm;
+	text-align: center;
+}
+
+#stickers .sticker p {
+	margin: 0;
+	padding: 0;
+}
+
+#stickers .sticker p.series, #stickers .sticker p.album {}
+
+#stickers .sticker p.series {
+	font-variant: small-caps;
+	font-size: 7pt;
+}
+
+#stickers .sticker p.album span {
+	margin-right: 4pt;
+}
+        </style>
+    </head>
+    <body>
+        <div id="stickers">
+#foreach ($derivative in $derivativeList)
+    <div class="sticker">
+        <div>
+            #if ($derivative.series)
+                <p class="series">$derivative.series.identifyingName</p>
+            #end
+            #if ($derivative.album)
+                <p class="album">$derivative.album.identifyingName</p>
+            #end
+            #if ($derivative.artist)
+                <p class="author">$derivative.artist.identifyingName</p>
+            #end
+            #if ($derivative.source)
+                <p class="source">$derivative.source.identifyingName</p>
+            #end
+            <p class="type_number">
+                $derivative.type.identifyingName
+                #if ($derivative.number && $derivative.total)
+        			#number($derivative.number) / #number($derivative.total)
+        		#end
+                #if ($derivative.authorsCopy)
+                    (#_('field.Derivative.authorsCopy.view.short'))
+                #end
+                #if ($derivative.restrictedSale)
+                    (#_('field.Derivative.restrictedSale.view.short'))
+                #end
+            </p>
+        </div>
+    </div>
+#end
+        </div>
+    </body>
+</html>

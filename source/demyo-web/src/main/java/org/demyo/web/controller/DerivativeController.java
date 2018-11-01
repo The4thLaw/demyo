@@ -1,6 +1,7 @@
 package org.demyo.web.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,6 +82,21 @@ public class DerivativeController extends AbstractModelController<Derivative> {
 		model.addAttribute("derivativeList", entities);
 
 		return "derivatives/index";
+	}
+
+	/**
+	 * Views an index of all Derivatives in a page intended to be printed for stickers.
+	 * 
+	 * @param model The view model.
+	 * @return The view name.
+	 */
+	@GetMapping("/stickers")
+	public String stickerSheet(Model model) {
+		// List<Derivative> derivatives = service.findAll();
+		List<Derivative> derivatives = service.findAllForStickers();
+		model.addAttribute("derivativeList", derivatives);
+		setLayoutPlain(model);
+		return "derivatives/stickers";
 	}
 
 	/**
