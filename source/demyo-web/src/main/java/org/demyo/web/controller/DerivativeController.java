@@ -2,7 +2,7 @@ package org.demyo.web.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +27,7 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
 import org.demyo.model.Image;
 import org.demyo.model.QDerivative;
+import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IDerivativeService;
 import org.demyo.service.IDerivativeSourceService;
@@ -138,6 +139,6 @@ public class DerivativeController extends AbstractModelController<Derivative> {
 
 	@InitBinder
 	private void initBinder(PropertyEditorRegistry binder) throws Exception {
-		registerCollectionEditor(binder, Set.class, "images", Image.class);
+		registerCollectionEditor(binder, SortedSet.class, "images", Image.class, new IdentifyingNameComparator());
 	}
 }

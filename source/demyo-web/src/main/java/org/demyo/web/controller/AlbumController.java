@@ -2,7 +2,6 @@ package org.demyo.web.controller;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 
 import javax.servlet.http.HttpServletRequest;
@@ -178,6 +177,6 @@ public class AlbumController extends AbstractModelController<Album> {
 		registerCollectionEditor(binder, SortedSet.class, "inkers", Author.class, authComp);
 		registerCollectionEditor(binder, SortedSet.class, "translators", Author.class, authComp);
 		registerCollectionEditor(binder, SortedSet.class, "tags", Tag.class, new IdentifyingNameComparator());
-		registerCollectionEditor(binder, Set.class, "images", Image.class);
+		registerCollectionEditor(binder, SortedSet.class, "images", Image.class, new IdentifyingNameComparator());
 	}
 }
