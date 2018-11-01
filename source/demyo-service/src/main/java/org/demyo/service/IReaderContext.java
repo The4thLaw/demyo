@@ -3,6 +3,7 @@ package org.demyo.service;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.model.Series;
+import org.demyo.model.config.ApplicationConfiguration;
 
 /**
  * Provides methods to access the currently selected {@link Reader}.
@@ -14,6 +15,13 @@ public interface IReaderContext {
 	 * @return The currently selected {@link Reader} (can be <code>null</code>).
 	 */
 	Reader getCurrentReader();
+
+	/**
+	 * Shorthand for <code>getCurrentReader().getConfiguration()</code>
+	 * 
+	 * @return The configuration, or a default one if there is no reader.
+	 */
+	ApplicationConfiguration getConfiguration();
 
 	/**
 	 * Sets the current {@link Reader} in the context of the request.

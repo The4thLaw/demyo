@@ -1,5 +1,8 @@
 package org.demyo.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 
 import javax.persistence.Column;
@@ -11,11 +14,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedSubgraph;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
+import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -29,6 +35,7 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Table(name = "READERS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraph(name = "Reader.forView", attributeNodes = { //
+		@NamedAttributeNode("configurationEntries"), //
 		@NamedAttributeNode("favouriteSeries"), //
 		@NamedAttributeNode(value = "favouriteAlbums", subgraph = "Series.Album"), //
 		@NamedAttributeNode(value = "readingList", subgraph = "Series.Album") }, //
@@ -39,9 +46,17 @@ public class Reader extends AbstractModel {
 	@NotBlank
 	private String name;
 
-	/** The preferred colour of the user. */
+	/** The preferred colour of the reader. */
 	@Column(name = "colour")
 	private String colour;
+
+	/** The configuration entries for the reader. */
+	@OneToMany(mappedBy = "reader", fetch = FetchType.LAZY)
+	private Set<ConfigurationEntry> configurationEntries;
+
+	/** The configuration for the reader. */
+	@Transient
+	private ApplicationConfiguration configuration;
 
 	/** The reader's favourite series. */
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -88,21 +103,39 @@ public class Reader extends AbstractModel {
 	}
 
 	/**
-	 * Gets the preferred colour of the user.
+	 * Gets the preferred colour of the reader.
 	 *
-	 * @return the preferred colour of the user
+	 * @return the preferred colour of the reader
 	 */
 	public String getColour() {
 		return colour;
 	}
 
 	/**
-	 * Sets the preferred colour of the user.
+	 * Sets the preferred colour of the reader.
 	 *
-	 * @param colour the new preferred colour of the user
+	 * @param colour the new preferred colour of the reader
 	 */
 	public void setColour(String colour) {
 		this.colour = colour;
+	}
+
+	/**
+	 * Gets the configuration for the reader.
+	 *
+	 * @return the configuration for the reader
+	 */
+	public ApplicationConfiguration getConfiguration() {
+		if (configuration != null) {
+			return configuration;
+		}
+
+		Map<String, String> configurationValues = new HashMap<>();
+		for (ConfigurationEntry entry : configurationEntries) {
+			configurationValues.put(entry.getKey(), entry.getValue());
+		}
+		configuration = new ApplicationConfiguration(configurationValues);
+		return configuration;
 	}
 
 	/**

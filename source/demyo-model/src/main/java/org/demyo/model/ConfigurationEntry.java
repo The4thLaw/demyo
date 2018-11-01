@@ -2,11 +2,14 @@ package org.demyo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.demyo.model.util.DefaultOrder;
-
 import org.hibernate.validator.constraints.NotBlank;
+
+import org.demyo.model.util.DefaultOrder;
 
 /**
  * Represents a type of binding.
@@ -23,6 +26,11 @@ public class ConfigurationEntry extends AbstractModel {
 	/** The value for the configuration property. */
 	@Column(name = "config_value")
 	private String value;
+
+	/** The {@link Reader} owning this configuration entry. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reader_id")
+	private Reader reader;
 
 	@Override
 	public String getIdentifyingName() {
@@ -63,5 +71,23 @@ public class ConfigurationEntry extends AbstractModel {
 	 */
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	/**
+	 * Gets the {@link Reader} owning this configuration entry.
+	 *
+	 * @return the {@link Reader} owning this configuration entry
+	 */
+	public Reader getReader() {
+		return reader;
+	}
+
+	/**
+	 * Sets the {@link Reader} owning this configuration entry.
+	 *
+	 * @param reader the new {@link Reader} owning this configuration entry
+	 */
+	public void setReader(Reader reader) {
+		this.reader = reader;
 	}
 }

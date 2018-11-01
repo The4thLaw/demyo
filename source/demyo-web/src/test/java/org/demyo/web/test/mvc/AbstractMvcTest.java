@@ -38,7 +38,6 @@ import com.gargoylesoftware.htmlunit.util.Cookie;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import org.demyo.common.config.SystemConfiguration;
-import org.demyo.service.IConfigurationService;
 import org.demyo.test.AbstractPersistenceTest;
 import org.demyo.test.utils.Predicate;
 
@@ -65,8 +64,6 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	private WebApplicationContext wac;
 	@Autowired
 	private CacheManager cacheManager;
-	@Autowired
-	private IConfigurationService config;
 
 	/** The HTMLUnit Web Client. */
 	private WebClient webClient;
@@ -92,8 +89,8 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 */
 	@Before
 	public void setLanguage() {
-		// Have a common base for labels
-		config.getConfiguration().setLanguage(Locale.ENGLISH);
+		// Have a common base for labels. Will be used as default by the reader configuration
+		Locale.setDefault(Locale.ENGLISH);
 	}
 
 	/**

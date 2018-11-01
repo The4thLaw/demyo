@@ -11,7 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
-import org.demyo.service.IConfigurationService;
+import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
 /**
@@ -24,7 +24,7 @@ public class TranslationService implements ITranslationService {
 	private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
 	@Autowired
-	private IConfigurationService configService;
+	private IReaderService readerService;
 
 	@Autowired
 	private MessageSource messageSource;
@@ -61,6 +61,6 @@ public class TranslationService implements ITranslationService {
 	}
 
 	private Locale getLocale() {
-		return configService.getConfiguration().getLanguage();
+		return readerService.getContext().getConfiguration().getLanguage();
 	}
 }

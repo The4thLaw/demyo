@@ -31,10 +31,11 @@ import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IQuickSearchableRepo;
 import org.demyo.model.IModel;
+import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.PreSave;
-import org.demyo.service.IConfigurationService;
 import org.demyo.service.IModelService;
+import org.demyo.service.IReaderService;
 
 /**
  * Implementation of base operations on models.
@@ -45,7 +46,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
 
 	@Autowired
-	private IConfigurationService configurationService;
+	private IReaderService readerService;
 
 	private final Class<M> modelClass;
 	/**
@@ -218,8 +219,8 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 			orders = defaultOrder;
 		}
 		Sort sort = orders.length == 0 ? null : new Sort(orders);
-		Pageable pageable = new PageRequest(currentPage, configurationService.getConfiguration().getPageSizeForText(),
-				sort);
+		ApplicationConfiguration config = readerService.getContext().getConfiguration();
+		Pageable pageable = new PageRequest(currentPage, config.getPageSizeForText(), sort);
 		return pageable;
 	}
 

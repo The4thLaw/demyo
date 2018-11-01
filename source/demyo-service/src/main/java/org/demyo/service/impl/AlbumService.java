@@ -38,8 +38,8 @@ import org.demyo.model.Image;
 import org.demyo.model.MetaSeries;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
-import org.demyo.service.IConfigurationService;
 import org.demyo.service.IImageService;
+import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
 /**
@@ -54,7 +54,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Autowired
 	private IMetaSeriesRepo metaSeriesRepo;
 	@Autowired
-	private IConfigurationService configurationService;
+	private IReaderService readerService;
 	@Autowired
 	private ISeriesRepo seriesRepo;
 	@Autowired
@@ -97,7 +97,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			throw new UnsupportedOperationException("It is not possible to override the order for pages of albums");
 		}
 		Pageable pageable = new PageRequest(currentPage,
-				configurationService.getConfiguration().getPageSizeForAlbums());
+				readerService.getContext().getConfiguration().getPageSizeForAlbums());
 
 		Slice<MetaSeries> metaSlice = metaSeriesRepo.findAll(pageable);
 

@@ -41,9 +41,9 @@ import org.demyo.dao.IImageRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.service.IConfigurationService;
 import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
+import org.demyo.service.IReaderService;
 import org.demyo.utils.io.DIOUtils;
 
 /**
@@ -57,7 +57,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Autowired
 	private IImageRepo repo;
 	@Autowired
-	private IConfigurationService configService;
+	private IReaderService readerService;
 	@Autowired
 	private IFilePondService filePondService;
 
@@ -102,6 +102,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Override
 	@Transactional(readOnly = true)
 	public File getImageThumbnail(long id) throws DemyoException {
+		// TODO: this won't work if the thumbnail size changes
 		// Check cache (two possible formats)
 		File pngThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".png");
 		File jpgThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".jpg");
@@ -123,7 +124,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		// If the image has one dimension too small, constrain it to that
-		ApplicationConfiguration config = configService.getConfiguration();
+		ApplicationConfiguration config = readerService.getContext().getConfiguration();
 		int desiredMaxWidth = config.getThumbnailWidth() > buffImage.getWidth() ? buffImage.getWidth()
 				: config.getThumbnailWidth();
 		int desiredMaxHeight = config.getThumbnailHeight() > buffImage.getHeight() ? buffImage.getHeight()

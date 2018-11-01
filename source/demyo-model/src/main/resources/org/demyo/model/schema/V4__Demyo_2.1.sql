@@ -56,3 +56,16 @@ CREATE TABLE readers_reading_list (
 
 ALTER TABLE albums
 	ADD COLUMN marked_as_first_edition BOOLEAN DEFAULT 'false';
+
+/**
+ * Per-reader configuration
+ * Also clear the configuration since there was no advertised way of changing it and we want to handle this at
+ * application level
+ * https://github.com/The4thLaw/demyo/issues/50
+ */
+
+DELETE FROM configuration;
+ALTER TABLE configuration
+	ADD COLUMN reader_id INT UNSIGNED NOT NULL;
+ALTER TABLE configuration
+	ADD CONSTRAINT fk_configuration_reader FOREIGN KEY (reader_id) REFERENCES readers(id) ON DELETE CASCADE;

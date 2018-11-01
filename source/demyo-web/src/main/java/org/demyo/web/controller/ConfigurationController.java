@@ -2,9 +2,6 @@ package org.demyo.web.controller;
 
 import java.util.Map;
 
-import org.demyo.model.config.ApplicationConfiguration;
-import org.demyo.service.IConfigurationService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.demyo.model.config.ApplicationConfiguration;
+import org.demyo.service.IConfigurationService;
+import org.demyo.service.IReaderService;
+import org.demyo.service.impl.ReaderContext;
 
 /**
  * Controller for {@link ApplicationConfiguration} management.
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ConfigurationController extends AbstractController {
 	@Autowired
 	private IConfigurationService service;
+	@Autowired
+	private IReaderService readerService;
 
 	/**
 	 * Views the advanced configuration page.
@@ -43,7 +47,9 @@ public class ConfigurationController extends AbstractController {
 	 */
 	@PostMapping("/advanced")
 	public String saveAdvance(Model model, @RequestParam Map<String, String> newConfig) {
-		service.save(newConfig);
+		ReaderContext context = (ReaderContext) readerService.getContext();
+		service.save(newConfig, context.getCurrentReader());
+		context.clearCurrentReader();
 		return redirect(model, "/configuration/advanced");
 	}
 }

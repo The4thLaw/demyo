@@ -18,6 +18,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
+import org.demyo.service.IConfigurationService;
 import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ISeriesService;
@@ -38,6 +39,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	private IAlbumRepo albumRepo;
 	@Autowired
 	private ITranslationService translationService;
+	@Autowired
+	private IConfigurationService configService;
 
 	/**
 	 * Default constructor.
@@ -75,9 +78,13 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 			// - It allows generating a reader with a locale-sensitive default name
 			// - It acts as a failsafe if the Reader somehow got missing
 			// - It deals with imports of Demyo 1.x and 2.0, which didn't have this data
+			// - It allows creating a default configuration which can evolve over time
 			Reader defaultReader = new Reader();
 			defaultReader.setName(translationService.translate("field.Reader.name.default"));
 			save(defaultReader);
+
+			// Also create a default configuration for that reader
+			configService.createDefaultConfiguration(defaultReader);
 		} else if (count != 1) {
 			return null;
 		}

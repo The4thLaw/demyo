@@ -31,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
-import org.demyo.service.IConfigurationService;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
@@ -55,8 +54,6 @@ public abstract class AbstractController {
 	private static final String LAYOUT_PLAIN = "layout/plain.vm";
 	private static final String LAYOUT_MINIMAL = "layout/minimal.vm";
 
-	@Autowired
-	private IConfigurationService configService;
 	@Autowired
 	private ITranslationService translationService;
 	@Autowired
@@ -96,7 +93,7 @@ public abstract class AbstractController {
 		ModelAndView model = new ModelAndView(viewName);
 		model.addObject("exception", ex);
 		model.addObject(MODEL_KEY_I18N_SERV, translationService);
-		model.addObject(MODEL_KEY_CONFIG, configService.getConfiguration());
+		model.addObject(MODEL_KEY_CONFIG, readerService.getContext().getConfiguration());
 		model.addObject(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		model.addObject(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
 		model.addObject(MODEL_KEY_READER_SERV, readerService);
@@ -163,7 +160,7 @@ public abstract class AbstractController {
 	 */
 	@ModelAttribute
 	private void initConfiguration(Model model) {
-		model.addAttribute(MODEL_KEY_CONFIG, configService.getConfiguration());
+		model.addAttribute(MODEL_KEY_CONFIG, readerService.getContext().getConfiguration());
 		model.addAttribute(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		model.addAttribute(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
 	}

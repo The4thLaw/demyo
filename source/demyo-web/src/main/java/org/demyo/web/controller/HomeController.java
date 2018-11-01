@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.demyo.service.IConfigurationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.demyo.service.IReaderService;
 
 /**
  * Controller for the home, manifest and about pages.
@@ -24,7 +25,7 @@ public class HomeController extends AbstractController {
 	@Autowired
 	private MessageSource messageSource;
 	@Autowired
-	private IConfigurationService config;
+	private IReaderService readerService;
 
 	@Value("#{servletContext.contextPath}")
 	private String servletContextPath;
@@ -44,6 +45,7 @@ public class HomeController extends AbstractController {
 	/**
 	 * Displays the about page.
 	 * 
+	 * @param request The HTTP request
 	 * @param model The view model
 	 * @return The view name
 	 */
@@ -68,7 +70,7 @@ public class HomeController extends AbstractController {
 	@RequestMapping("/manifest.json")
 	@ResponseBody
 	public Map<String, Object> getApplicationManifest() {
-		Locale language = config.getConfiguration().getLanguage();
+		Locale language = readerService.getContext().getConfiguration().getLanguage();
 
 		Map<String, Object> manifest = new HashMap<>();
 		manifest.put("name", "Demyo");
