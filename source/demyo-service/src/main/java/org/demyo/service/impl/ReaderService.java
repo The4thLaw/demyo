@@ -85,6 +85,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 			// Also create a default configuration for that reader
 			configService.createDefaultConfiguration(defaultReader);
+
+			return defaultReader;
 		} else if (count != 1) {
 			return null;
 		}

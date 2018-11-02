@@ -1,11 +1,14 @@
 package org.demyo.service.impl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +35,19 @@ public class ConfigurationService implements IConfigurationService {
 	@Override
 	@Transactional
 	public void createDefaultConfiguration(Reader reader) {
-		save(ApplicationConfiguration.getDefaultConfiguration(), reader);
+		Set<ConfigurationEntry> saved = save(ApplicationConfiguration.getDefaultConfiguration(), reader);
+		reader.setConfigurationEntries(saved);
 	}
 
 	@Override
 	@Transactional
-	public void save(@NotNull ApplicationConfiguration newConfig, Reader reader) {
-		save(newConfig.asMap(), reader);
+	public Set<ConfigurationEntry> save(@NotNull ApplicationConfiguration newConfig, Reader reader) {
+		return save(newConfig.asMap(), reader);
 	}
 
 	@Override
 	@Transactional
-	public void save(Map<String, String> newConfig, Reader reader) {
+	public Set<ConfigurationEntry> save(Map<String, String> newConfig, Reader reader) {
 		LOGGER.debug("Saving configuration for reader #{}", reader.getId());
 
 		// Merge what is in the database with what has been provided
@@ -68,6 +72,9 @@ public class ConfigurationService implements IConfigurationService {
 		}
 
 		// Now save everything
-		repo.save(configurationValues.values());
+		Iterable<ConfigurationEntry> saved = repo.save(configurationValues.values());
+		Set<ConfigurationEntry> savedSet = new HashSet<>();
+		CollectionUtils.addAll(savedSet, saved.iterator());
+		return savedSet;
 	}
 }

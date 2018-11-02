@@ -139,6 +139,24 @@ public class Reader extends AbstractModel {
 	}
 
 	/**
+	 * Gets the configuration entries for the reader.
+	 *
+	 * @return the configuration entries for the reader
+	 */
+	public Set<ConfigurationEntry> getConfigurationEntries() {
+		return configurationEntries;
+	}
+
+	/**
+	 * Sets the configuration entries for the reader.
+	 *
+	 * @param configurationEntries the new configuration entries for the reader
+	 */
+	public void setConfigurationEntries(Set<ConfigurationEntry> configurationEntries) {
+		this.configurationEntries = configurationEntries;
+	}
+
+	/**
 	 * Gets the reader's favourite series.
 	 *
 	 * @return the reader's favourite series
