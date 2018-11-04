@@ -34,4 +34,11 @@
 	<readers_favourite_series reader_id="2" series_id="1" />
 	<readers_favourite_albums reader_id="2" album_id="3" />
 	<readers_reading_list reader_id="2" album_id="2" />
+	
+	<configuration id="1" reader_id="2" config_key="language" config_value="en" />
+	<configuration id="2" reader_id="2" config_key="paging.textPageSize" config_value="60" />
+	<configuration id="3" reader_id="2" config_key="paging.imagePageSize" config_value="15" />
+	<configuration id="4" reader_id="2" config_key="paging.albumPageSize" config_value="20" />
+	<configuration id="5" reader_id="2" config_key="thumbnail.width" config_value="220" />
+	<configuration id="6" reader_id="2" config_key="thumbnail.height" config_value="200" />
 </dataset>
