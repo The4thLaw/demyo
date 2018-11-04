@@ -29,6 +29,8 @@ import org.demyo.common.config.SystemConfiguration;
 public class ApplicationConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);
 
+	private static final Locale SYSTEM_LOCALE = Locale.getDefault();
+
 	private static final int DEFAULT_PAGE_SIZE_TEXT = 60;
 	private static final int DEFAULT_PAGE_SIZE_IMAGES = 15;
 	private static final int DEFAULT_PAGE_SIZE_ALBUMS = 20;
@@ -43,7 +45,7 @@ public class ApplicationConfiguration {
 	public static ApplicationConfiguration getDefaultConfiguration() {
 		ApplicationConfiguration config = new ApplicationConfiguration();
 
-		config.setLanguage(Locale.getDefault());
+		config.setLanguage(SYSTEM_LOCALE);
 		config.headerLinksSpec = "[]";
 		config.headerLinks = new ArrayList<>();
 		config.pageSizeForText = DEFAULT_PAGE_SIZE_TEXT;
@@ -177,8 +179,8 @@ public class ApplicationConfiguration {
 	public void setLanguage(Locale language) {
 		this.language = language;
 
-		// Set the locale JVM-wide. This is notably use for javax.validation messages
-		Locale.setDefault(language);
+		// This won't impact the JVM locale (used notably for javax.validation messages), but we can't really do that
+		// in a multi-reader context (this would result in an edit war between readers).
 		LocaleContextHolder.setLocale(language);
 	}
 
