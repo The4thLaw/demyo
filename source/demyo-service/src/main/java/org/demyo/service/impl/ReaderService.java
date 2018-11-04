@@ -86,6 +86,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 			// Also create a default configuration for that reader
 			configService.createDefaultConfiguration(defaultReader);
 
+			// Return the created reader rather than reloading it from the database: since the transaction is not
+			// yet committed, the configuration entries wouldn't be available
 			return defaultReader;
 		} else if (count != 1) {
 			return null;
