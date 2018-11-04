@@ -17,7 +17,7 @@ public interface IReaderContext {
 	Reader getCurrentReader();
 
 	/**
-	 * Shorthand for <code>getCurrentReader().getConfiguration()</code>
+	 * Shorthand for <code>getCurrentReader().getConfiguration()</code>.
 	 * 
 	 * @return The configuration, or a default one if there is no reader.
 	 */
