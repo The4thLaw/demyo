@@ -11,6 +11,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
+import org.demyo.model.config.ApplicationConfiguration;
+import org.demyo.service.IConfigurationService;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
@@ -25,7 +27,8 @@ public class TranslationService implements ITranslationService {
 
 	@Autowired
 	private IReaderService readerService;
-
+	@Autowired
+	private IConfigurationService configService;
 	@Autowired
 	private MessageSource messageSource;
 
@@ -61,6 +64,23 @@ public class TranslationService implements ITranslationService {
 	}
 
 	private Locale getLocale() {
-		return readerService.getContext().getConfiguration().getLanguage();
+		try {
+			return readerService.getContext().getConfiguration().getLanguage();
+		} catch (RuntimeException re) {
+			LOGGER.debug("No locale available in the reader context");
+			// It could be that we don't have a reader context or something like that. This will definitely happen
+			// for desktop integration, but could also happen in background tasks. In that case:
+			// 1. Try to get the language of the first reader, if any
+			Locale firstReaderLocale = configService.getLocaleForFirstReader();
+			if (firstReaderLocale != null) {
+				LOGGER.debug("The first reader has a locale of {}, using it", firstReaderLocale.toLanguageTag());
+				return firstReaderLocale;
+			}
+			// 2. Use the system language
+			LOGGER.debug("No locale available for any reader, using the default system locale: {}",
+					ApplicationConfiguration.SYSTEM_LOCALE);
+			return ApplicationConfiguration.SYSTEM_LOCALE;
+		}
+
 	}
 }

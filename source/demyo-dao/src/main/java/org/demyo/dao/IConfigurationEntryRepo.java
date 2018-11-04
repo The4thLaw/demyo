@@ -18,4 +18,12 @@ public interface IConfigurationEntryRepo extends IModelRepo<ConfigurationEntry> 
 	 * @return The configuration entries.
 	 */
 	List<ConfigurationEntry> findAllByReaderId(long id);
+
+	/**
+	 * Finds the first (considering the Reader identifiers as the order) entry matching the given key.
+	 * 
+	 * @param key The key to search for.
+	 * @return The entry, or <code>null</code> if there is no such entry.
+	 */
+	ConfigurationEntry findFirstByKeyOrderByReaderId(String key);
 }

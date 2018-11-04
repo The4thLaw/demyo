@@ -29,7 +29,17 @@ import org.demyo.common.config.SystemConfiguration;
 public class ApplicationConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);
 
-	private static final Locale SYSTEM_LOCALE = Locale.getDefault();
+	/**
+	 * The system locale.
+	 * <p>
+	 * This is the default locale used when Demyo was started, before Demyo made any change.
+	 * </p>
+	 */
+	public static final Locale SYSTEM_LOCALE = Locale.getDefault();
+	/**
+	 * The configuration key corresponding to the language.
+	 */
+	public static final String CONFIG_KEY_LANGUAGE = "language";
 
 	private static final int DEFAULT_PAGE_SIZE_TEXT = 60;
 	private static final int DEFAULT_PAGE_SIZE_IMAGES = 15;
@@ -95,7 +105,7 @@ public class ApplicationConfiguration {
 	 * @param config The configuration to retrieve values from.
 	 */
 	public void merge(Map<String, String> config) {
-		String languageCode = getString(config, "language");
+		String languageCode = getString(config, CONFIG_KEY_LANGUAGE);
 		Locale theLanguage;
 		if (languageCode != null) {
 			theLanguage = Locale.forLanguageTag(languageCode);
@@ -151,7 +161,7 @@ public class ApplicationConfiguration {
 	public SortedMap<String, String> asMap() {
 		SortedMap<String, String> config = new TreeMap<>();
 
-		config.put("language", language.toString());
+		config.put(CONFIG_KEY_LANGUAGE, language.toString());
 		config.put("paging.textPageSize", String.valueOf(pageSizeForText));
 		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
 		config.put("paging.albumPageSize", String.valueOf(pageSizeForAlbums));

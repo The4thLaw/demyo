@@ -2,6 +2,7 @@ package org.demyo.service.impl;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -76,5 +77,15 @@ public class ConfigurationService implements IConfigurationService {
 		Set<ConfigurationEntry> savedSet = new HashSet<>();
 		CollectionUtils.addAll(savedSet, saved.iterator());
 		return savedSet;
+	}
+
+	@Override
+	public Locale getLocaleForFirstReader() {
+		ConfigurationEntry entry = repo.findFirstByKeyOrderByReaderId(ApplicationConfiguration.CONFIG_KEY_LANGUAGE);
+		if (entry == null) {
+			return null;
+		}
+		LOGGER.trace("Locale for first reader is {}", entry.getValue());
+		return Locale.forLanguageTag(entry.getValue());
 	}
 }

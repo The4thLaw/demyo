@@ -1,5 +1,6 @@
 package org.demyo.service;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,4 +46,11 @@ public interface IConfigurationService {
 	 * @return The saved entries.
 	 */
 	Set<ConfigurationEntry> save(Map<String, String> config, Reader reader);
+
+	/**
+	 * Gets the Locale selected by the first available Reader.
+	 * 
+	 * @return The Locale, or <code>null</code> if none is found.
+	 */
+	Locale getLocaleForFirstReader();
 }
