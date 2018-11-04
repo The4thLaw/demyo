@@ -161,7 +161,7 @@ public class ApplicationConfiguration {
 	public SortedMap<String, String> asMap() {
 		SortedMap<String, String> config = new TreeMap<>();
 
-		config.put(CONFIG_KEY_LANGUAGE, language.toString());
+		config.put(CONFIG_KEY_LANGUAGE, language.toLanguageTag());
 		config.put("paging.textPageSize", String.valueOf(pageSizeForText));
 		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
 		config.put("paging.albumPageSize", String.valueOf(pageSizeForAlbums));
