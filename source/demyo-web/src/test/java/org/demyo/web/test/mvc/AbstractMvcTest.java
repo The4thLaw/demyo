@@ -1,6 +1,8 @@
 package org.demyo.web.test.mvc;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +40,7 @@ import com.gargoylesoftware.htmlunit.util.Cookie;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import org.demyo.common.config.SystemConfiguration;
+import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.test.AbstractPersistenceTest;
 import org.demyo.test.utils.Predicate;
 
@@ -86,10 +89,26 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 
 	/**
 	 * Sets a common base (English) for labels in views.
+	 * 
+	 * @throws NoSuchFieldException In case of issue while setting the locale.
+	 * @throws SecurityException In case of issue while setting the locale.
+	 * @throws IllegalAccessException In case of issue while setting the locale.
+	 * @throws IllegalArgumentException In case of issue while setting the locale.
 	 */
 	@Before
-	public void setLanguage() {
+	public void setLanguage()
+			throws SecurityException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		// Have a common base for labels. Will be used as default by the reader configuration
+
+		// Very ugly but I don't see a better way at the moment
+		Field field = ApplicationConfiguration.class.getField("SYSTEM_LOCALE");
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+		boolean isModifierAccessible = modifiersField.isAccessible();
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+		field.setAccessible(true);
+		field.set(null, Locale.ENGLISH);
+
 		Locale.setDefault(Locale.ENGLISH);
 	}
 
