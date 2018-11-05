@@ -19,3 +19,4 @@ source/demyo-utils/.settings/
 source/demyo-web/.classpath
 source/demyo-web/.settings/
 /.metadata/
+source/.vscode/launch.test.json
