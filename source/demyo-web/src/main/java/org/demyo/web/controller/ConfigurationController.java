@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
+import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
-import org.demyo.service.impl.ReaderContext;
 
 /**
  * Controller for {@link ApplicationConfiguration} management.
@@ -47,7 +47,7 @@ public class ConfigurationController extends AbstractController {
 	 */
 	@PostMapping("/advanced")
 	public String saveAdvance(Model model, @RequestParam Map<String, String> newConfig) {
-		ReaderContext context = (ReaderContext) readerService.getContext();
+		IReaderContext context = readerService.getContext();
 		service.save(newConfig, context.getCurrentReader());
 		context.clearCurrentReader();
 		return redirect(model, "/configuration/advanced");
