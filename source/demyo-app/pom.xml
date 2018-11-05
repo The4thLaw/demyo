@@ -161,7 +161,7 @@ Includes the Web server, H2 server, and startup program.</description>
 										<fileVersion>${windows.version}</fileVersion>
 										<txtFileVersion>${project.version}</txtFileVersion>
 										<fileDescription>Demyo Comic Manager v${project.version}, Windows executable</fileDescription>
-										<copyright>2007-2017 Xavier Dalem</copyright>
+										<copyright>2007-2018 Xavier Dalem</copyright>
 										<productVersion>${windows.version}</productVersion>
 										<txtProductVersion>${project.version}</txtProductVersion>
 										<productName>Demyo</productName>
