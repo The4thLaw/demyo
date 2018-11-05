@@ -102,10 +102,15 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Override
 	@Transactional(readOnly = true)
 	public File getImageThumbnail(long id) throws DemyoException {
-		// TODO: this won't work if the thumbnail size changes
+		ApplicationConfiguration config = readerService.getContext().getConfiguration();
+		int thumbnailWidth = config.getThumbnailWidth();
+		int thumbnailHeight = config.getThumbnailHeight();
+		File directoryBySize = new File(SystemConfiguration.getInstance().getThumbnailDirectory(),
+				thumbnailWidth + "x" + thumbnailHeight);
+
 		// Check cache (two possible formats)
-		File pngThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".png");
-		File jpgThumb = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), id + ".jpg");
+		File pngThumb = new File(directoryBySize, id + ".png");
+		File jpgThumb = new File(directoryBySize, id + ".jpg");
 		if (pngThumb.exists()) {
 			return pngThumb;
 		}
@@ -114,6 +119,13 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		// No cache hit, generate thumbnail
+		if (!directoryBySize.isDirectory()) {
+			directoryBySize.mkdirs();
+			LOGGER.debug("Creating thumbnail directory: {}", directoryBySize);
+		} else {
+			LOGGER.trace("Thumbnail directory exists: {}", directoryBySize);
+		}
+
 		File image = getImageFile(getByIdForEdition(id));
 		long time = System.currentTimeMillis();
 		BufferedImage buffImage;
@@ -124,11 +136,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		// If the image has one dimension too small, constrain it to that
-		ApplicationConfiguration config = readerService.getContext().getConfiguration();
-		int desiredMaxWidth = config.getThumbnailWidth() > buffImage.getWidth() ? buffImage.getWidth()
-				: config.getThumbnailWidth();
-		int desiredMaxHeight = config.getThumbnailHeight() > buffImage.getHeight() ? buffImage.getHeight()
-				: config.getThumbnailHeight();
+		int desiredMaxWidth = thumbnailWidth > buffImage.getWidth() ? buffImage.getWidth() : thumbnailWidth;
+		int desiredMaxHeight = thumbnailHeight > buffImage.getHeight() ? buffImage.getHeight() : thumbnailHeight;
 
 		// Resize
 		BufferedImage buffThumb = Scalr.resize(buffImage, Method.AUTOMATIC, Mode.AUTOMATIC, desiredMaxWidth,
