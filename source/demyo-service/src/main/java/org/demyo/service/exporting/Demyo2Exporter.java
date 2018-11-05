@@ -132,6 +132,8 @@ public class Demyo2Exporter implements IExporter {
 							new ManyToManyRelation("reading-list", "reading-list-entry", "READER_ID", "ALBUM_ID",
 									rawSqlDao.getRawRecords("READERS_READING_LIST")) });
 
+			exportModel(xsw, "configuration", "configuration-entry", "CONFIGURATION");
+
 			xsw.writeEndElement();
 
 			xsw.writeEndDocument();
