@@ -26,6 +26,7 @@ import org.demyo.model.Reader;
 import org.demyo.model.Series;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IModelService;
+import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 
 /**
@@ -36,9 +37,10 @@ import org.demyo.service.IReaderService;
 public class ReaderController extends AbstractModelController<Reader> {
 	@Autowired
 	private IReaderService service;
-
 	@Autowired
 	private IAlbumService albumService;
+	@Autowired
+	private IReaderContext readerContext;
 
 	/**
 	 * Default constructor.
@@ -88,6 +90,15 @@ public class ReaderController extends AbstractModelController<Reader> {
 
 		if (result.hasErrors()) {
 			return "readers/add-edit";
+		}
+
+		// If the edited reader is the logged in one, clear the context so that his name is updated automatically
+		// Other readers will have to re-select the reader, clear their session or restart Demyo so that the session
+		// beans are reloaded
+		// Maybe use a toast message to notify this?
+		Reader currentReader = readerContext.getCurrentReader();
+		if (currentReader != null && currentReader.getId().equals(entity.getId())) {
+			readerContext.clearCurrentReader();
 		}
 
 		return redirect(model, "/readers/index");
