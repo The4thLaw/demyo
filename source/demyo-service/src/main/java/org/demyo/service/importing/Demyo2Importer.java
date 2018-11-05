@@ -323,6 +323,8 @@ public class Demyo2Importer implements IImporter {
 				columns.put("reader_id", readerId);
 				columns.put("album_id", attributes.getValue("ref"));
 				readerReadingList.add(columns);
+			} else if ("configuration-entry".equals(localName)) {
+				createLine("configuration", attributes);
 			}
 		}
 

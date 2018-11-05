@@ -27,6 +27,9 @@ public class RawSQLDao implements IRawSQLDao {
 
 	private JdbcTemplate jdbcTemplate;
 
+	/**
+	 * Default construtor.
+	 */
 	public RawSQLDao() {
 		jdbcTemplate = new JdbcTemplate();
 	}
@@ -49,7 +52,8 @@ public class RawSQLDao implements IRawSQLDao {
 				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
 				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
 				"albums_writers", "albums_artists", "albums_images", "albums_prices", "albums", "bindings",
-				"series_relations", "series", "authors", "collections", "publishers", "images", "readers" }) {
+				"series_relations", "series", "authors", "collections", "publishers", "images", "readers",
+				"configuration" }) {
 			executeUpdate("DELETE FROM " + table);
 		}
 	}
