@@ -231,7 +231,8 @@
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
-				<version>1.4.197</version>
+				<version>1.4.196</version>
+				<!-- 1.4.197 should be avoided due to https://github.com/h2database/h2database/issues/1073 -->
 			</dependency>
 
 			<dependency>
