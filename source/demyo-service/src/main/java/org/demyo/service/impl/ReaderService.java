@@ -3,6 +3,7 @@ package org.demyo.service.impl;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,10 +82,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 			// - It allows creating a default configuration which can evolve over time
 			Reader defaultReader = new Reader();
 			defaultReader.setName(translationService.translate("field.Reader.name.default"));
-			save(defaultReader);
-
-			// Also create a default configuration for that reader
-			configService.createDefaultConfiguration(defaultReader);
+			save(defaultReader); // Will create a default configuration
 
 			// Return the created reader rather than reloading it from the database: since the transaction is not
 			// yet committed, the configuration entries wouldn't be available
@@ -187,6 +185,20 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		}
 
 		context.clearCurrentReader();
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public long save(@NotNull Reader model) {
+		boolean isNew = model.getId() == null;
+		Reader ret = saveAndGetModel(model);
+
+		if (isNew) {
+			configService.createDefaultConfiguration(ret);
+		}
+
+		return ret.getId();
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
