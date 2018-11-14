@@ -42,7 +42,9 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "ALBUMS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"), @DefaultOrder.Order(property = "cycle"),
-		@DefaultOrder.Order(property = "number"), @DefaultOrder.Order(property = "numberSuffix") })
+		@DefaultOrder.Order(property = "number"), @DefaultOrder.Order(property = "numberSuffix"),
+		// All other things being equal, sort by title. It's more intuitive for one shots in Album indexes, for example
+		@DefaultOrder.Order(property = "title") })
 @NamedEntityGraphs({ //
 		@NamedEntityGraph(name = "Album.forView", attributeNodes =
 		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
