@@ -13,7 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -35,11 +34,7 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Table(name = "READERS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraph(name = "Reader.forView", attributeNodes = { //
-		@NamedAttributeNode("configurationEntries"), //
-		@NamedAttributeNode("favouriteSeries"), //
-		@NamedAttributeNode(value = "favouriteAlbums", subgraph = "Series.Album"), //
-		@NamedAttributeNode(value = "readingList", subgraph = "Series.Album") }, //
-		subgraphs = { @NamedSubgraph(name = "Series.Album", attributeNodes = { @NamedAttributeNode("series") }) })
+		@NamedAttributeNode("configurationEntries") })
 public class Reader extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")

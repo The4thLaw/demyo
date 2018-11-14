@@ -1,5 +1,7 @@
 package org.demyo.dao;
 
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +25,33 @@ public interface IReaderRepo extends IModelRepo<Reader> {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Reader.forView")
 	Reader findOneForView(long id);
+
+	/**
+	 * Gets the internal identifiers of the Albums in the reading list of the provided Reader.
+	 * 
+	 * @param readerId The internal identifier of the Reader to query.
+	 * @return The IDs. The representation depends on the actual database.
+	 */
+	@Query(value = "select series_id from readers_favourite_series where reader_id=?1", nativeQuery = true)
+	Set<Number> getFavouriteSeriesForReader(long readerId);
+
+	/**
+	 * Gets the internal identifiers of the Albums in the reading list of the provided Reader.
+	 * 
+	 * @param readerId The internal identifier of the Reader to query.
+	 * @return The IDs. The representation depends on the actual database.
+	 */
+	@Query(value = "select album_id from readers_favourite_albums where reader_id=?1", nativeQuery = true)
+	Set<Number> getFavouriteAlbumsForReader(long readerId);
+
+	/**
+	 * Gets the internal identifiers of the Albums in the reading list of the provided Reader.
+	 * 
+	 * @param readerId The internal identifier of the Reader to query.
+	 * @return The IDs. The representation depends on the actual database.
+	 */
+	@Query(value = "select album_id from readers_reading_list where reader_id=?1", nativeQuery = true)
+	Set<Number> getReadingListForReader(long readerId);
 
 	/**
 	 * Removes a favourite {@link Series} for the given {@link Reader}.
