@@ -2,6 +2,7 @@
 
 $javascript.load('Demyo.Readers')
 $javascript.load('Demyo.DragAndDrop')
+$javascript.load('Demyo.QuickTasks')
 
 $quickTasks.add({
 	"id" : "qt-fave-album",

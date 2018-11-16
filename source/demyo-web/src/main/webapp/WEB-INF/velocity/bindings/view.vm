@@ -1,5 +1,7 @@
 #setPageTitleParams('title.view.binding' $binding.identifyingName)
 
+$javascript.load('Demyo.QuickTasks')
+
 $quickTasks.add({
 	"id" : "qt-edit-binding",
 	"url" : "../edit/$binding.id",

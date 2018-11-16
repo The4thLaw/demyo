@@ -1,5 +1,7 @@
 #setPageTitleParams('title.view.derivativeType' $derivativeType.identifyingName)
 
+$javascript.load('Demyo.QuickTasks')
+
 $quickTasks.add({
 	"id" : "qt-edit-derivativeType",
 	"url" : "../edit/$derivativeType.id",

@@ -1,5 +1,7 @@
 #setPageTitleParams('title.view.tag' $tag.identifyingName)
 
+$javascript.load('Demyo.QuickTasks')
+
 $quickTasks.add({
 	"id" : "qt-edit-tag",
 	"url" : "../edit/$tag.id",

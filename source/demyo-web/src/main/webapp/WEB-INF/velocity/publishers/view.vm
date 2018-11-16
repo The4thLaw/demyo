@@ -1,5 +1,7 @@
 #setPageTitleParams('title.view.publisher' $publisher.identifyingName)
 
+$javascript.load('Demyo.QuickTasks')
+
 $quickTasks.add({
 	"id" : "qt-edit-publisher",
 	"url" : "../edit/$publisher.id",

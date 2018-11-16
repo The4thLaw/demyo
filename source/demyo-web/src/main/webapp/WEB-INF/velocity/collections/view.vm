@@ -1,5 +1,7 @@
 #setPageTitleParams('title.view.collection' $collection.identifyingName)
 
+$javascript.load('Demyo.QuickTasks')
+
 $quickTasks.add({
 	"id" : "qt-edit-collection",
 	"url" : "../edit/$collection.id",
