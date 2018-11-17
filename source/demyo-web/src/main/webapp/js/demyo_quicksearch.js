@@ -14,7 +14,7 @@
 			
 			settings = $.extend({
 				delay: 400,
-				url: contextRoot + '/search/quick',
+				url: contextRoot + 'search/quick',
 				contentToHide: '#page-content',
 				resultLocation: '#quickSearch-results',
 				fadeSpeed: 'fast',
