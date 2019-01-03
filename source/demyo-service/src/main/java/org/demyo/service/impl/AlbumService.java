@@ -226,7 +226,13 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		(isNewAlbum && !newAlbum.isWishlist())
 				// Not a new album, but was part of the wishlist and is no longer part of it
 				|| isLeavingWishlist) {
-			LOGGER.debug("Adding the album to the reading list of all users");
+			LOGGER.debug("Adding the album to the reading list of all users (removing it first to be safe)");
+			// This is to be safe: normally, it won't be needed but
+			// 1) I once messed up my database manually so that items were simultaneously in the wishlist and reading
+			// list
+			// 2) If there is ever a bug that causes this corruption in Demyo without messing with the DB manually,
+			// this will prevent the issue
+			readerRepo.deleteFromAllReadingLists(id);
 			readerRepo.insertInAllReadingLists(id);
 		}
 
