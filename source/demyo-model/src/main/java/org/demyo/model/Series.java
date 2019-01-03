@@ -37,9 +37,10 @@ import org.demyo.model.util.StartsWithField;
 		{ @NamedAttributeNode("relatedSeries"),
 				@NamedAttributeNode(value = "albums", subgraph = "Series.Album") }, subgraphs =
 				{ @NamedSubgraph(name = "Series.Album", attributeNodes = { @NamedAttributeNode("writers"),
-						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-						@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-						@NamedAttributeNode("tags"), @NamedAttributeNode("cover") }) }),
+						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
+						@NamedAttributeNode("translators"), @NamedAttributeNode("publisher"),
+						@NamedAttributeNode("collection"), @NamedAttributeNode("tags"),
+						@NamedAttributeNode("cover") }) }),
 		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
 public class Series extends AbstractModel {
 	/** The name. */
