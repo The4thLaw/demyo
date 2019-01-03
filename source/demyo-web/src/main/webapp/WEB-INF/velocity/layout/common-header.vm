@@ -16,7 +16,7 @@
 		
 		<meta name="application-name" content="Demyo">
 		<meta name="mobile-web-app-capable" content="yes">
-		<link rel="manifest" href="/manifest.json">
+		<link rel="manifest" href="$link.contextPath/manifest.json">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-title" content="Demyo">
 		<meta name="msapplication-starturl" content="/">
