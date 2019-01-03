@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -75,7 +76,10 @@ public class ReaderInterceptor implements HandlerInterceptor {
 		} else {
 			// We have multiple readers, the user should select by himself, except if we are already on the right page
 			if (!path.matches("^/readers(/(index)?)?")) {
-				response.sendRedirect(request.getContextPath() + "/readers/");
+				// Don't use response.sendRedirect as it will prepend the server name etc.
+				// This is not ideal in an environment featuring reverse proxies
+				response.setStatus(HttpStatus.SEE_OTHER.value());
+				response.setHeader("Location", request.getContextPath() + "/readers/");
 			}
 		}
 
