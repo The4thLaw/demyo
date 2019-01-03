@@ -39,6 +39,7 @@ import org.demyo.model.MetaSeries;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IImageService;
+import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
@@ -55,6 +56,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	private IMetaSeriesRepo metaSeriesRepo;
 	@Autowired
 	private IReaderService readerService;
+	@Autowired
+	private IReaderContext context;
 	@Autowired
 	private ISeriesRepo seriesRepo;
 	@Autowired
@@ -220,7 +223,9 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			// wishlist
 			LOGGER.debug("Removing the album from the reading list of all users");
 			readerRepo.deleteFromAllReadingLists(id);
-
+			// Refresh the context of the current reader at least. Other readers won't see the change until the
+			// session expires, but it's better if the current reader sees his changes
+			context.clearCurrentReader();
 		} else if (// Add it to the reading list of all users if...
 		// New album, not part of the wishlist
 		(isNewAlbum && !newAlbum.isWishlist())
@@ -234,6 +239,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			// this will prevent the issue
 			readerRepo.deleteFromAllReadingLists(id);
 			readerRepo.insertInAllReadingLists(id);
+			// Refresh the context of the current reader at least. See above
+			context.clearCurrentReader();
 		}
 
 		return id;
