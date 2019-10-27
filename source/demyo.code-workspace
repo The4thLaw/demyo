@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"eslint.validate": [
+			"javascript",
+			"javascriptreact",
+			{
+				"language": "vue"
+			}
+		],
+
+		"stylelint.enable": true,
+		"css.validate": false,
+		"scss.validate": false,
+		"less.validate": false,
+
+		"editor.tabSize": 4
+	}
+}
