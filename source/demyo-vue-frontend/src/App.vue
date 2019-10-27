@@ -39,6 +39,11 @@
 
 		<v-content>
 			<HelloWorld />
+			<v-footer color="secondary" inset dark>
+				<v-col>
+					TODO: codename
+				</v-col>
+			</v-footer>
 		</v-content>
 	</v-app>
 </template>
