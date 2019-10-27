@@ -1,19 +1,14 @@
 <template>
 	<v-app>
-		<v-app-bar app>
-			<v-toolbar-title class="headline text-uppercase">
-				<span>Vuetify</span>
-				<span class="font-weight-light">MATERIAL DESIGN</span>
-			</v-toolbar-title>
+		<v-navigation-drawer v-model="mainMenu" app>
+			TODO: menu
+		</v-navigation-drawer>
+		<v-app-bar color="primary" dark app>
+			
+			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
+			<v-toolbar-title>TODO: title</v-toolbar-title>
 			<v-spacer />
-			<v-btn
-				text
-				href="https://github.com/vuetifyjs/vuetify/releases/latest"
-				target="_blank"
-			>
-				<span class="mr-2">Latest Release</span>
-				<v-icon>mdi-open-in-new</v-icon>
-			</v-btn>
+			TODO: search
 		</v-app-bar>
 
 		<v-content>
@@ -27,11 +22,15 @@ import HelloWorld from './components/HelloWorld'
 
 export default {
 	name: 'App',
+
 	components: {
 		HelloWorld
 	},
-	data: () => ({
-		//
-	})
+
+	data() {
+		return {
+			mainMenu: false
+		}
+	}
 }
 </script>
