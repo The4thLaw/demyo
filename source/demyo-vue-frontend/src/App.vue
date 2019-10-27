@@ -2,6 +2,14 @@
 	<v-app id="demyo">
 		<v-navigation-drawer v-model="mainMenu" app>
 			<v-list>
+				<v-list-item href="/TODO">
+					<v-list-item-icon>
+						<LetterIcon letter="T" color="#0000ff" />
+					</v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title>TODO: reader</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
 				<v-list-item href="/">
 					<v-list-item-icon>
 						<v-icon>mdi-home</v-icon>
@@ -50,12 +58,14 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import LetterIcon from './components/LetterIcon'
 
 export default {
 	name: 'App',
 
 	components: {
-		HelloWorld
+		HelloWorld,
+		LetterIcon
 	},
 
 	data() {
