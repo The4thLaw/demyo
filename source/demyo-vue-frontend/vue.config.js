@@ -6,7 +6,10 @@ module.exports = {
 			'fallbackLocale': 'en',
 			'localeDir': 'locales',
 			'enableInSFC': false
-		}
+		},
+		'webpackBundleAnalyzer': {
+                        'openAnalyzer': false
+                }
 	},
 	'transpileDependencies': [
 		'vuetify'
