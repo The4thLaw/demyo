@@ -2,7 +2,7 @@ module.exports = {
 	root: true,
 	env: {
 		node: true,
-		browser: true,
+		browser: true
 	},
 	parserOptions: {
 		'parser': 'babel-eslint'
@@ -23,7 +23,7 @@ module.exports = {
 		'curly': 'error',
 		'default-case': 'warn',
 		'dot-location': ['warn', 'property'],
-		'eqeqeq': ["error", "smart"],
+		'eqeqeq': ['error', 'smart'],
 		'no-alert': 'error',
 		'no-caller': 'error',
 		'no-else-return': 'error',
