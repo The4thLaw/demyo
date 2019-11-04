@@ -45,7 +45,7 @@
 		<org.slf4j.version>1.7.25</org.slf4j.version>
 		<org.springframework.version>4.3.18.RELEASE</org.springframework.version>
 		<org.hibernate.version>5.1.15.Final</org.hibernate.version> <!-- Last Java 7 version -->
-		<com.fasterxml.jackson.version>2.9.6</com.fasterxml.jackson.version>
+		<com.fasterxml.jackson.version>2.10.0</com.fasterxml.jackson.version>
 		<com.querydsl.version>4.2.1</com.querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
