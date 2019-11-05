@@ -56,6 +56,7 @@
 						</v-list-item-content>
 					</template>
 
+					<!-- TODO: not sure the href creates a router link -->
 					<v-list-item v-for="item in section.subItems" :key="item.title" :href="item.url">
 						<v-list-item-icon>
 							<v-icon v-text="item.icon" />
@@ -70,13 +71,16 @@
 		<v-app-bar color="primary" dark app>
 			
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
-			<v-toolbar-title>TODO: title</v-toolbar-title>
+			<v-toolbar-title>TODO: title <router-link to="/about">aaa</router-link></v-toolbar-title>
 			<v-spacer />
 			TODO: search
 		</v-app-bar>
 
 		<v-content>
-			<HelloWorld />
+			<v-container>
+				<router-view />
+			</v-container>
+			<!--<HelloWorld />-->
 			<v-footer color="secondary" inset dark>
 				<v-col>
 					TODO: codename
@@ -157,5 +161,9 @@ html[lang], #demyo {
 
 #demyo .v-list-item__title {
 	font-size: 14px;
+}
+
+#demyo .container {
+	max-width: initial;
 }
 </style>

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import AuthorIndex from '@/views/authors/AuthorIndex'
 
 Vue.use(VueRouter)
 
@@ -9,6 +10,11 @@ const routes = [
 		path: '/',
 		name: 'home',
 		component: Home
+	},
+	{
+		path: '/authors',
+		name: 'AuthorIndex',
+		component: AuthorIndex
 	},
 	{
 		path: '/about',
