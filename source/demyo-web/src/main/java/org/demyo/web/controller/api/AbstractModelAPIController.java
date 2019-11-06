@@ -1,14 +1,18 @@
 package org.demyo.web.controller.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.demyo.model.IModel;
+import org.demyo.model.ModelView;
 import org.demyo.service.IModelService;
 
 public abstract class AbstractModelAPIController<M extends IModel> {
@@ -34,12 +38,13 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 * @param request the HTTP request (e.g. for direct access to parameters).
 	 * @return The view name.
 	 */
-	// We need to provide direct access to the request because we cannot vary the mapping based on optional request
-	// parameters
 	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	@ResponseBody
-	public List<M> index() {
-		return getService().findAll();
+	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
+		List<M> value = getService().findAll();
+		MappingJacksonValue jackson = new MappingJacksonValue(value);
+		jackson.setSerializationView(ModelView.byName(view));
+		return jackson;
 	}
 
 	/**

@@ -14,14 +14,16 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 
-import org.demyo.model.util.AlbumAndSeriesComparator;
-import org.demyo.model.util.DefaultOrder;
-import org.demyo.model.util.StartsWithField;
-
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import org.demyo.model.util.AlbumAndSeriesComparator;
+import org.demyo.model.util.DefaultOrder;
+import org.demyo.model.util.StartsWithField;
 
 /**
  * Represents an Author (Artist, Writer, Colorist, Inker...).
@@ -30,26 +32,29 @@ import org.hibernate.validator.constraints.URL;
 @Table(name = "AUTHORS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name"), @DefaultOrder.Order(property = "firstName") })
 @NamedEntityGraphs({
-		@NamedEntityGraph(name = "Author.forEdition", attributeNodes = { @NamedAttributeNode("portrait") }),
-		@NamedEntityGraph(name = "Author.forView", attributeNodes = { @NamedAttributeNode("portrait"),
-				@NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
+		@NamedEntityGraph(name = "Author.forEdition", attributeNodes =
+		{ @NamedAttributeNode("portrait") }),
+		@NamedEntityGraph(name = "Author.forView", attributeNodes =
+		{ @NamedAttributeNode("portrait"), @NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
 				@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
 				@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album"),
 				@NamedAttributeNode(value = "albumsAsInker", subgraph = "Author.Album"),
-				@NamedAttributeNode(value = "albumsAsTranslator", subgraph = "Author.Album") },
-				subgraphs = { @NamedSubgraph(name = "Author.Album",
-						attributeNodes = { @NamedAttributeNode("series") }) }) })
+				@NamedAttributeNode(value = "albumsAsTranslator", subgraph = "Author.Album") }, subgraphs =
+				{ @NamedSubgraph(name = "Author.Album", attributeNodes = { @NamedAttributeNode("series") }) }) })
 public class Author extends AbstractModel {
 	/** The last name. */
 	@Column(name = "name")
 	@NotBlank
 	@StartsWithField
+	@JsonView(ModelView.Basic.class)
 	private String name;
 	/** The first name. */
 	@Column(name = "fname")
+	@JsonView(ModelView.Basic.class)
 	private String firstName;
 	/** The nickname. */
 	@Column(name = "nickname")
+	@JsonView(ModelView.Basic.class)
 	private String nickname;
 	/** The biography. */
 	@Column(name = "biography")
