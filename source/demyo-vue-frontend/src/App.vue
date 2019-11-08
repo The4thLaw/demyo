@@ -40,7 +40,7 @@
 
 				<v-divider />
 
-				<v-list-item href="/">
+				<v-list-item to="/">
 					<v-list-item-icon>
 						<v-icon>mdi-home</v-icon>
 					</v-list-item-icon>
@@ -56,8 +56,7 @@
 						</v-list-item-content>
 					</template>
 
-					<!-- TODO: not sure the href creates a router link -->
-					<v-list-item v-for="item in section.subItems" :key="item.title" :href="item.url">
+					<v-list-item v-for="item in section.subItems" :key="item.title" :to="item.url">
 						<v-list-item-icon>
 							<v-icon v-text="item.icon" />
 						</v-list-item-icon>
