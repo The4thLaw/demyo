@@ -8,6 +8,7 @@
 
 <script>
 import TextIndex from '@/components/TextIndex'
+import authorService from '@/services/author-service'
 
 export default {
 	name: 'AuthorIndex',
@@ -32,6 +33,17 @@ export default {
 					identifyingName: 'Jean-David 2 Morvan 2'
 				}
 			]
+		}
+	},
+
+	created() {
+		this.fetchData()
+	},
+
+	methods: {
+		async fetchData() {
+			let authors = await authorService.findForIndex()
+			this.authors = authors
 		}
 	}
 }
