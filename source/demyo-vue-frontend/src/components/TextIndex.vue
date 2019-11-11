@@ -8,12 +8,12 @@
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, key) in groupedItems" :key="key">
-				<div class="c-TextIndex__firstLetter display-1 mx-2 my-4">
+				<div class="c-TextIndex__firstLetter display-1 mx-2 my-4 accent--text">
 					{{ key }}
 				</div>
 				<v-card>
 					<v-card-text>
-						<v-list class="c-TextIndex__list">
+						<v-list class="c-TextIndex__list" dense>
 							<v-list-item v-for="item in value" :key="item.id">
 								<v-list-item-content>
 									<slot :item="item" />
@@ -24,7 +24,7 @@
 				</v-card>
 			</div>
 		</div>
-		<v-pagination v-model="currentPage" :length="pageCount" total-visible="10" class="my-2" />
+		<v-pagination v-if="pageCount > 1" v-model="currentPage" :length="pageCount" total-visible="10" class="my-2" />
 	</div>
 </template>
 
@@ -78,8 +78,14 @@ export default {
 	font-family: serif !important;
 }
 
-.c-TextIndex__list {
+#demyo .c-TextIndex__list {
 	columns: 4;
+	font-size: 1rem;
+
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
 }
 
 @media (max-width: 1023px) and (min-width: 840px) {

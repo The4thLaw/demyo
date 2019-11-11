@@ -9,9 +9,15 @@ export default new Vuetify({
 		iconfont: 'mdi'
 	},
 	theme: {
+		/*
+		options: {
+			customProperties: true
+		},
+		*/
 		themes: {
 			light: {
-				primary: colors.blue
+				primary: colors.blue,
+				accent: colors.pink
 			}
 		}
 	}
