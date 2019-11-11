@@ -3,5 +3,12 @@
 		{
 			"path": "source"
 		}
-	]
+	],
+	"settings": {
+		"eslint.validate": [
+			"javascript",
+			"vue",
+			"html"
+		]
+	}
 }
