@@ -68,15 +68,15 @@
 			</v-list>
 		</v-navigation-drawer>
 		<v-app-bar color="primary" dark app>
-			
+
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
-			<v-toolbar-title>TODO: title <router-link to="/about">aaa</router-link></v-toolbar-title>
+			<v-toolbar-title>TODO: title</v-toolbar-title>
 			<v-spacer />
 			TODO: search
 		</v-app-bar>
 
 		<v-content>
-			<v-container>
+			<v-container fluid>
 				<router-view />
 			</v-container>
 			<!--<HelloWorld />-->
@@ -164,7 +164,7 @@ html[lang], #demyo {
 	font-size: 14px;
 }
 
-#demyo .container {
-	max-width: initial;
+.v-toolbar .v-input {
+	caret-color: inherit !important;
 }
 </style>
