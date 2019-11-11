@@ -4,7 +4,7 @@ module.exports = {
 	devServer: {
 		// Route requests to unknown URLs to the backend (can be JSON server or Spring)
 		proxy: {
-			'/api': { target: 'http://localhost:3000/' }
+			'/api': { target: 'http://localhost:1607/' }
 		}
 	},
 

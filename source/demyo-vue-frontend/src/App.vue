@@ -80,6 +80,7 @@
 				<router-view />
 			</v-container>
 			<!--<HelloWorld />-->
+			<!-- TODO: flush this to the end of the page -->
 			<v-footer color="secondary" inset dark>
 				<v-col>
 					TODO: codename
@@ -156,6 +157,7 @@ export default {
 <style lang="less">
 html[lang], #demyo {
 	font-family: -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	background: #eee;
 }
 
 #demyo .v-list-item__title {

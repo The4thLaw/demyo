@@ -2,18 +2,29 @@
 	<div>
 		<div v-if="!splitByFirstLetter">
 			<div v-for="item in items" :key="item.id">
-				{{ firstLetterExtractor(item) }}<slot :item="item" />
+				<slot :item="item" />
 			</div>
 		</div>
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, key) in groupedItems" :key="key">
-				{{key}}
-				<div v-for="item in value" :key="item.id">
-				   <slot :item="item" />
+				<div class="c-TextIndex__firstLetter display-1 mx-2 my-4">
+					{{ key }}
 				</div>
+				<v-card>
+					<v-card-text>
+						<v-list class="c-TextIndex__list">
+							<v-list-item v-for="item in value" :key="item.id">
+								<v-list-item-content>
+									<slot :item="item" />
+								</v-list-item-content>
+							</v-list-item>
+						</v-list>
+					</v-card-text>
+				</v-card>
 			</div>
 		</div>
+		<v-pagination v-model="currentPage" :length="pageCount" total-visible="10" class="my-2" />
 	</div>
 </template>
 
@@ -34,13 +45,14 @@ export default {
 		},
 		firstLetterExtractor: {
 			type: Function,
-			default: () => 'A'
+			default: () => '#'
 		}
 	},
 
 	data() {
 		return {
-			itemsPerPage: 5,
+			// TODO: load this from the config
+			itemsPerPage: 30,
 			currentPage: 1
 		}
 	},
@@ -52,7 +64,39 @@ export default {
 
 		groupedItems() {
 			return groupBy(this.paginatedItems, (i) => deburr(this.firstLetterExtractor(i)))
+		},
+
+		pageCount() {
+			return Math.ceil(this.items.length / this.itemsPerPage);
 		}
 	}
 }
 </script>
+
+<style lang="less">
+#demyo .c-TextIndex__firstLetter {
+	font-family: serif !important;
+}
+
+.c-TextIndex__list {
+	columns: 4;
+}
+
+@media (max-width: 1023px) and (min-width: 840px) {
+	.c-TextIndex__list {
+		columns: 3;
+	}
+}
+
+@media (max-width: 839px) and (min-width: 480px) {
+	.c-TextIndex__list {
+		columns: 2;
+	}
+}
+
+@media (max-width: 479px) {
+	.mdl-list {
+		columns: 1;
+	}
+}
+</style>
