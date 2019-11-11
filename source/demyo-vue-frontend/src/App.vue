@@ -1,6 +1,6 @@
 <template>
 	<v-app id="demyo">
-		<v-navigation-drawer v-model="mainMenu" app>
+		<v-navigation-drawer v-model="mainMenu" app absolute temporary>
 			<v-list>
 				<v-list-group>
 					<template v-slot:activator>
