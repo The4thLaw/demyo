@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import store from '@/store/index'
+import Home from '@/views/Home.vue'
 import AuthorIndex from '@/views/authors/AuthorIndex'
 
 Vue.use(VueRouter)
@@ -30,6 +31,14 @@ const router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes
+})
+
+// Reset the UI on page transitions:
+// - Enable the search bar
+// - TODO: clear the quick tasks
+router.beforeEach((to, from, next) => {
+	store.dispatch('ui/enableSearch')
+	next()
 })
 
 export default router

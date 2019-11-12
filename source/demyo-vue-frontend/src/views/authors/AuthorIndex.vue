@@ -31,6 +31,8 @@ export default {
 
 	created() {
 		this.fetchData()
+		// TODO: left here for demo purposes, remove soon
+		this.$store.dispatch('ui/disableSearch')
 	},
 
 	methods: {

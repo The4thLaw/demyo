@@ -72,7 +72,9 @@
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
 			<v-toolbar-title>TODO: title</v-toolbar-title>
 			<v-spacer />
-			TODO: search
+			<template v-if="!suppressSearch">
+				TODO: search
+			</template>
 		</v-app-bar>
 
 		<v-content>
@@ -91,6 +93,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import HelloWorld from './components/HelloWorld'
 import LetterIcon from './components/LetterIcon'
 
@@ -150,6 +153,12 @@ export default {
 				}
 			]
 		}
+	},
+
+	computed: {
+		...mapState({
+			suppressSearch: state => state.ui.suppressSearch
+		})
 	}
 }
 </script>
