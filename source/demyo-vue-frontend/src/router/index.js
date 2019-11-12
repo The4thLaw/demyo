@@ -1,10 +1,12 @@
 import Vue from 'vue'
+import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
 import store from '@/store/index'
 import Home from '@/views/Home.vue'
 import AuthorIndex from '@/views/authors/AuthorIndex'
 
 Vue.use(VueRouter)
+Vue.use(VueMeta)
 
 const routes = [
 	{

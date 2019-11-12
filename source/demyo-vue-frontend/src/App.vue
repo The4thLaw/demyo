@@ -70,7 +70,7 @@
 		<v-app-bar color="primary" dark app>
 
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
-			<v-toolbar-title>TODO: title</v-toolbar-title>
+			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
 			<template v-if="!suppressSearch">
 				TODO: search
@@ -105,8 +105,22 @@ export default {
 		LetterIcon
 	},
 
+	metaInfo() {
+		let self = this
+
+		return {
+			title: this.$t('title.home'),
+			titleTemplate: '%s — Demyo',
+			changed(newInfo, addedTags, removedTags) {
+				self.pageTitle = newInfo.titleChunk
+			}
+		}
+	},
+
 	data() {
 		return {
+			pageTitle: 'Demyo',
+
 			mainMenu: false,
 
 			menuItems: [

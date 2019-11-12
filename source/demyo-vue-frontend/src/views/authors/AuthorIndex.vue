@@ -22,10 +22,9 @@ export default {
 		TextIndex
 	},
 
-	data() {
+	metaInfo() {
 		return {
-			authors: [
-			]
+			title: this.$t('title.index.author')
 		}
 	},
 
