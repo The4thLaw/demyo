@@ -52,7 +52,7 @@ export default {
 	data() {
 		return {
 			// TODO: load this from the config
-			itemsPerPage: 30,
+			itemsPerPage: 1,
 			currentPage: 1
 		}
 	},
@@ -86,6 +86,12 @@ export default {
 		color: inherit;
 		text-decoration: none;
 	}
+}
+
+// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541​ is resolved, switch to it
+#demyo .v-pagination button {
+	box-shadow: none;
+	border-radius: 50%;
 }
 
 @media (max-width: 1023px) and (min-width: 840px) {
