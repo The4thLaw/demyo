@@ -1,10 +1,6588 @@
 {
 	"authors": [
 		{
+			"id": 381,
+			"name": "Aaron",
+			"firstName": "Jason",
+			"fullName": "Jason Aaron",
+			"identifyingName": "Jason Aaron"
+		},
+		{
+			"id": 282,
+			"name": "Acar",
+			"firstName": "Jacques",
+			"fullName": "Jacques Acar",
+			"identifyingName": "Jacques Acar"
+		},
+		{
+			"id": 147,
+			"name": "Adam",
+			"firstName": "Éric",
+			"fullName": "Éric Adam",
+			"identifyingName": "Éric Adam"
+		},
+		{
+			"id": 543,
+			"name": "Adams",
+			"firstName": "Neal",
+			"fullName": "Neal Adams",
+			"identifyingName": "Neal Adams"
+		},
+		{
+			"id": 491,
+			"name": "Aguirre-Sacasa",
+			"firstName": "Roberto",
+			"fullName": "Roberto Aguirre-Sacasa",
+			"identifyingName": "Roberto Aguirre-Sacasa"
+		},
+		{
+			"id": 974,
+			"name": "Aja",
+			"firstName": "David",
+			"fullName": "David Aja",
+			"identifyingName": "David Aja"
+		},
+		{
+			"id": 114,
+			"name": "Alain",
+			"firstName": "Maury",
+			"fullName": "Maury Alain",
+			"identifyingName": "Maury Alain"
+		},
+		{
+			"id": 538,
+			"name": "Alcante",
+			"firstName": "Didier",
+			"fullName": "Didier Alcante",
+			"identifyingName": "Didier Alcante"
+		},
+		{
+			"id": 801,
+			"name": "Alex",
+			"fullName": "Alex",
+			"identifyingName": "Alex"
+		},
+		{
+			"id": 954,
+			"name": "Alixe",
+			"firstName": "Pascal",
+			"fullName": "Pascal Alixe",
+			"identifyingName": "Pascal Alixe"
+		},
+		{
+			"id": 191,
+			"name": "Alizon",
+			"firstName": "Ludwig",
+			"fullName": "Ludwig Alizon",
+			"identifyingName": "Ludwig Alizon"
+		},
+		{
+			"id": 229,
+			"name": "Alliel",
+			"fullName": "Alliel",
+			"identifyingName": "Alliel"
+		},
+		{
+			"id": 692,
+			"name": "Almanza",
+			"firstName": "Jérémie",
+			"fullName": "Jérémie Almanza",
+			"identifyingName": "Jérémie Almanza"
+		},
+		{
+			"id": 442,
+			"name": "Alves",
+			"firstName": "Wellinton",
+			"fullName": "Wellinton Alves",
+			"identifyingName": "Wellinton Alves"
+		},
+		{
+			"id": 665,
+			"name": "Alwett",
+			"firstName": "Audrey",
+			"fullName": "Audrey Alwett",
+			"identifyingName": "Audrey Alwett"
+		},
+		{
+			"id": 931,
+			"name": "Amouriq",
+			"firstName": "Alexandre",
+			"fullName": "Alexandre Amouriq",
+			"identifyingName": "Alexandre Amouriq"
+		},
+		{
+			"id": 667,
+			"name": "Andolfo",
+			"firstName": "Mirka",
+			"fullName": "Mirka Andolfo",
+			"identifyingName": "Mirka Andolfo"
+		},
+		{
+			"id": 660,
+			"name": "Andoryss",
+			"fullName": "Andoryss",
+			"identifyingName": "Andoryss"
+		},
+		{
+			"id": 872,
+			"name": "Andréae",
+			"firstName": "Jean-Baptiste",
+			"fullName": "Jean-Baptiste Andréae",
+			"identifyingName": "Jean-Baptiste Andréae"
+		},
+		{
+			"id": 332,
+			"name": "Andrews",
+			"firstName": "Kaare",
+			"fullName": "Kaare Andrews",
+			"identifyingName": "Kaare Andrews"
+		},
+		{
+			"id": 935,
+			"name": "Annabel",
+			"fullName": "Annabel",
+			"identifyingName": "Annabel"
+		},
+		{
+			"id": 948,
+			"name": "Antista",
+			"firstName": "Paolla",
+			"fullName": "Paolla Antista",
+			"identifyingName": "Paolla Antista"
+		},
+		{
+			"id": 867,
+			"name": "Anyk",
+			"fullName": "Anyk",
+			"identifyingName": "Anyk"
+		},
+		{
+			"id": 938,
+			"name": "Aquaro",
+			"fullName": "Aquaro",
+			"identifyingName": "Aquaro"
+		},
+		{
+			"id": 292,
+			"name": "Arakawa",
+			"firstName": "Hiromu",
+			"biography": "<p>Née en 1973 dans la région nord d'Hokkaido, Hiromu Arakawa est une mangaka débutante lorsqu'elle envoie son premier manuscrit à l'éditeur Square-Enix. Très vite repérée par son talent pour la mise en scène, la petite histoire courte qu'elle avait imaginée dans un monde fantaisiste deviendra l'un des mangas les plus vendus de tous les temps au Japon : Fullmetal Alchemist</p>",
+			"website": "http://en.wikipedia.org/wiki/Hiromu_Arakawa",
+			"fullName": "Hiromu Arakawa",
+			"identifyingName": "Hiromu Arakawa"
+		},
+		{
+			"id": 264,
+			"name": "Araldi",
+			"firstName": "Christophe",
+			"fullName": "Christophe Araldi",
+			"identifyingName": "Christophe Araldi"
+		},
+		{
+			"id": 581,
+			"name": "Archer",
+			"firstName": "Adam",
+			"fullName": "Adam Archer",
+			"identifyingName": "Adam Archer"
+		},
+		{
+			"id": 120,
+			"name": "Arleston",
+			"firstName": "Christophe",
+			"fullName": "Christophe Arleston",
+			"identifyingName": "Christophe Arleston"
+		},
+		{
+			"id": 626,
+			"name": "Atiyeh",
+			"firstName": "Michael",
+			"fullName": "Michael Atiyeh",
+			"identifyingName": "Michael Atiyeh"
+		},
+		{
+			"id": 621,
+			"name": "Atkinson",
+			"firstName": "Zac",
+			"fullName": "Zac Atkinson",
+			"identifyingName": "Zac Atkinson"
+		},
+		{
+			"id": 927,
+			"name": "Augereau",
+			"firstName": "David",
+			"nickname": "Dav",
+			"fullName": "David 'Dav' Augereau",
+			"identifyingName": "David 'Dav' Augereau"
+		},
+		{
+			"id": 233,
+			"name": "Augustin",
+			"firstName": "Virginie",
+			"fullName": "Virginie Augustin",
+			"identifyingName": "Virginie Augustin"
+		},
+		{
+			"id": 333,
+			"name": "Austen",
+			"firstName": "Chuck",
+			"fullName": "Chuck Austen",
+			"identifyingName": "Chuck Austen"
+		},
+		{
+			"id": 835,
+			"name": "Ayakura",
+			"firstName": "Jyuu",
+			"fullName": "Jyuu Ayakura",
+			"identifyingName": "Jyuu Ayakura"
+		},
+		{
+			"id": 8,
+			"name": "Aymond",
+			"firstName": "Philippe",
+			"fullName": "Philippe Aymond",
+			"identifyingName": "Philippe Aymond"
+		},
+		{
+			"id": 64,
+			"name": "Ayroles",
+			"firstName": "Alain",
+			"fullName": "Alain Ayroles",
+			"identifyingName": "Alain Ayroles"
+		},
+		{
+			"id": 560,
+			"name": "Azaceta",
+			"firstName": "Paul",
+			"fullName": "Paul Azaceta",
+			"identifyingName": "Paul Azaceta"
+		},
+		{
+			"id": 417,
+			"name": "Azuma",
+			"firstName": "Kiyohiko",
+			"biography": "<p>Né le 27 mai 1968 à Takasago (près de Kobe), au Japon.</p>",
+			"fullName": "Kiyohiko Azuma",
+			"identifyingName": "Kiyohiko Azuma"
+		},
+		{
+			"id": 334,
+			"name": "Azzarello",
+			"firstName": "Brian",
+			"fullName": "Brian Azzarello",
+			"identifyingName": "Brian Azzarello"
+		},
+		{
+			"id": 335,
+			"name": "Bachalo",
+			"firstName": "Chris",
+			"fullName": "Chris Bachalo",
+			"identifyingName": "Chris Bachalo"
+		},
+		{
+			"id": 958,
+			"name": "Bachs",
+			"firstName": "Ramon",
+			"fullName": "Ramon Bachs",
+			"identifyingName": "Ramon Bachs"
+		},
+		{
+			"id": 61,
+			"name": "Bajram",
+			"firstName": "Denis",
+			"website": "http://www.bajram.com/",
+			"fullName": "Denis Bajram",
+			"identifyingName": "Denis Bajram"
+		},
+		{
+			"id": 681,
+			"name": "Baldetti",
+			"firstName": "Laurence",
+			"fullName": "Laurence Baldetti",
+			"identifyingName": "Laurence Baldetti"
+		},
+		{
+			"id": 373,
+			"name": "Banning",
+			"firstName": "Matt",
+			"nickname": "Batt",
+			"fullName": "Matt 'Batt' Banning",
+			"identifyingName": "Matt 'Batt' Banning"
+		},
+		{
+			"id": 212,
+			"name": "Baradat",
+			"firstName": "Jean-Philippe",
+			"fullName": "Jean-Philippe Baradat",
+			"identifyingName": "Jean-Philippe Baradat"
+		},
+		{
+			"id": 672,
+			"name": "Barbucci",
+			"firstName": "Alessandro",
+			"fullName": "Alessandro Barbucci",
+			"identifyingName": "Alessandro Barbucci"
+		},
+		{
+			"id": 559,
+			"name": "Barreto",
+			"firstName": "Diego",
+			"fullName": "Diego Barreto",
+			"identifyingName": "Diego Barreto"
+		},
+		{
+			"id": 618,
+			"name": "Barreto",
+			"firstName": "Eduardo",
+			"fullName": "Eduardo Barreto",
+			"identifyingName": "Eduardo Barreto"
+		},
+		{
+			"id": 641,
+			"name": "Barrionuevo",
+			"firstName": "Al",
+			"fullName": "Al Barrionuevo",
+			"identifyingName": "Al Barrionuevo"
+		},
+		{
+			"id": 892,
+			"name": "Barthelemy",
+			"fullName": "Barthelemy",
+			"identifyingName": "Barthelemy"
+		},
+		{
+			"id": 978,
+			"name": "Basaldua",
+			"firstName": "Eric",
+			"fullName": "Eric Basaldua",
+			"identifyingName": "Eric Basaldua"
+		},
+		{
+			"id": 979,
+			"name": "Basaldua",
+			"firstName": "Rick",
+			"fullName": "Rick Basaldua",
+			"identifyingName": "Rick Basaldua"
+		},
+		{
+			"id": 265,
+			"name": "Basset",
+			"firstName": "Xavier",
+			"fullName": "Xavier Basset",
+			"identifyingName": "Xavier Basset"
+		},
+		{
+			"id": 805,
+			"name": "Bassini",
+			"firstName": "Matteo",
+			"fullName": "Matteo Bassini",
+			"identifyingName": "Matteo Bassini"
+		},
+		{
+			"id": 645,
+			"name": "Bazal",
+			"fullName": "Bazal",
+			"identifyingName": "Bazal"
+		},
+		{
+			"id": 108,
+			"name": "BD",
+			"firstName": "Collective",
+			"fullName": "Collective BD",
+			"identifyingName": "Collective BD"
+		},
+		{
+			"id": 210,
+			"name": "Beau",
+			"firstName": "Carole",
+			"fullName": "Carole Beau",
+			"identifyingName": "Carole Beau"
+		},
+		{
+			"id": 397,
+			"name": "Beaulieu",
+			"firstName": "Jean-François",
+			"fullName": "Jean-François Beaulieu",
+			"identifyingName": "Jean-François Beaulieu"
+		},
+		{
+			"id": 830,
+			"name": "BeKa",
+			"fullName": "BeKa",
+			"identifyingName": "BeKa"
+		},
+		{
+			"id": 1005,
+			"name": "Belingard",
+			"firstName": "Laurence",
+			"fullName": "Laurence Belingard",
+			"identifyingName": "Laurence Belingard"
+		},
+		{
+			"id": 393,
+			"name": "Bendis",
+			"firstName": "Brian Michael",
+			"fullName": "Brian Michael Bendis",
+			"identifyingName": "Brian Michael Bendis"
+		},
+		{
+			"id": 415,
+			"name": "Benitez",
+			"firstName": "Joe",
+			"fullName": "Joe Benitez",
+			"identifyingName": "Joe Benitez"
+		},
+		{
+			"id": 916,
+			"name": "Benoît",
+			"firstName": "Bertrand",
+			"fullName": "Bertrand Benoît",
+			"identifyingName": "Bertrand Benoît"
+		},
+		{
+			"id": 28,
+			"name": "Benoit",
+			"firstName": "Ted",
+			"fullName": "Ted Benoit",
+			"identifyingName": "Ted Benoit"
+		},
+		{
+			"id": 336,
+			"name": "Benson",
+			"firstName": "Mike",
+			"fullName": "Mike Benson",
+			"identifyingName": "Mike Benson"
+		},
+		{
+			"id": 378,
+			"name": "Beredo",
+			"firstName": "Rain",
+			"fullName": "Rain Beredo",
+			"identifyingName": "Rain Beredo"
+		},
+		{
+			"id": 337,
+			"name": "Bermejo",
+			"firstName": "Lee",
+			"fullName": "Lee Bermejo",
+			"identifyingName": "Lee Bermejo"
+		},
+		{
+			"id": 550,
+			"name": "Bernardin",
+			"firstName": "Marc",
+			"fullName": "Marc Bernardin",
+			"identifyingName": "Marc Bernardin"
+		},
+		{
+			"id": 392,
+			"name": "Berthet",
+			"fullName": "Berthet",
+			"identifyingName": "Berthet"
+		},
+		{
+			"id": 765,
+			"name": "Bertolucci",
+			"firstName": "Federico",
+			"fullName": "Federico Bertolucci",
+			"identifyingName": "Federico Bertolucci"
+		},
+		{
+			"id": 216,
+			"name": "Besson",
+			"firstName": "Frédéric",
+			"nickname": "Fred",
+			"fullName": "Frédéric 'Fred' Besson",
+			"identifyingName": "Frédéric 'Fred' Besson"
+		},
+		{
+			"id": 567,
+			"name": "Betbeder",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Betbeder",
+			"identifyingName": "Stéphane Betbeder"
+		},
+		{
+			"id": 218,
+			"name": "Biancarelli",
+			"fullName": "Biancarelli",
+			"identifyingName": "Biancarelli"
+		},
+		{
+			"id": 691,
+			"name": "Bianco",
+			"firstName": "Guillaume",
+			"fullName": "Guillaume Bianco",
+			"identifyingName": "Guillaume Bianco"
+		},
+		{
+			"id": 653,
+			"name": "Bileau",
+			"firstName": "Stéphane",
+			"website": "http://bileau.over-blog.com/",
+			"fullName": "Stéphane Bileau",
+			"identifyingName": "Stéphane Bileau"
+		},
+		{
+			"id": 192,
+			"name": "Blanchard",
+			"firstName": "Fred",
+			"fullName": "Fred Blanchard",
+			"identifyingName": "Fred Blanchard"
+		},
+		{
+			"id": 338,
+			"name": "Blanchard",
+			"firstName": "Shannon",
+			"fullName": "Shannon Blanchard",
+			"identifyingName": "Shannon Blanchard"
+		},
+		{
+			"id": 854,
+			"name": "Blancher",
+			"firstName": "Virginie",
+			"fullName": "Virginie Blancher",
+			"identifyingName": "Virginie Blancher"
+		},
+		{
+			"id": 472,
+			"name": "Blanco",
+			"firstName": "Fernando",
+			"fullName": "Fernando Blanco",
+			"identifyingName": "Fernando Blanco"
+		},
+		{
+			"id": 262,
+			"name": "Blengino",
+			"firstName": "Luca",
+			"fullName": "Luca Blengino",
+			"identifyingName": "Luca Blengino"
+		},
+		{
+			"id": 924,
+			"name": "Boiscommun",
+			"firstName": "Olivier",
+			"fullName": "Olivier Boiscommun",
+			"identifyingName": "Olivier Boiscommun"
+		},
+		{
+			"id": 386,
+			"name": "Bolland",
+			"firstName": "Brian",
+			"fullName": "Brian Bolland",
+			"identifyingName": "Brian Bolland"
+		},
+		{
+			"id": 9,
+			"name": "Bollée",
+			"firstName": "Laurent-Frédéric",
+			"fullName": "Laurent-Frédéric Bollée",
+			"identifyingName": "Laurent-Frédéric Bollée"
+		},
+		{
+			"id": 150,
+			"name": "Bom",
+			"fullName": "Bom",
+			"identifyingName": "Bom"
+		},
+		{
+			"id": 464,
+			"name": "Bond",
+			"firstName": "Philip",
+			"fullName": "Philip Bond",
+			"identifyingName": "Philip Bond"
+		},
+		{
+			"id": 869,
+			"name": "Bonetti",
+			"firstName": "Elia",
+			"fullName": "Elia Bonetti",
+			"identifyingName": "Elia Bonetti"
+		},
+		{
+			"id": 720,
+			"name": "Bordier",
+			"firstName": "Jean-Paul",
+			"fullName": "Jean-Paul Bordier",
+			"identifyingName": "Jean-Paul Bordier"
+		},
+		{
+			"id": 987,
+			"name": "Borges",
+			"firstName": "Gustavo",
+			"fullName": "Gustavo Borges",
+			"identifyingName": "Gustavo Borges"
+		},
+		{
+			"id": 383,
+			"name": "Boschi",
+			"firstName": "Roland",
+			"fullName": "Roland Boschi",
+			"identifyingName": "Roland Boschi"
+		},
+		{
+			"id": 825,
+			"name": "Bouazzouni",
+			"firstName": "Nora",
+			"fullName": "Nora Bouazzouni",
+			"identifyingName": "Nora Bouazzouni"
+		},
+		{
+			"id": 818,
+			"name": "Bouchard",
+			"firstName": "Christophe",
+			"fullName": "Christophe Bouchard",
+			"identifyingName": "Christophe Bouchard"
+		},
+		{
+			"id": 539,
+			"name": "Boucq",
+			"firstName": "François",
+			"fullName": "François Boucq",
+			"identifyingName": "François Boucq"
+		},
+		{
+			"id": 299,
+			"name": "Bourgier",
+			"firstName": "Éric",
+			"fullName": "Éric Bourgier",
+			"identifyingName": "Éric Bourgier"
+		},
+		{
+			"id": 942,
+			"name": "Bovagnet",
+			"firstName": "Florian",
+			"nickname": "B-gnet",
+			"website": "https://b-gnet.blogspot.com/",
+			"fullName": "Florian 'B-gnet' Bovagnet",
+			"identifyingName": "Florian 'B-gnet' Bovagnet"
+		},
+		{
+			"id": 339,
+			"name": "Bradstreet",
+			"firstName": "Tim",
+			"fullName": "Tim Bradstreet",
+			"identifyingName": "Tim Bradstreet"
+		},
+		{
+			"id": 184,
+			"name": "Broca",
+			"firstName": "Nic",
+			"fullName": "Nic Broca",
+			"identifyingName": "Nic Broca"
+		},
+		{
+			"id": 901,
+			"name": "Brooks",
+			"firstName": "Mark",
+			"fullName": "Mark Brooks",
+			"identifyingName": "Mark Brooks"
+		},
+		{
+			"id": 630,
+			"name": "Broussard",
+			"firstName": "Michael",
+			"fullName": "Michael Broussard",
+			"identifyingName": "Michael Broussard"
+		},
+		{
+			"id": 255,
+			"name": "Brown",
+			"firstName": "Dan",
+			"fullName": "Dan Brown",
+			"identifyingName": "Dan Brown"
+		},
+		{
+			"id": 966,
+			"name": "Brown / Sotocolor",
+			"firstName": "J.",
+			"fullName": "J. Brown / Sotocolor",
+			"identifyingName": "J. Brown / Sotocolor"
+		},
+		{
+			"id": 764,
+			"name": "Brrémaud",
+			"firstName": "Frédéric",
+			"fullName": "Frédéric Brrémaud",
+			"identifyingName": "Frédéric Brrémaud"
+		},
+		{
+			"id": 523,
+			"name": "Brubaker",
+			"firstName": "Ed",
+			"fullName": "Ed Brubaker",
+			"identifyingName": "Ed Brubaker"
+		},
+		{
+			"id": 473,
+			"name": "Brunner",
+			"firstName": "Frank",
+			"fullName": "Frank Brunner",
+			"identifyingName": "Frank Brunner"
+		},
+		{
+			"id": 824,
+			"name": "Brunschwig",
+			"firstName": "Luc",
+			"fullName": "Luc Brunschwig",
+			"identifyingName": "Luc Brunschwig"
+		},
+		{
+			"id": 340,
+			"name": "Buccellato",
+			"firstName": "Brian",
+			"fullName": "Brian Buccellato",
+			"identifyingName": "Brian Buccellato"
+		},
+		{
+			"id": 52,
+			"name": "Buchet",
+			"firstName": "Philippe",
+			"fullName": "Philippe Buchet",
+			"identifyingName": "Philippe Buchet"
+		},
+		{
+			"id": 990,
+			"name": "Bui",
+			"firstName": "Doan",
+			"fullName": "Doan Bui",
+			"identifyingName": "Doan Bui"
+		},
+		{
+			"id": 205,
+			"name": "Burchielli",
+			"firstName": "Riccardo",
+			"fullName": "Riccardo Burchielli",
+			"identifyingName": "Riccardo Burchielli"
+		},
+		{
+			"id": 110,
+			"name": "Cabanau",
+			"firstName": "Jean-Claude",
+			"fullName": "Jean-Claude Cabanau",
+			"identifyingName": "Jean-Claude Cabanau"
+		},
+		{
+			"id": 11,
+			"name": "Cailleteau",
+			"firstName": "Thierry",
+			"fullName": "Thierry Cailleteau",
+			"identifyingName": "Thierry Cailleteau"
+		},
+		{
+			"id": 321,
+			"name": "Caldwell",
+			"firstName": "Talent",
+			"fullName": "Talent Caldwell",
+			"identifyingName": "Talent Caldwell"
+		},
+		{
+			"id": 407,
+			"name": "Calero",
+			"firstName": "Denis",
+			"fullName": "Denis Calero",
+			"identifyingName": "Denis Calero"
+		},
+		{
+			"id": 722,
+			"name": "Callède",
+			"fullName": "Callède",
+			"identifyingName": "Callède"
+		},
+		{
+			"id": 341,
+			"name": "Cameron",
+			"firstName": "Don",
+			"fullName": "Don Cameron",
+			"identifyingName": "Don Cameron"
+		},
+		{
+			"id": 965,
+			"name": "Campanella",
+			"firstName": "Rob",
+			"fullName": "Rob Campanella",
+			"identifyingName": "Rob Campanella"
+		},
+		{
+			"id": 409,
+			"name": "Camuncoli",
+			"firstName": "Guiseppe",
+			"fullName": "Guiseppe Camuncoli",
+			"identifyingName": "Guiseppe Camuncoli"
+		},
+		{
+			"id": 856,
+			"name": "Carette",
+			"firstName": "Julien",
+			"fullName": "Julien Carette",
+			"identifyingName": "Julien Carette"
+		},
+		{
+			"id": 493,
+			"name": "Carey",
+			"firstName": "Mike",
+			"fullName": "Mike Carey",
+			"identifyingName": "Mike Carey"
+		},
+		{
+			"id": 799,
+			"name": "Caroll",
+			"firstName": "Lewis",
+			"fullName": "Lewis Caroll",
+			"identifyingName": "Lewis Caroll"
+		},
+		{
+			"id": 676,
+			"name": "Carot",
+			"firstName": "Manolo",
+			"nickname": "Man",
+			"fullName": "Manolo 'Man' Carot",
+			"identifyingName": "Manolo 'Man' Carot"
+		},
+		{
+			"id": 342,
+			"name": "Carré",
+			"firstName": "Benjamin",
+			"fullName": "Benjamin Carré",
+			"identifyingName": "Benjamin Carré"
+		},
+		{
+			"id": 926,
+			"name": "Carrion",
+			"firstName": "Antoine",
+			"fullName": "Antoine Carrion",
+			"identifyingName": "Antoine Carrion"
+		},
+		{
+			"id": 875,
+			"name": "Cartier",
+			"fullName": "Cartier",
+			"identifyingName": "Cartier"
+		},
+		{
+			"id": 711,
+			"name": "Casas",
+			"firstName": "Santi",
+			"fullName": "Santi Casas",
+			"identifyingName": "Santi Casas"
+		},
+		{
+			"id": 972,
+			"name": "Caselli",
+			"firstName": "Stefano",
+			"fullName": "Stefano Caselli",
+			"identifyingName": "Stefano Caselli"
+		},
+		{
+			"id": 529,
+			"name": "Cassaday",
+			"firstName": "John",
+			"fullName": "John Cassaday",
+			"identifyingName": "John Cassaday"
+		},
+		{
+			"id": 375,
+			"name": "Cassegrain",
+			"firstName": "Didier",
+			"fullName": "Didier Cassegrain",
+			"identifyingName": "Didier Cassegrain"
+		},
+		{
+			"id": 450,
+			"name": "Castellini",
+			"firstName": "Claudio",
+			"fullName": "Claudio Castellini",
+			"identifyingName": "Claudio Castellini"
+		},
+		{
+			"id": 203,
+			"name": "Casten",
+			"fullName": "Casten",
+			"identifyingName": "Casten"
+		},
+		{
+			"id": 41,
+			"name": "Cauvin",
+			"firstName": "Raoul",
+			"fullName": "Raoul Cauvin",
+			"identifyingName": "Raoul Cauvin"
+		},
+		{
+			"id": 822,
+			"name": "Cazenove",
+			"fullName": "Cazenove",
+			"identifyingName": "Cazenove"
+		},
+		{
+			"id": 408,
+			"name": "Cebulski",
+			"firstName": "C.B.",
+			"fullName": "C.B. Cebulski",
+			"identifyingName": "C.B. Cebulski"
+		},
+		{
+			"id": 838,
+			"name": "Celoni",
+			"firstName": "Fabio",
+			"fullName": "Fabio Celoni",
+			"identifyingName": "Fabio Celoni"
+		},
+		{
+			"id": 343,
+			"name": "Cha",
+			"firstName": "Keu",
+			"fullName": "Keu Cha",
+			"identifyingName": "Keu Cha"
+		},
+		{
+			"id": 249,
+			"name": "Chabbert",
+			"firstName": "Éric",
+			"fullName": "Éric Chabbert",
+			"identifyingName": "Éric Chabbert"
+		},
+		{
+			"id": 939,
+			"name": "Chabbert",
+			"firstName": "Ingrid",
+			"fullName": "Ingrid Chabbert",
+			"identifyingName": "Ingrid Chabbert"
+		},
+		{
+			"id": 795,
+			"name": "Chamblain",
+			"firstName": "Joris",
+			"fullName": "Joris Chamblain",
+			"identifyingName": "Joris Chamblain"
+		},
+		{
+			"id": 489,
+			"name": "Champelovier",
+			"firstName": "Simon",
+			"fullName": "Simon Champelovier",
+			"identifyingName": "Simon Champelovier"
+		},
+		{
+			"id": 610,
+			"name": "Chan",
+			"firstName": "Pierre-Mony",
+			"website": "http://pmchan.fr.nf/",
+			"fullName": "Pierre-Mony Chan",
+			"identifyingName": "Pierre-Mony Chan"
+		},
+		{
+			"id": 699,
+			"name": "Charalampidis",
+			"firstName": "Jim",
+			"fullName": "Jim Charalampidis",
+			"identifyingName": "Jim Charalampidis"
+		},
+		{
+			"id": 33,
+			"name": "Charlier",
+			"firstName": "Jean-Michel",
+			"fullName": "Jean-Michel Charlier",
+			"identifyingName": "Jean-Michel Charlier"
+		},
+		{
+			"id": 880,
+			"name": "Chaud",
+			"firstName": "Benjamin",
+			"fullName": "Benjamin Chaud",
+			"identifyingName": "Benjamin Chaud"
+		},
+		{
+			"id": 162,
+			"name": "Chaulet",
+			"firstName": "Georges",
+			"fullName": "Georges Chaulet",
+			"identifyingName": "Georges Chaulet"
+		},
+		{
+			"id": 457,
+			"name": "Chauvel",
+			"firstName": "David",
+			"fullName": "David Chauvel",
+			"identifyingName": "David Chauvel"
+		},
+		{
+			"id": 511,
+			"name": "Chaykin",
+			"firstName": "Howard",
+			"fullName": "Howard Chaykin",
+			"identifyingName": "Howard Chaykin"
+		},
+		{
+			"id": 844,
+			"name": "Cheetham",
+			"firstName": "Rosemary",
+			"fullName": "Rosemary Cheetham",
+			"identifyingName": "Rosemary Cheetham"
+		},
+		{
+			"id": 309,
+			"name": "Cheilan",
+			"firstName": "Thomas",
+			"fullName": "Thomas Cheilan",
+			"identifyingName": "Thomas Cheilan"
+		},
+		{
+			"id": 448,
+			"name": "Chen",
+			"firstName": "Sean",
+			"fullName": "Sean Chen",
+			"identifyingName": "Sean Chen"
+		},
+		{
+			"id": 219,
+			"name": "Chéret",
+			"fullName": "Chéret",
+			"identifyingName": "Chéret"
+		},
+		{
+			"id": 515,
+			"name": "Cheung",
+			"firstName": "Jim",
+			"fullName": "Jim Cheung",
+			"identifyingName": "Jim Cheung"
+		},
+		{
+			"id": 682,
+			"name": "Chevallier",
+			"firstName": "Loïc",
+			"fullName": "Loïc Chevallier",
+			"identifyingName": "Loïc Chevallier"
+		},
+		{
+			"id": 634,
+			"name": "Chiang",
+			"firstName": "Cliff",
+			"fullName": "Cliff Chiang",
+			"identifyingName": "Cliff Chiang"
+		},
+		{
+			"id": 478,
+			"name": "Ching",
+			"firstName": "Brian",
+			"fullName": "Brian Ching",
+			"identifyingName": "Brian Ching"
+		},
+		{
+			"id": 344,
+			"name": "Choi",
+			"firstName": "Mike",
+			"fullName": "Mike Choi",
+			"identifyingName": "Mike Choi"
+		},
+		{
+			"id": 197,
+			"name": "Christin",
+			"firstName": "Pierre",
+			"fullName": "Pierre Christin",
+			"identifyingName": "Pierre Christin"
+		},
+		{
+			"id": 565,
+			"name": "Chuckry",
+			"firstName": "Chris",
+			"fullName": "Chris Chuckry",
+			"identifyingName": "Chris Chuckry"
+		},
+		{
+			"id": 239,
+			"name": "Chung",
+			"firstName": "June",
+			"fullName": "June Chung",
+			"identifyingName": "June Chung"
+		},
+		{
+			"id": 447,
+			"name": "Claremont",
+			"firstName": "Chris",
+			"fullName": "Chris Claremont",
+			"identifyingName": "Chris Claremont"
+		},
+		{
+			"id": 394,
+			"name": "Coipel",
+			"firstName": "Olivier",
+			"fullName": "Olivier Coipel",
+			"identifyingName": "Olivier Coipel"
+		},
+		{
+			"id": 346,
+			"name": "Coker",
+			"firstName": "Tomm",
+			"fullName": "Tomm Coker",
+			"identifyingName": "Tomm Coker"
+		},
+		{
+			"id": 898,
+			"name": "Coleite",
+			"firstName": "Aron Eli",
+			"fullName": "Aron Eli Coleite",
+			"identifyingName": "Aron Eli Coleite"
+		},
+		{
+			"id": 458,
+			"name": "Collette",
+			"firstName": "Xavier",
+			"fullName": "Xavier Collette",
+			"identifyingName": "Xavier Collette"
+		},
+		{
+			"id": 281,
+			"name": "Collin",
+			"firstName": "Luc",
+			"nickname": "Batem",
+			"fullName": "Luc 'Batem' Collin",
+			"identifyingName": "Luc 'Batem' Collin"
+		},
+		{
+			"id": 26,
+			"name": "Colman",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Colman",
+			"identifyingName": "Stéphane Colman"
+		},
+		{
+			"id": 475,
+			"name": "Coney",
+			"firstName": "Malachy",
+			"fullName": "Malachy Coney",
+			"identifyingName": "Malachy Coney"
+		},
+		{
+			"id": 70,
+			"name": "Conrad",
+			"fullName": "Conrad",
+			"identifyingName": "Conrad"
+		},
+		{
+			"id": 428,
+			"name": "Cook",
+			"firstName": "Nikki",
+			"fullName": "Nikki Cook",
+			"identifyingName": "Nikki Cook"
+		},
+		{
+			"id": 254,
+			"name": "Corben",
+			"firstName": "Richard",
+			"fullName": "Richard Corben",
+			"identifyingName": "Richard Corben"
+		},
+		{
+			"id": 103,
+			"name": "Corbeyran",
+			"firstName": "Éric",
+			"fullName": "Éric Corbeyran",
+			"identifyingName": "Éric Corbeyran"
+		},
+		{
+			"id": 348,
+			"name": "Cordurié",
+			"firstName": "Sandrine",
+			"fullName": "Sandrine Cordurié",
+			"identifyingName": "Sandrine Cordurié"
+		},
+		{
+			"id": 349,
+			"name": "Cordurié",
+			"firstName": "Sylvain",
+			"fullName": "Sylvain Cordurié",
+			"identifyingName": "Sylvain Cordurié"
+		},
+		{
+			"id": 648,
+			"name": "Corgié",
+			"firstName": "Johann",
+			"fullName": "Johann Corgié",
+			"identifyingName": "Johann Corgié"
+		},
+		{
+			"id": 783,
+			"name": "Cornette",
+			"firstName": "Jean-Luc",
+			"fullName": "Jean-Luc Cornette",
+			"identifyingName": "Jean-Luc Cornette"
+		},
+		{
+			"id": 832,
+			"name": "Cosson",
+			"firstName": "Maëla",
+			"fullName": "Maëla Cosson",
+			"identifyingName": "Maëla Cosson"
+		},
+		{
+			"id": 214,
+			"name": "Cossu",
+			"firstName": "Brice",
+			"fullName": "Brice Cossu",
+			"identifyingName": "Brice Cossu"
+		},
+		{
+			"id": 619,
+			"name": "Couceiro",
+			"firstName": "Damian",
+			"fullName": "Damian Couceiro",
+			"identifyingName": "Damian Couceiro"
+		},
+		{
+			"id": 206,
+			"name": "Cox",
+			"firstName": "Jeromy",
+			"fullName": "Jeromy Cox",
+			"identifyingName": "Jeromy Cox"
+		},
+		{
+			"id": 982,
+			"name": "Crabtree",
+			"firstName": "Bill",
+			"fullName": "Bill Crabtree",
+			"identifyingName": "Bill Crabtree"
+		},
+		{
+			"id": 161,
+			"name": "Craenhals",
+			"firstName": "François",
+			"fullName": "François Craenhals",
+			"identifyingName": "François Craenhals"
+		},
+		{
+			"id": 89,
+			"name": "Crain",
+			"firstName": "Clayton",
+			"fullName": "Clayton Crain",
+			"identifyingName": "Clayton Crain"
+		},
+		{
+			"id": 350,
+			"name": "Créty",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Créty",
+			"identifyingName": "Stéphane Créty"
+		},
+		{
+			"id": 215,
+			"name": "Crisse",
+			"firstName": "Didier",
+			"fullName": "Didier Crisse",
+			"identifyingName": "Didier Crisse"
+		},
+		{
+			"id": 6,
+			"name": "Cromwell",
+			"fullName": "Cromwell",
+			"identifyingName": "Cromwell"
+		},
+		{
+			"id": 984,
+			"name": "Crossley",
+			"firstName": "Andrew",
+			"fullName": "Andrew Crossley",
+			"identifyingName": "Andrew Crossley"
+		},
+		{
+			"id": 905,
+			"name": "Cuevas",
+			"firstName": "Carlos",
+			"fullName": "Carlos Cuevas",
+			"identifyingName": "Carlos Cuevas"
+		},
+		{
+			"id": 284,
+			"name": "Culliford",
+			"firstName": "Thierry",
+			"fullName": "Thierry Culliford",
+			"identifyingName": "Thierry Culliford"
+		},
+		{
+			"id": 866,
+			"name": "Cuneo",
+			"firstName": "Andrea",
+			"fullName": "Andrea Cuneo",
+			"identifyingName": "Andrea Cuneo"
+		},
+		{
+			"id": 55,
+			"name": "Cuvelier",
+			"firstName": "Paul",
+			"fullName": "Paul Cuvelier",
+			"identifyingName": "Paul Cuvelier"
+		},
+		{
+			"id": 687,
+			"name": "Cuzor",
+			"firstName": "Steve",
+			"fullName": "Steve Cuzor",
+			"identifyingName": "Steve Cuzor"
+		},
+		{
+			"id": 576,
+			"name": "D'Anda",
+			"firstName": "Carlos",
+			"fullName": "Carlos D'Anda",
+			"identifyingName": "Carlos D'Anda"
+		},
+		{
+			"id": 296,
+			"name": "D'Armata",
+			"firstName": "Frank G.",
+			"fullName": "Frank G. D'Armata",
+			"identifyingName": "Frank G. D'Armata"
+		},
+		{
+			"id": 553,
+			"name": "D'Orazio",
+			"firstName": "Valérie",
+			"fullName": "Valérie D'Orazio",
+			"identifyingName": "Valérie D'Orazio"
+		},
+		{
+			"id": 427,
+			"name": "Dalhouse",
+			"firstName": "Andrew",
+			"fullName": "Andrew Dalhouse",
+			"identifyingName": "Andrew Dalhouse"
+		},
+		{
+			"id": 323,
+			"name": "Damien",
+			"fullName": "Damien",
+			"identifyingName": "Damien"
+		},
+		{
+			"id": 317,
+			"name": "Damour",
+			"fullName": "Damour",
+			"identifyingName": "Damour"
+		},
+		{
+			"id": 220,
+			"name": "Danard",
+			"fullName": "Danard",
+			"identifyingName": "Danard"
+		},
+		{
+			"id": 156,
+			"name": "Dany",
+			"fullName": "Dany",
+			"identifyingName": "Dany"
+		},
+		{
+			"id": 280,
+			"name": "Darc",
+			"firstName": "Jean",
+			"fullName": "Jean Darc",
+			"identifyingName": "Jean Darc"
+		},
+		{
+			"id": 807,
+			"name": "Darlot",
+			"firstName": "Jean-Michel",
+			"fullName": "Jean-Michel Darlot",
+			"identifyingName": "Jean-Michel Darlot"
+		},
+		{
+			"id": 136,
+			"name": "Daudet/thomsin",
+			"fullName": "Daudet/thomsin",
+			"identifyingName": "Daudet/thomsin"
+		},
+		{
+			"id": 399,
+			"name": "David",
+			"firstName": "Dominique",
+			"fullName": "Dominique David",
+			"identifyingName": "Dominique David"
+		},
+		{
+			"id": 300,
+			"name": "David",
+			"firstName": "Fabrice",
+			"fullName": "Fabrice David",
+			"identifyingName": "Fabrice David"
+		},
+		{
+			"id": 637,
+			"name": "David",
+			"firstName": "Peter",
+			"fullName": "Peter David",
+			"identifyingName": "Peter David"
+		},
+		{
+			"id": 587,
+			"name": "David",
+			"firstName": "Sophie",
+			"fullName": "Sophie David",
+			"identifyingName": "Sophie David"
+		},
+		{
+			"id": 956,
+			"name": "Davidson",
+			"firstName": "Pat",
+			"fullName": "Pat Davidson",
+			"identifyingName": "Pat Davidson"
+		},
+		{
+			"id": 986,
+			"name": "Davier",
+			"firstName": "Thomas",
+			"fullName": "Thomas Davier",
+			"identifyingName": "Thomas Davier"
+		},
+		{
+			"id": 751,
+			"name": "Daviet",
+			"firstName": "Véra",
+			"fullName": "Véra Daviet",
+			"identifyingName": "Véra Daviet"
+		},
+		{
+			"id": 488,
+			"name": "Daxiong",
+			"fullName": "Daxiong",
+			"identifyingName": "Daxiong"
+		},
+		{
+			"id": 695,
+			"name": "Day",
+			"firstName": "Thomas",
+			"fullName": "Thomas Day",
+			"identifyingName": "Thomas Day"
+		},
+		{
+			"id": 725,
+			"name": "De Becker",
+			"firstName": "Stéphane",
+			"nickname": "Stuf",
+			"fullName": "Stéphane 'Stuf' De Becker",
+			"identifyingName": "Stéphane 'Stuf' De Becker"
+		},
+		{
+			"id": 283,
+			"name": "Debruyne",
+			"firstName": "Jacques",
+			"fullName": "Jacques Debruyne",
+			"identifyingName": "Jacques Debruyne"
+		},
+		{
+			"id": 297,
+			"name": "Defali",
+			"firstName": "Djillali",
+			"fullName": "Djillali Defali",
+			"identifyingName": "Djillali Defali"
+		},
+		{
+			"id": 157,
+			"name": "De Gieter",
+			"fullName": "De Gieter",
+			"identifyingName": "De Gieter"
+		},
+		{
+			"id": 989,
+			"name": "Deglin",
+			"firstName": "Jean-Luc",
+			"fullName": "Jean-Luc Deglin",
+			"identifyingName": "Jean-Luc Deglin"
+		},
+		{
+			"id": 77,
+			"name": "Degotte",
+			"firstName": "Charles",
+			"fullName": "Charles Degotte",
+			"identifyingName": "Charles Degotte"
+		},
+		{
+			"id": 134,
+			"name": "De Groot",
+			"fullName": "De Groot",
+			"identifyingName": "De Groot"
+		},
+		{
+			"id": 314,
+			"name": "Delabie",
+			"firstName": "Caroline",
+			"fullName": "Caroline Delabie",
+			"identifyingName": "Caroline Delabie"
+		},
+		{
+			"id": 18,
+			"name": "De La Royère",
+			"firstName": "Jean-Claude",
+			"fullName": "Jean-Claude De La Royère",
+			"identifyingName": "Jean-Claude De La Royère"
+		},
+		{
+			"id": 879,
+			"name": "Delaunay",
+			"firstName": "Yann",
+			"fullName": "Yann Delaunay",
+			"identifyingName": "Yann Delaunay"
+		},
+		{
+			"id": 518,
+			"name": "Delgado",
+			"firstName": "Edgar",
+			"fullName": "Edgar Delgado",
+			"identifyingName": "Edgar Delgado"
+		},
+		{
+			"id": 455,
+			"name": "Dell'Otto",
+			"firstName": "Gabriele",
+			"fullName": "Gabriele Dell'Otto",
+			"identifyingName": "Gabriele Dell'Otto"
+		},
+		{
+			"id": 232,
+			"name": "De Longuis",
+			"fullName": "De Longuis",
+			"identifyingName": "De Longuis"
+		},
+		{
+			"id": 494,
+			"name": "Delperdang",
+			"firstName": "Jesse",
+			"fullName": "Jesse Delperdang",
+			"identifyingName": "Jesse Delperdang"
+		},
+		{
+			"id": 285,
+			"name": "Delporte",
+			"firstName": "Yvan",
+			"fullName": "Yvan Delporte",
+			"identifyingName": "Yvan Delporte"
+		},
+		{
+			"id": 671,
+			"name": "Dem",
+			"fullName": "Dem",
+			"identifyingName": "Dem"
+		},
+		{
+			"id": 84,
+			"name": "De Maesmaker",
+			"firstName": "Jean",
+			"nickname": "Jidéhem",
+			"fullName": "Jean 'Jidéhem' De Maesmaker",
+			"identifyingName": "Jean 'Jidéhem' De Maesmaker"
+		},
+		{
+			"id": 851,
+			"name": "Demare",
+			"firstName": "Nicolas",
+			"fullName": "Nicolas Demare",
+			"identifyingName": "Nicolas Demare"
+		},
+		{
+			"id": 236,
+			"name": "Démarez",
+			"fullName": "Démarez",
+			"identifyingName": "Démarez"
+		},
+		{
+			"id": 694,
+			"name": "De Meyere",
+			"firstName": "Gaël",
+			"fullName": "Gaël De Meyere",
+			"identifyingName": "Gaël De Meyere"
+		},
+		{
+			"id": 970,
+			"name": "Deming",
+			"firstName": "Mike",
+			"fullName": "Mike Deming",
+			"identifyingName": "Mike Deming"
+		},
+		{
+			"id": 47,
+			"name": "Denis",
+			"firstName": "Lapiere",
+			"fullName": "Lapiere Denis",
+			"identifyingName": "Lapiere Denis"
+		},
+		{
+			"id": 377,
+			"name": "Deodato",
+			"firstName": "Mike Jr",
+			"fullName": "Mike Jr Deodato",
+			"identifyingName": "Mike Jr Deodato"
+		},
+		{
+			"id": 750,
+			"name": "Deplano",
+			"firstName": "Paolo",
+			"fullName": "Paolo Deplano",
+			"identifyingName": "Paolo Deplano"
+		},
+		{
+			"id": 244,
+			"name": "Derenick",
+			"firstName": "Tom",
+			"fullName": "Tom Derenick",
+			"identifyingName": "Tom Derenick"
+		},
+		{
+			"id": 42,
+			"name": "Derib",
+			"fullName": "Derib",
+			"identifyingName": "Derib"
+		},
+		{
+			"id": 27,
+			"name": "Desberg",
+			"firstName": "André",
+			"fullName": "André Desberg",
+			"identifyingName": "André Desberg"
+		},
+		{
+			"id": 747,
+			"name": "Desberg",
+			"firstName": "Stephen",
+			"fullName": "Stephen Desberg",
+			"identifyingName": "Stephen Desberg"
+		},
+		{
+			"id": 111,
+			"name": "de Vita",
+			"firstName": "Giulio",
+			"fullName": "Giulio de Vita",
+			"identifyingName": "Giulio de Vita"
+		},
+		{
+			"id": 226,
+			"name": "Diaz",
+			"fullName": "Diaz",
+			"identifyingName": "Diaz"
+		},
+		{
+			"id": 5,
+			"name": "Dieter",
+			"fullName": "Dieter",
+			"identifyingName": "Dieter"
+		},
+		{
+			"id": 404,
+			"name": "Di Giandomenico",
+			"firstName": "Carmine",
+			"fullName": "Carmine Di Giandomenico",
+			"identifyingName": "Carmine Di Giandomenico"
+		},
+		{
+			"id": 490,
+			"name": "Digikore Studios",
+			"fullName": "Digikore Studios",
+			"identifyingName": "Digikore Studios"
+		},
+		{
+			"id": 817,
+			"name": "Dillies",
+			"firstName": "Renaud",
+			"fullName": "Renaud Dillies",
+			"identifyingName": "Renaud Dillies"
+		},
+		{
+			"id": 604,
+			"name": "Dillon",
+			"firstName": "Steve",
+			"fullName": "Steve Dillon",
+			"identifyingName": "Steve Dillon"
+		},
+		{
+			"id": 865,
+			"name": "Dimat",
+			"firstName": "Dana",
+			"fullName": "Dana Dimat",
+			"identifyingName": "Dana Dimat"
+		},
+		{
+			"id": 387,
+			"name": "Dini",
+			"firstName": "Paul",
+			"fullName": "Paul Dini",
+			"identifyingName": "Paul Dini"
+		},
+		{
+			"id": 852,
+			"name": "Djian",
+			"firstName": "Jean-Blaise",
+			"fullName": "Jean-Blaise Djian",
+			"identifyingName": "Jean-Blaise Djian"
+		},
+		{
+			"id": 223,
+			"name": "Djief",
+			"fullName": "Djief",
+			"identifyingName": "Djief"
+		},
+		{
+			"id": 586,
+			"name": "Dlea",
+			"firstName": "Leonardo",
+			"fullName": "Leonardo Dlea",
+			"identifyingName": "Leonardo Dlea"
+		},
+		{
+			"id": 655,
+			"name": "Dobbs",
+			"fullName": "Dobbs",
+			"identifyingName": "Dobbs"
+		},
+		{
+			"id": 257,
+			"name": "Donaldson",
+			"firstName": "Kristian",
+			"fullName": "Kristian Donaldson",
+			"identifyingName": "Kristian Donaldson"
+		},
+		{
+			"id": 313,
+			"name": "Dorison",
+			"firstName": "Xavier",
+			"fullName": "Xavier Dorison",
+			"identifyingName": "Xavier Dorison"
+		},
+		{
+			"id": 602,
+			"name": "Double-S",
+			"fullName": "Double-S",
+			"identifyingName": "Double-S"
+		},
+		{
+			"id": 947,
+			"name": "Douyé",
+			"firstName": "Sylvia",
+			"fullName": "Sylvia Douyé",
+			"identifyingName": "Sylvia Douyé"
+		},
+		{
+			"id": 434,
+			"name": "Dragotta",
+			"firstName": "Nick",
+			"fullName": "Nick Dragotta",
+			"identifyingName": "Nick Dragotta"
+		},
+		{
+			"id": 716,
+			"name": "Du",
+			"firstName": "Yu",
+			"fullName": "Yu Du",
+			"identifyingName": "Yu Du"
+		},
+		{
+			"id": 683,
+			"name": "Duarte",
+			"firstName": "Kiko",
+			"fullName": "Kiko Duarte",
+			"identifyingName": "Kiko Duarte"
+		},
+		{
+			"id": 167,
+			"name": "Duchâteau",
+			"firstName": "André-Paul",
+			"fullName": "André-Paul Duchâteau",
+			"identifyingName": "André-Paul Duchâteau"
+		},
+		{
+			"id": 894,
+			"name": "Duclos",
+			"firstName": "Marina",
+			"fullName": "Marina Duclos",
+			"identifyingName": "Marina Duclos"
+		},
+		{
+			"id": 985,
+			"name": "Duclos",
+			"firstName": "Nicole",
+			"fullName": "Nicole Duclos",
+			"identifyingName": "Nicole Duclos"
+		},
+		{
+			"id": 863,
+			"name": "Duhamel",
+			"fullName": "Duhamel",
+			"identifyingName": "Duhamel"
+		},
+		{
+			"id": 62,
+			"name": "Dupa",
+			"fullName": "Dupa",
+			"identifyingName": "Dupa"
+		},
+		{
+			"id": 189,
+			"name": "Dusart",
+			"firstName": "Michel",
+			"fullName": "Michel Dusart",
+			"identifyingName": "Michel Dusart"
+		},
+		{
+			"id": 98,
+			"name": "Duval",
+			"firstName": "Fred",
+			"fullName": "Fred Duval",
+			"identifyingName": "Fred Duval"
+		},
+		{
+			"id": 707,
+			"name": "Egea",
+			"firstName": "Diana",
+			"fullName": "Diana Egea",
+			"identifyingName": "Diana Egea"
+		},
+		{
+			"id": 708,
+			"name": "Elder",
+			"firstName": "Andrew",
+			"fullName": "Andrew Elder",
+			"identifyingName": "Andrew Elder"
+		},
+		{
+			"id": 421,
+			"name": "Ellis",
+			"firstName": "Warren",
+			"fullName": "Warren Ellis",
+			"identifyingName": "Warren Ellis"
+		},
+		{
+			"id": 440,
+			"name": "Elson",
+			"firstName": "Richard",
+			"fullName": "Richard Elson",
+			"identifyingName": "Richard Elson"
+		},
+		{
+			"id": 582,
+			"name": "Eltaeb",
+			"firstName": "Gabe",
+			"fullName": "Gabe Eltaeb",
+			"identifyingName": "Gabe Eltaeb"
+		},
+		{
+			"id": 293,
+			"name": "Endo",
+			"firstName": "Hiroki",
+			"fullName": "Hiroki Endo",
+			"identifyingName": "Hiroki Endo"
+		},
+		{
+			"id": 90,
+			"name": "Ennis",
+			"firstName": "Garth",
+			"fullName": "Garth Ennis",
+			"identifyingName": "Garth Ennis"
+		},
+		{
+			"id": 524,
+			"name": "Epting",
+			"firstName": "Steve",
+			"fullName": "Steve Epting",
+			"identifyingName": "Steve Epting"
+		},
+		{
+			"id": 263,
+			"name": "Erbetta",
+			"firstName": "Luca",
+			"fullName": "Luca Erbetta",
+			"identifyingName": "Luca Erbetta"
+		},
+		{
+			"id": 846,
+			"name": "Erra",
+			"firstName": "Sergi",
+			"fullName": "Sergi Erra",
+			"identifyingName": "Sergi Erra"
+		},
+		{
+			"id": 918,
+			"name": "Evana",
+			"fullName": "Evana",
+			"identifyingName": "Evana"
+		},
+		{
+			"id": 923,
+			"name": "Evangelista",
+			"firstName": "Eber",
+			"fullName": "Eber Evangelista",
+			"identifyingName": "Eber Evangelista"
+		},
+		{
+			"id": 754,
+			"name": "Evangelisti",
+			"firstName": "Patrizio",
+			"fullName": "Patrizio Evangelisti",
+			"identifyingName": "Patrizio Evangelisti"
+		},
+		{
+			"id": 414,
+			"name": "Evans",
+			"firstName": "Khari",
+			"fullName": "Khari Evans",
+			"identifyingName": "Khari Evans"
+		},
+		{
+			"id": 820,
+			"name": "Evrard",
+			"firstName": "David",
+			"fullName": "David Evrard",
+			"identifyingName": "David Evrard"
+		},
+		{
+			"id": 88,
+			"name": "F'murr",
+			"fullName": "F'murr",
+			"identifyingName": "F'murr"
+		},
+		{
+			"id": 331,
+			"name": "Fabrys",
+			"fullName": "Fabrys",
+			"identifyingName": "Fabrys"
+		},
+		{
+			"id": 555,
+			"name": "Fairbairn",
+			"firstName": "Nathan",
+			"fullName": "Nathan Fairbairn",
+			"identifyingName": "Nathan Fairbairn"
+		},
+		{
+			"id": 943,
+			"name": "Falco",
+			"firstName": "Giuseppe",
+			"fullName": "Giuseppe Falco",
+			"identifyingName": "Giuseppe Falco"
+		},
+		{
+			"id": 351,
+			"name": "Fauche",
+			"firstName": "Xavier",
+			"fullName": "Xavier Fauche",
+			"identifyingName": "Xavier Fauche"
+		},
+		{
+			"id": 324,
+			"name": "Fernandez",
+			"firstName": "Jean-Paul",
+			"fullName": "Jean-Paul Fernandez",
+			"identifyingName": "Jean-Paul Fernandez"
+		},
+		{
+			"id": 961,
+			"name": "Fernandez",
+			"firstName": "Leandro",
+			"fullName": "Leandro Fernandez",
+			"identifyingName": "Leandro Fernandez"
+		},
+		{
+			"id": 352,
+			"name": "Ferri",
+			"firstName": "Jean-Yves",
+			"fullName": "Jean-Yves Ferri",
+			"identifyingName": "Jean-Yves Ferri"
+		},
+		{
+			"id": 513,
+			"name": "Ferry",
+			"firstName": "Pasqual",
+			"fullName": "Pasqual Ferry",
+			"identifyingName": "Pasqual Ferry"
+		},
+		{
+			"id": 151,
+			"name": "Finch",
+			"firstName": "David",
+			"fullName": "David Finch",
+			"identifyingName": "David Finch"
+		},
+		{
+			"id": 227,
+			"name": "Fino",
+			"fullName": "Fino",
+			"identifyingName": "Fino"
+		},
+		{
+			"id": 406,
+			"name": "Firchow",
+			"firstName": "Steve",
+			"fullName": "Steve Firchow",
+			"identifyingName": "Steve Firchow"
+		},
+		{
+			"id": 533,
+			"name": "Floch",
+			"firstName": "Adrien",
+			"fullName": "Adrien Floch",
+			"identifyingName": "Adrien Floch"
+		},
+		{
+			"id": 964,
+			"name": "Florea",
+			"firstName": "Sandu",
+			"fullName": "Sandu Florea",
+			"identifyingName": "Sandu Florea"
+		},
+		{
+			"id": 17,
+			"name": "Follet",
+			"firstName": "René",
+			"fullName": "René Follet",
+			"identifyingName": "René Follet"
+		},
+		{
+			"id": 698,
+			"name": "Folny",
+			"firstName": "Aurore",
+			"fullName": "Aurore Folny",
+			"identifyingName": "Aurore Folny"
+		},
+		{
+			"id": 758,
+			"name": "Fouquart",
+			"firstName": "Agnès",
+			"fullName": "Agnès Fouquart",
+			"identifyingName": "Agnès Fouquart"
+		},
+		{
+			"id": 183,
+			"name": "Fournier",
+			"fullName": "Fournier",
+			"identifyingName": "Fournier"
+		},
+		{
+			"id": 345,
+			"name": "Fox",
+			"firstName": "Nathan",
+			"fullName": "Nathan Fox",
+			"identifyingName": "Nathan Fox"
+		},
+		{
+			"id": 969,
+			"name": "Fraction",
+			"firstName": "Matt",
+			"fullName": "Matt Fraction",
+			"identifyingName": "Matt Fraction"
+		},
+		{
+			"id": 74,
+			"name": "Francard",
+			"fullName": "Francard",
+			"identifyingName": "Francard"
+		},
+		{
+			"id": 353,
+			"name": "Francescutto",
+			"firstName": "Paolo",
+			"fullName": "Paolo Francescutto",
+			"identifyingName": "Paolo Francescutto"
+		},
+		{
+			"id": 734,
+			"name": "Francq",
+			"firstName": "Philippe",
+			"fullName": "Philippe Francq",
+			"identifyingName": "Philippe Francq"
+		},
+		{
+			"id": 83,
+			"name": "Franquin",
+			"firstName": "André",
+			"fullName": "André Franquin",
+			"identifyingName": "André Franquin"
+		},
+		{
+			"id": 430,
+			"name": "Freedman",
+			"firstName": "Daniel",
+			"fullName": "Daniel Freedman",
+			"identifyingName": "Daniel Freedman"
+		},
+		{
+			"id": 549,
+			"name": "Freeman",
+			"firstName": "Adam",
+			"fullName": "Adam Freeman",
+			"identifyingName": "Adam Freeman"
+		},
+		{
+			"id": 746,
+			"name": "Freire",
+			"firstName": "Marcio",
+			"fullName": "Marcio Freire",
+			"identifyingName": "Marcio Freire"
+		},
+		{
+			"id": 575,
+			"name": "Fridolfs",
+			"firstName": "Derek",
+			"fullName": "Derek Fridolfs",
+			"identifyingName": "Derek Fridolfs"
+		},
+		{
+			"id": 784,
+			"name": "Frissen",
+			"firstName": "Jerry",
+			"fullName": "Jerry Frissen",
+			"identifyingName": "Jerry Frissen"
+		},
+		{
+			"id": 75,
+			"name": "Froideval",
+			"fullName": "Froideval",
+			"identifyingName": "Froideval"
+		},
+		{
+			"id": 995,
+			"name": "Froissard",
+			"firstName": "Vincent",
+			"fullName": "Vincent Froissard",
+			"identifyingName": "Vincent Froissard"
+		},
+		{
+			"id": 452,
+			"name": "Fructus",
+			"biography": "<p>Dessinateur au dessin fouillé et riche en couleurs, dans le style de Gimenez mais avec moins de traits noirs.</p>",
+			"fullName": "Fructus",
+			"identifyingName": "Fructus"
+		},
+		{
+			"id": 50,
+			"name": "Funcken",
+			"firstName": "Fred",
+			"fullName": "Fred Funcken",
+			"identifyingName": "Fred Funcken"
+		},
+		{
+			"id": 287,
+			"name": "Funcken",
+			"firstName": "Liliane",
+			"fullName": "Liliane Funcken",
+			"identifyingName": "Liliane Funcken"
+		},
+		{
+			"id": 855,
+			"name": "Gabella",
+			"firstName": "Mathieu",
+			"fullName": "Mathieu Gabella",
+			"identifyingName": "Mathieu Gabella"
+		},
+		{
+			"id": 521,
+			"name": "Gage",
+			"firstName": "Christos N.",
+			"fullName": "Christos N. Gage",
+			"identifyingName": "Christos N. Gage"
+		},
+		{
+			"id": 558,
+			"name": "Gajic",
+			"firstName": "Vukasin",
+			"fullName": "Vukasin Gajic",
+			"identifyingName": "Vukasin Gajic"
+		},
+		{
+			"id": 980,
+			"name": "Galli",
+			"firstName": "Marco",
+			"fullName": "Marco Galli",
+			"identifyingName": "Marco Galli"
+		},
+		{
+			"id": 306,
+			"name": "Galliano",
+			"firstName": "Patrick",
+			"fullName": "Patrick Galliano",
+			"identifyingName": "Patrick Galliano"
+		},
+		{
+			"id": 261,
+			"name": "Gallo",
+			"firstName": "Pier Nicola",
+			"fullName": "Pier Nicola Gallo",
+			"identifyingName": "Pier Nicola Gallo"
+		},
+		{
+			"id": 664,
+			"name": "Garcia",
+			"firstName": "Bruno",
+			"fullName": "Bruno Garcia",
+			"identifyingName": "Bruno Garcia"
+		},
+		{
+			"id": 500,
+			"name": "García",
+			"firstName": "Manuel",
+			"fullName": "Manuel García",
+			"identifyingName": "Manuel García"
+		},
+		{
+			"id": 790,
+			"name": "Garcia Cruz",
+			"firstName": "David",
+			"fullName": "David Garcia Cruz",
+			"identifyingName": "David Garcia Cruz"
+		},
+		{
+			"id": 517,
+			"name": "Garney",
+			"firstName": "Ron",
+			"fullName": "Ron Garney",
+			"identifyingName": "Ron Garney"
+		},
+		{
+			"id": 24,
+			"name": "Garray",
+			"firstName": "Pascal",
+			"fullName": "Pascal Garray",
+			"identifyingName": "Pascal Garray"
+		},
+		{
+			"id": 584,
+			"name": "Garza",
+			"firstName": "Alé",
+			"fullName": "Alé Garza",
+			"identifyingName": "Alé Garza"
+		},
+		{
+			"id": 479,
+			"name": "Gastonny",
+			"firstName": "Garrie",
+			"fullName": "Garrie Gastonny",
+			"identifyingName": "Garrie Gastonny"
+		},
+		{
+			"id": 912,
+			"name": "Gaudin",
+			"firstName": "Jean-Charles",
+			"fullName": "Jean-Charles Gaudin",
+			"identifyingName": "Jean-Charles Gaudin"
+		},
+		{
+			"id": 65,
+			"name": "Gazzotti",
+			"firstName": "Bruno",
+			"fullName": "Bruno Gazzotti",
+			"identifyingName": "Bruno Gazzotti"
+		},
+		{
+			"id": 35,
+			"name": "Geerts",
+			"firstName": "Paul",
+			"fullName": "Paul Geerts",
+			"identifyingName": "Paul Geerts"
+		},
+		{
+			"id": 49,
+			"name": "Geluck",
+			"firstName": "Philippe",
+			"fullName": "Philippe Geluck",
+			"identifyingName": "Philippe Geluck"
+		},
+		{
+			"id": 557,
+			"name": "Georges",
+			"firstName": "Gaétan",
+			"fullName": "Gaétan Georges",
+			"identifyingName": "Gaétan Georges"
+		},
+		{
+			"id": 398,
+			"name": "Gérard",
+			"firstName": "Sébastien",
+			"fullName": "Sébastien Gérard",
+			"identifyingName": "Sébastien Gérard"
+		},
+		{
+			"id": 563,
+			"name": "Gho",
+			"firstName": "Sunny",
+			"website": "http://hideki.deviantart.com/",
+			"fullName": "Sunny Gho",
+			"identifyingName": "Sunny Gho"
+		},
+		{
+			"id": 827,
+			"name": "Giacometti",
+			"firstName": "Éric",
+			"fullName": "Éric Giacometti",
+			"identifyingName": "Éric Giacometti"
+		},
+		{
+			"id": 467,
+			"name": "Gibbons",
+			"firstName": "Dave",
+			"fullName": "Dave Gibbons",
+			"identifyingName": "Dave Gibbons"
+		},
+		{
+			"id": 945,
+			"name": "Gilbert",
+			"firstName": "Thomas",
+			"fullName": "Thomas Gilbert",
+			"identifyingName": "Thomas Gilbert"
+		},
+		{
+			"id": 279,
+			"name": "Gillain",
+			"firstName": "Joseph",
+			"nickname": "Jijé",
+			"fullName": "Joseph 'Jijé' Gillain",
+			"identifyingName": "Joseph 'Jijé' Gillain"
+		},
+		{
+			"id": 171,
+			"name": "Gilson",
+			"fullName": "Gilson",
+			"identifyingName": "Gilson"
+		},
+		{
+			"id": 706,
+			"name": "Gimenez",
+			"firstName": "Axel",
+			"fullName": "Axel Gimenez",
+			"identifyingName": "Axel Gimenez"
+		},
+		{
+			"id": 304,
+			"name": "Gimenez",
+			"firstName": "Juan",
+			"fullName": "Juan Gimenez",
+			"identifyingName": "Juan Gimenez"
+		},
+		{
+			"id": 302,
+			"name": "Giordano",
+			"firstName": "Dick",
+			"fullName": "Dick Giordano",
+			"identifyingName": "Dick Giordano"
+		},
+		{
+			"id": 99,
+			"name": "Gioux",
+			"firstName": "Thierry",
+			"fullName": "Thierry Gioux",
+			"identifyingName": "Thierry Gioux"
+		},
+		{
+			"id": 32,
+			"name": "Giraud",
+			"firstName": "Jean",
+			"fullName": "Jean Giraud",
+			"identifyingName": "Jean Giraud"
+		},
+		{
+			"id": 224,
+			"name": "Girod",
+			"fullName": "Girod",
+			"identifyingName": "Girod"
+		},
+		{
+			"id": 743,
+			"name": "Giroud",
+			"firstName": "Frank",
+			"fullName": "Frank Giroud",
+			"identifyingName": "Frank Giroud"
+		},
+		{
+			"id": 951,
+			"name": "Glapion",
+			"firstName": "Jonathan",
+			"fullName": "Jonathan Glapion",
+			"identifyingName": "Jonathan Glapion"
+		},
+		{
+			"id": 148,
+			"name": "Godart",
+			"firstName": "Christian",
+			"fullName": "Christian Godart",
+			"identifyingName": "Christian Godart"
+		},
+		{
+			"id": 607,
+			"name": "Going-Raney",
+			"firstName": "Gina",
+			"fullName": "Gina Going-Raney",
+			"identifyingName": "Gina Going-Raney"
+		},
+		{
+			"id": 354,
+			"name": "Goleash",
+			"firstName": "Grant",
+			"fullName": "Grant Goleash",
+			"identifyingName": "Grant Goleash"
+		},
+		{
+			"id": 842,
+			"name": "Gonzales",
+			"firstName": "Alejandro",
+			"fullName": "Alejandro Gonzales",
+			"identifyingName": "Alejandro Gonzales"
+		},
+		{
+			"id": 841,
+			"name": "Googe",
+			"firstName": "Neil",
+			"fullName": "Neil Googe",
+			"identifyingName": "Neil Googe"
+		},
+		{
+			"id": 169,
+			"name": "Gos",
+			"fullName": "Gos",
+			"identifyingName": "Gos"
+		},
+		{
+			"id": 16,
+			"name": "Goscinny",
+			"firstName": "René",
+			"fullName": "René Goscinny",
+			"identifyingName": "René Goscinny"
+		},
+		{
+			"id": 168,
+			"name": "Gotlib",
+			"fullName": "Gotlib",
+			"identifyingName": "Gotlib"
+		},
+		{
+			"id": 668,
+			"name": "Goux",
+			"firstName": "Pierre-Denis",
+			"fullName": "Pierre-Denis Goux",
+			"identifyingName": "Pierre-Denis Goux"
+		},
+		{
+			"id": 410,
+			"name": "Gracia",
+			"firstName": "Marte",
+			"fullName": "Marte Gracia",
+			"identifyingName": "Marte Gracia"
+		},
+		{
+			"id": 439,
+			"name": "Grahame-Smith",
+			"firstName": "Seth",
+			"fullName": "Seth Grahame-Smith",
+			"identifyingName": "Seth Grahame-Smith"
+		},
+		{
+			"id": 7,
+			"name": "Gratien",
+			"firstName": "Éric",
+			"fullName": "Éric Gratien",
+			"identifyingName": "Éric Gratien"
+		},
+		{
+			"id": 355,
+			"name": "Gray",
+			"firstName": "Mick",
+			"fullName": "Mick Gray",
+			"identifyingName": "Mick Gray"
+		},
+		{
+			"id": 649,
+			"name": "Graza",
+			"fullName": "Graza",
+			"identifyingName": "Graza"
+		},
+		{
+			"id": 144,
+			"name": "Greg",
+			"fullName": "Greg",
+			"identifyingName": "Greg"
+		},
+		{
+			"id": 217,
+			"name": "Grelin",
+			"fullName": "Grelin",
+			"identifyingName": "Grelin"
+		},
+		{
+			"id": 859,
+			"name": "Grenier",
+			"firstName": "Sébastien",
+			"fullName": "Sébastien Grenier",
+			"identifyingName": "Sébastien Grenier"
+		},
+		{
+			"id": 994,
+			"name": "Grenson",
+			"firstName": "Olivier",
+			"fullName": "Olivier Grenson",
+			"identifyingName": "Olivier Grenson"
+		},
+		{
+			"id": 864,
+			"name": "Grey",
+			"fullName": "Grey",
+			"identifyingName": "Grey"
+		},
+		{
+			"id": 946,
+			"name": "Grolleau",
+			"firstName": "Fabien",
+			"fullName": "Fabien Grolleau",
+			"identifyingName": "Fabien Grolleau"
+		},
+		{
+			"id": 225,
+			"name": "Guénet",
+			"fullName": "Guénet",
+			"identifyingName": "Guénet"
+		},
+		{
+			"id": 592,
+			"name": "Guérineau",
+			"firstName": "Richard",
+			"fullName": "Richard Guérineau",
+			"identifyingName": "Richard Guérineau"
+		},
+		{
+			"id": 308,
+			"name": "Guerrero",
+			"firstName": "Mateo",
+			"fullName": "Mateo Guerrero",
+			"identifyingName": "Mateo Guerrero"
+		},
+		{
+			"id": 519,
+			"name": "Guggenheim",
+			"firstName": "Marc",
+			"fullName": "Marc Guggenheim",
+			"identifyingName": "Marc Guggenheim"
+		},
+		{
+			"id": 897,
+			"name": "Guilhem",
+			"fullName": "Guilhem",
+			"identifyingName": "Guilhem"
+		},
+		{
+			"id": 738,
+			"name": "Guillé",
+			"firstName": "Yoann",
+			"fullName": "Yoann Guillé",
+			"identifyingName": "Yoann Guillé"
+		},
+		{
+			"id": 221,
+			"name": "Guillo",
+			"firstName": "Yoann",
+			"fullName": "Yoann Guillo",
+			"identifyingName": "Yoann Guillo"
+		},
+		{
+			"id": 209,
+			"name": "Guth",
+			"firstName": "Claude",
+			"fullName": "Claude Guth",
+			"identifyingName": "Claude Guth"
+		},
+		{
+			"id": 140,
+			"name": "Guylouis",
+			"firstName": "Claude",
+			"fullName": "Claude Guylouis",
+			"identifyingName": "Claude Guylouis"
+		},
+		{
+			"id": 247,
+			"name": "Haberlin",
+			"firstName": "Brian",
+			"fullName": "Brian Haberlin",
+			"identifyingName": "Brian Haberlin"
+		},
+		{
+			"id": 658,
+			"name": "Hadrien",
+			"firstName": "Marc",
+			"fullName": "Marc Hadrien",
+			"identifyingName": "Marc Hadrien"
+		},
+		{
+			"id": 546,
+			"name": "Hairsine",
+			"firstName": "Trevor",
+			"fullName": "Trevor Hairsine",
+			"identifyingName": "Trevor Hairsine"
+		},
+		{
+			"id": 919,
+			"name": "Hamon",
+			"firstName": "Jérôme",
+			"fullName": "Jérôme Hamon",
+			"identifyingName": "Jérôme Hamon"
+		},
+		{
+			"id": 950,
+			"name": "Hanna",
+			"firstName": "Scott",
+			"fullName": "Scott Hanna",
+			"identifyingName": "Scott Hanna"
+		},
+		{
+			"id": 449,
+			"name": "Hannin",
+			"firstName": "Ian",
+			"fullName": "Ian Hannin",
+			"identifyingName": "Ian Hannin"
+		},
+		{
+			"id": 400,
+			"name": "Haque",
+			"firstName": "Mohammad F.",
+			"nickname": "Hawk",
+			"biography": "<p>Mohammad F. Haque draws AppleGeeks and maintains the website. He also works full-time, at a firm in D.C. as a designer,illustrator and programmer. Hawk's artistic influences run the gamut, but there is a definite mainstay in American comics - Spiderman and Batman are two of the obvious ones. He has received an award nomination from CGTalk, the popular online digital art forum. Hawk has also done work for a wide range of people, mostly coloring: the Penny Arcade CCG, Megatokyo's Miho poster, and the cover of Ctrl Alt Del: Vol. 1. He has also illustrated short graphic stories Seven and Disconnect in the graphic novel anthologies Disposable Parts and City Limits, respectively. Mohammad is also a college graduate, having gained his degree from the University of Maryland, College Park.</p>",
+			"website": "http://www.hawkstudios.net/",
+			"fullName": "Mohammad F. 'Hawk' Haque",
+			"identifyingName": "Mohammad F. 'Hawk' Haque"
+		},
+		{
+			"id": 370,
+			"name": "Harao",
+			"firstName": "Yumiko",
+			"fullName": "Yumiko Harao",
+			"identifyingName": "Yumiko Harao"
+		},
+		{
+			"id": 729,
+			"name": "Hardy",
+			"firstName": "Marc",
+			"website": "http://hardymarc.com/",
+			"fullName": "Marc Hardy",
+			"identifyingName": "Marc Hardy"
+		},
+		{
+			"id": 552,
+			"name": "Harren",
+			"firstName": "James",
+			"fullName": "James Harren",
+			"identifyingName": "James Harren"
+		},
+		{
+			"id": 833,
+			"name": "Hasekura",
+			"firstName": "Isuna",
+			"fullName": "Isuna Hasekura",
+			"identifyingName": "Isuna Hasekura"
+		},
+		{
+			"id": 701,
+			"name": "Hashimoto",
+			"firstName": "Kachou",
+			"fullName": "Kachou Hashimoto",
+			"identifyingName": "Kachou Hashimoto"
+		},
+		{
+			"id": 522,
+			"name": "Haun",
+			"firstName": "Jeremy",
+			"fullName": "Jeremy Haun",
+			"identifyingName": "Jeremy Haun"
+		},
+		{
+			"id": 782,
+			"name": "Hausman",
+			"firstName": "René",
+			"fullName": "René Hausman",
+			"identifyingName": "René Hausman"
+		},
+		{
+			"id": 534,
+			"name": "Hautière",
+			"firstName": "Régis",
+			"fullName": "Régis Hautière",
+			"identifyingName": "Régis Hautière"
+		},
+		{
+			"id": 731,
+			"name": "Héban",
+			"firstName": "Olivier",
+			"fullName": "Olivier Héban",
+			"identifyingName": "Olivier Héban"
+		},
+		{
+			"id": 298,
+			"name": "Hédon",
+			"firstName": "Raphaël",
+			"fullName": "Raphaël Hédon",
+			"identifyingName": "Raphaël Hédon"
+		},
+		{
+			"id": 638,
+			"name": "Henderson",
+			"firstName": "Garry",
+			"fullName": "Garry Henderson",
+			"identifyingName": "Garry Henderson"
+		},
+		{
+			"id": 445,
+			"name": "Henninot",
+			"firstName": "Éric",
+			"fullName": "Éric Henninot",
+			"identifyingName": "Éric Henninot"
+		},
+		{
+			"id": 816,
+			"name": "Henrichon",
+			"firstName": "Niko",
+			"fullName": "Niko Henrichon",
+			"identifyingName": "Niko Henrichon"
+		},
+		{
+			"id": 787,
+			"name": "Henscher",
+			"fullName": "Henscher",
+			"identifyingName": "Henscher"
+		},
+		{
+			"id": 101,
+			"name": "Hérault",
+			"firstName": "Kevin",
+			"nickname": "Trantkat",
+			"fullName": "Kevin 'Trantkat' Hérault",
+			"identifyingName": "Kevin 'Trantkat' Hérault"
+		},
+		{
+			"id": 874,
+			"name": "Hérenguel",
+			"firstName": "Éric",
+			"fullName": "Éric Hérenguel",
+			"identifyingName": "Éric Hérenguel"
+		},
+		{
+			"id": 116,
+			"name": "Hergé",
+			"fullName": "Hergé",
+			"identifyingName": "Hergé"
+		},
+		{
+			"id": 154,
+			"name": "Herle",
+			"fullName": "Herle",
+			"identifyingName": "Herle"
+		},
+		{
+			"id": 113,
+			"name": "Hermann",
+			"fullName": "Hermann",
+			"identifyingName": "Hermann"
+		},
+		{
+			"id": 413,
+			"name": "Hernandez",
+			"firstName": "Vince",
+			"fullName": "Vince Hernandez",
+			"identifyingName": "Vince Hernandez"
+		},
+		{
+			"id": 578,
+			"name": "Herrera",
+			"firstName": "Ben",
+			"fullName": "Ben Herrera",
+			"identifyingName": "Ben Herrera"
+		},
+		{
+			"id": 585,
+			"name": "Herrera",
+			"firstName": "Francisco",
+			"fullName": "Francisco Herrera",
+			"identifyingName": "Francisco Herrera"
+		},
+		{
+			"id": 937,
+			"name": "Hervás Millán",
+			"firstName": "Jésús",
+			"fullName": "Jésús Hervás Millán",
+			"identifyingName": "Jésús Hervás Millán"
+		},
+		{
+			"id": 786,
+			"name": "Herzet",
+			"firstName": "Émmanuel",
+			"fullName": "Émmanuel Herzet",
+			"identifyingName": "Émmanuel Herzet"
+		},
+		{
+			"id": 973,
+			"name": "Hester",
+			"firstName": "Phil",
+			"fullName": "Phil Hester",
+			"identifyingName": "Phil Hester"
+		},
+		{
+			"id": 608,
+			"name": "Hi-Fi Design",
+			"website": "http://masterdigitalcolor.com/",
+			"fullName": "Hi-Fi Design",
+			"identifyingName": "Hi-Fi Design"
+		},
+		{
+			"id": 402,
+			"name": "Hine",
+			"firstName": "David",
+			"fullName": "David Hine",
+			"identifyingName": "David Hine"
+		},
+		{
+			"id": 770,
+			"name": "Hino",
+			"firstName": "Matsuri",
+			"fullName": "Matsuri Hino",
+			"identifyingName": "Matsuri Hino"
+		},
+		{
+			"id": 294,
+			"name": "Hirano",
+			"firstName": "Kohta",
+			"fullName": "Kohta Hirano",
+			"identifyingName": "Kohta Hirano"
+		},
+		{
+			"id": 498,
+			"name": "Hollingsworth",
+			"firstName": "Matt",
+			"fullName": "Matt Hollingsworth",
+			"identifyingName": "Matt Hollingsworth"
+		},
+		{
+			"id": 485,
+			"name": "Hollowell",
+			"firstName": "Morry Jay",
+			"fullName": "Morry Jay Hollowell",
+			"identifyingName": "Morry Jay Hollowell"
+		},
+		{
+			"id": 675,
+			"name": "Homs",
+			"firstName": "José",
+			"fullName": "José Homs",
+			"identifyingName": "José Homs"
+		},
+		{
+			"id": 837,
+			"name": "Hosseini",
+			"firstName": "Khaled",
+			"fullName": "Khaled Hosseini",
+			"identifyingName": "Khaled Hosseini"
+		},
+		{
+			"id": 857,
+			"name": "Hostache",
+			"firstName": "Jean-Baptiste",
+			"fullName": "Jean-Baptiste Hostache",
+			"identifyingName": "Jean-Baptiste Hostache"
+		},
+		{
+			"id": 505,
+			"name": "Huat",
+			"firstName": "Tan Eng",
+			"fullName": "Tan Eng Huat",
+			"identifyingName": "Tan Eng Huat"
+		},
+		{
+			"id": 878,
+			"name": "Hub",
+			"fullName": "Hub",
+			"identifyingName": "Hub"
+		},
+		{
+			"id": 904,
+			"name": "Hubbs",
+			"firstName": "Troy",
+			"fullName": "Troy Hubbs",
+			"identifyingName": "Troy Hubbs"
+		},
+		{
+			"id": 877,
+			"name": "Hübsch",
+			"firstName": "Éric",
+			"fullName": "Éric Hübsch",
+			"identifyingName": "Éric Hübsch"
+		},
+		{
+			"id": 502,
+			"name": "Hurwitz",
+			"firstName": "Gregg",
+			"fullName": "Gregg Hurwitz",
+			"identifyingName": "Gregg Hurwitz"
+		},
+		{
+			"id": 152,
+			"name": "Huston",
+			"firstName": "Charlie",
+			"fullName": "Charlie Huston",
+			"identifyingName": "Charlie Huston"
+		},
+		{
+			"id": 646,
+			"name": "IBAN",
+			"fullName": "IBAN",
+			"identifyingName": "IBAN"
+		},
+		{
+			"id": 508,
+			"name": "Immonen",
+			"firstName": "Stuart",
+			"fullName": "Stuart Immonen",
+			"identifyingName": "Stuart Immonen"
+		},
+		{
+			"id": 599,
+			"name": "Inui",
+			"firstName": "Sekihiko",
+			"fullName": "Sekihiko Inui",
+			"identifyingName": "Sekihiko Inui"
+		},
+		{
+			"id": 429,
+			"name": "Irvine",
+			"firstName": "Alexander",
+			"fullName": "Alexander Irvine",
+			"identifyingName": "Alexander Irvine"
+		},
+		{
+			"id": 460,
+			"name": "Isaacs",
+			"firstName": "Rebekah",
+			"fullName": "Rebekah Isaacs",
+			"identifyingName": "Rebekah Isaacs"
+		},
+		{
+			"id": 245,
+			"name": "Isanove",
+			"firstName": "Richard",
+			"fullName": "Richard Isanove",
+			"identifyingName": "Richard Isanove"
+		},
+		{
+			"id": 925,
+			"name": "Ishihara",
+			"firstName": "Keiko",
+			"fullName": "Keiko Ishihara",
+			"identifyingName": "Keiko Ishihara"
+		},
+		{
+			"id": 848,
+			"name": "Issartial",
+			"fullName": "Issartial",
+			"identifyingName": "Issartial"
+		},
+		{
+			"id": 775,
+			"name": "Isshiki",
+			"firstName": "Nobuyuki",
+			"fullName": "Nobuyuki Isshiki",
+			"identifyingName": "Nobuyuki Isshiki"
+		},
+		{
+			"id": 222,
+			"name": "Istin",
+			"firstName": "Jean-Luc",
+			"fullName": "Jean-Luc Istin",
+			"identifyingName": "Jean-Luc Istin"
+		},
+		{
+			"id": 836,
+			"name": "Iwasaki",
+			"firstName": "Takashi",
+			"fullName": "Takashi Iwasaki",
+			"identifyingName": "Takashi Iwasaki"
+		},
+		{
+			"id": 194,
+			"name": "Jacamon",
+			"firstName": "Luc",
+			"fullName": "Luc Jacamon",
+			"identifyingName": "Luc Jacamon"
+		},
+		{
+			"id": 596,
+			"name": "Jackson",
+			"firstName": "Dan",
+			"fullName": "Dan Jackson",
+			"identifyingName": "Dan Jackson"
+		},
+		{
+			"id": 776,
+			"name": "Jacquemoire",
+			"firstName": "Élodie",
+			"fullName": "Élodie Jacquemoire",
+			"identifyingName": "Élodie Jacquemoire"
+		},
+		{
+			"id": 693,
+			"name": "Jamin",
+			"fullName": "Jamin",
+			"identifyingName": "Jamin"
+		},
+		{
+			"id": 188,
+			"name": "Janry",
+			"fullName": "Janry",
+			"identifyingName": "Janry"
+		},
+		{
+			"id": 276,
+			"name": "Janssens",
+			"fullName": "Janssens",
+			"identifyingName": "Janssens"
+		},
+		{
+			"id": 685,
+			"name": "Jarry",
+			"firstName": "Nicolas",
+			"fullName": "Nicolas Jarry",
+			"identifyingName": "Nicolas Jarry"
+		},
+		{
+			"id": 744,
+			"name": "Jean",
+			"firstName": "Nicolas",
+			"fullName": "Nicolas Jean",
+			"identifyingName": "Nicolas Jean"
+		},
+		{
+			"id": 390,
+			"name": "Jemas",
+			"firstName": "Bill",
+			"fullName": "Bill Jemas",
+			"identifyingName": "Bill Jemas"
+		},
+		{
+			"id": 389,
+			"name": "Jenkins",
+			"firstName": "Paul",
+			"fullName": "Paul Jenkins",
+			"identifyingName": "Paul Jenkins"
+		},
+		{
+			"id": 849,
+			"name": "Jestin",
+			"firstName": "Thomas",
+			"nickname": "Gx",
+			"fullName": "Thomas 'Gx' Jestin",
+			"identifyingName": "Thomas 'Gx' Jestin"
+		},
+		{
+			"id": 571,
+			"name": "Jewet",
+			"firstName": "Jason",
+			"fullName": "Jason Jewet",
+			"identifyingName": "Jason Jewet"
+		},
+		{
+			"id": 325,
+			"name": "JiaWei",
+			"firstName": "Huang",
+			"biography": "<blockquote> <p>Je m’appelle Huang Jiawei et je suis un dessinateur de manhua chinois. Diplômé du département de sculpture de l’école des Beaux-arts  de Canton, je suis spécialisé dans le dessin de manhua. Ya San  est mon premier recueil, c’est également ma première œuvre publiée en  France, je l’ai terminée alors que j’étais dans ma 4e année d’étude.</p> </blockquote> <p style=\"font-size: 85%;\">[<a href=\"http://www.actuabd.com/Huang-JiaWei-En-Chine-il-n-y-a-pas-de-place-pour-les-manhuas\">source</a>]</p>",
+			"fullName": "Huang JiaWei",
+			"identifyingName": "Huang JiaWei"
+		},
+		{
+			"id": 536,
+			"name": "Jigounov",
+			"firstName": "Iouri",
+			"fullName": "Iouri Jigounov",
+			"identifyingName": "Iouri Jigounov"
+		},
+		{
+			"id": 231,
+			"name": "Jim",
+			"fullName": "Jim",
+			"identifyingName": "Jim"
+		},
+		{
+			"id": 199,
+			"name": "Jobin",
+			"firstName": "André",
+			"nickname": "Job",
+			"fullName": "André 'Job' Jobin",
+			"identifyingName": "André 'Job' Jobin"
+		},
+		{
+			"id": 305,
+			"name": "Jodorowsky",
+			"firstName": "Alexandro",
+			"fullName": "Alexandro Jodorowsky",
+			"identifyingName": "Alexandro Jodorowsky"
+		},
+		{
+			"id": 603,
+			"name": "Johns",
+			"firstName": "Geoff",
+			"fullName": "Geoff Johns",
+			"identifyingName": "Geoff Johns"
+		},
+		{
+			"id": 301,
+			"name": "Jones",
+			"firstName": "J.G.",
+			"website": "http://www.jgjones.com/",
+			"fullName": "J.G. Jones",
+			"identifyingName": "J.G. Jones"
+		},
+		{
+			"id": 895,
+			"name": "Joor",
+			"firstName": "Thierry",
+			"fullName": "Thierry Joor",
+			"identifyingName": "Thierry Joor"
+		},
+		{
+			"id": 187,
+			"name": "Jour",
+			"firstName": "Jean",
+			"fullName": "Jean Jour",
+			"identifyingName": "Jean Jour"
+		},
+		{
+			"id": 30,
+			"name": "Juillard",
+			"firstName": "André",
+			"fullName": "André Juillard",
+			"identifyingName": "André Juillard"
+		},
+		{
+			"id": 736,
+			"name": "Jurion",
+			"firstName": "Joël",
+			"fullName": "Joël Jurion",
+			"identifyingName": "Joël Jurion"
+		},
+		{
+			"id": 888,
+			"name": "Justice",
+			"firstName": "Chris",
+			"fullName": "Chris Justice",
+			"identifyingName": "Chris Justice"
+		},
+		{
+			"id": 930,
+			"name": "Jytéry",
+			"fullName": "Jytéry",
+			"identifyingName": "Jytéry"
+		},
+		{
+			"id": 741,
+			"name": "Kalisz",
+			"firstName": "John",
+			"fullName": "John Kalisz",
+			"identifyingName": "John Kalisz"
+		},
+		{
+			"id": 471,
+			"name": "Kaluta",
+			"firstName": "Michael W.",
+			"fullName": "Michael W. Kaluta",
+			"identifyingName": "Michael W. Kaluta"
+		},
+		{
+			"id": 347,
+			"name": "Kalvachev",
+			"firstName": "Viktor",
+			"fullName": "Viktor Kalvachev",
+			"identifyingName": "Viktor Kalvachev"
+		},
+		{
+			"id": 808,
+			"name": "Kanata",
+			"firstName": "Konami",
+			"fullName": "Konami Kanata",
+			"identifyingName": "Konami Kanata"
+		},
+		{
+			"id": 542,
+			"name": "Kane",
+			"firstName": "Gil",
+			"fullName": "Gil Kane",
+			"identifyingName": "Gil Kane"
+		},
+		{
+			"id": 700,
+			"name": "Kan-J",
+			"fullName": "Kan-J",
+			"identifyingName": "Kan-J"
+		},
+		{
+			"id": 470,
+			"name": "Kano",
+			"fullName": "Kano",
+			"identifyingName": "Kano"
+		},
+		{
+			"id": 772,
+			"name": "Karasuyama",
+			"firstName": "Eiji",
+			"fullName": "Eiji Karasuyama",
+			"identifyingName": "Eiji Karasuyama"
+		},
+		{
+			"id": 929,
+			"name": "Karinka",
+			"fullName": "Karinka",
+			"identifyingName": "Karinka"
+		},
+		{
+			"id": 600,
+			"name": "Kato",
+			"firstName": "Kazue",
+			"fullName": "Kazue Kato",
+			"identifyingName": "Kazue Kato"
+		},
+		{
+			"id": 749,
+			"name": "Kattrin",
+			"fullName": "Kattrin",
+			"identifyingName": "Kattrin"
+		},
+		{
+			"id": 267,
+			"name": "Kazutaka",
+			"fullName": "Kazutaka",
+			"identifyingName": "Kazutaka"
+		},
+		{
+			"id": 530,
+			"name": "Keith",
+			"firstName": "Jason",
+			"fullName": "Jason Keith",
+			"identifyingName": "Jason Keith"
+		},
+		{
+			"id": 463,
+			"name": "Kelly",
+			"firstName": "Ryan",
+			"fullName": "Ryan Kelly",
+			"identifyingName": "Ryan Kelly"
+		},
+		{
+			"id": 627,
+			"name": "Keown",
+			"firstName": "Dale",
+			"fullName": "Dale Keown",
+			"identifyingName": "Dale Keown"
+		},
+		{
+			"id": 663,
+			"name": "Keramidas",
+			"firstName": "Nicolas",
+			"fullName": "Nicolas Keramidas",
+			"identifyingName": "Nicolas Keramidas"
+		},
+		{
+			"id": 826,
+			"name": "Kickliy",
+			"fullName": "Kickliy",
+			"identifyingName": "Kickliy"
+		},
+		{
+			"id": 678,
+			"name": "King",
+			"firstName": "Stephen",
+			"fullName": "Stephen King",
+			"identifyingName": "Stephen King"
+		},
+		{
+			"id": 644,
+			"name": "Kinutani",
+			"firstName": "Yu",
+			"fullName": "Yu Kinutani",
+			"identifyingName": "Yu Kinutani"
+		},
+		{
+			"id": 540,
+			"name": "Kirby",
+			"firstName": "Jack",
+			"fullName": "Jack Kirby",
+			"identifyingName": "Jack Kirby"
+		},
+		{
+			"id": 882,
+			"name": "Kirkham",
+			"firstName": "Tyler",
+			"fullName": "Tyler Kirkham",
+			"identifyingName": "Tyler Kirkham"
+		},
+		{
+			"id": 315,
+			"name": "Kirkman",
+			"firstName": "Robert",
+			"fullName": "Robert Kirkman",
+			"identifyingName": "Robert Kirkman"
+		},
+		{
+			"id": 771,
+			"name": "Kishi",
+			"firstName": "Yûsuke",
+			"fullName": "Yûsuke Kishi",
+			"identifyingName": "Yûsuke Kishi"
+		},
+		{
+			"id": 773,
+			"name": "Kishimoto",
+			"firstName": "Masashi",
+			"fullName": "Masashi Kishimoto",
+			"identifyingName": "Masashi Kishimoto"
+		},
+		{
+			"id": 97,
+			"name": "Kishiro",
+			"firstName": "Yukito",
+			"website": "http://www.yukito.com/",
+			"fullName": "Yukito Kishiro",
+			"identifyingName": "Yukito Kishiro"
+		},
+		{
+			"id": 1001,
+			"name": "Knauf",
+			"firstName": "Charles",
+			"fullName": "Charles Knauf",
+			"identifyingName": "Charles Knauf"
+		},
+		{
+			"id": 1002,
+			"name": "Knauf",
+			"firstName": "Daniel",
+			"fullName": "Daniel Knauf",
+			"identifyingName": "Daniel Knauf"
+		},
+		{
+			"id": 975,
+			"name": "Kolins",
+			"firstName": "Scott",
+			"fullName": "Scott Kolins",
+			"identifyingName": "Scott Kolins"
+		},
+		{
+			"id": 834,
+			"name": "Koume",
+			"firstName": "Keito",
+			"fullName": "Keito Koume",
+			"identifyingName": "Keito Koume"
+		},
+		{
+			"id": 207,
+			"name": "Kovačević",
+			"firstName": "Boyan",
+			"fullName": "Boyan Kovačević",
+			"identifyingName": "Boyan Kovačević"
+		},
+		{
+			"id": 697,
+			"name": "Kowalski",
+			"firstName": "Piotr",
+			"fullName": "Piotr Kowalski",
+			"identifyingName": "Piotr Kowalski"
+		},
+		{
+			"id": 426,
+			"name": "Krause",
+			"firstName": "Peter",
+			"fullName": "Peter Krause",
+			"identifyingName": "Peter Krause"
+		},
+		{
+			"id": 624,
+			"name": "Kreisberg",
+			"firstName": "Andrew",
+			"fullName": "Andrew Kreisberg",
+			"identifyingName": "Andrew Kreisberg"
+		},
+		{
+			"id": 868,
+			"name": "Krstić",
+			"firstName": "Vladimir",
+			"nickname": "Laci",
+			"fullName": "Vladimir 'Laci' Krstić",
+			"identifyingName": "Vladimir 'Laci' Krstić"
+		},
+		{
+			"id": 412,
+			"name": "Krul",
+			"firstName": "J.T.",
+			"fullName": "J.T. Krul",
+			"identifyingName": "J.T. Krul"
+		},
+		{
+			"id": 241,
+			"name": "Kubert",
+			"firstName": "Adam",
+			"fullName": "Adam Kubert",
+			"identifyingName": "Adam Kubert"
+		},
+		{
+			"id": 242,
+			"name": "Kubert",
+			"firstName": "Andy",
+			"fullName": "Andy Kubert",
+			"identifyingName": "Andy Kubert"
+		},
+		{
+			"id": 597,
+			"name": "Kubo",
+			"firstName": "Tite",
+			"fullName": "Tite Kubo",
+			"identifyingName": "Tite Kubo"
+		},
+		{
+			"id": 739,
+			"name": "Kudranski",
+			"firstName": "Szymon",
+			"fullName": "Szymon Kudranski",
+			"identifyingName": "Szymon Kudranski"
+		},
+		{
+			"id": 617,
+			"name": "Kwok",
+			"firstName": "Annette",
+			"fullName": "Annette Kwok",
+			"identifyingName": "Annette Kwok"
+		},
+		{
+			"id": 453,
+			"name": "Kyle",
+			"firstName": "Craig",
+			"fullName": "Craig Kyle",
+			"identifyingName": "Craig Kyle"
+		},
+		{
+			"id": 669,
+			"name": "L'Hermenier",
+			"firstName": "Maxe",
+			"fullName": "Maxe L'Hermenier",
+			"identifyingName": "Maxe L'Hermenier"
+		},
+		{
+			"id": 642,
+			"name": "Lachance",
+			"firstName": "Louis",
+			"fullName": "Louis Lachance",
+			"identifyingName": "Louis Lachance"
+		},
+		{
+			"id": 800,
+			"name": "Lacombe",
+			"firstName": "Benjamin",
+			"fullName": "Benjamin Lacombe",
+			"identifyingName": "Benjamin Lacombe"
+		},
+		{
+			"id": 277,
+			"name": "Lady C",
+			"fullName": "Lady C",
+			"identifyingName": "Lady C"
+		},
+		{
+			"id": 213,
+			"name": "Lagrange",
+			"firstName": "Christophe",
+			"fullName": "Christophe Lagrange",
+			"identifyingName": "Christophe Lagrange"
+		},
+		{
+			"id": 483,
+			"name": "Lai",
+			"firstName": "Ben",
+			"fullName": "Ben Lai",
+			"identifyingName": "Ben Lai"
+		},
+		{
+			"id": 484,
+			"name": "Lai",
+			"firstName": "Ray",
+			"fullName": "Ray Lai",
+			"identifyingName": "Ray Lai"
+		},
+		{
+			"id": 311,
+			"name": "Lamirand",
+			"firstName": "Sébastien",
+			"fullName": "Sébastien Lamirand",
+			"identifyingName": "Sébastien Lamirand"
+		},
+		{
+			"id": 791,
+			"name": "Lamy",
+			"firstName": "Thierry",
+			"fullName": "Thierry Lamy",
+			"identifyingName": "Thierry Lamy"
+		},
+		{
+			"id": 976,
+			"name": "Langridge",
+			"firstName": "Roger",
+			"fullName": "Roger Langridge",
+			"identifyingName": "Roger Langridge"
+		},
+		{
+			"id": 889,
+			"name": "Lanning",
+			"firstName": "Andy",
+			"fullName": "Andy Lanning",
+			"identifyingName": "Andy Lanning"
+		},
+		{
+			"id": 477,
+			"name": "Lansang",
+			"firstName": "Clarence",
+			"fullName": "Clarence Lansang",
+			"identifyingName": "Clarence Lansang"
+		},
+		{
+			"id": 635,
+			"name": "Lapham",
+			"firstName": "David",
+			"fullName": "David Lapham",
+			"identifyingName": "David Lapham"
+		},
+		{
+			"id": 853,
+			"name": "Lapierre",
+			"firstName": "François",
+			"fullName": "François Lapierre",
+			"identifyingName": "François Lapierre"
+		},
+		{
+			"id": 955,
+			"name": "Lapointe",
+			"firstName": "Serge",
+			"fullName": "Serge Lapointe",
+			"identifyingName": "Serge Lapointe"
+		},
+		{
+			"id": 274,
+			"name": "Larcenet",
+			"firstName": "Patrice",
+			"fullName": "Patrice Larcenet",
+			"identifyingName": "Patrice Larcenet"
+		},
+		{
+			"id": 54,
+			"name": "Larcenet*",
+			"firstName": "Manu",
+			"website": "http://www.manularcenet.com/",
+			"fullName": "Manu Larcenet*",
+			"identifyingName": "Manu Larcenet*"
+		},
+		{
+			"id": 899,
+			"name": "Larroca",
+			"firstName": "Salvador",
+			"fullName": "Salvador Larroca",
+			"identifyingName": "Salvador Larroca"
+		},
+		{
+			"id": 839,
+			"name": "Larson",
+			"firstName": "Gary",
+			"fullName": "Gary Larson",
+			"identifyingName": "Gary Larson"
+		},
+		{
+			"id": 39,
+			"name": "Laudec",
+			"fullName": "Laudec",
+			"identifyingName": "Laudec"
+		},
+		{
+			"id": 319,
+			"name": "Layman",
+			"firstName": "John",
+			"fullName": "John Layman",
+			"identifyingName": "John Layman"
+		},
+		{
+			"id": 614,
+			"name": "Layton",
+			"firstName": "Bob",
+			"fullName": "Bob Layton",
+			"identifyingName": "Bob Layton"
+		},
+		{
+			"id": 673,
+			"name": "Lebreton",
+			"firstName": "Nolwenn",
+			"fullName": "Nolwenn Lebreton",
+			"identifyingName": "Nolwenn Lebreton"
+		},
+		{
+			"id": 858,
+			"name": "Le Breton",
+			"firstName": "Ronan",
+			"fullName": "Ronan Le Breton",
+			"identifyingName": "Ronan Le Breton"
+		},
+		{
+			"id": 696,
+			"name": "Ledroit",
+			"firstName": "Olivier",
+			"fullName": "Olivier Ledroit",
+			"identifyingName": "Olivier Ledroit"
+		},
+		{
+			"id": 679,
+			"name": "Lee",
+			"firstName": "Jae",
+			"fullName": "Jae Lee",
+			"identifyingName": "Jae Lee"
+		},
+		{
+			"id": 461,
+			"name": "Lee",
+			"firstName": "Jim",
+			"fullName": "Jim Lee",
+			"identifyingName": "Jim Lee"
+		},
+		{
+			"id": 793,
+			"name": "Le Galli",
+			"firstName": "Michaël",
+			"fullName": "Michaël Le Galli",
+			"identifyingName": "Michaël Le Galli"
+		},
+		{
+			"id": 934,
+			"name": "Legrand",
+			"firstName": "Olivier",
+			"fullName": "Olivier Legrand",
+			"identifyingName": "Olivier Legrand"
+		},
+		{
+			"id": 556,
+			"name": "Lehman",
+			"firstName": "Serge",
+			"fullName": "Serge Lehman",
+			"identifyingName": "Serge Lehman"
+		},
+		{
+			"id": 885,
+			"name": "Leisten",
+			"firstName": "Jay",
+			"fullName": "Jay Leisten",
+			"identifyingName": "Jay Leisten"
+		},
+		{
+			"id": 200,
+			"name": "Leloup",
+			"firstName": "Roger",
+			"fullName": "Roger Leloup",
+			"identifyingName": "Roger Leloup"
+		},
+		{
+			"id": 735,
+			"name": "Lemercier",
+			"firstName": "Gwendal",
+			"fullName": "Gwendal Lemercier",
+			"identifyingName": "Gwendal Lemercier"
+		},
+		{
+			"id": 569,
+			"name": "Lencot",
+			"firstName": "Yves",
+			"fullName": "Yves Lencot",
+			"identifyingName": "Yves Lencot"
+		},
+		{
 			"id": 1,
-			"fname": "Jean-David",
-			"lname": "Morvan",
+			"name": "Léo",
+			"fullName": "Léo",
+			"identifyingName": "Léo"
+		},
+		{
+			"id": 465,
+			"name": "Leon",
+			"firstName": "John Paul",
+			"fullName": "John Paul Leon",
+			"identifyingName": "John Paul Leon"
+		},
+		{
+			"id": 913,
+			"name": "Leoni",
+			"firstName": "Lucio",
+			"fullName": "Lucio Leoni",
+			"identifyingName": "Lucio Leoni"
+		},
+		{
+			"id": 356,
+			"name": "Leprévost",
+			"firstName": "Thierry",
+			"fullName": "Thierry Leprévost",
+			"identifyingName": "Thierry Leprévost"
+		},
+		{
+			"id": 871,
+			"name": "Lerolle",
+			"firstName": "Christian",
+			"fullName": "Christian Lerolle",
+			"identifyingName": "Christian Lerolle"
+		},
+		{
+			"id": 4,
+			"name": "Le Roux",
+			"firstName": "Étienne",
+			"fullName": "Étienne Le Roux",
+			"identifyingName": "Étienne Le Roux"
+		},
+		{
+			"id": 992,
+			"name": "Le Tendre",
+			"fullName": "Le Tendre",
+			"identifyingName": "Le Tendre"
+		},
+		{
+			"id": 714,
+			"name": "Letizia",
+			"firstName": "Bruno",
+			"fullName": "Bruno Letizia",
+			"identifyingName": "Bruno Letizia"
+		},
+		{
+			"id": 632,
+			"name": "Levin",
+			"firstName": "Rob",
+			"fullName": "Rob Levin",
+			"identifyingName": "Rob Levin"
+		},
+		{
+			"id": 959,
+			"name": "Lieber",
+			"firstName": "Steve",
+			"fullName": "Steve Lieber",
+			"identifyingName": "Steve Lieber"
+		},
+		{
+			"id": 613,
+			"name": "Liefeld",
+			"firstName": "Rob",
+			"fullName": "Rob Liefeld",
+			"identifyingName": "Rob Liefeld"
+		},
+		{
+			"id": 476,
+			"name": "Lobdell",
+			"firstName": "Scott",
+			"fullName": "Scott Lobdell",
+			"identifyingName": "Scott Lobdell"
+		},
+		{
+			"id": 25,
+			"name": "Lodewick",
+			"firstName": "Vincent",
+			"nickname": "Dugomier",
+			"fullName": "Vincent 'Dugomier' Lodewick",
+			"identifyingName": "Vincent 'Dugomier' Lodewick"
+		},
+		{
+			"id": 526,
+			"name": "Loeb",
+			"firstName": "Jeph",
+			"fullName": "Jeph Loeb",
+			"identifyingName": "Jeph Loeb"
+		},
+		{
+			"id": 656,
+			"name": "Loirat",
+			"firstName": "Benjamin",
+			"fullName": "Benjamin Loirat",
+			"identifyingName": "Benjamin Loirat"
+		},
+		{
+			"id": 810,
+			"name": "Loisel",
+			"firstName": "Régis",
+			"website": "https://regisloisel.com/",
+			"fullName": "Régis Loisel",
+			"identifyingName": "Régis Loisel"
+		},
+		{
+			"id": 670,
+			"name": "Looky",
+			"fullName": "Looky",
+			"identifyingName": "Looky"
+		},
+		{
+			"id": 710,
+			"name": "Lopez",
+			"firstName": "David",
+			"fullName": "David Lopez",
+			"identifyingName": "David Lopez"
+		},
+		{
+			"id": 606,
+			"name": "Lopresti",
+			"firstName": "Aaron",
+			"fullName": "Aaron Lopresti",
+			"identifyingName": "Aaron Lopresti"
+		},
+		{
+			"id": 593,
+			"name": "Lorusso",
+			"firstName": "Giovanni",
+			"fullName": "Giovanni Lorusso",
+			"identifyingName": "Giovanni Lorusso"
+		},
+		{
+			"id": 260,
+			"name": "Lou",
+			"fullName": "Lou",
+			"identifyingName": "Lou"
+		},
+		{
+			"id": 435,
+			"name": "Loughridge",
+			"firstName": "Lee",
+			"fullName": "Lee Loughridge",
+			"identifyingName": "Lee Loughridge"
+		},
+		{
+			"id": 752,
+			"name": "Louis",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Louis",
+			"identifyingName": "Stéphane Louis"
+		},
+		{
+			"id": 949,
+			"name": "Lowenael",
+			"fullName": "Lowenael",
+			"identifyingName": "Lowenael"
+		},
+		{
+			"id": 962,
+			"name": "Lucas",
+			"firstName": "John",
+			"fullName": "John Lucas",
+			"identifyingName": "John Lucas"
+		},
+		{
+			"id": 661,
+			"name": "Lullabi",
+			"firstName": "Ludo",
+			"fullName": "Ludo Lullabi",
+			"identifyingName": "Ludo Lullabi"
+		},
+		{
+			"id": 715,
+			"name": "Lupatelli",
+			"firstName": "Carita",
+			"fullName": "Carita Lupatelli",
+			"identifyingName": "Carita Lupatelli"
+		},
+		{
+			"id": 680,
+			"name": "Lylian",
+			"fullName": "Lylian",
+			"identifyingName": "Lylian"
+		},
+		{
+			"id": 446,
+			"name": "Lyse",
+			"fullName": "Lyse",
+			"identifyingName": "Lyse"
+		},
+		{
+			"id": 437,
+			"name": "Maberry",
+			"firstName": "Jonathan",
+			"fullName": "Jonathan Maberry",
+			"identifyingName": "Jonathan Maberry"
+		},
+		{
+			"id": 44,
+			"name": "Macherot",
+			"firstName": "Raymond",
+			"fullName": "Raymond Macherot",
+			"identifyingName": "Raymond Macherot"
+		},
+		{
+			"id": 686,
+			"name": "Maconi",
+			"firstName": "Gianluca",
+			"fullName": "Gianluca Maconi",
+			"identifyingName": "Gianluca Maconi"
+		},
+		{
+			"id": 48,
+			"name": "Magda",
+			"fullName": "Magda",
+			"identifyingName": "Magda"
+		},
+		{
+			"id": 46,
+			"name": "Magda",
+			"firstName": "(m.seron)",
+			"fullName": "(m.seron) Magda",
+			"identifyingName": "(m.seron) Magda"
+		},
+		{
+			"id": 840,
+			"name": "Maguire",
+			"firstName": "Kevin",
+			"fullName": "Kevin Maguire",
+			"identifyingName": "Kevin Maguire"
+		},
+		{
+			"id": 81,
+			"name": "Maine",
+			"firstName": "Régis",
+			"fullName": "Régis Maine",
+			"identifyingName": "Régis Maine"
+		},
+		{
+			"id": 82,
+			"name": "Maïorana",
+			"firstName": "Bruno",
+			"fullName": "Bruno Maïorana",
+			"identifyingName": "Bruno Maïorana"
+		},
+		{
+			"id": 107,
+			"name": "Makyo",
+			"fullName": "Makyo",
+			"identifyingName": "Makyo"
+		},
+		{
+			"id": 532,
+			"name": "Maleev",
+			"firstName": "Alex",
+			"fullName": "Alex Maleev",
+			"identifyingName": "Alex Maleev"
+		},
+		{
+			"id": 94,
+			"name": "Malfin",
+			"firstName": "Nicolas",
+			"fullName": "Nicolas Malfin",
+			"identifyingName": "Nicolas Malfin"
+		},
+		{
+			"id": 250,
+			"name": "Malisan",
+			"firstName": "Luca",
+			"fullName": "Luca Malisan",
+			"identifyingName": "Luca Malisan"
+		},
+		{
+			"id": 753,
+			"name": "Mallet",
+			"firstName": "Patrick",
+			"fullName": "Patrick Mallet",
+			"identifyingName": "Patrick Mallet"
+		},
+		{
+			"id": 202,
+			"name": "Mallié",
+			"firstName": "Vincent",
+			"fullName": "Vincent Mallié",
+			"identifyingName": "Vincent Mallié"
+		},
+		{
+			"id": 275,
+			"name": "Maltaite",
+			"fullName": "Maltaite",
+			"identifyingName": "Maltaite"
+		},
+		{
+			"id": 357,
+			"name": "Manapul",
+			"firstName": "Francis",
+			"fullName": "Francis Manapul",
+			"identifyingName": "Francis Manapul"
+		},
+		{
+			"id": 459,
+			"name": "Manara",
+			"firstName": "Milo",
+			"website": "http://www.milomanara.com/",
+			"fullName": "Milo Manara",
+			"identifyingName": "Milo Manara"
+		},
+		{
+			"id": 967,
+			"name": "Manesse",
+			"firstName": "Jérémy",
+			"fullName": "Jérémy Manesse",
+			"identifyingName": "Jérémy Manesse"
+		},
+		{
+			"id": 902,
+			"name": "Mann",
+			"firstName": "Clay",
+			"fullName": "Clay Mann",
+			"identifyingName": "Clay Mann"
+		},
+		{
+			"id": 779,
+			"name": "Marazano",
+			"firstName": "Richard",
+			"fullName": "Richard Marazano",
+			"identifyingName": "Richard Marazano"
+		},
+		{
+			"id": 91,
+			"name": "Marini",
+			"fullName": "Marini",
+			"identifyingName": "Marini"
+		},
+		{
+			"id": 358,
+			"name": "Mariolle",
+			"firstName": "Mathieu",
+			"fullName": "Mathieu Mariolle",
+			"identifyingName": "Mathieu Mariolle"
+		},
+		{
+			"id": 831,
+			"name": "Marko",
+			"fullName": "Marko",
+			"identifyingName": "Marko"
+		},
+		{
+			"id": 537,
+			"name": "Marquebreucq",
+			"firstName": "Bérangère",
+			"fullName": "Bérangère Marquebreucq",
+			"identifyingName": "Bérangère Marquebreucq"
+		},
+		{
+			"id": 564,
+			"name": "Marraffino",
+			"firstName": "Frank",
+			"fullName": "Frank Marraffino",
+			"identifyingName": "Frank Marraffino"
+		},
+		{
+			"id": 2,
+			"name": "Martin",
+			"firstName": "Jacques",
+			"fullName": "Jacques Martin",
+			"identifyingName": "Jacques Martin"
+		},
+		{
+			"id": 310,
+			"name": "Martin",
+			"firstName": "Javier",
+			"fullName": "Javier Martin",
+			"identifyingName": "Javier Martin"
+		},
+		{
+			"id": 531,
+			"name": "Martin",
+			"firstName": "Laura",
+			"fullName": "Laura Martin",
+			"identifyingName": "Laura Martin"
+		},
+		{
+			"id": 850,
+			"name": "Martin",
+			"firstName": "Montse",
+			"fullName": "Montse Martin",
+			"identifyingName": "Montse Martin"
+		},
+		{
+			"id": 3,
+			"name": "Martin / Morales",
+			"fullName": "Martin / Morales",
+			"identifyingName": "Martin / Morales"
+		},
+		{
+			"id": 234,
+			"name": "Martinage",
+			"fullName": "Martinage",
+			"identifyingName": "Martinage"
+		},
+		{
+			"id": 623,
+			"name": "Martinbrough",
+			"firstName": "Shawn",
+			"fullName": "Shawn Martinbrough",
+			"identifyingName": "Shawn Martinbrough"
+		},
+		{
+			"id": 501,
+			"name": "Martinez",
+			"firstName": "Marta",
+			"fullName": "Marta Martinez",
+			"identifyingName": "Marta Martinez"
+		},
+		{
+			"id": 814,
+			"name": "Martino",
+			"firstName": "Stefano",
+			"fullName": "Stefano Martino",
+			"identifyingName": "Stefano Martino"
+		},
+		{
+			"id": 815,
+			"name": "Marty",
+			"firstName": "Lionel",
+			"fullName": "Lionel Marty",
+			"identifyingName": "Lionel Marty"
+		},
+		{
+			"id": 359,
+			"name": "Marz",
+			"firstName": "Ron",
+			"fullName": "Ron Marz",
+			"identifyingName": "Ron Marz"
+		},
+		{
+			"id": 63,
+			"name": "Masbou",
+			"firstName": "Jean-luc",
+			"fullName": "Jean-luc Masbou",
+			"identifyingName": "Jean-luc Masbou"
+		},
+		{
+			"id": 195,
+			"name": "Matz",
+			"fullName": "Matz",
+			"identifyingName": "Matz"
+		},
+		{
+			"id": 829,
+			"name": "Maupomé",
+			"firstName": "Frédéric",
+			"fullName": "Frédéric Maupomé",
+			"identifyingName": "Frédéric Maupomé"
+		},
+		{
+			"id": 941,
+			"name": "May",
+			"fullName": "May",
+			"identifyingName": "May"
+		},
+		{
+			"id": 496,
+			"name": "Mayhem",
+			"firstName": "Mike",
+			"fullName": "Mike Mayhem",
+			"identifyingName": "Mike Mayhem"
+		},
+		{
+			"id": 583,
+			"name": "Mayor",
+			"firstName": "Randy",
+			"fullName": "Randy Mayor",
+			"identifyingName": "Randy Mayor"
+		},
+		{
+			"id": 940,
+			"name": "Mazé",
+			"firstName": "Léa",
+			"fullName": "Léa Mazé",
+			"identifyingName": "Léa Mazé"
+		},
+		{
+			"id": 360,
+			"name": "McCaig",
+			"firstName": "Dave",
+			"fullName": "Dave McCaig",
+			"identifyingName": "Dave McCaig"
+		},
+		{
+			"id": 1000,
+			"name": "McDuffie",
+			"firstName": "Dwayne",
+			"fullName": "Dwayne McDuffie",
+			"identifyingName": "Dwayne McDuffie"
+		},
+		{
+			"id": 527,
+			"name": "McGuinness",
+			"firstName": "Ed",
+			"fullName": "Ed McGuinness",
+			"identifyingName": "Ed McGuinness"
+		},
+		{
+			"id": 492,
+			"name": "McKeever",
+			"firstName": "Sean",
+			"fullName": "Sean McKeever",
+			"identifyingName": "Sean McKeever"
+		},
+		{
+			"id": 883,
+			"name": "McKone",
+			"firstName": "Mike",
+			"fullName": "Mike McKone",
+			"identifyingName": "Mike McKone"
+		},
+		{
+			"id": 510,
+			"name": "McNiven",
+			"firstName": "Steve",
+			"fullName": "Steve McNiven",
+			"identifyingName": "Steve McNiven"
+		},
+		{
+			"id": 873,
+			"name": "Melanÿn",
+			"fullName": "Melanÿn",
+			"identifyingName": "Melanÿn"
+		},
+		{
+			"id": 727,
+			"name": "Melchior",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Melchior",
+			"identifyingName": "Stéphane Melchior"
+		},
+		{
+			"id": 468,
+			"name": "Melo",
+			"firstName": "Adriana",
+			"fullName": "Adriana Melo",
+			"identifyingName": "Adriana Melo"
+		},
+		{
+			"id": 903,
+			"name": "Mendoza",
+			"firstName": "Jaime",
+			"fullName": "Jaime Mendoza",
+			"identifyingName": "Jaime Mendoza"
+		},
+		{
+			"id": 654,
+			"name": "Merli",
+			"fullName": "Merli",
+			"identifyingName": "Merli"
+		},
+		{
+			"id": 105,
+			"name": "Meyer",
+			"firstName": "Ralph",
+			"fullName": "Ralph Meyer",
+			"identifyingName": "Ralph Meyer"
+		},
+		{
+			"id": 723,
+			"name": "Meynet",
+			"firstName": "Félix",
+			"fullName": "Félix Meynet",
+			"identifyingName": "Félix Meynet"
+		},
+		{
+			"id": 196,
+			"name": "Mezieres",
+			"firstName": "Jean-claude",
+			"fullName": "Jean-claude Mezieres",
+			"identifyingName": "Jean-claude Mezieres"
+		},
+		{
+			"id": 118,
+			"name": "Midam",
+			"fullName": "Midam",
+			"identifyingName": "Midam"
+		},
+		{
+			"id": 792,
+			"name": "Mikaël",
+			"fullName": "Mikaël",
+			"identifyingName": "Mikaël"
+		},
+		{
+			"id": 480,
+			"name": "Mike",
+			"website": "http://mikesquadventures.blogspot.com/",
+			"fullName": "Mike",
+			"identifyingName": "Mike"
+		},
+		{
+			"id": 910,
+			"name": "Miki",
+			"firstName": "Danny",
+			"fullName": "Danny Miki",
+			"identifyingName": "Danny Miki"
+		},
+		{
+			"id": 541,
+			"name": "Milgrom",
+			"firstName": "Al",
+			"fullName": "Al Milgrom",
+			"identifyingName": "Al Milgrom"
+		},
+		{
+			"id": 441,
+			"name": "Milla",
+			"firstName": "Matt",
+			"fullName": "Matt Milla",
+			"identifyingName": "Matt Milla"
+		},
+		{
+			"id": 240,
+			"name": "Millar",
+			"firstName": "Mark",
+			"fullName": "Mark Millar",
+			"identifyingName": "Mark Millar"
+		},
+		{
+			"id": 704,
+			"name": "Miller",
+			"firstName": "Mike S.",
+			"fullName": "Mike S. Miller",
+			"identifyingName": "Mike S. Miller"
+		},
+		{
+			"id": 636,
+			"name": "Milligan",
+			"firstName": "Peter",
+			"fullName": "Peter Milligan",
+			"identifyingName": "Peter Milligan"
+		},
+		{
+			"id": 802,
+			"name": "Mirabelle",
+			"fullName": "Mirabelle",
+			"identifyingName": "Mirabelle"
+		},
+		{
+			"id": 135,
+			"name": "Mittéï",
+			"fullName": "Mittéï",
+			"identifyingName": "Mittéï"
+		},
+		{
+			"id": 228,
+			"name": "Mitton",
+			"fullName": "Mitton",
+			"identifyingName": "Mitton"
+		},
+		{
+			"id": 803,
+			"name": "Mobidic",
+			"fullName": "Mobidic",
+			"identifyingName": "Mobidic"
+		},
+		{
+			"id": 379,
+			"name": "Mokona",
+			"fullName": "Mokona",
+			"identifyingName": "Mokona"
+		},
+		{
+			"id": 631,
+			"name": "Molinar",
+			"firstName": "Larry",
+			"fullName": "Larry Molinar",
+			"identifyingName": "Larry Molinar"
+		},
+		{
+			"id": 554,
+			"name": "Moline",
+			"firstName": "Karl",
+			"fullName": "Karl Moline",
+			"identifyingName": "Karl Moline"
+		},
+		{
+			"id": 811,
+			"name": "Monin",
+			"firstName": "Arno",
+			"fullName": "Arno Monin",
+			"identifyingName": "Arno Monin"
+		},
+		{
+			"id": 717,
+			"name": "Montlló Ribó",
+			"firstName": "Miquel",
+			"nickname": "Miki",
+			"website": "http://miquelmontllo.blogspot.be/",
+			"fullName": "Miquel 'Miki' Montlló Ribó",
+			"identifyingName": "Miquel 'Miki' Montlló Ribó"
+		},
+		{
+			"id": 462,
+			"name": "Moon",
+			"firstName": "Fábio",
+			"fullName": "Fábio Moon",
+			"identifyingName": "Fábio Moon"
+		},
+		{
+			"id": 385,
+			"name": "Moore",
+			"firstName": "Alan",
+			"fullName": "Alan Moore",
+			"identifyingName": "Alan Moore"
+		},
+		{
+			"id": 382,
+			"name": "Moore",
+			"firstName": "Stuart",
+			"fullName": "Stuart Moore",
+			"identifyingName": "Stuart Moore"
+		},
+		{
+			"id": 432,
+			"name": "Moràn",
+			"firstName": "David",
+			"fullName": "David Moràn",
+			"identifyingName": "David Moràn"
+		},
+		{
+			"id": 164,
+			"name": "Moreno",
+			"firstName": "Éric",
+			"fullName": "Éric Moreno",
+			"identifyingName": "Éric Moreno"
+		},
+		{
+			"id": 286,
+			"name": "Moreno",
+			"firstName": "Marc",
+			"fullName": "Marc Moreno",
+			"identifyingName": "Marc Moreno"
+		},
+		{
+			"id": 893,
+			"name": "Moretti",
+			"firstName": "Nora",
+			"fullName": "Nora Moretti",
+			"identifyingName": "Nora Moretti"
+		},
+		{
+			"id": 590,
+			"name": "Morinière",
+			"firstName": "Aurélien",
+			"fullName": "Aurélien Morinière",
+			"identifyingName": "Aurélien Morinière"
+		},
+		{
+			"id": 138,
+			"name": "Morris",
+			"fullName": "Morris",
+			"identifyingName": "Morris"
+		},
+		{
+			"id": 53,
+			"name": "Morvan",
+			"firstName": "Jean-David",
+			"fullName": "Jean-David Morvan",
 			"identifyingName": "Jean-David Morvan"
+		},
+		{
+			"id": 423,
+			"name": "Mossa",
+			"firstName": "Andres",
+			"fullName": "Andres Mossa",
+			"identifyingName": "Andres Mossa"
+		},
+		{
+			"id": 303,
+			"name": "Mounts",
+			"firstName": "Paul",
+			"fullName": "Paul Mounts",
+			"identifyingName": "Paul Mounts"
+		},
+		{
+			"id": 193,
+			"name": "Mourier",
+			"fullName": "Mourier",
+			"identifyingName": "Mourier"
+		},
+		{
+			"id": 881,
+			"name": "Mourier",
+			"firstName": "Davy",
+			"fullName": "Davy Mourier",
+			"identifyingName": "Davy Mourier"
+		},
+		{
+			"id": 361,
+			"name": "Mulvihill",
+			"firstName": "Patricia",
+			"fullName": "Patricia Mulvihill",
+			"identifyingName": "Patricia Mulvihill"
+		},
+		{
+			"id": 998,
+			"name": "Muñoz",
+			"firstName": "David",
+			"fullName": "David Muñoz",
+			"identifyingName": "David Muñoz"
+		},
+		{
+			"id": 870,
+			"name": "Munuera",
+			"firstName": "José-Luis",
+			"fullName": "José-Luis Munuera",
+			"identifyingName": "José-Luis Munuera"
+		},
+		{
+			"id": 444,
+			"name": "Mutti",
+			"firstName": "Andrea",
+			"fullName": "Andrea Mutti",
+			"identifyingName": "Andrea Mutti"
+		},
+		{
+			"id": 794,
+			"name": "Nadji",
+			"fullName": "Nadji",
+			"identifyingName": "Nadji"
+		},
+		{
+			"id": 579,
+			"name": "Naifeh",
+			"firstName": "Ted",
+			"fullName": "Ted Naifeh",
+			"identifyingName": "Ted Naifeh"
+		},
+		{
+			"id": 915,
+			"name": "Nanjan",
+			"firstName": "J",
+			"fullName": "J Nanjan",
+			"identifyingName": "J Nanjan"
+		},
+		{
+			"id": 268,
+			"name": "Naoki",
+			"fullName": "Naoki",
+			"identifyingName": "Naoki"
+		},
+		{
+			"id": 914,
+			"name": "Negrin",
+			"firstName": "Emanuela",
+			"fullName": "Emanuela Negrin",
+			"identifyingName": "Emanuela Negrin"
+		},
+		{
+			"id": 963,
+			"name": "Nelson",
+			"fullName": "Nelson",
+			"identifyingName": "Nelson"
+		},
+		{
+			"id": 574,
+			"name": "Nelson",
+			"firstName": "Matt",
+			"fullName": "Matt Nelson",
+			"identifyingName": "Matt Nelson"
+		},
+		{
+			"id": 320,
+			"name": "Neves",
+			"firstName": "Fabiano",
+			"fullName": "Fabiano Neves",
+			"identifyingName": "Fabiano Neves"
+		},
+		{
+			"id": 796,
+			"name": "Neyret",
+			"firstName": "Aurélie",
+			"fullName": "Aurélie Neyret",
+			"identifyingName": "Aurélie Neyret"
+		},
+		{
+			"id": 577,
+			"name": "Nguyen",
+			"firstName": "Dustin",
+			"fullName": "Dustin Nguyen",
+			"identifyingName": "Dustin Nguyen"
+		},
+		{
+			"id": 278,
+			"name": "Nihei",
+			"firstName": "Tsutomu",
+			"fullName": "Tsutomu Nihei",
+			"identifyingName": "Tsutomu Nihei"
+		},
+		{
+			"id": 917,
+			"name": "Nob",
+			"fullName": "Nob",
+			"identifyingName": "Nob"
+		},
+		{
+			"id": 551,
+			"name": "Nord",
+			"firstName": "Cary",
+			"fullName": "Cary Nord",
+			"identifyingName": "Cary Nord"
+		},
+		{
+			"id": 495,
+			"name": "Noto",
+			"firstName": "Phil",
+			"fullName": "Phil Noto",
+			"identifyingName": "Phil Noto"
+		},
+		{
+			"id": 591,
+			"name": "Nury",
+			"firstName": "Fabien",
+			"fullName": "Fabien Nury",
+			"identifyingName": "Fabien Nury"
+		},
+		{
+			"id": 997,
+			"name": "Nykko",
+			"fullName": "Nykko",
+			"identifyingName": "Nykko"
+		},
+		{
+			"id": 322,
+			"name": "O'Neil",
+			"firstName": "Billy",
+			"fullName": "Billy O'Neil",
+			"identifyingName": "Billy O'Neil"
+		},
+		{
+			"id": 405,
+			"name": "Oback",
+			"firstName": "Sonia",
+			"fullName": "Sonia Oback",
+			"identifyingName": "Sonia Oback"
+		},
+		{
+			"id": 768,
+			"name": "Obata",
+			"firstName": "Takeshi",
+			"fullName": "Takeshi Obata",
+			"identifyingName": "Takeshi Obata"
+		},
+		{
+			"id": 767,
+			"name": "Ohba",
+			"firstName": "Tsugumi",
+			"fullName": "Tsugumi Ohba",
+			"identifyingName": "Tsugumi Ohba"
+		},
+		{
+			"id": 380,
+			"name": "Ohkawa",
+			"firstName": "Nanase",
+			"fullName": "Nanase Ohkawa",
+			"identifyingName": "Nanase Ohkawa"
+		},
+		{
+			"id": 774,
+			"name": "Okazaki",
+			"firstName": "Mari",
+			"fullName": "Mari Okazaki",
+			"identifyingName": "Mari Okazaki"
+		},
+		{
+			"id": 911,
+			"name": "Olazaba",
+			"firstName": "Victor",
+			"fullName": "Victor Olazaba",
+			"identifyingName": "Victor Olazaba"
+		},
+		{
+			"id": 211,
+			"name": "Oliveira",
+			"firstName": "Paul",
+			"fullName": "Paul Oliveira",
+			"identifyingName": "Paul Oliveira"
+		},
+		{
+			"id": 384,
+			"name": "Oliver",
+			"firstName": "Ben",
+			"fullName": "Ben Oliver",
+			"identifyingName": "Ben Oliver"
+		},
+		{
+			"id": 1004,
+			"name": "Olivetti",
+			"firstName": "Ariel",
+			"fullName": "Ariel Olivetti",
+			"identifyingName": "Ariel Olivetti"
+		},
+		{
+			"id": 269,
+			"name": "Ooshima",
+			"firstName": "Hiroyuki",
+			"fullName": "Hiroyuki Ooshima",
+			"identifyingName": "Hiroyuki Ooshima"
+		},
+		{
+			"id": 503,
+			"name": "Opeña",
+			"firstName": "Jerome",
+			"fullName": "Jerome Opeña",
+			"identifyingName": "Jerome Opeña"
+		},
+		{
+			"id": 588,
+			"name": "Otero",
+			"firstName": "Nicolas",
+			"fullName": "Nicolas Otero",
+			"identifyingName": "Nicolas Otero"
+		},
+		{
+			"id": 728,
+			"name": "Oubrerie",
+			"firstName": "Clément",
+			"fullName": "Clément Oubrerie",
+			"identifyingName": "Clément Oubrerie"
+		},
+		{
+			"id": 737,
+			"name": "Ozanam",
+			"firstName": "Antoine",
+			"fullName": "Antoine Ozanam",
+			"identifyingName": "Antoine Ozanam"
+		},
+		{
+			"id": 71,
+			"name": "Paccalet",
+			"firstName": "Gabriel",
+			"fullName": "Gabriel Paccalet",
+			"identifyingName": "Gabriel Paccalet"
+		},
+		{
+			"id": 60,
+			"name": "Paccalet",
+			"firstName": "Yves",
+			"fullName": "Yves Paccalet",
+			"identifyingName": "Yves Paccalet"
+		},
+		{
+			"id": 401,
+			"name": "Panagariya",
+			"firstName": "Ananth",
+			"biography": "<p>Ananth Panagariya writes AppleGeeks and other comics scripts in his spare time. His interest has oscillated variously between American comics, anime, manga, film, and more recently American television (with the advent of shows like LOST). He is currently working on a novel, and is also an artist himself, able to draw with both real and digital media. He graduated from the University of Maryland, College Park in May 2005, and has since been working in the creative industry - first in VA, and more recently at a firm in D.C. as a designer, illustrator, and most recently animator. He has written graphic short stories for two graphic novel anthologies: the stories are Seven, Disconnect, and Transmigration - the first of which appeared in Disposable Parts, the last two appearing in City Limits.</p>",
+			"website": "http://www.ahpcreate.com/",
+			"fullName": "Ananth Panagariya",
+			"identifyingName": "Ananth Panagariya"
+		},
+		{
+			"id": 908,
+			"name": "Panosian",
+			"firstName": "Dan",
+			"fullName": "Dan Panosian",
+			"identifyingName": "Dan Panosian"
+		},
+		{
+			"id": 953,
+			"name": "Paquette",
+			"firstName": "Yanick",
+			"fullName": "Yanick Paquette",
+			"identifyingName": "Yanick Paquette"
+		},
+		{
+			"id": 481,
+			"name": "Paris",
+			"firstName": "Josselin",
+			"fullName": "Josselin Paris",
+			"identifyingName": "Josselin Paris"
+		},
+		{
+			"id": 977,
+			"name": "Parks",
+			"firstName": "Ande",
+			"fullName": "Ande Parks",
+			"identifyingName": "Ande Parks"
+		},
+		{
+			"id": 201,
+			"name": "Parnotte",
+			"firstName": "Joël",
+			"fullName": "Joël Parnotte",
+			"identifyingName": "Joël Parnotte"
+		},
+		{
+			"id": 230,
+			"name": "Paty",
+			"fullName": "Paty",
+			"identifyingName": "Paty"
+		},
+		{
+			"id": 740,
+			"name": "Pearson",
+			"firstName": "Jason",
+			"fullName": "Jason Pearson",
+			"identifyingName": "Jason Pearson"
+		},
+		{
+			"id": 318,
+			"name": "Pécau",
+			"firstName": "Jean-Pierre",
+			"fullName": "Jean-Pierre Pécau",
+			"identifyingName": "Jean-Pierre Pécau"
+		},
+		{
+			"id": 95,
+			"name": "Pecqueur",
+			"firstName": "Daniel",
+			"fullName": "Daniel Pecqueur",
+			"identifyingName": "Daniel Pecqueur"
+		},
+		{
+			"id": 79,
+			"name": "Peeters",
+			"fullName": "Peeters",
+			"identifyingName": "Peeters"
+		},
+		{
+			"id": 633,
+			"name": "Pennac",
+			"firstName": "Daniel",
+			"fullName": "Daniel Pennac",
+			"identifyingName": "Daniel Pennac"
+		},
+		{
+			"id": 876,
+			"name": "Pepoy",
+			"fullName": "Pepoy",
+			"identifyingName": "Pepoy"
+		},
+		{
+			"id": 525,
+			"name": "Perkins",
+			"firstName": "Mike",
+			"fullName": "Mike Perkins",
+			"identifyingName": "Mike Perkins"
+		},
+		{
+			"id": 487,
+			"name": "Peru",
+			"firstName": "Olivier",
+			"fullName": "Olivier Peru",
+			"identifyingName": "Olivier Peru"
+		},
+		{
+			"id": 906,
+			"name": "Peru",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Peru",
+			"identifyingName": "Stéphane Peru"
+		},
+		{
+			"id": 719,
+			"name": "Pérusse-Bell",
+			"firstName": "Anouk",
+			"fullName": "Anouk Pérusse-Bell",
+			"identifyingName": "Anouk Pérusse-Bell"
+		},
+		{
+			"id": 988,
+			"name": "Peter",
+			"firstName": "Cris",
+			"fullName": "Cris Peter",
+			"identifyingName": "Cris Peter"
+		},
+		{
+			"id": 507,
+			"name": "Peterson",
+			"firstName": "Brandon",
+			"fullName": "Brandon Peterson",
+			"identifyingName": "Brandon Peterson"
+		},
+		{
+			"id": 20,
+			"name": "Peyo",
+			"fullName": "Peyo",
+			"identifyingName": "Peyo"
+		},
+		{
+			"id": 174,
+			"name": "Peyo/culliford",
+			"fullName": "Peyo/culliford",
+			"identifyingName": "Peyo/culliford"
+		},
+		{
+			"id": 22,
+			"name": "Peyo/delporte",
+			"firstName": "Y.",
+			"fullName": "Y. Peyo/delporte",
+			"identifyingName": "Y. Peyo/delporte"
+		},
+		{
+			"id": 160,
+			"name": "Peyo/delzenne",
+			"fullName": "Peyo/delzenne",
+			"identifyingName": "Peyo/delzenne"
+		},
+		{
+			"id": 23,
+			"name": "Peyo/gos",
+			"fullName": "Peyo/gos",
+			"identifyingName": "Peyo/gos"
+		},
+		{
+			"id": 173,
+			"name": "Peyo/maury",
+			"fullName": "Peyo/maury",
+			"identifyingName": "Peyo/maury"
+		},
+		{
+			"id": 19,
+			"name": "Peyo/will",
+			"fullName": "Peyo/will",
+			"identifyingName": "Peyo/will"
+		},
+		{
+			"id": 307,
+			"name": "Peyravernay",
+			"firstName": "Cédric",
+			"fullName": "Cédric Peyravernay",
+			"identifyingName": "Cédric Peyravernay"
+		},
+		{
+			"id": 238,
+			"name": "Phillips",
+			"firstName": "Sean",
+			"fullName": "Sean Phillips",
+			"identifyingName": "Sean Phillips"
+		},
+		{
+			"id": 718,
+			"name": "Picard",
+			"firstName": "Alice",
+			"fullName": "Alice Picard",
+			"identifyingName": "Alice Picard"
+		},
+		{
+			"id": 326,
+			"name": "Picault",
+			"firstName": "Aude",
+			"fullName": "Aude Picault",
+			"identifyingName": "Aude Picault"
+		},
+		{
+			"id": 639,
+			"name": "Pierfederici",
+			"firstName": "Mirco",
+			"fullName": "Mirco Pierfederici",
+			"identifyingName": "Mirco Pierfederici"
+		},
+		{
+			"id": 568,
+			"name": "Pietrobon",
+			"firstName": "Federico",
+			"fullName": "Federico Pietrobon",
+			"identifyingName": "Federico Pietrobon"
+		},
+		{
+			"id": 806,
+			"name": "Pilet",
+			"firstName": "Johan",
+			"fullName": "Johan Pilet",
+			"identifyingName": "Johan Pilet"
+		},
+		{
+			"id": 991,
+			"name": "Plée",
+			"firstName": "Leslie",
+			"fullName": "Leslie Plée",
+			"identifyingName": "Leslie Plée"
+		},
+		{
+			"id": 117,
+			"name": "Pleyers/martin",
+			"fullName": "Pleyers/martin",
+			"identifyingName": "Pleyers/martin"
+		},
+		{
+			"id": 486,
+			"name": "Ponsor",
+			"firstName": "Justin",
+			"fullName": "Justin Ponsor",
+			"identifyingName": "Justin Ponsor"
+		},
+		{
+			"id": 777,
+			"name": "Popescu",
+			"fullName": "Popescu",
+			"identifyingName": "Popescu"
+		},
+		{
+			"id": 327,
+			"name": "Porcel",
+			"firstName": "Francis",
+			"fullName": "Francis Porcel",
+			"identifyingName": "Francis Porcel"
+		},
+		{
+			"id": 778,
+			"name": "Poupard",
+			"firstName": "Jean-Charles",
+			"fullName": "Jean-Charles Poupard",
+			"identifyingName": "Jean-Charles Poupard"
+		},
+		{
+			"id": 509,
+			"name": "Pourquié",
+			"firstName": "Jeff",
+			"fullName": "Jeff Pourquié",
+			"identifyingName": "Jeff Pourquié"
+		},
+		{
+			"id": 657,
+			"name": "Quemener",
+			"firstName": "Simon",
+			"fullName": "Simon Quemener",
+			"identifyingName": "Simon Quemener"
+		},
+		{
+			"id": 391,
+			"name": "Quesada",
+			"firstName": "Joe",
+			"fullName": "Joe Quesada",
+			"identifyingName": "Joe Quesada"
+		},
+		{
+			"id": 190,
+			"name": "Quet",
+			"firstName": "Christophe",
+			"fullName": "Christophe Quet",
+			"identifyingName": "Christophe Quet"
+		},
+		{
+			"id": 594,
+			"name": "Quinn",
+			"firstName": "David",
+			"fullName": "David Quinn",
+			"identifyingName": "David Quinn"
+		},
+		{
+			"id": 703,
+			"name": "Raapack",
+			"firstName": "Jheremy",
+			"fullName": "Jheremy Raapack",
+			"identifyingName": "Jheremy Raapack"
+		},
+		{
+			"id": 922,
+			"name": "Radivojevic",
+			"firstName": "Živorad",
+			"fullName": "Živorad Radivojevic",
+			"identifyingName": "Živorad Radivojevic"
+		},
+		{
+			"id": 520,
+			"name": "Ramos",
+			"firstName": "Humberto",
+			"fullName": "Humberto Ramos",
+			"identifyingName": "Humberto Ramos"
+		},
+		{
+			"id": 907,
+			"name": "Ramos",
+			"firstName": "Jay David",
+			"fullName": "Jay David Ramos",
+			"identifyingName": "Jay David Ramos"
+		},
+		{
+			"id": 243,
+			"name": "Raney",
+			"firstName": "Tom",
+			"fullName": "Tom Raney",
+			"identifyingName": "Tom Raney"
+		},
+		{
+			"id": 957,
+			"name": "Rauch",
+			"firstName": "John",
+			"fullName": "John Rauch",
+			"identifyingName": "John Rauch"
+		},
+		{
+			"id": 983,
+			"name": "Reber",
+			"firstName": "Brian",
+			"fullName": "Brian Reber",
+			"identifyingName": "Brian Reber"
+		},
+		{
+			"id": 748,
+			"name": "Reculé",
+			"firstName": "Henri",
+			"fullName": "Henri Reculé",
+			"identifyingName": "Henri Reculé"
+		},
+		{
+			"id": 705,
+			"name": "Redondo",
+			"firstName": "Bruno",
+			"fullName": "Bruno Redondo",
+			"identifyingName": "Bruno Redondo"
+		},
+		{
+			"id": 80,
+			"name": "Redondo",
+			"firstName": "Jesus",
+			"fullName": "Jesus Redondo",
+			"identifyingName": "Jesus Redondo"
+		},
+		{
+			"id": 886,
+			"name": "Regla",
+			"firstName": "Sal",
+			"fullName": "Sal Regla",
+			"identifyingName": "Sal Regla"
+		},
+		{
+			"id": 887,
+			"name": "Reinhold",
+			"firstName": "Bill",
+			"fullName": "Bill Reinhold",
+			"identifyingName": "Bill Reinhold"
+		},
+		{
+			"id": 198,
+			"name": "Remacle",
+			"fullName": "Remacle",
+			"identifyingName": "Remacle"
+		},
+		{
+			"id": 419,
+			"name": "Remender",
+			"firstName": "Rick",
+			"fullName": "Rick Remender",
+			"identifyingName": "Rick Remender"
+		},
+		{
+			"id": 166,
+			"name": "Renaud",
+			"fullName": "Renaud",
+			"identifyingName": "Renaud"
+		},
+		{
+			"id": 732,
+			"name": "Renner",
+			"firstName": "Benjamin",
+			"nickname": "Reineke",
+			"fullName": "Benjamin 'Reineke' Renner",
+			"identifyingName": "Benjamin 'Reineke' Renner"
+		},
+		{
+			"id": 535,
+			"name": "Reno",
+			"fullName": "Reno",
+			"identifyingName": "Reno"
+		},
+		{
+			"id": 362,
+			"name": "Ribic",
+			"firstName": "Esad",
+			"fullName": "Esad Ribic",
+			"identifyingName": "Esad Ribic"
+		},
+		{
+			"id": 819,
+			"name": "Righi",
+			"fullName": "Righi",
+			"identifyingName": "Righi"
+		},
+		{
+			"id": 270,
+			"name": "Riki",
+			"fullName": "Riki",
+			"identifyingName": "Riki"
+		},
+		{
+			"id": 566,
+			"name": "Riley",
+			"firstName": "Andy",
+			"website": "http://www.misterandyriley.com/",
+			"fullName": "Andy Riley",
+			"identifyingName": "Andy Riley"
+		},
+		{
+			"id": 651,
+			"name": "Rios",
+			"firstName": "Emma",
+			"fullName": "Emma Rios",
+			"identifyingName": "Emma Rios"
+		},
+		{
+			"id": 363,
+			"name": "Risso",
+			"firstName": "Eduardo",
+			"fullName": "Eduardo Risso",
+			"identifyingName": "Eduardo Risso"
+		},
+		{
+			"id": 38,
+			"name": "Roba",
+			"fullName": "Roba",
+			"identifyingName": "Roba"
+		},
+		{
+			"id": 548,
+			"name": "Roberson",
+			"firstName": "Ibraim",
+			"fullName": "Ibraim Roberson",
+			"identifyingName": "Ibraim Roberson"
+		},
+		{
+			"id": 580,
+			"name": "Robinson",
+			"firstName": "Roger",
+			"fullName": "Roger Robinson",
+			"identifyingName": "Roger Robinson"
+		},
+		{
+			"id": 388,
+			"name": "Rocafort",
+			"firstName": "Kenneth",
+			"fullName": "Kenneth Rocafort",
+			"identifyingName": "Kenneth Rocafort"
+		},
+		{
+			"id": 652,
+			"name": "Rockfeller",
+			"firstName": "Alfred",
+			"fullName": "Alfred Rockfeller",
+			"identifyingName": "Alfred Rockfeller"
+		},
+		{
+			"id": 845,
+			"name": "Rodriguez",
+			"firstName": "Alejandro",
+			"fullName": "Alejandro Rodriguez",
+			"identifyingName": "Alejandro Rodriguez"
+		},
+		{
+			"id": 528,
+			"name": "Romita",
+			"firstName": "John Jr.",
+			"fullName": "John Jr. Romita",
+			"identifyingName": "John Jr. Romita"
+		},
+		{
+			"id": 289,
+			"name": "Rosa",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Rosa",
+			"identifyingName": "Stéphane Rosa"
+		},
+		{
+			"id": 761,
+			"name": "Rosinski",
+			"firstName": "Grzegorz",
+			"fullName": "Grzegorz Rosinski",
+			"identifyingName": "Grzegorz Rosinski"
+		},
+		{
+			"id": 726,
+			"name": "Rossi",
+			"firstName": "C",
+			"fullName": "C Rossi",
+			"identifyingName": "C Rossi"
+		},
+		{
+			"id": 179,
+			"name": "Rosy",
+			"fullName": "Rosy",
+			"identifyingName": "Rosy"
+		},
+		{
+			"id": 813,
+			"name": "Rouge",
+			"firstName": "Corentin",
+			"fullName": "Corentin Rouge",
+			"identifyingName": "Corentin Rouge"
+		},
+		{
+			"id": 235,
+			"name": "Roulot",
+			"fullName": "Roulot",
+			"identifyingName": "Roulot"
+		},
+		{
+			"id": 595,
+			"name": "Rubi",
+			"firstName": "Mel",
+			"fullName": "Mel Rubi",
+			"identifyingName": "Mel Rubi"
+		},
+		{
+			"id": 981,
+			"name": "Rudoni",
+			"firstName": "Daniele",
+			"fullName": "Daniele Rudoni",
+			"identifyingName": "Daniele Rudoni"
+		},
+		{
+			"id": 690,
+			"name": "Rufledt",
+			"firstName": "Hubertus",
+			"fullName": "Hubertus Rufledt",
+			"identifyingName": "Hubertus Rufledt"
+		},
+		{
+			"id": 474,
+			"name": "Ruiz",
+			"firstName": "Felix",
+			"fullName": "Felix Ruiz",
+			"identifyingName": "Felix Ruiz"
+		},
+		{
+			"id": 674,
+			"name": "Runberg",
+			"firstName": "Sylvain",
+			"fullName": "Sylvain Runberg",
+			"identifyingName": "Sylvain Runberg"
+		},
+		{
+			"id": 422,
+			"name": "Ryp",
+			"firstName": "Juan Jose",
+			"fullName": "Juan Jose Ryp",
+			"identifyingName": "Juan Jose Ryp"
+		},
+		{
+			"id": 266,
+			"name": "Sadamoto",
+			"firstName": "Yoshiyuki",
+			"biography": "<p>Né le 29 janvier 1962 à Tokuyama (maintenant Shunan), préfecture de Yamaguchi, Japon.</p>",
+			"fullName": "Yoshiyuki Sadamoto",
+			"identifyingName": "Yoshiyuki Sadamoto"
+		},
+		{
+			"id": 643,
+			"name": "Saint-Blancat",
+			"firstName": "Cyril",
+			"fullName": "Cyril Saint-Blancat",
+			"identifyingName": "Cyril Saint-Blancat"
+		},
+		{
+			"id": 684,
+			"name": "Saito",
+			"firstName": "Diogo",
+			"fullName": "Diogo Saito",
+			"identifyingName": "Diogo Saito"
+		},
+		{
+			"id": 45,
+			"name": "Saive",
+			"firstName": "Olivier",
+			"fullName": "Olivier Saive",
+			"identifyingName": "Olivier Saive"
+		},
+		{
+			"id": 611,
+			"name": "Sala",
+			"firstName": "Jean-Luc",
+			"fullName": "Jean-Luc Sala",
+			"identifyingName": "Jean-Luc Sala"
+		},
+		{
+			"id": 252,
+			"name": "Saltares",
+			"firstName": "Javier",
+			"fullName": "Javier Saltares",
+			"identifyingName": "Javier Saltares"
+		},
+		{
+			"id": 709,
+			"name": "Sanchez",
+			"firstName": "Alejandro",
+			"fullName": "Alejandro Sanchez",
+			"identifyingName": "Alejandro Sanchez"
+		},
+		{
+			"id": 788,
+			"name": "Sandoval",
+			"firstName": "Rafa",
+			"fullName": "Rafa Sandoval",
+			"identifyingName": "Rafa Sandoval"
+		},
+		{
+			"id": 944,
+			"name": "Santos",
+			"firstName": "Elmer B.",
+			"fullName": "Elmer B. Santos",
+			"identifyingName": "Elmer B. Santos"
+		},
+		{
+			"id": 403,
+			"name": "Sapolsky",
+			"firstName": "Fabrice",
+			"fullName": "Fabrice Sapolsky",
+			"identifyingName": "Fabrice Sapolsky"
+		},
+		{
+			"id": 259,
+			"name": "Sarchione",
+			"firstName": "Antionio",
+			"fullName": "Antionio Sarchione",
+			"identifyingName": "Antionio Sarchione"
+		},
+		{
+			"id": 158,
+			"name": "Sattouf",
+			"firstName": "Riad",
+			"fullName": "Riad Sattouf",
+			"identifyingName": "Riad Sattouf"
+		},
+		{
+			"id": 258,
+			"name": "Sautriot",
+			"firstName": "Marc",
+			"fullName": "Marc Sautriot",
+			"identifyingName": "Marc Sautriot"
+		},
+		{
+			"id": 733,
+			"name": "Sayago",
+			"firstName": "Nuria",
+			"fullName": "Nuria Sayago",
+			"identifyingName": "Nuria Sayago"
+		},
+		{
+			"id": 921,
+			"name": "Sayaphoum",
+			"firstName": "Lena",
+			"fullName": "Lena Sayaphoum",
+			"identifyingName": "Lena Sayaphoum"
+		},
+		{
+			"id": 208,
+			"name": "Schelle",
+			"firstName": "Pierre",
+			"fullName": "Pierre Schelle",
+			"identifyingName": "Pierre Schelle"
+		},
+		{
+			"id": 78,
+			"name": "Schuiten",
+			"fullName": "Schuiten",
+			"identifyingName": "Schuiten"
+		},
+		{
+			"id": 609,
+			"name": "Schwager",
+			"firstName": "Rob",
+			"fullName": "Rob Schwager",
+			"identifyingName": "Rob Schwager"
+		},
+		{
+			"id": 109,
+			"name": "Schwartz",
+			"firstName": "Olivier",
+			"fullName": "Olivier Schwartz",
+			"identifyingName": "Olivier Schwartz"
+		},
+		{
+			"id": 785,
+			"name": "Sécher",
+			"firstName": "Valentin",
+			"fullName": "Valentin Sécher",
+			"identifyingName": "Valentin Sécher"
+		},
+		{
+			"id": 996,
+			"name": "Seigneret",
+			"firstName": "Nicolas",
+			"nickname": "Bannister",
+			"fullName": "Nicolas 'Bannister' Seigneret",
+			"identifyingName": "Nicolas 'Bannister' Seigneret"
+		},
+		{
+			"id": 616,
+			"name": "Sejic",
+			"firstName": "Stjepan",
+			"fullName": "Stjepan Sejic",
+			"identifyingName": "Stjepan Sejic"
+		},
+		{
+			"id": 828,
+			"name": "Sénégas",
+			"firstName": "Stéphane",
+			"fullName": "Stéphane Sénégas",
+			"identifyingName": "Stéphane Sénégas"
+		},
+		{
+			"id": 31,
+			"name": "Sente",
+			"firstName": "Yves",
+			"fullName": "Yves Sente",
+			"identifyingName": "Yves Sente"
+		},
+		{
+			"id": 104,
+			"name": "Sentenac",
+			"firstName": "Alexis",
+			"fullName": "Alexis Sentenac",
+			"identifyingName": "Alexis Sentenac"
+		},
+		{
+			"id": 59,
+			"name": "Serafini",
+			"firstName": "Dominique",
+			"fullName": "Dominique Serafini",
+			"identifyingName": "Dominique Serafini"
+		},
+		{
+			"id": 628,
+			"name": "Serrano",
+			"firstName": "Felix",
+			"fullName": "Felix Serrano",
+			"identifyingName": "Felix Serrano"
+		},
+		{
+			"id": 328,
+			"name": "Shang",
+			"fullName": "Shang",
+			"identifyingName": "Shang"
+		},
+		{
+			"id": 438,
+			"name": "Shawn Alexander",
+			"firstName": "Jason",
+			"fullName": "Jason Shawn Alexander",
+			"identifyingName": "Jason Shawn Alexander"
+		},
+		{
+			"id": 862,
+			"name": "Shepherd",
+			"firstName": "Yuri",
+			"fullName": "Yuri Shepherd",
+			"identifyingName": "Yuri Shepherd"
+		},
+		{
+			"id": 598,
+			"name": "Shiono",
+			"firstName": "Etorouji",
+			"fullName": "Etorouji Shiono",
+			"identifyingName": "Etorouji Shiono"
+		},
+		{
+			"id": 372,
+			"name": "Silvestri",
+			"firstName": "Marc",
+			"fullName": "Marc Silvestri",
+			"identifyingName": "Marc Silvestri"
+		},
+		{
+			"id": 797,
+			"name": "Simonson",
+			"firstName": "Walter",
+			"fullName": "Walter Simonson",
+			"identifyingName": "Walter Simonson"
+		},
+		{
+			"id": 647,
+			"name": "Sintès",
+			"firstName": "Marc",
+			"nickname": "Makma",
+			"fullName": "Marc 'Makma' Sintès",
+			"identifyingName": "Marc 'Makma' Sintès"
+		},
+		{
+			"id": 93,
+			"name": "Sirius",
+			"fullName": "Sirius",
+			"identifyingName": "Sirius"
+		},
+		{
+			"id": 13,
+			"name": "Siro",
+			"fullName": "Siro",
+			"identifyingName": "Siro"
+		},
+		{
+			"id": 625,
+			"name": "Slagle",
+			"firstName": "David",
+			"fullName": "David Slagle",
+			"identifyingName": "David Slagle"
+		},
+		{
+			"id": 418,
+			"name": "Smith",
+			"firstName": "C.P.",
+			"fullName": "C.P. Smith",
+			"identifyingName": "C.P. Smith"
+		},
+		{
+			"id": 890,
+			"name": "Smith",
+			"firstName": "Cam",
+			"fullName": "Cam Smith",
+			"identifyingName": "Cam Smith"
+		},
+		{
+			"id": 615,
+			"name": "Smith",
+			"firstName": "JD",
+			"fullName": "JD Smith",
+			"identifyingName": "JD Smith"
+		},
+		{
+			"id": 364,
+			"name": "Smith",
+			"firstName": "Jonathan D.",
+			"fullName": "Jonathan D. Smith",
+			"identifyingName": "Jonathan D. Smith"
+		},
+		{
+			"id": 514,
+			"name": "Smith",
+			"firstName": "Paul",
+			"fullName": "Paul Smith",
+			"identifyingName": "Paul Smith"
+		},
+		{
+			"id": 92,
+			"name": "Smolderen",
+			"fullName": "Smolderen",
+			"identifyingName": "Smolderen"
+		},
+		{
+			"id": 896,
+			"name": "Smudja",
+			"firstName": "Gradimir",
+			"fullName": "Gradimir Smudja",
+			"identifyingName": "Gradimir Smudja"
+		},
+		{
+			"id": 933,
+			"name": "Smulkowski",
+			"firstName": "Scarlett",
+			"fullName": "Scarlett Smulkowski",
+			"identifyingName": "Scarlett Smulkowski"
+		},
+		{
+			"id": 499,
+			"name": "Snyder",
+			"firstName": "Scott",
+			"fullName": "Scott Snyder",
+			"identifyingName": "Scott Snyder"
+		},
+		{
+			"id": 416,
+			"name": "Sotelo",
+			"firstName": "Beth",
+			"fullName": "Beth Sotelo",
+			"identifyingName": "Beth Sotelo"
+		},
+		{
+			"id": 365,
+			"name": "Sotomayor",
+			"firstName": "Chris",
+			"fullName": "Chris Sotomayor",
+			"identifyingName": "Chris Sotomayor"
+		},
+		{
+			"id": 760,
+			"name": "Spano",
+			"firstName": "Sara",
+			"fullName": "Sara Spano",
+			"identifyingName": "Sara Spano"
+		},
+		{
+			"id": 860,
+			"name": "Spitéri",
+			"firstName": "Florence",
+			"fullName": "Florence Spitéri",
+			"identifyingName": "Florence Spitéri"
+		},
+		{
+			"id": 469,
+			"name": "Staples",
+			"firstName": "Val",
+			"fullName": "Val Staples",
+			"identifyingName": "Val Staples"
+		},
+		{
+			"id": 572,
+			"name": "Starr",
+			"firstName": "John",
+			"fullName": "John Starr",
+			"identifyingName": "John Starr"
+		},
+		{
+			"id": 374,
+			"name": "Steigerwald",
+			"firstName": "Peter",
+			"fullName": "Peter Steigerwald",
+			"identifyingName": "Peter Steigerwald"
+		},
+		{
+			"id": 248,
+			"name": "Stewart",
+			"firstName": "Dave",
+			"fullName": "Dave Stewart",
+			"identifyingName": "Dave Stewart"
+		},
+		{
+			"id": 909,
+			"name": "Story",
+			"firstName": "Karl",
+			"fullName": "Karl Story",
+			"identifyingName": "Karl Story"
+		},
+		{
+			"id": 516,
+			"name": "Straczynski",
+			"firstName": "Joseph Michael",
+			"fullName": "Joseph Michael Straczynski",
+			"identifyingName": "Joseph Michael Straczynski"
+		},
+		{
+			"id": 431,
+			"name": "Strain",
+			"firstName": "Christina",
+			"fullName": "Christina Strain",
+			"identifyingName": "Christina Strain"
+		},
+		{
+			"id": 762,
+			"name": "Studio Cerise",
+			"fullName": "Studio Cerise",
+			"identifyingName": "Studio Cerise"
+		},
+		{
+			"id": 769,
+			"name": "Studio Leonardo",
+			"fullName": "Studio Leonardo",
+			"identifyingName": "Studio Leonardo"
+		},
+		{
+			"id": 295,
+			"name": "Suayan",
+			"firstName": "Mico",
+			"fullName": "Mico Suayan",
+			"identifyingName": "Mico Suayan"
+		},
+		{
+			"id": 932,
+			"name": "Subic",
+			"firstName": "Stevan",
+			"fullName": "Stevan Subic",
+			"identifyingName": "Stevan Subic"
+		},
+		{
+			"id": 72,
+			"name": "Suk",
+			"firstName": "Jung-hyun",
+			"fullName": "Jung-hyun Suk",
+			"identifyingName": "Jung-hyun Suk"
+		},
+		{
+			"id": 712,
+			"name": "Surzhenko",
+			"firstName": "Roman",
+			"fullName": "Roman Surzhenko",
+			"identifyingName": "Roman Surzhenko"
+		},
+		{
+			"id": 589,
+			"name": "Svart",
+			"fullName": "Svart",
+			"identifyingName": "Svart"
+		},
+		{
+			"id": 112,
+			"name": "Swolfs",
+			"firstName": "Yves",
+			"fullName": "Yves Swolfs",
+			"identifyingName": "Yves Swolfs"
+		},
+		{
+			"id": 968,
+			"name": "Tadil",
+			"firstName": "Khaled",
+			"fullName": "Khaled Tadil",
+			"identifyingName": "Khaled Tadil"
+		},
+		{
+			"id": 823,
+			"name": "TaDuc",
+			"firstName": "Olivier",
+			"fullName": "Olivier TaDuc",
+			"identifyingName": "Olivier TaDuc"
+		},
+		{
+			"id": 271,
+			"name": "Takahashi",
+			"firstName": "Hikaru",
+			"fullName": "Hikaru Takahashi",
+			"identifyingName": "Hikaru Takahashi"
+		},
+		{
+			"id": 650,
+			"name": "Takara",
+			"firstName": "Marcio",
+			"fullName": "Marcio Takara",
+			"identifyingName": "Marcio Takara"
+		},
+		{
+			"id": 601,
+			"name": "Takashige",
+			"firstName": "Hiroshi",
+			"fullName": "Hiroshi Takashige",
+			"identifyingName": "Hiroshi Takashige"
+		},
+		{
+			"id": 570,
+			"name": "Tan",
+			"firstName": "Billy",
+			"fullName": "Billy Tan",
+			"identifyingName": "Billy Tan"
+		},
+		{
+			"id": 96,
+			"name": "Tanaka",
+			"fullName": "Tanaka",
+			"identifyingName": "Tanaka"
+		},
+		{
+			"id": 789,
+			"name": "Taragona Garcia",
+			"firstName": "Jordi",
+			"fullName": "Jordi Taragona Garcia",
+			"identifyingName": "Jordi Taragona Garcia"
+		},
+		{
+			"id": 119,
+			"name": "Tarquin",
+			"firstName": "Didier",
+			"fullName": "Didier Tarquin",
+			"identifyingName": "Didier Tarquin"
+		},
+		{
+			"id": 755,
+			"name": "Tarquin",
+			"firstName": "Lyse",
+			"fullName": "Lyse Tarquin",
+			"identifyingName": "Lyse Tarquin"
+		},
+		{
+			"id": 562,
+			"name": "Tartaglia",
+			"firstName": "Javier",
+			"website": "http://javiertartaglia.blogspot.com/",
+			"fullName": "Javier Tartaglia",
+			"identifyingName": "Javier Tartaglia"
+		},
+		{
+			"id": 702,
+			"name": "Taylor",
+			"firstName": "Tom",
+			"fullName": "Tom Taylor",
+			"identifyingName": "Tom Taylor"
+		},
+		{
+			"id": 329,
+			"name": "Tébo",
+			"fullName": "Tébo",
+			"identifyingName": "Tébo"
+		},
+		{
+			"id": 971,
+			"name": "Templton",
+			"firstName": "Ty",
+			"fullName": "Ty Templton",
+			"identifyingName": "Ty Templton"
+		},
+		{
+			"id": 713,
+			"name": "Tenuta",
+			"firstName": "Saverio",
+			"fullName": "Saverio Tenuta",
+			"identifyingName": "Saverio Tenuta"
+		},
+		{
+			"id": 253,
+			"name": "Texeira",
+			"firstName": "Mark",
+			"fullName": "Mark Texeira",
+			"identifyingName": "Mark Texeira"
+		},
+		{
+			"id": 132,
+			"name": "Thiriet",
+			"fullName": "Thiriet",
+			"identifyingName": "Thiriet"
+		},
+		{
+			"id": 928,
+			"name": "Thomas",
+			"firstName": "Dominique",
+			"fullName": "Dominique Thomas",
+			"identifyingName": "Dominique Thomas"
+		},
+		{
+			"id": 273,
+			"name": "Tibéry",
+			"fullName": "Tibéry",
+			"identifyingName": "Tibéry"
+		},
+		{
+			"id": 51,
+			"name": "Tibet",
+			"fullName": "Tibet",
+			"identifyingName": "Tibet"
+		},
+		{
+			"id": 629,
+			"name": "Tieri",
+			"firstName": "Frank",
+			"fullName": "Frank Tieri",
+			"identifyingName": "Frank Tieri"
+		},
+		{
+			"id": 999,
+			"name": "Tirso",
+			"fullName": "Tirso",
+			"identifyingName": "Tirso"
+		},
+		{
+			"id": 420,
+			"name": "Tocchini",
+			"firstName": "Greg",
+			"fullName": "Greg Tocchini",
+			"identifyingName": "Greg Tocchini"
+		},
+		{
+			"id": 900,
+			"name": "Tolibad",
+			"firstName": "Harvey",
+			"fullName": "Harvey Tolibad",
+			"identifyingName": "Harvey Tolibad"
+		},
+		{
+			"id": 175,
+			"name": "Tome",
+			"firstName": "Philippe",
+			"fullName": "Philippe Tome",
+			"identifyingName": "Philippe Tome"
+		},
+		{
+			"id": 159,
+			"name": "Tome Ph. & Janry",
+			"fullName": "Tome Ph. & Janry",
+			"identifyingName": "Tome Ph. & Janry"
+		},
+		{
+			"id": 411,
+			"name": "Tonogai",
+			"firstName": "Yoshiki",
+			"website": "http://blog.livedoor.jp/nejiusagi/",
+			"fullName": "Yoshiki Tonogai",
+			"identifyingName": "Yoshiki Tonogai"
+		},
+		{
+			"id": 456,
+			"name": "Toriyama",
+			"firstName": "Akira",
+			"fullName": "Akira Toriyama",
+			"identifyingName": "Akira Toriyama"
+		},
+		{
+			"id": 666,
+			"name": "Torregrossa",
+			"firstName": "Rémi",
+			"fullName": "Rémi Torregrossa",
+			"identifyingName": "Rémi Torregrossa"
+		},
+		{
+			"id": 756,
+			"name": "Torta",
+			"firstName": "Florence",
+			"fullName": "Florence Torta",
+			"identifyingName": "Florence Torta"
+		},
+		{
+			"id": 312,
+			"name": "Tota",
+			"fullName": "Tota",
+			"identifyingName": "Tota"
+		},
+		{
+			"id": 12,
+			"name": "Tota",
+			"firstName": "Ciro",
+			"fullName": "Ciro Tota",
+			"identifyingName": "Ciro Tota"
+		},
+		{
+			"id": 246,
+			"name": "Transparency Digital",
+			"fullName": "Transparency Digital",
+			"identifyingName": "Transparency Digital"
+		},
+		{
+			"id": 757,
+			"name": "Tréfouël",
+			"firstName": "Séverine",
+			"fullName": "Séverine Tréfouël",
+			"identifyingName": "Séverine Tréfouël"
+		},
+		{
+			"id": 843,
+			"name": "Trindade",
+			"firstName": "Jonas",
+			"fullName": "Jonas Trindade",
+			"identifyingName": "Jonas Trindade"
+		},
+		{
+			"id": 451,
+			"name": "Trondheim",
+			"firstName": "Lewis",
+			"fullName": "Lewis Trondheim",
+			"identifyingName": "Lewis Trondheim"
+		},
+		{
+			"id": 69,
+			"name": "Tsutsui",
+			"firstName": "Tetsuya",
+			"fullName": "Tetsuya Tsutsui",
+			"identifyingName": "Tetsuya Tsutsui"
+		},
+		{
+			"id": 804,
+			"name": "Turconi",
+			"firstName": "Stefano",
+			"fullName": "Stefano Turconi",
+			"identifyingName": "Stefano Turconi"
+		},
+		{
+			"id": 155,
+			"name": "Turf",
+			"fullName": "Turf",
+			"identifyingName": "Turf"
+		},
+		{
+			"id": 133,
+			"name": "Turk",
+			"fullName": "Turk",
+			"identifyingName": "Turk"
+		},
+		{
+			"id": 433,
+			"name": "Turnbull",
+			"firstName": "Koi",
+			"fullName": "Koi Turnbull",
+			"identifyingName": "Koi Turnbull"
+		},
+		{
+			"id": 73,
+			"name": "Turner",
+			"firstName": "Michael",
+			"fullName": "Michael Turner",
+			"identifyingName": "Michael Turner"
+		},
+		{
+			"id": 15,
+			"name": "Uderzo",
+			"firstName": "Albert",
+			"fullName": "Albert Uderzo",
+			"identifyingName": "Albert Uderzo"
+		},
+		{
+			"id": 272,
+			"name": "Uekusa",
+			"firstName": "Wataru",
+			"fullName": "Wataru Uekusa",
+			"identifyingName": "Wataru Uekusa"
+		},
+		{
+			"id": 544,
+			"name": "Urasawa",
+			"firstName": "Naoki",
+			"fullName": "Naoki Urasawa",
+			"identifyingName": "Naoki Urasawa"
+		},
+		{
+			"id": 745,
+			"name": "Valeani",
+			"firstName": "Yann",
+			"fullName": "Yann Valeani",
+			"identifyingName": "Yann Valeani"
+		},
+		{
+			"id": 721,
+			"name": "Vallée",
+			"firstName": "Sylvain",
+			"fullName": "Sylvain Vallée",
+			"identifyingName": "Sylvain Vallée"
+		},
+		{
+			"id": 622,
+			"name": "Van Buren",
+			"firstName": "Archie",
+			"fullName": "Archie Van Buren",
+			"identifyingName": "Archie Van Buren"
+		},
+		{
+			"id": 36,
+			"name": "Vance",
+			"firstName": "William",
+			"fullName": "William Vance",
+			"identifyingName": "William Vance"
+		},
+		{
+			"id": 482,
+			"name": "Van Cutsen",
+			"firstName": "Petra",
+			"fullName": "Petra Van Cutsen",
+			"identifyingName": "Petra Van Cutsen"
+		},
+		{
+			"id": 34,
+			"name": "Vandersteen",
+			"firstName": "Willy",
+			"fullName": "Willy Vandersteen",
+			"identifyingName": "Willy Vandersteen"
+		},
+		{
+			"id": 29,
+			"name": "Van Hamme",
+			"firstName": "Jean",
+			"fullName": "Jean Van Hamme",
+			"identifyingName": "Jean Van Hamme"
+		},
+		{
+			"id": 395,
+			"name": "Van Lente",
+			"firstName": "Fred",
+			"fullName": "Fred Van Lente",
+			"identifyingName": "Fred Van Lente"
+		},
+		{
+			"id": 10,
+			"name": "Vatine",
+			"firstName": "Olivier",
+			"fullName": "Olivier Vatine",
+			"identifyingName": "Olivier Vatine"
+		},
+		{
+			"id": 759,
+			"name": "Vattani",
+			"firstName": "Matteo",
+			"fullName": "Matteo Vattani",
+			"identifyingName": "Matteo Vattani"
+		},
+		{
+			"id": 506,
+			"name": "Vaughan",
+			"firstName": "Brian K.",
+			"fullName": "Brian K. Vaughan",
+			"identifyingName": "Brian K. Vaughan"
+		},
+		{
+			"id": 847,
+			"name": "Vazquez",
+			"firstName": "Fran",
+			"fullName": "Fran Vazquez",
+			"identifyingName": "Fran Vazquez"
+		},
+		{
+			"id": 66,
+			"name": "Vehlmann",
+			"fullName": "Vehlmann",
+			"identifyingName": "Vehlmann"
+		},
+		{
+			"id": 106,
+			"name": "Vehlmann",
+			"firstName": "Fabien",
+			"fullName": "Fabien Vehlmann",
+			"identifyingName": "Fabien Vehlmann"
+		},
+		{
+			"id": 146,
+			"name": "Verboest",
+			"fullName": "Verboest",
+			"identifyingName": "Verboest"
+		},
+		{
+			"id": 724,
+			"name": "Verlinden",
+			"firstName": "Dan",
+			"fullName": "Dan Verlinden",
+			"identifyingName": "Dan Verlinden"
+		},
+		{
+			"id": 677,
+			"name": "Vernay",
+			"firstName": "Valérie",
+			"fullName": "Valérie Vernay",
+			"identifyingName": "Valérie Vernay"
+		},
+		{
+			"id": 37,
+			"name": "Vernes",
+			"firstName": "Henri",
+			"fullName": "Henri Vernes",
+			"identifyingName": "Henri Vernes"
+		},
+		{
+			"id": 688,
+			"name": "Versaevel",
+			"firstName": "Meephe",
+			"fullName": "Meephe Versaevel",
+			"identifyingName": "Meephe Versaevel"
+		},
+		{
+			"id": 861,
+			"name": "Vignaux",
+			"firstName": "Fred",
+			"fullName": "Fred Vignaux",
+			"identifyingName": "Fred Vignaux"
+		},
+		{
+			"id": 256,
+			"name": "Villarrubia",
+			"firstName": "José",
+			"fullName": "José Villarrubia",
+			"identifyingName": "José Villarrubia"
+		},
+		{
+			"id": 730,
+			"name": "Vincent",
+			"firstName": "Cyril",
+			"fullName": "Cyril Vincent",
+			"identifyingName": "Cyril Vincent"
+		},
+		{
+			"id": 640,
+			"name": "Vitti",
+			"firstName": "Alessandro",
+			"fullName": "Alessandro Vitti",
+			"identifyingName": "Alessandro Vitti"
+		},
+		{
+			"id": 689,
+			"name": "Vogt",
+			"firstName": "Helge",
+			"fullName": "Helge Vogt",
+			"identifyingName": "Helge Vogt"
+		},
+		{
+			"id": 781,
+			"name": "Vukić",
+			"firstName": "Bojan",
+			"fullName": "Bojan Vukić",
+			"identifyingName": "Bojan Vukić"
+		},
+		{
+			"id": 425,
+			"name": "Waid",
+			"firstName": "Mark",
+			"fullName": "Mark Waid",
+			"identifyingName": "Mark Waid"
+		},
+		{
+			"id": 891,
+			"name": "Walker",
+			"firstName": "Kev",
+			"fullName": "Kev Walker",
+			"identifyingName": "Kev Walker"
+		},
+		{
+			"id": 396,
+			"name": "Walker",
+			"firstName": "Key",
+			"fullName": "Key Walker",
+			"identifyingName": "Key Walker"
+		},
+		{
+			"id": 424,
+			"name": "Waller",
+			"firstName": "Greg",
+			"fullName": "Greg Waller",
+			"identifyingName": "Greg Waller"
+		},
+		{
+			"id": 149,
+			"name": "Walli",
+			"fullName": "Walli",
+			"identifyingName": "Walli"
+		},
+		{
+			"id": 288,
+			"name": "Walt",
+			"fullName": "Walt",
+			"identifyingName": "Walt"
+		},
+		{
+			"id": 821,
+			"name": "Walter",
+			"fullName": "Walter",
+			"identifyingName": "Walter"
+		},
+		{
+			"id": 186,
+			"name": "Walthery",
+			"firstName": "François",
+			"fullName": "François Walthery",
+			"identifyingName": "François Walthery"
+		},
+		{
+			"id": 763,
+			"name": "Warnant",
+			"firstName": "Luc",
+			"fullName": "Luc Warnant",
+			"identifyingName": "Luc Warnant"
+		},
+		{
+			"id": 662,
+			"name": "Washington",
+			"firstName": "Tony",
+			"fullName": "Tony Washington",
+			"identifyingName": "Tony Washington"
+		},
+		{
+			"id": 330,
+			"name": "Wasterlain",
+			"firstName": "Marc",
+			"fullName": "Marc Wasterlain",
+			"identifyingName": "Marc Wasterlain"
+		},
+		{
+			"id": 952,
+			"name": "Watine-Vierard",
+			"firstName": "Sophie",
+			"fullName": "Sophie Watine-Vierard",
+			"identifyingName": "Sophie Watine-Vierard"
+		},
+		{
+			"id": 367,
+			"name": "Watterson",
+			"firstName": "Bill",
+			"biography": "<p>Né le 5 juillet 1958 à Washington, D.C.</p>",
+			"fullName": "Bill Watterson",
+			"identifyingName": "Bill Watterson"
+		},
+		{
+			"id": 251,
+			"name": "Way",
+			"firstName": "Daniel",
+			"fullName": "Daniel Way",
+			"identifyingName": "Daniel Way"
+		},
+		{
+			"id": 960,
+			"name": "Weeks",
+			"firstName": "Lee",
+			"fullName": "Lee Weeks",
+			"identifyingName": "Lee Weeks"
+		},
+		{
+			"id": 371,
+			"name": "Weems",
+			"firstName": "Joe B.",
+			"biography": "<p>5&egrave;me du nom.</p>",
+			"fullName": "Joe B. Weems",
+			"identifyingName": "Joe B. Weems"
+		},
+		{
+			"id": 436,
+			"name": "Wellington",
+			"firstName": "David",
+			"fullName": "David Wellington",
+			"identifyingName": "David Wellington"
+		},
+		{
+			"id": 545,
+			"name": "Wells",
+			"firstName": "Zeb",
+			"fullName": "Zeb Wells",
+			"identifyingName": "Zeb Wells"
+		},
+		{
+			"id": 443,
+			"name": "Weltjens",
+			"firstName": "Joe",
+			"nickname": "Guru-eFX",
+			"fullName": "Joe 'Guru-eFX' Weltjens",
+			"identifyingName": "Joe 'Guru-eFX' Weltjens"
+		},
+		{
+			"id": 809,
+			"name": "Wendling",
+			"firstName": "Claire",
+			"fullName": "Claire Wendling",
+			"identifyingName": "Claire Wendling"
+		},
+		{
+			"id": 573,
+			"name": "Wengler",
+			"firstName": "Tyson",
+			"fullName": "Tyson Wengler",
+			"identifyingName": "Tyson Wengler"
+		},
+		{
+			"id": 368,
+			"name": "White",
+			"firstName": "Dean",
+			"fullName": "Dean White",
+			"identifyingName": "Dean White"
+		},
+		{
+			"id": 798,
+			"name": "Wicky",
+			"firstName": "Jérôme",
+			"fullName": "Jérôme Wicky",
+			"identifyingName": "Jérôme Wicky"
+		},
+		{
+			"id": 153,
+			"name": "Widenlocher",
+			"fullName": "Widenlocher",
+			"identifyingName": "Widenlocher"
+		},
+		{
+			"id": 141,
+			"name": "William",
+			"fullName": "William",
+			"identifyingName": "William"
+		},
+		{
+			"id": 742,
+			"name": "Wilson",
+			"firstName": "Colin",
+			"fullName": "Colin Wilson",
+			"identifyingName": "Colin Wilson"
+		},
+		{
+			"id": 561,
+			"name": "Wilson",
+			"firstName": "Matthew",
+			"fullName": "Matthew Wilson",
+			"identifyingName": "Matthew Wilson"
+		},
+		{
+			"id": 369,
+			"name": "Wohl",
+			"firstName": "David",
+			"fullName": "David Wohl",
+			"identifyingName": "David Wohl"
+		},
+		{
+			"id": 204,
+			"name": "Wood",
+			"firstName": "Brian",
+			"fullName": "Brian Wood",
+			"identifyingName": "Brian Wood"
+		},
+		{
+			"id": 620,
+			"name": "Woodard",
+			"firstName": "Nolan",
+			"fullName": "Nolan Woodard",
+			"identifyingName": "Nolan Woodard"
+		},
+		{
+			"id": 497,
+			"name": "Woodward",
+			"firstName": "J.K.",
+			"fullName": "J.K. Woodward",
+			"identifyingName": "J.K. Woodward"
+		},
+		{
+			"id": 993,
+			"name": "Xavier",
+			"firstName": "Philippe",
+			"fullName": "Philippe Xavier",
+			"identifyingName": "Philippe Xavier"
+		},
+		{
+			"id": 291,
+			"name": "Yagi",
+			"firstName": "Norihiro",
+			"biography": "<p>Né en 1969 à Okinawa, Japon. A commencé à dessiner en 1990. A gagné le 32ème Akatsuka Award pour son premier one shot, Undeadman</p>",
+			"fullName": "Norihiro Yagi",
+			"identifyingName": "Norihiro Yagi"
+		},
+		{
+			"id": 145,
+			"name": "Yann",
+			"fullName": "Yann",
+			"identifyingName": "Yann"
+		},
+		{
+			"id": 780,
+			"name": "Yao",
+			"firstName": "Xu",
+			"fullName": "Xu Yao",
+			"identifyingName": "Xu Yao"
+		},
+		{
+			"id": 547,
+			"name": "Yardin",
+			"firstName": "David",
+			"fullName": "David Yardin",
+			"identifyingName": "David Yardin"
+		},
+		{
+			"id": 659,
+			"name": "Yi",
+			"firstName": "Ma",
+			"fullName": "Ma Yi",
+			"identifyingName": "Ma Yi"
+		},
+		{
+			"id": 454,
+			"name": "Yost",
+			"firstName": "Christopher",
+			"fullName": "Christopher Yost",
+			"identifyingName": "Christopher Yost"
+		},
+		{
+			"id": 884,
+			"name": "Young",
+			"firstName": "Skottie",
+			"fullName": "Skottie Young",
+			"identifyingName": "Skottie Young"
+		},
+		{
+			"id": 512,
+			"name": "Yu",
+			"firstName": "Leinil Francis",
+			"fullName": "Leinil Francis Yu",
+			"identifyingName": "Leinil Francis Yu"
+		},
+		{
+			"id": 290,
+			"name": "Yukimura",
+			"firstName": "Makoto",
+			"biography": "<p>Né le 8 mai 1976</p>",
+			"fullName": "Makoto Yukimura",
+			"identifyingName": "Makoto Yukimura"
+		},
+		{
+			"id": 920,
+			"name": "Zako",
+			"firstName": "Suheb",
+			"fullName": "Suheb Zako",
+			"identifyingName": "Suheb Zako"
+		},
+		{
+			"id": 76,
+			"name": "Zep",
+			"fullName": "Zep",
+			"identifyingName": "Zep"
+		},
+		{
+			"id": 936,
+			"name": "Zeppegno",
+			"firstName": "Chiara",
+			"fullName": "Chiara Zeppegno",
+			"identifyingName": "Chiara Zeppegno"
+		},
+		{
+			"id": 376,
+			"name": "Zezelj",
+			"firstName": "Danijel",
+			"fullName": "Danijel Zezelj",
+			"identifyingName": "Danijel Zezelj"
+		},
+		{
+			"id": 812,
+			"name": "Zidrou",
+			"fullName": "Zidrou",
+			"identifyingName": "Zidrou"
+		},
+		{
+			"id": 1003,
+			"name": "Zircher",
+			"firstName": "Patrick",
+			"fullName": "Patrick Zircher",
+			"identifyingName": "Patrick Zircher"
 		}
 	]
 }
