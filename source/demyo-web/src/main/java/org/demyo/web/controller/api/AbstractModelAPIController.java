@@ -6,8 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,18 +31,19 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	/**
 	 * Retrieves the full list of the entities.
 	 * 
-	 * @param currentPage The current page number (starting from 1). Can be missing.
-	 * @param model The view model.
-	 * @param startsWith The letter to which to jump.
-	 * @param request the HTTP request (e.g. for direct access to parameters).
-	 * @return The view name.
+	 * @param view The Jackson view to apply.
+	 * @return The list.
 	 */
-	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
+	@GetMapping({ "/", "/index" })
 	@ResponseBody
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<M> value = getService().findAll();
 		MappingJacksonValue jackson = new MappingJacksonValue(value);
-		jackson.setSerializationView(ModelView.byName(view));
+		Optional<Class<?>> viewClass = ModelView.byName(view);
+		LOGGER.debug("View class is {}", viewClass);
+		if (viewClass.isPresent()) {
+			jackson.setSerializationView(viewClass.get());
+		}
 		return jackson;
 	}
 

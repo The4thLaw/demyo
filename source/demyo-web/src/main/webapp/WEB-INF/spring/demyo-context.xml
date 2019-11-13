@@ -13,7 +13,10 @@
 	<context:component-scan base-package="org.demyo" />
 	<import resource="classpath:org/demyo/dao/demyo-dao-context.xml" />
 	<tx:annotation-driven/>
+	<!--
+	Not needed anymore due to a transition to @EnableWebMvc
 	<mvc:annotation-driven />
+	-->
 	<mvc:resources mapping="/css/**" location="/css/" />
 	<mvc:resources mapping="/fonts/**" location="/fonts/" />
 	<mvc:resources mapping="/js/**" location="/js/" />
