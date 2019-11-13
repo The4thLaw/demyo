@@ -58,7 +58,7 @@
 	<jee:jndi-lookup id="desktopCallbacks" jndi-name="org.demyo.services.desktop" />
 
 	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+		class="org.demyo.service.i18n.BrowsableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>org/demyo/i18n/core</value>

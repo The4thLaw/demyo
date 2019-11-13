@@ -2,6 +2,7 @@ package org.demyo.service.impl;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
+import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
 
 /**
  * Implements the contract defined by {@link ITranslationService}.
@@ -31,6 +33,18 @@ public class TranslationService implements ITranslationService {
 	private IConfigurationService configService;
 	@Autowired
 	private MessageSource messageSource;
+
+	// TODO: use a different cache
+	// TODO: cache with the locale name
+	// @Cacheable(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public Map<String, String> getAllTranslations(String locale) {
+		if (!(messageSource instanceof BrowsableResourceBundleMessageSource)) {
+			throw new RuntimeException("Unexpected MessageSource class: " + messageSource.getClass());
+		}
+		return ((BrowsableResourceBundleMessageSource) messageSource)//
+				.getAllMessages(Locale.forLanguageTag(locale));
+	}
 
 	@Override
 	public String translate(@NotEmpty String labelId) {
