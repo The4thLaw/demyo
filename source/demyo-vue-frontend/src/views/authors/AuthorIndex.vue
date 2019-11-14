@@ -28,6 +28,12 @@ export default {
 		}
 	},
 
+	data() {
+		return {
+			authors: []
+		}
+	},
+
 	created() {
 		this.fetchData()
 		// TODO: left here for demo purposes, remove soon
