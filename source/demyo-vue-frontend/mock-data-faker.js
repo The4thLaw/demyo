@@ -29,6 +29,7 @@ for (let i = 0; i < 250; i++) {
 	}
 	authors.push(author)
 }
+authors.sort((a, b) => a.name.localeCompare(b.name))
 
 module.exports = () => {
 	return {
