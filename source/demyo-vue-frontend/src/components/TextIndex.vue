@@ -52,7 +52,7 @@ export default {
 	data() {
 		return {
 			// TODO: load this from the config
-			itemsPerPage: 30,
+			itemsPerPage: 40,
 			currentPage: 1
 		}
 	},
@@ -79,8 +79,9 @@ export default {
 }
 
 #demyo .c-TextIndex__list {
-	columns: 4;
 	font-size: 1rem;
+	column-width: 15em;
+	column-gap: 2em;
 
 	a {
 		color: inherit;
@@ -92,23 +93,5 @@ export default {
 #demyo .v-pagination button {
 	box-shadow: none;
 	border-radius: 50%;
-}
-
-@media (max-width: 1023px) and (min-width: 840px) {
-	.c-TextIndex__list {
-		columns: 3;
-	}
-}
-
-@media (max-width: 839px) and (min-width: 480px) {
-	.c-TextIndex__list {
-		columns: 2;
-	}
-}
-
-@media (max-width: 479px) {
-	.mdl-list {
-		columns: 1;
-	}
 }
 </style>
