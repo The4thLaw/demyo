@@ -8,6 +8,15 @@ function luckRatio(ratio) {
 	return number <= ratio
 }
 
+function paragraphs(maxNum) {
+	let count = faker.random.number() % maxNum
+	let paragraphs = ''
+	do {
+		paragraphs += `<p>${faker.lorem.paragraph()}</p>`
+	} while (count-- >= 0)
+	return paragraphs
+}
+
 // AUTHORS
 let authors = []
 for (let i = 0; i < 250; i++) {
@@ -19,13 +28,13 @@ for (let i = 0; i < 250; i++) {
 		firstName: fname,
 		identifyingName: `${fname} ${lname}`
 	}
-	if (luckRatio(0.7)) {
-		let nick = faker.name.jobTitle()
+	if (luckRatio(0.2)) {
+		let nick = faker.name.firstName()
 		author.nickname = nick
 		author.identifyingName = `${fname} '${nick}' ${lname}`
 	}
-	if (luckRatio(0.1)) {
-		author.biography = `<p>${faker.lorem.paragraph()}</p>`
+	if (luckRatio(0.5)) {
+		author.biography = paragraphs(2)
 	}
 	authors.push(author)
 }
