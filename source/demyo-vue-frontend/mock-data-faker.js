@@ -33,6 +33,7 @@ for (let i = 0; i < 250; i++) {
 module.exports = () => {
 	return {
 		authors: authors,
-		translations_en: actualData.translations_en
+		translations_en: actualData.translations_en,
+		translations_fr: actualData.translations_fr
 	}
 }

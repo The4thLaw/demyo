@@ -1,4 +1,5 @@
 {
 	"/api/*": "/$1",
-	"/translations/en": "/translations_en"
+	"/translations/en": "/translations_en",
+	"/translations/fr": "/translations_fr"
 }
