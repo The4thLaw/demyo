@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "lint:css": "stylelint 'src/**/*.vue'",
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
-    "fake-api": "json-server --port 1607 --watch sample-data.json --routes routes.json",
+	"mock-api-faker": "json-server --port 1607 --watch mock-data-faker.js --routes routes.json",
+	"mock-api-actual": "json-server --port 1607 --watch mock-data-actual.json --routes routes.json",
     "serve-static": "serve -s dist",
     "sync-pom-version": "sync-pom-version"
   },
@@ -35,6 +36,7 @@
     "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "faker": "^4.1.0",
     "json-server": "^0.15.1",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
