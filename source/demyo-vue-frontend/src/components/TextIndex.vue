@@ -52,7 +52,7 @@ export default {
 	data() {
 		return {
 			// TODO: load this from the config
-			itemsPerPage: 1,
+			itemsPerPage: 30,
 			currentPage: 1
 		}
 	},
