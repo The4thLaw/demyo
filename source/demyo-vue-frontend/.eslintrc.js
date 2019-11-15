@@ -66,8 +66,8 @@ module.exports = {
 		// Vue
 		'vue/html-indent': ['error', 'tab'],
 		'vue/max-attributes-per-line': ['error', {
-			'singleline': 3,
-			'multiline': 3
+			'singleline': 4,
+			'multiline': 4
 		}]
 	}
 }
