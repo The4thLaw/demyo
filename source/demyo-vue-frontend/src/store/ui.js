@@ -2,12 +2,17 @@ export default {
 	namespaced: true,
 
 	state: {
-		suppressSearch: false
+		suppressSearch: false,
+		globalOverlay: false
 	},
 
 	mutations: {
 		toggleSearch(state, enabled) {
 			state.suppressSearch = !enabled
+		},
+
+		toggleGlobalOverlay(state, enabled) {
+			state.globalOverlay = enabled
 		}
 	},
 
@@ -18,6 +23,14 @@ export default {
 
 		disableSearch({ commit }) {
 			commit('toggleSearch', false)
+		},
+
+		enableGlobalOverlay({ commit }) {
+			commit('toggleGlobalOverlay', true)
+		},
+
+		disableGlobalOverlay({ commit }) {
+			commit('toggleGlobalOverlay', false)
 		}
 	}
 }

@@ -78,8 +78,8 @@
 
 		<v-content>
 			<v-container fluid>
-				<v-overlay absolute z-index="4" value="true" class="c-App__overlay">
-					<v-progress-circular indeterminate="true" color="primary" size="96" width="8" />
+				<v-overlay absolute z-index="4" :value="globalOverlay" class="c-App__overlay">
+					<v-progress-circular :indeterminate="true" color="primary" size="96" width="8" />
 					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
 				</v-overlay>
 				<router-view />
@@ -174,7 +174,8 @@ export default {
 
 	computed: {
 		...mapState({
-			suppressSearch: state => state.ui.suppressSearch
+			suppressSearch: state => state.ui.suppressSearch,
+			globalOverlay: state => state.ui.globalOverlay
 		})
 	}
 }
