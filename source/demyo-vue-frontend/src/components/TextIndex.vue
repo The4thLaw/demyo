@@ -86,6 +86,11 @@ export default {
 	a {
 		color: inherit;
 		text-decoration: none;
+
+		&:hover {
+			color: var(--v-anchor-base);
+			text-decoration: underline;
+		}
 	}
 }
 
