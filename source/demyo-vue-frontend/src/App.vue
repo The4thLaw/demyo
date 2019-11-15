@@ -68,7 +68,6 @@
 			</v-list>
 		</v-navigation-drawer>
 		<v-app-bar color="primary" dark app>
-
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
@@ -79,6 +78,10 @@
 
 		<v-content>
 			<v-container fluid>
+				<v-overlay absolute z-index="4" value="true" class="c-App__overlay">
+					<v-progress-circular indeterminate="true" color="primary" size="96" width="8" />
+					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
+				</v-overlay>
 				<router-view />
 			</v-container>
 			<!--<HelloWorld />-->
@@ -181,6 +184,16 @@ export default {
 html[lang], #demyo {
 	font-family: -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	background: #eee;
+}
+
+#demyo .c-App__overlay .v-overlay__content {
+	position: absolute;
+	top: 3em;
+}
+
+.c-App__overlayText {
+	font-size: 1.5rem;
+	padding-left: 1em;
 }
 
 #demyo .v-list-item__title {
