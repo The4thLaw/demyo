@@ -25,16 +25,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	// See https://stackoverflow.com/a/54412744
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-		LOGGER.error("Adding the Hibernate5Module to Jackson...");
+		LOGGER.debug("Adding the Hibernate5Module to Jackson...");
 		for (HttpMessageConverter<?> converter : converters) {
-			LOGGER.error("Converter: {}", converter);
-			LOGGER.error("Types: {}", converter.getSupportedMediaTypes());
 			if (converter instanceof AbstractJackson2HttpMessageConverter) {
 				ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter) converter).getObjectMapper();
 				mapper.registerModule(new Hibernate5Module());
-				LOGGER.error("NON_EMPTY");
 				mapper.setSerializationInclusion(Include.NON_EMPTY);
-				LOGGER.error("... successful");
+				LOGGER.debug("... successful");
 			}
 		}
 	}
