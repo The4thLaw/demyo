@@ -8,6 +8,9 @@
 				</router-link>
 			</template>
 		</TextIndex>
+		<v-btn fab to="/authors/add" color="accent" fixed bottom right>
+			<v-icon>mdi-plus</v-icon>
+		</v-btn>
 	</div>
 </template>
 
