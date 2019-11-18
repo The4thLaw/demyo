@@ -51,6 +51,8 @@
 				It can be very useful in constrained environments like a Raspberry Pi, when the Album edit page
 				fetches large amounts of mostly static data -->
 				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ModelLists"/>
+				<!-- Same reationale, but for reference data (e.g. translations) -->
+				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ReferenceData"/>
 			</set>
 		</property>
 	</bean>

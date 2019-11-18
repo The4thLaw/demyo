@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,13 @@ public class TranslationService implements ITranslationService {
 	@Autowired
 	private MessageSource messageSource;
 
-	// TODO: use a different cache
-	// TODO: cache with the locale name
-	// @Cacheable(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Cacheable(cacheNames = "ReferenceData")
 	@Override
 	public Map<String, String> getAllTranslations(String locale) {
 		if (!(messageSource instanceof BrowsableResourceBundleMessageSource)) {
 			throw new RuntimeException("Unexpected MessageSource class: " + messageSource.getClass());
 		}
+		LOGGER.debug("Detecting translations for all messages of locale {}", locale);
 		return ((BrowsableResourceBundleMessageSource) messageSource)//
 				.getAllMessages(Locale.forLanguageTag(locale));
 	}

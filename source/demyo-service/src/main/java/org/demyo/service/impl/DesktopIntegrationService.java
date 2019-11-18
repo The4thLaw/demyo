@@ -19,13 +19,15 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.demyo.common.desktop.DesktopCallbacks;
-import org.demyo.common.desktop.DesktopUtils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import org.demyo.common.desktop.DesktopCallbacks;
+import org.demyo.common.desktop.DesktopUtils;
+import org.demyo.service.ITranslationService;
 
 /**
  * A service with no public interface allowing integration with the user's desktop.
@@ -38,7 +40,7 @@ public class DesktopIntegrationService {
 	private DesktopCallbacks desktop;
 
 	@Autowired
-	private TranslationService translationService;
+	private ITranslationService translationService;
 
 	/**
 	 * Initializes the desktop integration.
