@@ -1,9 +1,12 @@
 <template>
 	<div
+		ref="keyTarget"
 		v-touch="{
 			left: nextPage,
 			right: previousPage
 		}"
+		@keyup.arrow-left.exact="previousPage()"
+		@keyup.arrow-right.exact="nextPage()"
 	>
 		<div v-if="!splitByFirstLetter">
 			<div v-for="item in items" :key="item.id">
@@ -74,6 +77,14 @@ export default {
 		pageCount() {
 			return Math.ceil(this.items.length / this.itemsPerPage);
 		}
+	},
+
+	mounted() {
+		// TODO: extract this to a helper method
+		let elem = this.$refs.keyTarget
+		// Adding the negative tabindex makes the element focusable
+		elem.setAttribute('tabindex', '-1')
+		elem.focus()
 	},
 
 	methods: {
