@@ -21,6 +21,8 @@ import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -93,6 +95,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the {@link Tag} set.
 	 */
+	@JsonIgnore
 	public SortedSet<Tag> getAlbumTags() {
 		SortedSet<Tag> albumTags = new TreeSet<>(new IdentifyingNameComparator());
 
@@ -108,6 +111,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the {@link Author} set.
 	 */
+	@JsonIgnore
 	public SortedSet<Author> getAlbumWriters() {
 		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
 
@@ -123,6 +127,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the {@link Author} set.
 	 */
+	@JsonIgnore
 	public SortedSet<Author> getAlbumArtists() {
 		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
 
@@ -138,6 +143,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the {@link Author} set.
 	 */
+	@JsonIgnore
 	public SortedSet<Author> getAlbumColorists() {
 		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
 
@@ -153,6 +159,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the {@link Author} set.
 	 */
+	@JsonIgnore
 	public SortedSet<Author> getAlbumInkers() {
 		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
 
@@ -168,6 +175,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the {@link Author} set.
 	 */
+	@JsonIgnore
 	public SortedSet<Author> getAlbumTranslators() {
 		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
 
@@ -183,6 +191,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the album count (excl. wishlist)
 	 */
+	@JsonIgnore
 	public int getOwnedAlbumCount() {
 		int count = 0;
 		for (Album a : albums) {
@@ -198,6 +207,7 @@ public class Series extends AbstractModel {
 	 * 
 	 * @return the album count (incl. wishlist)
 	 */
+	@JsonIgnore
 	public int getTotalAlbumCount() {
 		return albums.size();
 	}

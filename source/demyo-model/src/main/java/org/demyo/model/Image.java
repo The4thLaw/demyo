@@ -12,13 +12,16 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SortComparator;
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.utils.io.DIOUtils;
-import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents an image.
@@ -100,8 +103,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the URL to access the image.
 	 * 
-	 * @param url
-	 *            the new URL to access the image
+	 * @param url the new URL to access the image
 	 */
 	public void setUrl(String url) {
 		this.url = url;
@@ -119,8 +121,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the description of the image.
 	 * 
-	 * @param description
-	 *            the new description of the image
+	 * @param description the new description of the image
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -138,8 +139,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the {@link Album}s which use this Image as cover.
 	 *
-	 * @param albumCovers
-	 *            the new {@link Album}s which use this Image as cover
+	 * @param albumCovers the new {@link Album}s which use this Image as cover
 	 */
 	public void setAlbumCovers(SortedSet<Album> albumCovers) {
 		this.albumCovers = albumCovers;
@@ -157,8 +157,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the {@link Album}s which use this Image as other image.
 	 *
-	 * @param albumOtherImages
-	 *            the new {@link Album}s which use this Image as other image
+	 * @param albumOtherImages the new {@link Album}s which use this Image as other image
 	 */
 	public void setAlbumOtherImages(SortedSet<Album> albumOtherImages) {
 		this.albumOtherImages = albumOtherImages;
@@ -169,6 +168,7 @@ public class Image extends AbstractModel {
 	 *
 	 * @return The full set of {@link Album}s.
 	 */
+	@JsonIgnore
 	public SortedSet<Album> getAllAlbums() {
 		SortedSet<Album> all = new TreeSet<>(new AlbumAndSeriesComparator());
 		all.addAll(getAlbumCovers());
@@ -188,8 +188,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the {@link Author}s who use this Image.
 	 *
-	 * @param authors
-	 *            the new {@link Author}s who use this Image
+	 * @param authors the new {@link Author}s who use this Image
 	 */
 	public void setAuthors(SortedSet<Author> authors) {
 		this.authors = authors;
@@ -207,8 +206,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the {@link Collection}s which use this Image.
 	 *
-	 * @param collections
-	 *            the new {@link Collection}s which use this Image
+	 * @param collections the new {@link Collection}s which use this Image
 	 */
 	public void setCollections(SortedSet<Collection> collections) {
 		this.collections = collections;
@@ -226,8 +224,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the {@link Derivative}s which use this Image.
 	 *
-	 * @param derivatives
-	 *            the new {@link Derivative}s which use this Image
+	 * @param derivatives the new {@link Derivative}s which use this Image
 	 */
 	public void setDerivatives(SortedSet<Derivative> derivatives) {
 		this.derivatives = derivatives;
@@ -245,8 +242,7 @@ public class Image extends AbstractModel {
 	/**
 	 * Sets the {@link Publisher}s which use this Image.
 	 *
-	 * @param publishers
-	 *            the new {@link Publisher}s which use this Image
+	 * @param publishers the new {@link Publisher}s which use this Image
 	 */
 	public void setPublishers(SortedSet<Publisher> publishers) {
 		this.publishers = publishers;

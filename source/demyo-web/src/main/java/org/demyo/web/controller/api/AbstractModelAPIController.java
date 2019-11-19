@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,6 +16,7 @@ import org.demyo.model.IModel;
 import org.demyo.model.ModelView;
 import org.demyo.service.IModelService;
 
+@ResponseBody
 public abstract class AbstractModelAPIController<M extends IModel> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelAPIController.class);
 
@@ -35,7 +38,6 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 * @return The list.
 	 */
 	@GetMapping({ "/", "/index" })
-	@ResponseBody
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<M> value = getService().findAll();
 		MappingJacksonValue jackson = new MappingJacksonValue(value);
@@ -45,6 +47,11 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 			jackson.setSerializationView(viewClass.get());
 		}
 		return jackson;
+	}
+
+	@GetMapping("/{modelId}")
+	public M view(@PathVariable long modelId, Model model) {
+		return getService().getByIdForView(modelId);
 	}
 
 	/**
