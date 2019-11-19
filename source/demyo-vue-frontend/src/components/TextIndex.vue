@@ -1,5 +1,10 @@
 <template>
-	<div>
+	<div
+		v-touch="{
+			left: nextPage,
+			right: previousPage
+		}"
+	>
 		<div v-if="!splitByFirstLetter">
 			<div v-for="item in items" :key="item.id">
 				<slot :item="item" />
@@ -68,6 +73,20 @@ export default {
 
 		pageCount() {
 			return Math.ceil(this.items.length / this.itemsPerPage);
+		}
+	},
+
+	methods: {
+		previousPage() {
+			if (this.currentPage > 1) {
+				this.currentPage--
+			}
+		},
+
+		nextPage() {
+			if (this.currentPage < this.pageCount) {
+				this.currentPage++
+			}
 		}
 	}
 }

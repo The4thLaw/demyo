@@ -1,8 +1,15 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
+import { Touch } from 'vuetify/lib/directives'
 import colors from 'vuetify/lib/util/colors'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+	directives: {
+		Touch
+	}
+})
+
+console.log(Touch)
 
 export default new Vuetify({
 	icons: {
