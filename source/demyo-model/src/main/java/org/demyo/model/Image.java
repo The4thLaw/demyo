@@ -12,10 +12,9 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.AuthorComparator;
@@ -168,11 +167,15 @@ public class Image extends AbstractModel {
 	 *
 	 * @return The full set of {@link Album}s.
 	 */
-	@JsonIgnore
+	// TODO: @JsonIgnore might be more relevant here... to be determined later
 	public SortedSet<Album> getAllAlbums() {
 		SortedSet<Album> all = new TreeSet<>(new AlbumAndSeriesComparator());
-		all.addAll(getAlbumCovers());
-		all.addAll(getAlbumOtherImages());
+		if (Hibernate.isInitialized(albumCovers)) {
+			all.addAll(getAlbumCovers());
+		}
+		if (Hibernate.isInitialized(albumOtherImages)) {
+			all.addAll(getAlbumOtherImages());
+		}
 		return all;
 	}
 
