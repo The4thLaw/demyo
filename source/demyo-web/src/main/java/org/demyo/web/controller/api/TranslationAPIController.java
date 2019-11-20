@@ -25,7 +25,7 @@ public class TranslationAPIController {
 	 * @param lang The language to process.
 	 * @return The translated labels.
 	 */
-	@GetMapping("/{lang}/")
+	@GetMapping({ "/{lang}", "/{lang}/" })
 	public Map<String, String> getTranslations(@PathVariable("lang") String lang) {
 		return service.getAllTranslations(lang);
 	}
