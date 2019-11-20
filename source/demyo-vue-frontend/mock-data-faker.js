@@ -42,6 +42,9 @@ for (let i = 0; i < 250; i++) {
 		author.biography = paragraphs(2)
 	}
 	if (luckRatio(0.5)) {
+		author.website = faker.internet.url()
+	}
+	if (luckRatio(0.5)) {
 		// TODO: get a generated image instead
 		author.portrait = {
 			id: -1,
