@@ -9,8 +9,6 @@ Vue.use(Vuetify, {
 	}
 })
 
-console.log(Touch)
-
 export default new Vuetify({
 	icons: {
 		iconfont: 'mdi'
