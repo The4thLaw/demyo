@@ -1,27 +1,28 @@
 <template>
 	<v-container>
-		<v-card class="pa-6">
+		<SectionCard :loading="mainLoading">
 			<h1 class="display-1">{{ author.identifyingName }}</h1>
-			<!-- TODO: extract to a FieldValue component with a title prop and a slot for the content. Include the v-if by default -->
 			<FieldValue :label="$t('field.Author.website')" :value="author.website">
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
 			<FieldValue :label="$t('field.Author.biography')" :value="author.biography">
 				<div v-html="author.biography" />
 			</FieldValue>
-		</v-card>
+		</SectionCard>
 	</v-container>
 </template>
 
 <script>
 import FieldValue from '@/components/FieldValue'
+import SectionCard from '@/components/SectionCard'
 import authorService from '@/services/author-service'
 
 export default {
 	name: 'AuthorView',
 
 	components: {
-		FieldValue
+		FieldValue,
+		SectionCard
 	},
 
 	// TODO: title.author.view ?
@@ -33,6 +34,7 @@ export default {
 
 	data() {
 		return {
+			mainLoading: true,
 			author: {}
 		}
 	},
@@ -47,8 +49,10 @@ export default {
 
 	methods: {
 		async fetchData() {
+			this.mainLoading = true
 			const id = parseInt(this.$route.params.id, 10)
 			this.author = await authorService.findById(id)
+			this.mainLoading = false
 		}
 	}
 }
