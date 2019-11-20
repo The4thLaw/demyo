@@ -1,26 +1,28 @@
 <template>
 	<v-container>
-		<!-- TODO: check if 8 units is the right way to pad, or if 4 should be used -->
-		<v-card class="pa-8">
+		<v-card class="pa-6">
 			<h1 class="display-1">{{ author.identifyingName }}</h1>
 			<!-- TODO: extract to a FieldValue component with a title prop and a slot for the content. Include the v-if by default -->
-			<div>
-				<div><strong>{{ $t('field.Author.website') }}</strong></div>
-				<div>{{ author.website }}</div>
-			</div>
-			<div v-if="author.biography">
-				<div><strong>{{ $t('field.Author.biography') }}</strong></div>
-				<div>{{ author.biography }}</div>
-			</div>
+			<FieldValue :label="$t('field.Author.website')" :value="author.website">
+				<a :href="author.website">{{ author.website }}</a>
+			</FieldValue>
+			<FieldValue :label="$t('field.Author.biography')" :value="author.biography">
+				<div v-html="author.biography" />
+			</FieldValue>
 		</v-card>
 	</v-container>
 </template>
 
 <script>
+import FieldValue from '@/components/FieldValue'
 import authorService from '@/services/author-service'
 
 export default {
 	name: 'AuthorView',
+
+	components: {
+		FieldValue
+	},
 
 	// TODO: title.author.view ?
 	metaInfo() {
