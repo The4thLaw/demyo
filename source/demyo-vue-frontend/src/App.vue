@@ -204,4 +204,12 @@ html[lang], #demyo {
 .v-toolbar .v-input {
 	caret-color: inherit !important;
 }
+
+.v-application a {
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
 </style>

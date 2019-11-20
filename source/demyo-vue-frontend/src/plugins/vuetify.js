@@ -21,7 +21,7 @@ export default new Vuetify({
 		themes: {
 			light: {
 				primary: colors.blue,
-				anchor: colors.pink,
+				anchor: colors.pink.base,
 				accent: colors.pink
 			}
 		}
