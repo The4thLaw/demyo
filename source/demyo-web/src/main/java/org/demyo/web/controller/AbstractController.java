@@ -59,7 +59,7 @@ public abstract class AbstractController {
 	@Autowired
 	private IReaderService readerService;
 
-	private MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
+	protected MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
 
 	/**
 	 * Default constructor.

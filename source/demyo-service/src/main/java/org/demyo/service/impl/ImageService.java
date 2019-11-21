@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -31,6 +32,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,6 +100,74 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			throw new DemyoException(DemyoErrorCode.IMAGE_NOT_FOUND, path);
 		}
 		return image;
+	}
+
+	@Override
+	public Resource getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException {
+		if (!maxWidthOpt.isPresent()) {
+			// TODO: return the base image
+			throw new RuntimeException("Max width isn't optional yet");
+		}
+
+		int maxWidth = maxWidthOpt.get();
+		File directoryBySize = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), maxWidth + "w");
+
+		// Check cache (two possible formats - jpg is more likely so check it first)
+		File jpgThumb = new File(directoryBySize, id + ".jpg");
+		if (jpgThumb.exists()) {
+			return new FileSystemResource(jpgThumb);
+		}
+		File pngThumb = new File(directoryBySize, id + ".png");
+		if (pngThumb.exists()) {
+			return new FileSystemResource(pngThumb);
+		}
+
+		// No cache hit, generate thumbnail
+		File image = getImageFile(getByIdForEdition(id));
+		long time = System.currentTimeMillis();
+		BufferedImage buffImage;
+		try {
+			buffImage = ImageIO.read(image);
+		} catch (IOException e) {
+			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
+		}
+
+		int originalWidth = buffImage.getWidth();
+		if (maxWidth >= originalWidth || (lenient && maxWidth * 1.1 >= originalWidth)) {
+			// Return the original image, we don't have anything larger
+			return new FileSystemResource(image);
+		}
+
+		// Avoid creating the directory if we return the original image
+		if (!directoryBySize.isDirectory()) {
+			directoryBySize.mkdirs();
+			LOGGER.debug("Creating thumbnail directory: {}", directoryBySize);
+		} else {
+			LOGGER.trace("Thumbnail directory exists: {}", directoryBySize);
+		}
+
+		BufferedImage buffThumb = Scalr.resize(buffImage, Method.ULTRA_QUALITY, Mode.FIT_TO_WIDTH, maxWidth, 0,
+				Scalr.OP_ANTIALIAS);
+		LOGGER.debug("Thumbnail for {} generated in {}ms", id, System.currentTimeMillis() - time);
+
+		try {
+			// Write opaque images as JPG, transparent images as PNG
+			if (Transparency.OPAQUE == buffThumb.getTransparency()) {
+				ImageIO.write(buffThumb, "jpg", jpgThumb);
+				return new FileSystemResource(jpgThumb);
+			} else {
+				ImageIO.write(buffThumb, "png", pngThumb);
+				return new FileSystemResource(pngThumb);
+			}
+		} catch (IOException e) {
+			// Ensure we don't store invalid contents
+			jpgThumb.delete();
+			pngThumb.delete();
+			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
+		} finally {
+			buffImage.flush();
+			buffThumb.flush();
+		}
 	}
 
 	@Override

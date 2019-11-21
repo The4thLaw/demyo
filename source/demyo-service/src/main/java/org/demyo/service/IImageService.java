@@ -2,6 +2,9 @@ package org.demyo.service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
+
+import org.springframework.core.io.Resource;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Image;
@@ -26,6 +29,7 @@ public interface IImageService extends IModelService<Image> {
 	 * @return The image file.
 	 * @throws DemyoException In case of security or I/O error.
 	 */
+	@Deprecated
 	File getImageThumbnail(long id) throws DemyoException;
 
 	/**
@@ -71,5 +75,18 @@ public interface IImageService extends IModelService<Image> {
 	 */
 	List<Image> recoverImagesFromFilePond(String baseImageName, boolean alwaysNumber, String... filePondIds)
 			throws DemyoException;
+
+	/**
+	 * Gets an image, resized if necessary.
+	 * 
+	 * @param id The image ID
+	 * @param maxWidthOpt The maximum desired width, if any
+	 * @param lenient When lenient, we allow a 10% difference in sizes, because it won't change a lot in terms of
+	 *            bandwidth and will save disk space and processing power. The returned image could thus be larger than
+	 *            the maximum width
+	 * @return The resized image
+	 * @throws DemyoException In case of security or I/O error.
+	 */
+	Resource getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException;
 
 }
