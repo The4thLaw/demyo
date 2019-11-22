@@ -105,8 +105,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Override
 	public Resource getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException {
 		if (!maxWidthOpt.isPresent()) {
-			// TODO: return the base image
-			throw new RuntimeException("Max width isn't optional yet");
+			Image image = getByIdForEdition(id);
+			return new FileSystemResource(getImageFile(image));
 		}
 
 		int maxWidth = maxWidthOpt.get();

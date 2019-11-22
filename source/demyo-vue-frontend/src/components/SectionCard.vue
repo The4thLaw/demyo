@@ -14,9 +14,8 @@
 							(so that the height is reduced as well)
 						- Be nice on HiDPI and LoDPI screens
 					-->
-					<!-- TODO: use the right URL (with missing width, probably) -->
 					<img
-						v-img="{src: `${baseImageUrl}?w=1200`}"
+						v-img="{src: `${baseImageUrl}`}"
 						:src="`${baseImageUrl}?w=200`"
 						:srcset="`
 							${baseImageUrl}?w=200 200w
