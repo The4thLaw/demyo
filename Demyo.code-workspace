@@ -10,5 +10,7 @@
 			"vue",
 			"html"
 		]
+		"i18n-ally.forceEnabled": true,
+		"i18n-ally.localesPaths": "demyo-vue-frontend/src/locales"
 	}
 }
