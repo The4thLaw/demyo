@@ -45,10 +45,9 @@ for (let i = 0; i < 250; i++) {
 		author.website = faker.internet.url()
 	}
 	if (luckRatio(0.5)) {
-		// TODO: get a generated image instead
 		author.portrait = {
-			id: -1,
-			url: '1200x1600-100pct.png',
+			id: faker.random.number() % 2 + 1,
+			userFileName: 'sample image.jpg',
 			description: author.identifyingName + ' - Portrait',
 			identifyingName: author.identifyingName + ' - Portrait'
 		}

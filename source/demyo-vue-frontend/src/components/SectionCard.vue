@@ -85,4 +85,18 @@ export default {
 		padding-left: 0;
 	}
 }
+
+/**
+ * The following two styles are only useful with mock data, which can be wider than advertised by the
+ * src-set widths. Otherwise, the responsive images work just fine.
+ */
+.c-SectionCard__image img {
+	max-width: 350px;
+}
+
+@media (max-width: 700px) {
+	.c-SectionCard__image img {
+		max-width: 200px;
+	}
+}
 </style>
