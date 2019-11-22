@@ -13,7 +13,7 @@ export default {
 
 	props: {
 		value: {
-			type: Object,
+			type: null /* any */,
 			required: true
 		},
 
