@@ -122,9 +122,8 @@ public class ImagesController extends AbstractModelController<Image> {
 			@RequestParam(value = "lenient", defaultValue = "false") boolean lenient)
 			throws DemyoException, IOException {
 		Resource res = imageService.getImage(imageId, maxWidth, lenient);
-		// TODO: figure out where MediaTypeFactory comes from (Spring 5 ?)
+		// TODO: When migrating to Spring 5, rely on MediaTypeFactory
 		String type = mimeTypes.getContentType(res.getFile());
-
 		return ResponseEntity.ok().cacheControl(CACHE_FOR_IMAGES).contentType(MediaType.valueOf(type))
 				/*.contentType(MediaTypeFactory.getMediaType(res).get())*/.body(res);
 	}
