@@ -2,11 +2,11 @@ package org.demyo.dao;
 
 import java.util.List;
 
-import org.demyo.model.Author;
-
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import org.demyo.model.Author;
 
 /**
  * This class provides methods to manipulate {@link Author}s.

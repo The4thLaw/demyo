@@ -1,18 +1,23 @@
 package org.demyo.service.impl;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Future;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.demyo.dao.IAuthorRepo;
-import org.demyo.dao.IModelRepo;
-import org.demyo.model.Author;
-import org.demyo.service.IAuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.dao.IAlbumRepo;
+import org.demyo.dao.IAuthorRepo;
+import org.demyo.dao.IModelRepo;
+import org.demyo.model.Author;
+import org.demyo.model.beans.AuthorAlbums;
+import org.demyo.model.projections.IAuthorAlbum;
+import org.demyo.service.IAuthorService;
 
 /**
  * Implements the contract defined by {@link IAuthorService}.
@@ -21,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthorService extends AbstractModelService<Author> implements IAuthorService {
 	@Autowired
 	private IAuthorRepo repo;
+	@Autowired
+	private IAlbumRepo albumRepo;
 
 	/**
 	 * Default constructor.
@@ -44,6 +51,23 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	@Transactional(readOnly = true)
 	public Future<List<Author>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public AuthorAlbums getAuthorAlbums(long authorId) {
+		AuthorAlbums ret = new AuthorAlbums();
+
+		List<IAuthorAlbum> works = albumRepo.findAlbumsFromAuthor(authorId);
+		for (IAuthorAlbum w : works) {
+			ret.addWork(w);
+		}
+
+		Set<Long> albumIds = ret.getAllAlbumsIds();
+		// TODO: switch to a method with the right graph
+		ret.setAlbums(albumRepo.findAll(albumIds));
+
+		return ret;
 	}
 
 	@Override
