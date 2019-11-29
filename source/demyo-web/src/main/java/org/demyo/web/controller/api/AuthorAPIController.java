@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.Author;
+import org.demyo.model.ModelView;
 import org.demyo.model.beans.AuthorAlbums;
 import org.demyo.service.IAuthorService;
 
@@ -25,6 +28,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	 * @see IAuthorService#getAuthorAlbums(long)
 	 */
 	@GetMapping("/{modelId}/albums")
+	@JsonView(ModelView.Basic.class)
 	public AuthorAlbums getAuthorAlbums(@PathVariable("modelId") long id) {
 		return service.getAuthorAlbums(id);
 	}

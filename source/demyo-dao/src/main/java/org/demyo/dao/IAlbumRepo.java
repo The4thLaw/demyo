@@ -68,6 +68,16 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	List<Album> quickSearchLike(String query);
 
 	/**
+	 * Finds a set of {@link Album}s by their ID. Also fetches the associated {@link Series}.
+	 * 
+	 * @param albumIds The Album internal IDs
+	 * @return The matching Albums
+	 */
+	@Override
+	@EntityGraph("Album.forIndex")
+	List<Album> findAll(Iterable<Long> albumIds);
+
+	/**
 	 * Finds the albums to which an Author participated, in a structured manner.
 	 * 
 	 * @param id The Author ID

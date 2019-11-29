@@ -30,6 +30,8 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.ComparableComparator;
@@ -46,6 +48,8 @@ import org.demyo.model.util.IdentifyingNameComparator;
 		// All other things being equal, sort by title. It's more intuitive for one shots in Album indexes, for example
 		@DefaultOrder.Order(property = "title") })
 @NamedEntityGraphs({ //
+		@NamedEntityGraph(name = "Album.forIndex", attributeNodes =
+		{ @NamedAttributeNode("series") }), //
 		@NamedEntityGraph(name = "Album.forView", attributeNodes =
 		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 				@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
@@ -78,6 +82,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
+	@JsonView(ModelView.Basic.class)
 	private Series series;
 
 	/** The cycle. */

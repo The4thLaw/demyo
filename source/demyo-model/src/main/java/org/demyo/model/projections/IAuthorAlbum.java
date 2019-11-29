@@ -4,7 +4,6 @@ package org.demyo.model.projections;
  * Structures a set of Album identifiers based on the role of the Author who worked on them.
  */
 public interface IAuthorAlbum {
-	// Warning: the order of fields must correspond to the order of columns in the native query
 	/**
 	 * Gets the Author ID.
 	 * 

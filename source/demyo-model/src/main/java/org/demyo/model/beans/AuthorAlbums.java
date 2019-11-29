@@ -1,12 +1,17 @@
 package org.demyo.model.beans;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.Album;
+import org.demyo.model.ModelView;
 import org.demyo.model.projections.IAuthorAlbum;
+import org.demyo.model.util.AlbumAndSeriesComparator;
 
 /**
  * Represents all {@link Album}s from a given Author, with indexes of which albums the author participated to in which
@@ -18,7 +23,7 @@ public class AuthorAlbums {
 	private final Set<Long> asInker = new HashSet<>();
 	private final Set<Long> asTranslator = new HashSet<>();
 	private final Set<Long> asWriter = new HashSet<>();
-	private Iterable<Album> albums;
+	private final Set<Album> albums = new TreeSet<>(new AlbumAndSeriesComparator());
 
 	private static void add(Set<Long> set, Long id) {
 		if (id != null) {
@@ -48,16 +53,21 @@ public class AuthorAlbums {
 	public Set<Long> getAllAlbumsIds() {
 		Set<Long> ids = new HashSet<>();
 		ids.addAll(asArtist);
+		ids.addAll(asColorist);
+		ids.addAll(asInker);
+		ids.addAll(asTranslator);
+		ids.addAll(asWriter);
 		return ids;
 	}
 
 	/**
-	 * Sets the full {@link Album} entities
+	 * Sets the full {@link Album} entities.
 	 * 
 	 * @param albums The albums
 	 */
-	public void setAlbums(Iterable<Album> albums) {
-		this.albums = albums;
+	public void setAlbums(Collection<Album> albums) {
+		this.albums.clear();
+		this.albums.addAll(albums);
 	}
 
 	/**
@@ -65,6 +75,7 @@ public class AuthorAlbums {
 	 * 
 	 * @return The IDs
 	 */
+	@JsonView(ModelView.Basic.class)
 	public Set<Long> getAsArtist() {
 		return asArtist;
 	}
@@ -74,6 +85,7 @@ public class AuthorAlbums {
 	 * 
 	 * @return The IDs
 	 */
+	@JsonView(ModelView.Basic.class)
 	public Set<Long> getAsColorist() {
 		return asColorist;
 	}
@@ -83,6 +95,7 @@ public class AuthorAlbums {
 	 * 
 	 * @return The IDs
 	 */
+	@JsonView(ModelView.Basic.class)
 	public Set<Long> getAsInker() {
 		return asInker;
 	}
@@ -92,6 +105,7 @@ public class AuthorAlbums {
 	 * 
 	 * @return The IDs
 	 */
+	@JsonView(ModelView.Basic.class)
 	public Set<Long> getAsTranslator() {
 		return asTranslator;
 	}
@@ -101,6 +115,7 @@ public class AuthorAlbums {
 	 * 
 	 * @return The IDs
 	 */
+	@JsonView(ModelView.Basic.class)
 	public Set<Long> getAsWriter() {
 		return asWriter;
 	}
@@ -110,7 +125,8 @@ public class AuthorAlbums {
 	 * 
 	 * @return The {@link Album}s
 	 */
-	public Iterable<Album> getAlbums() {
+	@JsonView(ModelView.Basic.class)
+	public Collection<Album> getAlbums() {
 		return albums;
 	}
 }
