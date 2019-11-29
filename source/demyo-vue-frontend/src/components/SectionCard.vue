@@ -1,5 +1,5 @@
 <template>
-	<v-card :loading="loading ? 'primary' : false">
+	<v-card :loading="loading ? 'primary' : false" class="mb-4">
 		<div class="pa-6">
 			<template v-if="!image">
 				<slot />

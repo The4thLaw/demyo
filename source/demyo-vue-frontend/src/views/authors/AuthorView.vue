@@ -9,10 +9,19 @@
 				<div v-html="author.biography" />
 			</FieldValue>
 		</SectionCard>
+
+		<SectionCard v-if="albumsLoading || albums.length > 0" :loading="albumsLoading">
+			<AlbumTextList :albums="albums">
+				<template v-slot:default="slotProps">
+					My default slot content
+				</template>
+			</AlbumTextList>
+		</SectionCard>
 	</v-container>
 </template>
 
 <script>
+import AlbumTextList from '@/components/AlbumTextList'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
 import authorService from '@/services/author-service'
@@ -21,6 +30,7 @@ export default {
 	name: 'AuthorView',
 
 	components: {
+		AlbumTextList,
 		FieldValue,
 		SectionCard
 	},
@@ -35,7 +45,9 @@ export default {
 	data() {
 		return {
 			mainLoading: true,
-			author: {}
+			albumsLoading: true,
+			author: {},
+			authorAlbums: {}
 		}
 	},
 
@@ -43,6 +55,10 @@ export default {
 		basePortraitUrl() {
 			let encodedName = encodeURI(this.author.portrait.userFileName)
 			return '/images/' + this.author.portrait.id + '/file/' + encodedName
+		},
+
+		albums() {
+			return this.authorAlbums.albums || []
 		}
 	},
 
@@ -58,8 +74,12 @@ export default {
 		async fetchData() {
 			this.mainLoading = true
 			const id = parseInt(this.$route.params.id, 10)
+
 			this.author = await authorService.findById(id)
 			this.mainLoading = false
+
+			this.authorAlbums = await authorService.getAuthorAlbums(id)
+			this.albumsLoading = false
 		}
 	}
 }

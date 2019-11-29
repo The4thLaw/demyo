@@ -9,11 +9,20 @@ export default {
 
 	/**
 	 * Finds an Author by its ID.
-	 * @param {Number} id The technical identifier of the Author
+	 * @param {Number} id The Author ID
 	 * @return The Author
 	 */
 	async findById(id) {
 		let response = await axios.get(`${apiRoot}authors/${id}`)
+		return response.data
+	},
+
+	/**
+	 * Finds the Albums on which an Author has worked.
+	 * @param {Number} id The Author ID
+	 */
+	async getAuthorAlbums(id) {
+		let response = await axios.get(`${apiRoot}authors/${id}/albums`)
 		return response.data
 	}
 }

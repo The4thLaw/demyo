@@ -22,6 +22,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
@@ -49,6 +50,7 @@ public class Series extends AbstractModel {
 	@Column(name = "name")
 	@NotBlank
 	@StartsWithField
+	@JsonView(ModelView.Basic.class)
 	private String name;
 	/** The summary. */
 	@Column(name = "summary")

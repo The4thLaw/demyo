@@ -100,6 +100,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	/** The title. */
 	@Column(name = "title")
 	@NotBlank
+	@JsonView(ModelView.Basic.class)
 	private String title;
 
 	/** The owning {@link Publisher}. */
