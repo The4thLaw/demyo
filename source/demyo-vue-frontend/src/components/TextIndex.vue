@@ -32,7 +32,13 @@
 				</v-card>
 			</div>
 		</div>
-		<v-pagination v-if="pageCount > 1" v-model="currentPage" :length="pageCount" total-visible="10" class="my-2" />
+		<v-pagination
+			v-if="pageCount > 1"
+			v-model="currentPage"
+			:length="pageCount"
+			total-visible="10"
+			class="my-2"
+		/>
 	</div>
 </template>
 
@@ -67,7 +73,7 @@ export default {
 
 	computed: {
 		paginatedItems() {
-			return this.items.slice((this.currentPage-1)*this.itemsPerPage, this.currentPage*this.itemsPerPage)
+			return this.items.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
 		},
 
 		groupedItems() {
@@ -75,7 +81,7 @@ export default {
 		},
 
 		pageCount() {
-			return Math.ceil(this.items.length / this.itemsPerPage);
+			return Math.ceil(this.items.length / this.itemsPerPage)
 		}
 	},
 
