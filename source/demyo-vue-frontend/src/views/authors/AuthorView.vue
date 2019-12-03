@@ -11,9 +11,13 @@
 		</SectionCard>
 
 		<SectionCard v-if="albumsLoading || albums.length > 0" :loading="albumsLoading">
+			<h1 v-if="!albumsLoading" class="display-1">
+				{{ $t('page.Author.works') }}
+			</h1>
 			<AlbumTextList :albums="albums">
 				<template v-slot:default="slotProps">
 					My default slot content
+					{{ slotProps.album.id }}
 				</template>
 			</AlbumTextList>
 		</SectionCard>
