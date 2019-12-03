@@ -47,7 +47,7 @@ public class AuthorAlbums {
 	/**
 	 * Gets the internal IDs of all considered {@link Album}s, regardless of the role.
 	 * 
-	 * @return
+	 * @return The IDs
 	 */
 	@JsonIgnore
 	public Set<Long> getAllAlbumsIds() {
@@ -121,7 +121,7 @@ public class AuthorAlbums {
 	}
 
 	/**
-	 * Gets the full {@link Album} entities
+	 * Gets the full {@link Album} entities. The list is sorted.
 	 * 
 	 * @return The {@link Album}s
 	 */
