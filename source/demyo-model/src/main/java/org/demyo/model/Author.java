@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
-import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,12 +34,13 @@ import org.demyo.model.util.StartsWithField;
 		@NamedEntityGraph(name = "Author.forEdition", attributeNodes =
 		{ @NamedAttributeNode("portrait") }),
 		@NamedEntityGraph(name = "Author.forView", attributeNodes =
-		{ @NamedAttributeNode("portrait"), @NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
-				@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
-				@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album"),
-				@NamedAttributeNode(value = "albumsAsInker", subgraph = "Author.Album"),
-				@NamedAttributeNode(value = "albumsAsTranslator", subgraph = "Author.Album") }, subgraphs =
-				{ @NamedSubgraph(name = "Author.Album", attributeNodes = { @NamedAttributeNode("series") }) }) })
+		{ @NamedAttributeNode("portrait"),
+		/*@NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
+			@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
+			@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album"),
+			@NamedAttributeNode(value = "albumsAsInker", subgraph = "Author.Album"),
+			@NamedAttributeNode(value = "albumsAsTranslator", subgraph = "Author.Album") }, subgraphs =
+				{ @NamedSubgraph(name = "Author.Album", attributeNodes = { @NamedAttributeNode("series") })*/ }) })
 public class Author extends AbstractModel {
 	/** The last name. */
 	@Column(name = "name")
