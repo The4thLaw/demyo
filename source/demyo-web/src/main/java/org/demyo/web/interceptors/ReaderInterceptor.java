@@ -40,7 +40,10 @@ public class ReaderInterceptor implements HandlerInterceptor {
 
 		boolean hasReader = false;
 
-		// Special behaviour to avoid making a controller
+		// Special behaviours to avoid making a loop, and to avoid protecting the API
+		if (path.matches("^/api/.*$")) {
+			return true;
+		}
 		if (path.matches("^/readers/(\\d+)/select$")) {
 			Long readerId = parseReaderId(path.replaceAll("^/readers/(\\d+)/select$", "$1"));
 			LOGGER.debug("Selecting reader {}", readerId);
