@@ -33,10 +33,6 @@
 			<artifactId>demyo-service</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.demyo</groupId>
-			<artifactId>demyo-test</artifactId>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
