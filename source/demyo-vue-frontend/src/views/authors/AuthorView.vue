@@ -16,8 +16,7 @@
 			</h1>
 			<AlbumTextList :albums="albums">
 				<template v-slot:default="slotProps">
-					My default slot content
-					{{ slotProps.album.id }}
+					({{ describeAuthor(slotProps.album.id) }})
 				</template>
 			</AlbumTextList>
 		</SectionCard>
@@ -63,6 +62,16 @@ export default {
 
 		albums() {
 			return this.authorAlbums.albums || []
+		},
+
+		works() {
+			return {
+				asArtist: new Set(this.authorAlbums.asArtist),
+				asWriter: new Set(this.authorAlbums.asWriter),
+				asColorist: new Set(this.authorAlbums.asColorist),
+				asInker: new Set(this.authorAlbums.asInker),
+				asTranslator: new Set(this.authorAlbums.asTranslator),
+			}
 		}
 	},
 
@@ -84,6 +93,26 @@ export default {
 
 			this.authorAlbums = await authorService.getAuthorAlbums(id)
 			this.albumsLoading = false
+		},
+
+		describeAuthor(albumId) {
+			let qualifiers = []
+			if (this.works.asArtist.has(albumId)) {
+				qualifiers.push(this.$t('page.Author.works.role.artist'))
+			}
+			if (this.works.asWriter.has(albumId)) {
+				qualifiers.push(this.$t('page.Author.works.role.writer'))
+			}
+			if (this.works.asColorist.has(albumId)) {
+				qualifiers.push(this.$t('page.Author.works.role.colorist'))
+			}
+			if (this.works.asInker.has(albumId)) {
+				qualifiers.push(this.$t('page.Author.works.role.inker'))
+			}
+			if (this.works.asTranslator.has(albumId)) {
+				qualifiers.push(this.$t('page.Author.works.role.translator'))
+			}
+			return qualifiers.join(', ')
 		}
 	}
 }

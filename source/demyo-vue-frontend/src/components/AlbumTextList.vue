@@ -1,9 +1,13 @@
 <template>
 	<div>
-		Hello, albums -{{ albumsBySeries.length }}
 		<v-list>
 			<template v-for="(value, key) in paginatedAlbumsBySeries">
-				<v-list-group v-if="value.isSeries" :key="key" sub-group :value="value.albums.length < albumsPerSeriesThreshold">
+				<v-list-group
+					v-if="value.isSeries"
+					:key="key"
+					:value="value.albums.length < albumsPerSeriesThreshold"
+					sub-group
+				>
 					<template v-slot:activator>
 						<v-list-item-content>
 							<v-list-item-title v-text="value.name" />
@@ -20,7 +24,7 @@
 					</v-list-item>
 				</v-list-group>
 
-				<v-list-item v-if="!value.isSeries" to="/" :key="key">
+				<v-list-item v-if="!value.isSeries" :key="key" :to="`/albums/view/${value.id}`">
 					<v-list-item-content>
 						<v-list-item-title>{{ value.title }}</v-list-item-title>
 						<v-list-item-subtitle>
