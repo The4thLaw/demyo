@@ -1,10 +1,21 @@
 import axios from 'axios'
 import { apiRoot } from '@/myenv'
 
+async function axiosGet(url, defaultValue) {
+	let response
+	try {
+		response = await axios.get(url)
+	} catch (e) {
+		console.warn(`Failed to get the resource at ${url}`, e)
+		return defaultValue
+	}
+	return response.data
+}
+
 export default {
 	async findForIndex() {
-		let response = await axios.get(`${apiRoot}authors/`)
-		return response.data
+		let data = await axiosGet(`${apiRoot}authors/`, [])
+		return data
 	},
 
 	/**
@@ -13,8 +24,8 @@ export default {
 	 * @return The Author
 	 */
 	async findById(id) {
-		let response = await axios.get(`${apiRoot}authors/${id}`)
-		return response.data
+		let data = await axiosGet(`${apiRoot}authors/${id}`, {})
+		return data
 	},
 
 	/**
@@ -22,7 +33,7 @@ export default {
 	 * @param {Number} id The Author ID
 	 */
 	async getAuthorAlbums(id) {
-		let response = await axios.get(`${apiRoot}authors/${id}/albums`)
-		return response.data
+		let data = await axiosGet(`${apiRoot}authors/${id}/albums`, {})
+		return data
 	}
 }
