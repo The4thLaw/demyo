@@ -1,6 +1,9 @@
 <template>
 	<v-container>
-		<AppTasks />
+		<AppTasks>
+			<!-- TODO: edit, delete with confirmation -->
+			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/edit/${author.id}`" icon="mdi-heart" />
+		</AppTasks>
 
 		<SectionCard :loading="mainLoading" :image="author.portrait">
 			<h1 class="display-1">{{ author.identifyingName }}</h1>
@@ -27,6 +30,7 @@
 
 <script>
 import AlbumTextList from '@/components/AlbumTextList'
+import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
@@ -37,6 +41,7 @@ export default {
 
 	components: {
 		AlbumTextList,
+		AppTask,
 		AppTasks,
 		FieldValue,
 		SectionCard

@@ -6,10 +6,8 @@
 					<v-icon>mdi-dots-vertical</v-icon>
 				</v-btn>
 			</template>
-			<v-list>
-				<v-list-item @click="">
-					<v-list-item-title>Test</v-list-item-title>
-				</v-list-item>
+			<v-list class="c-AppTasks__list">
+				<slot />
 			</v-list>
 		</v-menu>
 	</portal>
@@ -20,3 +18,12 @@ export default {
 	name: 'AppTasks'
 }
 </script>
+
+<style lang="less">
+.c-AppTasks__list {
+	a,
+	a:hover {
+		text-decoration: none;
+	}
+}
+</style>
