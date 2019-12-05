@@ -1,7 +1,7 @@
 <template>
 	<v-app id="demyo">
 		<v-navigation-drawer v-model="mainMenu" app temporary>
-			<v-list>
+			<v-list class="c-App__menuList">
 				<v-list-group>
 					<template v-slot:activator>
 						<v-list-item-icon>
@@ -211,6 +211,13 @@ html[lang], #demyo {
 
 	&:hover {
 		text-decoration: underline;
+	}
+}
+
+.c-App__menuList {
+	a,
+	a:hover {
+		text-decoration: none;
 	}
 }
 </style>
