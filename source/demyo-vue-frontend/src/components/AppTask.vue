@@ -1,5 +1,5 @@
 <template>
-	<v-list-item :to="to">
+	<v-list-item :to="to" @click.native="emitClick">
 		<v-list-item-icon>
 			<v-icon v-text="icon" />
 		</v-list-item-icon>
@@ -28,6 +28,12 @@ export default {
 			type: String,
 			required: false,
 			default: undefined
+		}
+	},
+
+	methods: {
+		emitClick(e) {
+			this.$emit('click', e)
 		}
 	}
 }

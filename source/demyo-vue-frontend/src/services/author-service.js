@@ -35,5 +35,16 @@ export default {
 	async getAuthorAlbums(id) {
 		let data = await axiosGet(`${apiRoot}authors/${id}/albums`, {})
 		return data
+	},
+
+	/**
+	 * Deletes an Author.
+	 * @param {Number} id The Author ID
+	 * @return {Promise} A Promise that resolves when the author is deleted successfully.
+	 */
+	deleteAuthor(id) {
+		return axios
+			.delete(`${apiRoot}authors/${id}`)
+			.catch(e => console.log(`Failed to delete Author ${id}`, e))
 	}
 }

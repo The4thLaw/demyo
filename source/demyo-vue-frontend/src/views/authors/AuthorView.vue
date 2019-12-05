@@ -1,8 +1,33 @@
 <template>
 	<v-container>
 		<AppTasks>
-			<!-- TODO: edit, delete with confirmation -->
-			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/edit/${author.id}`" icon="mdi-heart" />
+			<!--
+				Consider making a generic icon overlay for those plus/minus icons.
+			Interesting icons are: delete, account-minus, minus, plus, pencil, account-edit
+				.v-icon { position: relative }
+				.mdi-heart::after {
+
+    content: 'a';
+    content: "\F2D1";
+    font: normal normal normal 12px/1 "Material Design Icons";
+        font-size: 12px;
+        line-height: 1;
+    font-size: 24px;
+    line-height: 1;
+    font-size: inherit;
+    text-rendering: auto;
+    line-height: inherit;
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    border: 1px solid
+
+    red;
+
+}
+			-->
+			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/edit/${author.id}`" icon="mdi-pencil" />
+			<AppTask :label="$t('quickTasks.delete.author')" icon="mdi-account-minus" @click="deleteAuthor" />
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" :image="author.portrait">
@@ -34,6 +59,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
+import { confirmAsyncAction } from '@/helpers/app-tasks-helpers'
 import authorService from '@/services/author-service'
 
 export default {
@@ -122,6 +148,15 @@ export default {
 				qualifiers.push(this.$t('page.Author.works.role.translator'))
 			}
 			return qualifiers.join(', ')
+		},
+
+		deleteAuthor() {
+			confirmAsyncAction(() => authorService.deleteAuthor(this.author.id),
+				this.$t('quickTasks.delete.author.confirm'))
+				.then(() => {
+					// TODO: handle toast confirmation
+					this.$router.push({ path: '/authors/' })
+				})
 		}
 	}
 }
