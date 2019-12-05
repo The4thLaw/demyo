@@ -1,5 +1,7 @@
 <template>
 	<v-container>
+		<AppTasks />
+
 		<SectionCard :loading="mainLoading" :image="author.portrait">
 			<h1 class="display-1">{{ author.identifyingName }}</h1>
 			<FieldValue :label="$t('field.Author.website')" :value="author.website">
@@ -25,6 +27,7 @@
 
 <script>
 import AlbumTextList from '@/components/AlbumTextList'
+import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
 import authorService from '@/services/author-service'
@@ -34,6 +37,7 @@ export default {
 
 	components: {
 		AlbumTextList,
+		AppTasks,
 		FieldValue,
 		SectionCard
 	},
