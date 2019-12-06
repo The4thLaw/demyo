@@ -84,10 +84,12 @@
 					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
 				</v-overlay>
 				<router-view />
+				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
+			<!-- TODO: Remove the component -->
 			<!--<HelloWorld />-->
 			<!-- TODO: flush this to the end of the page -->
-			<v-footer color="secondary" inset dark>
+			<v-footer color="secondary" inset dark @click.native="$store.dispatch('ui/showSnackbar', 'Hello World')">
 				<v-col>
 					TODO: codename
 				</v-col>
@@ -98,6 +100,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import AppSnackbar from '@/components/AppSnackbar'
 import HelloWorld from './components/HelloWorld'
 import LetterIcon from './components/LetterIcon'
 
@@ -105,6 +108,7 @@ export default {
 	name: 'App',
 
 	components: {
+		AppSnackbar,
 		HelloWorld,
 		LetterIcon
 	},
@@ -176,8 +180,16 @@ export default {
 	computed: {
 		...mapState({
 			suppressSearch: state => state.ui.suppressSearch,
-			globalOverlay: state => state.ui.globalOverlay
+			globalOverlay: state => state.ui.globalOverlay,
+			displaySnackbar: state => state.ui.displaySnackbar,
+			snackbarMessage: state => state.ui.snackbarMessages[0]
 		})
+	},
+
+	methods: {
+		closeSnackbar() {
+			this.$store.dispatch('ui/closeSnackbar')
+		}
 	}
 }
 </script>

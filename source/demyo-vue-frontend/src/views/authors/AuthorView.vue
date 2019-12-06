@@ -154,7 +154,7 @@ export default {
 			confirmAsyncAction(() => authorService.deleteAuthor(this.author.id),
 				this.$t('quickTasks.delete.author.confirm'))
 				.then(() => {
-					// TODO: handle toast confirmation
+					this.$store.dispatch('ui/showSnackbar', this.$t('quickTasks.delete.author.confirm.done'))
 					this.$router.push({ path: '/authors/' })
 				})
 		}
