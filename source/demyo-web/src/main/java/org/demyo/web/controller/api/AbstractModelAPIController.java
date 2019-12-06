@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +53,18 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	@GetMapping("/{modelId}")
 	public M view(@PathVariable long modelId, Model model) {
 		return getService().getByIdForView(modelId);
+	}
+
+	/**
+	 * Deletes an entity.
+	 * 
+	 * @param modelId The ID of the entity to delete.
+	 * @return Always <code>true</code>.
+	 */
+	@DeleteMapping("/{modelId}")
+	public boolean delete(@PathVariable long modelId) {
+		getService().delete(modelId);
+		return true;
 	}
 
 	/**
