@@ -5,6 +5,7 @@
 			left: nextPage,
 			right: previousPage
 		}"
+		class="c-TextIndex"
 		@keyup.arrow-left.exact="previousPage()"
 		@keyup.arrow-right.exact="nextPage()"
 	>
@@ -110,6 +111,11 @@ export default {
 </script>
 
 <style lang="less">
+.c-TextIndex {
+	// No outline on this artifically focused element
+	outline: 0;
+}
+
 #demyo .c-TextIndex__firstLetter {
 	font-family: serif !important;
 }
