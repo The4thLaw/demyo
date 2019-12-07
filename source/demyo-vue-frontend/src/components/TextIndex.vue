@@ -45,6 +45,7 @@
 
 <script>
 import { groupBy, deburr } from 'lodash'
+import { focusElement } from '@/helpers/dom-helpers.js'
 
 export default {
 	name: 'TextIndex',
@@ -87,11 +88,7 @@ export default {
 	},
 
 	mounted() {
-		// TODO: extract this to a helper method
-		let elem = this.$refs.keyTarget
-		// Adding the negative tabindex makes the element focusable
-		elem.setAttribute('tabindex', '-1')
-		elem.focus()
+		focusElement(this.$refs.keyTarget)
 	},
 
 	methods: {

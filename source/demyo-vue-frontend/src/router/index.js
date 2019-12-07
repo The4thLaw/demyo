@@ -44,7 +44,6 @@ const router = new VueRouter({
 
 // Reset the UI on page transitions:
 // - Enable the search bar
-// - TODO: clear the quick tasks
 router.beforeEach((to, from, next) => {
 	store.dispatch('ui/enableSearch')
 	next()
