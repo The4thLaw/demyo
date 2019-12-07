@@ -54,7 +54,6 @@ export default {
 		SectionCard
 	},
 
-	// TODO: title.author.view ?
 	metaInfo() {
 		return {
 			title: this.author.identifyingName
