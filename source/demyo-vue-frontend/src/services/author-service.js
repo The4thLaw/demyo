@@ -12,6 +12,17 @@ async function axiosGet(url, defaultValue) {
 	return response.data
 }
 
+async function axiosDelete(url, defaultValue) {
+	let response
+	try {
+		response = await axios.delete(url)
+	} catch (e) {
+		console.warn(`Failed to delete the resource at ${url}`, e)
+		return defaultValue
+	}
+	return response.data
+}
+
 export default {
 	async findForIndex() {
 		let data = await axiosGet(`${apiRoot}authors/`, [])
@@ -40,11 +51,9 @@ export default {
 	/**
 	 * Deletes an Author.
 	 * @param {Number} id The Author ID
-	 * @return {Promise} A Promise that resolves when the author is deleted successfully.
 	 */
-	deleteAuthor(id) {
-		return axios
-			.delete(`${apiRoot}authors/${id}`)
-			.catch(e => console.log(`Failed to delete Author ${id}`, e))
+	async deleteAuthor(id) {
+		let data = await axiosDelete(`${apiRoot}authors/${id}`, false)
+		return data
 	}
 }

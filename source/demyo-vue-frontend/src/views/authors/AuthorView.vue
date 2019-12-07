@@ -27,7 +27,12 @@
 }
 			-->
 			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/edit/${author.id}`" icon="mdi-pencil" />
-			<AppTask :label="$t('quickTasks.delete.author')" icon="mdi-account-minus" @click="deleteAuthor" />
+			<AppTask
+				:label="$t('quickTasks.delete.author')"
+				:confirm="$t('quickTasks.delete.author.confirm')"
+				icon="mdi-account-minus"
+				@confirm="deleteAuthor"
+			/>
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" :image="author.portrait">
@@ -150,13 +155,12 @@ export default {
 			return qualifiers.join(', ')
 		},
 
-		deleteAuthor() {
-			confirmAsyncAction(() => authorService.deleteAuthor(this.author.id),
-				this.$t('quickTasks.delete.author.confirm'))
-				.then(() => {
-					this.$store.dispatch('ui/showSnackbar', this.$t('quickTasks.delete.author.confirm.done'))
-					this.$router.push({ path: '/authors/' })
-				})
+		async deleteAuthor() {
+			let deleted = await authorService.deleteAuthor(this.author.id)
+			if (deleted) {
+				this.$store.dispatch('ui/showSnackbar', this.$t('quickTasks.delete.author.confirm.done'))
+				this.$router.push({ path: '/authors/' })
+			}
 		}
 	}
 }

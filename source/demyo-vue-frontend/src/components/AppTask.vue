@@ -1,11 +1,35 @@
 <template>
-	<v-list-item :to="to" @click.native="emitClick">
+	<!-- Force it to always look like a link -->
+	<v-list-item class="v-list-item--link" :to="to" @click.native.stop="handleClick">
 		<v-list-item-icon>
 			<v-icon v-text="icon" />
 		</v-list-item-icon>
+		<!-- TODO: the menu should be closed on delete (it currently stays open) -->
 		<v-list-item-content>
 			<v-list-item-title>{{ label }}</v-list-item-title>
 		</v-list-item-content>
+		<v-dialog v-model="confirmationDialog" max-width="50%">
+			<v-card>
+				<v-card-title class="headline">
+					{{ $t('quickTasks.confirm.title') }}
+				</v-card-title>
+				<v-card-text>
+					{{ confirm }}
+				</v-card-text>
+
+				<v-card-actions>
+					<v-spacer />
+
+					<v-btn color="accent" @click="confirmationDialog = false; $emit('confirm')">
+						{{ $t('quickTasks.confirm.ok.label') }}
+					</v-btn>
+
+					<v-btn color="primary" text @click="confirmationDialog = false; $emit('cancel')">
+						{{ $t('quickTasks.confirm.cancel.label') }}
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 	</v-list-item>
 </template>
 
@@ -28,12 +52,27 @@ export default {
 			type: String,
 			required: false,
 			default: undefined
+		},
+
+		confirm: {
+			type: String,
+			required: false,
+			default: ''
+		}
+	},
+
+	data() {
+		return {
+			confirmationDialog: false
 		}
 	},
 
 	methods: {
-		emitClick(e) {
+		handleClick(e) {
 			this.$emit('click', e)
+			if (this.confirm) {
+				this.confirmationDialog = true
+			}
 		}
 	}
 }

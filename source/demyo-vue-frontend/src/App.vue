@@ -89,7 +89,7 @@
 			<!-- TODO: Remove the component -->
 			<!--<HelloWorld />-->
 			<!-- TODO: flush this to the end of the page -->
-			<v-footer color="secondary" inset dark @click.native="$store.dispatch('ui/showSnackbar', 'Hello World')">
+			<v-footer color="secondary" inset dark>
 				<v-col>
 					TODO: codename
 				</v-col>
