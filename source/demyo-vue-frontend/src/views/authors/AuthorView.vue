@@ -87,7 +87,7 @@ export default {
 				asWriter: new Set(this.authorAlbums.asWriter),
 				asColorist: new Set(this.authorAlbums.asColorist),
 				asInker: new Set(this.authorAlbums.asInker),
-				asTranslator: new Set(this.authorAlbums.asTranslator),
+				asTranslator: new Set(this.authorAlbums.asTranslator)
 			}
 		}
 	},
