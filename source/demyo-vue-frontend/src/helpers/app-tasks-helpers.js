@@ -1,14 +1,15 @@
 /**
- * Requests confirmation from the user before performing an action.
- *
- * @param {Function} handler The handler to call upon confirmation
- * @param {String} message The confirmation message to show to the user
+ * Stub for a delete action in a view component.
+ * @param {Vue} component The Vue component
+ * @param {Function} handler The function that will perform the deletion
+ * @param {String} confirmationLabel The confirmation snackbar label key
+ * @param {String} path The path to redirect to
  */
-export function confirmAsyncAction(handler, message) {
-	if (confirm(message)) {
-		// TODO: use a vuetify dialog
-		return handler()
+export async function deleteStub(component, handler, confirmationLabel, path) {
+	component.appTasksMenu = false
+	let deleted = await handler()
+	if (deleted) {
+		component.$store.dispatch('ui/showSnackbar', component.$t(confirmationLabel))
+		component.$router.push({ path: path })
 	}
-	console.log('User rejected the action')
-	return new Promise()
 }

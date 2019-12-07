@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<AppTasks>
+		<AppTasks v-model="appTasksMenu">
 			<!--
 				Consider making a generic icon overlay for those plus/minus icons.
 			Interesting icons are: delete, account-minus, minus, plus, pencil, account-edit
@@ -31,6 +31,7 @@
 				:label="$t('quickTasks.delete.author')"
 				:confirm="$t('quickTasks.delete.author.confirm')"
 				icon="mdi-account-minus"
+				@cancel="appTasksMenu = false"
 				@confirm="deleteAuthor"
 			/>
 		</AppTasks>
@@ -64,7 +65,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
-import { confirmAsyncAction } from '@/helpers/app-tasks-helpers'
+import { deleteStub } from '@/helpers/app-tasks-helpers'
 import authorService from '@/services/author-service'
 
 export default {
@@ -90,7 +91,8 @@ export default {
 			mainLoading: true,
 			albumsLoading: true,
 			author: {},
-			authorAlbums: {}
+			authorAlbums: {},
+			appTasksMenu: false
 		}
 	},
 
@@ -155,12 +157,11 @@ export default {
 			return qualifiers.join(', ')
 		},
 
-		async deleteAuthor() {
-			let deleted = await authorService.deleteAuthor(this.author.id)
-			if (deleted) {
-				this.$store.dispatch('ui/showSnackbar', this.$t('quickTasks.delete.author.confirm.done'))
-				this.$router.push({ path: '/authors/' })
-			}
+		deleteAuthor() {
+			deleteStub(this,
+				() => authorService.deleteAuthor(this.author.id),
+				'quickTasks.delete.author.confirm.done',
+				'/authors/')
 		}
 	}
 }

@@ -4,7 +4,6 @@
 		<v-list-item-icon>
 			<v-icon v-text="icon" />
 		</v-list-item-icon>
-		<!-- TODO: the menu should be closed on delete (it currently stays open) -->
 		<v-list-item-content>
 			<v-list-item-title>{{ label }}</v-list-item-title>
 		</v-list-item-content>

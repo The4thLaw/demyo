@@ -1,6 +1,6 @@
 <template>
 	<portal to="appTasks">
-		<v-menu offset-y>
+		<v-menu v-model="inputVal" offset-y>
 			<template v-slot:activator="{ on }">
 				<v-btn text icon v-on="on">
 					<v-icon>mdi-dots-vertical</v-icon>
@@ -15,7 +15,30 @@
 
 <script>
 export default {
-	name: 'AppTasks'
+	name: 'AppTasks',
+
+	props: {
+		value: {
+			type: Boolean,
+			default: false
+		}
+	},
+
+	data() {
+		return {
+			inputVal: this.value
+		}
+	},
+
+	watch: {
+		value(val) {
+			this.inputVal = val
+		},
+
+		inputVal(val) {
+			this.$emit('input', val)
+		}
+	}
 }
 </script>
 
