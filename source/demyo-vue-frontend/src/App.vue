@@ -111,8 +111,6 @@
 				<router-view />
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
-			<!-- TODO: Remove the component -->
-			<!--<HelloWorld />-->
 			<!-- TODO: flush this to the end of the page -->
 			<v-footer color="secondary" inset dark>
 				<v-col>
@@ -126,7 +124,6 @@
 <script>
 import { mapState } from 'vuex'
 import AppSnackbar from '@/components/AppSnackbar'
-import HelloWorld from './components/HelloWorld'
 import LetterIcon from './components/LetterIcon'
 
 export default {
@@ -134,7 +131,6 @@ export default {
 
 	components: {
 		AppSnackbar,
-		HelloWorld,
 		LetterIcon
 	},
 
