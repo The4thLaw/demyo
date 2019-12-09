@@ -11,8 +11,7 @@
 			/>
 		</AppTasks>
 
-		<SectionCard :loading="mainLoading" :image="author.portrait">
-			<h1 class="display-1">{{ author.identifyingName }}</h1>
+		<SectionCard :loading="mainLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue :label="$t('field.Author.website')" :value="author.website">
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
@@ -21,10 +20,11 @@
 			</FieldValue>
 		</SectionCard>
 
-		<SectionCard v-if="albumsLoading || albums.length > 0" :loading="albumsLoading">
-			<h1 v-if="!albumsLoading" class="display-1">
-				{{ $t('page.Author.works') }}
-			</h1>
+		<SectionCard
+			v-if="albumsLoading || albums.length > 0"
+			:loading="albumsLoading"
+			:title="$t('page.Author.works')"
+		>
 			<AlbumTextList :albums="albums">
 				<template v-slot:default="slotProps">
 					({{ describeAuthor(slotProps.album.id) }})

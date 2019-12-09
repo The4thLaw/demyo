@@ -2,6 +2,9 @@
 	<v-card :loading="loading ? 'primary' : false" class="mb-4">
 		<div class="pa-6">
 			<template v-if="!image">
+				<h1 v-if="title && !loading" class="display-1">
+					{{ title }}
+				</h1>
 				<slot />
 			</template>
 			<div v-if="image" class="c-SectionCard__container">
@@ -25,6 +28,9 @@
 					>
 				</div>
 				<div class="c-SectionCard__content">
+					<h1 v-if="title && !loading" class="display-1">
+						{{ title }}
+					</h1>
 					<slot />
 				</div>
 			</div>
@@ -45,6 +51,12 @@ export default {
 			type: Boolean,
 			required: false,
 			default: false
+		},
+
+		title: {
+			type: String,
+			required: false,
+			default: undefined
 		},
 
 		image: {
