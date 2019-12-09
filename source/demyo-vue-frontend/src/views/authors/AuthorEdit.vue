@@ -14,7 +14,7 @@
 						<v-text-field v-model="author.nickname" :label="$t('field.Author.nickname')" />
 					</v-col>
 					<v-col :sm="12" :md="4">
-						<v-text-field v-model="author.name" :label="$t('field.Author.name')" />
+						<v-text-field v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required />
 					</v-col>
 					<v-col :sm="12" :md="6">
 						TODO: portrait
@@ -55,10 +55,10 @@
 </template>
 
 <script>
-// TODO: validation
 import { TiptapVuetify } from 'tiptap-vuetify'
 import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
+import { mandatory } from '@/helpers/rules'
 import authorService from '@/services/author-service'
 
 export default {
@@ -81,7 +81,13 @@ export default {
 		return {
 			initialized: false,
 			author: {},
-			tipTapExtensions: tipTapExtensions
+			tipTapExtensions: tipTapExtensions,
+
+			rules: {
+				name: [
+					mandatory(this)
+				]
+			}
 		}
 	},
 
