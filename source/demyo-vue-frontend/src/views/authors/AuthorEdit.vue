@@ -60,13 +60,15 @@ export default {
 
 	metaInfo() {
 		return {
-			// TODO: change title for ADD
-			title: this.author.identifyingName
+			title: this.initialized
+				? (this.author.id ? this.$t('title.edit.author') : this.$t('title.add.author'))
+				: ''
 		}
 	},
 
 	data() {
 		return {
+			initialized: false,
 			author: {},
 			tipTapExtensions: tipTapExtensions
 		}
@@ -82,10 +84,13 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
-			const id = parseInt(this.$route.params.id, 10)
-			this.author = await authorService.findById(id)
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			if (this.$route.params.id) { // Edit mode -> load the author
+				this.$store.dispatch('ui/enableGlobalOverlay')
+				const id = parseInt(this.$route.params.id, 10)
+				this.author = await authorService.findById(id)
+				this.$store.dispatch('ui/disableGlobalOverlay')
+			}
+			this.initialized = true
 		}
 	}
 }
