@@ -1,50 +1,61 @@
 <template>
 	<v-container fluid>
-		TODO: handle add / edit
-		<SectionCard>
-			<h2 class="subtitle-1 primary--text">
-				{{ $t('fieldset.Author.identity') }}
-			</h2>
-			<v-row>
-				<v-col :sm="12" :md="4">
-					<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
-				</v-col>
-				<v-col :sm="12" :md="4">
-					<v-text-field v-model="author.nickname" :label="$t('field.Author.nickname')" />
-				</v-col>
-				<v-col :sm="12" :md="4">
-					<v-text-field v-model="author.name" :label="$t('field.Author.name')" />
-				</v-col>
-				<v-col :sm="12" :md="6">
-					TODO: portrait
-				</v-col>
-			</v-row>
-		</SectionCard>
+		<v-form ref="form">
+			TODO: handle add / edit
+			<SectionCard>
+				<h2 class="subtitle-1 primary--text">
+					{{ $t('fieldset.Author.identity') }}
+				</h2>
+				<v-row>
+					<v-col :sm="12" :md="4">
+						<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
+					</v-col>
+					<v-col :sm="12" :md="4">
+						<v-text-field v-model="author.nickname" :label="$t('field.Author.nickname')" />
+					</v-col>
+					<v-col :sm="12" :md="4">
+						<v-text-field v-model="author.name" :label="$t('field.Author.name')" />
+					</v-col>
+					<v-col :sm="12" :md="6">
+						TODO: portrait
+					</v-col>
+				</v-row>
+			</SectionCard>
 
-		<SectionCard>
-			<h2 class="subtitle-1 primary--text">
-				{{ $t('fieldset.Author.biography') }}
-			</h2>
-			<v-row>
-				<v-col :sm="12" :md="6">
-					<label class="fieldLabel">{{ $t('field.Author.biography') }}</label>
-					<tiptap-vuetify
-						v-model="author.biography"
-						:extensions="tipTapExtensions"
-						:card-props="{ outlined: true }"
-					/>
-				</v-col>
-				<v-col :sm="12" :md="6">
-					<v-text-field v-model="author.website" :label="$t('field.Author.website')" />
-				</v-col>
-			</v-row>
-		</SectionCard>
+			<SectionCard>
+				<h2 class="subtitle-1 primary--text">
+					{{ $t('fieldset.Author.biography') }}
+				</h2>
+				<v-row>
+					<v-col :sm="12" :md="6">
+						<label class="fieldLabel">{{ $t('field.Author.biography') }}</label>
+						<tiptap-vuetify
+							v-model="author.biography"
+							:extensions="tipTapExtensions"
+							:card-props="{ outlined: true }"
+						/>
+					</v-col>
+					<v-col :sm="12" :md="6">
+						<v-text-field v-model="author.website" :label="$t('field.Author.website')" />
+					</v-col>
+				</v-row>
+			</SectionCard>
 
-		TODO: buttons to save/cancel
+			<!-- TODO: extract this to a component, where we will be able to put the CSS as well -->
+			<div v-if="initialized" class="formActionButtons">
+				<v-btn color="accent" @click="save">
+					{{ $t('button.save') }}
+				</v-btn>
+				<v-btn text color="primary" @click="reset">
+					{{ $t('button.reset') }}
+				</v-btn>
+			</div>
+		</v-form>
 	</v-container>
 </template>
 
 <script>
+// TODO: validation
 import { TiptapVuetify } from 'tiptap-vuetify'
 import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
@@ -91,6 +102,13 @@ export default {
 				this.$store.dispatch('ui/disableGlobalOverlay')
 			}
 			this.initialized = true
+		},
+
+		reset() {
+			this.$refs.form.reset()
+			if (this.author.id) {
+				this.fetchData()
+			}
 		}
 	}
 }

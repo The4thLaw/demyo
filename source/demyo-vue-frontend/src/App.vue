@@ -262,5 +262,9 @@ html[lang], #demyo {
 	}
 }
 
-
+.formActionButtons {
+	button {
+		margin-right: 16px;
+	}
+}
 </style>
