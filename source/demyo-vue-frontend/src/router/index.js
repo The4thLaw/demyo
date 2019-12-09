@@ -3,6 +3,7 @@ import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
 import store from '@/store/index'
 import Home from '@/views/Home.vue'
+import AuthorEdit from '@/views/authors/AuthorEdit'
 import AuthorIndex from '@/views/authors/AuthorIndex'
 import AuthorView from '@/views/authors/AuthorView'
 
@@ -25,6 +26,11 @@ const routes = [
 		alias: '/authors/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
 		name: 'AuthorView',
 		component: AuthorView
+	},
+	{
+		path: '/authors/:id/edit',
+		name: 'AuthorEdit',
+		component: AuthorEdit
 	},
 	{
 		path: '/about',

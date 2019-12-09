@@ -253,4 +253,14 @@ html[lang], #demyo {
 		text-decoration: none;
 	}
 }
+
+.fieldLabel {
+	font-size: 12px;
+
+	.theme--light & {
+		color: rgba(0, 0, 0, 0.54);
+	}
+}
+
+
 </style>
