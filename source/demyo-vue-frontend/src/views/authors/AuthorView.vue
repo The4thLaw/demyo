@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<AppTasks v-model="appTasksMenu">
-			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/edit/${author.id}`" icon="mdi-pencil" />
+			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/${author.id}/edit`" icon="mdi-pencil" />
 			<AppTask
 				:label="$t('quickTasks.delete.author')"
 				:confirm="$t('quickTasks.delete.author.confirm')"

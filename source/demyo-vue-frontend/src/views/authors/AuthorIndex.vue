@@ -2,7 +2,7 @@
 	<div>
 		<TextIndex :items="authors" :firstLetterExtractor="(item) => item.name[0]">
 			<template v-slot:default="slotProps">
-				<router-link :to="'/authors/view/' + slotProps.item.id">
+				<router-link :to="`/authors/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>
 			</template>
