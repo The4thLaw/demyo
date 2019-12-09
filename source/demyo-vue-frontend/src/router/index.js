@@ -33,6 +33,11 @@ const routes = [
 		component: AuthorEdit
 	},
 	{
+		path: '/authors/new',
+		name: 'AuthorAdd',
+		component: AuthorEdit
+	},
+	{
 		path: '/about',
 		name: 'about',
 		// route level code-splitting
