@@ -1,33 +1,10 @@
-import axios from 'axios'
-import { apiRoot } from '@/myenv'
+import { axiosGet, axiosDelete } from '@/helpers/axios'
 
-// TODO: extract axios helpers, make an AbstractModelService with prototype-based inheritance
-
-async function axiosGet(url, defaultValue) {
-	let response
-	try {
-		response = await axios.get(url)
-	} catch (e) {
-		console.warn(`Failed to get the resource at ${url}`, e)
-		return defaultValue
-	}
-	return response.data
-}
-
-async function axiosDelete(url, defaultValue) {
-	let response
-	try {
-		response = await axios.delete(url)
-	} catch (e) {
-		console.warn(`Failed to delete the resource at ${url}`, e)
-		return defaultValue
-	}
-	return response.data
-}
+// TODO: make an AbstractModelService with prototype-based inheritance
 
 export default {
 	async findForIndex() {
-		let data = await axiosGet(`${apiRoot}authors/`, [])
+		let data = await axiosGet('authors/', [])
 		return data
 	},
 
@@ -37,7 +14,7 @@ export default {
 	 * @return The Author
 	 */
 	async findById(id) {
-		let data = await axiosGet(`${apiRoot}authors/${id}`, {})
+		let data = await axiosGet(`authors/${id}`, {})
 		return data
 	},
 
@@ -46,7 +23,7 @@ export default {
 	 * @param {Number} id The Author ID
 	 */
 	async getAuthorAlbums(id) {
-		let data = await axiosGet(`${apiRoot}authors/${id}/albums`, {})
+		let data = await axiosGet(`authors/${id}/albums`, {})
 		return data
 	},
 
@@ -55,7 +32,7 @@ export default {
 	 * @param {Number} id The Author ID
 	 */
 	async deleteAuthor(id) {
-		let data = await axiosDelete(`${apiRoot}authors/${id}`, false)
+		let data = await axiosDelete(`authors/${id}`, false)
 		return data
 	}
 }
