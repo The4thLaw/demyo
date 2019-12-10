@@ -45,7 +45,7 @@
 
 <script>
 import { groupBy, deburr } from 'lodash'
-import { focusElement } from '@/helpers/dom-helpers.js'
+import { focusElement } from '@/helpers/dom'
 
 export default {
 	name: 'TextIndex',
