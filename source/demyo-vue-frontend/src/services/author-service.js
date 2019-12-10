@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { apiRoot } from '@/myenv'
 
+// TODO: extract axios helpers, make an AbstractModelService with prototype-based inheritance
+
 async function axiosGet(url, defaultValue) {
 	let response
 	try {

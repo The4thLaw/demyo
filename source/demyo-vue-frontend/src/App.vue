@@ -261,10 +261,4 @@ html[lang], #demyo {
 		color: rgba(0, 0, 0, 0.54);
 	}
 }
-
-.formActionButtons {
-	button {
-		margin-right: 16px;
-	}
-}
 </style>

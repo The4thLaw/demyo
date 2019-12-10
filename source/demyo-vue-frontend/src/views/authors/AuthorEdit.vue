@@ -41,21 +41,14 @@
 				</v-row>
 			</SectionCard>
 
-			<!-- TODO: extract this to a component, where we will be able to put the CSS as well -->
-			<div v-if="initialized" class="formActionButtons">
-				<v-btn color="accent" @click="save">
-					{{ $t('button.save') }}
-				</v-btn>
-				<v-btn text color="primary" @click="reset">
-					{{ $t('button.reset') }}
-				</v-btn>
-			</div>
+			<FormActions v-if="initialized" />
 		</v-form>
 	</v-container>
 </template>
 
 <script>
 import { TiptapVuetify } from 'tiptap-vuetify'
+import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
@@ -65,6 +58,7 @@ export default {
 	name: 'AuthorEdit',
 
 	components: {
+		FormActions,
 		SectionCard,
 		TiptapVuetify
 	},
@@ -108,6 +102,13 @@ export default {
 				this.$store.dispatch('ui/disableGlobalOverlay')
 			}
 			this.initialized = true
+		},
+
+		save() {
+			if (!this.$refs.form.validate()) {
+				return
+			}
+			// TODO: implement save
 		},
 
 		reset() {
