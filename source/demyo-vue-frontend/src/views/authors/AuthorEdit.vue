@@ -17,13 +17,13 @@
 						<v-text-field v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required />
 					</v-col>
 					<v-col :sm="12" :md="6">
-						<v-autocomplete
+						<Autocomplete
 							v-model="author.portrait.id"
 							:items="allImages"
-							:label="$t('field.Author.portrait')"
-							item-text="identifyingName"
-							item-value="id"
-							menu-props="allowOverflow"
+							:loading="allImagesLoading"
+							label-key="field.Author.portrait"
+							refreshable
+							@refresh="refreshImages"
 						/>
 					</v-col>
 				</v-row>
@@ -55,6 +55,7 @@
 
 <script>
 import { TiptapVuetify } from 'tiptap-vuetify'
+import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
@@ -66,6 +67,7 @@ export default {
 	name: 'AuthorEdit',
 
 	components: {
+		Autocomplete,
 		FormActions,
 		SectionCard,
 		TiptapVuetify
@@ -83,7 +85,8 @@ export default {
 		return {
 			initialized: false,
 			allImages: [],
-			author: {},
+			allImagesLoading: false,
+			author: { portrait: {} },
 			tipTapExtensions: tipTapExtensions,
 
 			rules: {
@@ -119,11 +122,18 @@ export default {
 			this.initialized = true
 		},
 
+		async refreshImages() {
+			this.allImagesLoading = true
+			this.allImages = await imageService.findForIndex()
+			this.allImagesLoading = false
+		},
+
 		save() {
 			if (!this.$refs.form.validate()) {
 				return
 			}
 			// TODO: implement save
+			alert('save')
 		},
 
 		reset() {
