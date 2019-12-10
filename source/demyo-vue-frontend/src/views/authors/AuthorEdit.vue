@@ -17,7 +17,14 @@
 						<v-text-field v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required />
 					</v-col>
 					<v-col :sm="12" :md="6">
-						TODO: portrait
+						<v-autocomplete
+							v-model="author.portrait.id"
+							:items="allImages"
+							:label="$t('field.Author.portrait')"
+							item-text="identifyingName"
+							item-value="id"
+							menu-props="allowOverflow"
+						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -53,6 +60,7 @@ import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import authorService from '@/services/author-service'
+import imageService from '@/services/image-service'
 
 export default {
 	name: 'AuthorEdit',
@@ -74,6 +82,7 @@ export default {
 	data() {
 		return {
 			initialized: false,
+			allImages: [],
 			author: {},
 			tipTapExtensions: tipTapExtensions,
 
@@ -101,6 +110,12 @@ export default {
 				this.author = await authorService.findById(id)
 				this.$store.dispatch('ui/disableGlobalOverlay')
 			}
+			if (!this.author.portrait) {
+				this.author.portrait = {
+					id: undefined
+				}
+			}
+			this.allImages = await imageService.findForIndex()
 			this.initialized = true
 		},
 
