@@ -133,7 +133,7 @@ export default {
 
 		deleteAuthor() {
 			deleteStub(this,
-				() => authorService.deleteAuthor(this.author.id),
+				() => authorService.deleteModel(this.author.id),
 				'quickTasks.delete.author.confirm.done',
 				'/authors/')
 		}
