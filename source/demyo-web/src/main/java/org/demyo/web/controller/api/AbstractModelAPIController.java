@@ -3,13 +3,19 @@ package org.demyo.web.controller.api;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -53,6 +59,24 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	@GetMapping("/{modelId}")
 	public M view(@PathVariable long modelId, Model model) {
 		return getService().getByIdForView(modelId);
+	}
+
+	/**
+	 * Saves changes to a new or updated entity.
+	 * 
+	 * @param entity The entity to save.
+	 * @param result The result of the binding and validation.
+	 * @return The internal ID of the saved entity.
+	 */
+	@RequestMapping(value = { "/", "/{modelId}" }, method = { RequestMethod.POST, RequestMethod.PUT })
+	public long save(@RequestBody @Valid M entity, BindingResult result) {
+		LOGGER.debug("Requested to save entity: {}", entity);
+		if (result.hasErrors()) {
+			LOGGER.error("There were validation errors: {}", result);
+			return -1;
+		}
+
+		return getService().save(entity);
 	}
 
 	/**

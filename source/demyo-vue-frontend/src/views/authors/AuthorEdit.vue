@@ -1,7 +1,6 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			TODO: handle add / edit
 			<SectionCard>
 				<h2 class="subtitle-1 primary--text">
 					{{ $t('fieldset.Author.identity') }}
@@ -14,16 +13,14 @@
 						<v-text-field v-model="author.nickname" :label="$t('field.Author.nickname')" />
 					</v-col>
 					<v-col :sm="12" :md="4">
-						<v-text-field v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required />
+						<v-text-field
+							v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required
+						/>
 					</v-col>
 					<v-col :sm="12" :md="6">
 						<Autocomplete
-							v-model="author.portrait.id"
-							:items="allImages"
-							:loading="allImagesLoading"
-							label-key="field.Author.portrait"
-							refreshable
-							@refresh="refreshImages"
+							v-model="author.portrait.id" :items="allImages" :loading="allImagesLoading"
+							label-key="field.Author.portrait" refreshable @refresh="refreshImages"
 						/>
 					</v-col>
 				</v-row>
@@ -37,8 +34,7 @@
 					<v-col :sm="12" :md="6">
 						<label class="fieldLabel">{{ $t('field.Author.biography') }}</label>
 						<tiptap-vuetify
-							v-model="author.biography"
-							:extensions="tipTapExtensions"
+							v-model="author.biography" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
 						/>
 					</v-col>
@@ -102,6 +98,7 @@ export default {
 	},
 
 	created() {
+		this.$store.dispatch('ui/disableSearch')
 		this.fetchData()
 	},
 
@@ -128,12 +125,16 @@ export default {
 			this.allImagesLoading = false
 		},
 
-		save() {
+		async save() {
 			if (!this.$refs.form.validate()) {
 				return
 			}
-			// TODO: implement save
-			alert('save')
+			let id = await authorService.save(this.author)
+			if (id <= 0) {
+				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
+			} else {
+				this.$router.push({ path: `/authors/${id}/view` })
+			}
 		},
 
 		reset() {

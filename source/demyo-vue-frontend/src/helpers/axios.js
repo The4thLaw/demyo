@@ -16,6 +16,28 @@ export async function axiosGet(url, defaultValue) {
 	return response.data
 }
 
+export async function axiosPost(url, data, defaultValue) {
+	let response
+	try {
+		response = await axios.post(baselineUrl(url), data)
+	} catch (e) {
+		console.warn(`Failed to post the data at ${url}`, data, e)
+		return defaultValue
+	}
+	return response.data
+}
+
+export async function axiosPut(url, data, defaultValue) {
+	let response
+	try {
+		response = await axios.put(baselineUrl(url), data)
+	} catch (e) {
+		console.warn(`Failed to post the data at ${url}`, data, e)
+		return defaultValue
+	}
+	return response.data
+}
+
 export async function axiosDelete(url, defaultValue) {
 	let response
 	try {

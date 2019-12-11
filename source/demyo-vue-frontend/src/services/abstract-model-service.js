@@ -1,4 +1,4 @@
-import { axiosGet, axiosDelete } from '@/helpers/axios'
+import { axiosGet, axiosPost, axiosPut, axiosDelete } from '@/helpers/axios'
 
 /**
  * Base class for Model API services.
@@ -24,6 +24,16 @@ class AbstractModelService {
 	 */
 	async findById(id) {
 		let data = await axiosGet(this.basePath + id, {})
+		return data
+	}
+
+	async save(model) {
+		let data
+		if (model.id) {
+			data = await axiosPut(this.basePath + model.id, model, -1)
+		} else {
+			data = await axiosPost(this.basePath, model, -1)
+		}
 		return data
 	}
 

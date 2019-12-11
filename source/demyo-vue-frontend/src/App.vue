@@ -180,17 +180,17 @@ export default {
 						{
 							title: 'menu.albums.add',
 							icon: 'mdi-book-open-variant',
-							url: '/albums/add'
+							url: '/albums/new'
 						},
 						{
 							title: 'menu.authors.add',
 							icon: 'mdi-account-plus',
-							url: '/authors/add'
+							url: '/authors/new'
 						},
 						{
 							title: 'menu.series.add',
 							icon: 'mdi-layers-plus',
-							url: '/series/add'
+							url: '/series/new'
 						}
 					]
 				}
