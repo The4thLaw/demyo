@@ -54,7 +54,6 @@ public class Author extends AbstractModel {
 	private String firstName;
 	/** The nickname. */
 	@Column(name = "nickname")
-	@JsonView(ModelView.Basic.class)
 	private String nickname;
 	/** The biography. */
 	@Column(name = "biography")
