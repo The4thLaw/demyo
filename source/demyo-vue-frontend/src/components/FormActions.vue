@@ -1,9 +1,9 @@
 <template>
 	<div class="c-FormActions">
-		<v-btn color="accent" class="c-FormActions__button" @click="save">
+		<v-btn color="accent" class="c-FormActions__button" @click="$emit('save')">
 			{{ $t('button.save') }}
 		</v-btn>
-		<v-btn text color="primary" class="c-FormActions__button" @click="reset">
+		<v-btn text color="primary" class="c-FormActions__button" @click="$emit('reset')">
 			{{ $t('button.reset') }}
 		</v-btn>
 	</div>

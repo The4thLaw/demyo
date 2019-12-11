@@ -48,7 +48,7 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" />
+			<FormActions v-if="initialized" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
