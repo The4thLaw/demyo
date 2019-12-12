@@ -69,6 +69,7 @@ export default {
 	computed: {
 		baseImageUrl() {
 			let encodedName = encodeURI(this.image.userFileName)
+			encodedName = encodedName.replace(/#/, '')
 			return '/images/' + this.image.id + '/file/' + encodedName
 		}
 	}

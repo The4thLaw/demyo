@@ -12,9 +12,10 @@
 		<div v-if="!splitByFirstLetter">
 			<div v-for="item in paginatedItems" :key="item.id">
 				image {{item.id}}
-				<!-- TODO: v-img doesn't seem to form a gallery -->
+				<!-- TODO: v-img doesn't seem to form a gallery -> :group? -->
 				<!-- TODO: the page handlers steal the next/previous image events -->
-				<!-- TODO: image sizes aren't right -->
+				<!-- TODO: Find a way to deal with overhigh images. Either fix an aspect ratio in the backend
+					or use a max-height here and object-fit cover (the latter seems better) -->
 				<img
 					v-img="{src: `${item.baseImageUrl}`}"
 					:src="`${item.baseImageUrl}?w=200`"
@@ -73,7 +74,9 @@ export default {
 				} else {
 					image = item
 				}
+				// TODO: extract this and the one in SectionCard to a helper
 				let encodedName = encodeURI(image.userFileName)
+				encodedName = encodedName.replace(/#/, '')
 				item.baseImageUrl = '/images/' + image.id + '/file/' + encodedName
 			})
 			return slice
