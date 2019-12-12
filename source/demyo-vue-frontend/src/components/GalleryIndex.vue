@@ -9,23 +9,19 @@
 		@keyup.arrow-left.exact="previousPage()"
 		@keyup.arrow-right.exact="nextPage()"
 	>
-		<div v-if="!splitByFirstLetter">
-			<div v-for="item in paginatedItems" :key="item.id">
-				<!-- TODO: v-img doesn't seem to form a gallery -> :group? -->
-				<!-- TODO: the page handlers steal the next/previous image events -->
-				<!-- TODO: Find a way to deal with overhigh images. Either fix an aspect ratio in the backend
-					or use a max-height here and object-fit cover (the latter seems better) -->
-				<img
-					v-img="{src: `${item.baseImageUrl}`}"
-					:src="`${item.baseImageUrl}?w=200`"
-					:srcset="`
-						${item.baseImageUrl}?w=200 1x,
-						${item.baseImageUrl}?w=400 2x`"
-				>
-				<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
-					<slot :item="item" />
-				</legend>
-			</div>
+		<div v-for="item in paginatedItems" :key="item.id">
+			<!-- TODO: Find a way to deal with overhigh images. Either fix an aspect ratio in the backend
+				or use a max-height here and object-fit cover (the latter seems better) -->
+			<img
+				v-img:group="{src: `${item.baseImageUrl}`}"
+				:src="`${item.baseImageUrl}?w=200`"
+				:srcset="`
+					${item.baseImageUrl}?w=200 1x,
+					${item.baseImageUrl}?w=400 2x`"
+			>
+			<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
+				<slot :item="item" />
+			</legend>
 		</div>
 
 		<v-pagination
@@ -91,17 +87,28 @@ export default {
 	},
 
 	mounted() {
+		// TODO: check if there is an event that would allow us to detect v-img being opened/closed
+		// so that we can better prevent intercepting key presses and restore the focus
 		focusElement(this.$refs.keyTarget)
 	},
 
 	methods: {
 		previousPage() {
+			if (document.querySelector('.fullscreen-v-img')) {
+				// v-img is active, don't do anything
+				return
+			}
 			if (this.currentPage > 1) {
 				this.currentPage--
 			}
 		},
 
 		nextPage() {
+			if (document.querySelector('.fullscreen-v-img')) {
+				// v-img is active, don't do anything
+				return
+			}
+			console.log('do')
 			if (this.currentPage < this.pageCount) {
 				this.currentPage++
 			}
