@@ -47,6 +47,10 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<M> value = getService().findAll();
+		return getIndexView(view, value);
+	}
+
+	protected MappingJacksonValue getIndexView(Optional<String> view, List<M> value) {
 		MappingJacksonValue jackson = new MappingJacksonValue(value);
 		Optional<Class<?>> viewClass = ModelView.byName(view);
 		LOGGER.debug("View class is {}", viewClass);

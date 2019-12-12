@@ -24,12 +24,14 @@ public class IDerivativeRepoImpl implements IDerivativeCustomRepo {
 	public List<Derivative> findAllForStickers(Sort sort) {
 		List<Derivative> list = repo.findAll(sort);
 		// See IPublisherRepoImpl for rationale behind this
+		// TODO: check if this is relevant because we fetch everything for stickers anyway
 		for (Derivative deriv : list) {
 			Hibernate.initialize(deriv.getArtist());
 		}
 		return list;
 	}
 
+	// TODO: remove this when switch to Vue is finished
 	@Override
 	public Slice<Derivative> findAllForIndex(Predicate filter, Pageable pageable) {
 		Slice<Derivative> slice = repo.findAll(filter, pageable);

@@ -28,6 +28,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.constraints.OneNotNull;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
@@ -42,6 +44,8 @@ import org.demyo.model.util.IdentifyingNameComparator;
 		@DefaultOrder.Order(property = "album.cycle"), @DefaultOrder.Order(property = "album.number"),
 		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
 @NamedEntityGraphs({
+		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes =
+		{ @NamedAttributeNode("images") }),
 		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
 		{ @NamedAttributeNode("artist"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") }) })
 @OneNotNull(fields = { "series.id", "album.id" })
@@ -49,11 +53,13 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "series_id")
+	@JsonView(ModelView.Basic.class)
 	private Series series;
 
 	/** The parent {@link Album}. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "album_id")
+	@JsonView(ModelView.Basic.class)
 	private Album album;
 
 	/** The {@link Author} who worked on this Derivative. */
@@ -75,6 +81,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	/** The {@link DerivativeSource source} of this Derivative. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "source_id")
+	@JsonView(ModelView.Basic.class)
 	private DerivativeSource source;
 
 	/** The item number. */
@@ -184,6 +191,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	 * @return An Image, or <code>null</code> if no image is associated to this Derivative.
 	 */
 	@Transient
+	@JsonView(ModelView.Basic.class)
 	public Image getMainImage() {
 		if (images == null || images.isEmpty()) {
 			return null;

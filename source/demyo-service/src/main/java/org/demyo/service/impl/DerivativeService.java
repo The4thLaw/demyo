@@ -55,6 +55,13 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<Derivative> findAllForIndex() {
+		Sort sort = new Sort(getDefaultOrder());
+		return repo.findAllForIndex(sort);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public List<Derivative> findAllForStickers() {
 		Sort sort = new Sort(getDefaultOrder());
 		return repo.findAllForStickers(sort);

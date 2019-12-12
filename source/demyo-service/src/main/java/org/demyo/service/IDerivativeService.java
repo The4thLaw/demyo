@@ -22,6 +22,13 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	void recoverFromFilePond(long derivativeId, String[] otherFilePondIds) throws DemyoException;
 
 	/**
+	 * Finds all Derivatives in a format and order suitable for the index.
+	 * 
+	 * @return The Derivatives
+	 */
+	List<Derivative> findAllForIndex();
+
+	/**
 	 * Finds all Derivatives in a format and order suitable for the sticker sheet.
 	 * 
 	 * @return The Derivatives

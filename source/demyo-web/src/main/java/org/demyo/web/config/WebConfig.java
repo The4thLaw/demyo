@@ -29,7 +29,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 		for (HttpMessageConverter<?> converter : converters) {
 			if (converter instanceof AbstractJackson2HttpMessageConverter) {
 				ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter) converter).getObjectMapper();
-				mapper.registerModule(new Hibernate5Module());
+				Hibernate5Module module = new Hibernate5Module();
+				module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+				mapper.registerModule(module);
 				mapper.setSerializationInclusion(Include.NON_EMPTY);
 				LOGGER.debug("... successful");
 			}
