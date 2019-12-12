@@ -126,10 +126,8 @@ export default {
 }
 
 .c-GalleryIndex__list {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, 216px);
-	grid-gap: 32px;
-	justify-items: center;
+	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
 
@@ -142,11 +140,14 @@ export default {
 }
 
 .c-GalleryIndex__image {
-	text-align: center;
+	width: 216px;
+	margin: 16px;
 }
 
 .v-application .c-GalleryIndex__imageLegend {
 	font-size: 0.8em;
+	text-align: center;
+	display: block;
 
 	a {
 		color: inherit;
