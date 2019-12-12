@@ -38,8 +38,9 @@
 </template>
 
 <script>
-import { get, map } from 'lodash'
+import { get } from 'lodash'
 import { focusElement } from '@/helpers/dom'
+import { getEncodedImageName } from '@/helpers/images'
 
 export default {
 	name: 'GalleryIndex',
@@ -74,10 +75,7 @@ export default {
 				} else {
 					image = item
 				}
-				// TODO: extract this and the one in SectionCard to a helper
-				let encodedName = encodeURI(image.userFileName)
-				encodedName = encodedName.replace(/#/, '')
-				item.baseImageUrl = '/images/' + image.id + '/file/' + encodedName
+				item.baseImageUrl = '/images/' + image.id + '/file/' + getEncodedImageName(image)
 			})
 			return slice
 		},

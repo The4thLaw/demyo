@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { getEncodedImageName } from '@/helpers/images'
 /**
  * A card used to section content.
  * Sports standard padding and loading style.
@@ -68,9 +69,7 @@ export default {
 
 	computed: {
 		baseImageUrl() {
-			let encodedName = encodeURI(this.image.userFileName)
-			encodedName = encodedName.replace(/#/, '')
-			return '/images/' + this.image.id + '/file/' + encodedName
+			return '/images/' + this.image.id + '/file/' + getEncodedImageName(this.image)
 		}
 	}
 }
