@@ -2,7 +2,7 @@
 	<div>
 		<GalleryIndex :items="images">
 			<template v-slot:default="slotProps">
-				<router-link :to="`/authors/${slotProps.item.id}/view`">
+				<router-link :to="`/images/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>
 			</template>

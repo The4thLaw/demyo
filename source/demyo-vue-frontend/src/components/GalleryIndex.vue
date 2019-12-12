@@ -11,7 +11,6 @@
 	>
 		<div v-if="!splitByFirstLetter">
 			<div v-for="item in paginatedItems" :key="item.id">
-				image {{item.id}}
 				<!-- TODO: v-img doesn't seem to form a gallery -> :group? -->
 				<!-- TODO: the page handlers steal the next/previous image events -->
 				<!-- TODO: Find a way to deal with overhigh images. Either fix an aspect ratio in the backend
@@ -23,7 +22,9 @@
 						${item.baseImageUrl}?w=200 1x,
 						${item.baseImageUrl}?w=400 2x`"
 				>
-				<slot :item="item" />
+				<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
+					<slot :item="item" />
+				</legend>
 			</div>
 		</div>
 
@@ -65,6 +66,10 @@ export default {
 	},
 
 	computed: {
+		hasDefaultSlot() {
+			return !!this.$scopedSlots.default
+		},
+
 		paginatedItems() {
 			let slice = this.items.slice((this.currentPage - 1) * this.itemsPerPage,
 				this.currentPage * this.itemsPerPage)
