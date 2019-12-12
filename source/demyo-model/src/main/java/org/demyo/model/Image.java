@@ -16,6 +16,8 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.DefaultOrder;
@@ -80,6 +82,7 @@ public class Image extends AbstractModel {
 	 * 
 	 * @return a file name.
 	 */
+	@JsonView(ModelView.Basic.class)
 	public String getUserFileName() {
 		String fileExtension = DIOUtils.getFileExtension(url);
 		if (fileExtension == null) {

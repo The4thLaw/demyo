@@ -6,6 +6,7 @@ import Home from '@/views/Home.vue'
 import AuthorEdit from '@/views/authors/AuthorEdit'
 import AuthorIndex from '@/views/authors/AuthorIndex'
 import AuthorView from '@/views/authors/AuthorView'
+import ImageIndex from '@/views/images/ImageIndex'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -36,6 +37,11 @@ const routes = [
 		path: '/authors/new',
 		name: 'AuthorAdd',
 		component: AuthorEdit
+	},
+	{
+		path: '/images',
+		name: 'ImageIndex',
+		component: ImageIndex
 	},
 	{
 		path: '/about',

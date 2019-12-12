@@ -261,4 +261,10 @@ html[lang], #demyo {
 		color: rgba(0, 0, 0, 0.54);
 	}
 }
+
+// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541​ is resolved, switch to it
+#demyo .v-pagination button {
+	box-shadow: none;
+	border-radius: 50%;
+}
 </style>
