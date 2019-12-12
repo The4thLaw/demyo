@@ -115,13 +115,13 @@ export default {
 					id: undefined
 				}
 			}
-			this.allImages = await imageService.findForIndex()
+			this.allImages = await imageService.findForList()
 			this.initialized = true
 		},
 
 		async refreshImages() {
 			this.allImagesLoading = true
-			this.allImages = await imageService.findForIndex()
+			this.allImages = await imageService.findForList()
 			this.allImagesLoading = false
 		},
 

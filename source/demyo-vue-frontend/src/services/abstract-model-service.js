@@ -17,6 +17,11 @@ class AbstractModelService {
 		return data
 	}
 
+	async findForList() {
+		let data = await axiosGet(this.basePath + '?view=minimal', [])
+		return data
+	}
+
 	/**
 	 * Finds a Model by its ID.
 	 * @param {Number} id The Model ID
