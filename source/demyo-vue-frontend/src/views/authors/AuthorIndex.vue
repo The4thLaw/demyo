@@ -1,13 +1,16 @@
 <template>
 	<div>
-		<TextIndex :items="authors" :firstLetterExtractor="(item) => item.name[0]">
+		<TextIndex :items="authors" :first-letter-extractor="(item) => item.name[0]">
 			<template v-slot:default="slotProps">
 				<router-link :to="`/authors/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>
 			</template>
 		</TextIndex>
-		<v-btn fab to="/authors/add" color="accent" fixed bottom right>
+		<v-btn
+			fab to="/authors/add" color="accent" fixed
+			bottom right
+		>
 			<v-icon>mdi-plus</v-icon>
 		</v-btn>
 	</div>
