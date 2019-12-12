@@ -9,19 +9,21 @@
 		@keyup.arrow-left.exact="previousPage()"
 		@keyup.arrow-right.exact="nextPage()"
 	>
-		<div v-for="item in paginatedItems" :key="item.id">
-			<!-- TODO: Find a way to deal with overhigh images. Either fix an aspect ratio in the backend
-				or use a max-height here and object-fit cover (the latter seems better) -->
-			<img
-				v-img:group="{src: `${item.baseImageUrl}`}"
-				:src="`${item.baseImageUrl}?w=200`"
-				:srcset="`
-					${item.baseImageUrl}?w=200 1x,
-					${item.baseImageUrl}?w=400 2x`"
-			>
-			<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
-				<slot :item="item" />
-			</legend>
+		<div class="c-GalleryIndex__list">
+			<div v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
+				<v-sheet class="pa-2">
+					<img
+						v-img:group="{src: `${item.baseImageUrl}`}"
+						:src="`${item.baseImageUrl}?w=200`"
+						:srcset="`
+							${item.baseImageUrl}?w=200 1x,
+							${item.baseImageUrl}?w=400 2x`"
+					>
+					<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
+						<slot :item="item" />
+					</legend>
+				</v-sheet>
+			</div>
 		</div>
 
 		<v-pagination
@@ -121,5 +123,37 @@ export default {
 .c-GalleryIndex {
 	// No outline on this artifically focused element
 	outline: 0;
+}
+
+.c-GalleryIndex__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 216px);
+	grid-gap: 32px;
+	justify-items: center;
+	align-items: center;
+	justify-content: center;
+
+	img {
+		// Crop overly large images
+		width: 200px;
+		max-height: 350px;
+		object-fit: none;
+	}
+}
+
+.c-GalleryIndex__image {
+	text-align: center;
+}
+
+.v-application .c-GalleryIndex__imageLegend {
+	font-size: 0.8em;
+
+	a {
+		color: inherit;
+
+		&:hover {
+			color: var(--v-anchor-base);
+		}
+	}
 }
 </style>
