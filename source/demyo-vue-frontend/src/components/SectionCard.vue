@@ -18,12 +18,12 @@
 						- Be nice on HiDPI and LoDPI screens
 					-->
 					<img
-						v-img="{src: `${baseImageUrl}`}"
+						v-img="{src: baseImageUrl}"
 						:src="`${baseImageUrl}?w=200`"
 						:srcset="`
-							${baseImageUrl}?w=200 200w
+							${baseImageUrl}?w=200 200w,
 							${baseImageUrl}?w=400 400w,
-							${baseImageUrl}?w=700 700w,`"
+							${baseImageUrl}?w=700 700w`"
 						sizes="(max-width: 700px) 200px, 350px"
 					>
 				</div>
