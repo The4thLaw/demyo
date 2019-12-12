@@ -10,7 +10,7 @@
 		@keyup.arrow-right.exact="nextPage()"
 	>
 		<div v-if="!splitByFirstLetter">
-			<div v-for="item in items" :key="item.id">
+			<div v-for="item in paginatedItems" :key="item.id">
 				<slot :item="item" />
 			</div>
 		</div>
