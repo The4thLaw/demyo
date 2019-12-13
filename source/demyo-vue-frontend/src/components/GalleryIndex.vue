@@ -13,7 +13,7 @@
 			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
 				<img
 					v-if="item.baseImageUrl"
-					v-img:group="{src: `${item.baseImageUrl}`}"
+					v-img:group="{src: item.baseImageUrl, opened: vimgOpen, closed: vimgClosed}"
 					:src="`${item.baseImageUrl}?w=250`"
 					:srcset="`
 						${item.baseImageUrl}?w=250 1x,
@@ -56,6 +56,7 @@ export default {
 
 	data() {
 		return {
+			vimg: false,
 			// TODO: load this from the config
 			itemsPerPage: 20,
 			currentPage: 1
@@ -92,12 +93,23 @@ export default {
 	mounted() {
 		// TODO: check if there is an event that would allow us to detect v-img being opened/closed
 		// so that we can better prevent intercepting key presses and restore the focus
+		// Use the opened and closed callbacks that can be passed in the object
 		focusElement(this.$refs.keyTarget)
 	},
 
 	methods: {
+		vimgOpen() {
+			this.vimg = true
+		},
+
+		vimgClosed() {
+			this.vimg = false
+			// Refocus to allow keyboard navigation again
+			focusElement(this.$refs.keyTarget)
+		},
+
 		previousPage() {
-			if (document.querySelector('.fullscreen-v-img')) {
+			if (this.vimg) {
 				// v-img is active, don't do anything
 				return
 			}
@@ -107,7 +119,7 @@ export default {
 		},
 
 		nextPage() {
-			if (document.querySelector('.fullscreen-v-img')) {
+			if (this.vimg) {
 				// v-img is active, don't do anything
 				return
 			}
