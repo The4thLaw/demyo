@@ -136,7 +136,7 @@ export default {
 		// Crop overly large images
 		width: 250px;
 		max-height: 400px;
-		object-fit: cover;
+		object-fit: contain;
 	}
 }
 
