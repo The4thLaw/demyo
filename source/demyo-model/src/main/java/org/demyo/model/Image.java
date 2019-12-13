@@ -30,7 +30,7 @@ import org.demyo.utils.io.DIOUtils;
 @Entity
 @Table(name = "IMAGES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "description"))
-@NamedEntityGraph(name = "Image.forView", attributeNodes = { @NamedAttributeNode("albumCovers"),
+@NamedEntityGraph(name = "Image.forDependencies", attributeNodes = { @NamedAttributeNode("albumCovers"),
 		@NamedAttributeNode("albumOtherImages"), @NamedAttributeNode("authors"), @NamedAttributeNode("collections"),
 		@NamedAttributeNode("derivatives"), @NamedAttributeNode("publishers") })
 public class Image extends AbstractModel {

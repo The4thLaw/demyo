@@ -72,6 +72,7 @@ export default {
 
 	computed: {
 		basePortraitUrl() {
+			// TODO: use the encode image helper
 			let encodedName = encodeURI(this.author.portrait.userFileName)
 			return '/images/' + this.author.portrait.id + '/file/' + encodedName
 		},

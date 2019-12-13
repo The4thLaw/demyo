@@ -28,8 +28,17 @@ public interface IImageRepo extends IModelRepo<Image>, IImageCustomRepo {
 	 * @return The fetched model.
 	 */
 	@Query("select x from #{#entityName} x where id=?1")
-	@EntityGraph("Image.forView")
 	Image findOneForView(long id);
+
+	/**
+	 * Returns a model for the list of entities depending on this image.
+	 * 
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	@EntityGraph("Image.forDependencies")
+	Image findOneForDependencies(long id);
 
 	/**
 	 * Finds all Images whose description matches the provided pattern.
