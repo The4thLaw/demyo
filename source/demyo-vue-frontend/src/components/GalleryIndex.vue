@@ -10,20 +10,18 @@
 		@keyup.arrow-right.exact="nextPage()"
 	>
 		<div class="c-GalleryIndex__list">
-			<div v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
-				<v-sheet class="pa-2">
-					<img
-						v-img:group="{src: `${item.baseImageUrl}`}"
-						:src="`${item.baseImageUrl}?w=200`"
-						:srcset="`
-							${item.baseImageUrl}?w=200 1x,
-							${item.baseImageUrl}?w=400 2x`"
-					>
-					<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
-						<slot :item="item" />
-					</legend>
-				</v-sheet>
-			</div>
+			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
+				<img
+					v-img:group="{src: `${item.baseImageUrl}`}"
+					:src="`${item.baseImageUrl}?w=250`"
+					:srcset="`
+						${item.baseImageUrl}?w=250 1x,
+						${item.baseImageUrl}?w=500 2x`"
+				>
+				<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
+					<slot :item="item" />
+				</legend>
+			</v-sheet>
 		</div>
 
 		<v-pagination
@@ -133,14 +131,15 @@ export default {
 
 	img {
 		// Crop overly large images
-		width: 200px;
-		max-height: 350px;
-		object-fit: none;
+		width: 250px;
+		max-height: 400px;
+		object-fit: cover;
 	}
 }
 
 .c-GalleryIndex__image {
-	width: 216px;
+	width: 266px;
+	padding: 8px;
 	margin: 16px;
 }
 
