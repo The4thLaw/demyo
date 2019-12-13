@@ -3,11 +3,9 @@ import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
 import store from '@/store/index'
 import Home from '@/views/Home.vue'
-import AuthorEdit from '@/views/authors/AuthorEdit'
-import AuthorIndex from '@/views/authors/AuthorIndex'
-import AuthorView from '@/views/authors/AuthorView'
-import ImageIndex from '@/views/images/ImageIndex'
-import DerivativeIndex from '@/views/derivatives/DerivativeIndex'
+import authorRoutes from './authors'
+import derivativeRoutes from './derivatives'
+import imageRoutes from './images'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -18,37 +16,9 @@ const routes = [
 		name: 'home',
 		component: Home
 	},
-	{
-		path: '/authors',
-		name: 'AuthorIndex',
-		component: AuthorIndex
-	},
-	{
-		path: '/authors/:id/view',
-		alias: '/authors/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
-		name: 'AuthorView',
-		component: AuthorView
-	},
-	{
-		path: '/authors/:id/edit',
-		name: 'AuthorEdit',
-		component: AuthorEdit
-	},
-	{
-		path: '/authors/new',
-		name: 'AuthorAdd',
-		component: AuthorEdit
-	},
-	{
-		path: '/images',
-		name: 'ImageIndex',
-		component: ImageIndex
-	},
-	{
-		path: '/derivatives',
-		name: 'DerivativeIndex',
-		component: DerivativeIndex
-	},
+	...authorRoutes,
+	...derivativeRoutes,
+	...imageRoutes,
 	{
 		path: '/about',
 		name: 'about',
