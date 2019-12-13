@@ -73,13 +73,11 @@ export default {
 			slice.map(item => {
 				let image
 				if (this.imagePath) {
-					console.log(item)
-					console.log(this.imagePath)
 					image = get(item, this.imagePath)
 				} else {
 					image = item
 				}
-				if (image) {
+				if (image) { // Some entries may not have an image at all
 					item.baseImageUrl = '/images/' + image.id + '/file/' + getEncodedImageName(image)
 				}
 			})
