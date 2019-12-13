@@ -236,18 +236,18 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	}
 
 	/**
-	 * Gets the {@link Author} who wworked on this Derivative.
+	 * Gets the {@link Author} who worked on this Derivative.
 	 * 
-	 * @return the {@link Author} who wworked on this Derivative
+	 * @return the {@link Author} who worked on this Derivative
 	 */
 	public Author getArtist() {
 		return artist;
 	}
 
 	/**
-	 * Sets the {@link Author} who wworked on this Derivative.
+	 * Sets the {@link Author} who worked on this Derivative.
 	 * 
-	 * @param artist the new {@link Author} who wworked on this Derivative
+	 * @param artist the new {@link Author} who worked on this Derivative
 	 */
 	public void setArtist(Author artist) {
 		this.artist = artist;

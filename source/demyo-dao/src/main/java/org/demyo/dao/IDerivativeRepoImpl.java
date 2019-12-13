@@ -21,6 +21,17 @@ public class IDerivativeRepoImpl implements IDerivativeCustomRepo {
 	private IDerivativeRepo repo;
 
 	@Override
+	public List<Derivative> findAllForIndex(Sort sort) {
+		List<Derivative> list = repo.findAll(sort);
+		// See IPublisherRepoImpl for rationale behind this
+		// In this case, having multiple images means that the Derivative is fetched multiple times
+		for (Derivative deriv : list) {
+			Hibernate.initialize(deriv.getImages());
+		}
+		return list;
+	}
+
+	@Override
 	public List<Derivative> findAllForStickers(Sort sort) {
 		List<Derivative> list = repo.findAll(sort);
 		// See IPublisherRepoImpl for rationale behind this

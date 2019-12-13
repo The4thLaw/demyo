@@ -1,8 +1,5 @@
 package org.demyo.dao;
 
-import java.util.List;
-
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,9 +11,12 @@ import org.demyo.model.Derivative;
  */
 @Repository
 public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCustomRepo {
-	@Query("select x from #{#entityName} x")
+	/*
+	TODO: search the Hibernate docs and figure out why we get multiple results. Distinct doesn't help.
+	@Query("select distinct x from #{#entityName} x")
 	@EntityGraph("Derivative.forIndex")
 	List<Derivative> findAllForIndex(Sort sort);
+	/**/
 
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")

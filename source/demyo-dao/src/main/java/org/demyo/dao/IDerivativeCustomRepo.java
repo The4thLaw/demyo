@@ -15,6 +15,14 @@ import org.demyo.model.Derivative;
  */
 public interface IDerivativeCustomRepo {
 	/**
+	 * Returns a {@link List} of entities meeting request order. Will also fetch the related images.
+	 * 
+	 * @param sort The order to respect
+	 * @return The entities
+	 */
+	List<Derivative> findAllForIndex(Sort sort);
+
+	/**
 	 * Returns a {@link List} of entities meeting request order. Will also fetch the related artists.
 	 * 
 	 * @param sort The order to respect
