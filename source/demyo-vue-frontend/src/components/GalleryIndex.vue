@@ -12,6 +12,7 @@
 		<div class="c-GalleryIndex__list">
 			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
 				<img
+					v-if="item.baseImageUrl"
 					v-img:group="{src: `${item.baseImageUrl}`}"
 					:src="`${item.baseImageUrl}?w=250`"
 					:srcset="`
@@ -72,11 +73,15 @@ export default {
 			slice.map(item => {
 				let image
 				if (this.imagePath) {
+					console.log(item)
+					console.log(this.imagePath)
 					image = get(item, this.imagePath)
 				} else {
 					image = item
 				}
-				item.baseImageUrl = '/images/' + image.id + '/file/' + getEncodedImageName(image)
+				if (image) {
+					item.baseImageUrl = '/images/' + image.id + '/file/' + getEncodedImageName(image)
+				}
 			})
 			return slice
 		},

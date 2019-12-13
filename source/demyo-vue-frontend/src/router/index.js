@@ -7,6 +7,7 @@ import AuthorEdit from '@/views/authors/AuthorEdit'
 import AuthorIndex from '@/views/authors/AuthorIndex'
 import AuthorView from '@/views/authors/AuthorView'
 import ImageIndex from '@/views/images/ImageIndex'
+import DerivativeIndex from '@/views/derivatives/DerivativeIndex'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -42,6 +43,11 @@ const routes = [
 		path: '/images',
 		name: 'ImageIndex',
 		component: ImageIndex
+	},
+	{
+		path: '/derivatives',
+		name: 'DerivativeIndex',
+		component: DerivativeIndex
 	},
 	{
 		path: '/about',
