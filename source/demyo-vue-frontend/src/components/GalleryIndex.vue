@@ -147,7 +147,7 @@ export default {
 	img {
 		// Crop overly large images
 		width: 250px;
-		max-height: 400px;
+		height: 400px;
 		object-fit: contain;
 	}
 }
