@@ -5,7 +5,7 @@
 				<v-list-group
 					v-if="value.isSeries"
 					:key="key"
-					:value="value.albums.length < albumsPerSeriesThreshold"
+					:value="false"
 					sub-group
 				>
 					<template v-slot:activator>
@@ -58,7 +58,6 @@ export default {
 
 	data() {
 		return {
-			albumsPerSeriesThreshold: 3,
 			itemsPerPage: 10,
 			currentPage: 1
 		}
