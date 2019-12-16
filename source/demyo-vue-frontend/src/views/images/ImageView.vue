@@ -139,7 +139,7 @@ export default {
 			deleteStub(this,
 				() => imageService.deleteModel(this.image.id),
 				'quickTasks.delete.image.confirm.done',
-				'/images/')
+				'ImageIndex')
 		}
 	}
 }

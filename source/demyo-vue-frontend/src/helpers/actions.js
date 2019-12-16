@@ -23,13 +23,13 @@ export async function saveStub(component, handler, routeName) {
  * @param {Vue} component The Vue component
  * @param {Function} handler The function that will perform the deletion
  * @param {String} confirmationLabel The confirmation snackbar label key
- * @param {String} path The path to redirect to
+ * @param {String} routeName The named route to redirect to on success
  */
-export async function deleteStub(component, handler, confirmationLabel, path) {
+export async function deleteStub(component, handler, confirmationLabel, routeName) {
 	component.appTasksMenu = false
 	let deleted = await handler()
 	if (deleted) {
 		component.$store.dispatch('ui/showSnackbar', component.$t(confirmationLabel))
-		component.$router.push({ path: path })
+		component.$router.push({ name: routeName })
 	}
 }
