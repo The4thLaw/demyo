@@ -14,7 +14,7 @@
 						</v-list-item-content>
 					</template>
 
-					<v-list-item v-for="album in value.albums" :key="album.id" :to="`/albums/view/${album.id}`">
+					<v-list-item v-for="album in value.albums" :key="album.id" :to="`/albums/${album.id}/view`">
 						<v-list-item-content class="pl-4">
 							<v-list-item-title v-text="album.title" />
 							<v-list-item-subtitle>
