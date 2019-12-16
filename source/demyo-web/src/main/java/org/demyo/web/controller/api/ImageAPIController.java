@@ -1,5 +1,7 @@
 package org.demyo.web.controller.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +31,12 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 	@GetMapping("/{modelId}/dependencies")
 	@JsonView(ModelView.ImageDependencies.class)
 	public Image dependencies(@PathVariable long modelId) {
-		return getService().getImageDependencies(modelId);
+		return service.getImageDependencies(modelId);
+	}
+
+	@GetMapping("/detect")
+	public List<String> detectDiskImages() {
+		return service.findUnknownDiskImages();
 	}
 
 	@Override
