@@ -20,6 +20,7 @@
 <script>
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
+import { saveStub } from '@/helpers/actions'
 import { mandatory } from '@/helpers/rules'
 import imageService from '@/services/image-service'
 
@@ -68,16 +69,10 @@ export default {
 			this.initialized = true
 		},
 
-		async save() {
-			if (!this.$refs.form.validate()) {
-				return
-			}
-			let id = await imageService.save(this.image)
-			if (id <= 0) {
-				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
-			} else {
-				this.$router.push({ path: `/images/${id}/view` })
-			}
+		save() {
+			saveStub(this, () => {
+				return imageService.save(this.image)
+			}, 'ImageView')
 		},
 
 		reset() {

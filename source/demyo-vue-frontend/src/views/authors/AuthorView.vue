@@ -40,7 +40,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
-import { deleteStub } from '@/helpers/app-tasks'
+import { deleteStub } from '@/helpers/actions'
 import authorService from '@/services/author-service'
 
 export default {

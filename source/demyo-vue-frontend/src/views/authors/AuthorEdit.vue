@@ -54,6 +54,7 @@ import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
+import { saveStub } from '@/helpers/actions'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import authorService from '@/services/author-service'
@@ -125,16 +126,10 @@ export default {
 			this.allImagesLoading = false
 		},
 
-		async save() {
-			if (!this.$refs.form.validate()) {
-				return
-			}
-			let id = await authorService.save(this.author)
-			if (id <= 0) {
-				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
-			} else {
-				this.$router.push({ path: `/authors/${id}/view` })
-			}
+		save() {
+			saveStub(this, () => {
+				return authorService.save(this.author)
+			}, 'AuthorView')
 		},
 
 		reset() {

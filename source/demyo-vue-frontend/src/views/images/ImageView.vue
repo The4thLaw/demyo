@@ -57,7 +57,7 @@
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import SectionCard from '@/components/SectionCard'
-import { deleteStub } from '@/helpers/app-tasks'
+import { deleteStub } from '@/helpers/actions'
 import { getEncodedImageName } from '@/helpers/images'
 import imageService from '@/services/image-service'
 
