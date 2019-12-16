@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
@@ -193,7 +194,9 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	@Transient
 	@JsonView(ModelView.Basic.class)
 	public Image getMainImage() {
-		if (images == null || images.isEmpty()) {
+		// In some cases (such as when loading a Derivative from its Image), this collection could be
+		// uninitialized
+		if (!Hibernate.isInitialized(images) || images == null || images.isEmpty()) {
 			return null;
 		}
 		return images.iterator().next();
