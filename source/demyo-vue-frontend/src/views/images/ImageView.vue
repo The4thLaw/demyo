@@ -5,7 +5,7 @@
 			<AppTask
 				:label="$t('quickTasks.delete.image')"
 				:confirm="$t('quickTasks.delete.image.confirm')"
-				icon="mdi-account-minus"
+				icon="mdi-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteImage"
 			/>
@@ -16,14 +16,44 @@
 			<img :src="imageUrl">
 			<p>{{ image.description }}</p>
 		</SectionCard>
-		<!--
-			TODO: dependencies
-		-->
+
+		<SectionCard
+			v-if="dependenciesLoading || hasDependencies"
+			:loading="dependenciesLoading"
+			:title="$t('page.Image.usedIn')"
+		>
+			<v-list>
+				<template v-for="(value, key) in parsedDependencies">
+					<v-list-group
+						v-if="value.length > 0"
+						:key="key"
+						:value="true"
+						sub-group
+					>
+						<template v-slot:activator>
+							<v-list-item-content>
+								<v-list-item-title v-text="$t('page.Image.usedIn.' + key)" />
+							</v-list-item-content>
+						</template>
+
+						<v-list-item v-for="item in value" :key="item.id" :to="`/${key}/${item.id}/view`">
+							<v-list-item-content class="pl-4">
+								<v-list-item-title>
+									<template v-if="key === 'albums' && item.series">
+										{{ item.series.name }} -
+									</template>
+									{{ item.identifyingName }}
+								</v-list-item-title>
+							</v-list-item-content>
+						</v-list-item>
+					</v-list-group>
+				</template>
+			</v-list>
+		</SectionCard>
 	</v-container>
 </template>
 
 <script>
-import AlbumTextList from '@/components/AlbumTextList'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import SectionCard from '@/components/SectionCard'
@@ -35,7 +65,6 @@ export default {
 	name: 'ImageView',
 
 	components: {
-		AlbumTextList,
 		AppTask,
 		AppTasks,
 		SectionCard
@@ -50,7 +79,9 @@ export default {
 	data() {
 		return {
 			mainLoading: true,
+			dependenciesLoading: true,
 			image: {},
+			dependencies: {},
 			appTasksMenu: false
 		}
 	},
@@ -59,6 +90,28 @@ export default {
 		imageUrl() {
 			// TODO: should match the context root. Also check other occurrences
 			return '/images/' + this.image.id + '/file/' + getEncodedImageName(this.image)
+		},
+
+		hasDependencies() {
+			return this.dependencies.albumCovers ||
+				this.dependencies.albumOtherImages ||
+				this.dependencies.authors ||
+				this.dependencies.collections ||
+				this.dependencies.derivatives ||
+				this.dependencies.publishers
+		},
+
+		parsedDependencies() {
+			let covs = this.dependencies.albumCovers || []
+			let other = this.dependencies.albumOtherImages || []
+			// This won't work if an image is used twice in an Album, although that hardly makes any sense
+			return {
+				albums: [ ...covs, ...other ],
+				authors: this.dependencies.authors || [],
+				collections: this.dependencies.collections || [],
+				derivatives: this.dependencies.derivatives || [],
+				publishers: this.dependencies.publishers || []
+			}
 		}
 	},
 
@@ -77,6 +130,9 @@ export default {
 
 			this.image = await imageService.findById(id)
 			this.mainLoading = false
+
+			this.dependencies = await imageService.getImageDependencies(id)
+			this.dependenciesLoading = false
 		},
 
 		deleteImage() {
