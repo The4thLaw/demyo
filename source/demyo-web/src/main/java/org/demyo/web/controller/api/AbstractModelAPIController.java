@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +60,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	}
 
 	@GetMapping("/{modelId}")
-	public M view(@PathVariable long modelId, Model model) {
+	public M view(@PathVariable long modelId) {
 		return getService().getByIdForView(modelId);
 	}
 
