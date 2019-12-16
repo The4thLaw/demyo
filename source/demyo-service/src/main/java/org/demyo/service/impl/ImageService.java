@@ -87,6 +87,16 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public Image getImageDependencies(long id) {
+		Image entity = repo.findOneForDependencies(id);
+		if (entity == null) {
+			throw new EntityNotFoundException("No Image for ID " + id);
+		}
+		return entity;
+	}
+
+	@Override
 	protected IModelRepo<Image> getRepo() {
 		return repo;
 	}

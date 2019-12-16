@@ -89,4 +89,11 @@ public interface IImageService extends IModelService<Image> {
 	 */
 	Resource getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException;
 
+	/**
+	 * Returns an Image and its dependent albums, authors, etc.
+	 * 
+	 * @param id The image ID
+	 * @return The Image object, populated with its dependencies.
+	 */
+	Image getImageDependencies(long id);
 }

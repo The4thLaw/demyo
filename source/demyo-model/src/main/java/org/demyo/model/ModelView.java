@@ -65,4 +65,10 @@ public final class ModelView {
 	 */
 	public interface Basic extends Minimal {
 	}
+
+	/**
+	 * A view used specifically for retrieving Image dependencies.
+	 */
+	public interface ImageDependencies extends Basic {
+	}
 }
