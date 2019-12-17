@@ -1,10 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard>
-				<h2 class="subtitle-1 primary--text">
-					{{ $t('fieldset.Author.identity') }}
-				</h2>
+			<SectionCard :subtitle="$t('fieldset.Author.identity')">
 				<v-row>
 					<v-col :sm="12" :md="4">
 						<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
@@ -26,10 +23,7 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard>
-				<h2 class="subtitle-1 primary--text">
-					{{ $t('fieldset.Author.biography') }}
-				</h2>
+			<SectionCard :subtitle="$t('fieldset.Author.biography')">
 				<v-row>
 					<v-col :sm="12" :md="6">
 						<label class="fieldLabel">{{ $t('field.Author.biography') }}</label>

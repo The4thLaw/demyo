@@ -5,6 +5,9 @@
 				<h1 v-if="title && !loading" class="display-1">
 					{{ title }}
 				</h1>
+				<h2 v-if="subtitle && !loading" class="subtitle-1 primary--text">
+					{{ subtitle }}
+				</h2>
 				<slot />
 			</template>
 			<div v-if="image" class="c-SectionCard__container">
@@ -55,6 +58,12 @@ export default {
 		},
 
 		title: {
+			type: String,
+			required: false,
+			default: undefined
+		},
+
+		subtitle: {
 			type: String,
 			required: false,
 			default: undefined
