@@ -16,7 +16,7 @@
 			</v-form>
 		</SectionCard>
 
-		<FormActions :show-reset="false" @save="save" />
+		<FormActions v-if="detectedImages.length > 0" :show-reset="false" @save="save" />
 	</v-container>
 </template>
 
@@ -76,7 +76,6 @@ export default {
 			 - Save the images (with overlay until refresh)
 			 - Show a confirmation toast with the right number of images
 			 - Refresh the page
-			 - Hide the save button if there are no detected images
 			*/
 		}
 	}
