@@ -17,6 +17,18 @@ class ImageService extends AbstractModelService {
 		let data = await axiosGet(`images/${id}/dependencies`, {})
 		return data
 	}
+
+	/**
+	 * Detects non-registered images currently on the disk.
+	 * @return {Promise<String[]>} The image paths
+	 */
+	detectDiskImages() {
+		// TODO: Remove the async/await in service functions and change JSDoc.
+		// They are useless unless we want to do something with the awaited value *in the service*.
+		// The fact that the function is async means we return a Promise anyway.
+		// A bit of a stupid mistake, really...
+		return axiosGet('/images/detect')
+	}
 }
 
 export default new ImageService()
