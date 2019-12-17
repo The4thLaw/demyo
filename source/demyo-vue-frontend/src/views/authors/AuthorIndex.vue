@@ -46,8 +46,7 @@ export default {
 	methods: {
 		async fetchData() {
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			let authors = await authorService.findForIndex()
-			this.authors = authors
+			this.authors = await authorService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		}
 	}
