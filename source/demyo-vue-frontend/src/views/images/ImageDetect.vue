@@ -1,6 +1,9 @@
 <template>
 	<v-container class="c-ImageDetect">
 		<SectionCard :subtitle="$t('title.add.image.detect')">
+			<v-alert border="left" type="info" text>
+				{{ $t('page.Image.add.recommendation') }}
+			</v-alert>
 			<v-form>
 				<v-checkbox
 					v-for="(label, index) in detectedImages" :key="index"
@@ -72,7 +75,6 @@ export default {
 			 - Refresh the page
 			 - Show a message if there are no detected images
 			 - Hide the save button if there are no detected images
-			 - Explain what the recommended way to add images is
 			*/
 		}
 	}
