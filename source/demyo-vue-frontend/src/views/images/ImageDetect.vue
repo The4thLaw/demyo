@@ -1,8 +1,11 @@
 <template>
 	<v-container class="c-ImageDetect">
 		<SectionCard :subtitle="$t('title.add.image.detect')">
-			<v-alert border="left" type="info" text>
-				{{ $t('page.Image.add.recommendation') }}
+			<v-alert v-if="detectedImages.length > 0" border="left" type="info" text>
+				{{ $t('page.Image.detect.recommendation') }}
+			</v-alert>
+			<v-alert v-if="!detecting && detectedImages.length == 0" border="left" type="warning" text>
+				{{ $t('page.Image.detect.noImages') }}
 			</v-alert>
 			<v-form>
 				<v-checkbox
@@ -73,7 +76,6 @@ export default {
 			 - Save the images (with overlay until refresh)
 			 - Show a confirmation toast with the right number of images
 			 - Refresh the page
-			 - Show a message if there are no detected images
 			 - Hide the save button if there are no detected images
 			*/
 		}
