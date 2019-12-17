@@ -1,5 +1,5 @@
 import AbstractModelService from './abstract-model-service'
-import { axiosGet } from '@/helpers/axios'
+import { axiosGet, axiosPost } from '@/helpers/axios'
 
 /**
  * API service for Authors.
@@ -20,7 +20,7 @@ class ImageService extends AbstractModelService {
 
 	/**
 	 * Detects non-registered images currently on the disk.
-	 * @return {Promise<String[]>} The image paths
+	 * @return {Promise<String[]>} The image paths.
 	 */
 	detectDiskImages() {
 		// TODO: Remove the async/await in service functions and change JSDoc.
@@ -28,6 +28,15 @@ class ImageService extends AbstractModelService {
 		// The fact that the function is async means we return a Promise anyway.
 		// A bit of a stupid mistake, really...
 		return axiosGet('/images/detect')
+	}
+
+	/**
+	 * Saves a set of detected images.
+	 * @param {String[]} images The paths of the images to add.
+	 * @return {Promise<Number[]>} The added image IDs.
+	 */
+	saveDiskImages(images) {
+		return axiosPost('/images/detect', images, [])
 	}
 }
 

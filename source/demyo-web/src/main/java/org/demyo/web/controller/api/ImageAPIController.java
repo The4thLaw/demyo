@@ -33,7 +33,14 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 		this.service = service;
 	}
 
-	// TODO: batch view that returns a set of images
+	@GetMapping("/batch/{modelIds}")
+	public List<Image> viewBatch(@PathVariable long[] modelIds) {
+		List<Image> images = new ArrayList<>(modelIds.length);
+		for (long modelId : modelIds) {
+			images.add(getService().getByIdForView(modelId));
+		}
+		return images;
+	}
 
 	/**
 	 * @see IImageService#getImageDependencies(long)

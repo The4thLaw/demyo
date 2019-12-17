@@ -16,12 +16,23 @@
 			</v-form>
 		</SectionCard>
 
+		<SectionCard v-if="addedImages.length" :subtitle="$t('page.image.detect.lastBatch')">
+			<GalleryIndex :items="addedImages">
+				<template v-slot:default="slotProps">
+					<router-link :to="`/images/${slotProps.item.id}/view`">
+						{{ slotProps.item.identifyingName }}
+					</router-link>
+				</template>
+			</GalleryIndex>
+		</SectionCard>
+
 		<FormActions v-if="detectedImages.length > 0" :show-reset="false" @save="save" />
 	</v-container>
 </template>
 
 <script>
 import FormActions from '@/components/FormActions'
+import GalleryIndex from '@/components/GalleryIndex'
 import SectionCard from '@/components/SectionCard'
 import imageService from '@/services/image-service'
 
@@ -30,6 +41,7 @@ export default {
 
 	components: {
 		FormActions,
+		GalleryIndex,
 		SectionCard
 	},
 
@@ -43,9 +55,10 @@ export default {
 		return {
 			detecting: true,
 			detectedImages: [],
-			// Directly working with the paths as indexes caused issues, possibly due to the special characters
+			// Iterating directly over this caused issues, possibly due to the special characters
 			// For example, the v-for wouldn't work (no iteration)
-			imageSelections: {}
+			imageSelections: {},
+			addedImages: []
 		}
 	},
 
@@ -57,26 +70,32 @@ export default {
 		async fetchData() {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.detectedImages = await imageService.detectDiskImages()
+			this.imageSelections = {}
 			this.detectedImages.forEach((v, i) => {
 				this.imageSelections[v] = false
 			})
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		},
 
-		save() {
+		async save() {
+			this.$store.dispatch('ui/enableGlobalOverlay')
+
+			this.addedImages = []
+
 			let selectedImages = []
 			for (let k in this.imageSelections) {
 				if (this.imageSelections[k]) {
 					selectedImages.push(k)
 				}
 			}
-			console.log(selectedImages)
-			/*
-			TODO:
-			 - Save the images (with overlay until refresh)
-			 - Show a confirmation toast with the right number of images
-			 - Refresh the page
-			*/
+			if (selectedImages.length <= 0) {
+				this.$store.dispatch('ui/disableGlobalOverlay')
+				return
+			}
+
+			const added = await imageService.saveDiskImages(selectedImages)
+			this.addedImages = await imageService.findMultipleById(added)
+			this.fetchData() // Will take care of hiding the overlay
 		}
 	}
 }

@@ -32,6 +32,17 @@ class AbstractModelService {
 		return data
 	}
 
+	/**
+	 * Finds a set of Models by their IDs.
+	 * @param {Number[]} ids The Model IDs
+	 * @return {Object[]} The Models
+	 */
+	async findMultipleById(ids) {
+		let idString = ids.join(',')
+		let data = await axiosGet(`${this.basePath}/batch/${idString}`, {})
+		return data
+	}
+
 	async save(model) {
 		let data
 		if (model.id) {
