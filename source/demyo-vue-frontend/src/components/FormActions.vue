@@ -3,7 +3,10 @@
 		<v-btn color="accent" class="c-FormActions__button" @click="$emit('save')">
 			{{ $t('button.save') }}
 		</v-btn>
-		<v-btn text color="primary" class="c-FormActions__button" @click="$emit('reset')">
+		<v-btn
+			v-if="showReset" text color="primary"
+			class="c-FormActions__button" @click="$emit('reset')"
+		>
 			{{ $t('button.reset') }}
 		</v-btn>
 	</div>
@@ -11,7 +14,14 @@
 
 <script>
 export default {
-	name: 'FormActions'
+	name: 'FormActions',
+
+	props: {
+		showReset: {
+			type: Boolean,
+			default: true
+		}
+	}
 }
 </script>
 
