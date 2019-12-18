@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 
 /**
- * Integration tests for the Derivative API.
+ * Integration tests for the Translation API.
  */
 public class TranslationAPIControllerIT extends AbstractAPIIT {
 	@Test
