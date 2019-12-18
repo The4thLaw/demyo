@@ -67,6 +67,7 @@ public class Author extends AbstractModel {
 	@URL
 	private String website;
 
+	// TODO: remove these when the switch to Vue is done
 	/** The {@link Album}s that this Author wrote. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "writers")
 	@SortComparator(AlbumAndSeriesComparator.class)

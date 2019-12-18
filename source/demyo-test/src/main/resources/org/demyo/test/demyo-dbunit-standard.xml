@@ -1,5 +1,6 @@
 <dataset>
-	<authors id="1" name="Buchet" fname="Philippe" />
+	<authors id="1" name="Morvan" fname="Jean-David" />
+	<authors id="2" name="Buchet" nickname="Bubuche" fname="Philippe" />
 
 	<publishers id="1" name="Delcourt" />
 	<publishers id="2" name="Dargaud" />

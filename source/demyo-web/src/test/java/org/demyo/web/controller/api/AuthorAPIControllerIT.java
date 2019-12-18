@@ -1,5 +1,9 @@
 package org.demyo.web.controller.api;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +14,6 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -27,14 +29,15 @@ import org.demyo.test.AbstractPersistenceTest;
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 // TODO [boot]: use @WebMvcTest when migrating to Spring Boot
 // TODO: extract abstract test class. Some tests could be automated completely (404 errors, for example) ?
-// TODO: build a good base dbunit xml (and adapt the other tests accordingly)
+// TODO: build a good base dbunit xml (and adapt the other tests accordingly) - Create the entries manually and then
+// export the database ?
 public class AuthorAPIControllerIT extends AbstractPersistenceTest {
 	@Autowired
 	private WebApplicationContext wac;
 	@Autowired
 	private CacheManager cacheManager;
 
-	private MockMvc mockMvc;
+	protected MockMvc mockMvc;
 
 	@Before
 	public void setup() {
@@ -59,13 +62,24 @@ public class AuthorAPIControllerIT extends AbstractPersistenceTest {
 
 	@Test
 	public void index() throws Exception {
-		// TODO: extract to other method
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/authors/421337")) //
-				.andExpect(MockMvcResultMatchers.status().isNotFound());
+		mockMvc.perform(get("/api/authors/")) //
+				.andExpect(status().isOk()) //
+				.andExpect(jsonPath("$", Matchers.hasSize(2))) //
+				// Check first author. Include some checks for properties that shouldn't be mentioned
+				.andExpect(jsonPath("$[0].id").value(2)) //
+				.andExpect(jsonPath("$[0].name").value("Buchet")) //
+				.andExpect(jsonPath("$[0].firstName").value("Philippe")) //
+				.andExpect(jsonPath("$[0].nickname").doesNotExist()) //
+				.andExpect(jsonPath("$[0].albumsAsWriter").doesNotExist())
+				// Check second author. Only basic stuff
+				.andExpect(jsonPath("$[1].id").value(1)) //
+				.andExpect(jsonPath("$[1].name").value("Morvan")) //
+				.andExpect(jsonPath("$[1].firstName").value("Jean-David"));
+	}
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/authors/")) //
-				.andExpect(MockMvcResultMatchers.status().isOk()) //
-				// .andExpect(MockMvcResultMatchers.content().string("")) //
-				.andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
+	@Test
+	public void testMissingEntityView() throws Exception {
+		mockMvc.perform(get("/api/authors/421337")) //
+				.andExpect(status().isNotFound());
 	}
 }
