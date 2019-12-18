@@ -16,7 +16,7 @@
 			</v-form>
 		</SectionCard>
 
-		<SectionCard v-if="addedImages.length" :subtitle="$t('page.image.detect.lastBatch')">
+		<SectionCard v-if="addedImages.length" :subtitle="$t('page.Image.detect.lastBatch')">
 			<GalleryIndex :items="addedImages">
 				<template v-slot:default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
