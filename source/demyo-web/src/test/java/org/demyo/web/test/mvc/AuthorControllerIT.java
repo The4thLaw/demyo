@@ -6,14 +6,15 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.demyo.web.controller.AuthorController;
-
 import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
+import org.demyo.web.controller.AuthorController;
 
 /**
  * Integration tests for {@link AuthorController}.
@@ -25,6 +26,7 @@ public class AuthorControllerIT extends AbstractMvcTest {
 	 * @throws IOException in case of IO error.
 	 */
 	@Test
+	@Ignore("Broken by the Vue.js switch, due to be phased out")
 	public void testAll() throws IOException {
 		HtmlPage page = getWebClient().getPage("http://localhost/authors/add");
 
