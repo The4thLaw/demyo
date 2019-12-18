@@ -121,6 +121,14 @@
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>htmlunit-driver</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.skyscreamer</groupId>
+			<artifactId>jsonassert</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+		</dependency>
 		
 		<!-- Some dependencies related to JEE, provided by the container.
 			We need to declare them for unit tests to work -->

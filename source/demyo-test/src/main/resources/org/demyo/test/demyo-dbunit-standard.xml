@@ -1,4 +1,6 @@
 <dataset>
+	<authors id="1" name="Buchet" fname="Philippe" />
+
 	<publishers id="1" name="Delcourt" />
 	<publishers id="2" name="Dargaud" />
 	
