@@ -12,6 +12,7 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -29,7 +30,7 @@ import org.demyo.service.impl.AbstractServiceTest;
  * Not actually meant to be run as a JUnit test in CI.
  * </p>
  */
-// @Ignore("This is just an utility class") // Comment this to launch this utility
+@Ignore("This is just an utility class") // Comment this to launch this utility
 public class DBUnitExtractor extends AbstractServiceTest {
 	@Autowired
 	private IImportService importService;
