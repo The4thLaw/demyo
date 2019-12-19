@@ -64,11 +64,13 @@
   <AUTHORS ID="610" NAME="Chan" FNAME="Pierre-Mony" WEBSITE="http://pmchan.fr.nf/"/>
   <AUTHORS ID="717" NAME="Montlló Ribó" FNAME="Miquel" NICKNAME="Miki" WEBSITE="http://miquelmontllo.blogspot.be/"/>
   <AUTHORS ID="718" NAME="Picard" FNAME="Alice"/>
+  <SERIES ID="2" NAME="Sample empty series" COMPLETED="false"/>
   <SERIES ID="99" NAME="Sillage" COMPLETED="false" WEBSITE="http://www.poukram.org/" LOCATION="Bibliothèque, F2"/>
   <SERIES ID="232" NAME="Sillage - Premières Armes" COMPLETED="false" LOCATION="Bibliothèque, F2"/>
   <SERIES_RELATIONS MAIN="99" SUB="232"/>
   <SERIES_RELATIONS MAIN="232" SUB="99"/>
   <TAGS ID="1" NAME="science-fiction"/>
+  <TAGS ID="3" NAME="comic" FGCOLOUR="#ffffff" BGCOLOUR="#1c1d82"/>
   <TAGS ID="7" NAME="dédicacé"/>
   <TAGS ID="10" NAME="vernis sélectif"/>
   <TAGS ID="13" NAME="coffret"/>
@@ -326,7 +328,10 @@
   <READERS_FAVOURITE_ALBUMS READER_ID="1" ALBUM_ID="1313"/>
   <READERS_READING_LIST READER_ID="1" ALBUM_ID="1459"/>
   <CONFIGURATION ID="8" CONFIG_KEY="paging.textPageSize" CONFIG_VALUE="60" READER_ID="1"/>
-  <CONFIGURATION ID="9" CONFIG_KEY="language" CONFIG_VALUE="fr-BE" READER_ID="1"/>
+  <CONFIGURATION ID="9" CONFIG_KEY="language" CONFIG_VALUE="en" READER_ID="1"/>
   <CONFIGURATION ID="10" CONFIG_KEY="paging.imagePageSize" CONFIG_VALUE="15" READER_ID="1"/>
+  <CONFIGURATION ID="11" CONFIG_KEY="thumbnail.width" CONFIG_VALUE="220" READER_ID="1"/>
+  <CONFIGURATION ID="12" CONFIG_KEY="header.quickLinks" CONFIG_VALUE="[]" READER_ID="1"/>
   <CONFIGURATION ID="13" CONFIG_KEY="paging.albumPageSize" CONFIG_VALUE="20" READER_ID="1"/>
+  <CONFIGURATION ID="14" CONFIG_KEY="thumbnail.height" CONFIG_VALUE="200" READER_ID="1"/>
 </dataset>

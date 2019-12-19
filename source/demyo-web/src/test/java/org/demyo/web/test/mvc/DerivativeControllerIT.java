@@ -29,9 +29,9 @@ public class DerivativeControllerIT extends AbstractMvcTest {
 		// dependent select don't fire
 		// Still better than nothing: we make sure that the controller doesn't reject Derivatives with empty Series
 		getJavaScriptExecutor().executeScript("$('#field_derivative_album_id').html('')"
-				+ ".append('<option value=\"2\" selected=\"selected\">2</option>')");
+				+ ".append('<option value=\"1313\" selected=\"selected\">1313</option>')");
 		// Set the Album to a one shot
-		setFieldValue("field_derivative_album_id", "2");
+		setFieldValue("field_derivative_album_id", "1313");
 
 		submitMainModelForm();
 

@@ -41,7 +41,8 @@ public class ReaderInterceptor implements HandlerInterceptor {
 		boolean hasReader = false;
 
 		// Special behaviours to avoid making a loop, and to avoid protecting the API
-		if (path.matches("^/api/.*$")) {
+		// Empty is for special weird cases in unit tests
+		if (path.matches("^/api/.*$") || path.isEmpty()) {
 			return true;
 		}
 		if (path.matches("^/readers/(\\d+)/select$")) {

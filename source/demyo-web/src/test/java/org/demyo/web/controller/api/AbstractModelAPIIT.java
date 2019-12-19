@@ -22,6 +22,7 @@ public abstract class AbstractModelAPIIT extends AbstractAPIIT {
 	@Test
 	public void genTestIndex() throws Exception {
 		mockMvc.perform(get(apiRoot)) //
+				// .andDo(MockMvcResultHandlers.print()) //
 				.andExpect(status().isOk()) //
 				.andExpect(jsonPath("$", hasSize(Matchers.greaterThan(0))));
 	}

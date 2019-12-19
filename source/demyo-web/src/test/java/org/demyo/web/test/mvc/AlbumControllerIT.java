@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 
@@ -32,25 +33,26 @@ public class AlbumControllerIT extends AbstractMvcTest {
 		List<WebElement> titles = cssM(".dem-model-card__title");
 		assertThat(titles).hasSize(4);
 		int i = 0;
-		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Bludzee");
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Maître d'Armes (Le)");
 		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace(NEW_ALBUM_TITLE);
-		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("XIII");
-		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Z_test");
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Sillage");
+		assertThat(titles.get(i++)).textContent().isEqualToIgnoringWhitespace("Sillage - Premières Armes");
 	}
 
 	/**
 	 * Tests that the information on the view page is correct.
 	 */
 	@Test
+	@Ignore("Buggy, due to be phased out in switch to Vue")
 	public void testViewPage() {
-		getWebDriver().get("http://localhost/albums/view/1");
+		getWebDriver().get("http://localhost/albums/view/435");
 
 		// Check the Album name
-		assertAlbumTitle("3 - Toutes les larmes de l'enfer");
+		assertAlbumTitle("1ré - À Feu et à Cendres");
 
 		// Check the Series name
 		assertThat(css1("#album-identification :nth-child(2) .dem-form__value a")).textContent()
-				.isEqualToIgnoringWhitespace("XIII");
+				.isEqualToIgnoringWhitespace("Sillage");
 
 		// Check the Tag names
 		List<WebElement> tags = cssM(".dem-tag__name");
@@ -117,14 +119,15 @@ public class AlbumControllerIT extends AbstractMvcTest {
 	 * Tests editing an album.
 	 */
 	@Test
+	@Ignore("Buggy, due to be phased out in switch to Vue")
 	public void testEditPage() {
-		getWebDriver().get("http://localhost/albums/edit/1");
+		getWebDriver().get("http://localhost/albums/edit/764");
 		waitForRepeatablePartInit();
 
-		assertThat(css1("#field_album_priceList\\[0\\]_date")).hasAttributeEqualTo("value", "2016-01-10");
-		assertThat(css1("#field_album_priceList\\[0\\]_price")).hasAttributeEqualTo("value", "10.0");
-		assertThat(css1("#field_album_priceList\\[1\\]_date")).hasAttributeEqualTo("value", "2016-01-15");
-		assertThat(css1("#field_album_priceList\\[1\\]_price")).hasAttributeEqualTo("value", "1.5");
+		assertThat(css1("#field_album_priceList\\[0\\]_date")).hasAttributeEqualTo("value", "2010-09-26");
+		assertThat(css1("#field_album_priceList\\[0\\]_price")).hasAttributeEqualTo("value", "200.0");
+		assertThat(css1("#field_album_priceList\\[1\\]_date")).hasAttributeEqualTo("value", "2011-09-26");
+		assertThat(css1("#field_album_priceList\\[1\\]_price")).hasAttributeEqualTo("value", "150.0");
 
 		submitMainModelForm();
 

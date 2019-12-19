@@ -6,8 +6,6 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.demyo.web.controller.CollectionController;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
@@ -15,6 +13,8 @@ import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+import org.demyo.web.controller.CollectionController;
 
 /**
  * Integration tests for {@link CollectionController}.
@@ -29,7 +29,7 @@ public class CollectionControllerIT extends AbstractMvcTest {
 	 */
 	@Test
 	public void testDelete() throws IOException {
-		String viewUrl = "http://localhost/collections/view/1";
+		String viewUrl = "http://localhost/collections/view/9";
 		HtmlPage page = getWebClient().getPage(viewUrl);
 
 		// Delete

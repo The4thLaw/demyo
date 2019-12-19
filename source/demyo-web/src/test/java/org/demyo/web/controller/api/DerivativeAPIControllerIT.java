@@ -23,10 +23,10 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	public void index() throws Exception {
 		mockMvc.perform(get("/api/derivatives/")) //
 				.andExpect(status().isOk()) //
-				.andExpect(jsonPath("$", hasSize(3))) //
+				.andExpect(jsonPath("$", hasSize(28))) //
 				// Check first entry. Includes some checks for properties that shouldn't be mentioned
-				.andExpect(jsonPath("$[0].id").value(3)) //
-				.andExpect(jsonPath("$[0].album.id").value(2)) //
+				.andExpect(jsonPath("$[0].id").value(205)) //
+				.andExpect(jsonPath("$[0].album.id").value(1313)) //
 				.andExpect(jsonPath("$[0].total").doesNotExist()) //
 				.andExpect(jsonPath("$[0].artist").doesNotExist());
 	}

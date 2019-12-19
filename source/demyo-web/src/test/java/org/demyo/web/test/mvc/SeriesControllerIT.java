@@ -2,12 +2,12 @@ package org.demyo.web.test.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.demyo.web.controller.SeriesController;
-
 import org.junit.Test;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+import org.demyo.web.controller.SeriesController;
 
 /**
  * Integration tests for {@link SeriesController}.
@@ -24,14 +24,14 @@ public class SeriesControllerIT extends AbstractMvcTest {
 	 */
 	@Test
 	public void testCompletionAndLocation() {
-		final String url = "http://localhost/series/view/2";
-		final String sampleLocation = "My location";
+		final String url = "http://localhost/series/view/99";
+		final String sampleLocation = "Bibliothèque, F2";
 
 		getWebDriver().get(url);
 		assertThat(getWebDriver().getPageSource()).contains(ONGOING_SERIES_LABEL);
 		assertThat(getWebDriver().getPageSource()).doesNotContain(COMLETED_SERIES_LABEL);
 
-		getWebDriver().get("http://localhost/series/edit/2");
+		getWebDriver().get("http://localhost/series/edit/99");
 		css1("#field_series_location").sendKeys(sampleLocation);
 		submitMainModelForm();
 		assertThat(getWebDriver().getCurrentUrl()).isEqualTo(url);
@@ -39,14 +39,14 @@ public class SeriesControllerIT extends AbstractMvcTest {
 		assertThat(getWebDriver().getPageSource()).contains(ONGOING_SERIES_LABEL);
 		assertThat(getWebDriver().getPageSource()).doesNotContain(COMLETED_SERIES_LABEL);
 
-		getWebDriver().get("http://localhost/series/edit/2");
+		getWebDriver().get("http://localhost/series/edit/99");
 		css1("label[for=field_series_completed]").click();
 		submitMainModelForm();
 		assertThat(getWebDriver().getPageSource()).contains(sampleLocation);
 		assertThat(getWebDriver().getPageSource()).contains(COMLETED_SERIES_LABEL);
 		assertThat(getWebDriver().getPageSource()).doesNotContain(ONGOING_SERIES_LABEL);
 
-		getWebDriver().get("http://localhost/series/edit/2");
+		getWebDriver().get("http://localhost/series/edit/99");
 		setFieldValue("field_series_location", "");
 		submitMainModelForm();
 		assertThat(getWebDriver().getPageSource()).doesNotContain(sampleLocation);
