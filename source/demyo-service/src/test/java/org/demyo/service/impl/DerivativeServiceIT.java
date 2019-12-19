@@ -35,10 +35,9 @@ public class DerivativeServiceIT extends AbstractServiceTest {
 	@Transactional(readOnly = true)
 	public void testOrdering() {
 		List<Derivative> derivs = service.findPaginated(1).getContent();
-		assertThat(derivs.get(0).getAlbum().getTitle()).isEqualTo("Bludzee");
+		assertThat(derivs.get(0).getAlbum().getTitle()).isEqualTo("Maître d'Armes (Le)");
 		assertThat(derivs.get(1).getSeries().getName()).isEqualTo("Sillage");
-		assertThat(derivs.get(2).getSeries().getName()).isEqualTo("XIII");
-		assertThat(derivs.get(2).getAlbum().getTitle()).isEqualTo("Toutes les larmes de l'enfer");
+		assertThat(derivs.get(20).getAlbum().getTitle()).isEqualTo("Collection Privée");
 	}
 
 	/**
@@ -51,7 +50,7 @@ public class DerivativeServiceIT extends AbstractServiceTest {
 	public void testLargeDerivativeNumbers() {
 		Derivative deriv = new Derivative();
 		deriv.setType(typeService.getByIdForEdition(1L));
-		deriv.setSeries(seriesService.getByIdForEdition(1L));
+		deriv.setSeries(seriesService.getByIdForEdition(232L));
 		deriv.setNumber(2_000_000_000);
 		deriv.setTotal(2_000_000_000);
 		service.save(deriv);

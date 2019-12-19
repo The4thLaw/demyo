@@ -43,9 +43,10 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 		expFile.delete();
 		LOGGER.error(expContent);
 
-		assertThat(expContent).contains("<reader id=\"2\" name=\"Sarah\" colour=\"#FF69B4\">");
-		assertThat(expContent).contains("<favourite-series ref=\"1\"/>");
-		assertThat(expContent).contains("<reading-list-entry ref=\"2\"/>");
+		assertThat(expContent).contains("<reader id=\"1\" name=\"Xavier\" colour=\"#304ffe\">");
+		assertThat(expContent).contains("<favourite-series ref=\"99\"/>");
+		assertThat(expContent).contains("<favourite-album ref=\"1313\"/>");
+		assertThat(expContent).contains("<reading-list-entry ref=\"1459\"/>");
 
 	}
 }

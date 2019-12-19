@@ -2,14 +2,14 @@ package org.demyo.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.demyo.model.Tag;
-import org.demyo.service.ITagService;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+import org.demyo.model.Tag;
+import org.demyo.service.ITagService;
 
 /**
  * Tests for {@link TagService}.
@@ -23,25 +23,25 @@ public class TagServiceIT extends AbstractServiceTest {
 	public void testGetByIdForView() {
 		Tag tag = tagService.getByIdForView(1);
 		assertThat(tag.getId()).isEqualTo(1);
-		assertThat(tag.getName()).isEqualTo("action");
-		assertThat(tag.getTaggedAlbums().size()).isEqualTo(1);
-		assertThat(tag.getTaggedAlbums().first().getTitle()).isEqualTo("Toutes les larmes de l'enfer");
+		assertThat(tag.getName()).isEqualTo("science-fiction");
+		assertThat(tag.getTaggedAlbums().size()).isEqualTo(24);
+		assertThat(tag.getTaggedAlbums().first().getTitle()).isEqualTo("Le Collectionneur");
 	}
 
 	@Test
 	public void testSave() {
 		Tag tagToSave = new Tag();
-		tagToSave.setId(1L);
-		tagToSave.setName("action");
+		tagToSave.setId(21L);
+		tagToSave.setName("one shot");
 		tagToSave.setBgColour("000000");
 		tagService.save(tagToSave);
 
-		Tag savedTag = tagService.getByIdForView(1);
-		assertThat(savedTag.getId()).isEqualTo(1);
+		Tag savedTag = tagService.getByIdForView(21L);
+		assertThat(savedTag.getId()).isEqualTo(21L);
 		assertThat(savedTag.getBgColour()).isEqualTo("000000");
 		// Check that the association was preserved even though we don't set the albums
 		assertThat(savedTag.getTaggedAlbums()).isNotNull();
 		assertThat(savedTag.getTaggedAlbums().size()).isEqualTo(1);
-		assertThat(savedTag.getTaggedAlbums().first().getTitle()).isEqualTo("Toutes les larmes de l'enfer");
+		assertThat(savedTag.getTaggedAlbums().first().getTitle()).isEqualTo("Maître d'Armes (Le)");
 	}
 }

@@ -109,7 +109,8 @@
   <ALBUMS ID="1313" TITLE="Maître d&apos;Armes (Le)" PUBLISHER_ID="1" FIRST_EDITION="2015-10-01" ISBN="978-2-5050-6342-1" ACQUISITION_DATE="2016-10-16" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Not&amp;eacute;&amp;nbsp;&lt;em&gt;Quatri&amp;egrave;me &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="250.0" PAGES="94" LOCATION="Bibliothèque, E6" MARKED_AS_FIRST_EDITION="false"/>
   <ALBUMS ID="1370" SERIES_ID="99" NUMBER="19.0" TITLE="Temps mort" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2016-10-01" THIS_EDITION="2016-10-01" ISBN="978-2-7560-6486-4" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COVER_ID="947" COMMENT="&lt;p&gt;Not&amp;eacute; &lt;em&gt;premi&amp;egrave;re &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
   <ALBUMS ID="1459" SERIES_ID="99" NUMBER="17.0" NUMBER_SUFFIX="TL" TITLE="Grands Froids" PUBLISHER_ID="3" COLLECTION_ID="9" ACQUISITION_DATE="2017-10-14" PURCHASE_PRICE="69.0" WISHLIST="false" BINDING_ID="3" COMMENT="&lt;p&gt;Tirage num&amp;eacute;rot&amp;eacute; 226/450, r&amp;eacute;alis&amp;eacute; par Bruno Graff.&lt;/p&gt; &lt;p&gt;Tir&amp;eacute; avec 3 ex-libris dont 1 sign&amp;eacute;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS_PRICES/>
+  <ALBUMS_PRICES ALBUM_ID="764" DATE="2010-09-26" PRICE="200.0"/>
+  <ALBUMS_PRICES ALBUM_ID="764" DATE="2011-09-26" PRICE="150.0"/>
   <ALBUMS_IMAGES ALBUM_ID="435" IMAGE_ID="4"/>
   <ALBUMS_ARTISTS ALBUM_ID="435" ARTIST_ID="52"/>
   <ALBUMS_ARTISTS ALBUM_ID="436" ARTIST_ID="52"/>
