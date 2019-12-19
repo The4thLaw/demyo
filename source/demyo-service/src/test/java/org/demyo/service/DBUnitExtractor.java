@@ -1,9 +1,10 @@
 package org.demyo.service;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.sql.DataSource;
 
@@ -11,6 +12,8 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,9 +27,10 @@ import org.demyo.service.impl.AbstractServiceTest;
 /**
  * Utility class to import a demyo XML file and export it to the dbunit test XML.
  * <p>
- * Not actually meant to be run as a JUnit test.
+ * Not actually meant to be run as a JUnit test in CI.
  * </p>
  */
+@Ignore("This is just an utility class") // Comment this to launch this utility
 public class DBUnitExtractor extends AbstractServiceTest {
 	@Autowired
 	private IImportService importService;
@@ -35,7 +39,7 @@ public class DBUnitExtractor extends AbstractServiceTest {
 	@Autowired
 	private PlatformTransactionManager txMgr;
 
-	// @Test // Uncomment this to launch this utility
+	@Test
 	public void importXmlAndExportDBUnit() throws Exception {
 		// Manage transaction manually to be able to read directly afterwards
 		TransactionTemplate transactionTemplate = new TransactionTemplate(txMgr);
@@ -56,19 +60,21 @@ public class DBUnitExtractor extends AbstractServiceTest {
 		// Gather data set
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection.getConnection());
 		QueryDataSet fullDataSet = new QueryDataSet(connection);
+		// The order of this list is important: DBUnit will keep the same and may fail if foreign keys are missing
 		for (String table : new String[] { "IMAGES", "PUBLISHERS", "COLLECTIONS", "AUTHORS", "SERIES",
-				"SERIES_RELATIONS", "ALBUMS", "ALBUMS_PRICES", "ALBUMS_IMAGES", "ALBUMS_ARTISTS", "ALBUMS_WRITERS",
-				"ALBUMS_COLORISTS", "ALBUMS_INKERS", "ALBUMS_TRANSLATORS", "TAGS", "ALBUMS_TAGS", "SOURCES",
+				"SERIES_RELATIONS", "TAGS", "BINDINGS", "ALBUMS", "ALBUMS_PRICES", "ALBUMS_IMAGES", "ALBUMS_ARTISTS",
+				"ALBUMS_WRITERS", "ALBUMS_COLORISTS", "ALBUMS_INKERS", "ALBUMS_TRANSLATORS", "ALBUMS_TAGS", "SOURCES",
 				"DERIVATIVE_TYPES", "DERIVATIVES", "DERIVATIVES_PRICES", "DERIVATIVES_IMAGES", "READERS",
 				"READERS_FAVOURITE_SERIES", "READERS_FAVOURITE_ALBUMS", "READERS_READING_LIST", "CONFIGURATION" }) {
 			fullDataSet.addTable(table);
 		}
 
 		// Write to src/test
-		File output = new ClassPathResource("/org/demyo/test/demyo-dbunit-standard.xml").getFile();
-		System.err.println("Writing to " + output);
-		try (FileOutputStream os = new FileOutputStream(output)) {
-			FlatXmlDataSet.write(fullDataSet, os);
+		File output = new File("../demyo-test/src/main/resources/org/demyo/test/demyo-dbunit-standard.xml");
+		// Note that we can't have emojis in the test database. DBUnit uses the same code internally that caused issue
+		// https://github.com/The4thLaw/demyo/issues/76
+		try (FileWriter writer = new FileWriter(output)) {
+			FlatXmlDataSet.write(fullDataSet, writer, StandardCharsets.UTF_8.name());
 		}
 	}
 }
