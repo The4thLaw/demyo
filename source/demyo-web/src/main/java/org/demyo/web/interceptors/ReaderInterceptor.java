@@ -42,6 +42,7 @@ public class ReaderInterceptor implements HandlerInterceptor {
 
 		// Special behaviours to avoid making a loop, and to avoid protecting the API
 		// Empty is for special weird cases in unit tests
+		// TODO: figure out if this causes issues once Vue is in production
 		if (path.matches("^/api/.*$") || path.isEmpty()) {
 			return true;
 		}
