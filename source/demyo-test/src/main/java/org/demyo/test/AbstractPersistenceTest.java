@@ -3,18 +3,19 @@ package org.demyo.test;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.demyo.test.desktop.TestDesktopCallbacks;
-
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mock.jndi.SimpleNamingContextBuilder;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import org.demyo.test.desktop.TestDesktopCallbacks;
+
 /**
  * Base class for persistence tests.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+// TODO: try to solve https://stackoverflow.com/questions/27652689/spring-test-dbunit-warning
 public abstract class AbstractPersistenceTest {
 	protected static final int DEFAULT_PAGE_SIZE = 10;
 
