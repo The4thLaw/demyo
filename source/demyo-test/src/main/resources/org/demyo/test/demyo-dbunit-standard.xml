@@ -1,47 +1,331 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <dataset>
-	<authors id="1" name="Morvan" fname="Jean-David" />
-	<authors id="2" name="Buchet" nickname="Bubuche" fname="Philippe" />
-
-	<publishers id="1" name="Delcourt" />
-	<publishers id="2" name="Dargaud" />
-	
-	<collections id="1" publisher_id="1" name="Série B" />
-
-	<series id="1" name="XIII" website="http://www.treize.com/"
-		summary="XIII is a guy suffering from amnesia." comment="Comment for XIII."/>
-	<series id="2" name="Sillage" />
-	
-	<albums id="1" series_id="1" number="3" publisher_id="2" title="Toutes les larmes de l'enfer" />
-	<albums id="2" publisher_id="1" title="Bludzee" />
-	<albums id="3" publisher_id="1" title="Z_test" />
-	
-	<albums_prices album_id="1" date="2016-01-10" price="10" />
-	<albums_prices album_id="1" date="2016-01-15" price="1.5" />
-
-	<derivative_types id="1" name="Offset" />
-	<derivative_types id="2" name="Serigraphy" />
-
-	<derivatives id="1" derivative_type_id="1" series_id="1" album_id="1" description="Offset for XIII #3."/>
-	<derivatives id="2" derivative_type_id="1" series_id="2" description="Offset for Sillage, no album."/>
-	<derivatives id="3" derivative_type_id="2" album_id="2" description="Serigraphy for Bludzee, a One Shot."/>
-	
-	<tags id="1" name="action" />
-	<tags id="2" name="humour" />
-	<tags id="3" name="science-fiction" fgColour="#ffffff" bgColour="#ff0000" />
-	
-	<albums_tags album_id="1" tag_id="1" />
-	<albums_tags album_id="1" tag_id="3" />
-	<albums_tags album_id="2" tag_id="2" />
-	
-	<readers id="2" name="Sarah" colour="#FF69B4" />
-	<readers_favourite_series reader_id="2" series_id="1" />
-	<readers_favourite_albums reader_id="2" album_id="3" />
-	<readers_reading_list reader_id="2" album_id="2" />
-	
-	<configuration id="1" reader_id="2" config_key="language" config_value="en" />
-	<configuration id="2" reader_id="2" config_key="paging.textPageSize" config_value="60" />
-	<configuration id="3" reader_id="2" config_key="paging.imagePageSize" config_value="15" />
-	<configuration id="4" reader_id="2" config_key="paging.albumPageSize" config_value="20" />
-	<configuration id="5" reader_id="2" config_key="thumbnail.width" config_value="220" />
-	<configuration id="6" reader_id="2" config_key="thumbnail.height" config_value="200" />
+  <IMAGES ID="1" URL="Covers/P-T/Sillage_02.jpg" DESCRIPTION="Sillage 02 - Couverture"/>
+  <IMAGES ID="2" URL="Covers/P-T/Sillage_09.jpg" DESCRIPTION="Sillage 09 - Couverture"/>
+  <IMAGES ID="3" URL="Covers/P-T/Sillage_01.jpg" DESCRIPTION="Sillage 01 - Couverture"/>
+  <IMAGES ID="4" URL="Covers/P-T/Sillage_01_reed.jpg" DESCRIPTION="Sillage 01 - Couverture de la réédition"/>
+  <IMAGES ID="5" URL="Covers/P-T/Sillage_03.jpg" DESCRIPTION="Sillage 03 - Couverture"/>
+  <IMAGES ID="6" URL="Covers/P-T/Sillage_04.jpg" DESCRIPTION="Sillage 04 - Couverture"/>
+  <IMAGES ID="7" URL="Covers/P-T/Sillage_05.jpg" DESCRIPTION="Sillage 05 - Couverture"/>
+  <IMAGES ID="8" URL="Covers/P-T/Sillage_06.jpg" DESCRIPTION="Sillage 06 - Couverture"/>
+  <IMAGES ID="9" URL="Covers/P-T/Sillage_07.jpg" DESCRIPTION="Sillage 07 - Couverture"/>
+  <IMAGES ID="10" URL="Covers/P-T/Sillage_08.jpg" DESCRIPTION="Sillage 08 - Couverture"/>
+  <IMAGES ID="11" URL="Covers/P-T/Sillage_10.jpg" DESCRIPTION="Sillage 10 - Couverture"/>
+  <IMAGES ID="12" URL="Covers/P-T/Sillage_collectionneur.jpg" DESCRIPTION="Sillage hors série Collectionneur - Couverture"/>
+  <IMAGES ID="13" URL="Coffrets/Sillage_coffret1234_back.jpg" DESCRIPTION="Sillage 1,2,3,4 - Coffret dos"/>
+  <IMAGES ID="14" URL="Coffrets/Sillage_coffret1234_front.jpg" DESCRIPTION="Sillage 1,2,3,4 - Coffret face"/>
+  <IMAGES ID="170" URL="Ex-Libris/Sillage_01_Forbidden.jpg" DESCRIPTION="Sillage 01 - Ex-Libris Forbidden Worlds"/>
+  <IMAGES ID="171" URL="Ex-Libris/Sillage_chevalier.jpg" DESCRIPTION="Sillage - Offset chevalier"/>
+  <IMAGES ID="172" URL="Ex-Libris/Sillage_dragon.jpg" DESCRIPTION="Sillage - Offset dragon"/>
+  <IMAGES ID="173" URL="Ex-Libris/Sillage_gym.jpg" DESCRIPTION="Sillage - Offset gym"/>
+  <IMAGES ID="174" URL="Ex-Libris/Sillage_militaire.jpg" DESCRIPTION="Sillage - Offset militaire"/>
+  <IMAGES ID="175" URL="Ex-Libris/Sillage_rondin_Sans_Titre.jpg" DESCRIPTION="Sillage - Sérigraphie rondin Sans Titre"/>
+  <IMAGES ID="176" URL="Ex-Libris/Sillage_01_Atlantis.jpg" DESCRIPTION="Sillage 01 - Ex-Libris Atlantis"/>
+  <IMAGES ID="177" URL="Ex-Libris/Sillage_02_Durango.jpg" DESCRIPTION="Sillage 02 - Ex-Libris Durango"/>
+  <IMAGES ID="178" URL="Ex-Libris/Sillage_douche_Bulles_Decume.jpg" DESCRIPTION="Sillage - Offset douche Bulles D&apos;écume"/>
+  <IMAGES ID="179" URL="Ex-Libris/Sillage_ruines.jpg" DESCRIPTION="Sillage - Offset ruines"/>
+  <IMAGES ID="180" URL="Ex-Libris/Sillage_03_Durango.jpg" DESCRIPTION="Sillage 03 - Ex-Libris Durango"/>
+  <IMAGES ID="182" URL="Ex-Libris/Sillage_03_Fantasmagories.jpg" DESCRIPTION="Sillage 03 - Ex-Libris Fantasmagories"/>
+  <IMAGES ID="183" URL="Ex-Libris/Sillage_05_Durango.jpg" DESCRIPTION="Sillage 05 - Ex-Libris Durango"/>
+  <IMAGES ID="184" URL="Ex-Libris/Sillage_noel_Durango.jpg" DESCRIPTION="Sillage - Sérigraphie noël Durango"/>
+  <IMAGES ID="185" URL="Ex-Libris/Sillage_04_Durango.jpg" DESCRIPTION="Sillage 04 - Ex-Libris Durango"/>
+  <IMAGES ID="186" URL="Ex-Libris/Sillage_armurerie_unk.jpg" DESCRIPTION="Sillage - Offset armurerie"/>
+  <IMAGES ID="187" URL="Signets/Sillage_Durango.jpg" DESCRIPTION="Sillage - Signet dos Durango"/>
+  <IMAGES ID="188" URL="Signets/Sillage_Durango_b.jpg" DESCRIPTION="Sillage - Signet bronzette Durango"/>
+  <IMAGES ID="189" URL="Ex-Libris/Sillage_SG9_Durango.jpg" DESCRIPTION="Sillage - Série Graphique 9 Durango"/>
+  <IMAGES ID="190" URL="Ex-Libris/Sillage_SG10_Durango.jpg" DESCRIPTION="Sillage - Série Graphique 10 Durango"/>
+  <IMAGES ID="191" URL="Ex-Libris/Sillage_06_Durango.jpg" DESCRIPTION="Sillage 06 - Ex-Libris Durango"/>
+  <IMAGES ID="192" URL="Ex-Libris/Sillage_07_Durango.jpg" DESCRIPTION="Sillage 07 - Ex-Libris Durango"/>
+  <IMAGES ID="195" URL="Divers/Sillage_tapis_souris.jpg" DESCRIPTION="Sillage - Tapis de souris"/>
+  <IMAGES ID="196" URL="Carnets/Sillages_coulisses.jpg" DESCRIPTION="Sillage - Les coulisses"/>
+  <IMAGES ID="241" URL="Ex-Libris/Sillage_tete_dragon.jpg" DESCRIPTION="Sillage - Offset à la tête de dragon"/>
+  <IMAGES ID="242" URL="Ex-Libris/Sillage_aristocrates.jpg" DESCRIPTION="Sillage - Offset aristocrates"/>
+  <IMAGES ID="278" URL="Covers/P-T/Sillage_11.jpg" DESCRIPTION="Sillage 11 - Couverture"/>
+  <IMAGES ID="582" URL="Covers/P-T/Sillage_BlockBuster.jpg" DESCRIPTION="Sillage BlockBuster - Couverture"/>
+  <IMAGES ID="654" URL="Logos/Delcourt_Neopolis.png" DESCRIPTION="Logo - Collection Neopolis (Delcourt)"/>
+  <IMAGES ID="666" URL="Covers/P-T/Sillage_12.jpg" DESCRIPTION="Sillage 12 - Couverture"/>
+  <IMAGES ID="667" URL="Covers/P-T/Sillage_13.jpg" DESCRIPTION="Sillage 13 - Couverture"/>
+  <IMAGES ID="752" URL="Covers/P-T/Sillage_15.jpg" DESCRIPTION="Sillage 15 - Couverture"/>
+  <IMAGES ID="943" URL="uploads/1fb0a95682a89b74990690add7f7ce1865774293edb81fc0ffb9ecb875f20fa6.jpg" DESCRIPTION="Sillage - Premières Armes 1 - Couverture"/>
+  <IMAGES ID="944" URL="uploads/e8909a8ed80fdfbc0ba7cf5ad7ae95cc55bbd547429d3e87d516a9953b879f2c.jpg" DESCRIPTION="Sillage 16 - Couverture"/>
+  <IMAGES ID="945" URL="uploads/7b302e269ce0faae6cf11321a7bf6efc1f228dc97f37c143f50eb87e7f614c69.jpg" DESCRIPTION="Sillage 17 - Couverture"/>
+  <IMAGES ID="946" URL="uploads/dc0e2361b8c1d7444daaaef3135a50fda4484b0f46cc7a01aa6e8b1b9fdc4dad.jpg" DESCRIPTION="Sillage 18 - Couverture"/>
+  <IMAGES ID="947" URL="uploads/8c47feff374558c008cf39d1092d5a822128f856381d540c955f82fca06c7fb1.jpg" DESCRIPTION="Sillage 19 - Couverture"/>
+  <IMAGES ID="948" URL="uploads/392de5c0d8f694d56b954b313156619bfbddd1affd4ef664dd7985550aeb2ca0.jpg" DESCRIPTION="Sillage 14 - Couverture"/>
+  <IMAGES ID="1328" URL="uploads/46c7ea97aff5410a0203507fe8d21836b825a6c209f87bf9b8c6457ae9e86d38.jpg" DESCRIPTION="Maître d&apos;Armes (Le) - Sérigraphie Durango - Image 1"/>
+  <PUBLISHERS ID="1" NAME="Dargaud" WEBSITE="http://www.dargaud.com/" FEED="http://www.dargaud.com/actualites/news.aspx"/>
+  <PUBLISHERS ID="3" NAME="Delcourt" WEBSITE="http://www.editions-delcourt.fr/" FEED="http://feeds2.feedburner.com/Delcourt-SortiesBd"/>
+  <COLLECTIONS ID="7" NAME="Série B" WEBSITE="http://www.editions-delcourt.fr/serieb/" PUBLISHER_ID="3"/>
+  <COLLECTIONS ID="9" NAME="Neopolis" WEBSITE="http://www.editions-delcourt.fr/catalogue/collections/neopolis" LOGO_ID="654" PUBLISHER_ID="3"/>
+  <AUTHORS ID="52" NAME="Buchet" FNAME="Philippe"/>
+  <AUTHORS ID="53" NAME="Morvan" FNAME="Jean-David"/>
+  <AUTHORS ID="201" NAME="Parnotte" FNAME="Joël"/>
+  <AUTHORS ID="313" NAME="Dorison" FNAME="Xavier"/>
+  <AUTHORS ID="610" NAME="Chan" FNAME="Pierre-Mony" WEBSITE="http://pmchan.fr.nf/"/>
+  <AUTHORS ID="717" NAME="Montlló Ribó" FNAME="Miquel" NICKNAME="Miki" WEBSITE="http://miquelmontllo.blogspot.be/"/>
+  <AUTHORS ID="718" NAME="Picard" FNAME="Alice"/>
+  <SERIES ID="99" NAME="Sillage" COMPLETED="false" WEBSITE="http://www.poukram.org/" LOCATION="Bibliothèque, F2"/>
+  <SERIES ID="232" NAME="Sillage - Premières Armes" COMPLETED="false" LOCATION="Bibliothèque, F2"/>
+  <SERIES_RELATIONS MAIN="99" SUB="232"/>
+  <SERIES_RELATIONS MAIN="232" SUB="99"/>
+  <TAGS ID="1" NAME="science-fiction"/>
+  <TAGS ID="7" NAME="dédicacé"/>
+  <TAGS ID="10" NAME="vernis sélectif"/>
+  <TAGS ID="13" NAME="coffret"/>
+  <TAGS ID="21" NAME="one shot"/>
+  <TAGS ID="50" NAME="tirage limité"/>
+  <TAGS ID="53" NAME="cahier graphique"/>
+  <TAGS ID="56" NAME="bandeau"/>
+  <TAGS ID="79" NAME="héroïne"/>
+  <TAGS ID="85" NAME="course"/>
+  <TAGS ID="90" NAME="jungle"/>
+  <TAGS ID="106" NAME="évasion"/>
+  <BINDINGS ID="1" NAME="Cartonné"/>
+  <BINDINGS ID="2" NAME="Broché"/>
+  <BINDINGS ID="3" NAME="Cartonné &amp; Toilé"/>
+  <ALBUMS ID="435" SERIES_ID="99" NUMBER="1.0" NUMBER_SUFFIX="ré" TITLE="À Feu et à Cendres" PUBLISHER_ID="3" COLLECTION_ID="9" THIS_EDITION="1998-02-01" WISHLIST="false" BINDING_ID="1" COVER_ID="3" COMMENT="&lt;p&gt;Dédicacé pour Xavier par les deux auteurs.&lt;/p&gt; &lt;p&gt;Réédition le même mois que la première après la mise au pilon de celle-ci.&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="436" SERIES_ID="99" NUMBER="2.0" TITLE="Collection Privée" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="1999-05-01" THIS_EDITION="1999-05-01" WISHLIST="false" BINDING_ID="1" COVER_ID="1" COMMENT="&lt;p&gt;Carnet de croquit de huit pages -               Ex-libris 175/220 Durango&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="437" SERIES_ID="99" NUMBER="3.0" TITLE="Engrenages" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2000-08-01" THIS_EDITION="2000-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="5" COMMENT="&lt;p&gt;Ex-libris 139/250 Durango&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="438" SERIES_ID="99" NUMBER="4.0" TITLE="Le Signe des Démons" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2001-09-01" THIS_EDITION="2001-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="6" COMMENT="&lt;p&gt;Coffret pour les 4 albums parus.&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="439" SERIES_ID="99" NUMBER="5.0" TITLE="&apos;J.VJ,..&apos;\_ " PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2002-06-01" THIS_EDITION="2002-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="7" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="440" SERIES_ID="99" NUMBER="6.0" TITLE="Artifices" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2003-08-01" THIS_EDITION="2003-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="8" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="441" SERIES_ID="99" NUMBER="7.0" TITLE="Q.H.I." PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2004-08-01" THIS_EDITION="2004-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="9" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="442" SERIES_ID="99" NUMBER="8.0" TITLE="Nature Humaine" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2005-09-01" THIS_EDITION="2005-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="10" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="443" SERIES_ID="99" NUMBER="9.0" TITLE="Infiltrations" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2006-09-01" THIS_EDITION="2006-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="2" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="444" SERIES_ID="99" NUMBER_SUFFIX="HS" TITLE="Le Collectionneur" PUBLISHER_ID="3" FIRST_EDITION="2002-10-01" THIS_EDITION="2002-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="12" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="567" SERIES_ID="99" NUMBER="10.0" TITLE="Retour de Flammes" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2007-10-01" THIS_EDITION="2007-10-01" ACQUISITION_DATE="2007-11-10" WISHLIST="false" BINDING_ID="1" COVER_ID="11" COMMENT="&lt;p&gt;Édition Spéciale « 10 ans » : couverture à vernis sélectif, DVD anniversaire, carnet de croquis&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="48" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="669" SERIES_ID="99" NUMBER="11.0" TITLE="Monde Flottant" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2008-09-01" THIS_EDITION="2008-09-01" ISBN="978-2-7560-1184-4" ACQUISITION_DATE="2008-11-16" WISHLIST="false" BINDING_ID="1" COVER_ID="278" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="737" SERIES_ID="99" NUMBER_SUFFIX="HS" TITLE="BlockBuster" PUBLISHER_ID="3" COLLECTION_ID="7" FIRST_EDITION="2005-11-01" THIS_EDITION="2005-11-01" ISBN="978-2-84789-949-8" WISHLIST="false" BINDING_ID="1" COVER_ID="582" SUMMARY="&lt;p&gt;Couvertures, dessins originaux et croquis comment&amp;eacute;s par l&apos;auteur.&lt;/p&gt;" COMMENT="&lt;p&gt;Pr&amp;eacute;face de [[Author:10|Vatine]].&lt;/p&gt; &lt;p&gt;Not&amp;eacute; //premi&amp;egrave;re &amp;eacute;dition//.&lt;/p&gt;" LOCATION="Bibliothèque, F2" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="746" SERIES_ID="99" NUMBER="12.0" TITLE="Zone Franche" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2009-10-01" THIS_EDITION="2009-10-01" ISBN="978-2-7560-1592-7" ACQUISITION_DATE="2009-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="666" SUMMARY="&lt;p&gt;Nävis est aux trousses de Soimitt, le tueur à gages qui l&apos;avait manipulée jusqu&apos;à la pousser à détruire une partie du vaisseau amiral de Sillage. Elle espère lui extirper des informations susceptibles de faire réviser son procès.&lt;/p&gt;&lt;p&gt;Mais le cerveau de l&apos;assassin est truffé de bloqueurs psychiques et le seul système capable de le faire parler est... une planète ! Elle émet des ondes forçant les gens à révéler leur vérité et, de ce fait, se trouve interdite d&apos;accès par les dirigeants de Sillage. Car quelle autorité serait capable d&apos;accepter en son sein une telle zone franche ?&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="764" SERIES_ID="99" NUMBER="1.0" TITLE="À Feu et à Cendres" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="1998-02-01" THIS_EDITION="1998-02-01" ISBN="978-2-84055-177-5" ACQUISITION_DATE="2009-07-04" PURCHASE_PRICE="200.0" WISHLIST="false" BINDING_ID="1" COVER_ID="3" COMMENT="&lt;p&gt;Version originale partie au pilon pour cause d&apos;erreur d&apos;impression : not&amp;eacute; &lt;em&gt;Achev&amp;eacute; d&apos;imprimer en d&amp;eacute;cembre 1998&lt;/em&gt; au lieu de 1997.&lt;/p&gt; &lt;p&gt;Coin sup&amp;eacute;rieur droit de la face enfonc&amp;eacute;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="848" SERIES_ID="99" NUMBER="13.0" TITLE="Dérapage Contrôlé" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2010-09-29" THIS_EDITION="2010-09-29" ISBN="978-2-7560-1997-0" ACQUISITION_DATE="2010-10-30" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COVER_ID="667" SUMMARY="&lt;p&gt;Nävis participe au Cannonball de l&apos;espace, une course illégale où tous les coups sont permis et son seul moyen pour rejoindre discrètement Bobo. Elle compte lui demander pourquoi il lui a menti et qu&apos;il lui révèle qui la finançait clandestinement pendant qu&apos;elle était agent de Sillage... Dérapages verbaux incontrôlés et prises de risques maximales seront au programme de cette course à la vérité.&lt;/p&gt;" COMMENT="&lt;p&gt;La suite d&apos;une série d&apos;albums charnières. L&apos;histoire globale avance mais le scénario local est assez anecdotique.&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="945" SERIES_ID="99" NUMBER="14.0" TITLE="Liquidation Totale" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2011-10-01" THIS_EDITION="2011-10-01" ISBN="978-2-7560-2433-2" ACQUISITION_DATE="2011-11-10" WISHLIST="false" BINDING_ID="1" COVER_ID="948" COMMENT="&lt;p&gt;Noté //première édition//. &lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="946" SERIES_ID="99" NUMBER="14.0" NUMBER_SUFFIX="gf" TITLE="Liquidation Totale" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2011-10-01" THIS_EDITION="2011-10-01" ISBN="978-2-7560-2658-9" ACQUISITION_DATE="2011-11-10" PURCHASE_PRICE="40.0" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Tirage limit&amp;eacute; &amp;agrave; 2200 exemplaires (dont 50 HC) &amp;agrave; l&apos;occasion des 25 ans des &amp;Eacute;ditions Delcourt.&lt;/p&gt; &lt;p&gt;Album num&amp;eacute;rot&amp;eacute; 2101/2150.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" LOCATION="Bibliothèque, D8" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1000" SERIES_ID="99" NUMBER="15.0" TITLE="Chasse Gardée" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2012-10-03" THIS_EDITION="2012-10-03" ISBN="978-2-7560-2434-9" ACQUISITION_DATE="2012-10-27" WISHLIST="false" BINDING_ID="1" COVER_ID="752" SUMMARY="&lt;p&gt;Blanchie de l&apos;attentat contre la Constituante, Nävis a refusé de redevenir agent, lasse de la corruption qui règne aux plus hauts rangs des autorités. Désormais, elle enchaîne les petits boulots pour subvenir à ses besoins et poursuivre sa route à la recherche d&apos;autres humains. Jusqu&apos;au jour où elle répond à l&apos;annonce d&apos;un milliardaire proposant une mission très bien payée, et sans danger, en apparence...&lt;/p&gt;" COMMENT="&lt;p&gt;Noté //première édition//.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1086" SERIES_ID="99" NUMBER="16.0" TITLE="Liés par le Sang" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2013-09-01" THIS_EDITION="2013-09-01" ISBN="978-2-7560-3262-7" ACQUISITION_DATE="2013-10-19" PURCHASE_PRICE="18.0" WISHLIST="false" BINDING_ID="1" COVER_ID="944" COMMENT="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1093" SERIES_ID="232" NUMBER="1.0" TITLE="Esprit d&apos;Équipe" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2014-06-01" THIS_EDITION="2014-06-01" ISBN="978-2-7560-3893-3" ACQUISITION_DATE="2014-11-08" WISHLIST="false" BINDING_ID="1" COVER_ID="943" COMMENT="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="52" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1186" SERIES_ID="99" NUMBER="18.0" TITLE="Psycholocauste" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2015-09-01" THIS_EDITION="2015-09-01" ISBN="978-2-7560-6485-7" ACQUISITION_DATE="2015-10-17" WISHLIST="false" BINDING_ID="1" COVER_ID="946" COMMENT="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1229" SERIES_ID="99" NUMBER="17.0" TITLE="Grands Froids" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2014-09-01" THIS_EDITION="2014-09-01" ISBN="978-2-7560-4126-1" ACQUISITION_DATE="2015-09-05" WISHLIST="false" BINDING_ID="1" COVER_ID="945" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="true"/>
+  <ALBUMS ID="1313" TITLE="Maître d&apos;Armes (Le)" PUBLISHER_ID="1" FIRST_EDITION="2015-10-01" ISBN="978-2-5050-6342-1" ACQUISITION_DATE="2016-10-16" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Not&amp;eacute;&amp;nbsp;&lt;em&gt;Quatri&amp;egrave;me &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="250.0" PAGES="94" LOCATION="Bibliothèque, E6" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1370" SERIES_ID="99" NUMBER="19.0" TITLE="Temps mort" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2016-10-01" THIS_EDITION="2016-10-01" ISBN="978-2-7560-6486-4" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COVER_ID="947" COMMENT="&lt;p&gt;Not&amp;eacute; &lt;em&gt;premi&amp;egrave;re &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS ID="1459" SERIES_ID="99" NUMBER="17.0" NUMBER_SUFFIX="TL" TITLE="Grands Froids" PUBLISHER_ID="3" COLLECTION_ID="9" ACQUISITION_DATE="2017-10-14" PURCHASE_PRICE="69.0" WISHLIST="false" BINDING_ID="3" COMMENT="&lt;p&gt;Tirage num&amp;eacute;rot&amp;eacute; 226/450, r&amp;eacute;alis&amp;eacute; par Bruno Graff.&lt;/p&gt; &lt;p&gt;Tir&amp;eacute; avec 3 ex-libris dont 1 sign&amp;eacute;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
+  <ALBUMS_PRICES/>
+  <ALBUMS_IMAGES ALBUM_ID="435" IMAGE_ID="4"/>
+  <ALBUMS_ARTISTS ALBUM_ID="435" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="436" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="437" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="438" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="439" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="440" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="441" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="442" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="443" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="444" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="567" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="669" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="737" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="746" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="764" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="848" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="945" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="946" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1000" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1086" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1093" ARTIST_ID="610"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1186" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1229" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1313" ARTIST_ID="201"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1370" ARTIST_ID="52"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1459" ARTIST_ID="52"/>
+  <ALBUMS_WRITERS ALBUM_ID="435" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="436" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="437" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="438" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="439" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="440" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="441" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="442" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="443" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="444" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="567" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="669" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="737" WRITER_ID="52"/>
+  <ALBUMS_WRITERS ALBUM_ID="746" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="764" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="848" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="945" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="946" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1000" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1086" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1093" WRITER_ID="52"/>
+  <ALBUMS_WRITERS ALBUM_ID="1093" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1186" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1229" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1313" WRITER_ID="313"/>
+  <ALBUMS_WRITERS ALBUM_ID="1370" WRITER_ID="53"/>
+  <ALBUMS_WRITERS ALBUM_ID="1459" WRITER_ID="53"/>
+  <ALBUMS_COLORISTS ALBUM_ID="435" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="669" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="737" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="746" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="764" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="848" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="945" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="946" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1000" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1086" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1093" COLORIST_ID="610"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1093" COLORIST_ID="718"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1186" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1229" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1313" COLORIST_ID="201"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1370" COLORIST_ID="52"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1459" COLORIST_ID="52"/>
+  <ALBUMS_INKERS/>
+  <ALBUMS_TRANSLATORS/>
+  <ALBUMS_TAGS ALBUM_ID="435" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="435" TAG_ID="7"/>
+  <ALBUMS_TAGS ALBUM_ID="435" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="435" TAG_ID="90"/>
+  <ALBUMS_TAGS ALBUM_ID="436" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="436" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="437" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="437" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="438" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="438" TAG_ID="13"/>
+  <ALBUMS_TAGS ALBUM_ID="438" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="439" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="439" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="440" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="440" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="441" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="441" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="441" TAG_ID="106"/>
+  <ALBUMS_TAGS ALBUM_ID="442" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="442" TAG_ID="13"/>
+  <ALBUMS_TAGS ALBUM_ID="442" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="443" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="443" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="444" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="444" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="567" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="567" TAG_ID="10"/>
+  <ALBUMS_TAGS ALBUM_ID="567" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="669" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="669" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="737" TAG_ID="10"/>
+  <ALBUMS_TAGS ALBUM_ID="737" TAG_ID="53"/>
+  <ALBUMS_TAGS ALBUM_ID="737" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="746" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="746" TAG_ID="13"/>
+  <ALBUMS_TAGS ALBUM_ID="746" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="764" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="764" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="764" TAG_ID="90"/>
+  <ALBUMS_TAGS ALBUM_ID="848" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="848" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="848" TAG_ID="85"/>
+  <ALBUMS_TAGS ALBUM_ID="945" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="945" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="946" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="946" TAG_ID="10"/>
+  <ALBUMS_TAGS ALBUM_ID="946" TAG_ID="50"/>
+  <ALBUMS_TAGS ALBUM_ID="946" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="1000" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1086" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1086" TAG_ID="13"/>
+  <ALBUMS_TAGS ALBUM_ID="1093" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1093" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="1186" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1186" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="1229" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1229" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="1313" TAG_ID="21"/>
+  <ALBUMS_TAGS ALBUM_ID="1313" TAG_ID="56"/>
+  <ALBUMS_TAGS ALBUM_ID="1370" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1370" TAG_ID="79"/>
+  <ALBUMS_TAGS ALBUM_ID="1459" TAG_ID="1"/>
+  <ALBUMS_TAGS ALBUM_ID="1459" TAG_ID="50"/>
+  <ALBUMS_TAGS ALBUM_ID="1459" TAG_ID="53"/>
+  <ALBUMS_TAGS ALBUM_ID="1459" TAG_ID="79"/>
+  <SOURCES ID="1" NAME="Durango" EMAIL="user@example.org"/>
+  <SOURCES ID="2" NAME="Sans Titre"/>
+  <SOURCES ID="3" NAME="Fantasmagories"/>
+  <SOURCES ID="7" NAME="Forbidden Worlds"/>
+  <SOURCES ID="12" NAME="Atlantis"/>
+  <SOURCES ID="13" NAME="Bulles D&apos;écume"/>
+  <SOURCES ID="14" NAME="Delcourt"/>
+  <SOURCES ID="15" NAME="BDCaf&apos; Mag"/>
+  <SOURCES ID="17" NAME="Folle Image"/>
+  <DERIVATIVE_TYPES ID="1" NAME="Offset"/>
+  <DERIVATIVE_TYPES ID="2" NAME="Sérigraphie"/>
+  <DERIVATIVE_TYPES ID="3" NAME="Objet"/>
+  <DERIVATIVE_TYPES ID="4" NAME="Coffret"/>
+  <DERIVATIVE_TYPES ID="5" NAME="Carnet de croquis"/>
+  <DERIVATIVES ID="12" SERIES_ID="99" ALBUM_ID="438" ARTIST_ID="52" DERIVATIVE_TYPE_ID="4" SOURCE_ID="14" SIGNED="false" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Coffret Sillage 1, 2, 3, 4 représentant Nävis et Snivel.&lt;/p&gt;" WIDTH="241.0" HEIGHT="326.0" DEPTH="40.0"/>
+  <DERIVATIVES ID="66" SERIES_ID="99" ALBUM_ID="435" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="7" NUMBER="144" TOTAL="170" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Couverture de comic. Passages : 1 noir, 1 rouge, 1 vert, 2 bleus, 2 peau, 1 gris.&lt;/p&gt;" WIDTH="155.0" HEIGHT="235.0"/>
+  <DERIVATIVES ID="67" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="23" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Nävis en habit médiéval.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
+  <DERIVATIVES ID="68" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="54" TOTAL="290" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis avec un costume de dragon.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
+  <DERIVATIVES ID="69" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="23" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Nävis en tenue de gym.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
+  <DERIVATIVES ID="70" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="23" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Nävis en tenue militaire.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
+  <DERIVATIVES ID="71" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="2" NUMBER="239" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis et bobo façon début 20ème, roulant sur un rodin.&lt;/p&gt;" WIDTH="500.0" HEIGHT="700.0"/>
+  <DERIVATIVES ID="72" SERIES_ID="99" ALBUM_ID="435" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="12" NUMBER="210" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis sautant un branche dans la jungle, avec Bobo à ses trousses.&lt;/p&gt;" WIDTH="160.0" HEIGHT="250.0"/>
+  <DERIVATIVES ID="73" SERIES_ID="99" ALBUM_ID="436" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="175" TOTAL="220" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Liste d&apos;équipement pour une mission. Passages : 1 noir, 1 orange, 1 vert, 1 peau, 1 gris, 1 brun.&lt;/p&gt;" WIDTH="285.0" HEIGHT="145.0"/>
+  <DERIVATIVES ID="74" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="13" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis prenant sa douche.&lt;/p&gt;" WIDTH="210.0" HEIGHT="297.0"/>
+  <DERIVATIVES ID="75" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="17" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis couchée dans des ruines, le pistolet fumant.&lt;/p&gt;" WIDTH="267.0" HEIGHT="182.0"/>
+  <DERIVATIVES ID="76" SERIES_ID="99" ALBUM_ID="437" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="139" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis emmenant un prisonnier. Passages : 1 noir, 2 oranges, 2 violets, 2 peau, 2 gris&lt;/p&gt;" WIDTH="145.0" HEIGHT="283.0"/>
+  <DERIVATIVES ID="78" SERIES_ID="99" ALBUM_ID="437" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="3" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis couchée dans des feuillages.&lt;/p&gt;" WIDTH="119.0" HEIGHT="216.0"/>
+  <DERIVATIVES ID="79" SERIES_ID="99" ALBUM_ID="439" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="1" NUMBER="148" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Un rebelle assis sur un tuyau, les armes à la main. Passages : 1 noir, 1 ombre (bleu), 1 brun, 1 vert, 1 peau, 1 rouge, 1 os, 1 gris.&lt;/p&gt;" WIDTH="205.0" HEIGHT="304.0"/>
+  <DERIVATIVES ID="80" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="7" SOURCE_ID="1" NUMBER="150" TOTAL="254" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en père noël. Passages : 1 noir, 1 argenté, 2 violets (dont 1 ombre), 1 rouge, 1 vert, 1 orange. Impression sur papier glacé.&lt;/p&gt;" WIDTH="207.0" HEIGHT="298.0"/>
+  <DERIVATIVES ID="81" SERIES_ID="99" ALBUM_ID="438" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="181" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis et deux personnages à fourrure. Passages : 1 noir, 2 rouges, 1 peau, 2 bruns, 1 argenté, 1 bleu, 1 vert.&lt;/p&gt;" WIDTH="196.0" HEIGHT="300.0"/>
+  <DERIVATIVES ID="82" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis dans une armurerie.&lt;/p&gt;" WIDTH="200.0" HEIGHT="239.0"/>
+  <DERIVATIVES ID="83" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="169" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis de dos. Passages : 1 noir, 1 argenté (ombre), 1 peau, 1 jaune, 1 vert.&lt;/p&gt;" WIDTH="90.0" HEIGHT="240.0" ACQUISITION_DATE="2001-09-01"/>
+  <DERIVATIVES ID="84" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="169" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en train de faire bronzette, avec un oiseau couché sur une de ses jambes. Passages : 1 noir, 1 gris (ombre), 1 peau, 1 jaune, 2 verts.&lt;/p&gt;" WIDTH="95.0" HEIGHT="240.0" ACQUISITION_DATE="2001-09-01"/>
+  <DERIVATIVES ID="85" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="132" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en camouflage militaire près d&apos;une pocket bike. Série Graphique n°9. Passages : 1 noir, 2 bruns, 1 vert, 1 peau, 1 métal.&lt;/p&gt;" WIDTH="210.0" HEIGHT="299.0" ACQUISITION_DATE="2001-09-01"/>
+  <DERIVATIVES ID="86" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="132" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en princesse. Série Graphique n°10. Passages : 1 noir, 2 roses, 1 peau, 2 oranges, 1 vert, 1 jaune, 1 argenté.&lt;/p&gt;" WIDTH="210.0" HEIGHT="301.0" ACQUISITION_DATE="2001-09-01"/>
+  <DERIVATIVES ID="87" SERIES_ID="99" ALBUM_ID="440" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="1" NUMBER="187" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en habit local. Passages : 1 noir, 1 peau, 1 jaune, 1 orange, 2 bruns, 1 vert, 1 gris.&lt;/p&gt;" WIDTH="169.0" HEIGHT="270.0"/>
+  <DERIVATIVES ID="88" SERIES_ID="99" ALBUM_ID="441" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="4" SOURCE_ID="1" NUMBER="188" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis nue, adossée à un mur. Passages : 1 noir, 1 peau, 1 ombre, 1 vert.&lt;/p&gt;" WIDTH="176.0" HEIGHT="275.0"/>
+  <DERIVATIVES ID="90" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="3" COLORS="0" SOURCE_ID="14" NUMBER="0" TOTAL="0" SIGNED="false" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Tapis de souris circulaire présentant Nävis en train d&apos;appuyer sur un bouton Delcourt.&lt;/p&gt;" WIDTH="250.0" HEIGHT="250.0" DEPTH="3.0"/>
+  <DERIVATIVES ID="91" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="5" COLORS="0" SOURCE_ID="15" NUMBER="31" TOTAL="50" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Carnet de croquis avec interview de Buchet, accompagné d&apos;un emboîtage en carton bleu, lui-même assorti de croquis.&lt;/p&gt;" WIDTH="173.0" HEIGHT="235.0"/>
+  <DERIVATIVES ID="114" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="292" TOTAL="350" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis surplombée par une tête de dragon.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
+  <DERIVATIVES ID="115" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="18" TOTAL="25" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis et Bobo habillés en aristocrates.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
+  <DERIVATIVES ID="205" ALBUM_ID="1313" ARTIST_ID="201" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="176" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Repr&amp;eacute;sente deux personnages et leurs montures en for&amp;ecirc;t.&lt;/p&gt; &lt;p&gt;Passages: 2 gris, 2 bleus, 1 noir.&lt;/p&gt;" WIDTH="205.0" HEIGHT="280.0" ACQUISITION_DATE="2016-10-16"/>
+  <DERIVATIVES_PRICES/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="12" IMAGE_ID="13"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="12" IMAGE_ID="14"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="66" IMAGE_ID="170"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="67" IMAGE_ID="171"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="68" IMAGE_ID="172"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="69" IMAGE_ID="173"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="70" IMAGE_ID="174"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="71" IMAGE_ID="175"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="72" IMAGE_ID="176"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="73" IMAGE_ID="177"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="74" IMAGE_ID="178"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="75" IMAGE_ID="179"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="76" IMAGE_ID="180"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="78" IMAGE_ID="182"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="79" IMAGE_ID="183"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="80" IMAGE_ID="184"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="81" IMAGE_ID="185"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="82" IMAGE_ID="186"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="83" IMAGE_ID="187"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="84" IMAGE_ID="188"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="85" IMAGE_ID="189"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="86" IMAGE_ID="190"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="87" IMAGE_ID="191"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="88" IMAGE_ID="192"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="90" IMAGE_ID="195"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="91" IMAGE_ID="196"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="114" IMAGE_ID="241"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="115" IMAGE_ID="242"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="205" IMAGE_ID="1328"/>
+  <READERS ID="1" NAME="Xavier" COLOUR="#304ffe"/>
+  <READERS_FAVOURITE_SERIES READER_ID="1" SERIES_ID="99"/>
+  <READERS_FAVOURITE_ALBUMS READER_ID="1" ALBUM_ID="1313"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1459"/>
+  <CONFIGURATION ID="8" CONFIG_KEY="paging.textPageSize" CONFIG_VALUE="60" READER_ID="1"/>
+  <CONFIGURATION ID="9" CONFIG_KEY="language" CONFIG_VALUE="fr-BE" READER_ID="1"/>
+  <CONFIGURATION ID="10" CONFIG_KEY="paging.imagePageSize" CONFIG_VALUE="15" READER_ID="1"/>
+  <CONFIGURATION ID="13" CONFIG_KEY="paging.albumPageSize" CONFIG_VALUE="20" READER_ID="1"/>
 </dataset>
