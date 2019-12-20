@@ -1,9 +1,8 @@
 language: java
 # Needed for openjdk8
-dist: trusty
+dist: xenial
 jdk:
   - oraclejdk8
-  - openjdk7
   - openjdk8
 # Demyo sources are in a sub-directory
 before_script:
