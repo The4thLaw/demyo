@@ -2,7 +2,9 @@ package org.demyo.desktop;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -55,14 +57,11 @@ public class PluginManager {
 	 * @return The CSV paths.
 	 */
 	public String getPluginPaths() {
-		// TODO: (java 8) use a lambda for this
-		StringBuilder sb = new StringBuilder();
-		for (File plugin : getPlugins()) {
-			sb.append(plugin.getAbsolutePath()).append(",");
-		}
-		if (sb.length() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
-		return sb.toString();
+		String joined = Arrays.asList(paths)
+				.stream()
+				.map(File::getAbsolutePath)
+				.collect(Collectors.joining(","));
+		LOGGER.trace("Plugin paths (as string): {}", joined);
+		return joined;
 	}
 }
