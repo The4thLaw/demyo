@@ -73,7 +73,6 @@ public class ReaderContext implements IReaderContext {
 	}
 
 	private static void addAll(Collection<Long> to, Iterable<Number> from) {
-		// TODO:use Java 8 paralell streams?
 		for (Number n : from) {
 			to.add(n.longValue());
 		}
