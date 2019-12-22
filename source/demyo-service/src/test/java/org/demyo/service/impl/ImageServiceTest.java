@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -58,20 +56,8 @@ public class ImageServiceTest extends AbstractServiceTest {
 		ReflectionTestUtils.setField(service, "repo", repo);
 		ReflectionTestUtils.setField(service, "filePondService", fpService);
 
-		// TODO: Java 8: use a lambda for this?
-		when(fpService.getFileForId(Matchers.anyString())).thenAnswer(new Answer<File>() {
-			// We must generate a new File for each invocation
-			@Override
-			public File answer(InvocationOnMock invocation) throws Throwable {
-				return generateDummyImmage();
-			}
-		});
-		when(repo.save(Matchers.<Image>any())).thenAnswer(new Answer<Image>() {
-			@Override
-			public Image answer(InvocationOnMock invocation) throws Throwable {
-				return invocation.getArgumentAt(0, Image.class);
-			}
-		});
+		when(fpService.getFileForId(ArgumentMatchers.anyString())).thenAnswer(invocation -> generateDummyImmage());
+		when(repo.save(ArgumentMatchers.<Image>any())).thenAnswer(invocation -> invocation.getArgument(0, Image.class));
 		return service;
 	}
 
@@ -106,7 +92,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 		Image existing1 = new Image();
 		existing1.setDescription("Album Name 01 - Cover");
 
-		when(repo.findByDescriptionLike(Matchers.anyString())).thenReturn(Collections.singletonList(existing1));
+		when(repo.findByDescriptionLike(ArgumentMatchers.anyString())).thenReturn(Collections.singletonList(existing1));
 
 		List<Image> saved = service.recoverImagesFromFilePond("Album Name 01 - Cover", false, "filePondFile1");
 		assertThat(saved).hasSize(1);
@@ -153,7 +139,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 		Image existing2 = new Image();
 		existing2.setDescription("Album Name 01 - Image 2");
 
-		when(repo.findByDescriptionLike(Matchers.anyString())).thenReturn(Arrays.asList(existing1, existing2));
+		when(repo.findByDescriptionLike(ArgumentMatchers.anyString())).thenReturn(Arrays.asList(existing1, existing2));
 
 		List<Image> saved = service.recoverImagesFromFilePond("Album Name 01 - Image", true, "filePondFile1",
 				"filePondFile2");
