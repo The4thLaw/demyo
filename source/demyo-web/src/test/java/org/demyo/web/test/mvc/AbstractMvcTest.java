@@ -6,6 +6,7 @@ import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BooleanSupplier;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -42,7 +43,6 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.test.AbstractPersistenceTest;
-import org.demyo.test.utils.Predicate;
 
 /**
  * Base class for MVC integration tests.
@@ -329,7 +329,7 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 * 
 	 * @param p The predicate to test.
 	 */
-	protected void waitFor(Predicate p) {
+	protected void waitFor(BooleanSupplier p) {
 		waitFor(p, DEFAULT_WAITFOR_TIMEOUT);
 	}
 
@@ -339,9 +339,9 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 * @param p The predicate to test.
 	 * @param timeout The maximum timeout, in milliseconds.
 	 */
-	protected void waitFor(Predicate p, long timeout) {
+	protected void waitFor(BooleanSupplier p, long timeout) {
 		long startTime = System.currentTimeMillis();
-		while (!p.test()) {
+		while (!p.getAsBoolean()) {
 			try {
 				Thread.sleep(WAITFOR_SLEEPTIME);
 			} catch (InterruptedException e) {
@@ -361,11 +361,6 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 	 * </p>
 	 */
 	protected void waitForRepeatablePartInit() {
-		waitFor(new Predicate() {
-			@Override
-			public boolean test() {
-				return cssM(".dem-repeatable-template").isEmpty();
-			}
-		});
+		waitFor(() -> cssM(".dem-repeatable-template").isEmpty());
 	}
 }
