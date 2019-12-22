@@ -96,9 +96,9 @@ public class SeriesTest {
 
 		assertThat(writers).hasSize(2);
 		assertThat(writers).element(0)
-				.hasFieldOrPropertyWithValue("name", "Chan");
-		assertThat(writers).element(1)
 				.hasFieldOrPropertyWithValue("name", "Morvan");
+		assertThat(writers).element(1)
+				.hasFieldOrPropertyWithValue("name", "Chan");
 	}
 
 	/**
