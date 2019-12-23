@@ -73,7 +73,7 @@ public class SearchService implements ISearchService {
 		Future<List<Collection>> collections = collectionService.quickSearch(query, exactMatch);
 
 		// TODO: Spring 5: switch to CompletableFuture and use CF.allOf(...). It should remove the need for all the
-		// getFuture calls. At that time, also check Spring's pool for the Async tasks
+		// getFuture calls, by using the join(). At that time, also check Spring's pool for the Async tasks
 		SearchResult result = new SearchResult(getFuture(series), getFuture(albums), getFuture(tags),
 				getFuture(authors), getFuture(publishers), getFuture(collections));
 
