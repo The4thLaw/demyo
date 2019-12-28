@@ -6,6 +6,7 @@
 		<ignoreVersion type="regex">(?i).*alpha.*</ignoreVersion>
 		<ignoreVersion type="regex">(?i).*beta.*</ignoreVersion>
 		<ignoreVersion type="regex">.*CR\d*</ignoreVersion>
+		<ignoreVersion type="regex">(?i).*-rc-?\d*</ignoreVersion>
 	</ignoreVersions>
 	<rules>
 		<!-- Ignore betas for javax.el -->
