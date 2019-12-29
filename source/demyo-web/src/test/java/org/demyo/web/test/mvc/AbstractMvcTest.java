@@ -103,7 +103,6 @@ public abstract class AbstractMvcTest extends AbstractPersistenceTest {
 		// Very ugly but I don't see a better way at the moment
 		Field field = ApplicationConfiguration.class.getField("SYSTEM_LOCALE");
 		Field modifiersField = Field.class.getDeclaredField("modifiers");
-		boolean isModifierAccessible = modifiersField.isAccessible();
 		modifiersField.setAccessible(true);
 		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 		field.setAccessible(true);
