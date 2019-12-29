@@ -18,7 +18,9 @@
 
 	<jee:jndi-lookup id="dataSource" jndi-name="org.demyo.services.dataSource" />
 	
-	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+	<bean id="flywayConfig" class="org.flywaydb.core.api.configuration.ClassicConfiguration">
+		<!-- Old Demyo databases may have schema_version, but that is no longer the default since Flyway 5 -->
+		<property name="table" value="schema_version"/>
 		<property name="dataSource" ref="dataSource"/>
 		<property name="locations">
 			<array>
@@ -26,6 +28,7 @@
 			</array>
 		</property>
 	</bean>
+	<bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" />
 	
 	<!-- Must be run after Flyway to ensure the database is compatible with the code -->
 	<bean id="entityManagerFactory"
