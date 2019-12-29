@@ -121,12 +121,6 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
 				<version>${org.hibernate.version}</version>
-				<exclusions>
-					<exclusion>
-						<groupId>net.bytebuddy</groupId>
-						<artifactId>byte-buddy</artifactId>
-					</exclusion>
-				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -302,6 +296,12 @@
 				<artifactId>mockito-core</artifactId>
 				<version>3.2.4</version>
 				<scope>test</scope>
+			</dependency>
+			<!-- Lock to the version used by mockito, which is also used by Hibernate -->
+			<dependency>
+				<groupId>net.bytebuddy</groupId>
+				<artifactId>byte-buddy</artifactId>
+				<version>1.10.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.dbunit</groupId>
