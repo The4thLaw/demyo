@@ -12,13 +12,13 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.SortComparator;
 
 import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
-
-import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents a Tag.
@@ -26,9 +26,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "TAGS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraphs({ @NamedEntityGraph(name = "Tag.forView", attributeNodes = { @NamedAttributeNode(
-		value = "taggedAlbums", subgraph = "Tag.Album") }, subgraphs = { @NamedSubgraph(name = "Tag.Album",
-		attributeNodes = { @NamedAttributeNode("series") }) }) })
+@NamedEntityGraphs({
+		@NamedEntityGraph(name = "Tag.forView", attributeNodes =
+		{ @NamedAttributeNode(value = "taggedAlbums", subgraph = "Tag.Album") }, subgraphs = {
+				@NamedSubgraph(name = "Tag.Album", attributeNodes =
+				{ @NamedAttributeNode("series") }) }) })
 public class Tag extends AbstractModel {
 	/** The name of the Tag. */
 	@Column(name = "name")

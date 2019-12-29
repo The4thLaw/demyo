@@ -24,11 +24,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.util.AuthorComparator;

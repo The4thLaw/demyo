@@ -3,13 +3,13 @@ package org.demyo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.URL;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 /**
  * Represents the source of a Derivative.

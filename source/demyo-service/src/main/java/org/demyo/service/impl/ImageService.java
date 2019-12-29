@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -23,7 +24,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;

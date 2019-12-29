@@ -16,9 +16,9 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.util.AlbumComparator;

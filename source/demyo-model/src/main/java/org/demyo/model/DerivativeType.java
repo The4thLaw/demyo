@@ -3,11 +3,10 @@ package org.demyo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Represents a type of Derivative.
