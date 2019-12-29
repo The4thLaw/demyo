@@ -13,7 +13,7 @@
 	
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
-		<org.stagemonitor.version>0.31.0</org.stagemonitor.version>
+		<org.stagemonitor.version>0.89.0</org.stagemonitor.version>
 	</properties>
 
 	<dependencies>
@@ -186,7 +186,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>org.stagemonitor</groupId>
-					<artifactId>stagemonitor-web</artifactId>
+					<artifactId>stagemonitor-web-servlet</artifactId>
 					<version>${org.stagemonitor.version}</version>
 				</dependency>
 				<dependency>
