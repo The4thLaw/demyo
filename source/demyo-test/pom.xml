@@ -18,7 +18,6 @@
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

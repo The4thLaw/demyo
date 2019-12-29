@@ -18,13 +18,11 @@
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
-			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-utils</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.demyo</groupId>

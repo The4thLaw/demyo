@@ -63,6 +63,33 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- All internal dependencies -->
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-dao</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>

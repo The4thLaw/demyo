@@ -20,7 +20,6 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	
 		<dependency>
