@@ -125,4 +125,8 @@
     <property name="format" value="^\s*System\.(out|err)\.print.*$"/>
     <property name="message" value="Cannot print to standard output. Use a logger instead."/>
   </module>
+  <module name="SuppressionFilter">
+    <property name="file" value="demyo-checkstyle-suppressions.xml"/>
+    <property name="optional" value="false"/>
+  </module>
 </module>

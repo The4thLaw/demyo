@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+	"-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+	"https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<suppressions>
+	<!-- Suppress all checks for Maven-generated code -->
+	<suppress files="[/\\]target[/\\]" checks=".*"/>
+	<!-- We don't care about magic numbers in test files -->
+	<suppress files="[/\\]src[/\\]test[/\\]java[/\\]" checks="MagicNumber"/>
+</suppressions>
