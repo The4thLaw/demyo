@@ -71,7 +71,9 @@
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<version>1.9.4</version>
+				<!-- 1.9.4 causes issues with Velocity : https://issues.apache.org/jira/browse/VELTOOLS-183 -->
+				<!-- TODO: Spring 5: Bump to latest version -->
+				<version>1.9.3</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-configuration</groupId>
@@ -298,6 +300,7 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- Lock to the version used by mockito, which is also used by Hibernate -->
+			<!-- TODO: Spring 5: Try to unlock this when migrating to a more recent Hibernate -->
 			<dependency>
 				<groupId>net.bytebuddy</groupId>
 				<artifactId>byte-buddy</artifactId>
