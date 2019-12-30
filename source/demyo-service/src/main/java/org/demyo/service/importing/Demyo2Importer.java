@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -36,6 +34,7 @@ import org.demyo.service.IImageService;
 import org.demyo.service.IImportService;
 import org.demyo.utils.io.DIOUtils;
 import org.demyo.utils.io.ZipUtils;
+import org.demyo.utils.xml.XMLUtils;
 
 /**
  * Importer for Demyo 2.x files.
@@ -110,12 +109,7 @@ public class Demyo2Importer implements IImporter {
 			long splitTime = stopWatch.getSplitTime();
 
 			// Create a SAX parser for the input file
-			SAXParserFactory spf = SAXParserFactory.newInstance();
-			spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-			spf.setNamespaceAware(true);
-			SAXParser saxParser = spf.newSAXParser();
-			XMLReader xmlReader = saxParser.getXMLReader();
+			XMLReader xmlReader = XMLUtils.createXmlReader();
 			xmlFis = new FileInputStream(xmlFile);
 			xmlBis = new BufferedInputStream(xmlFis);
 

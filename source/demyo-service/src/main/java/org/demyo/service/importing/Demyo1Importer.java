@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -31,6 +29,7 @@ import org.xml.sax.XMLReader;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.utils.io.DIOUtils;
+import org.demyo.utils.xml.XMLUtils;
 
 /**
  * Importer for Demyo 1.5 files.
@@ -80,12 +79,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			long splitTime = stopWatch.getSplitTime();
 
 			// Create a SAX parser for the input file
-			SAXParserFactory spf = SAXParserFactory.newInstance();
-			spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
-			spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-			spf.setNamespaceAware(true);
-			SAXParser saxParser = spf.newSAXParser();
-			XMLReader xmlReader = saxParser.getXMLReader();
+			XMLReader xmlReader = XMLUtils.createXmlReader();
 
 			// Convert Demyo 1.5 to Demyo 2 on-the-fly
 			xslSheet = Demyo1Importer.class.getResourceAsStream("demyo-to-demyo2.xsl");
