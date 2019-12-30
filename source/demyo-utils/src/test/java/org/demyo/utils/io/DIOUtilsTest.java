@@ -1,5 +1,7 @@
 package org.demyo.utils.io;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.zip.ZipFile;
@@ -87,5 +89,18 @@ public class DIOUtilsTest {
 		Mockito.doThrow(XMLStreamException.class).when(closeable).close();
 		DIOUtils.closeQuietly(closeable);
 		Mockito.verify(closeable, Mockito.times(1)).close();
+	}
+
+	/**
+	 * Tests {@link DIOUtils#getFileExtension(String)}.
+	 */
+	@Test
+	public void getFileExtension() {
+		assertThat(DIOUtils.getFileExtension(null)).isNull();
+		assertThat(DIOUtils.getFileExtension("foo")).isNull();
+		assertThat(DIOUtils.getFileExtension("foo.jpg")).isEqualTo("jpg");
+		assertThat(DIOUtils.getFileExtension("foo.JPG")).isEqualTo("jpg");
+		assertThat(DIOUtils.getFileExtension("foo.mp3")).isEqualTo("mp3");
+		assertThat(DIOUtils.getFileExtension("foo.mp3/")).isEqualTo("mp3");
 	}
 }

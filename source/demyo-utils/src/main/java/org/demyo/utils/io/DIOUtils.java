@@ -32,8 +32,8 @@ public final class DIOUtils {
 	/**
 	 * Unconditionally close a {@link Closeable}.
 	 * <p>
-	 * Equivalent to {@link Closeable#close()}, except any exceptions will be logged and ignored. This is typically
-	 * used in finally blocks.
+	 * Equivalent to {@link Closeable#close()}, except any exceptions will be logged and ignored. This is typically used
+	 * in finally blocks.
 	 * </p>
 	 * <p>
 	 * Similar to Apache Commons' method, but actually logs any error rather than discarding them.
@@ -55,8 +55,8 @@ public final class DIOUtils {
 	/**
 	 * Unconditionally close a {@link ZipFile}.
 	 * <p>
-	 * Equivalent to {@link ZipFile#close()}, except any exceptions will be logged and ignored. This is typically
-	 * used in finally blocks.
+	 * Equivalent to {@link ZipFile#close()}, except any exceptions will be logged and ignored. This is typically used
+	 * in finally blocks.
 	 * </p>
 	 * <p>
 	 * Similar to Apache Commons' method, but actually logs any error rather than discarding them.
@@ -99,8 +99,8 @@ public final class DIOUtils {
 	}
 
 	/**
-	 * Deletes a file, but logs if deletion failed. If deletion failed, the file is marked for deletion on exit, in
-	 * case the lock has disappeared in the mean time.
+	 * Deletes a file, but logs if deletion failed. If deletion failed, the file is marked for deletion on exit, in case
+	 * the lock has disappeared in the mean time.
 	 * <p>
 	 * This method ignores the file if it is not a regular file.
 	 * </p>
@@ -140,7 +140,7 @@ public final class DIOUtils {
 	 * 
 	 * @param prefix The prefix string to be used in generating the file's name.
 	 * @param directory The directory in which the file is to be created, or <code>null</code> if the default
-	 *        temporary-file directory is to be used
+	 *            temporary-file directory is to be used
 	 * @return A {@link File} pointing to a temporary directory.
 	 * @throws IOException In case of error while creating the temporary directory.
 	 */
@@ -150,16 +150,25 @@ public final class DIOUtils {
 
 	/**
 	 * Returns the extension of a file.
+	 * <p>
+	 * Special characters are stripped out to avoid potential injections
+	 * </p>
 	 * 
 	 * @param fileName The name of the file.
 	 * @return The extension, or <code>null</code> if there was no extension.
 	 */
 	public static String getFileExtension(String fileName) {
+		if (fileName == null) {
+			return null;
+		}
 		int lastDot = fileName.lastIndexOf('.');
 		if (lastDot <= 0) {
 			return null;
 		} else {
-			return fileName.substring(lastDot + 1, fileName.length());
+			return fileName
+					.substring(lastDot + 1, fileName.length())
+					.replaceAll("[^A-Za-z0-9]", "")
+					.toLowerCase();
 		}
 	}
 
