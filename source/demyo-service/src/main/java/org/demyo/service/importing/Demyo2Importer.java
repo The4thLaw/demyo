@@ -111,6 +111,8 @@ public class Demyo2Importer implements IImporter {
 
 			// Create a SAX parser for the input file
 			SAXParserFactory spf = SAXParserFactory.newInstance();
+			spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
 			spf.setNamespaceAware(true);
 			SAXParser saxParser = spf.newSAXParser();
 			XMLReader xmlReader = saxParser.getXMLReader();
