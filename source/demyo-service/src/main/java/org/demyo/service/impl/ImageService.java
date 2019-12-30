@@ -215,7 +215,10 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		// Either the file does not exist, or it was removed in the previous step
 		// Move the image to its final destination
-		imageFile.renameTo(targetFile);
+		if (!imageFile.renameTo(targetFile)) {
+			LOGGER.error("Failed to rename {} to {}", imageFile, targetFile);
+			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR);
+		}
 
 		// Create a new image with the right attributes
 		Image image = new Image();
