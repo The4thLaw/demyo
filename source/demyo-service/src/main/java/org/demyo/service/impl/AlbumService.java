@@ -187,7 +187,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	protected Album reloadIfNeeded(Album model) {
 		if (model.getId() == null) {
 			return model;

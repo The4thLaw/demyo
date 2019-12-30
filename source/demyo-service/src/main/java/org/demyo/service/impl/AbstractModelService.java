@@ -282,6 +282,9 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * <p>
 	 * By default, this method returns the provided object without any modification.
 	 * </p>
+	 * <p>
+	 * This method must be run in a transactional context.
+	 * </p>
 	 * 
 	 * @param model The model that would be saved.
 	 * @return The model to save.
