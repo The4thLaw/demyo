@@ -23,6 +23,7 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IImageRepo;
 import org.demyo.model.Image;
 import org.demyo.service.IFilePondService;
+import org.demyo.utils.io.DIOUtils;
 
 /**
  * Unit tests for {@link ImageService}.
@@ -43,9 +44,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 
 	private static void cleanDummyImage(Image image) {
 		File f = new File(SystemConfiguration.getInstance().getImagesDirectory(), image.getUrl());
-		if (!f.delete()) {
-			LOGGER.debug("Failed to delete dummy image: {}", f);
-		}
+		DIOUtils.delete(f);
 	}
 
 	private static ImageService createImageServiceForRecovery() throws DemyoException {

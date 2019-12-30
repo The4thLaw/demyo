@@ -155,8 +155,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			}
 		} catch (IOException e) {
 			// Ensure we don't store invalid contents
-			jpgThumb.delete();
-			pngThumb.delete();
+			DIOUtils.delete(jpgThumb);
+			DIOUtils.delete(pngThumb);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
 		} finally {
 			buffImage.flush();
@@ -210,7 +210,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				return foundImage;
 			}
 			LOGGER.debug("Already existing image was not found in the database. Uploading it as a new one...");
-			targetFile.delete();
+			DIOUtils.delete(targetFile);
 		}
 
 		// Either the file does not exist, or it was removed in the previous step

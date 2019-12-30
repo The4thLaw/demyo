@@ -78,7 +78,7 @@ public class FilePondService implements IFilePondService {
 		try (FileOutputStream fos = new FileOutputStream(destinationFile)) {
 			IOUtils.copy(input, fos);
 		} catch (IOException ioe) {
-			destinationFile.delete();
+			DIOUtils.delete(destinationFile);
 		}
 		// Request to delete on exit, just in case
 		destinationFile.deleteOnExit();

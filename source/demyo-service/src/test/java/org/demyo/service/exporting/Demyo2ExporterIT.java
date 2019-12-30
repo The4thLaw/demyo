@@ -18,6 +18,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.impl.AbstractServiceTest;
+import org.demyo.utils.io.DIOUtils;
 
 /**
  * Tests for {@link Demyo2Exporter}.
@@ -40,7 +41,7 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 	public void testExportCompleteness() throws DemyoException, IOException {
 		File expFile = exporter.export();
 		String expContent = FileUtils.readFileToString(expFile, StandardCharsets.UTF_8);
-		expFile.delete();
+		DIOUtils.delete(expFile);
 		LOGGER.error(expContent);
 
 		assertThat(expContent).contains("<reader id=\"2\" name=\"Sarah\" colour=\"#FF69B4\">");
