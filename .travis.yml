@@ -3,12 +3,18 @@ language: java
 dist: xenial
 jdk:
   - openjdk8
+addons:
+  sonarcloud:
+    organization: "the4thlaw"
+    token:
+      secure: "jOQBckAsKurHX/qTsOapdTdXWIG51CqWoQDn6MIY0ZV6GNs7BhTwfxenhrjtF/89nREERbrrn1EZfJJxFaKZfG+qGiYHbyVzLtEcwGlWAb87kP1/uZL+t4bvmmn0Hn/gdoeo1B7z7uU2Bo4z7kH1cyTI4H+l8r6VZ4aPysTnSrjl9N2YBwbCG9BdENmHSyaRN78qf36ffAgBPZFsDE3qUruDBxgYCdf8zKunF8LLmgr/xnqsnn26wBvr9n0viZTBm6oobNQzFAxB/y04/kzmgLIqp4+xJYuPKTUObAYEAD0PplAQ/81xw6SSlWG2lGz9dbcjPZSE3q3DRICQqJzUc4soLrkdVfiSdBm6KoRyL/k5XS1RUGg5ThoXMCDt7XjZO/INH/Z5DUTT44NCica196+v9/aqy5Sd/vUmctUGCFE8GOvAyZmaU/aPXcd+YA9Pbwrd75l9xXM5jJ0LxK0agUme+8k5rXHAO1fNMwN6J2mAen++B9w+oVmFO1v/iMtc4sTED45rWiZ2z3/SVLC+sAcJ/hwrr4GdgVlEs7wT1hB8IGpuZme8gx5vJw1R5BYYb4iq/niNpxQluma0k8at3Jez4/WSlCG6KP4+36ogidVvIdn57uuxwtLZX2xbMBHvtWJ1EUjfDrLUVBwDObUcbMjQolKBypx30UhvRpHq3QI="
 # Demyo sources are in a sub-directory
 before_script:
   cd source
 # The standard script does not run integration tests
 script:
-  mvn verify -B
+  #mvn verify -B
+  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify sonar:sonar -Dsonar.projectKey=The4thLaw_demyo -B
 cache:
   directories:
     - $HOME/.m2
