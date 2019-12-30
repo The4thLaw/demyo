@@ -23,6 +23,7 @@ public class DIOUtilsTest {
 	 */
 	@Test
 	public void testCloseQuietlyCloseableNormal() throws IOException {
+		DIOUtils.closeQuietly((Closeable) null);
 		Closeable closeable = Mockito.mock(Closeable.class);
 		DIOUtils.closeQuietly(closeable);
 		Mockito.verify(closeable, Mockito.times(1)).close();
@@ -48,6 +49,7 @@ public class DIOUtilsTest {
 	 */
 	@Test
 	public void testCloseQuietlyZipFileNormal() throws IOException {
+		DIOUtils.closeQuietly((ZipFile) null);
 		ZipFile closeable = Mockito.mock(ZipFile.class);
 		DIOUtils.closeQuietly(closeable);
 		Mockito.verify(closeable, Mockito.times(1)).close();
@@ -73,6 +75,7 @@ public class DIOUtilsTest {
 	 */
 	@Test
 	public void testCloseQuietlyXMLStreamWriterNormal() throws XMLStreamException {
+		DIOUtils.closeQuietly((XMLStreamWriter) null);
 		XMLStreamWriter closeable = Mockito.mock(XMLStreamWriter.class);
 		DIOUtils.closeQuietly(closeable);
 		Mockito.verify(closeable, Mockito.times(1)).close();
