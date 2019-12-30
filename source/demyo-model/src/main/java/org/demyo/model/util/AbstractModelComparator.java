@@ -16,14 +16,14 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 	private static final long serialVersionUID = 6870681552272458176L;
 
 	/**
-	 * Performs a nullsafe comparison (according to their compare methods) of the provided elements. A
-	 * {@literal null} element is considered as smaller than a non-{@literal null} one.
+	 * Performs a nullsafe comparison (according to their compare methods) of the provided elements. A {@literal null}
+	 * element is considered as smaller than a non-{@literal null} one.
 	 * 
 	 * @param <T> The type of item to compare.
 	 * @param c1 The first element for comparison
 	 * @param c2 The second element for comparison
-	 * @return a negative integer, zero, or a positive integer as the first object is less than, equal to, or
-	 *         greater than the second object.
+	 * @return a negative integer, zero, or a positive integer as the first object is less than, equal to, or greater
+	 *         than the second object.
 	 */
 	public static <T> int nullSafeComparison(Comparable<T> c1, T c2) {
 		if (c1 == null && c2 == null) {
@@ -53,8 +53,8 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 	 * 
 	 * @param m1 The first model for comparison.
 	 * @param m2 The second model for comparison.
-	 * @return a negative integer, zero, or a positive integer as the first model is less than, equal to, or
-	 *         greater than the second model.
+	 * @return a negative integer, zero, or a positive integer as the first model is less than, equal to, or greater
+	 *         than the second model.
 	 */
 	protected final int defaultComparison(M m1, M m2) {
 		// In case of equal everything, still distinguish them by ID to avoid omitting some results
@@ -62,16 +62,15 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 	}
 
 	/**
-	 * Performs a null-safe, collation-aware comparison of the provided strings. A {@literal null} string is
-	 * considered as smaller than a non-{@literal null} one.
+	 * Performs a null-safe, collation-aware comparison of the provided strings. A {@literal null} string is considered
+	 * as smaller than a non-{@literal null} one.
 	 * 
-	 * @param <T> The type of item to compare.
 	 * @param s1 The first string for comparison
 	 * @param s2 The second string for comparison
-	 * @return a negative integer, zero, or a positive integer as the first string is less than, equal to, or
-	 *         string than the second object.
+	 * @return a negative integer, zero, or a positive integer as the first string is less than, equal to, or string
+	 *         than the second object.
 	 */
-	protected <T> int nullSafeCollatingComparison(String s1, String s2) {
+	protected int nullSafeCollatingComparison(String s1, String s2) {
 		if (s1 == null && s2 == null) {
 			return 0;
 		}

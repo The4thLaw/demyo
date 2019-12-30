@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class HeaderLink {
 
 	/** The link count. */
-	private static int LINK_COUNT = 1;
+	private static int linkCount = 1;
 
 	/** The URL for the link, relative to the application root. */
 	private final String urlFromRoot;
@@ -33,7 +33,7 @@ public class HeaderLink {
 		this.urlFromRoot = urlFromRoot;
 		this.iconSpec = iconSpec;
 		this.label = label;
-		this.id = "header_quick_link_" + LINK_COUNT++;
+		this.id = "header_quick_link_" + linkCount++;
 	}
 
 	/**

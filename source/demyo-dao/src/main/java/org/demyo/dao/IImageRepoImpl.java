@@ -26,7 +26,7 @@ public class IImageRepoImpl implements IImageCustomRepo {
 
 	@Override
 	public Set<String> findAllPaths() {
-		return new HashSet<String>(jdbcTemplate.queryForList("select url from images", String.class));
+		return new HashSet<>(jdbcTemplate.queryForList("select url from images", String.class));
 	}
 
 }

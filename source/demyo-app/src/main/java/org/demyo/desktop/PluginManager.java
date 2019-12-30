@@ -44,7 +44,7 @@ public class PluginManager {
 
 		if (LOGGER.isDebugEnabled()) {
 			for (File plugin : plugins) {
-				LOGGER.debug("Found plugin: " + plugin.getPath());
+				LOGGER.debug("Found plugin", plugin.getPath());
 			}
 		}
 

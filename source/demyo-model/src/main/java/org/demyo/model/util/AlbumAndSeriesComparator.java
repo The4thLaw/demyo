@@ -14,11 +14,9 @@ public class AlbumAndSeriesComparator extends AlbumComparator {
 		Series s1 = a1.getSeries();
 		Series s2 = a2.getSeries();
 
-		if (s1 != null && s2 != null) {
-			if (s1.getId().equals(s2.getId())) {
-				// Same series, use the regular comparison
-				return super.compare(a1, a2);
-			}
+		if (s1 != null && s2 != null && s1.getId().equals(s2.getId())) {
+			// Same series, use the regular comparison
+			return super.compare(a1, a2);
 		}
 
 		// Different series, or null series name. Compare by title.
