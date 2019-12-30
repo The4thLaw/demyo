@@ -4,10 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.zip.ZipOutputStream;
 
@@ -55,18 +54,7 @@ public class ExportService implements IExportService {
 
 	private static final String EXPORT_DIRECTORY_NAME = "exports";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExportService.class);
-
-	/**
-	 * Returns a date format to use in the exported file name.
-	 * <p>
-	 * Doesn't use a ThreadLocal to avoid memory leaks.
-	 * </p>
-	 * 
-	 * @return The date format
-	 */
-	private static DateFormat getDateFormat() {
-		return new SimpleDateFormat("yyyy-MM-dd");
-	}
+	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	private final List<IExporter> exporters = new ArrayList<>();
 	private final File exportDirectory;
@@ -89,7 +77,7 @@ public class ExportService implements IExportService {
 		// It's not a issue at the moment.
 
 		IExporter exporter = exporters.get(0);
-		String baseExportFileName = "demyo_" + getDateFormat().format(new Date()) + ".";
+		String baseExportFileName = "demyo_" + LocalDate.now().format(DATE_FORMAT) + ".";
 
 		File libraryExport = exporter.export();
 		LOGGER.debug("Data export complete");
