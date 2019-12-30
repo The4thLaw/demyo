@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
+import java.sql.Statement;
 
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
@@ -86,7 +87,9 @@ public final class Start {
 		if (isNewDatabase) {
 			LOGGER.info("Setting the database collation...");
 			// This is the collation for French, but it should do no harm to English
-			ds.getConnection().createStatement().execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
+			try (Statement stmt = ds.getConnection().createStatement()) {
+				stmt.execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
+			}
 		}
 
 		String httpAddress = sysConfig.getHttpAddress();
