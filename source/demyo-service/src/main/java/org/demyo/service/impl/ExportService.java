@@ -6,8 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.zip.ZipOutputStream;
 
 import javax.validation.constraints.NotNull;
@@ -56,7 +56,7 @@ public class ExportService implements IExportService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExportService.class);
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	private final List<IExporter> exporters = new ArrayList<>();
+	private final List<IExporter> exporters = new Vector<>();
 	private final File exportDirectory;
 
 	public ExportService() {
