@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -39,7 +39,7 @@ public class ImportService implements IImportService {
 	private IRawSQLDao rawSqlDao;
 	@Autowired
 	private IReaderContext readerContext;
-	private List<IImporter> importers = new ArrayList<IImporter>();
+	private List<IImporter> importers = new Vector<>();
 
 	@Override
 	public void registerImporter(IImporter importer) {
