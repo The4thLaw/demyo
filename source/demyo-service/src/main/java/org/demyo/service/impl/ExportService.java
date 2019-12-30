@@ -13,17 +13,17 @@ import java.util.zip.ZipOutputStream;
 
 import javax.validation.constraints.NotNull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IExportService;
 import org.demyo.service.exporting.IExporter;
 import org.demyo.utils.io.ZipUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IExportService}.
@@ -56,12 +56,17 @@ public class ExportService implements IExportService {
 	private static final String EXPORT_DIRECTORY_NAME = "exports";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExportService.class);
 
-	private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
-		@Override
-		protected DateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd");
-		}
-	};
+	/**
+	 * Returns a date format to use in the exported file name.
+	 * <p>
+	 * Doesn't use a ThreadLocal to avoid memory leaks.
+	 * </p>
+	 * 
+	 * @return The date format
+	 */
+	private static DateFormat getDateFormat() {
+		return new SimpleDateFormat("yyyy-MM-dd");
+	}
 
 	private final List<IExporter> exporters = new ArrayList<>();
 	private final File exportDirectory;
@@ -84,7 +89,7 @@ public class ExportService implements IExportService {
 		// It's not a issue at the moment.
 
 		IExporter exporter = exporters.get(0);
-		String baseExportFileName = "demyo_" + DATE_FORMAT.get().format(new Date()) + ".";
+		String baseExportFileName = "demyo_" + getDateFormat().format(new Date()) + ".";
 
 		File libraryExport = exporter.export();
 		LOGGER.debug("Data export complete");
