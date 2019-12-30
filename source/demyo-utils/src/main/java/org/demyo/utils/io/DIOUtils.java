@@ -112,8 +112,11 @@ public final class DIOUtils {
 			LOGGER.debug("Doesn't exist or not a regular file: {}", file.getAbsolutePath());
 			return;
 		}
-		if (!file.delete()) {
-			LOGGER.warn("Failed to delete file at {}", file.getAbsolutePath());
+
+		try {
+			Files.delete(file.toPath());
+		} catch (IOException e) {
+			LOGGER.warn("Failed to delete file at {}", file.getAbsolutePath(), e);
 			file.deleteOnExit();
 		}
 	}
