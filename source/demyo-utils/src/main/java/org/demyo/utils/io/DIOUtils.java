@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 public final class DIOUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DIOUtils.class);
 	private static final int SNIFF_DEFAULT_BUFFER = 256;
+	private static final Pattern FILE_EXT_EXCLUSIONS = Pattern.compile("[^A-Za-z0-9]");
 
 	private DIOUtils() {
 	}
@@ -168,10 +169,8 @@ public final class DIOUtils {
 		if (lastDot <= 0) {
 			return null;
 		} else {
-			return fileName
-					.substring(lastDot + 1, fileName.length())
-					.replaceAll("[^A-Za-z0-9]", "")
-					.toLowerCase();
+			String baseExt = fileName.substring(lastDot + 1, fileName.length()).toLowerCase();
+			return FILE_EXT_EXCLUSIONS.matcher(baseExt).replaceAll("");
 		}
 	}
 
