@@ -809,7 +809,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 * 
 	 * @return The number format.
 	 */
-	private NumberFormat getNumberFormat() {
+	private static NumberFormat getNumberFormat() {
 		NumberFormat fmt = NumberFormat.getInstance();
 		if (fmt instanceof DecimalFormat) {
 			DecimalFormat df = (DecimalFormat) fmt;
