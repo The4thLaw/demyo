@@ -13,11 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.annotations.SortComparator;
-
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
