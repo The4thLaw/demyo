@@ -3,6 +3,7 @@ package org.demyo.model;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,9 +17,9 @@ import javax.persistence.NamedEntityGraphs;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -90,8 +91,19 @@ public class Series extends AbstractModel {
 		return name;
 	}
 
-	// TODO [Java 8]: refactor all aggregator methods to use a single method with
-	// lamba expressions
+	private <A extends IModel, C extends java.util.Collection<A>> SortedSet<A> getAggregate(
+			Function<Album, C> extractor) {
+		SortedSet<A> aggregate = new TreeSet<>(new IdentifyingNameComparator());
+
+		// Technically, we could use the stream but it's less efficient and this is just as readable
+		for (Album a : albums) {
+			aggregate.addAll(extractor.apply(a));
+		}
+
+		return aggregate;
+
+	}
+
 	/**
 	 * Returns all tags used by the albums of this series.
 	 * 
@@ -99,13 +111,7 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public SortedSet<Tag> getAlbumTags() {
-		SortedSet<Tag> albumTags = new TreeSet<>(new IdentifyingNameComparator());
-
-		for (Album a : albums) {
-			albumTags.addAll(a.getTags());
-		}
-
-		return albumTags;
+		return this.getAggregate(Album::getTags);
 	}
 
 	/**
@@ -115,6 +121,7 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public SortedSet<Author> getAlbumWriters() {
+		// return this.getAggregate(Album::getWriters);
 		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
 
 		for (Album a : albums) {
@@ -131,13 +138,7 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public SortedSet<Author> getAlbumArtists() {
-		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
-
-		for (Album a : albums) {
-			albumAuthors.addAll(a.getArtists());
-		}
-
-		return albumAuthors;
+		return this.getAggregate(Album::getArtists);
 	}
 
 	/**
@@ -147,13 +148,7 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public SortedSet<Author> getAlbumColorists() {
-		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
-
-		for (Album a : albums) {
-			albumAuthors.addAll(a.getColorists());
-		}
-
-		return albumAuthors;
+		return this.getAggregate(Album::getColorists);
 	}
 
 	/**
@@ -163,13 +158,7 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public SortedSet<Author> getAlbumInkers() {
-		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
-
-		for (Album a : albums) {
-			albumAuthors.addAll(a.getInkers());
-		}
-
-		return albumAuthors;
+		return this.getAggregate(Album::getColorists);
 	}
 
 	/**
@@ -179,13 +168,7 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public SortedSet<Author> getAlbumTranslators() {
-		SortedSet<Author> albumAuthors = new TreeSet<>(new IdentifyingNameComparator());
-
-		for (Album a : albums) {
-			albumAuthors.addAll(a.getTranslators());
-		}
-
-		return albumAuthors;
+		return this.getAggregate(Album::getTranslators);
 	}
 
 	/**
@@ -195,13 +178,9 @@ public class Series extends AbstractModel {
 	 */
 	@JsonIgnore
 	public int getOwnedAlbumCount() {
-		int count = 0;
-		for (Album a : albums) {
-			if (!a.isWishlist()) {
-				count++;
-			}
-		}
-		return count;
+		return Math.toIntExact(albums.stream()
+				.filter(Album::isWishlist)
+				.count());
 	}
 
 	/**

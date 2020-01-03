@@ -73,7 +73,6 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	}
 
 	@Override
-	@Transactional(readOnly = true)
 	protected Derivative reloadIfNeeded(Derivative model) {
 		if (model.getId() == null) {
 			return model;

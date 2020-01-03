@@ -33,6 +33,6 @@ public class DemyoRuntimeException extends RuntimeException implements IDemyoExc
 
 	@Override
 	public boolean is(DemyoErrorCode targetCode) {
-		return code.equals(targetCode);
+		return code == targetCode;
 	}
 }

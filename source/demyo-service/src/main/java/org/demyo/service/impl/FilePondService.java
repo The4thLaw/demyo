@@ -28,9 +28,9 @@ import org.demyo.utils.io.DIOUtils;
 @Service
 public class FilePondService implements IFilePondService {
 
-	private static final int AUTOCLEAN_DELAY = 1000 * 60;
-	private static final int AUTOCLEAN_PERIOD = 1000 * 60 * 60 * 24;
-	private static final long AUTOCLEAN_MIN_AGE = 1000 * 60 * 60;
+	private static final long AUTOCLEAN_DELAY = 1000L * 60;
+	private static final long AUTOCLEAN_PERIOD = 1000L * 60 * 60 * 24;
+	private static final long AUTOCLEAN_MIN_AGE = 1000L * 60 * 60;
 	private static final Logger LOGGER = LoggerFactory.getLogger(FilePondService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "filepond";
 
@@ -78,7 +78,7 @@ public class FilePondService implements IFilePondService {
 		try (FileOutputStream fos = new FileOutputStream(destinationFile)) {
 			IOUtils.copy(input, fos);
 		} catch (IOException ioe) {
-			destinationFile.delete();
+			DIOUtils.delete(destinationFile);
 		}
 		// Request to delete on exit, just in case
 		destinationFile.deleteOnExit();

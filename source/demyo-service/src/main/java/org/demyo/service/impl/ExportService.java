@@ -4,14 +4,18 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Vector;
 import java.util.zip.ZipOutputStream;
 
 import javax.validation.constraints.NotNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -19,11 +23,6 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IExportService;
 import org.demyo.service.exporting.IExporter;
 import org.demyo.utils.io.ZipUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link IExportService}.
@@ -55,15 +54,9 @@ public class ExportService implements IExportService {
 
 	private static final String EXPORT_DIRECTORY_NAME = "exports";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExportService.class);
+	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
-		@Override
-		protected DateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd");
-		}
-	};
-
-	private final List<IExporter> exporters = new ArrayList<>();
+	private final List<IExporter> exporters = new Vector<>();
 	private final File exportDirectory;
 
 	public ExportService() {
@@ -84,7 +77,7 @@ public class ExportService implements IExportService {
 		// It's not a issue at the moment.
 
 		IExporter exporter = exporters.get(0);
-		String baseExportFileName = "demyo_" + DATE_FORMAT.get().format(new Date()) + ".";
+		String baseExportFileName = "demyo_" + LocalDate.now().format(DATE_FORMAT) + ".";
 
 		File libraryExport = exporter.export();
 		LOGGER.debug("Data export complete");

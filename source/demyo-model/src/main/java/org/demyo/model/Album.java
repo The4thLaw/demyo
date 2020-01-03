@@ -24,11 +24,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -64,21 +64,6 @@ import org.demyo.model.util.IdentifyingNameComparator;
 				@NamedAttributeNode("prices") })//
 })
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
-	private static final ThreadLocal<NumberFormat> NUMBER_FORMAT = new ThreadLocal<NumberFormat>() {
-		@Override
-		protected NumberFormat initialValue() {
-			NumberFormat fmt = NumberFormat.getInstance();
-			if (fmt instanceof DecimalFormat) {
-				DecimalFormat df = (DecimalFormat) fmt;
-				DecimalFormatSymbols symbols = (DecimalFormatSymbols) df.getDecimalFormatSymbols().clone();
-				symbols.setDecimalSeparator('.'); // We always want a dot in this case
-				df.setDecimalFormatSymbols(symbols);
-				df.applyPattern("#0.#");
-			}
-			return fmt;
-		}
-	};
-
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
@@ -180,7 +165,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@Column(name = "comment")
 	private String comment;
 
-	/** The {@link Tag}s labelling this Album. */
+	/** The {@link Tag}s labeling this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -272,7 +257,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 			if (sb.length() > 0) {
 				sb.append(".");
 			}
-			sb.append(NUMBER_FORMAT.get().format(number.doubleValue()));
+			sb.append(getNumberFormat().format(number.doubleValue()));
 		}
 		if (numberSuffix != null) {
 			if (sb.length() > 0) {
@@ -819,5 +804,26 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	public void setImages(SortedSet<Image> images) {
 		this.images = images;
+	}
+
+	/**
+	 * Gets a NumberFormat for use in {@link #getQualifiedNumber()}.
+	 * <p>
+	 * Done as an instance method rather than a ThreadLocal to avoid potential leaks. However, the number of times we
+	 * may call this method doesn't warrant the inception of a more convoluted ThreadLocal recycler.
+	 * </p>
+	 * 
+	 * @return The number format.
+	 */
+	private static NumberFormat getNumberFormat() {
+		NumberFormat fmt = NumberFormat.getInstance();
+		if (fmt instanceof DecimalFormat) {
+			DecimalFormat df = (DecimalFormat) fmt;
+			DecimalFormatSymbols symbols = (DecimalFormatSymbols) df.getDecimalFormatSymbols().clone();
+			symbols.setDecimalSeparator('.'); // We always want a dot in this case
+			df.setDecimalFormatSymbols(symbols);
+			df.applyPattern("#0.#");
+		}
+		return fmt;
 	}
 }

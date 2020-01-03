@@ -8,12 +8,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.URL;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 /**
  * Represents a Collection of comics within a {@link Publisher}.

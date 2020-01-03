@@ -17,6 +17,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -24,7 +25,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.imgscalr.Scalr;
 import org.imgscalr.Scalr.Method;
 import org.imgscalr.Scalr.Mode;
@@ -236,8 +236,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			}
 		} catch (IOException e) {
 			// Ensure we don't store invalid contents
-			jpgThumb.delete();
-			pngThumb.delete();
+			DIOUtils.delete(jpgThumb);
+			DIOUtils.delete(pngThumb);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
 		} finally {
 			buffImage.flush();
@@ -291,12 +291,15 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				return foundImage;
 			}
 			LOGGER.debug("Already existing image was not found in the database. Uploading it as a new one...");
-			targetFile.delete();
+			DIOUtils.delete(targetFile);
 		}
 
 		// Either the file does not exist, or it was removed in the previous step
 		// Move the image to its final destination
-		imageFile.renameTo(targetFile);
+		if (!imageFile.renameTo(targetFile)) {
+			LOGGER.error("Failed to rename {} to {}", imageFile, targetFile);
+			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR);
+		}
 
 		// Create a new image with the right attributes
 		Image image = new Image();

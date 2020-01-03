@@ -12,15 +12,15 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.SortComparator;
+import org.hibernate.validator.constraints.URL;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
-
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.SortComparator;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 /**
  * Represents a Publisher of comics.
@@ -29,7 +29,8 @@ import org.hibernate.validator.constraints.URL;
 @Table(name = "PUBLISHERS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
 @NamedEntityGraphs({
-		@NamedEntityGraph(name = "Publisher.forView", attributeNodes = { @NamedAttributeNode("collections"),
+		@NamedEntityGraph(name = "Publisher.forView", attributeNodes =
+		{ @NamedAttributeNode("collections"),
 				@NamedAttributeNode("logo") }),
 		@NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo")) })
 public class Publisher extends AbstractModel {

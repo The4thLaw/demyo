@@ -7,6 +7,11 @@ import java.util.concurrent.Future;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Collection;
@@ -22,10 +27,6 @@ import org.demyo.service.ISearchService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
 import org.demyo.service.SearchResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Implements the contract defined by {@link ISearchService}.
@@ -71,6 +72,8 @@ public class SearchService implements ISearchService {
 		Future<List<Publisher>> publishers = publisherService.quickSearch(query, exactMatch);
 		Future<List<Collection>> collections = collectionService.quickSearch(query, exactMatch);
 
+		// TODO: Spring 5: switch to CompletableFuture and use CF.allOf(...). It should remove the need for all the
+		// getFuture calls, by using the join(). At that time, also check Spring's pool for the Async tasks
 		SearchResult result = new SearchResult(getFuture(series), getFuture(albums), getFuture(tags),
 				getFuture(authors), getFuture(publishers), getFuture(collections));
 

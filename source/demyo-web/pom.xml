@@ -13,25 +13,22 @@
 	
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
-		<org.stagemonitor.version>0.31.0</org.stagemonitor.version>
+		<org.stagemonitor.version>0.89.0</org.stagemonitor.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
-			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-model</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-service</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -73,12 +70,12 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>4.2.1.RELEASE</version>
+			<version>4.2.13.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>4.2.1.RELEASE</version>
+			<version>4.2.13.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -96,7 +93,7 @@
 			<artifactId>velocity-tools</artifactId>
 			<version>2.0</version>
 			<exclusions>
-				<!-- Conflicts with v3.0.1 -->
+				<!-- Conflicts with v3+ -->
 				<exclusion>
 					<artifactId>servlet-api</artifactId>
 					<groupId>javax.servlet</groupId>
@@ -135,7 +132,7 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -190,7 +187,7 @@
 			<dependencies>
 				<dependency>
 					<groupId>org.stagemonitor</groupId>
-					<artifactId>stagemonitor-web</artifactId>
+					<artifactId>stagemonitor-web-servlet</artifactId>
 					<version>${org.stagemonitor.version}</version>
 				</dependency>
 				<dependency>

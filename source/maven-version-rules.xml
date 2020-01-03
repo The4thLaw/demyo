@@ -6,6 +6,7 @@
 		<ignoreVersion type="regex">(?i).*alpha.*</ignoreVersion>
 		<ignoreVersion type="regex">(?i).*beta.*</ignoreVersion>
 		<ignoreVersion type="regex">.*CR\d*</ignoreVersion>
+		<ignoreVersion type="regex">(?i).*-rc-?\d*</ignoreVersion>
 	</ignoreVersions>
 	<rules>
 		<!-- Ignore betas for javax.el -->
@@ -14,9 +15,10 @@
 				<ignoreVersion type="regex">(?i).*-b.*</ignoreVersion>
 			</ignoreVersions>
 		</rule>
-		<rule groupId="org.glassfish.web" artifactId="javax.el">
+		<!-- Ignore v2.0, which is older than 1.3 and 1.4 -->
+		<rule groupId="xml-apis" artifactId="xml-apis">
 			<ignoreVersions>
-				<ignoreVersion type="regex">(?i).*-b.*</ignoreVersion>
+				<ignoreVersion type="regex">2\.0\./*</ignoreVersion>
 			</ignoreVersions>
 		</rule>
 	</rules>

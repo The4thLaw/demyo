@@ -1,9 +1,9 @@
 package org.demyo.web.servlet;
 
+import java.lang.reflect.InvocationTargetException;
+
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.WebApplicationInitializer;
 
 /**
- * Specific component to ensure the stagemonitor plugin is initialised. Has no
- * compile-time dependencies on stagemonitor, and no requirement at runtime.
+ * Specific component to ensure the stagemonitor plugin is initialised. Has no compile-time dependencies on
+ * stagemonitor, and no requirement at runtime.
  */
 @Component
 public class StagemonitorInitializer implements WebApplicationInitializer {
@@ -31,14 +31,13 @@ public class StagemonitorInitializer implements WebApplicationInitializer {
 	}
 
 	/**
-	 * Checks whether Stagemonitor is in the classpath. Does not check for
-	 * potential issues with the initialisation.
+	 * Checks whether Stagemonitor is in the classpath. Does not check for potential issues with the initialisation.
 	 * 
 	 * @return <code>true</code> if the
 	 */
 	public static boolean isStagemonitorAvailable() {
 		try {
-			Class.forName("org.stagemonitor.web.WebPlugin");
+			Class.forName("org.stagemonitor.web.servlet.initializer.ServletContainerInitializerUtil");
 		} catch (ClassNotFoundException e) {
 			return false;
 		}
@@ -48,19 +47,14 @@ public class StagemonitorInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext ctx) {
 		try {
-			Class<?> webPluginClass = Class.forName("org.stagemonitor.web.WebPlugin");
-			ServletContainerInitializer webPlugin = (ServletContainerInitializer) webPluginClass.newInstance();
-			webPlugin.onStartup(null, ctx);
+			Class<?> util = Class.forName("org.stagemonitor.web.servlet.initializer.ServletContainerInitializerUtil");
+			util.getMethod("registerStagemonitorServletContainerInitializers", ServletContext.class).invoke(null,
+					servletContext);
 			LOGGER.info("Initialised the stagemonitor plugin");
 		} catch (ClassNotFoundException e) {
 			LOGGER.info("stagemonitor is not in the classpath, continuing happily");
-		} catch (InstantiationException | IllegalAccessException | ClassCastException e) {
-			LOGGER.warn("stagemonitor is in the classpath but I can't instantiate it, continuing happily", e);
-		} catch (ServletException | UnsupportedOperationException e) {
-			// UnsupportedOperationException could happen in integration tests,
-			// for example. We could exclude
-			// stagemonitor for failsafe tests but Eclipse does not comply
-			LOGGER.warn("stagemonitor is in the classpath but I can't configure it, continuing happily", e);
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+			LOGGER.warn("stagemonitor is in the classpath but I can't initialize it, continuing happily", e);
 		}
 	}
 }

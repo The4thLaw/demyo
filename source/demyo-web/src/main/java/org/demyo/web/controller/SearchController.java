@@ -1,12 +1,13 @@
 package org.demyo.web.controller;
 
-import org.demyo.service.ISearchService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import org.demyo.service.ISearchService;
 
 /**
  * Controller for management of search operations.
@@ -24,7 +25,7 @@ public class SearchController extends AbstractController {
 	 * @param model The {@link Model}
 	 * @return The view name
 	 */
-	@RequestMapping("/quick")
+	@GetMapping("/quick")
 	public String quickSearch(@RequestParam("q") String query, Model model) {
 		model.addAttribute("results", searchService.quickSearch(query));
 		setLayoutPlain(model);

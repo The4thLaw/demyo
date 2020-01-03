@@ -11,6 +11,9 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.SortComparator;
 
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;

@@ -144,6 +144,9 @@ public class Demyo2Exporter implements IExporter {
 		} catch (XMLStreamException e) {
 			throw new DemyoException(DemyoErrorCode.EXPORT_XML_ERROR, e);
 		} finally {
+			// We will most likely not need this anymore in the current request. Clear it to avoid leaks.
+			DATE_FORMAT.remove();
+
 			DIOUtils.closeQuietly(xsw);
 			DIOUtils.closeQuietly(outputStream);
 		}

@@ -55,15 +55,10 @@ public final class ZipUtils {
 					entryDestination.mkdirs();
 				} else {
 					entryDestination.getParentFile().mkdirs();
-					InputStream in = zipFile.getInputStream(entry);
-					FileOutputStream fos = new FileOutputStream(entryDestination);
-					BufferedOutputStream bos = new BufferedOutputStream(fos);
-					try {
+					try (InputStream in = zipFile.getInputStream(entry);
+							FileOutputStream fos = new FileOutputStream(entryDestination);
+							BufferedOutputStream bos = new BufferedOutputStream(fos)) {
 						IOUtils.copy(in, fos);
-					} finally {
-						DIOUtils.closeQuietly(in);
-						DIOUtils.closeQuietly(bos);
-						DIOUtils.closeQuietly(fos);
 					}
 				}
 			}

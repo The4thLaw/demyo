@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
+import java.sql.Statement;
 
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
@@ -38,7 +39,7 @@ public final class Start {
 	 */
 	public static void main(String[] args) {
 		try {
-			startDemyo(args);
+			startDemyo();
 		} catch (Exception e) {
 			LOGGER.error("Failed to start Demyo", e);
 			if (!GraphicsEnvironment.isHeadless()) {
@@ -53,7 +54,7 @@ public final class Start {
 		System.exit(0);
 	}
 
-	private static void startDemyo(String[] args) throws Exception {
+	private static void startDemyo() throws Exception {
 		// Try to detect the application directory, based on the app JAR (the only reliable one since others may come
 		// from the exploded WAR).
 		if (System.getProperty("demyo.applicationDirectory") == null) {
@@ -86,7 +87,9 @@ public final class Start {
 		if (isNewDatabase) {
 			LOGGER.info("Setting the database collation...");
 			// This is the collation for French, but it should do no harm to English
-			ds.getConnection().createStatement().execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
+			try (Statement stmt = ds.getConnection().createStatement()) {
+				stmt.execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
+			}
 		}
 
 		String httpAddress = sysConfig.getHttpAddress();

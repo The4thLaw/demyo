@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.demyo.service.IReaderService;
@@ -36,7 +36,7 @@ public class HomeController extends AbstractController {
 	 * @param model The view model
 	 * @return The view name
 	 */
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String viewHome(Model model) {
 		suppressQuickSearch(model);
 		return "core/home";
@@ -49,7 +49,7 @@ public class HomeController extends AbstractController {
 	 * @param model The view model
 	 * @return The view name
 	 */
-	@RequestMapping("/about")
+	@GetMapping("/about")
 	public String viewAbout(HttpServletRequest request, Model model) {
 		suppressQuickSearch(model);
 		model.addAttribute("javaVersion", System.getProperty("java.version"));
@@ -67,7 +67,7 @@ public class HomeController extends AbstractController {
 	 * @return The manifest map.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/Manifest
 	 */
-	@RequestMapping("/manifest.json")
+	@GetMapping("/manifest.json")
 	@ResponseBody
 	public Map<String, Object> getApplicationManifest() {
 		Locale language = readerService.getContext().getConfiguration().getLanguage();
