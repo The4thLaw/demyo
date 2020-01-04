@@ -6,6 +6,11 @@
 	],
 	"settings": {
 		"java.configuration.updateBuildConfiguration": "interactive",
+
+		// See https://github.com/vuejs/eslint-plugin-vue/issues/976
+		"eslint.workingDirectories": [
+			"./source/demyo-vue-frontend"
+		],
 		"eslint.validate": [
 			"javascript",
 			"javascriptreact",
