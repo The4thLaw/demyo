@@ -6,6 +6,8 @@
 <suppressions>
 	<!-- Suppress all checks for Maven-generated code -->
 	<suppress files="[/\\]target[/\\]" checks=".*"/>
+	<!-- Suppress all checks for non-text files -->
+	<suppress files=".*(DS_Store|png|bmp|xcf)" checks=".*"/>
 	<!-- We don't care about magic numbers in test files -->
 	<suppress files="[/\\]src[/\\]test[/\\]java[/\\]" checks="MagicNumber"/>
 </suppressions>
