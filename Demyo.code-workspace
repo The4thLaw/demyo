@@ -5,6 +5,21 @@
 		}
 	],
 	"settings": {
+		"files.exclude": {
+			"**/.classpath": true,
+			"**/.project": true,
+			"**/.settings": true,
+			"**/.factorypath": true
+		},
+
+		"editor.tabSize": 4,
+
+		"java.configuration.updateBuildConfiguration": "interactive",
+
+		// See https://github.com/vuejs/eslint-plugin-vue/issues/976
+		"eslint.workingDirectories": [
+			"./demyo-vue-frontend"
+		],
 		"eslint.validate": [
 			"javascript",
 			"vue",
