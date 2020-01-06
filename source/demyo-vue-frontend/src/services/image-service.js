@@ -2,7 +2,7 @@ import AbstractModelService from './abstract-model-service'
 import { axiosGet, axiosPost } from '@/helpers/axios'
 
 /**
- * API service for Authors.
+ * API service for Images.
  */
 class ImageService extends AbstractModelService {
 	constructor() {

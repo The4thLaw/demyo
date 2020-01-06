@@ -1,7 +1,7 @@
 import AbstractModelService from './abstract-model-service'
 
 /**
- * API service for Authors.
+ * API service for Derivatives.
  */
 class DerivativeService extends AbstractModelService {
 	constructor() {
