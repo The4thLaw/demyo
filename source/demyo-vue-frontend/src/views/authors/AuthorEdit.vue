@@ -48,9 +48,9 @@ import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
-import { saveStub } from '@/helpers/actions'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
+import modelEditMixin from '@/mixins/model-edit'
 import authorService from '@/services/author-service'
 import imageService from '@/services/image-service'
 
@@ -64,17 +64,19 @@ export default {
 		TiptapVuetify
 	},
 
-	metaInfo() {
-		return {
-			title: this.initialized
-				? (this.author.id ? this.$t('title.edit.author') : this.$t('title.add.author'))
-				: ''
-		}
-	},
+	mixins: [modelEditMixin],
 
 	data() {
 		return {
-			initialized: false,
+			mixinConfig: {
+				modelEdit: {
+					titleKeys: {
+						add: 'title.add.author',
+						edit: 'title.edit.author'
+					},
+					saveRedirectViewName: 'AuthorView'
+				}
+			},
 			allImages: [],
 			allImagesLoading: false,
 			author: { portrait: {} },
@@ -88,22 +90,10 @@ export default {
 		}
 	},
 
-	watch: {
-		'$route': 'fetchData'
-	},
-
-	created() {
-		this.$store.dispatch('ui/disableSearch')
-		this.fetchData()
-	},
-
 	methods: {
 		async fetchData() {
-			if (this.$route.params.id) { // Edit mode -> load the author
-				this.$store.dispatch('ui/enableGlobalOverlay')
-				const id = parseInt(this.$route.params.id, 10)
-				this.author = await authorService.findById(id)
-				this.$store.dispatch('ui/disableGlobalOverlay')
+			if (this.parsedId) { // Edit mode -> load the author
+				this.author = await authorService.findById(this.parsedId)
 			}
 			if (!this.author.portrait) {
 				this.author.portrait = {
@@ -111,7 +101,6 @@ export default {
 				}
 			}
 			this.allImages = await imageService.findForList()
-			this.initialized = true
 		},
 
 		async refreshImages() {
@@ -120,17 +109,8 @@ export default {
 			this.allImagesLoading = false
 		},
 
-		save() {
-			saveStub(this, () => {
-				return authorService.save(this.author)
-			}, 'AuthorView')
-		},
-
-		reset() {
-			this.$refs.form.reset()
-			if (this.author.id) {
-				this.fetchData()
-			}
+		saveHandler() {
+			return authorService.save(this.author)
 		}
 	}
 }
