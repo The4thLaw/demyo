@@ -56,7 +56,18 @@ export default {
 		async fetchDataInternal() {
 			this.initialized = false
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			await this.fetchData()
+
+			const loadPromises = []
+
+			loadPromises.push(this.fetchData())
+
+			// Integration with other mixins
+			if (this.refreshImages) {
+				loadPromises.push(this.refreshImages())
+			}
+
+			await Promise.all(loadPromises)
+
 			this.initialized = true
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		},

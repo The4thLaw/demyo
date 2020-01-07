@@ -51,8 +51,8 @@ import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
+import imgRefreshMixin from '@/mixins/refresh-image-list'
 import authorService from '@/services/author-service'
-import imageService from '@/services/image-service'
 
 export default {
 	name: 'AuthorEdit',
@@ -64,7 +64,7 @@ export default {
 		TiptapVuetify
 	},
 
-	mixins: [modelEditMixin],
+	mixins: [modelEditMixin, imgRefreshMixin],
 
 	data() {
 		return {
@@ -77,8 +77,6 @@ export default {
 					saveRedirectViewName: 'AuthorView'
 				}
 			},
-			allImages: [],
-			allImagesLoading: false,
 			author: { portrait: {} },
 			tipTapExtensions: tipTapExtensions,
 
@@ -100,13 +98,6 @@ export default {
 					id: undefined
 				}
 			}
-			this.allImages = await imageService.findForList()
-		},
-
-		async refreshImages() {
-			this.allImagesLoading = true
-			this.allImages = await imageService.findForList()
-			this.allImagesLoading = false
 		},
 
 		saveHandler() {
