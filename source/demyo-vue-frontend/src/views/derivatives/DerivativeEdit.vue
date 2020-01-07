@@ -6,6 +6,12 @@
 					<v-col :sm="12" :md="6">
 						<Autocomplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
+							@input="loadAlbums"
+						/>
+					</v-col>
+					<v-col :sm="12" :md="6">
+						<Autocomplete
+							v-model="derivative.album.id" :items="relatedAlbums" label-key="field.Derivative.album"
 						/>
 					</v-col>
 				</v-row>
@@ -27,7 +33,7 @@ import imageService from '@/services/image-service'
 import seriesService from '@/services/series-service'
 
 export default {
-	name: 'AuthorEdit',
+	name: 'DerivativeEdit',
 
 	components: {
 		Autocomplete,
@@ -48,6 +54,7 @@ export default {
 		return {
 			initialized: false,
 			allSeries: [],
+			relatedAlbums: [],
 			allImages: [],
 			allImagesLoading: false,
 			derivative: {
@@ -68,28 +75,48 @@ export default {
 		'$route': 'fetchData'
 	},
 
-	created() { // TODO: Maybe this disableSearch, watch and auto-reload should be mixins ?
+	created() {
+		// TODO: Maybe this disableSearch, watch and auto-reload should be mixins ?
+		// The mixin could call the fetchData and handle the overlay
+		// Perhaps we could also have mixins for reloadable images, etc
 		this.$store.dispatch('ui/disableSearch')
 		this.fetchData()
 	},
 
 	methods: {
 		async fetchData() {
-			// TODO: stub this
+			this.$store.dispatch('ui/enableGlobalOverlay')
+			// TODO: stub this? Maybe it should be a mixin?
 			if (this.$route.params.id) { // Edit mode -> load
-				this.$store.dispatch('ui/enableGlobalOverlay')
 				const id = parseInt(this.$route.params.id, 10)
 				this.derivative = await derivativeService.findById(id)
-				this.$store.dispatch('ui/disableGlobalOverlay')
 			}
 			if (!this.derivative.series) {
-				this.derivative.series = {
-					id: undefined
-				}
+				this.derivative.series = {}
 			}
-			this.allImages = await imageService.findForList()
-			this.allSeries = await seriesService.findForList()
+			if (!this.derivative.album) {
+				this.derivative.album = {}
+			}
+
+			// Find all reference data
+			const pImages = await imageService.findForList()
+			const pSeries = await seriesService.findForList()
+			const pAuthors = await authorService.findForList()
+			// Assign all reference data
+			this.allImages = await pImages
+			this.allSeries = await pSeries
+			this.allAuthors = await pAuthors
+
+			// Load albums with the currently available data
+			this.loadAlbums()
+
+			this.$store.dispatch('ui/disableGlobalOverlay')
 			this.initialized = true
+		},
+
+		async loadAlbums() {
+			this.relatedAlbums = await seriesService.findAlbumsForList(this.derivative.series.id)
+			// TODO: if the current album ID is not in the returned list, clear it
 		},
 
 		async refreshImages() {

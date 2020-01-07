@@ -1,3 +1,4 @@
+import { axiosGet } from '@/helpers/axios'
 import AbstractModelService from './abstract-model-service'
 
 /**
@@ -6,6 +7,13 @@ import AbstractModelService from './abstract-model-service'
 class SeriesService extends AbstractModelService {
 	constructor() {
 		super('series/')
+	}
+
+	findAlbumsForList(seriesId) {
+		if (!seriesId) {
+			seriesId = 'none'
+		}
+		return axiosGet(`${this.basePath}/${seriesId}/albums`, [])
 	}
 }
 
