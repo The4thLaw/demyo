@@ -62,6 +62,9 @@ export default {
 			loadPromises.push(this.fetchData())
 
 			// Integration with other mixins
+			if (this.refreshAuthors) {
+				loadPromises.push(this.refreshAuthors())
+			}
 			if (this.refreshImages) {
 				loadPromises.push(this.refreshImages())
 			}

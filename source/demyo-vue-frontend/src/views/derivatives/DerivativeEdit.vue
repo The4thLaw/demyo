@@ -25,13 +25,11 @@ import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
-import { saveStub } from '@/helpers/actions'
 import { tipTapExtensions } from '@/helpers/fields'
 import modelEditMixin from '@/mixins/model-edit'
+import authorRefreshMixin from '@/mixins/refresh-author-list'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
-import authorService from '@/services/author-service'
 import derivativeService from '@/services/derivative-service'
-import imageService from '@/services/image-service'
 import seriesService from '@/services/series-service'
 
 export default {
@@ -44,7 +42,7 @@ export default {
 		TiptapVuetify
 	},
 
-	mixins: [modelEditMixin, imgRefreshMixin],
+	mixins: [modelEditMixin, authorRefreshMixin, imgRefreshMixin],
 
 	data() {
 		return {
@@ -77,8 +75,7 @@ export default {
 	methods: {
 		async fetchData() {
 			if (this.parsedId) {
-				const id = parseInt(this.$route.params.id, 10)
-				this.derivative = await derivativeService.findById(id)
+				this.derivative = await derivativeService.findById(this.parsedId)
 			}
 			if (!this.derivative.series) {
 				this.derivative.series = {}
@@ -89,10 +86,8 @@ export default {
 
 			// Find all reference data
 			const pSeries = await seriesService.findForList()
-			const pAuthors = await authorService.findForList()
 			// Assign all reference data
 			this.allSeries = await pSeries
-			this.allAuthors = await pAuthors
 
 			// Load albums with the currently available data
 			this.loadAlbums()
