@@ -15,8 +15,16 @@
 							label-key="field.Derivative.album" refreshable @refresh="loadAlbums"
 						/>
 					</v-col>
+					<v-col :sm="12" :md="6">
+						<Autocomplete
+							v-model="derivative.artist.id" :items="allAuthors" :loading="allAuthorsLoading"
+							label-key="field.Derivative.artist" refreshable @refresh="refreshAuthors"
+						/>
+					</v-col>
 				</v-row>
 			</SectionCard>
+
+			<FormActions v-if="initialized" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
@@ -62,7 +70,8 @@ export default {
 			relatedAlbumsLoading: false,
 			derivative: {
 				series: {},
-				album: {}
+				album: {},
+				artist: {}
 			},
 			tipTapExtensions: tipTapExtensions,
 
@@ -84,6 +93,9 @@ export default {
 			}
 			if (!this.derivative.album) {
 				this.derivative.album = {}
+			}
+			if (!this.derivative.artist) {
+				this.derivative.artist = {}
 			}
 
 			// Find all reference data

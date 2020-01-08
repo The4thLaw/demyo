@@ -25,7 +25,10 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	}
 
 	/**
-	 * @see IAuthorService#getAuthorAlbums(long)
+	 * Gets the albums to which a specific author participated.
+	 * 
+	 * @param authorId The Author internal identifier
+	 * @return The structured works
 	 */
 	@GetMapping("/{modelId}/albums")
 	@JsonView(ModelView.Basic.class)
