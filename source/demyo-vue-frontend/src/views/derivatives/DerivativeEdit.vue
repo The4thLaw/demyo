@@ -11,7 +11,8 @@
 					</v-col>
 					<v-col :sm="12" :md="6">
 						<Autocomplete
-							v-model="derivative.album.id" :items="relatedAlbums" label-key="field.Derivative.album"
+							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
+							label-key="field.Derivative.album" refreshable @refresh="loadAlbums"
 						/>
 					</v-col>
 				</v-row>
@@ -58,6 +59,7 @@ export default {
 
 			allSeries: [],
 			relatedAlbums: [],
+			relatedAlbumsLoading: false,
 			derivative: {
 				series: {},
 				album: {}
@@ -94,8 +96,10 @@ export default {
 		},
 
 		async loadAlbums() {
+			this.relatedAlbumsLoading = true
 			this.relatedAlbums = await seriesService.findAlbumsForList(this.derivative.series.id)
 			// TODO: if the current album ID is not in the returned list, clear it
+			this.relatedAlbumsLoading = false
 		},
 
 		saveHandler() {
