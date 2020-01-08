@@ -98,7 +98,12 @@ export default {
 		async loadAlbums() {
 			this.relatedAlbumsLoading = true
 			this.relatedAlbums = await seriesService.findAlbumsForList(this.derivative.series.id)
-			// TODO: if the current album ID is not in the returned list, clear it
+			if (this.derivative.album.id) {
+				// If the current album ID is not in the returned list, clear it
+				if (!this.relatedAlbums.find(val => val.id === this.derivative.album.id)) {
+					this.derivative.album.id = undefined
+				}
+			}
 			this.relatedAlbumsLoading = false
 		},
 
