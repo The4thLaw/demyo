@@ -20,8 +20,8 @@
 <script>
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
-import { saveStub } from '@/helpers/actions'
 import { mandatory } from '@/helpers/rules'
+import modelEditMixin from '@/mixins/model-edit'
 import imageService from '@/services/image-service'
 
 export default {
@@ -32,15 +32,20 @@ export default {
 		SectionCard
 	},
 
-	metaInfo() {
-		return {
-			title: this.$t('title.edit.image')
-		}
-	},
+	mixins: [modelEditMixin],
 
 	data() {
 		return {
-			initialized: false,
+			mixinConfig: {
+				modelEdit: {
+					titleKeys: {
+						add: '-',
+						edit: 'title.edit.image'
+					},
+					saveRedirectViewName: 'ImageView'
+				}
+			},
+
 			image: {},
 
 			rules: {
@@ -51,33 +56,13 @@ export default {
 		}
 	},
 
-	watch: {
-		'$route': 'fetchData'
-	},
-
-	created() {
-		this.$store.dispatch('ui/disableSearch')
-		this.fetchData()
-	},
-
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
-			const id = parseInt(this.$route.params.id, 10)
-			this.image = await imageService.findById(id)
-			this.$store.dispatch('ui/disableGlobalOverlay')
-			this.initialized = true
+			this.image = await imageService.findById(this.parsedId)
 		},
 
-		save() {
-			saveStub(this, () => {
-				return imageService.save(this.image)
-			}, 'ImageView')
-		},
-
-		reset() {
-			this.$refs.form.reset()
-			this.fetchData()
+		saveHandler() {
+			return imageService.save(this.image)
 		}
 	}
 }

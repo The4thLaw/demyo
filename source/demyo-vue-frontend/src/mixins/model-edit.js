@@ -2,7 +2,7 @@ export default {
 	metaInfo() {
 		return {
 			title: this.initialized
-				? (this.author.id
+				? (this.parsedId
 					? this.$t(this.mixinConfig.modelEdit.titleKeys.edit)
 					: this.$t(this.mixinConfig.modelEdit.titleKeys.edit))
 				: ''
