@@ -27,6 +27,8 @@ import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
 import { saveStub } from '@/helpers/actions'
 import { tipTapExtensions } from '@/helpers/fields'
+import modelEditMixin from '@/mixins/model-edit'
+import imgRefreshMixin from '@/mixins/refresh-image-list'
 import authorService from '@/services/author-service'
 import derivativeService from '@/services/derivative-service'
 import imageService from '@/services/image-service'
@@ -42,21 +44,22 @@ export default {
 		TiptapVuetify
 	},
 
-	metaInfo() {
-		return {
-			title: this.initialized
-				? (this.derivative.id ? this.$t('title.edit.derivative') : this.$t('title.add.derivative'))
-				: ''
-		}
-	},
+	mixins: [modelEditMixin, imgRefreshMixin],
 
 	data() {
 		return {
-			initialized: false,
+			mixinConfig: {
+				modelEdit: {
+					titleKeys: {
+						add: 'title.add.derivative',
+						edit: 'title.edit.derivative'
+					},
+					saveRedirectViewName: 'DerivativeView'
+				}
+			},
+
 			allSeries: [],
 			relatedAlbums: [],
-			allImages: [],
-			allImagesLoading: false,
 			derivative: {
 				series: {},
 				album: {}
@@ -71,23 +74,9 @@ export default {
 		}
 	},
 
-	watch: {
-		'$route': 'fetchData'
-	},
-
-	created() {
-		// TODO: Maybe this disableSearch, watch and auto-reload should be mixins ?
-		// The mixin could call the fetchData and handle the overlay
-		// Perhaps we could also have mixins for reloadable images, etc
-		this.$store.dispatch('ui/disableSearch')
-		this.fetchData()
-	},
-
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
-			// TODO: stub this? Maybe it should be a mixin?
-			if (this.$route.params.id) { // Edit mode -> load
+			if (this.parsedId) {
 				const id = parseInt(this.$route.params.id, 10)
 				this.derivative = await derivativeService.findById(id)
 			}
@@ -99,19 +88,14 @@ export default {
 			}
 
 			// Find all reference data
-			const pImages = await imageService.findForList()
 			const pSeries = await seriesService.findForList()
 			const pAuthors = await authorService.findForList()
 			// Assign all reference data
-			this.allImages = await pImages
 			this.allSeries = await pSeries
 			this.allAuthors = await pAuthors
 
 			// Load albums with the currently available data
 			this.loadAlbums()
-
-			this.$store.dispatch('ui/disableGlobalOverlay')
-			this.initialized = true
 		},
 
 		async loadAlbums() {
@@ -119,23 +103,8 @@ export default {
 			// TODO: if the current album ID is not in the returned list, clear it
 		},
 
-		async refreshImages() {
-			this.allImagesLoading = true
-			this.allImages = await imageService.findForList()
-			this.allImagesLoading = false
-		},
-
-		save() {
-			saveStub(this, () => {
-				return derivativeService.save(this.derivative)
-			}, 'DerivativeView')
-		},
-
-		reset() {
-			this.$refs.form.reset()
-			if (this.derivative.id) {
-				this.fetchData()
-			}
+		saveHandler() {
+			return derivativeService.save(this.derivative)
 		}
 	}
 }

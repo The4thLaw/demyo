@@ -77,6 +77,7 @@ export default {
 					saveRedirectViewName: 'AuthorView'
 				}
 			},
+
 			author: { portrait: {} },
 			tipTapExtensions: tipTapExtensions,
 
@@ -90,7 +91,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			if (this.parsedId) { // Edit mode -> load the author
+			if (this.parsedId) {
 				this.author = await authorService.findById(this.parsedId)
 			}
 			if (!this.author.portrait) {
