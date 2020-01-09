@@ -6,12 +6,14 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.demyo.service.impl.TranslationService;
-
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.config.ValidScope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.Advised;
+import org.springframework.aop.support.AopUtils;
+
+import org.demyo.service.impl.TranslationService;
 
 /**
  * Velocity tool for Rich Text Editing.
@@ -28,7 +30,8 @@ public class RteTool {
 	private static final int GROUP_MODEL_LINKS_MODEL = 2;
 	private static final int GROUP_MODEL_LINKS_ID = 3;
 
-	// Maybe extract this to an inflector if ever needed. Consider https://issues.apache.org/jira/browse/LANG-485 in that case
+	// Maybe extract this to an inflector if ever needed. Consider https://issues.apache.org/jira/browse/LANG-485 in
+	// that case
 	private static final Map<String, String> MODEL_TO_CONTROLLER = new HashMap<String, String>();
 
 	static {
@@ -60,15 +63,27 @@ public class RteTool {
 	 * @see #replaceModelLinks(CharSequence, String)
 	 * @see #replaceOrdinals(CharSequence, TranslationService)
 	 */
-	public String parse(String text, String contextRoot, TranslationService translationService) {
+	public String parse(String text, String contextRoot, Object translationService) throws Exception {
 		if (text == null) {
 			return null;
 		}
 
 		CharSequence replaced = replaceModelLinks(text, contextRoot);
-		replaced = replaceOrdinals(replaced, translationService);
+		replaced = replaceOrdinals(replaced, proxyAwareCast(TranslationService.class, translationService));
 
 		return replaced.toString();
+	}
+
+	private static <T> T proxyAwareCast(Class<T> clazz, Object o) throws Exception {
+		if (AopUtils.isAopProxy(o) && o instanceof Advised) {
+			o = ((Advised) o).getTargetSource().getTarget();
+		}
+
+		if (clazz.isInstance(o)) {
+			return clazz.cast(o);
+		}
+
+		throw new ClassCastException("Cannot cast to " + clazz);
 	}
 
 	/**
