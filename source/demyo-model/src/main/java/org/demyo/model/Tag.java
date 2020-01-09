@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 
 import org.demyo.model.util.AlbumAndSeriesComparator;
@@ -138,9 +139,14 @@ public class Tag extends AbstractModel {
 	 * @return the number of times this Tag has been used
 	 */
 	public Integer getUsageCount() {
+		if (!Hibernate.isInitialized(taggedAlbums)) {
+			return null;
+		}
+
 		if (usageCount == null) {
 			return taggedAlbums.size();
 		}
+
 		return usageCount;
 	}
 
