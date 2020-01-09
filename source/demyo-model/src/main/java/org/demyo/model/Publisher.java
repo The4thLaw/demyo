@@ -18,6 +18,8 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
@@ -58,6 +60,7 @@ public class Publisher extends AbstractModel {
 	@OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
 	@BatchSize(size = BATCH_SIZE)
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonIgnoreProperties("publisher")
 	private SortedSet<Collection> collections;
 
 	@Override
