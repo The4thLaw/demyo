@@ -2,6 +2,7 @@ package org.demyo.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
@@ -13,9 +14,12 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
-import org.demyo.model.util.PreSave;
-
 import org.apache.commons.collections.CollectionUtils;
+import org.hibernate.Hibernate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.demyo.model.util.PreSave;
 
 /**
  * An {@link AbstractModel} for which detailed prices are tracked.
@@ -26,6 +30,8 @@ import org.apache.commons.collections.CollectionUtils;
 @MappedSuperclass
 public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M extends AbstractPricedModel<P, M>>
 		extends AbstractModel {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPricedModel.class);
+
 	/** The date of acquisition. */
 	@Column(name = "acquisition_date")
 	private Date acquisitionDate;
@@ -131,12 +137,18 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 	 */
 	@Transient
 	public List<P> getPriceList() {
+		if (!Hibernate.isInitialized(getPrices())) {
+			return Collections.emptyList();
+		}
+		LOGGER.debug("prices are initialized");
+
 		if (priceList == null) {
 			priceList = new ArrayList<>();
 			if (!CollectionUtils.isEmpty(getPrices())) {
 				priceList.addAll(getPrices());
 			}
 		}
+
 		return priceList;
 	}
 
