@@ -24,12 +24,11 @@ import org.demyo.service.IImageService;
 @RequestMapping("/api/images")
 public class ImageAPIController extends AbstractModelAPIController<Image> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageAPIController.class);
-
 	private final IImageService service;
 
 	@Autowired
 	public ImageAPIController(IImageService service) {
-		super(Image.class);
+		super(Image.class, service);
 		this.service = service;
 	}
 
@@ -37,7 +36,7 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 	public List<Image> viewBatch(@PathVariable long[] modelIds) {
 		List<Image> images = new ArrayList<>(modelIds.length);
 		for (long modelId : modelIds) {
-			images.add(getService().getByIdForView(modelId));
+			images.add(service.getByIdForView(modelId));
 		}
 		return images;
 	}
@@ -67,10 +66,4 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 
 		return addedImages;
 	}
-
-	@Override
-	protected IImageService getService() {
-		return service;
-	}
-
 }

@@ -20,7 +20,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 	@Autowired
 	public DerivativeAPIController(IDerivativeService service) {
-		super(Derivative.class);
+		super(Derivative.class, service);
 		this.service = service;
 	}
 
@@ -33,13 +33,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 	@Override
 	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
-		List<Derivative> value = getService().findAllForIndex();
+		List<Derivative> value = service.findAllForIndex();
 		return getIndexView(view, value);
 	}
-
-	@Override
-	protected IDerivativeService getService() {
-		return service;
-	}
-
 }

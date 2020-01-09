@@ -27,14 +27,17 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelAPIController.class);
 
 	private final Class<M> modelClass;
+	private final IModelService<M> service;
 
 	/**
 	 * Creates the controller.
 	 * 
 	 * @param modelClass The concrete class of the managed model.
+	 * @param service The service to manage the model.
 	 */
-	protected AbstractModelAPIController(Class<M> modelClass) {
+	protected AbstractModelAPIController(Class<M> modelClass, IModelService<M> service) {
 		this.modelClass = modelClass;
+		this.service = service;
 	}
 
 	/**
@@ -45,7 +48,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 */
 	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
-		List<M> value = getService().findAll();
+		List<M> value = service.findAll();
 		return getIndexView(view, value);
 	}
 
@@ -61,7 +64,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 
 	@GetMapping("/{modelId}")
 	public M view(@PathVariable long modelId) {
-		return getService().getByIdForView(modelId);
+		return service.getByIdForView(modelId);
 	}
 
 	/**
@@ -79,7 +82,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 			return -1;
 		}
 
-		return getService().save(entity);
+		return service.save(entity);
 	}
 
 	/**
@@ -90,14 +93,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 */
 	@DeleteMapping("/{modelId}")
 	public boolean delete(@PathVariable long modelId) {
-		getService().delete(modelId);
+		service.delete(modelId);
 		return true;
 	}
-
-	/**
-	 * Gets the service for this model.
-	 * 
-	 * @return the service.
-	 */
-	protected abstract IModelService<M> getService();
 }

@@ -10,17 +10,8 @@ import org.demyo.service.ICollectionService;
 @RestController
 @RequestMapping("/api/collections")
 public class CollectionAPIController extends AbstractModelAPIController<Collection> {
-	private final ICollectionService service;
-
 	@Autowired
 	public CollectionAPIController(ICollectionService service) {
-		super(Collection.class);
-		this.service = service;
+		super(Collection.class, service);
 	}
-
-	@Override
-	protected ICollectionService getService() {
-		return service;
-	}
-
 }

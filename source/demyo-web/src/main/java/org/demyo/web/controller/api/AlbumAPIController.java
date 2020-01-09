@@ -10,17 +10,8 @@ import org.demyo.service.IAlbumService;
 @RestController
 @RequestMapping("/api/albums")
 public class AlbumAPIController extends AbstractModelAPIController<Album> {
-	private final IAlbumService service;
-
 	@Autowired
 	public AlbumAPIController(IAlbumService service) {
-		super(Album.class);
-		this.service = service;
+		super(Album.class, service);
 	}
-
-	@Override
-	protected IAlbumService getService() {
-		return service;
-	}
-
 }

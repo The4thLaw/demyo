@@ -10,17 +10,8 @@ import org.demyo.service.IBindingService;
 @RestController
 @RequestMapping("/api/bindings")
 public class BindingAPIController extends AbstractModelAPIController<Binding> {
-	private final IBindingService service;
-
 	@Autowired
 	public BindingAPIController(IBindingService service) {
-		super(Binding.class);
-		this.service = service;
+		super(Binding.class, service);
 	}
-
-	@Override
-	protected IBindingService getService() {
-		return service;
-	}
-
 }

@@ -19,13 +19,11 @@ import org.demyo.service.ISeriesService;
 @RestController
 @RequestMapping("/api/series")
 public class SeriesAPIController extends AbstractModelAPIController<Series> {
-	private final ISeriesService service;
 	private final IAlbumService albumService;
 
 	@Autowired
 	public SeriesAPIController(ISeriesService service, IAlbumService albumService) {
-		super(Series.class);
-		this.service = service;
+		super(Series.class, service);
 		this.albumService = albumService;
 	}
 
@@ -51,10 +49,4 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	public List<Album> getAlbumsWithoutSeries() {
 		return albumService.findBySeriesId(null);
 	}
-
-	@Override
-	protected ISeriesService getService() {
-		return service;
-	}
-
 }

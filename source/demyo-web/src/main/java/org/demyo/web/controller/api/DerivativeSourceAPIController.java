@@ -10,17 +10,8 @@ import org.demyo.service.IDerivativeSourceService;
 @RestController
 @RequestMapping("/api/derivativeSources")
 public class DerivativeSourceAPIController extends AbstractModelAPIController<DerivativeSource> {
-	private final IDerivativeSourceService service;
-
 	@Autowired
 	public DerivativeSourceAPIController(IDerivativeSourceService service) {
-		super(DerivativeSource.class);
-		this.service = service;
+		super(DerivativeSource.class, service);
 	}
-
-	@Override
-	protected IDerivativeSourceService getService() {
-		return service;
-	}
-
 }

@@ -20,7 +20,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 
 	@Autowired
 	public AuthorAPIController(IAuthorService service) {
-		super(Author.class);
+		super(Author.class, service);
 		this.service = service;
 	}
 
@@ -35,10 +35,4 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	public AuthorAlbums getAuthorAlbums(@PathVariable("modelId") long id) {
 		return service.getAuthorAlbums(id);
 	}
-
-	@Override
-	protected IAuthorService getService() {
-		return service;
-	}
-
 }

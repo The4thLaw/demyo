@@ -10,17 +10,8 @@ import org.demyo.service.ITagService;
 @RestController
 @RequestMapping("/api/tags")
 public class TagAPIController extends AbstractModelAPIController<Tag> {
-	private final ITagService service;
-
 	@Autowired
 	public TagAPIController(ITagService service) {
-		super(Tag.class);
-		this.service = service;
+		super(Tag.class, service);
 	}
-
-	@Override
-	protected ITagService getService() {
-		return service;
-	}
-
 }
