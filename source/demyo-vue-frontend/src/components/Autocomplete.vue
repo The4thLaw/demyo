@@ -8,6 +8,7 @@
 		item-value="id"
 		menu-props="allowOverflow"
 		:loading="loading ? 'primary' : false"
+		:required="required"
 	>
 		<template v-if="refreshable" v-slot:append-outer>
 			<v-btn icon small @click.stop="$emit('refresh')">
@@ -40,6 +41,11 @@ export default {
 		clearable: {
 			type: Boolean,
 			default: true
+		},
+
+		required: {
+			type: Boolean,
+			default: false
 		},
 
 		refreshable: {

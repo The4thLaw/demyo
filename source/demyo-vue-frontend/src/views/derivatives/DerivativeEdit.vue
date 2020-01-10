@@ -21,6 +21,48 @@
 							label-key="field.Derivative.artist" refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
+					<v-col :sm="12" :md="6">
+						<Autocomplete
+							v-model="derivative.source.id" :items="allSources" label-key="field.Derivative.source"
+						/>
+					</v-col>
+				</v-row>
+			</SectionCard>
+
+			<SectionCard :subtitle="$t('fieldset.Derivative.format')">
+				<v-row>
+					<v-col :sm="12" :md="6">
+						<Autocomplete
+							v-model="derivative.type.id" :items="allTypes" :clearable="false"
+							label-key="field.Derivative.type" :required="true"
+						/>
+						<!-- TODO: figure out why "required" doesn't work -->
+					</v-col>
+					<v-col :sm="12" :md="6">
+						<v-text-field
+							v-model="derivative.colours" :label="$t('field.Derivative.colours')" type="number"
+						/>
+					</v-col>
+				</v-row>
+				<v-row>
+					<v-col :sm="12" :md="4">
+						<v-text-field
+							v-model="derivative.width" :label="$t('field.Derivative.width')"
+							type="number" step="any"
+						/>
+					</v-col>
+					<v-col :sm="12" :md="4">
+						<v-text-field
+							v-model="derivative.height" :label="$t('field.Derivative.height')"
+							type="number" step="any"
+						/>
+					</v-col>
+					<v-col :sm="12" :md="4">
+						<v-text-field
+							v-model="derivative.depth" :label="$t('field.Derivative.depth')"
+							type="number" step="any"
+						/>
+					</v-col>
 				</v-row>
 			</SectionCard>
 
@@ -39,6 +81,8 @@ import modelEditMixin from '@/mixins/model-edit'
 import authorRefreshMixin from '@/mixins/refresh-author-list'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
 import derivativeService from '@/services/derivative-service'
+import sourceService from '@/services/derivative-source-service'
+import typeService from '@/services/derivative-type-service'
 import seriesService from '@/services/series-service'
 
 export default {
@@ -68,10 +112,14 @@ export default {
 			allSeries: [],
 			relatedAlbums: [],
 			relatedAlbumsLoading: false,
+			allSources: [],
+			allTypes: [],
 			derivative: {
 				series: {},
 				album: {},
-				artist: {}
+				artist: {},
+				source: {},
+				type: {}
 			},
 			tipTapExtensions: tipTapExtensions,
 
@@ -97,14 +145,25 @@ export default {
 			if (!this.derivative.artist) {
 				this.derivative.artist = {}
 			}
+			if (!this.derivative.source) {
+				this.derivative.source = {}
+			}
+			if (!this.derivative.type) {
+				this.derivative.type = {}
+			}
 
 			// Find all reference data
-			const pSeries = await seriesService.findForList()
-			// Assign all reference data
-			this.allSeries = await pSeries
+			const pSeries = seriesService.findForList()
+			const pSources = sourceService.findForList()
+			const pTypes = typeService.findForList()
 
 			// Load albums with the currently available data
 			this.loadAlbums()
+
+			// Assign all reference data
+			this.allSeries = await pSeries
+			this.allSources = await pSources
+			this.allTypes = await pTypes
 		},
 
 		async loadAlbums() {
