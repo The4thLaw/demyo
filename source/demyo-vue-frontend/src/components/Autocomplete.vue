@@ -4,11 +4,12 @@
 		:items="items"
 		:label="$t(labelKey)"
 		:clearable="clearable"
+		:multiple="multiple"
 		item-text="identifyingName"
 		item-value="id"
 		menu-props="allowOverflow"
 		:loading="loading ? 'primary' : false"
-		:required="required"
+		:rules="rules"
 	>
 		<template v-if="refreshable" v-slot:append-outer>
 			<v-btn icon small @click.stop="$emit('refresh')">
@@ -43,9 +44,14 @@ export default {
 			default: true
 		},
 
-		required: {
+		multiple: {
 			type: Boolean,
-			default: false
+			default: true
+		},
+
+		rules: {
+			type: Array,
+			default: undefined
 		},
 
 		refreshable: {

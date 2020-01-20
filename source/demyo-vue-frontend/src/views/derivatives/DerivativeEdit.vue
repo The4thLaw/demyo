@@ -3,25 +3,25 @@
 		<v-form ref="form">
 			<SectionCard :subtitle="$t('fieldset.Derivative.origin')">
 				<v-row>
-					<v-col :sm="12" :md="6">
+					<v-col sm="12" md="6">
 						<Autocomplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
 							@input="loadAlbums"
 						/>
 					</v-col>
-					<v-col :sm="12" :md="6">
+					<v-col sm="12" md="6">
 						<Autocomplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
 							label-key="field.Derivative.album" refreshable @refresh="loadAlbums"
 						/>
 					</v-col>
-					<v-col :sm="12" :md="6">
+					<v-col sm="12" md="6">
 						<Autocomplete
 							v-model="derivative.artist.id" :items="allAuthors" :loading="allAuthorsLoading"
 							label-key="field.Derivative.artist" refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
-					<v-col :sm="12" :md="6">
+					<v-col sm="12" md="6">
 						<Autocomplete
 							v-model="derivative.source.id" :items="allSources" label-key="field.Derivative.source"
 						/>
@@ -31,14 +31,14 @@
 
 			<SectionCard :subtitle="$t('fieldset.Derivative.format')">
 				<v-row>
-					<v-col :sm="12" :md="6">
+					<v-col sm="12" md="6">
 						<Autocomplete
 							v-model="derivative.type.id" :items="allTypes" :clearable="false"
 							label-key="field.Derivative.type" :rules="rules.type"
 						/>
 						<!-- TODO: figure out why "required" doesn't work -->
 					</v-col>
-					<v-col :sm="12" :md="6">
+					<v-col sm="12" md="6">
 						<v-text-field
 							v-model="derivative.colours" :label="$t('field.Derivative.colours')"
 							:rules="rules.colours" type="number" inputmode="numeric"
@@ -46,22 +46,64 @@
 					</v-col>
 				</v-row>
 				<v-row>
-					<v-col :sm="12" :md="4">
+					<v-col sm="12" md="4">
 						<v-text-field
 							v-model="derivative.width" :label="$t('field.Derivative.width')"
 							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
-					<v-col :sm="12" :md="4">
+					<v-col sm="12" md="4">
 						<v-text-field
 							v-model="derivative.height" :label="$t('field.Derivative.height')"
 							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
-					<v-col :sm="12" :md="4">
+					<v-col sm="12" md="4">
 						<v-text-field
 							v-model="derivative.depth" :label="$t('field.Derivative.depth')"
 							type="number" inputmode="decimal" step="any"
+						/>
+					</v-col>
+				</v-row>
+			</SectionCard>
+
+			<SectionCard :subtitle="$t('fieldset.Derivative.description')">
+				<v-row>
+					<v-col sm="6" lg="2">
+						<v-text-field
+							v-model="derivative.number" :label="$t('field.Derivative.number')"
+							type="number" inputmode="decimal" step="any"
+						/>
+					</v-col>
+					<v-col sm="6" lg="2">
+						<v-text-field
+							v-model="derivative.total" :label="$t('field.Derivative.total')"
+							type="number" inputmode="decimal" step="any"
+						/>
+					</v-col>
+					<v-col sm="6" md="4" lg="2">
+						<v-checkbox v-model="derivative.signed" :label="$t('field.Derivative.signed.edit')" />
+					</v-col>
+					<v-col sm="6" md="4" lg="3">
+						<v-checkbox v-model="derivative.authorsCopy" :label="$t('field.Derivative.authorsCopy.edit')" />
+					</v-col>
+					<v-col sm="6" md="4" lg="3">
+						<v-checkbox
+							v-model="derivative.restrictedSale" :label="$t('field.Derivative.restrictedSale.edit')"
+						/>
+					</v-col>
+					<v-col :sm="12" :md="6">
+						<label class="fieldLabel">{{ $t('field.Derivative.description') }}</label>
+						<tiptap-vuetify
+							v-model="derivative.description" :extensions="tipTapExtensions"
+							:card-props="{ outlined: true }"
+						/>
+					</v-col>
+					<v-col :sm="12" :md="6">
+						<Autocomplete
+							v-model="derivative.images" :items="allImages" :loading="allImagesLoading"
+							:multiple="true"
+							label-key="field.Derivative.images" refreshable @refresh="refreshImages"
 						/>
 					</v-col>
 				</v-row>
