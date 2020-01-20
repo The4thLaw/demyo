@@ -111,6 +111,23 @@
 				</v-row>
 			</SectionCard>
 
+			<SectionCard :subtitle="$t('fieldset.Derivative.acquisition')">
+				<v-row>
+					<v-col cols="12" md="6">
+						<v-text-field
+							v-model="derivative.acquisitionDate" :label="$t('field.Derivative.acquisitionDate')"
+							type="date"
+						/>
+						<v-text-field
+							v-model="derivative.purchasePrice" :label="$t('field.Derivative.purchasePrice')"
+							type="number" inputmode="decimal" step="any"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+					</v-col>
+				</v-row>
+			</SectionCard>
+
 			<FormActions v-if="initialized" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
