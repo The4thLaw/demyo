@@ -3,18 +3,18 @@
 		<v-form ref="form">
 			<SectionCard :subtitle="$t('fieldset.Author.identity')">
 				<v-row>
-					<v-col xs="12" :md="4">
+					<v-col cols="12" md="4">
 						<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
 					</v-col>
-					<v-col xs="12" :md="4">
+					<v-col cols="12" md="4">
 						<v-text-field v-model="author.nickname" :label="$t('field.Author.nickname')" />
 					</v-col>
-					<v-col xs="12" :md="4">
+					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required
 						/>
 					</v-col>
-					<v-col xs="12" :md="6">
+					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="author.portrait.id" :items="allImages" :loading="allImagesLoading"
 							label-key="field.Author.portrait" refreshable @refresh="refreshImages"
@@ -25,14 +25,14 @@
 
 			<SectionCard :subtitle="$t('fieldset.Author.biography')">
 				<v-row>
-					<v-col xs="12" :md="6">
+					<v-col cols="12" md="6">
 						<label class="fieldLabel">{{ $t('field.Author.biography') }}</label>
 						<tiptap-vuetify
 							v-model="author.biography" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
 						/>
 					</v-col>
-					<v-col xs="12" :md="6">
+					<v-col cols="12" md="6">
 						<v-text-field v-model="author.website" :label="$t('field.Author.website')" />
 					</v-col>
 				</v-row>
