@@ -34,13 +34,14 @@
 					<v-col :sm="12" :md="6">
 						<Autocomplete
 							v-model="derivative.type.id" :items="allTypes" :clearable="false"
-							label-key="field.Derivative.type" :required="true"
+							label-key="field.Derivative.type" :rules="rules.type"
 						/>
 						<!-- TODO: figure out why "required" doesn't work -->
 					</v-col>
 					<v-col :sm="12" :md="6">
 						<v-text-field
-							v-model="derivative.colours" :label="$t('field.Derivative.colours')" type="number"
+							v-model="derivative.colours" :label="$t('field.Derivative.colours')"
+							:rules="rules.colours" type="number" inputmode="numeric"
 						/>
 					</v-col>
 				</v-row>
@@ -48,19 +49,19 @@
 					<v-col :sm="12" :md="4">
 						<v-text-field
 							v-model="derivative.width" :label="$t('field.Derivative.width')"
-							type="number" step="any"
+							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
 					<v-col :sm="12" :md="4">
 						<v-text-field
 							v-model="derivative.height" :label="$t('field.Derivative.height')"
-							type="number" step="any"
+							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
 					<v-col :sm="12" :md="4">
 						<v-text-field
 							v-model="derivative.depth" :label="$t('field.Derivative.depth')"
-							type="number" step="any"
+							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
 				</v-row>
@@ -80,6 +81,7 @@ import { tipTapExtensions } from '@/helpers/fields'
 import modelEditMixin from '@/mixins/model-edit'
 import authorRefreshMixin from '@/mixins/refresh-author-list'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
+import { integer, mandatory } from '@/helpers/rules'
 import derivativeService from '@/services/derivative-service'
 import sourceService from '@/services/derivative-source-service'
 import typeService from '@/services/derivative-type-service'
@@ -124,9 +126,8 @@ export default {
 			tipTapExtensions: tipTapExtensions,
 
 			rules: {
-				name: [
-					v => !!v || this.$t('validation.mandatory')
-				]
+				type: [ mandatory(this) ],
+				colours: [ integer(this) ]
 			}
 		}
 	},
