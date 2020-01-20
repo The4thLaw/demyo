@@ -3,7 +3,7 @@
 		<v-form ref="form">
 			<SectionCard>
 				<v-row>
-					<v-col :sm="12">
+					<v-col xs="12">
 						<v-text-field
 							v-model="image.description" :label="$t('field.Image.description')"
 							:rules="rules.description"
