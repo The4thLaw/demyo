@@ -1,5 +1,6 @@
 package org.demyo.web.config;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,14 +26,20 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	// See https://stackoverflow.com/a/54412744
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-		LOGGER.debug("Adding the Hibernate5Module to Jackson...");
+		LOGGER.debug("Configuring Jackson...");
 		for (HttpMessageConverter<?> converter : converters) {
 			if (converter instanceof AbstractJackson2HttpMessageConverter) {
 				ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter) converter).getObjectMapper();
+
+				// Add Hibernate 5 module
 				Hibernate5Module module = new Hibernate5Module();
 				module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
 				mapper.registerModule(module);
 				mapper.setSerializationInclusion(Include.NON_EMPTY);
+
+				// Configure the date format
+				mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+
 				LOGGER.debug("... successful");
 			}
 		}
