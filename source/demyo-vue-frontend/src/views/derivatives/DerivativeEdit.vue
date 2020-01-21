@@ -124,6 +124,33 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
+						<label class="fieldLabel">{{ $t('field.Derivative.prices.history') }}</label>
+						<v-row
+							v-for="(price, index) in derivative.prices" :key="'price_' + index"
+							class="v-DerivativeEdit__priceRow"
+						>
+							<v-col cols="12" md="6">
+								<v-text-field
+									v-model="price.date" :label="$t('field.Derivative.prices.date')"
+									type="date" :rules="rules.price.date" required
+								/>
+							</v-col>
+							<v-col cols="12" md="6">
+								<v-text-field
+									v-model="price.price" :label="$t('field.Derivative.prices.price')"
+									type="number" inputmode="decimal" step="any" :rules="rules.price.price"
+									required
+								/>
+								<v-btn icon @click="removePrice(index)">
+									<v-icon>mdi-minus</v-icon>
+								</v-btn>
+							</v-col>
+						</v-row>
+						<div class="v-DerivativeEdit__priceAdder">
+							<v-btn icon @click="addPrice">
+								<v-icon>mdi-plus</v-icon>
+							</v-btn>
+						</div>
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -188,12 +215,32 @@ export default {
 
 			rules: {
 				type: [ mandatory(this) ],
-				colours: [ integer(this) ]
+				colours: [ integer(this) ],
+				price: {
+					date: [ mandatory(this) ],
+					price: [ mandatory(this) ]
+				}
 			}
 		}
 	},
 
 	methods: {
+		addPrice() {
+			let newPrice = {
+				date: null,
+				price: null
+			}
+			if (!this.derivative.prices) {
+				this.derivate.prices = [ newPrice ]
+			} else {
+				this.derivative.prices.push(newPrice)
+			}
+		},
+
+		removePrice(index) {
+			this.derivative.prices.splice(index, 1)
+		},
+
 		async fetchData() {
 			if (this.parsedId) {
 				this.derivative = await derivativeService.findById(this.parsedId)
@@ -246,3 +293,20 @@ export default {
 	}
 }
 </script>
+
+<style lang="less">
+.v-DerivativeEdit__priceRow {
+	> :last-child {
+		display: flex;
+		align-items: center;
+
+		> button {
+			margin-left: 1em;
+		}
+	}
+}
+
+.v-DerivativeEdit__priceAdder {
+	text-align: right;
+}
+</style>
