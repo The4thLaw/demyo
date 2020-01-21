@@ -132,13 +132,13 @@
 							<v-col cols="12" md="6">
 								<v-text-field
 									v-model="price.date" :label="$t('field.Derivative.prices.date')"
-									type="date" :rules="rules.price.date" required
+									type="date" :rules="rules.prices.date" required
 								/>
 							</v-col>
 							<v-col cols="12" md="6">
 								<v-text-field
 									v-model="price.price" :label="$t('field.Derivative.prices.price')"
-									type="number" inputmode="decimal" step="any" :rules="rules.price.price"
+									type="number" inputmode="decimal" step="any" :rules="rules.prices.price"
 									required
 								/>
 								<v-btn icon @click="removePrice(index)">
@@ -216,7 +216,7 @@ export default {
 			rules: {
 				type: [ mandatory(this) ],
 				colours: [ integer(this) ],
-				price: {
+				prices: {
 					date: [ mandatory(this) ],
 					price: [ mandatory(this) ]
 				}
