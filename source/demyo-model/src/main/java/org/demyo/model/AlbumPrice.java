@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Defines a dated price for an {@link Album}.
  */
@@ -38,6 +40,7 @@ public class AlbumPrice extends AbstractPrice<AlbumPrice, Album> {
 	@JoinColumn(name = "album_id")
 	@NotNull
 	@Id
+	@JsonBackReference
 	private Album album;
 
 	@Override

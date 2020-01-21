@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Defines a dated price for an {@link Derivative}.
  */
@@ -38,6 +40,7 @@ public class DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> 
 	@JoinColumn(name = "derivative_id")
 	@NotNull
 	@Id
+	@JsonBackReference
 	private Derivative derivative;
 
 	@Override

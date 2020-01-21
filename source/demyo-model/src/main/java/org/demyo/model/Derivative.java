@@ -29,6 +29,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.constraints.OneNotNull;
@@ -130,6 +131,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	@JoinColumn(name = "derivative_id", insertable = false, updatable = false)
 	@SortComparator(ComparableComparator.class)
 	@Valid
+	@JsonManagedReference
 	private SortedSet<DerivativePrice> prices;
 
 	/** The {@link Image}s related to this Derivative. */

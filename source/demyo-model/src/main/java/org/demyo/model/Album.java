@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.constraints.ISBN;
@@ -122,6 +123,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinColumn(name = "album_id", insertable = false, updatable = false)
 	@SortComparator(ComparableComparator.class)
 	@Valid
+	@JsonManagedReference
 	private SortedSet<AlbumPrice> prices;
 
 	/** The flag indicating whether an item is part of the wishlist. */
