@@ -22,6 +22,11 @@ import org.demyo.model.IModel;
 import org.demyo.model.ModelView;
 import org.demyo.service.IModelService;
 
+/**
+ * Base controller for most API calls.
+ * 
+ * @param <M> The model class.
+ */
 @ResponseBody
 public abstract class AbstractModelAPIController<M extends IModel> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelAPIController.class);
@@ -52,8 +57,15 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 		return getIndexView(view, value);
 	}
 
-	protected MappingJacksonValue getIndexView(Optional<String> view, List<M> value) {
-		MappingJacksonValue jackson = new MappingJacksonValue(value);
+	/**
+	 * Returns a constrained view of the models, for use in index pages.
+	 * 
+	 * @param view The view logical name.
+	 * @param models The list of models to filter.
+	 * @return The entity to return in the mapping.
+	 */
+	protected MappingJacksonValue getIndexView(Optional<String> view, List<M> models) {
+		MappingJacksonValue jackson = new MappingJacksonValue(models);
 		Optional<Class<?>> viewClass = ModelView.byName(view);
 		LOGGER.debug("View class is {}", viewClass);
 		if (viewClass.isPresent()) {
@@ -62,6 +74,12 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 		return jackson;
 	}
 
+	/**
+	 * Returns the requested model, with relevant links initialized.
+	 * 
+	 * @param modelId The model ID.
+	 * @return The model.
+	 */
 	@GetMapping("/{modelId}")
 	public M view(@PathVariable long modelId) {
 		return service.getByIdForView(modelId);
