@@ -73,13 +73,14 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 * @param entity The entity to save.
 	 * @param result The result of the binding and validation.
 	 * @return The internal ID of the saved entity.
+	 * @throws InvalidEntityException If the entity to save is not valid.
 	 */
 	@RequestMapping(value = { "/", "/{modelId}" }, method = { RequestMethod.POST, RequestMethod.PUT })
-	public long save(@RequestBody @Valid M entity, BindingResult result) {
+	public long save(@RequestBody @Valid M entity, BindingResult result) throws InvalidEntityException {
 		LOGGER.debug("Requested to save entity: {}", entity);
 		if (result.hasErrors()) {
-			LOGGER.error("There were validation errors: {}", result);
-			return -1;
+			LOGGER.warn("There were validation errors: {}", result);
+			throw new InvalidEntityException();
 		}
 
 		return service.save(entity);

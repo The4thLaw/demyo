@@ -2,6 +2,8 @@ package org.demyo.web.controller.api;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,7 +46,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 						+ "\"album\":{\"id\":1313},"
 						+ "\"artist\":{\"id\":201},"
 						+ "\"type\":{\"id\":2},"
-						+ "\"colours\":5,"
+						+ "\"colours\":42,"
 						+ "\"source\":{\"id\":1},"
 						+ "\"number\":176,"
 						+ "\"total\":200,"
@@ -70,6 +72,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(205))
 				.andExpect(jsonPath("$.acquisitionDate").value("2010-01-01"))
+				.andExpect(jsonPath("$.colours").value("42"))
 				.andExpect(jsonPath("$.description").value("<p>Foo</p>"))
 				.andExpect(jsonPath("$.images[0].id").value("10"))
 				.andExpect(jsonPath("$.mainImage.id").value("10"));
@@ -77,6 +80,22 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 
 	@Test
 	public void saveWithValidationErrors() throws Exception {
-		// TODO
+		// Save a new entity with validation errors
+		mockMvc.perform(post("/api/derivatives/")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content("{}"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(""));
+
+		// Save an existing entity with validation errors
+		mockMvc.perform(put("/api/derivatives/205")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)
+				.content("{"
+						+ "\"id\":205"
+						+ "}"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(""));
 	}
 }
