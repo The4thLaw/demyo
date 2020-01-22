@@ -20,3 +20,4 @@ source/demyo-web/.classpath
 source/demyo-web/.settings/
 /.metadata/
 source/.vscode/launch.test.json
+**/node_modules
