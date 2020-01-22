@@ -31,8 +31,10 @@ import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import org.demyo.model.constraints.OneNotNull;
+import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -140,6 +142,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	@BatchSize(size = BATCH_SIZE)
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Image> images;
 
 	@Override
