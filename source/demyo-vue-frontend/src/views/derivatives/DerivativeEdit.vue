@@ -36,7 +36,6 @@
 							v-model="derivative.type.id" :items="allTypes" :clearable="false"
 							label-key="field.Derivative.type" :rules="rules.type"
 						/>
-						<!-- TODO: figure out why "required" doesn't work -->
 					</v-col>
 					<v-col cols="12" md="6">
 						<v-text-field
