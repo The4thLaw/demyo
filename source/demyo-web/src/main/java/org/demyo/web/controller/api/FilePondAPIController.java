@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.demyo.service.IFilePondService;
 
 /**
- * Controller implementing backend for FilePond.
+ * Controller handling the API calls for FilePond.
  */
 @RestController
 @RequestMapping("/api/filepond")

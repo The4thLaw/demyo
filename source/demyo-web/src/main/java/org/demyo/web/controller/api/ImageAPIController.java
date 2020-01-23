@@ -20,6 +20,9 @@ import org.demyo.model.Image;
 import org.demyo.model.ModelView;
 import org.demyo.service.IImageService;
 
+/**
+ * Controller handling the API calls for {@link Image}s.
+ */
 @RestController
 @RequestMapping("/api/images")
 public class ImageAPIController extends AbstractModelAPIController<Image> {

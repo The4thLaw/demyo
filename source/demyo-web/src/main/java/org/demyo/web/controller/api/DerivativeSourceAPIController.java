@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.demyo.model.DerivativeSource;
 import org.demyo.service.IDerivativeSourceService;
 
+/**
+ * Controller handling the API calls for {@link DerivativeSource}s.
+ */
 @RestController
 @RequestMapping("/api/derivativeSources")
 public class DerivativeSourceAPIController extends AbstractModelAPIController<DerivativeSource> {

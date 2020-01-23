@@ -16,6 +16,9 @@ import org.demyo.model.Series;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.ISeriesService;
 
+/**
+ * Controller handling the API calls for {@link Series}.
+ */
 @RestController
 @RequestMapping("/api/series")
 public class SeriesAPIController extends AbstractModelAPIController<Series> {

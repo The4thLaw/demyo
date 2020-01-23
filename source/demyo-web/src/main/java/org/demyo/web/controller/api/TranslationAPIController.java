@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.demyo.service.ITranslationService;
 
 /**
- * REST API controller for everything related to translations.
+ * Controller handling the API calls for everything related to translations.
  */
 @RestController
 @RequestMapping("/api/translations/")

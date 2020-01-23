@@ -13,6 +13,9 @@ import org.demyo.model.ModelView;
 import org.demyo.model.beans.AuthorAlbums;
 import org.demyo.service.IAuthorService;
 
+/**
+ * Controller handling the API calls for {@link Author}s.
+ */
 @RestController
 @RequestMapping("/api/authors")
 public class AuthorAPIController extends AbstractModelAPIController<Author> {
