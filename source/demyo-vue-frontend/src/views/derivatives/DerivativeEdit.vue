@@ -162,6 +162,7 @@
 
 <script>
 import { TiptapVuetify } from 'tiptap-vuetify'
+import Vue from 'vue'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
@@ -230,11 +231,7 @@ export default {
 				date: null,
 				price: null
 			}
-			if (!this.derivative.prices) {
-				this.derivate.prices = [ newPrice ]
-			} else {
-				this.derivative.prices.push(newPrice)
-			}
+			this.derivative.prices.push(newPrice)
 		},
 
 		removePrice(index) {
@@ -259,6 +256,9 @@ export default {
 			}
 			if (!this.derivative.type) {
 				this.derivative.type = {}
+			}
+			if (!this.derivative.prices) {
+				Vue.set(this.derivative, 'prices', [])
 			}
 
 			// Find all reference data
