@@ -127,7 +127,7 @@
 						<label class="fieldLabel">{{ $t('field.Derivative.prices.history') }}</label>
 						<v-row
 							v-for="(price, index) in derivative.prices" :key="'price_' + index"
-							class="v-DerivativeEdit__priceRow"
+							dense class="v-DerivativeEdit__priceRow"
 						>
 							<v-col cols="12" md="6">
 								<v-text-field
