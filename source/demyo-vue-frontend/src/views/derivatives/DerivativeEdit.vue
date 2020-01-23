@@ -263,6 +263,9 @@ export default {
 			if (!this.parsedId && this.$route.query.toSeries) {
 				this.derivative.series.id = parseInt(this.$route.query.toSeries, 10)
 			}
+			if (!this.parsedId && this.$route.query.toAlbum) {
+				this.derivative.album.id = parseInt(this.$route.query.toAlbum, 10)
+			}
 
 			// Find all reference data
 			const pSeries = seriesService.findForList()
