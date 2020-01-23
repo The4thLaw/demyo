@@ -24,7 +24,7 @@ public class TagControllerIT extends AbstractMvcTest {
 		assertThat(css1("#field_tag_fgColour_colour_remover").getAttribute("checked")).isEqualTo("true");
 		assertThat(css1("#field_tag_bgColour_colour_remover").getAttribute("checked")).isEqualTo("true");
 
-		// TODO: fix this is Vue is not kept in the end (unlikely)
+		// TODO: fix this if Vue is not kept in the end (unlikely)
 		// getWebDriver().get("http://localhost/tags/edit/3");
 		// assertThat(css1("#field_tag_fgColour_colour_remover").getAttribute("checked")).isNull();
 		// assertThat(css1("#field_tag_bgColour_colour_remover").getAttribute("checked")).isNull();

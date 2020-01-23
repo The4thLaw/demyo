@@ -19,8 +19,6 @@ import org.demyo.test.AbstractPersistenceTest;
 @WebAppConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
 // TODO [boot]: use @WebMvcTest when migrating to Spring Boot
-// TODO: build a good base dbunit xml (and adapt the other tests accordingly) - Create the entries manually and then
-// export the database ?
 public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 
 	@Autowired
