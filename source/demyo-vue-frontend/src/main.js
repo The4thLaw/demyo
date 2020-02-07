@@ -12,10 +12,24 @@ import '@mdi/font/css/materialdesignicons.css'
 
 Vue.config.productionTip = false
 
-// TODO: instead of doing this, set a fake reader in the store to bootstrap the application faster
-// This fake reader could have a specific fake flag to recognize it and avoid getting favourite...
-// Or maybe a specific "isLoaded" state
-// init() would then be called from the reader service constructor and be ready when it's ready
+/*
+TODO: instead of doing this, set a fake reader in the store to bootstrap the application faster
+This fake reader could have a specific fake flag to recognize it and avoid getting favourites...
+Or maybe a specific "isLoaded" state. Not sure if it's really needed
+init() would then be called from the reader service constructor and be ready when it's ready
+Once ready, it would set the reader in the store
+If setting a reader in the store is not possible, it would set a specific requiresReaderSelection in the store
+that would be watched by App. In such cases, App would show a *modal* dialog apologizing for the interruption
+and requesting that the user select his reader. This dialog could also be used to switch readers in the
+regular process, if the dialog title can be configured. In "select" mode, it should still be possible to
+delete readers, as maybe it's at that time that the user will realise that he shouldn't have a specific reader.
+Same for adding readers
+This would also remove the need for specific guards in the router since the App would automatically react
+to missing data
+
+Checking the favourites of other readers could be done directly from the favourites pages, rather than from
+the selection dialog as it was done in
+*/
 
 readerService.init().then(() => {
 	console.log('Reader is initialized, bootstrapping the application...')
