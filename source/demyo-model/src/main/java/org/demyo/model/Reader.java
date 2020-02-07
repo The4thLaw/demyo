@@ -20,6 +20,8 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
@@ -47,6 +49,7 @@ public class Reader extends AbstractModel {
 
 	/** The configuration entries for the reader. */
 	@OneToMany(mappedBy = "reader", fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private Set<ConfigurationEntry> configurationEntries;
 
 	/** The configuration for the reader. */
