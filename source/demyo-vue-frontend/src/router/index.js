@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
+import readerService from '@/services/reader-service'
 import store from '@/store/index'
 import Home from '@/views/Home.vue'
 import authorRoutes from './authors'
@@ -39,6 +40,14 @@ const router = new VueRouter({
 // - Enable the search bar
 router.beforeEach((to, from, next) => {
 	store.dispatch('ui/enableSearch')
+	next()
+})
+
+// Check that we currently have a reader
+router.beforeEach((to, from, next) => {
+	console.log(to)
+	let reader = readerService.getCurrentReader()
+	console.log(reader)
 	next()
 })
 

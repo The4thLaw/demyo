@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.demyo.model.util.DefaultOrder;
 
 /**
@@ -29,6 +31,7 @@ public class ConfigurationEntry extends AbstractModel {
 	/** The {@link Reader} owning this configuration entry. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reader_id")
+	@JsonBackReference
 	private Reader reader;
 
 	@Override
