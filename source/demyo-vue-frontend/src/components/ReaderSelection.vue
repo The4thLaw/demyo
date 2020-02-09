@@ -1,7 +1,7 @@
 <template>
 	<v-dialog v-model="dialog" :persistent="requireSelection" max-width="400px">
 		<v-card>
-			<v-card-title class="headline">
+			<v-card-title>
 				{{ $t('page.Reader.select.title') }}
 			</v-card-title>
 			<v-card-text>

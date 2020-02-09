@@ -9,7 +9,7 @@
 		</v-list-item-content>
 		<v-dialog v-model="confirmationDialog" max-width="50%">
 			<v-card>
-				<v-card-title class="headline">
+				<v-card-title>
 					{{ $t('quickTasks.confirm.title') }}
 				</v-card-title>
 				<v-card-text>
