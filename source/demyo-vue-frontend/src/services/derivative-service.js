@@ -1,4 +1,6 @@
 import AbstractModelService from './abstract-model-service'
+import { axiosPost } from '@/helpers/axios'
+
 
 /**
  * API service for Derivatives.
@@ -23,6 +25,10 @@ class DerivativeService extends AbstractModelService {
 			model.source = {}
 		}
 		return super.save(model)
+	}
+
+	saveFilepondImages(modelId, imageIds) {
+		return axiosPost(`${this.basePath}${modelId}/images`, { filePondOtherImages: imageIds }, false)
 	}
 }
 
