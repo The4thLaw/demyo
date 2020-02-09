@@ -1,5 +1,5 @@
 import AbstractModelService from './abstract-model-service'
-import { axiosGet, axiosPost, axiosPut, axiosDelete } from '@/helpers/axios'
+import { axiosGet } from '@/helpers/axios'
 import store from '@/store'
 
 /**
@@ -14,23 +14,27 @@ class ReaderService extends AbstractModelService {
 		console.debug('Initializing reader')
 
 		// Check if we already have a Reader in the local storage
-		let reader = localStorage.getItem('currentReader')
+		const readerStr = localStorage.getItem('currentReader')
+		let reader
 
-		if (reader) {
-			reader = JSON.parse(reader)
+		if (readerStr) {
+			console.debug('Restoring Reader from local storage...')
+			reader = JSON.parse(readerStr)
+			// Already set it in store, it could be used temporarily at least
+			this.setCurrentReader(reader)
+			// Revalidate the reader. Who knows, it could have been deleted in the mean time
+			reader = await axiosGet(this.basePath + '/' + reader.id, null)
 		} else {
 			reader = await axiosGet(this.basePath + '/autoSelect', null)
 		}
 
 		if (reader) {
-			await setCurrentReader(reader)
+			await this.setCurrentReader(reader)
+			console.log('Reader is initialized to', reader)
+		} else {
+			console.log('Cannot select a reader automatically, prompting user...')
+			store.dispatch('reader/requireReaderSelection')
 		}
-
-		console.log('Reader is initialized to', reader)
-	}
-
-	getCurrentReader() {
-		return store.state.reader.currentReader
 	}
 
 	async setCurrentReader(reader) {

@@ -21,6 +21,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.util.AlbumComparator;
@@ -41,10 +42,12 @@ public class Reader extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
 	@NotBlank
+	@JsonView(ModelView.Basic.class)
 	private String name;
 
 	/** The preferred colour of the reader. */
 	@Column(name = "colour")
+	@JsonView(ModelView.Basic.class)
 	private String colour;
 
 	/** The configuration entries for the reader. */

@@ -27,7 +27,7 @@
 	<v-app id="demyo">
 		<v-navigation-drawer v-model="mainMenu" app temporary>
 			<v-list class="c-App__menuList">
-				<v-list-group>
+				<v-list-group v-if="readerLoaded">
 					<template v-slot:activator>
 						<v-list-item-icon>
 							<LetterIcon letter="T" color="#0000ff" />
@@ -104,6 +104,9 @@
 
 		<v-content>
 			<v-container fluid>
+				<ReaderSelection
+					v-if="requireReaderSelection || promptReaderSelection" :require-selection="requireReaderSelection"
+				/>
 				<v-overlay absolute z-index="4" :value="globalOverlay" class="c-App__overlay">
 					<v-progress-circular :indeterminate="true" color="primary" size="96" width="8" />
 					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
@@ -124,14 +127,16 @@
 <script>
 import { mapState } from 'vuex'
 import AppSnackbar from '@/components/AppSnackbar'
-import LetterIcon from './components/LetterIcon'
+import LetterIcon from '@/components/LetterIcon'
+import ReaderSelection from '@/components/ReaderSelection'
 
 export default {
 	name: 'App',
 
 	components: {
 		AppSnackbar,
-		LetterIcon
+		LetterIcon,
+		ReaderSelection
 	},
 
 	metaInfo() {
@@ -151,6 +156,8 @@ export default {
 			pageTitle: 'Demyo',
 
 			mainMenu: false,
+
+			promptReaderSelection: false,
 
 			menuItems: [
 				{
@@ -200,10 +207,14 @@ export default {
 
 	computed: {
 		...mapState({
+			readerLoaded: state => state.reader.readerLoaded,
+			requireReaderSelection: state => state.reader.requireReaderSelection,
+			currentReader: state => state.reader.currentReader,
+
 			suppressSearch: state => state.ui.suppressSearch,
 			globalOverlay: state => state.ui.globalOverlay,
 			displaySnackbar: state => state.ui.displaySnackbar,
-			snackbarMessage: state => state.ui.snackbarMessages[0]
+			snackbarMessage: state => state.ui.snackbarMessages[0],
 		})
 	},
 

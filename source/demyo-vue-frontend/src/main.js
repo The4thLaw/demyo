@@ -31,14 +31,13 @@ Checking the favourites of other readers could be done directly from the favouri
 the selection dialog as it was done in
 */
 
-readerService.init().then(() => {
-	console.log('Reader is initialized, bootstrapping the application...')
+// Do this as soon as possible. It's asynchronous and will work during bootstrap
+readerService.init()
 
-	new Vue({
-		router,
-		store,
-		i18n,
-		vuetify,
-		render: h => h(App)
-	}).$mount('#app')
-})
+new Vue({
+	router,
+	store,
+	i18n,
+	vuetify,
+	render: h => h(App)
+}).$mount('#app')
