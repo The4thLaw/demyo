@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="dialog" max-width="800px">
+	<v-dialog v-model="inputVal" max-width="800px">
 		<v-card>
 			<v-card-title>
 				{{ $t('draganddrop.dialog.title') }}
@@ -102,6 +102,10 @@ export default {
 	},
 
 	props: {
+		value: {
+			type: Boolean,
+			default: false
+		},
 		mainImageLabel: {
 			type: String,
 			default: null
@@ -114,11 +118,27 @@ export default {
 
 	data() {
 		return {
-			dialog: true,
+			inputVal: this.value,
 			serverConfig: {
 				process: apiRoot + 'filepond/process',
 				revert: apiRoot + 'filepond/revert'
 			}
+		}
+	},
+
+	watch: {
+		/*
+		We need a data and a prop to avoid the following warning:
+		[Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent
+		component re-renders.
+		Instead, use a data or computed property based on the prop's value. Prop being mutated: "value"
+		*/
+		value(val) {
+			this.inputVal = val
+		},
+
+		inputVal(val) {
+			this.$emit('input', val)
 		}
 	},
 
@@ -135,7 +155,7 @@ export default {
 	methods: {
 		showDialog(e) {
 			e.preventDefault()
-			this.dialog = true
+			this.value = true
 		},
 
 		cancel() {
@@ -145,7 +165,7 @@ export default {
 			if (this.$refs.otherPond) {
 				this.$refs.otherPond.removeFiles()
 			}
-			this.dialog = false
+			this.value = false
 		},
 
 		save() {
