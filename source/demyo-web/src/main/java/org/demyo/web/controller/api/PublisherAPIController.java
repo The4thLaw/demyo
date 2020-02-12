@@ -13,8 +13,13 @@ import org.demyo.service.IPublisherService;
 @RestController
 @RequestMapping("/api/publishers")
 public class PublisherAPIController extends AbstractModelAPIController<Publisher> {
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public PublisherAPIController(IPublisherService service) {
-		super(Publisher.class, service);
+		super(service);
 	}
 }

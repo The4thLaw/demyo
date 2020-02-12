@@ -24,9 +24,14 @@ import org.demyo.service.ISeriesService;
 public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	private final IAlbumService albumService;
 
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public SeriesAPIController(ISeriesService service, IAlbumService albumService) {
-		super(Series.class, service);
+		super(service);
 		this.albumService = albumService;
 	}
 

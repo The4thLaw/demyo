@@ -13,8 +13,13 @@ import org.demyo.service.IBindingService;
 @RestController
 @RequestMapping("/api/bindings")
 public class BindingAPIController extends AbstractModelAPIController<Binding> {
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public BindingAPIController(IBindingService service) {
-		super(Binding.class, service);
+		super(service);
 	}
 }

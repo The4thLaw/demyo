@@ -20,7 +20,7 @@ public class BrowsableResourceBundleMessageSource extends ResourceBundleMessageS
 	 * @return The messages, indexed by message key.
 	 */
 	public Map<String, String> getAllMessages(Locale locale) {
-		Map<String, String> messages = new HashMap<String, String>();
+		Map<String, String> messages = new HashMap<>();
 		for (String basename : getBasenameSet()) {
 			ResourceBundle bundle = doGetBundle(basename, locale);
 			for (String key : bundle.keySet()) {

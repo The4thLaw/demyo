@@ -83,15 +83,20 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 * @param id The Author ID
 	 * @return The identifiers of all matching albums, split by author role
 	 */
-	@Query(value = "select artist_id as author_id, album_id as as_artist, null as as_colorist, null as as_inker, null as as_translator, null as as_writer from albums_artists where artist_id = ?1"
+	@Query(value = "select artist_id as author_id, album_id as as_artist, null as as_colorist, null as as_inker,"
+			+ " null as as_translator, null as as_writer from albums_artists where artist_id = ?1"
 			+ " union all "
-			+ "select colorist_id as author_id, null as as_artist, album_id as as_colorist, null as as_inker, null as as_translator, null as as_writer from albums_colorists where colorist_id = ?1"
+			+ "select colorist_id as author_id, null as as_artist, album_id as as_colorist, null as as_inker,"
+			+ " null as as_translator, null as as_writer from albums_colorists where colorist_id = ?1"
 			+ " union all "
-			+ "select inker_id as author_id, null as as_artist, null as as_colorist, album_id as as_inker, null as as_translator, null as as_writer from albums_inkers where inker_id = ?1"
+			+ "select inker_id as author_id, null as as_artist, null as as_colorist, album_id as as_inker,"
+			+ " null as as_translator, null as as_writer from albums_inkers where inker_id = ?1"
 			+ " union all "
-			+ "select translator_id as author_id, null as as_artist, null as as_colorist, null as as_inker, album_id as as_translator, null as as_writer from albums_translators where translator_id = ?1"
+			+ "select translator_id as author_id, null as as_artist, null as as_colorist, null as as_inker,"
+			+ " album_id as as_translator, null as as_writer from albums_translators where translator_id = ?1"
 			+ " union all "
-			+ "select writer_id as author_id, null as as_artist, null as as_colorist, null as as_inker, null as as_translator, album_id as as_writer from albums_writers where writer_id = ?1"
+			+ "select writer_id as author_id, null as as_artist, null as as_colorist, null as as_inker,"
+			+ "$ null as as_translator, album_id as as_writer from albums_writers where writer_id = ?1"
 			+ "", nativeQuery = true)
 	List<IAuthorAlbum> findAlbumsFromAuthor(long id);
 }

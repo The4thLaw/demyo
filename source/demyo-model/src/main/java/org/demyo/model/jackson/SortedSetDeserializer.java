@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -95,7 +94,7 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 
 	@Override
 	public SortedSet<T> deserialize(JsonParser p, DeserializationContext ctxt)
-			throws IOException, JsonProcessingException {
+			throws IOException {
 		Objects.requireNonNull(compInstance);
 		Objects.requireNonNull(elementClass);
 

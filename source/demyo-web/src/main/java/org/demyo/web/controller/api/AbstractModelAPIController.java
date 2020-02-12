@@ -31,17 +31,14 @@ import org.demyo.service.IModelService;
 public abstract class AbstractModelAPIController<M extends IModel> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelAPIController.class);
 
-	private final Class<M> modelClass;
 	private final IModelService<M> service;
 
 	/**
 	 * Creates the controller.
 	 * 
-	 * @param modelClass The concrete class of the managed model.
 	 * @param service The service to manage the model.
 	 */
-	protected AbstractModelAPIController(Class<M> modelClass, IModelService<M> service) {
-		this.modelClass = modelClass;
+	protected AbstractModelAPIController(IModelService<M> service) {
 		this.service = service;
 	}
 

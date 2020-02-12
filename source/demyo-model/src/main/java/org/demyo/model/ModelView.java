@@ -22,7 +22,7 @@ public final class ModelView {
 	 * @param name The name of the view.
 	 * @return The view class.
 	 */
-	public static final Optional<Class<?>> byName(String name) {
+	public static Optional<Class<?>> byName(String name) {
 		return byName(Optional.ofNullable(name));
 	}
 
@@ -35,7 +35,7 @@ public final class ModelView {
 	 * @param name The name of the view.
 	 * @return The view class. Could be missing if there is no view to apply.
 	 */
-	public static final Optional<Class<?>> byName(Optional<String> name) {
+	public static Optional<Class<?>> byName(Optional<String> name) {
 		if (!name.isPresent()) {
 			return Optional.<Class<?>>of(Basic.class);
 		}

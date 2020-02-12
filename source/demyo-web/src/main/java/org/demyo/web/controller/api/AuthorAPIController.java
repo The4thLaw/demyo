@@ -21,9 +21,14 @@ import org.demyo.service.IAuthorService;
 public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	private final IAuthorService service;
 
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public AuthorAPIController(IAuthorService service) {
-		super(Author.class, service);
+		super(service);
 		this.service = service;
 	}
 

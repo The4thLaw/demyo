@@ -171,8 +171,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			}
 		} catch (IOException e) {
 			// Ensure we don't store invalid contents
-			jpgThumb.delete();
-			pngThumb.delete();
+			DIOUtils.delete(jpgThumb);
+			DIOUtils.delete(pngThumb);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
 		} finally {
 			buffImage.flush();

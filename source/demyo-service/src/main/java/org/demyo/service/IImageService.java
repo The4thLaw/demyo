@@ -28,6 +28,7 @@ public interface IImageService extends IModelService<Image> {
 	 * @param id The id of the image.
 	 * @return The image file.
 	 * @throws DemyoException In case of security or I/O error.
+	 * @deprecated Use {@link #getImage(long, Optional, boolean)} instead.
 	 */
 	@Deprecated
 	File getImageThumbnail(long id) throws DemyoException;

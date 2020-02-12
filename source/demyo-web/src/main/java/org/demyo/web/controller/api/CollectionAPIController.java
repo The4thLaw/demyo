@@ -13,8 +13,13 @@ import org.demyo.service.ICollectionService;
 @RestController
 @RequestMapping("/api/collections")
 public class CollectionAPIController extends AbstractModelAPIController<Collection> {
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public CollectionAPIController(ICollectionService service) {
-		super(Collection.class, service);
+		super(service);
 	}
 }

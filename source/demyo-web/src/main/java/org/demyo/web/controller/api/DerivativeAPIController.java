@@ -30,9 +30,14 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 	private final IDerivativeService service;
 
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public DerivativeAPIController(IDerivativeService service) {
-		super(Derivative.class, service);
+		super(service);
 		this.service = service;
 	}
 

@@ -13,8 +13,13 @@ import org.demyo.service.ITagService;
 @RestController
 @RequestMapping("/api/tags")
 public class TagAPIController extends AbstractModelAPIController<Tag> {
+	/**
+	 * Creates the controller.
+	 * 
+	 * @param service The service to manage the entries.
+	 */
 	@Autowired
 	public TagAPIController(ITagService service) {
-		super(Tag.class, service);
+		super(service);
 	}
 }
