@@ -1,14 +1,18 @@
 package org.demyo.model.projections;
 
+import org.springframework.beans.factory.annotation.Value;
+
 /**
  * Structures a set of Album identifiers based on the role of the Author who worked on them.
  */
+// TODO [Spring 5]: Check if the @Value annotations are still needed after migrating
 public interface IAuthorAlbum {
 	/**
 	 * Gets the Author ID.
 	 * 
 	 * @return The ID
 	 */
+	@Value("#{target.author_id}")
 	Long getAuthorId();
 
 	/**
@@ -16,6 +20,7 @@ public interface IAuthorAlbum {
 	 * 
 	 * @return The ID
 	 */
+	@Value("#{target.as_artist}")
 	Long getAsArtist();
 
 	/**
@@ -23,6 +28,7 @@ public interface IAuthorAlbum {
 	 * 
 	 * @return The ID
 	 */
+	@Value("#{target.as_colorist}")
 	Long getAsColorist();
 
 	/**
@@ -30,6 +36,7 @@ public interface IAuthorAlbum {
 	 * 
 	 * @return The ID
 	 */
+	@Value("#{target.as_inker}")
 	Long getAsInker();
 
 	/**
@@ -37,6 +44,7 @@ public interface IAuthorAlbum {
 	 * 
 	 * @return The ID
 	 */
+	@Value("#{target.as_translator}")
 	Long getAsTranslator();
 
 	/**
@@ -44,5 +52,6 @@ public interface IAuthorAlbum {
 	 * 
 	 * @return The ID
 	 */
+	@Value("#{target.as_writer}")
 	Long getAsWriter();
 }
