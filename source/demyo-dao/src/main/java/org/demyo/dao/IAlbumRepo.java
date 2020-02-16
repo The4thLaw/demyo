@@ -96,7 +96,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 			+ " album_id as as_translator, null as as_writer from albums_translators where translator_id = ?1"
 			+ " union all "
 			+ "select writer_id as author_id, null as as_artist, null as as_colorist, null as as_inker,"
-			+ "$ null as as_translator, album_id as as_writer from albums_writers where writer_id = ?1"
+			+ " null as as_translator, album_id as as_writer from albums_writers where writer_id = ?1"
 			+ "", nativeQuery = true)
 	List<IAuthorAlbum> findAlbumsFromAuthor(long id);
 }
