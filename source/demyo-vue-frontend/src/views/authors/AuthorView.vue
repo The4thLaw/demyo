@@ -12,10 +12,10 @@
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" :image="author.portrait" :title="author.identifyingName">
-			<FieldValue :label="$t('field.Author.website')" :value="author.website" :highlight-links="true">
+			<FieldValue :label="$t('field.Author.website')" :value="author.website">
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
-			<FieldValue :label="$t('field.Author.biography')" :value="author.biography" :highlight-links="true">
+			<FieldValue :label="$t('field.Author.biography')" :value="author.biography">
 				<div v-html="author.biography" />
 			</FieldValue>
 		</SectionCard>
