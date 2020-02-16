@@ -30,32 +30,24 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.series')" :value="derivative.series.id">
-							<router-link :to="`/series/${derivative.series.id}/view`">
-								{{ derivative.series.identifyingName }}
-							</router-link>
+							<ModelLink :model="derivative.series" view="SeriesView" />
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.album')" :value="derivative.album.id">
-							<router-link :to="`/albums/${derivative.album.id}/view`">
-								{{ derivative.album.identifyingName }}
-							</router-link>
+							<ModelLink :model="derivative.album" view="AlbumView" />
 						</FieldValue>
 					</v-col>
 				</v-row>
 				<v-row>
 					<v-col cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.artist')" :value="derivative.artist.id">
-							<router-link :to="`/authors/${derivative.artist.id}/view`">
-								{{ derivative.artist.identifyingName }}
-							</router-link>
+							<ModelLink :model="derivative.artist" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.source')" :value="derivative.source.id">
-							<router-link :to="`/derivativeSources/${derivative.source.id}/view`">
-								{{ derivative.source.identifyingName }}
-							</router-link>
+							<ModelLink :model="derivative.source" view="DerivativeSourceView" />
 						</FieldValue>
 					</v-col>
 				</v-row>
@@ -91,6 +83,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import DnDImage from '@/components/DnDImage'
 import FieldValue from '@/components/FieldValue'
+import ModelLink from '@/components/ModelLink'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
@@ -104,6 +97,7 @@ export default {
 		AppTasks,
 		DnDImage,
 		FieldValue,
+		ModelLink,
 		SectionCard
 	},
 

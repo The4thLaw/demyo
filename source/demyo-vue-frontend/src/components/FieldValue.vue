@@ -1,5 +1,5 @@
 <template>
-	<div v-if="value" class="c-FieldValue" :class="{ 'c-FieldValue--hideLinks': !highlightLinks }">
+	<div v-if="value" class="c-FieldValue">
 		<div class="c-FieldValue__label">
 			{{ label }}
 		</div>
@@ -13,18 +13,13 @@ export default {
 
 	props: {
 		value: {
-			type: null /* any */,
+			type: null,
 			required: true
 		},
 
 		label: {
 			type: String,
 			required: true
-		},
-
-		highlightLinks: {
-			type: Boolean,
-			default: false
 		}
 	}
 }
@@ -48,9 +43,5 @@ export default {
 .c-FieldValue__label {
 	color: var(--v-primary-base);
 	font-size: 0.9em;
-}
-
-.c-FieldValue--hideLinks a:not(:hover) {
-	color: inherit;
 }
 </style>
