@@ -1,5 +1,5 @@
 <template>
-	<div v-if="value" class="my-4">
+	<div v-if="value" class="c-FieldValue" :class="{ 'c-FieldValue--hideLinks': !highlightLinks }">
 		<div class="c-FieldValue__label">
 			{{ label }}
 		</div>
@@ -20,14 +20,37 @@ export default {
 		label: {
 			type: String,
 			required: true
+		},
+
+		highlightLinks: {
+			type: Boolean,
+			default: false
 		}
 	}
 }
 </script>
 
 <style lang="less">
+.c-FieldValue {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+// Don't set margins when in a flex grid: the grid has its own margins
+.col,
+[class*="col-"] {
+	& > .c-FieldValue {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
 .c-FieldValue__label {
 	color: var(--v-primary-base);
 	font-size: 0.9em;
+}
+
+.c-FieldValue--hideLinks a:not(:hover) {
+	color: inherit;
 }
 </style>

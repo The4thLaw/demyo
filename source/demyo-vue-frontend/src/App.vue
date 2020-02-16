@@ -179,6 +179,12 @@ export default {
 							icon: 'mdi-account',
 							url: '/authors'
 						}
+						,
+						{
+							title: 'menu.derivatives.browse',
+							icon: 'mdi-image-frame',
+							url: '/derivatives'
+						}
 					]
 				},
 				{
@@ -262,6 +268,20 @@ html[lang], #demyo {
 	a,
 	a:hover {
 		text-decoration: none;
+	}
+}
+
+.fieldSet {
+	.theme--light & {
+		border-top: 1px solid rgba(0, 0, 0, 0.12);
+	}
+
+	.theme--dark & {
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	&:first-of-type {
+		border-top: 0;
 	}
 }
 
