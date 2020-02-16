@@ -272,6 +272,9 @@ html[lang], #demyo {
 }
 
 .fieldSet {
+	margin-top: 8px;
+	margin-bottom: 8px;
+
 	.theme--light & {
 		border-top: 1px solid rgba(0, 0, 0, 0.12);
 	}

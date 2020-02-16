@@ -5,6 +5,32 @@ import { apiRoot, defaultLanguage, fallbackLanguage } from '@/myenv'
 
 Vue.use(VueI18n)
 
+const dateTimeFormats = {
+	en: {
+		numeric: {
+			year: 'numeric', month: 'numeric', day: 'numeric'
+		},
+		short: {
+			year: 'numeric', month: 'short', day: 'numeric'
+		},
+		long: {
+			year: 'numeric', month: 'long', day: 'numeric'
+		}
+	},
+
+	fr: {
+		numeric: {
+			year: 'numeric', month: 'numeric', day: 'numeric'
+		},
+		short: {
+			year: 'numeric', month: 'short', day: 'numeric'
+		},
+		long: {
+			year: 'numeric', month: 'long', day: 'numeric'
+		}
+	}
+}
+
 // By default, we start with partial messages covering all above-the-fold content in all supported languages
 // (mainly titles)
 // TODO: add more messages to those files (list them all)
@@ -27,7 +53,8 @@ function loadLocaleMessages() {
 const i18n = new VueI18n({
 	locale: defaultLanguage,
 	fallbackLocale: fallbackLanguage,
-	messages: loadLocaleMessages()
+	messages: loadLocaleMessages(),
+	dateTimeFormats
 })
 console.log(`Initialized i18n with '${defaultLanguage}' as default language and '${fallbackLanguage}' as fallback`)
 

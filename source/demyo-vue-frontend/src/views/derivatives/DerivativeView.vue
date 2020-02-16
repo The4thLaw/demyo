@@ -28,12 +28,12 @@
 		<SectionCard :loading="loading" :image="derivative.mainImage" :title="derivative.identifyingName">
 			<div class="fieldSet">
 				<v-row>
-					<v-col cols="12" md="6">
+					<v-col v-if="derivative.series.id" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.series')" :value="derivative.series.id">
 							<ModelLink :model="derivative.series" view="SeriesView" />
 						</FieldValue>
 					</v-col>
-					<v-col cols="12" md="6">
+					<v-col v-if="derivative.album.id" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.album')" :value="derivative.album.id">
 							<ModelLink :model="derivative.album" view="AlbumView" />
 						</FieldValue>
@@ -56,24 +56,130 @@
 			<div class="fieldSet">
 				<v-row>
 					<v-col cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.type')" :value="derivative.type.id">
+							<ModelLink :model="derivative.type" view="DerivativeTypeView" />
+						</FieldValue>
+					</v-col>
+					<v-col cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.colours')" :value="derivative.colours">
+							{{ derivative.colours }}
+						</FieldValue>
+					</v-col>
+					<v-col v-if="sizeSpec" cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.size')" :value="true">
+							{{ sizeSpec }}
+						</FieldValue>
+					</v-col>
+					<template v-if="!sizeSpec">
+						<v-col cols="12" md="4">
+							<FieldValue :label="$t('field.Derivative.width')" :value="derivative.width">
+								{{ derivative.width }}
+							</FieldValue>
+						</v-col>
+						<v-col cols="12" md="4">
+							<FieldValue :label="$t('field.Derivative.height')" :value="derivative.height">
+								{{ derivative.height }}
+							</FieldValue>
+						</v-col>
+						<v-col cols="12" md="4">
+							<FieldValue :label="$t('field.Derivative.depth')" :value="derivative.depth">
+								{{ derivative.depth }}
+							</FieldValue>
+						</v-col>
+					</template>
+				</v-row>
+			</div>
+
+			<div class="fieldSet">
+				<v-row>
+					<v-col cols="12" md="6" xl="3">
+						<template v-if="derivative.number && derivative.total">
+							<FieldValue :label="$t('field.Derivative.numberOverTotal')" :value="true">
+								{{ derivative.number }} / {{ derivative.total }}
+							</FieldValue>
+						</template>
+						<template v-if="!derivative.number || !derivative.total">
+							<FieldValue :label="$t('field.Derivative.number')" :value="derivative.number">
+								{{ derivative.number }}
+							</FieldValue>
+							<FieldValue :label="$t('field.Derivative.total')" :value="derivative.total">
+								{{ derivative.total }}
+							</FieldValue>
+						</template>
+					</v-col>
+					<v-col cols="12" md="6" xl="3">
+						<FieldValue :label="$t('field.Derivative.signed.view')" :value="true">
+							{{ $t('field.Derivative.signed.value.' + derivative.signed) }}
+						</FieldValue>
+					</v-col>
+					<v-col cols="12" md="6" xl="3">
+						<FieldValue :label="$t('field.Derivative.authorsCopy.view')" :value="true">
+							{{ $t('field.Derivative.authorsCopy.value.' + derivative.authorsCopy) }}
+						</FieldValue>
+					</v-col>
+					<v-col cols="12" md="6" xl="3">
+						<FieldValue :label="$t('field.Derivative.restrictedSale.view')" :value="true">
+							{{ $t('field.Derivative.restrictedSale.value.' + derivative.restrictedSale) }}
+						</FieldValue>
+					</v-col>
+					<v-col cols="12">
+						<FieldValue :label="$t('field.Derivative.description')" :value="derivative.description">
+							<div v-html="derivative.description" />
+						</FieldValue>
 					</v-col>
 				</v-row>
-				#@mdlGridCell([6,4,4])
-		#entityFieldLinkedModel('field.Derivative.type' $derivative.type)
-		#entityFieldText('field.Derivative.colours' $derivative.colours)
-	#end
-	#@mdlGridCell([6,4,4])
-		#if ($derivative.width && $derivative.height && $derivative.depth)
-			#entityFieldText('field.Derivative.size' "#number($derivative.width) x #number($derivative.height) x #number($derivative.depth)")
-		#elseif ($derivative.width && $derivative.height)
-			#entityFieldText('field.Derivative.size' "#number($derivative.width) x #number($derivative.height)")
-		#else
-			#entityFieldNumber('field.Derivative.width' $derivative.width)
-			#entityFieldNumber('field.Derivative.height' $derivative.height)
-			#entityFieldNumber('field.Derivative.depth' $derivative.depth)
-		#end
-	#end
 			</div>
+
+			<div
+				v-if="derivative.purchasePrice || derivative.acquisitionDate || derivative.prices.length > 0"
+				class="fieldSet"
+			>
+				<v-row>
+					<v-col cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.acquisitionDate')" :value="derivative.acquisitionDate">
+							{{ $d(new Date(derivative.acquisitionDate), 'long') }}
+						</FieldValue>
+					</v-col>
+					<v-col cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.purchasePrice')" :value="derivative.purchasePrice">
+							{{ derivative.purchasePrice }}
+						</FieldValue>
+					</v-col>
+					<v-col cols="12" md="6">
+						<FieldValue
+							:label="$t('field.Derivative.prices.history')"
+							:value="derivative.prices.length > 0"
+						>
+							<v-simple-table>
+								<template v-slot:default>
+									<thead>
+										<tr>
+											<th>{{ $t('field.Derivative.prices.date') }}</th>
+											<th>{{ $t('field.Derivative.prices.price') }}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr v-for="(price, index) in derivative.prices" :key="index">
+											<td>{{ $d(new Date(price.date), 'long') }}</td>
+											<td>{{ price.price }}</td>
+										</tr>
+									</tbody>
+								</template>
+							</v-simple-table>
+						</FieldValue>
+					</v-col>
+				</v-row>
+			</div>
+		</SectionCard>
+
+		<SectionCard v-if="derivative.images.length > 1" :loading="loading" :title="$t('page.Derivative.gallery')">
+			<GalleryIndex :items="derivative.images">
+				<template v-slot:default="slotProps">
+					<router-link :to="`/images/${slotProps.item.id}/view`">
+						{{ slotProps.item.identifyingName }}
+					</router-link>
+				</template>
+			</GalleryIndex>
 		</SectionCard>
 	</v-container>
 </template>
@@ -83,6 +189,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import DnDImage from '@/components/DnDImage'
 import FieldValue from '@/components/FieldValue'
+import GalleryIndex from '@/components/GalleryIndex'
 import ModelLink from '@/components/ModelLink'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
@@ -97,6 +204,7 @@ export default {
 		AppTasks,
 		DnDImage,
 		FieldValue,
+		GalleryIndex,
 		ModelLink,
 		SectionCard
 	},
@@ -119,12 +227,30 @@ export default {
 		}
 	},
 
+	computed: {
+		sizeSpec() {
+			if (this.derivative.width && this.derivative.height && this.derivative.depth) {
+				return `${this.derivative.width} x ${this.derivative.height} x ${this.derivative.depth}`
+			}
+
+			if (this.derivative.width && this.derivative.height) {
+				return `${this.derivative.width} x ${this.derivative.height}`
+			}
+
+			return null
+		}
+	},
+
 	methods: {
 		async fetchData() {
 			this.derivative = await derivativeService.findById(this.parsedId)
 
 			if (!this.derivative.series) {
 				this.derivative.series = {}
+			}
+
+			if (!this.derivative.prices) {
+				this.derivative.prices = []
 			}
 		},
 
