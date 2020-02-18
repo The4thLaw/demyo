@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<AppTasks v-model="appTasksMenu">
+		<AppTasks v-if="!loading" v-model="appTasksMenu">
 			<AppTask :label="$t('quickTasks.edit.image')" :to="`/images/${image.id}/edit`" icon="mdi-pencil" />
 			<AppTask
 				:label="$t('quickTasks.delete.image')"
@@ -9,7 +9,6 @@
 				@cancel="appTasksMenu = false"
 				@confirm="deleteImage"
 			/>
-			<!-- TODO: icons ! -->
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" class="c-ImageView__image">
@@ -59,6 +58,7 @@ import AppTasks from '@/components/AppTasks'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
 import { getEncodedImageName } from '@/helpers/images'
+import modelViewMixin from '@/mixins/model-view'
 import imageService from '@/services/image-service'
 
 export default {
@@ -69,6 +69,8 @@ export default {
 		AppTasks,
 		SectionCard
 	},
+
+	mixins: [modelViewMixin],
 
 	metaInfo() {
 		return {
@@ -115,23 +117,14 @@ export default {
 		}
 	},
 
-	watch: {
-		'$route': 'fetchData'
-	},
-
-	created() {
-		this.fetchData()
-	},
-
 	methods: {
 		async fetchData() {
 			this.mainLoading = true
-			const id = parseInt(this.$route.params.id, 10)
 
-			this.image = await imageService.findById(id)
+			this.image = await imageService.findById(this.parsedId)
 			this.mainLoading = false
 
-			this.dependencies = await imageService.getImageDependencies(id)
+			this.dependencies = await imageService.getImageDependencies(this.parsedId)
 			this.dependenciesLoading = false
 		},
 

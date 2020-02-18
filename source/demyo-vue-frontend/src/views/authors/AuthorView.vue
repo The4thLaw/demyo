@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<AppTasks v-model="appTasksMenu">
+		<AppTasks v-if="!loading" v-model="appTasksMenu">
 			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/${author.id}/edit`" icon="mdi-pencil" />
 			<AppTask
 				:label="$t('quickTasks.delete.author')"
@@ -41,6 +41,7 @@ import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
+import modelViewMixin from '@/mixins/model-view'
 import authorService from '@/services/author-service'
 
 export default {
@@ -53,6 +54,8 @@ export default {
 		FieldValue,
 		SectionCard
 	},
+
+	mixins: [modelViewMixin],
 
 	metaInfo() {
 		return {
@@ -92,23 +95,13 @@ export default {
 		}
 	},
 
-	watch: {
-		'$route': 'fetchData'
-	},
-
-	created() {
-		this.fetchData()
-	},
-
 	methods: {
 		async fetchData() {
 			this.mainLoading = true
-			const id = parseInt(this.$route.params.id, 10)
-
-			this.author = await authorService.findById(id)
+			this.author = await authorService.findById(this.parsedId)
 			this.mainLoading = false
 
-			this.authorAlbums = await authorService.getAuthorAlbums(id)
+			this.authorAlbums = await authorService.getAuthorAlbums(this.parsedIdd)
 			this.albumsLoading = false
 		},
 
