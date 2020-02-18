@@ -53,6 +53,7 @@
 
 <script>
 import { groupBy, deburr } from 'lodash'
+import { mapState } from 'vuex'
 import { focusElement } from '@/helpers/dom'
 
 export default {
@@ -75,13 +76,15 @@ export default {
 
 	data() {
 		return {
-			// TODO: load this from the config
-			itemsPerPage: 40,
 			currentPage: 1
 		}
 	},
 
 	computed: {
+		...mapState({
+			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForText || 40
+		}),
+
 		paginatedItems() {
 			return this.items.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
 		},

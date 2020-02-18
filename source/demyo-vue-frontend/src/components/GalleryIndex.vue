@@ -37,6 +37,7 @@
 
 <script>
 import { get } from 'lodash'
+import { mapState } from 'vuex'
 import { focusElement } from '@/helpers/dom'
 import { getEncodedImageName } from '@/helpers/images'
 
@@ -57,13 +58,15 @@ export default {
 	data() {
 		return {
 			vimg: false,
-			// TODO: load this from the config
-			itemsPerPage: 20,
 			currentPage: 1
 		}
 	},
 
 	computed: {
+		...mapState({
+			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForImages || 20
+		}),
+
 		hasDefaultSlot() {
 			return !!this.$scopedSlots.default
 		},
