@@ -1,6 +1,6 @@
 import AuthorEdit from '@/views/authors/AuthorEdit'
 import DerivativeTypeIndex from '@/views/derivativeTypes/DerivativeTypeIndex'
-import AuthorView from '@/views/authors/AuthorView'
+import DerivativeTypeView from '@/views/derivativeTypes/DerivativeTypeView'
 
 export default [
 	{
@@ -9,10 +9,10 @@ export default [
 		component: DerivativeTypeIndex
 	},
 	{
-		path: '/authors/:id/view',
-		alias: '/authors/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
-		name: 'AuthorView',
-		component: AuthorView
+		path: '/derivativeTypes/:id/view',
+		alias: '/derivativeTypes/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
+		name: 'DerivativeTypeView',
+		component: DerivativeTypeView
 	},
 	{
 		path: '/authors/:id/edit',
