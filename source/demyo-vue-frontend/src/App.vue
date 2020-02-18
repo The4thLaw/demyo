@@ -293,7 +293,7 @@ html[lang], #demyo {
 .v-application a {
 	text-decoration: none;
 
-	&:hover {
+	&:not(.v-btn):hover {
 		text-decoration: underline;
 	}
 }
