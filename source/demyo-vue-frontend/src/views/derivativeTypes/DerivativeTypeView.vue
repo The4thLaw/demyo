@@ -7,6 +7,7 @@
 				icon="mdi-pencil"
 			/>
 			<AppTask
+				v-if="count == 0"
 				:label="$t('quickTasks.delete.derivativeType')"
 				:confirm="$t('quickTasks.delete.derivativeType.confirm')"
 				icon="mdi-account-minus"
@@ -20,7 +21,7 @@
 				:to="{ name: 'DerivativeIndex', query: { withType: type.id } }"
 				color="accent" class="my-4" small outlined
 			>
-				{{ $t('page.DerivativeType.viewDerivatives') }}
+				{{ $t('page.DerivativeType.viewDerivatives', {count: count}) }}
 			</v-btn>
 		</SectionCard>
 	</v-container>
@@ -54,13 +55,16 @@ export default {
 	data() {
 		return {
 			type: {},
+			count: -1,
 			appTasksMenu: false
 		}
 	},
 
 	methods: {
 		async fetchData() {
-			this.type = await typeService.findById(this.parsedId)
+			let typeP = typeService.findById(this.parsedId)
+			this.count = await typeService.countDerivatives(this.parsedId)
+			this.type = await typeP // Resolve calls in parallel
 		},
 
 		deleteType() {

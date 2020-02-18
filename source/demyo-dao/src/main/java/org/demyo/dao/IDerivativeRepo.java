@@ -22,4 +22,13 @@ public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCust
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Derivative.forEdition")
 	Derivative findOneForEdition(long id);
+
+	/**
+	 * Counts how many Derivatives use the given type.
+	 * 
+	 * @param typeId The internal ID of the DerivativeType
+	 * @return the count
+	 */
+	@Query(value = "select count(*) from derivatives where derivative_type_id=?1", nativeQuery = true)
+	int countDerivativesByType(long typeId);
 }

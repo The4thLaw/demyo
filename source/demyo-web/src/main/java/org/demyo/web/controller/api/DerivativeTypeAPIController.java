@@ -1,10 +1,13 @@
 package org.demyo.web.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.DerivativeType;
+import org.demyo.service.IDerivativeService;
 import org.demyo.service.IDerivativeTypeService;
 
 /**
@@ -13,13 +16,28 @@ import org.demyo.service.IDerivativeTypeService;
 @RestController
 @RequestMapping("/api/derivativeTypes")
 public class DerivativeTypeAPIController extends AbstractModelAPIController<DerivativeType> {
+	private IDerivativeService derivativeService;
+
 	/**
 	 * Creates the controller.
 	 * 
 	 * @param service The service to manage the entries.
+	 * @param derivativeService The service to manage Derivatives.
 	 */
 	@Autowired
-	public DerivativeTypeAPIController(IDerivativeTypeService service) {
+	public DerivativeTypeAPIController(IDerivativeTypeService service, IDerivativeService derivativeService) {
 		super(service);
+		this.derivativeService = derivativeService;
+	}
+
+	/**
+	 * Counts how many Derivatives use the given type.
+	 * 
+	 * @param typeId The internal ID of the DerivativeType
+	 * @return the count
+	 */
+	@GetMapping("{modelId}/derivatives/count")
+	int countDerivativesByType(@PathVariable long modelId) {
+		return derivativeService.countDerivativesByType(modelId);
 	}
 }

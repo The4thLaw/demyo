@@ -99,4 +99,9 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 			save(derivative); // Only save if we changed something
 		}
 	}
+
+	@Override
+	public int countDerivativesByType(long typeId) {
+		return repo.countDerivativesByType(typeId);
+	}
 }

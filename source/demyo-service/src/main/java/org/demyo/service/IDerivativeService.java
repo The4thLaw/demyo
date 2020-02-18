@@ -34,4 +34,12 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * @return The Derivatives
 	 */
 	List<Derivative> findAllForStickers();
+
+	/**
+	 * Counts how many Derivatives use the given type.
+	 * 
+	 * @param typeId The internal ID of the DerivativeType
+	 * @return the count
+	 */
+	int countDerivativesByType(long typeId);
 }
