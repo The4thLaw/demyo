@@ -25,7 +25,7 @@
 }
 			-->
 	<v-app id="demyo">
-		<v-navigation-drawer v-model="mainMenu" app temporary>
+		<v-navigation-drawer v-model="mainMenu" app temporary width="20em">
 			<v-list class="c-App__menuList">
 				<v-list-group v-if="readerLoaded">
 					<template v-slot:activator>
@@ -178,12 +178,46 @@ export default {
 							title: 'menu.authors.browse',
 							icon: 'mdi-account',
 							url: '/authors'
-						}
-						,
+						},
 						{
 							title: 'menu.derivatives.browse',
 							icon: 'mdi-image-frame',
 							url: '/derivatives'
+						},
+						{
+							title: 'menu.derivatives.browse.stickers',
+							icon: 'mdi-?',
+							url: '/derivatives/stickers'
+						},
+						{
+							title: 'menu.tags.browse',
+							icon: 'mdi-tag',
+							url: '/tags'
+						},
+						{
+							title: 'menu.publishers.browse',
+							icon: 'mdi-?',
+							url: '/publishers'
+						},
+						{
+							title: 'menu.derivative_sources.browse',
+							icon: 'mdi-?',
+							url: '/derivativeSources'
+						},
+						{
+							title: 'menu.derivative_types.browse',
+							icon: 'mdi-?',
+							url: '/derivativeTypes'
+						},
+						{
+							title: 'menu.bindings.browse',
+							icon: 'mdi-?',
+							url: '/bindings'
+						},
+						{
+							title: 'menu.images.browse',
+							icon: 'mdi-?',
+							url: '/images'
 						}
 					]
 				},
