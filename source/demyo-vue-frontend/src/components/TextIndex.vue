@@ -10,9 +10,17 @@
 		@keyup.arrow-right.exact="nextPage()"
 	>
 		<div v-if="!splitByFirstLetter">
-			<div v-for="item in paginatedItems" :key="item.id">
-				<slot :item="item" />
-			</div>
+			<v-card>
+				<v-card-text>
+					<v-list class="c-TextIndex__list" dense>
+						<v-list-item v-for="item in paginatedItems" :key="item.id">
+							<v-list-item-content>
+								<slot :item="item" />
+							</v-list-item-content>
+						</v-list-item>
+					</v-list>
+				</v-card-text>
+			</v-card>
 		</div>
 
 		<div v-if="splitByFirstLetter">

@@ -5,6 +5,7 @@ import store from '@/store/index'
 import Home from '@/views/Home.vue'
 import authorRoutes from './authors'
 import derivativeRoutes from './derivatives'
+import derivativeTypeRoutes from './derivativeTypes'
 import imageRoutes from './images'
 
 Vue.use(VueRouter)
@@ -18,6 +19,7 @@ const routes = [
 	},
 	...authorRoutes,
 	...derivativeRoutes,
+	...derivativeTypeRoutes,
 	...imageRoutes,
 	{
 		path: '/about',
