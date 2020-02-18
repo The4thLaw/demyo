@@ -21,7 +21,7 @@
 				:to="{ name: 'DerivativeIndex', query: { withType: type.id } }"
 				color="accent" class="my-4" small outlined
 			>
-				{{ $t('page.DerivativeType.viewDerivatives', {count: count}) }}
+				{{ $tc('page.DerivativeType.viewDerivatives', count, {count: count}) }}
 			</v-btn>
 		</SectionCard>
 	</v-container>
