@@ -16,7 +16,7 @@
 			</template>
 		</GalleryIndex>
 		<v-btn
-			fab to="/derivatives/add" color="accent" fixed
+			fab to="/derivatives/new" color="accent" fixed
 			bottom right
 		>
 			<v-icon>mdi-plus</v-icon>

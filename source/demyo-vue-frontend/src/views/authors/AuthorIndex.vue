@@ -8,7 +8,7 @@
 			</template>
 		</TextIndex>
 		<v-btn
-			fab to="/authors/add" color="accent" fixed
+			fab to="/authors/new" color="accent" fixed
 			bottom right
 		>
 			<v-icon>mdi-plus</v-icon>
