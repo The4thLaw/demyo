@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
 import store from '@/store'
@@ -12,6 +13,9 @@ class ReaderService extends AbstractModelService {
 
 	async init() {
 		console.debug('Initializing reader')
+		console.log(i18n)
+		console.log(i18n.t)
+		console.log(i18n.t('foo'))
 
 		// Check if we already have a Reader in the local storage
 		const readerStr = localStorage.getItem('currentReader')
@@ -31,6 +35,7 @@ class ReaderService extends AbstractModelService {
 		if (reader) {
 			await this.setCurrentReader(reader)
 			console.log('Reader is initialized to', reader)
+			store.dispatch('ui/showSnackbar', i18n.t('core.reader.welcome', { reader: reader.name }))
 		} else {
 			console.log('Cannot select a reader automatically, prompting user...')
 			store.dispatch('reader/requireReaderSelection')
