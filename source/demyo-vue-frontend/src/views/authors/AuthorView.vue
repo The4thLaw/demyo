@@ -104,7 +104,7 @@ export default {
 			this.author = await authorService.findById(this.parsedId)
 			this.mainLoading = false
 
-			this.authorAlbums = await authorService.getAuthorAlbums(this.parsedIdd)
+			this.authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
 			this.albumsLoading = false
 		},
 
