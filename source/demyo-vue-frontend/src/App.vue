@@ -323,7 +323,7 @@ html[lang],
 	}
 
 	&::after {
-		font: normal normal normal 16px/1 "Material Design Icons";
+		font: normal normal normal 67%/1 "Material Design Icons";
 		text-rendering: auto;
 		position: absolute;
 		bottom: -2px;
@@ -343,7 +343,7 @@ html[lang],
 
 .dem-overlay-add::after {
 	content: "\F0217";
-	font-size: 14px;
+	font-size: 58%;
 }
 
 .dem-overlay-edit::after {
