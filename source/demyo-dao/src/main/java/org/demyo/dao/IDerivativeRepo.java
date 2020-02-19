@@ -29,6 +29,6 @@ public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCust
 	 * @param typeId The internal ID of the DerivativeType
 	 * @return the count
 	 */
-	@Query(value = "select count(*) from derivatives where derivative_type_id=?1", nativeQuery = true)
+	@Query("select count(*) from Derivative d where d.type.id = ?1")
 	int countDerivativesByType(long typeId);
 }
