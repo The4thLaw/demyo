@@ -94,9 +94,6 @@ export default {
 	},
 
 	mounted() {
-		// TODO: check if there is an event that would allow us to detect v-img being opened/closed
-		// so that we can better prevent intercepting key presses and restore the focus
-		// Use the opened and closed callbacks that can be passed in the object
 		focusElement(this.$refs.keyTarget)
 	},
 
