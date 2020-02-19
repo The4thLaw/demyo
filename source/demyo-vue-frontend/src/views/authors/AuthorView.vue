@@ -44,6 +44,7 @@ import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
+import { getEncodedImageName } from '@/helpers/images'
 import modelViewMixin from '@/mixins/model-view'
 import authorService from '@/services/author-service'
 
@@ -78,8 +79,7 @@ export default {
 
 	computed: {
 		basePortraitUrl() {
-			// TODO: use the encode image helper
-			let encodedName = encodeURI(this.author.portrait.userFileName)
+			let encodedName = getEncodedImageName(this.author.portrait.userFileName)
 			return '/images/' + this.author.portrait.id + '/file/' + encodedName
 		},
 
