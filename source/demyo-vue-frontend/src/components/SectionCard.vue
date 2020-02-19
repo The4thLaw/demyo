@@ -42,7 +42,9 @@
 </template>
 
 <script>
-import { getEncodedImageName } from '@/helpers/images'
+import { contextRoot } from '@/myenv'
+import { getBaseImageUrl } from '@/helpers/images'
+
 /**
  * A card used to section content.
  * Sports standard padding and loading style.
@@ -78,7 +80,7 @@ export default {
 
 	computed: {
 		baseImageUrl() {
-			return '/images/' + this.image.id + '/file/' + getEncodedImageName(this.image)
+			return getBaseImageUrl(this.image)
 		}
 	}
 }

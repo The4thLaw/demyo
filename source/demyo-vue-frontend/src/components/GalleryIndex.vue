@@ -38,8 +38,9 @@
 <script>
 import { get } from 'lodash'
 import { mapState } from 'vuex'
+import { contextRoot } from '@/myenv'
 import { focusElement } from '@/helpers/dom'
-import { getEncodedImageName } from '@/helpers/images'
+import { getBaseImageUrl } from '@/helpers/images'
 
 export default {
 	name: 'GalleryIndex',
@@ -82,7 +83,7 @@ export default {
 					image = item
 				}
 				if (image) { // Some entries may not have an image at all
-					item.baseImageUrl = '/images/' + image.id + '/file/' + getEncodedImageName(image)
+					item.baseImageUrl = getBaseImageUrl(image)
 				}
 			})
 			return slice

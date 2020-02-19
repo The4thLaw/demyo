@@ -60,7 +60,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
-import { getEncodedImageName } from '@/helpers/images'
+import { getBaseImageUrl } from '@/helpers/images'
 import modelViewMixin from '@/mixins/model-view'
 import imageService from '@/services/image-service'
 
@@ -93,8 +93,7 @@ export default {
 
 	computed: {
 		imageUrl() {
-			// TODO: should match the context root. Also check other occurrences
-			return '/images/' + this.image.id + '/file/' + getEncodedImageName(this.image)
+			return getBaseImageUrl(this.image)
 		},
 
 		hasDependencies() {
