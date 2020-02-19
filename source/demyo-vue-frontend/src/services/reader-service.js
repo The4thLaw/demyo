@@ -1,4 +1,4 @@
-import i18n from '../i18n'
+import i18n from '@/i18n'
 import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
 import store from '@/store'
