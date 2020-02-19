@@ -1,11 +1,14 @@
 <template>
 	<v-container>
 		<AppTasks v-if="!loading" v-model="appTasksMenu">
-			<AppTask :label="$t('quickTasks.edit.author')" :to="`/authors/${author.id}/edit`" icon="mdi-pencil" />
+			<AppTask
+				:label="$t('quickTasks.edit.author')" :to="`/authors/${author.id}/edit`"
+				icon="mdi-account dem-overlay-edit"
+			/>
 			<AppTask
 				:label="$t('quickTasks.delete.author')"
 				:confirm="$t('quickTasks.delete.author.confirm')"
-				icon="mdi-account-minus"
+				icon="mdi-account dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteAuthor"
 			/>

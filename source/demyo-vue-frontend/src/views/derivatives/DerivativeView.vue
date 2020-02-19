@@ -4,7 +4,7 @@
 			<AppTask
 				:label="$t('quickTasks.edit.derivative')"
 				:to="`/derivatives/${derivative.id}/edit`"
-				icon="mdi-pencil"
+				icon="mdi-image-frame dem-overlay-edit"
 			/>
 			<!--
 			Adding an @click="appTasksMenu = false" causes the dialog to instantly
@@ -13,13 +13,13 @@
 			<AppTask
 				:label="$t('quickTasks.delete.derivative')"
 				:confirm="$t('quickTasks.delete.derivative.confirm')"
-				icon="mdi-delete"
+				icon="mdi-image-frame dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteDerivative"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.images.to.derivative')"
-				icon="mdi-camera"
+				icon="mdi-camera dem-overlay-add"
 				@click="appTasksMenu = false; dndDialog = true"
 			/>
 		</AppTasks>

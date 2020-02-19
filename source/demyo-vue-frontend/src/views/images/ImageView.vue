@@ -1,11 +1,14 @@
 <template>
 	<v-container>
 		<AppTasks v-if="!loading" v-model="appTasksMenu">
-			<AppTask :label="$t('quickTasks.edit.image')" :to="`/images/${image.id}/edit`" icon="mdi-pencil" />
+			<AppTask
+				:label="$t('quickTasks.edit.image')" :to="`/images/${image.id}/edit`"
+				icon="mdi-camera dem-overlay-edit"
+			/>
 			<AppTask
 				:label="$t('quickTasks.delete.image')"
 				:confirm="$t('quickTasks.delete.image.confirm')"
-				icon="mdi-delete"
+				icon="mdi-camera dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteImage"
 			/>

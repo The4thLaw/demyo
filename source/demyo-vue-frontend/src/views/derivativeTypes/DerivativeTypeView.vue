@@ -4,13 +4,13 @@
 			<AppTask
 				:label="$t('quickTasks.edit.derivativeType')"
 				:to="`/derivativeTypes/${type.id}/edit`"
-				icon="mdi-pencil"
+				icon="mdi-brush dem-overlay-edit"
 			/>
 			<AppTask
 				v-if="count == 0"
 				:label="$t('quickTasks.delete.derivativeType')"
 				:confirm="$t('quickTasks.delete.derivativeType.confirm')"
-				icon="mdi-account-minus"
+				icon="mdi-brush dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteType"
 			/>

@@ -1,29 +1,4 @@
 <template>
-	<!--
-				Consider making a generic icon overlay for those plus/minus icons.
-			Interesting icons are: delete, account-minus, minus, plus, pencil, account-edit
-				.v-icon { position: relative }
-				.mdi-heart::after {
-
-    content: 'a';
-    content: "\F2D1";
-    font: normal normal normal 12px/1 "Material Design Icons";
-        font-size: 12px;
-        line-height: 1;
-    font-size: 24px;
-    line-height: 1;
-    font-size: inherit;
-    text-rendering: auto;
-    line-height: inherit;
-    position: absolute;
-    top: 0px;
-    font-size: 12px;
-    border: 1px solid
-
-    red;
-
-}
-			-->
 	<v-app id="demyo">
 		<v-navigation-drawer v-model="mainMenu" app temporary width="20em">
 			<v-list class="c-App__menuList">
@@ -47,7 +22,7 @@
 					</v-list-item>
 					<v-list-item href="/TODO">
 						<v-list-item-icon>
-							<v-icon>mdi-bookmark-multiple</v-icon>
+							<v-icon>mdi-library</v-icon>
 						</v-list-item-icon>
 						<v-list-item-content>
 							<v-list-item-title>{{ $t('menu.reader.readingList') }}</v-list-item-title>
@@ -166,7 +141,7 @@ export default {
 					subItems: [
 						{
 							title: 'menu.series.browse',
-							icon: 'mdi-layers-triple',
+							icon: 'mdi-animation',
 							url: '/series'
 						},
 						{
@@ -186,7 +161,7 @@ export default {
 						},
 						{
 							title: 'menu.derivatives.browse.stickers',
-							icon: 'mdi-?',
+							icon: 'mdi-note-outline',
 							url: '/derivatives/stickers'
 						},
 						{
@@ -196,27 +171,28 @@ export default {
 						},
 						{
 							title: 'menu.publishers.browse',
-							icon: 'mdi-?',
+							icon: 'mdi-office-building',
+							// Collection could be folder-multiple or picture-in-picture-bottom-right if we keep Demyo 2.0/2.1
 							url: '/publishers'
 						},
 						{
 							title: 'menu.derivative_sources.browse',
-							icon: 'mdi-?',
+							icon: 'mdi-tooltip-account',
 							url: '/derivativeSources'
 						},
 						{
 							title: 'menu.derivative_types.browse',
-							icon: 'mdi-?',
+							icon: 'mdi-brush',
 							url: '/derivativeTypes'
 						},
 						{
 							title: 'menu.bindings.browse',
-							icon: 'mdi-?',
+							icon: 'mdi-notebook',
 							url: '/bindings'
 						},
 						{
 							title: 'menu.images.browse',
-							icon: 'mdi-?',
+							icon: 'mdi-camera',
 							url: '/images'
 						}
 					]
@@ -226,17 +202,17 @@ export default {
 					subItems: [
 						{
 							title: 'menu.albums.add',
-							icon: 'mdi-book-open-variant',
+							icon: 'mdi-book-open-variant dem-overlay-add',
 							url: '/albums/new'
 						},
 						{
 							title: 'menu.authors.add',
-							icon: 'mdi-account-plus',
+							icon: 'mdi-account dem-overlay-add',
 							url: '/authors/new'
 						},
 						{
 							title: 'menu.series.add',
-							icon: 'mdi-layers-plus',
+							icon: 'mdi-animation dem-overlay-add',
 							url: '/series/new'
 						}
 					]
@@ -332,9 +308,50 @@ html[lang],
 	}
 }
 
-// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541​ is resolved, switch to it
+// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541 is resolved, switch to it
 #demyo .v-pagination button {
 	box-shadow: none;
 	border-radius: 50%;
 }
+
+/** Overlays for icons. */
+.dem-overlay-add,
+.dem-overlay-edit,
+.dem-overlay-delete {
+	&.v-icon {
+		position: relative;
+	}
+
+	&::after {
+		font: normal normal normal 16px/1 "Material Design Icons";
+		text-rendering: auto;
+		position: absolute;
+		bottom: -2px;
+		right: -4px;
+		// TODO [dark]: handle shadows on dark theme
+		text-shadow:
+			-2px -2px 0 #fff,
+			2px -2px #fff,
+			-2px 2px #fff,
+			2px 2px #fff,
+			0 -2px #fff,
+			0 2px #fff,
+			2px 0 #fff,
+			-2px 0 #fff;
+	}
+}
+
+.dem-overlay-add::after {
+	content: "\F0217";
+	font-size: 14px;
+}
+
+.dem-overlay-edit::after {
+	content: "\F3EB";
+}
+
+.dem-overlay-delete::after {
+	content: "\F1C0"; // Minus is \F374
+}
+
 </style>
