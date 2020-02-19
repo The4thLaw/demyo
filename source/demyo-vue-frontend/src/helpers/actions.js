@@ -1,3 +1,7 @@
+import i18n from '../i18n'
+import router from '@/router'
+import store from '@/store'
+
 /**
  * Stub for a save action in an edit component.
  * @param {Vue} component The Vue component
@@ -8,13 +12,13 @@ export async function saveStub(component, handler, routeName) {
 	if (!component.$refs.form.validate()) {
 		return
 	}
-	component.$store.dispatch('ui/enableGlobalOverlay')
+	store.dispatch('ui/enableGlobalOverlay')
 	let id = await handler()
-	component.$store.dispatch('ui/disableGlobalOverlay')
+	store.dispatch('ui/disableGlobalOverlay')
 	if (id <= 0) {
-		component.$store.dispatch('ui/showSnackbar', component.$t('core.exception.api.title'))
+		store.dispatch('ui/showSnackbar', i18n.t('core.exception.api.title'))
 	} else {
-		component.$router.push({ name: routeName, params: { id: id } })
+		router.push({ name: routeName, params: { id: id } })
 	}
 }
 
@@ -29,7 +33,7 @@ export async function deleteStub(component, handler, confirmationLabel, routeNam
 	component.appTasksMenu = false
 	let deleted = await handler()
 	if (deleted) {
-		component.$store.dispatch('ui/showSnackbar', component.$t(confirmationLabel))
-		component.$router.push({ name: routeName })
+		store.dispatch('ui/showSnackbar', i18n.t(confirmationLabel))
+		router.push({ name: routeName })
 	}
 }
