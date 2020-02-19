@@ -1,4 +1,4 @@
-import AuthorEdit from '@/views/authors/AuthorEdit'
+import DerivativeTypeEdit from '@/views/derivativeTypes/DerivativeTypeEdit'
 import DerivativeTypeIndex from '@/views/derivativeTypes/DerivativeTypeIndex'
 import DerivativeTypeView from '@/views/derivativeTypes/DerivativeTypeView'
 
@@ -15,13 +15,13 @@ export default [
 		component: DerivativeTypeView
 	},
 	{
-		path: '/authors/:id/edit',
-		name: 'AuthorEdit',
-		component: AuthorEdit
+		path: '/derivativeTypes/:id/edit',
+		name: 'DerivativeTypeEdit',
+		component: DerivativeTypeEdit
 	},
 	{
-		path: '/authors/new',
-		name: 'AuthorAdd',
-		component: AuthorEdit
+		path: '/derivativeTypes/new',
+		name: 'DerivativeTypeAdd',
+		component: DerivativeTypeEdit
 	}
 ]
