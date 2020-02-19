@@ -13,9 +13,8 @@ class AuthorService extends AbstractModelService {
 	 * Finds the Albums on which an Author has worked.
 	 * @param {Number} id The Author ID
 	 */
-	async getAuthorAlbums(id) {
-		let data = await axiosGet(`authors/${id}/albums`, {})
-		return data
+	getAuthorAlbums(id) {
+		return axiosGet(`authors/${id}/albums`, {})
 	}
 }
 
