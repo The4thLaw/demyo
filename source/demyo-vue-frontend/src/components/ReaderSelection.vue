@@ -34,7 +34,6 @@
 <script>
 // TODO: add / edit readers
 // TODO: Switch from App
-// TODO: welcome toast when restarting the app ?
 import LetterIcon from '@/components/LetterIcon'
 import readerService from '@/services/reader-service'
 
