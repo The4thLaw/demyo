@@ -267,7 +267,8 @@ export default {
 </script>
 
 <style lang="less">
-html[lang], #demyo {
+html[lang],
+#demyo {
 	font-family: -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	background: #eee;
 }
@@ -298,7 +299,8 @@ html[lang], #demyo {
 	}
 }
 
-.c-App__menuList {
+.v-application .c-App__menuList,
+.v-application .c-AppTasks__list {
 	a,
 	a:hover {
 		text-decoration: none;
