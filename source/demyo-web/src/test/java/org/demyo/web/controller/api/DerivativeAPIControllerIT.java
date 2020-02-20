@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -37,8 +36,24 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
+	public void indexWithFilter() throws Exception {
+		mockMvc.perform(post("/api/derivatives/index/filtered")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{"
+						+ "\"type\": 3"
+						+ "}")) //
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$[0].id").value(90))
+				.andExpect(jsonPath("$[0].series.name").value("Sillage"))
+				.andExpect(jsonPath("$[0].album.id").doesNotExist())
+				.andExpect(jsonPath("$[0].total").doesNotExist())
+				.andExpect(jsonPath("$[0].artist").doesNotExist());
+	}
+
+	@Test
 	public void saveExisting() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.put("/api/derivatives/205")
+		mockMvc.perform(put("/api/derivatives/205")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
 						+ "\"id\":205,"

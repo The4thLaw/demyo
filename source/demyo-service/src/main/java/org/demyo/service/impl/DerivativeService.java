@@ -18,6 +18,7 @@ import org.demyo.dao.IDerivativeRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Derivative;
 import org.demyo.model.Image;
+import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IDerivativeService;
 import org.demyo.service.IImageService;
 import org.demyo.service.ITranslationService;
@@ -55,9 +56,19 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Derivative> findAllForIndex() {
+	public Iterable<Derivative> findAllForIndex() {
+		return findAllForIndex(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<Derivative> findAllForIndex(DerivativeFilter filter) {
 		Sort sort = new Sort(getDefaultOrder());
-		return repo.findAllForIndex(sort);
+		if (filter == null) {
+			return repo.findAllForIndex(sort);
+		} else {
+			return repo.findAllForIndex(filter.getPredicate(), sort);
+		}
 	}
 
 	@Override

@@ -26,6 +26,7 @@
 
 <script>
 import GalleryIndex from '@/components/GalleryIndex'
+import { retrieveFilter } from '@/helpers/filter'
 import derivativeService from '@/services/derivative-service'
 
 export default {
@@ -54,7 +55,8 @@ export default {
 	methods: {
 		async fetchData() {
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			this.derivatives = await derivativeService.findForIndex()
+			let filter = retrieveFilter(this.$route)
+			this.derivatives = await derivativeService.findForIndex(filter)
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		}
 	}

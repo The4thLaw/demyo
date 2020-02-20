@@ -21,8 +21,18 @@ public class IDerivativeRepoImpl implements IDerivativeCustomRepo {
 	private IDerivativeRepo repo;
 
 	@Override
-	public List<Derivative> findAllForIndex(Sort sort) {
-		List<Derivative> list = repo.findAll(sort);
+	public Iterable<Derivative> findAllForIndex(Sort sort) {
+		return findAllForIndex(null, sort);
+	}
+
+	@Override
+	public Iterable<Derivative> findAllForIndex(Predicate p, Sort sort) {
+		Iterable<Derivative> list;
+		if (p != null) {
+			list = repo.findAll(p, sort);
+		} else {
+			list = repo.findAll(sort);
+		}
 		// See IPublisherRepoImpl for rationale behind this
 		// In this case, having multiple images means that the Derivative is fetched multiple times
 		for (Derivative deriv : list) {

@@ -1,6 +1,5 @@
 import AbstractModelService from './abstract-model-service'
-import { axiosPost } from '@/helpers/axios'
-
+import { axiosGet, axiosPost } from '@/helpers/axios'
 
 /**
  * API service for Derivatives.
@@ -8,6 +7,13 @@ import { axiosPost } from '@/helpers/axios'
 class DerivativeService extends AbstractModelService {
 	constructor() {
 		super('derivatives/')
+	}
+
+	findForIndex(filter) {
+		if (filter) {
+			return axiosPost(this.basePath + 'index/filtered', filter, [])
+		}
+		return axiosGet(this.basePath, [])
 	}
 
 	save(model) {

@@ -1,7 +1,6 @@
 package org.demyo.web.controller.api;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
+import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IDerivativeService;
 
 /**
@@ -50,7 +50,14 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 	@Override
 	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
-		List<Derivative> value = service.findAllForIndex();
+		Iterable<Derivative> value = service.findAllForIndex();
+		return getIndexView(view, value);
+	}
+
+	@PostMapping({ "/index/filtered" })
+	public MappingJacksonValue index(@RequestParam("view") Optional<String> view,
+			@RequestBody DerivativeFilter filter) {
+		Iterable<Derivative> value = service.findAllForIndex(filter);
 		return getIndexView(view, value);
 	}
 
