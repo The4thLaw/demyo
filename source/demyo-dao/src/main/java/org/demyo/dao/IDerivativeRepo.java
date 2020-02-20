@@ -29,6 +29,8 @@ public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCust
 	 * @param typeId The internal ID of the DerivativeType
 	 * @return the count
 	 */
+	// Having a native query avoids Spring date making a join to DERIVATIVE_TYPE just to get the ID
+	// (the method would be named countDerivativesByTypeId)
 	@Query("select count(*) from Derivative d where d.type.id = ?1")
 	int countDerivativesByType(long typeId);
 }
