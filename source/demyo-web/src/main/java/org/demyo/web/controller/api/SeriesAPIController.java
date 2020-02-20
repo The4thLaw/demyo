@@ -28,6 +28,7 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	 * Creates the controller.
 	 * 
 	 * @param service The service to manage the entries.
+	 * @param albumService The service to manage the {@link Album}s.
 	 */
 	@Autowired
 	public SeriesAPIController(ISeriesService service, IAlbumService albumService) {
