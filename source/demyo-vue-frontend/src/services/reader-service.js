@@ -13,9 +13,6 @@ class ReaderService extends AbstractModelService {
 
 	async init() {
 		console.debug('Initializing reader')
-		console.log(i18n)
-		console.log(i18n.t)
-		console.log(i18n.t('foo'))
 
 		// Check if we already have a Reader in the local storage
 		const readerStr = localStorage.getItem('currentReader')
