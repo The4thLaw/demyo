@@ -99,4 +99,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 			+ " null as as_translator, album_id as as_writer from albums_writers where writer_id = ?1"
 			+ "", nativeQuery = true)
 	List<IAuthorAlbum> findAlbumsFromAuthor(long id);
+
+	/**
+	 * Finds the IDs of the Albums belonging to a Series, ordered logically.
+	 * 
+	 * @param seriesId The Series ID
+	 * @return The Album IDs, if any.
+	 */
+	@Query("select a.id from Album a where a.series.id=?1 order by cycle asc, number asc, numberSuffix asc, "
+			+ "firstEditionDate asc, currentEditionDate asc, title asc")
+	List<Long> findAlbumIdsBySeries(long seriesId);
 }

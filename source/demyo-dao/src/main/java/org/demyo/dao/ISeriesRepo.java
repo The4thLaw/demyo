@@ -2,11 +2,11 @@ package org.demyo.dao;
 
 import java.util.List;
 
-import org.demyo.model.Series;
-
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import org.demyo.model.Series;
 
 /**
  * This class provides methods to manipulate {@link Series}.
@@ -19,7 +19,7 @@ public interface ISeriesRepo extends IModelRepo<Series>, IQuickSearchableRepo<Se
 
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
-	@EntityGraph("Series.forEdition")
+	@EntityGraph("Series.forView")
 	Series findOneForEdition(long id);
 
 	List<Series> findByIdNot(long id);

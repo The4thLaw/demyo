@@ -6,15 +6,17 @@ import java.util.concurrent.Future;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 
-import org.demyo.dao.IModelRepo;
-import org.demyo.dao.ISeriesRepo;
-import org.demyo.model.Series;
-import org.demyo.service.ISeriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.dao.IAlbumRepo;
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ISeriesRepo;
+import org.demyo.model.Series;
+import org.demyo.service.ISeriesService;
 
 /**
  * Implements the contract defined by {@link ISeriesService}.
@@ -23,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class SeriesService extends AbstractModelService<Series> implements ISeriesService {
 	@Autowired
 	private ISeriesRepo repo;
+	@Autowired
+	private IAlbumRepo albumRepo;
 
 	/**
 	 * Default constructor.
@@ -38,6 +42,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 		if (entity == null) {
 			throw new EntityNotFoundException("No Series for ID " + id);
 		}
+		entity.setAlbumIds(albumRepo.findAlbumIdsBySeries(id));
 		return entity;
 	}
 

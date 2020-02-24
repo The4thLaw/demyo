@@ -1,5 +1,6 @@
 package org.demyo.model;
 
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -16,6 +17,7 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
@@ -36,8 +38,8 @@ import org.demyo.model.util.StartsWithField;
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraphs({
-		@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries")),
-		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
+		@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries")) })
+// TODO [Vue]: Remove all useless properties (albums, tags, authors...)
 public class Series extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
@@ -72,6 +74,10 @@ public class Series extends AbstractModel {
 	@OneToMany(mappedBy = "series", fetch = FetchType.LAZY)
 	@SortComparator(AlbumComparator.class)
 	private SortedSet<Album> albums;
+
+	/** The internal IDs of the Albums belonging to this Series. */
+	@Transient
+	private List<Long> albumIds;
 
 	/** The {@link Reader}s who favourited this Series. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteSeries")
@@ -318,5 +324,23 @@ public class Series extends AbstractModel {
 	 */
 	public SortedSet<Album> getAlbums() {
 		return albums;
+	}
+
+	/**
+	 * Gets the internal IDs of the Albums belonging to this Series.
+	 *
+	 * @return the internal IDs of the Albums belonging to this Series
+	 */
+	public List<Long> getAlbumIds() {
+		return albumIds;
+	}
+
+	/**
+	 * Sets the internal IDs of the Albums belonging to this Series.
+	 *
+	 * @param albumIds the new internal IDs of the Albums belonging to this Series
+	 */
+	public void setAlbumIds(List<Long> albumIds) {
+		this.albumIds = albumIds;
 	}
 }

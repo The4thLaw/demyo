@@ -2,6 +2,7 @@ package org.demyo.web.test.mvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
@@ -13,6 +14,7 @@ import org.demyo.web.controller.SeriesController;
  * Integration tests for {@link SeriesController}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
+@Ignore("Due to be removed as part of Vue switch")
 public class SeriesControllerIT extends AbstractMvcTest {
 	private static final String ONGOING_SERIES_LABEL = "This series is ongoing.";
 	private static final String COMLETED_SERIES_LABEL = "This series is over.";

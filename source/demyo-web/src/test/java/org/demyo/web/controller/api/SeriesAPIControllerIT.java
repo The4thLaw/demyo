@@ -1,5 +1,6 @@
 package org.demyo.web.controller.api;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,11 +36,16 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	public void view() throws Exception {
 		mockMvc.perform(get("/api/series/99"))
 				.andExpect(status().isOk())
+				.andDo(MockMvcResultHandlers.print())
 				.andExpect(jsonPath("$.id").value(99))
 				.andExpect(jsonPath("$.name").value("Sillage"))
 				.andExpect(jsonPath("$.website").value("http://www.poukram.org/"))
 				.andExpect(jsonPath("$.relatedSeries", hasSize(1)))
 				.andExpect(jsonPath("$.relatedSeries[0].id").value(232))
+				.andExpect(jsonPath("$.albumIds", hasSize(24)))
+				.andExpect(jsonPath("$.albumIds",
+						contains(444, 737, 764, 435, 436, 437, 438, 439, 440, 441, 442, 443, 567, 669, 746, 848, 945,
+								946, 1000, 1086, 1229, 1459, 1186, 1370)))
 				.andExpect(jsonPath("$.albums").doesNotExist())
 				.andExpect(jsonPath("$.albumTags").doesNotExist());
 	}
