@@ -16,6 +16,14 @@ class AuthorService extends AbstractModelService {
 	getAuthorAlbums(id) {
 		return axiosGet(`authors/${id}/albums`, {})
 	}
+
+	/**
+	 * Finds how many Derivatives use the given artist.
+	 * @param {Number} id The Derivative Type ID
+	 */
+	countDerivatives(id) {
+		return axiosGet(`authors/${id}/derivatives/count`, 0)
+	}
 }
 
 export default new AuthorService()

@@ -12,6 +12,7 @@ import org.demyo.model.Author;
 import org.demyo.model.ModelView;
 import org.demyo.model.beans.AuthorAlbums;
 import org.demyo.service.IAuthorService;
+import org.demyo.service.IDerivativeService;
 
 /**
  * Controller handling the API calls for {@link Author}s.
@@ -20,16 +21,19 @@ import org.demyo.service.IAuthorService;
 @RequestMapping("/api/authors")
 public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	private final IAuthorService service;
+	private final IDerivativeService derivativeService;
 
 	/**
 	 * Creates the controller.
 	 * 
 	 * @param service The service to manage the entries.
+	 * @param derivativeService The service to manage Derivatives.
 	 */
 	@Autowired
-	public AuthorAPIController(IAuthorService service) {
+	public AuthorAPIController(IAuthorService service, IDerivativeService derivativeService) {
 		super(service);
 		this.service = service;
+		this.derivativeService = derivativeService;
 	}
 
 	/**
@@ -42,5 +46,16 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	@JsonView(ModelView.Basic.class)
 	public AuthorAlbums getAuthorAlbums(@PathVariable("modelId") long id) {
 		return service.getAuthorAlbums(id);
+	}
+
+	/**
+	 * Counts how many Derivatives use the given artist.
+	 * 
+	 * @param typeId The internal ID of the Author
+	 * @return the count
+	 */
+	@GetMapping("{modelId}/derivatives/count")
+	int countDerivativesByArtist(@PathVariable long modelId) {
+		return derivativeService.countDerivativesByArtist(modelId);
 	}
 }

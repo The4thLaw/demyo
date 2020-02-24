@@ -51,4 +51,11 @@ public class AuthorAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$.albums[0].id").value(1093))
 				.andExpect(jsonPath("$.albums[0].title").value("Esprit d'Équipe"));
 	}
+
+	@Test
+	public void countDerivativesByArtist() throws Exception {
+		mockMvc.perform(get("/api/authors/52/derivatives/count"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$").value(27));
+	}
 }

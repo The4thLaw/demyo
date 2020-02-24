@@ -21,6 +21,19 @@
 			<FieldValue :label="$t('field.Author.biography')" :value="author.biography">
 				<div v-html="author.biography" />
 			</FieldValue>
+			<v-btn
+				v-if="count > 0"
+				:to="{ name: 'DerivativeIndex', query: { withArtist: author.id } }"
+				color="accent" class="my-4" small outlined
+			>
+				{{ $tc('page.Author.viewDerivatives', count) }}
+			</v-btn>
+			<v-alert
+				v-if="count <= 0"
+				border="left" type="info" text class="my-4"
+			>
+				{{ $t('page.Author.noDerivatives') }}
+			</v-alert>
 		</SectionCard>
 
 		<SectionCard
@@ -72,6 +85,7 @@ export default {
 			albumsLoading: true,
 			author: {},
 			authorAlbums: {},
+			count: -1,
 			appTasksMenu: false
 		}
 	},
@@ -95,7 +109,9 @@ export default {
 	methods: {
 		async fetchData() {
 			this.mainLoading = true
+			let countP = authorService.countDerivatives(this.parsedId)
 			this.author = await authorService.findById(this.parsedId)
+			this.count = await countP
 			this.mainLoading = false
 
 			this.authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
