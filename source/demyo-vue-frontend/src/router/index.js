@@ -7,6 +7,7 @@ import authorRoutes from './authors'
 import derivativeRoutes from './derivatives'
 import derivativeTypeRoutes from './derivativeTypes'
 import imageRoutes from './images'
+import seriesRoutes from './series'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -21,6 +22,7 @@ const routes = [
 	...derivativeRoutes,
 	...derivativeTypeRoutes,
 	...imageRoutes,
+	...seriesRoutes,
 	{
 		path: '/about',
 		name: 'about',
