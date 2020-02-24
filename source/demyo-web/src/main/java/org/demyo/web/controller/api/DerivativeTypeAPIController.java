@@ -16,7 +16,7 @@ import org.demyo.service.IDerivativeTypeService;
 @RestController
 @RequestMapping("/api/derivativeTypes")
 public class DerivativeTypeAPIController extends AbstractModelAPIController<DerivativeType> {
-	private IDerivativeService derivativeService;
+	private final IDerivativeService derivativeService;
 
 	/**
 	 * Creates the controller.
