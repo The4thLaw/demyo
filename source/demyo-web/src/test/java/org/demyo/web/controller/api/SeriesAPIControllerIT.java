@@ -21,6 +21,17 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
+	public void index() throws Exception {
+		mockMvc.perform(get("/api/series/"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(3)))
+				.andExpect(jsonPath("$[1].id").value(99))
+				.andExpect(jsonPath("$[1].identifyingName").value("Sillage"))
+				.andExpect(jsonPath("$[1].name").doesNotExist())
+				.andExpect(jsonPath("$[1].location").doesNotExist());
+	}
+
+	@Test
 	public void getAlbumsForSeries() throws Exception {
 		mockMvc.perform(get("/api/series/2/albums"))
 				.andExpect(status().isOk())

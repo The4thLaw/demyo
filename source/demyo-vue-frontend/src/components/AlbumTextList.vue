@@ -10,7 +10,7 @@
 				>
 					<template v-slot:activator>
 						<v-list-item-content>
-							<v-list-item-title v-text="value.name" />
+							<v-list-item-title v-text="value.identifyingName" />
 						</v-list-item-content>
 					</template>
 
@@ -84,7 +84,7 @@ export default {
 						bySeries[id] = a.series
 						bySeries[id].isSeries = true
 						bySeries[id].albums = [ a ]
-						bySeries[id].sortName = a.series.name
+						bySeries[id].sortName = a.series.identifyingName
 					} else {
 						bySeries[id] = a
 						bySeries[id].isSeries = false
