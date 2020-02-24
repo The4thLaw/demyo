@@ -14,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedEntityGraphs;
-import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +22,7 @@ import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
@@ -36,14 +36,7 @@ import org.demyo.model.util.StartsWithField;
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraphs({
-		@NamedEntityGraph(name = "Series.forView", attributeNodes =
-		{ @NamedAttributeNode("relatedSeries"),
-				@NamedAttributeNode(value = "albums", subgraph = "Series.Album") }, subgraphs =
-				{ @NamedSubgraph(name = "Series.Album", attributeNodes = { @NamedAttributeNode("writers"),
-						@NamedAttributeNode("artists"), @NamedAttributeNode("colorists"), @NamedAttributeNode("inkers"),
-						@NamedAttributeNode("translators"), @NamedAttributeNode("publisher"),
-						@NamedAttributeNode("collection"), @NamedAttributeNode("tags"),
-						@NamedAttributeNode("cover") }) }),
+		@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries")),
 		@NamedEntityGraph(name = "Series.forEdition", attributeNodes = @NamedAttributeNode("relatedSeries")) })
 public class Series extends AbstractModel {
 	/** The name. */
@@ -72,6 +65,7 @@ public class Series extends AbstractModel {
 	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"), //
 			inverseJoinColumns = @JoinColumn(name = "sub"))
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonIgnoreProperties("relatedSeries")
 	private SortedSet<Series> relatedSeries;
 
 	/** The albums belonging to this series. */
