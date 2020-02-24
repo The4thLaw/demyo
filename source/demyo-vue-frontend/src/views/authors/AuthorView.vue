@@ -29,7 +29,7 @@
 				{{ $tc('page.Author.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
-				v-if="count <= 0"
+				v-if="count == 0"
 				border="left" type="info" text class="my-4"
 			>
 				{{ $t('page.Author.noDerivatives') }}
@@ -111,11 +111,12 @@ export default {
 			this.mainLoading = true
 			let countP = authorService.countDerivatives(this.parsedId)
 			this.author = await authorService.findById(this.parsedId)
-			this.count = await countP
 			this.mainLoading = false
 
 			this.authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
 			this.albumsLoading = false
+
+			this.count = await countP
 		},
 
 		describeAuthor(albumId) {
