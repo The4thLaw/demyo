@@ -1,7 +1,7 @@
 <template>
 	<v-card :loading="loading ? 'primary' : false" class="mb-4">
 		<div class="pa-6">
-			<template v-if="!image">
+			<template v-if="!loading && !image">
 				<h1 v-if="title && !loading" class="display-1">
 					{{ title }}
 				</h1>
@@ -10,7 +10,7 @@
 				</h2>
 				<slot />
 			</template>
-			<div v-if="image" class="c-SectionCard__container">
+			<div v-if="!loading && image" class="c-SectionCard__container">
 				<div class="c-SectionCard__image">
 					<!--
 					What we want for this image is:
