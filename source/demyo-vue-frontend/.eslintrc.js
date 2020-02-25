@@ -55,6 +55,7 @@ module.exports = {
 		'max-len': ['error', {
 			'code': 120
 		}],
+		'no-mixed-space-and-tabs': ['error', 'smart-tabs'],
 		'no-tabs': 'off',
 		'space-before-blocks': 'error',
 		'space-before-function-paren': ['error', {
