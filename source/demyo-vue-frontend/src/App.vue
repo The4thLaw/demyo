@@ -247,6 +247,7 @@ export default {
 	// TODO[dark]: alternate colors
 	--dem-text: rgba(0, 0, 0, 0.87);
 	--dem-primary-contrast: #fff;
+	--dem-bg-contrast: #ddd;
 }
 
 html[lang],

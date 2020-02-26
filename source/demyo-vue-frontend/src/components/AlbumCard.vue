@@ -75,7 +75,7 @@
 						</FieldValue>
 						<!-- TODO: special component for tags -->
 						<FieldValue :label="$t('field.Album.tags')" :value="album.tags">
-							<ModelLink :model="album.tags" view="TagView" />
+							<TagLink :model="album.tags" />
 						</FieldValue>
 						<FieldValue :label="$t('field.Album.binding')" :value="album.binding">
 							<ModelLink :model="album.binding" view="BindingView" />
@@ -112,13 +112,15 @@
 <script>
 import FieldValue from '@/components/FieldValue'
 import ModelLink from '@/components/ModelLink'
+import TagLink from '@/components/TagLink'
 
 export default {
 	name: 'AlbumCard',
 
 	components: {
 		FieldValue,
-		ModelLink
+		ModelLink,
+		TagLink
 	},
 
 	props: {

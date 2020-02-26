@@ -1,0 +1,71 @@
+<template>
+	<ModelLink :model="model" :comma-separated="false" css-class="c-TagLink" view="TagView">
+		<template v-slot:default="slotProps">
+			<span :style="getStyle(slotProps.item)" class="d-Tag">
+				{{ slotProps.item.identifyingName }}
+			</span>
+		</template>
+	</ModelLink>
+</template>
+
+<script>
+import ModelLink from '@/components/ModelLink'
+
+export default {
+	name: 'TagLink',
+
+	components: {
+		ModelLink
+	},
+
+	props: {
+		model: {
+			type: null,
+			required: true
+		}
+	},
+
+	methods: {
+		getStyle(tag) {
+			let style = {}
+			if (tag.fgColour) {
+				style['color'] = tag.fgColour
+			}
+			if (tag.bgColour) {
+				style['background-color'] = tag.bgColour
+			}
+			return style
+		}
+	}
+}
+</script>
+
+<style lang="less">
+.d-Tag {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background-color: var(--dem-bg-contrast);
+	margin-right: 1em;
+	padding: 4px 12px;
+	white-space: nowrap;
+	line-height: 200%;
+
+	&__count {
+		font-size: 80%;
+
+		&::before {
+			content: '(';
+			margin-left: 0.5em;
+		}
+
+		&::after {
+			content: ')';
+		}
+	}
+}
+
+a.c-TagLink:hover {
+	text-decoration: none !important;
+}
+</style>
