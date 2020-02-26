@@ -60,7 +60,7 @@
 		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
 			<v-switch v-model="showWishlist" :label="$t('page.Series.showWishlist')" prepend-icon="mdi-gift" />
 			<v-row>
-				<v-col v-for="albumId in series.albumIds" :key="albumId" cols="12" md="6">
+				<v-col v-for="albumId in series.albumIds" :key="albumId" cols="12" md="6" lg="4">
 					<AlbumCard :album="albums[albumId]" :loading="albums[albumId].loading" />
 				</v-col>
 			</v-row>
@@ -69,11 +69,12 @@
 </template>
 
 <script>
-// TODO: albums
 // TODO: derivatives
 // TODO: QT for: fave/unfave, add to reading list (if not already all in it), delete if no albums or derivatives
 // TODO: QT for: add deriv to series, tag all albums if at least one album, remove a tag if at least one album
 // TODO: show/hide wishlist items only if there are wishlist items
+import asyncPool from 'tiny-async-pool'
+import Vue from 'vue'
 import AlbumCard from '@/components/AlbumCard'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
@@ -81,6 +82,7 @@ import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
+import albumService from '@/services/album-service'
 import seriesService from '@/services/series-service'
 
 export default {
@@ -119,9 +121,24 @@ export default {
 
 			if (this.series.albumIds) {
 				this.series.albumIds.forEach(id => {
-					this.albums[id] = { loading: true }
+					Vue.set(this.albums, id, { loading: true })
 				})
 			}
+
+			// This is intentionnally async
+			this.loadAlbums()
+		},
+
+		async loadAlbums() {
+			await asyncPool(2, this.series.albumIds, this.albumLoader)
+			this.albumsLoaded = true
+		},
+
+		async albumLoader(id) {
+			console.log('Loading album', id, this.albums)
+			let album = await albumService.findById(id)
+			this.albums[id] = album
+			this.albums[id].loading = false
 		},
 
 		deleteSeries() {

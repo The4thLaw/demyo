@@ -243,6 +243,12 @@ export default {
 </script>
 
 <style lang="less">
+:root {
+	// TODO[dark]: alternate colors
+	--dem-text: rgba(0, 0, 0, 0.87);
+	--dem-primary-contrast: #fff;
+}
+
 html[lang],
 #demyo {
 	font-family: -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
