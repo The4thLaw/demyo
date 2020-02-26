@@ -64,10 +64,6 @@ export default {
 	},
 
 	computed: {
-		hasDefaultSlot() {
-			return !!this.$scopedSlots.default
-		},
-
 		albumsBySeries() {
 			let bySeries = {}
 			this.albums.forEach(a => {
