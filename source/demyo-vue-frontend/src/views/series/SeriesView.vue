@@ -216,6 +216,11 @@ export default {
 
 	methods: {
 		async fetchData() {
+			this.series = {}
+			this.albums = {}
+			this.albumsLoaded = false
+			this.derivatives = []
+
 			this.series = await seriesService.findById(this.parsedId)
 
 			if (this.series.albumIds) {
