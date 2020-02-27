@@ -79,7 +79,7 @@
 <script>
 // TODO: derivatives
 // TODO: QT for: fave/unfave, add to reading list (if not already all in it), delete if no albums or derivatives
-// TODO: QT for: add deriv to series, tag all albums if at least one album, remove a tag if at least one album
+// TODO[long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
 import { filter } from 'lodash'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
