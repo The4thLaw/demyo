@@ -18,6 +18,7 @@
 				:to="{ name: 'DerivativeAdd', query: { toSeries: series.id }}"
 				icon="mdi-image-frame dem-overlay-add"
 			/>
+			<!-- TODO: also mention toArtist if there is only one artist -->
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="series.identifyingName">
@@ -34,20 +35,10 @@
 				</template>
 			</FieldValue>
 
-			<FieldValue v-if="albumsLoaded" :label="$t('field.Series.albumCount')">
-				<template v-if="albumCount === ownedAlbumCount">
-					{{ $t('field.Series.albumCount.count.full', albumCount) }}
-				</template>
-				<template v-else>
-					{{ $t('field.Series.albumCount.count.partial', [ownedAlbumCount, albumCount]) }}
-				</template>
-			</FieldValue>
-
 			<FieldValue v-if="series.location" :label="$t('field.Series.location')">
 				{{ series.location }}
 			</FieldValue>
 
-			TODO: authors, tags
 			<v-row>
 				<v-col cols="12" md="6" v-if="series.biography">
 					<FieldValue v-if="series.biography" :label="$t('field.Series.summary')">
@@ -63,12 +54,45 @@
 		</SectionCard>
 
 		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
+			<div v-if="albumsLoaded" class="c-Series__albumAggregateData">
+				<FieldValue :label="$t('field.Series.albumCount')">
+					<template v-if="albumCount === ownedAlbumCount">
+						{{ $t('field.Series.albumCount.count.full', [albumCount]) }}
+					</template>
+					<template v-else>
+						{{ $t('field.Series.albumCount.count.partial', [ownedAlbumCount, albumCount]) }}
+					</template>
+				</FieldValue>
+
+				<FieldValue v-if="allWriters.length" :label="$tc('field.Album.writers', allWriters.length)">
+					<ModelLink :model="allWriters" view="AuthorView" />
+				</FieldValue>
+				<FieldValue v-if="allArtists.length" :label="$tc('field.Album.artists', allArtists.length)">
+					<ModelLink :model="allArtists" view="AuthorView" />
+				</FieldValue>
+				<FieldValue v-if="allColorists.length" :label="$tc('field.Album.colorists', allColorists.length)">
+					<ModelLink :model="allColorists" view="AuthorView" />
+				</FieldValue>
+				<FieldValue v-if="allInkers.length" :label="$tc('field.Album.inkers', allInkers.length)">
+					<ModelLink :model="allInkers" view="AuthorView" />
+				</FieldValue>
+				<FieldValue v-if="allTranslators.length" :label="$tc('field.Album.translators', allTranslators.length)">
+					<ModelLink :model="allTranslators" view="AuthorView" />
+				</FieldValue>
+
+				<FieldValue v-if="allTags.length" :label="$tc('field.Album.tags', allTags.length)">
+					<TagLink :model="allTags" />
+				</FieldValue>
+			</div>
 			<v-switch
 				v-if="albumCount !== ownedAlbumCount" v-model="showWishlist"
 				:label="$t('page.Series.showWishlist')" prepend-icon="mdi-gift"
 			/>
 			<v-row>
-				<v-col v-for="albumId in filteredIds" :key="albumId" cols="12" md="6" lg="4">
+				<v-col
+					v-for="albumId in filteredIds" :key="albumId"
+					cols="12" md="6" lg="4"
+				>
 					<AlbumCard :album="albums[albumId]" :loading="albums[albumId].loading" />
 				</v-col>
 			</v-row>
@@ -87,8 +111,11 @@ import AlbumCard from '@/components/AlbumCard'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
+import ModelLink from '@/components/ModelLink'
 import SectionCard from '@/components/SectionCard'
+import TagLink from '@/components/TagLink'
 import { deleteStub } from '@/helpers/actions'
+import { mergeModels } from '@/helpers/fields'
 import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import seriesService from '@/services/series-service'
@@ -101,7 +128,9 @@ export default {
 		AppTask,
 		AppTasks,
 		FieldValue,
-		SectionCard
+		ModelLink,
+		SectionCard,
+		TagLink
 	},
 
 	mixins: [modelViewMixin],
@@ -147,6 +176,30 @@ export default {
 
 		ownedAlbumCount() {
 			return this.ownedIds.length
+		},
+
+		allWriters() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'writers', ['name', 'firstName']) : []
+		},
+
+		allArtists() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'artists', ['name', 'firstName']) : []
+		},
+
+		allColorists() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'colorists', ['name', 'firstName']) : []
+		},
+
+		allInkers() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'inkers', ['name', 'firstName']) : []
+		},
+
+		allTranslators() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'translators', ['name', 'firstName']) : []
+		},
+
+		allTags() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'tags', 'identifyingName') : []
 		}
 	},
 
@@ -184,3 +237,9 @@ export default {
 	}
 }
 </script>
+
+<style lang="less">
+.c-Series__albumAggregateData {
+	border-bottom: 1px solid var(--dem-base-border);
+}
+</style>
