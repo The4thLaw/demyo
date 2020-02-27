@@ -38,18 +38,19 @@
 				{{ series.location }}
 			</FieldValue>
 
-			<v-row>
-				<v-col cols="12" md="6" v-if="series.biography">
-					<FieldValue v-if="series.biography" :label="$t('field.Series.summary')">
-						<div v-html="series.summary" />
-					</FieldValue>
-				</v-col>
-				<v-col cols="12" md="6">
-					<FieldValue v-if="series.comment" :label="$t('field.Series.comment')">
-						<div v-html="series.comment" />
-					</FieldValue>
-				</v-col>
-			</v-row>
+			<FieldValue v-if="series.relatedSeries" :label="$t('field.Series.relatedSeries')">
+				<ModelLink :model="series.relatedSeries" view="SeriesView" />
+			</FieldValue>
+
+			<!-- TODO: test this layout once we can edit Series to add data -->
+			<div class="dem-columnized">
+				<FieldValue v-if="series.biography" :label="$t('field.Series.summary')">
+					<div v-html="series.summary" />
+				</FieldValue>
+				<FieldValue v-if="series.comment" :label="$t('field.Series.comment')">
+					<div v-html="series.comment" />
+				</FieldValue>
+			</div>
 		</SectionCard>
 
 		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
