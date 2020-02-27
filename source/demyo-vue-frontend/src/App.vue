@@ -248,6 +248,7 @@ export default {
 	--dem-text: rgba(0, 0, 0, 0.87);
 	--dem-primary-contrast: #fff;
 	--dem-bg-contrast: #ddd;
+	--dem-column-rule: #ccc;
 }
 
 html[lang],
