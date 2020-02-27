@@ -12,7 +12,7 @@
 		<div v-if="!splitByFirstLetter">
 			<v-card>
 				<v-card-text>
-					<v-list class="c-TextIndex__list" dense>
+					<v-list class="dem-columnized c-TextIndex__list" dense>
 						<v-list-item v-for="item in paginatedItems" :key="item.id">
 							<v-list-item-content>
 								<slot :item="item" />
@@ -30,7 +30,7 @@
 				</div>
 				<v-card>
 					<v-card-text>
-						<v-list class="c-TextIndex__list" dense>
+						<v-list class="dem-columnized c-TextIndex__list" dense>
 							<v-list-item v-for="item in value" :key="item.id">
 								<v-list-item-content>
 									<slot :item="item" />
@@ -141,9 +141,8 @@ export default {
 
 #demyo .c-TextIndex__list {
 	font-size: 1rem;
+	column-count: initial;
 	column-width: 15em;
-	column-gap: 2em;
-	column-rule: 1px solid var(--dem-base-border);
 
 	a {
 		color: inherit;

@@ -291,6 +291,16 @@ html[lang],
 	}
 }
 
+.dem-columnized {
+	column-gap: 2em;
+	column-count: 1;
+	column-rule: 1px solid var(--dem-base-border);
+
+	@media (min-width: 1264px) { // Same breakpoint as fluid container
+		columns: 2;
+	}
+}
+
 .dem-fieldset {
 	margin-top: 8px;
 	margin-bottom: 8px;

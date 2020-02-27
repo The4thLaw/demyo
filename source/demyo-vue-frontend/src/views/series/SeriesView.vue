@@ -53,7 +53,7 @@
 		</SectionCard>
 
 		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
-			<div v-if="albumsLoaded" class="c-Series__albumAggregateData">
+			<div v-if="albumsLoaded" class="c-Series__albumAggregateData dem-columnized">
 				<FieldValue :label="$t('field.Series.albumCount')">
 					<template v-if="albumCount === ownedAlbumCount">
 						{{ $t('field.Series.albumCount.count.full', [albumCount]) }}

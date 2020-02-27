@@ -24,6 +24,7 @@ export default {
 .c-FieldValue {
 	margin-top: 16px;
 	margin-bottom: 16px;
+	break-inside: avoid;
 }
 
 // Don't set margins when in a flex grid: the grid has its own margins
