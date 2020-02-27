@@ -34,8 +34,13 @@
 				</template>
 			</FieldValue>
 
-			<FieldValue :label="$t('field.Series.albumCount')">
-				TODO: field.Series.albumCount.count.full and field.Series.albumCount.count.partial
+			<FieldValue v-if="albumsLoaded" :label="$t('field.Series.albumCount')">
+				<template v-if="albumCount === ownedAlbumCount">
+					{{ $t('field.Series.albumCount.count.full', albumCount) }}
+				</template>
+				<template v-else>
+					{{ $t('field.Series.albumCount.count.partial', [ownedAlbumCount, albumCount]) }}
+				</template>
 			</FieldValue>
 
 			<FieldValue v-if="series.location" :label="$t('field.Series.location')">
@@ -58,9 +63,12 @@
 		</SectionCard>
 
 		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
-			<v-switch v-model="showWishlist" :label="$t('page.Series.showWishlist')" prepend-icon="mdi-gift" />
+			<v-switch
+				v-if="albumCount !== ownedAlbumCount" v-model="showWishlist"
+				:label="$t('page.Series.showWishlist')" prepend-icon="mdi-gift"
+			/>
 			<v-row>
-				<v-col v-for="albumId in series.albumIds" :key="albumId" cols="12" md="6" lg="4">
+				<v-col v-for="albumId in filteredIds" :key="albumId" cols="12" md="6" lg="4">
 					<AlbumCard :album="albums[albumId]" :loading="albums[albumId].loading" />
 				</v-col>
 			</v-row>
@@ -73,6 +81,7 @@
 // TODO: QT for: fave/unfave, add to reading list (if not already all in it), delete if no albums or derivatives
 // TODO: QT for: add deriv to series, tag all albums if at least one album, remove a tag if at least one album
 // TODO: show/hide wishlist items only if there are wishlist items
+import { filter } from 'lodash'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
 import AlbumCard from '@/components/AlbumCard'
@@ -115,6 +124,33 @@ export default {
 		}
 	},
 
+	computed: {
+		ownedIds() {
+			return filter(this.series.albumIds, id => {
+				let album = this.albums[id]
+				if (!album) {
+					return false
+				}
+				return album.loading || !album.wishlist
+			})
+		},
+
+		filteredIds() {
+			if (this.showWishlist) {
+				return this.series.albumIds
+			}
+			return this.ownedIds
+		},
+
+		albumCount() {
+			return this.series.albumIds.length
+		},
+
+		ownedAlbumCount() {
+			return this.ownedIds.length
+		}
+	},
+
 	methods: {
 		async fetchData() {
 			this.series = await seriesService.findById(this.parsedId)
@@ -135,7 +171,6 @@ export default {
 		},
 
 		async albumLoader(id) {
-			console.log('Loading album', id, this.albums)
 			let album = await albumService.findById(id)
 			this.albums[id] = album
 			this.albums[id].loading = false
