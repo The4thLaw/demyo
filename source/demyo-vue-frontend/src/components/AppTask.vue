@@ -48,14 +48,12 @@ export default {
 		},
 
 		to: {
-			type: String,
-			required: false,
+			type: null,
 			default: undefined
 		},
 
 		confirm: {
 			type: String,
-			required: false,
 			default: ''
 		}
 	},
