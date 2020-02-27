@@ -296,7 +296,7 @@ html[lang],
 	column-count: 1;
 	column-rule: 1px solid var(--dem-base-border);
 
-	@media (min-width: 1264px) { // Same breakpoint as fluid container
+	@media (min-width: 1264px) { // Vuetify "lg" breakpoint
 		columns: 2;
 	}
 }

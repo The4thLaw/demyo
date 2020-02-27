@@ -7,7 +7,7 @@
 			<v-alert v-if="!detecting && detectedImages.length == 0" border="left" type="warning" text>
 				{{ $t('page.Image.detect.noImages') }}
 			</v-alert>
-			<v-form>
+			<v-form class="dem-columnized">
 				<v-checkbox
 					v-for="(label, index) in detectedImages" :key="index"
 					v-model="imageSelections[label]"
@@ -104,12 +104,6 @@ export default {
 <style lang="less">
 .c-ImageDetect .v-messages {
 	display: none;
-}
-
-@media (min-width: 1264px) { // Same breakpoint as fluid container
-	.c-ImageDetect .v-form {
-		columns: 2;
-	}
 }
 
 .c-ImageDetect .v-input--selection-controls {
