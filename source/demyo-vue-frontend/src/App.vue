@@ -248,7 +248,7 @@ export default {
 	--dem-text: rgba(0, 0, 0, 0.87);
 	--dem-primary-contrast: #fff;
 	--dem-bg-contrast: #ddd;
-	--dem-column-rule: #ccc;
+	--dem-base-border: #ccc;
 }
 
 html[lang],
@@ -296,7 +296,7 @@ html[lang],
 	margin-bottom: 8px;
 
 	.theme--light & {
-		border-top: 1px solid rgba(0, 0, 0, 0.12);
+		border-top: 1px solid var(--dem-base-border);
 	}
 
 	.theme--dark & {

@@ -143,7 +143,7 @@ export default {
 	font-size: 1rem;
 	column-width: 15em;
 	column-gap: 2em;
-	column-rule: 1px solid var(--dem-column-rule);
+	column-rule: 1px solid var(--dem-base-border);
 
 	a {
 		color: inherit;
