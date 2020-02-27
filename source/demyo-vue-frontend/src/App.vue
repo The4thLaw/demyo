@@ -5,10 +5,10 @@
 				<v-list-group v-if="readerLoaded">
 					<template v-slot:activator>
 						<v-list-item-icon>
-							<LetterIcon letter="T" color="#0000ff" />
+							<LetterIcon :letter="currentReader.name[0]" :color="currentReader.colour" />
 						</v-list-item-icon>
 						<v-list-item-content>
-							<v-list-item-title>TODO: reader</v-list-item-title>
+							<v-list-item-title>{{ currentReader.name }}</v-list-item-title>
 						</v-list-item-content>
 					</template>
 
@@ -106,7 +106,7 @@ import LetterIcon from '@/components/LetterIcon'
 import ReaderSelection from '@/components/ReaderSelection'
 
 export default {
-	name: 'App',
+	name: 'DemyoApp',
 
 	components: {
 		AppSnackbar,
