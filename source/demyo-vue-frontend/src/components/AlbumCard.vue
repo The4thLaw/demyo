@@ -98,9 +98,10 @@
 					<v-icon v-if="album.favorite" color="accent">mdi-heart</v-icon>
 					<v-icon v-if="!album.favorite">mdi-heart-outline</v-icon>
 				</v-btn>
-				<v-btn icon>
-					<v-icon>mdi-dots-vertical</v-icon>
-					<!-- TODO: menu to edit, toggle reading list, wishlist... Not delete -->
+				<!-- Eventually, replace the following button with an overflow menu to edit, change reading list,
+				change wishlist, delete if the album can be deleted (no derivatives)... -->
+				<v-btn :to="`/albums/${album.id}/edit`" icon>
+					<v-icon>mdi-pencil</v-icon>
 				</v-btn>
 			</v-card-actions>
 		</v-card>
