@@ -15,7 +15,7 @@
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.derivative.to.series')"
-				:to="{ name: 'DerivativeAdd', query: { toSeries: series.id }}"
+				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
 				icon="mdi-image-frame dem-overlay-add"
 			/>
 			<!-- TODO: also mention toArtist if there is only one artist -->
@@ -200,6 +200,17 @@ export default {
 
 		allTags() {
 			return this.albumsLoaded ? mergeModels(this.albums, 'tags', 'identifyingName') : []
+		},
+
+		derivativeQuery() {
+			let query = {
+				toSeries: this.series.id
+			}
+			if (this.allArtists.length === 1) {
+				query.toArtist = this.allArtists[0].id
+			}
+			// If not all albums are loaded, let impatient users add the Derivative just to the Series
+			return query
 		}
 	},
 
