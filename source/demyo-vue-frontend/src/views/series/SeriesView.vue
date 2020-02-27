@@ -18,7 +18,6 @@
 				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
 				icon="mdi-image-frame dem-overlay-add"
 			/>
-			<!-- TODO: also mention toArtist if there is only one artist -->
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="series.identifyingName">
