@@ -15,10 +15,10 @@
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" :image="author.portrait" :title="author.identifyingName">
-			<FieldValue :label="$t('field.Author.website')" :value="author.website">
+			<FieldValue v-if="author.website" :label="$t('field.Author.website')">
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
-			<FieldValue :label="$t('field.Author.biography')" :value="author.biography">
+			<FieldValue v-if="author.biography" :label="$t('field.Author.biography')">
 				<div v-html="author.biography" />
 			</FieldValue>
 			<v-btn

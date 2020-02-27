@@ -29,24 +29,24 @@
 			<div class="fieldSet">
 				<v-row>
 					<v-col v-if="derivative.series.id" cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.series')" :value="derivative.series.id">
+						<FieldValue v-if="derivative.series.id" :label="$t('field.Derivative.series')">
 							<ModelLink :model="derivative.series" view="SeriesView" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="derivative.album.id" cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.album')" :value="derivative.album.id">
+						<FieldValue v-if="derivative.album.id" :label="$t('field.Derivative.album')">
 							<ModelLink :model="derivative.album" view="AlbumView" />
 						</FieldValue>
 					</v-col>
 				</v-row>
 				<v-row>
 					<v-col cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.artist')" :value="derivative.artist.id">
+						<FieldValue v-if="derivative.artist.id" :label="$t('field.Derivative.artist')">
 							<ModelLink :model="derivative.artist" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.source')" :value="derivative.source.id">
+						<FieldValue v-if="derivative.source.id" :label="$t('field.Derivative.source')">
 							<ModelLink :model="derivative.source" view="DerivativeSourceView" />
 						</FieldValue>
 					</v-col>
@@ -56,33 +56,33 @@
 			<div class="fieldSet">
 				<v-row>
 					<v-col cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.type')" :value="derivative.type.id">
+						<FieldValue v-if="derivative.type.id" :label="$t('field.Derivative.type')">
 							<ModelLink :model="derivative.type" view="DerivativeTypeView" />
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.colours')" :value="derivative.colours">
+						<FieldValue v-if="derivative.colours" :label="$t('field.Derivative.colours')">
 							{{ derivative.colours }}
 						</FieldValue>
 					</v-col>
 					<v-col v-if="sizeSpec" cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.size')" :value="true">
+						<FieldValue :label="$t('field.Derivative.size')">
 							{{ sizeSpec }}
 						</FieldValue>
 					</v-col>
 					<template v-if="!sizeSpec">
 						<v-col cols="12" md="4">
-							<FieldValue :label="$t('field.Derivative.width')" :value="derivative.width">
+							<FieldValue v-if="derivative.width" :label="$t('field.Derivative.width')">
 								{{ derivative.width }}
 							</FieldValue>
 						</v-col>
 						<v-col cols="12" md="4">
-							<FieldValue :label="$t('field.Derivative.height')" :value="derivative.height">
+							<FieldValue v-if="derivative.height" :label="$t('field.Derivative.height')">
 								{{ derivative.height }}
 							</FieldValue>
 						</v-col>
 						<v-col cols="12" md="4">
-							<FieldValue :label="$t('field.Derivative.depth')" :value="derivative.depth">
+							<FieldValue v-if="derivative.depth" :label="$t('field.Derivative.depth')">
 								{{ derivative.depth }}
 							</FieldValue>
 						</v-col>
@@ -94,36 +94,36 @@
 				<v-row>
 					<v-col cols="12" md="6" xl="3">
 						<template v-if="derivative.number && derivative.total">
-							<FieldValue :label="$t('field.Derivative.numberOverTotal')" :value="true">
+							<FieldValue :label="$t('field.Derivative.numberOverTotal')">
 								{{ derivative.number }} / {{ derivative.total }}
 							</FieldValue>
 						</template>
 						<template v-if="!derivative.number || !derivative.total">
-							<FieldValue :label="$t('field.Derivative.number')" :value="derivative.number">
+							<FieldValue v-if="derivative.number" :label="$t('field.Derivative.number')">
 								{{ derivative.number }}
 							</FieldValue>
-							<FieldValue :label="$t('field.Derivative.total')" :value="derivative.total">
+							<FieldValue v-if="derivative.total" :label="$t('field.Derivative.total')">
 								{{ derivative.total }}
 							</FieldValue>
 						</template>
 					</v-col>
 					<v-col cols="12" md="6" xl="3">
-						<FieldValue :label="$t('field.Derivative.signed.view')" :value="true">
+						<FieldValue :label="$t('field.Derivative.signed.view')">
 							{{ $t('field.Derivative.signed.value.' + derivative.signed) }}
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6" xl="3">
-						<FieldValue :label="$t('field.Derivative.authorsCopy.view')" :value="true">
+						<FieldValue :label="$t('field.Derivative.authorsCopy.view')">
 							{{ $t('field.Derivative.authorsCopy.value.' + derivative.authorsCopy) }}
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6" xl="3">
-						<FieldValue :label="$t('field.Derivative.restrictedSale.view')" :value="true">
+						<FieldValue :label="$t('field.Derivative.restrictedSale.view')">
 							{{ $t('field.Derivative.restrictedSale.value.' + derivative.restrictedSale) }}
 						</FieldValue>
 					</v-col>
 					<v-col cols="12">
-						<FieldValue :label="$t('field.Derivative.description')" :value="derivative.description">
+						<FieldValue v-if="derivative.description" :label="$t('field.Derivative.description')">
 							<div v-html="derivative.description" />
 						</FieldValue>
 					</v-col>
@@ -136,19 +136,19 @@
 			>
 				<v-row>
 					<v-col cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.acquisitionDate')" :value="derivative.acquisitionDate">
+						<FieldValue v-if="derivative.acquisitionDate" :label="$t('field.Derivative.acquisitionDate')">
 							{{ $d(new Date(derivative.acquisitionDate), 'long') }}
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
-						<FieldValue :label="$t('field.Derivative.purchasePrice')" :value="derivative.purchasePrice">
+						<FieldValue v-if="derivative.purchasePrice" :label="$t('field.Derivative.purchasePrice')">
 							{{ derivative.purchasePrice }}
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
 						<FieldValue
+							v-if="derivative.prices.length > 0"
 							:label="$t('field.Derivative.prices.history')"
-							:value="derivative.prices.length > 0"
 						>
 							<v-simple-table>
 								<template v-slot:default>

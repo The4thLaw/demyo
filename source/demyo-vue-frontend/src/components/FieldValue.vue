@@ -1,5 +1,5 @@
 <template>
-	<div v-if="value" class="c-FieldValue">
+	<div class="c-FieldValue">
 		<div class="c-FieldValue__label">
 			{{ label }}
 		</div>
@@ -12,11 +12,6 @@ export default {
 	name: 'FieldValue',
 
 	props: {
-		value: {
-			type: null,
-			required: true
-		},
-
 		label: {
 			type: String,
 			required: true

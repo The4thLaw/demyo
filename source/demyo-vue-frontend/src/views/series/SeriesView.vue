@@ -21,11 +21,11 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="series.identifyingName">
-			<FieldValue :label="$t('field.Series.website')" :value="series.website">
+			<FieldValue v-if="series.website" :label="$t('field.Series.website')">
 				<a :href="series.website">{{ series.website }}</a>
 			</FieldValue>
 
-			<FieldValue :label="$t('field.Series.completed.view')" :value="true">
+			<FieldValue :label="$t('field.Series.completed.view')">
 				<template v-if="series.completed">
 					{{ $t('field.Series.completed.value.true') }}
 				</template>
@@ -34,23 +34,23 @@
 				</template>
 			</FieldValue>
 
-			<FieldValue :label="$t('field.Series.albumCount')" :value="true">
+			<FieldValue :label="$t('field.Series.albumCount')">
 				TODO: field.Series.albumCount.count.full and field.Series.albumCount.count.partial
 			</FieldValue>
 
-			<FieldValue :label="$t('field.Series.location')" :value="series.location">
+			<FieldValue v-if="series.location" :label="$t('field.Series.location')">
 				{{ series.location }}
 			</FieldValue>
 
 			TODO: authors, tags
 			<v-row>
 				<v-col cols="12" md="6" v-if="series.biography">
-					<FieldValue :label="$t('field.Series.summary')" :value="series.biography">
+					<FieldValue v-if="series.biography" :label="$t('field.Series.summary')">
 						<div v-html="series.summary" />
 					</FieldValue>
 				</v-col>
 				<v-col cols="12" md="6">
-					<FieldValue :label="$t('field.Series.comment')" :value="series.comment">
+					<FieldValue v-if="series.comment" :label="$t('field.Series.comment')">
 						<div v-html="series.comment" />
 					</FieldValue>
 				</v-col>

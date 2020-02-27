@@ -17,8 +17,8 @@
 			</router-link>
 			<v-card-text>
 				<template v-if="album.firstEditionDate && album.firstEditionDate === album.currentEditionDate">
-					<FieldValue :label="$t('field.Album.firstEditionDate')" :value="true">
-						<!--{{ $d(new Date(album.firstEditionDate), 'long') }}-->
+					<FieldValue :label="$t('field.Album.firstEditionDate')">
+						{{ $d(new Date(album.firstEditionDate), 'long') }}
 						<template v-if="album.markedAsFirstEdition">
 							{{ $t('field.Album.markedAsFirstEdition.view') }}
 						</template>
@@ -28,61 +28,59 @@
 					</FieldValue>
 				</template>
 				<template v-else>
-					<FieldValue :label="$t('field.Album.firstEditionDate')" :value="album.firstEditionDate">
-						<!--{{ $d(new Date(album.firstEditionDate), 'long') }}-->
+					<FieldValue v-if="album.firstEditionDate" :label="$t('field.Album.firstEditionDate')">
+						{{ $d(new Date(album.firstEditionDate), 'long') }}
 					</FieldValue>
-					<FieldValue :label="$t('field.Album.currentEditionDate')" :value="album.currentEditionDate">
-						<!--{{ $d(new Date(album.currentEditionDate), 'long') }}-->
+					<FieldValue v-if="album.currentEditionDate" :label="$t('field.Album.currentEditionDate')">
+						{{ $d(new Date(album.currentEditionDate), 'long') }}
 					</FieldValue>
 				</template>
 				<FieldValue
+					v-if="album.writers"
 					:label="$tc('field.Album.writers', album.writers ? album.writers.length : 0)"
-					:value="album.writers"
 				>
 					<ModelLink :model="album.writers" view="AuthorView" />
 				</FieldValue>
 				<FieldValue
+					v-if="album.artists"
 					:label="$tc('field.Album.artists', album.artists ? album.artists.length : 0)"
-					:value="album.artists"
 				>
 					<ModelLink :model="album.artists" view="AuthorView" />
 				</FieldValue>
 				<v-fade-transition>
 					<div v-if="expanded">
 						<FieldValue
+							v-if="album.colorists"
 							:label="$tc('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
-							:value="album.colorists"
 						>
 							<ModelLink :model="album.colorists" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
+							v-if="album.inkers"
 							:label="$tc('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
-							:value="album.inkers"
 						>
 							<ModelLink :model="album.inkers" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
+							v-if="album.translators"
 							:label="$tc('field.Album.translators', album.translators ? album.translators.length : 0)"
-							:value="album.translators"
 						>
 							<ModelLink :model="album.translators" view="AuthorView" />
 						</FieldValue>
-						<FieldValue :label="$t('field.Album.publisher')" :value="album.publisher">
+						<FieldValue v-if="album.publisher" :label="$t('field.Album.publisher')">
 							<ModelLink :model="album.publisher" view="PublisherView" />
 						</FieldValue>
-						<FieldValue :label="$t('field.Album.collection')" :value="album.collection">
+						<FieldValue v-if="album.collection" :label="$t('field.Album.collection')">
 							<ModelLink :model="album.collection" view="CollectionView" />
 						</FieldValue>
-						<!-- TODO: special component for tags -->
-						<FieldValue :label="$t('field.Album.tags')" :value="album.tags">
+						<FieldValue v-if="album.tags" :label="$t('field.Album.tags')">
 							<TagLink :model="album.tags" />
 						</FieldValue>
-						<FieldValue :label="$t('field.Album.binding')" :value="album.binding">
+						<FieldValue v-if="album.binding" :label="$t('field.Album.binding')">
 							<ModelLink :model="album.binding" view="BindingView" />
 						</FieldValue>
-						<!-- TODO: get rid of FieldValue.value : v-if is more suitable because else the slot is always rendered -->
-						<FieldValue :label="$t('field.Album.acquisitionDate')" v-if="album.acquisitionDate" :value="album.acquisitionDate">
-								{{ $d(new Date(album.acquisitionDate), 'long') }}
+						<FieldValue v-if="album.acquisitionDate" :label="$t('field.Album.acquisitionDate')">
+							{{ $d(new Date(album.acquisitionDate), 'long') }}
 						</FieldValue>
 					</div>
 				</v-fade-transition>
