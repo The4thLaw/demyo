@@ -39,9 +39,6 @@ export default {
 		}
 
 		this.$store.dispatch('ui/disableSearch')
-		if (this.$route.params.id) { // Edit mode -> set the ID
-			this.parsedId = parseInt(this.$route.params.id, 10)
-		}
 		this.fetchDataInternal()
 	},
 
@@ -54,6 +51,10 @@ export default {
 
 	methods: {
 		async fetchDataInternal() {
+			if (this.$route.params.id) { // Edit mode -> set the ID
+				this.parsedId = parseInt(this.$route.params.id, 10)
+			}
+
 			this.initialized = false
 			this.$store.dispatch('ui/enableGlobalOverlay')
 

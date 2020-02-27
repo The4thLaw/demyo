@@ -15,14 +15,14 @@ export default {
 		if (!this.fetchData) {
 			throw new Error('Missing fetchData method')
 		}
-
-		// Set the ID
-		this.parsedId = parseInt(this.$route.params.id, 10)
 		this.fetchDataInternal()
 	},
 
 	methods: {
 		async fetchDataInternal() {
+			// Set the ID
+			this.parsedId = parseInt(this.$route.params.id, 10)
+
 			this.loading = true
 
 			await this.fetchData()
