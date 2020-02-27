@@ -6,7 +6,7 @@
 			</v-card-title>
 			<v-card-text>
 				<div v-if="mainImageLabel">
-					<label class="fieldLabel">
+					<label class="dem-fieldlabel">
 						{{ $t(mainImageLabel) }}
 					</label>
 					<file-pond
@@ -41,7 +41,7 @@
 				</div>
 
 				<div v-if="otherImagesLabel">
-					<label class="fieldLabel">
+					<label class="dem-fieldlabel">
 						{{ $t(otherImagesLabel) }}
 					</label>
 					<file-pond

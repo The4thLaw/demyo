@@ -94,7 +94,7 @@
 				</v-row>
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="fieldLabel">{{ $t('field.Derivative.description') }}</label>
+						<label class="dem-fieldlabel">{{ $t('field.Derivative.description') }}</label>
 						<tiptap-vuetify
 							v-model="derivative.description" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
@@ -123,7 +123,7 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="fieldLabel">{{ $t('field.Derivative.prices.history') }}</label>
+						<label class="dem-fieldlabel">{{ $t('field.Derivative.prices.history') }}</label>
 						<v-row
 							v-for="(price, index) in derivative.prices" :key="'price_' + index"
 							dense class="v-DerivativeEdit__priceRow"

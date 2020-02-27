@@ -26,7 +26,7 @@
 		<DnDImage v-model="dndDialog" other-images-label="field.Derivative.images" @save="saveDndImages" />
 
 		<SectionCard :loading="loading" :image="derivative.mainImage" :title="derivative.identifyingName">
-			<div class="fieldSet">
+			<div class="dem-fieldset">
 				<v-row>
 					<v-col v-if="derivative.series.id" cols="12" md="6">
 						<FieldValue v-if="derivative.series.id" :label="$t('field.Derivative.series')">
@@ -53,7 +53,7 @@
 				</v-row>
 			</div>
 
-			<div class="fieldSet">
+			<div class="dem-fieldset">
 				<v-row>
 					<v-col cols="12" md="6">
 						<FieldValue v-if="derivative.type.id" :label="$t('field.Derivative.type')">
@@ -90,7 +90,7 @@
 				</v-row>
 			</div>
 
-			<div class="fieldSet">
+			<div class="dem-fieldset">
 				<v-row>
 					<v-col cols="12" md="6" xl="3">
 						<template v-if="derivative.number && derivative.total">
@@ -132,7 +132,7 @@
 
 			<div
 				v-if="derivative.purchasePrice || derivative.acquisitionDate || derivative.prices.length > 0"
-				class="fieldSet"
+				class="dem-fieldset"
 			>
 				<v-row>
 					<v-col cols="12" md="6">

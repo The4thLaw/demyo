@@ -291,7 +291,7 @@ html[lang],
 	}
 }
 
-.fieldSet {
+.dem-fieldset {
 	margin-top: 8px;
 	margin-bottom: 8px;
 
@@ -308,7 +308,7 @@ html[lang],
 	}
 }
 
-.fieldLabel {
+.dem-fieldlabel {
 	font-size: 12px;
 
 	.theme--light & {

@@ -26,7 +26,7 @@
 			<SectionCard :subtitle="$t('fieldset.Author.biography')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="fieldLabel">{{ $t('field.Author.biography') }}</label>
+						<label class="dem-fieldlabel">{{ $t('field.Author.biography') }}</label>
 						<tiptap-vuetify
 							v-model="author.biography" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
