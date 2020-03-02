@@ -6,7 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -29,5 +31,18 @@ public class ReaderAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$.colour").value("#304ffe"))
 				.andExpect(jsonPath("$.identifyingName").value("Xavier"))
 				.andExpect(jsonPath("$.configurationEntries", hasSize(greaterThan(2))));
+	}
+
+	@Test
+	public void getLists() throws Exception {
+		mockMvc.perform(get("/api/readers/1/lists"))
+				.andDo(MockMvcResultHandlers.print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.favouriteSeries", hasSize(1)))
+				.andExpect(jsonPath("$.favouriteSeries", Matchers.hasItems(99)))
+				.andExpect(jsonPath("$.favouriteAlbums", hasSize(1)))
+				.andExpect(jsonPath("$.favouriteAlbums", Matchers.hasItems(1313)))
+				.andExpect(jsonPath("$.readingList", hasSize(1)))
+				.andExpect(jsonPath("$.readingList", Matchers.hasItems(1459)));
 	}
 }

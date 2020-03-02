@@ -1,6 +1,7 @@
 package org.demyo.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
+import org.demyo.model.beans.ReaderLists;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
@@ -99,66 +101,87 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Transactional
 	@Override
 	public void addFavouriteSeries(long seriesId) {
-		LOGGER.debug("Adding favourite series {}", seriesId);
-
 		long readerId = context.getCurrentReader().getId();
+		addFavouriteSeries(readerId, seriesId);
+		// Clear the context so that it's reloaded for next request
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void addFavouriteSeries(long readerId, long seriesId) {
+		LOGGER.debug("Adding favourite series {} to reader {}", seriesId, readerId);
+
 		// Remove to avoid duplicates
 		repo.deleteFavouriteSeries(readerId, seriesId);
 		// Add the actual favourite
 		repo.insertFavouriteSeries(readerId, seriesId);
-		// Clear the context so that it's reloaded for next request
-		context.clearCurrentReader();
 	}
 
 	@Transactional
 	@Override
 	public void removeFavouriteSeries(long seriesId) {
-		LOGGER.debug("Removing favourite series {}", seriesId);
-
 		long readerId = context.getCurrentReader().getId();
-		// Remove to avoid duplicates
-		repo.deleteFavouriteSeries(readerId, seriesId);
+		removeFavouriteSeries(readerId, seriesId);
 		// Clear the context so that it's reloaded for next request
 		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void removeFavouriteSeries(long readerId, long seriesId) {
+		LOGGER.debug("Removing favourite series {} from reader {}", seriesId, readerId);
+		repo.deleteFavouriteSeries(readerId, seriesId);
 	}
 
 	@Transactional
 	@Override
 	public void addFavouriteAlbum(long albumId) {
-		LOGGER.debug("Adding favourite album {}", albumId);
-
 		long readerId = context.getCurrentReader().getId();
+		addFavouriteAlbum(readerId, albumId);
+		// Clear the context so that it's reloaded for next request
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void addFavouriteAlbum(long readerId, long albumId) {
+		LOGGER.debug("Adding favourite album {} to reader {}", albumId, readerId);
+
 		// Remove to avoid duplicates
 		repo.deleteFavouriteAlbum(readerId, albumId);
 		// Add the actual favourite
 		repo.insertFavouriteAlbum(readerId, albumId);
-		// Clear the context so that it's reloaded for next request
-		context.clearCurrentReader();
 	}
 
 	@Transactional
 	@Override
 	public void removeFavouriteAlbum(long albumId) {
-		LOGGER.debug("Removing favourite album {}", albumId);
-
 		long readerId = context.getCurrentReader().getId();
-		// Remove to avoid duplicates
-		repo.deleteFavouriteAlbum(readerId, albumId);
+		removeFavouriteAlbum(readerId, albumId);
 		// Clear the context so that it's reloaded for next request
 		context.clearCurrentReader();
 	}
 
 	@Transactional
 	@Override
-	public void addAlbumToReadingList(long albumId) {
-		LOGGER.debug("Adding album {} to the reading list", albumId);
+	public void removeFavouriteAlbum(long readerId, long albumId) {
+		LOGGER.debug("Removing favourite album {} from reader", albumId, readerId);
+		repo.deleteFavouriteAlbum(readerId, albumId);
+	}
 
+	@Transactional
+	@Override
+	public void addAlbumToReadingList(long albumId) {
 		long readerId = context.getCurrentReader().getId();
-		addAlbumToReadingList(albumId, readerId);
+		addAlbumToReadingList(readerId, albumId);
 		context.clearCurrentReader();
 	}
 
-	private void addAlbumToReadingList(long albumId, long readerId) {
+	@Override
+	@Transactional
+	public void addAlbumToReadingList(long readerId, long albumId) {
+		LOGGER.debug("Adding album {} to the reading list of reader {}", albumId, readerId);
 		repo.deleteFromReadingList(readerId, albumId);
 		repo.insertInReadingList(readerId, albumId);
 	}
@@ -166,25 +189,35 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Transactional
 	@Override
 	public void removeAlbumFromReadingList(long albumId) {
-		LOGGER.debug("Removing album {} from the reading list", albumId);
-
 		long readerId = context.getCurrentReader().getId();
-		repo.deleteFromReadingList(readerId, albumId);
+		removeAlbumFromReadingList(readerId, albumId);
 		context.clearCurrentReader();
 	}
 
 	@Transactional
 	@Override
-	public void addSeriesToReadingList(long seriesId) {
-		LOGGER.debug("Adding albums from series {} to the reading list", seriesId);
+	public void removeAlbumFromReadingList(long readerId, long albumId) {
+		LOGGER.debug("Removing album {} from the reading list of reader {}", albumId, readerId);
+		repo.deleteFromReadingList(readerId, albumId);
+	}
 
+	@Transactional
+	@Override
+	public void addSeriesToReadingList(long seriesId) {
 		long readerId = context.getCurrentReader().getId();
+		addSeriesToReadingList(readerId, seriesId);
+		context.clearCurrentReader();
+	}
+
+	@Transactional
+	@Override
+	public void addSeriesToReadingList(long readerId, long seriesId) {
+		LOGGER.debug("Adding albums from series {} to the reading list of {}", seriesId, readerId);
+
 		List<Album> albums = albumRepo.findBySeriesIdAndWishlistFalse(seriesId);
 		for (Album a : albums) {
-			addAlbumToReadingList(a.getId(), readerId);
+			addAlbumToReadingList(readerId, a.getId());
 		}
-
-		context.clearCurrentReader();
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
@@ -211,6 +244,15 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 					"Cannot delete the last reader in the database");
 		}
 		super.delete(id);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public ReaderLists getLists(long readerId) {
+		Set<Number> series = repo.getFavouriteSeriesForReader(readerId);
+		Set<Number> albums = repo.getFavouriteAlbumsForReader(readerId);
+		Set<Number> reading = repo.getReadingListForReader(readerId);
+		return new ReaderLists(series, albums, reading);
 	}
 
 	@Override
