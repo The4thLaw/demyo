@@ -4,6 +4,8 @@
 			<span :style="getStyle(slotProps.item)" class="d-Tag">
 				{{ slotProps.item.identifyingName }}
 			</span>
+			<!-- Need to allow line breaks between tags -->
+			<wbr>
 		</template>
 	</ModelLink>
 </template>
