@@ -93,11 +93,7 @@
 					{{ $t('page.Series.albums.viewLess') }}
 				</v-btn>
 				<v-spacer />
-				<v-btn icon @click="album.favorite = !album.favorite">
-					<!-- TODO: check if fave, set/unset -->
-					<v-icon v-if="album.favorite" color="accent">mdi-heart</v-icon>
-					<v-icon v-if="!album.favorite">mdi-heart-outline</v-icon>
-				</v-btn>
+				<FavouriteButton :model-id="album.id" type="Album" />
 				<!-- Eventually, replace the following button with an overflow menu to edit, change reading list,
 				change wishlist, delete if the album can be deleted (no derivatives)... -->
 				<v-btn :to="`/albums/${album.id}/edit`" icon>
@@ -109,6 +105,7 @@
 </template>
 
 <script>
+import FavouriteButton from '@/components/FavouriteButton'
 import FieldValue from '@/components/FieldValue'
 import ModelLink from '@/components/ModelLink'
 import TagLink from '@/components/TagLink'
@@ -117,6 +114,7 @@ export default {
 	name: 'AlbumCard',
 
 	components: {
+		FavouriteButton,
 		FieldValue,
 		ModelLink,
 		TagLink

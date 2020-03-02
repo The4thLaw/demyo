@@ -20,6 +20,7 @@
 </template>
 
 <script>
+// TODO: try to use v-bind="$attrs" rather than redeclaring everything as own props
 export default {
 	name: 'Autocomplete',
 

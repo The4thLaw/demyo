@@ -31,6 +31,7 @@ class ReaderService extends AbstractModelService {
 
 		if (reader) {
 			await this.setCurrentReader(reader)
+			this.loadLists(reader)
 			console.log('Reader is initialized to', reader)
 			store.dispatch('ui/showSnackbar', i18n.t('core.reader.welcome', { reader: reader.name }))
 		} else {
@@ -44,6 +45,12 @@ class ReaderService extends AbstractModelService {
 		let storeProm = store.dispatch('reader/setCurrentReader', reader)
 		localStorage.setItem('currentReader', JSON.stringify(reader))
 		await storeProm
+	}
+
+	async loadLists(reader) {
+		let lists = await axiosGet(`${this.basePath}/${reader.id}/lists`)
+		console.log('Loaded reader lists', lists)
+		store.dispatch('reader/setReaderLists', lists)
 	}
 }
 

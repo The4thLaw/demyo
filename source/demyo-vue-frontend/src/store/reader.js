@@ -3,6 +3,10 @@ export default {
 
 	state: {
 		currentReader: {},
+		// Sets would be nice, but Vue won't support reactive sets until sometime in v3
+		favouriteSeries: [],
+		favouriteAlbums: [],
+		readingList: [],
 		readerLoaded: false,
 		requireReaderSelection: false
 	},
@@ -15,6 +19,21 @@ export default {
 		setRequireReaderSelection(state, val) {
 			state.requireReaderSelection = val
 			state.readerLoaded = !val
+		},
+
+		setFavouriteSeries(state, list) {
+			list = list || []
+			state.favouriteSeries = list.sort((a, b) => a - b)
+		},
+
+		setFavouriteAlbums(state, list) {
+			list = list || []
+			state.favouriteAlbums = list.sort((a, b) => a - b)
+		},
+
+		setReadingList(state, list) {
+			list = list || []
+			state.readingList = list.sort((a, b) => a - b)
 		}
 	},
 
@@ -26,6 +45,12 @@ export default {
 
 		requireReaderSelection({ commit }) {
 			commit('setRequireReaderSelection', true)
+		},
+
+		setReaderLists({ commit }, lists) {
+			commit('setFavouriteSeries', lists.favouriteSeries)
+			commit('setFavouriteAlbums', lists.favouriteAlbums)
+			commit('setReadingList', lists.readingList)
 		}
 	}
 }
