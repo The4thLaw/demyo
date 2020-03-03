@@ -11,7 +11,6 @@
 		</v-card>
 		<v-card v-else outlined class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
-				<!-- TODO: try to use the typography classes (probably title) and see how that changes -->
 				<v-img
 					v-if="album.cover"
 					:src="`${baseImageUrl}?w=400`"
@@ -23,7 +22,7 @@
 					gradient="to top, rgba(0, 0, 0, 0.8) 0%, transparent 72px"
 				>
 					<v-row align="end" class="fill-height px-4	">
-						<v-col>
+						<v-col class="title">
 							{{ album.identifyingName }}
 						</v-col>
 					</v-row>
@@ -195,10 +194,6 @@ export default {
 
 		& .v-image {
 			color: white;
-			// This is copied from v-card__title
-			font-size: 1.25rem;
-			font-weight: 500;
-			letter-spacing: 0.0125em;
 		}
 	}
 }
