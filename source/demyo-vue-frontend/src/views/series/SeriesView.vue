@@ -58,7 +58,7 @@
 		</SectionCard>
 
 		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
-			<div v-if="albumsLoaded" class="c-Series__albumAggregateData dem-columnized">
+			<div v-if="albumsLoaded" class="c-Series__albumAggregateData dem-columnized pb-4">
 				<FieldValue :label="$t('field.Series.albumCount')">
 					<template v-if="albumCount === ownedAlbumCount">
 						{{ $t('field.Series.albumCount.count.full', [albumCount]) }}
@@ -106,7 +106,7 @@
 
 <script>
 // TODO: derivatives
-// TODO: QT for: fave/unfave, add to reading list (if not already all in it), delete if no albums or derivatives
+// TODO: add all to reading list (if not already all in it), delete if no albums or derivatives
 // TODO[long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
 import { filter } from 'lodash'
 import asyncPool from 'tiny-async-pool'

@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import { contextRoot } from '@/myenv'
 import { getBaseImageUrl } from '@/helpers/images'
 
 /**

@@ -11,7 +11,24 @@
 		</v-card>
 		<v-card v-else outlined class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
-				<v-card-title>
+				<!-- TODO: try to use the typography classes (probably title) and see how that changes -->
+				<v-img
+					v-if="album.cover"
+					:src="`${baseImageUrl}?w=400`"
+					:srcset="`
+							${baseImageUrl}?w=400 400w,
+							${baseImageUrl}?w=700 700w`"
+					:eager="eagerCovers"
+					aspect-ratio="3"
+					gradient="to top, rgba(0, 0, 0, 0.8) 0%, transparent 72px"
+				>
+					<v-row align="end" class="fill-height px-4	">
+						<v-col>
+							{{ album.identifyingName }}
+						</v-col>
+					</v-row>
+				</v-img>
+				<v-card-title v-else>
 					{{ album.identifyingName }}
 				</v-card-title>
 			</router-link>
@@ -109,6 +126,7 @@ import FavouriteButton from '@/components/FavouriteButton'
 import FieldValue from '@/components/FieldValue'
 import ModelLink from '@/components/ModelLink'
 import TagLink from '@/components/TagLink'
+import { getBaseImageUrl } from '@/helpers/images'
 
 export default {
 	name: 'AlbumCard',
@@ -136,6 +154,16 @@ export default {
 		return {
 			expanded: false
 		}
+	},
+
+	computed: {
+		baseImageUrl() {
+			return getBaseImageUrl(this.album.cover)
+		},
+
+		eagerCovers() {
+			return !(navigator.connection && navigator.connection.saveData)
+		}
 	}
 }
 </script>
@@ -151,7 +179,7 @@ export default {
 }
 
 .c-AlbumCard {
-	.v-card__title {
+	.v-card__title, {
 		background-color: var(--v-primary-base);
 		color: var(--dem-primary-contrast);
 	}
@@ -160,8 +188,18 @@ export default {
 		color: var(--dem-text);
 	}
 
-	&__albumLink:hover {
-		text-decoration: none !important;
+	&__albumLink {
+		&:hover {
+			text-decoration: none !important;
+		}
+
+		& .v-image {
+			color: white;
+			// This is copied from v-card__title
+			font-size: 1.25rem;
+			font-weight: 500;
+			letter-spacing: 0.0125em;
+		}
 	}
 }
 
