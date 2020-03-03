@@ -41,7 +41,7 @@ export default {
 					return state.reader.favouriteSeries
 				}
 				console.error('Invalid favourite type', this.type)
-				return new Set()
+				return []
 			}
 		}),
 
