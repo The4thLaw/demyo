@@ -83,10 +83,17 @@ class ReaderService extends AbstractModelService {
 			'readers.confirm.readingList.remove')
 	}
 
+	async addSeriesToReadingList(item) {
+		let reader = store.state.reader.currentReader
+		let newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
+		store.dispatch('ui/showSnackbar', i18n.t('readers.confirm.readingList.add'))
+		return store.dispatch('reader/setReadingList', newList)
+	}
+
 	/** @private */
 	async addOrRemoveListItem(storeAction, handler, listType, itemType, id, confirmLabel) {
 		let reader = store.state.reader.currentReader
-		let success = await handler(`${this.basePath}/${reader.id}/${listType}/${itemType}/${id}`, false)
+		let success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
 			store.dispatch('ui/showSnackbar', i18n.t(confirmLabel))
 			return store.dispatch('reader/' + storeAction, id)

@@ -1,5 +1,7 @@
 package org.demyo.service;
 
+import java.util.Set;
+
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.model.Series;
@@ -157,4 +159,12 @@ public interface IReaderService extends IModelService<Reader> {
 	 * @return The lists
 	 */
 	ReaderLists getLists(long readerId);
+
+	/**
+	 * Gets the reading list of the specified {@link Reader}.
+	 * 
+	 * @param readerId The {@link Reader} ID.
+	 * @return The reading listS
+	 */
+	Set<Number> getReadingList(long readerId);
 }

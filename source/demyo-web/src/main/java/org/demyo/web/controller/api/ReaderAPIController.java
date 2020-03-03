@@ -1,5 +1,7 @@
 package org.demyo.web.controller.api;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -137,12 +139,12 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 * 
 	 * @param modelId The {@link Reader} ID.
 	 * @param seriesId The Series to add.
-	 * @return Always <code>true</code>.
+	 * @return The updated reading list.
 	 */
 	@PostMapping("/{modelId}/readingList/series/{seriesId}")
-	public boolean addSeriesToReadingList(@PathVariable long modelId, @PathVariable long seriesId) {
+	public Set<Number> addSeriesToReadingList(@PathVariable long modelId, @PathVariable long seriesId) {
 		service.addSeriesToReadingList(modelId, seriesId);
-		return true;
+		return service.getReadingList(modelId);
 	}
 
 }

@@ -18,6 +18,12 @@
 				@confirm="deleteSeries"
 			/>
 			<AppTask
+				v-if="hasAlbumsOutsideReadingList"
+				:label="$t('quickTasks.add.series.to.readingList')"
+				icon="mdi-library"
+				@click="addSeriesToReadingList"
+			/>
+			<AppTask
 				:label="$t('quickTasks.add.derivative.to.series')"
 				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
 				icon="mdi-image-frame dem-overlay-add"
@@ -106,11 +112,12 @@
 
 <script>
 // TODO: derivatives
-// TODO: add all to reading list (if not already all in it), delete if no albums or derivatives
+// TODO: delete if no albums or derivatives
 // TODO[long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
-import { filter } from 'lodash'
+import { filter, some, sortedIndexOf } from 'lodash'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
+import { mapState } from 'vuex'
 import AlbumCard from '@/components/AlbumCard'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
@@ -123,6 +130,7 @@ import { deleteStub } from '@/helpers/actions'
 import { mergeModels } from '@/helpers/fields'
 import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
+import readerService from '@/services/reader-service'
 import seriesService from '@/services/series-service'
 
 export default {
@@ -217,7 +225,19 @@ export default {
 			}
 			// If not all albums are loaded, let impatient users add the Derivative just to the Series
 			return query
-		}
+		},
+
+		hasAlbumsOutsideReadingList() {
+			if (!this.albumsLoaded) {
+				return false
+			}
+
+			return some(this.albums, a => sortedIndexOf(this.readingList, a.id) <= -1)
+		},
+
+		...mapState({
+			readingList: state => state.reader.readingList
+		})
 	},
 
 	methods: {
@@ -255,6 +275,10 @@ export default {
 				() => seriesService.deleteModel(this.series.id),
 				'quickTasks.delete.series.confirm.done',
 				'SeriesIndex')
+		},
+
+		addSeriesToReadingList() {
+			readerService.addSeriesToReadingList(this.parsedId)
 		}
 	}
 }

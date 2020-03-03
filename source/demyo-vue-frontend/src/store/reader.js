@@ -107,6 +107,10 @@ export default {
 			commit('setReadingList', lists.readingList)
 		},
 
+		setReadingList({ commit }, list) {
+			commit('setReadingList', list)
+		},
+
 		addFavouriteSeries({ commit }, item) {
 			commit('addFavouriteSeries', item)
 		},

@@ -255,6 +255,12 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		return new ReaderLists(series, albums, reading);
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public Set<Number> getReadingList(long readerId) {
+		return repo.getReadingListForReader(readerId);
+	}
+
 	@Override
 	protected IModelRepo<Reader> getRepo() {
 		return repo;
