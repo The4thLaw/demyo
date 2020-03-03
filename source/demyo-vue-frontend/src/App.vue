@@ -292,6 +292,18 @@ html[lang],
 	}
 }
 
+.v-application .v-alert--dense {
+	// Super dense alerts
+	font-size: 90%;
+	padding-top: 4px;
+	padding-bottom: 4px;
+
+	.v-alert__icon.v-icon {
+		font-size: 20px;
+		margin-right: 8px;
+	}
+}
+
 .dem-columnized {
 	column-gap: 2em;
 	column-count: 1;

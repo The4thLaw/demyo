@@ -32,6 +32,12 @@
 				</v-card-title>
 			</router-link>
 			<v-card-text>
+				<v-alert
+					v-if="album.wishlist" color="primary" border="left"
+					icon="mdi-gift" text dense
+				>
+					{{ $t('field.Album.wishlist.value.true') }}
+				</v-alert>
 				<template v-if="album.firstEditionDate && album.firstEditionDate === album.currentEditionDate">
 					<FieldValue :label="$t('field.Album.firstEditionDate')">
 						{{ $d(new Date(album.firstEditionDate), 'long') }}
