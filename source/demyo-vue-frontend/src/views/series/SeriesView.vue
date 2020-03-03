@@ -1,5 +1,9 @@
 <template>
 	<v-container fluid>
+		<portal v-if="!loading" to="appBarAddons">
+			<FavouriteButton :model-id="series.id" type="Series" />
+		</portal>
+
 		<AppTasks v-if="!loading" v-model="appTasksMenu">
 			<AppTask
 				:label="$t('quickTasks.edit.series')"
@@ -110,6 +114,7 @@ import Vue from 'vue'
 import AlbumCard from '@/components/AlbumCard'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
+import FavouriteButton from '@/components/FavouriteButton'
 import FieldValue from '@/components/FieldValue'
 import ModelLink from '@/components/ModelLink'
 import SectionCard from '@/components/SectionCard'
@@ -127,6 +132,7 @@ export default {
 		AlbumCard,
 		AppTask,
 		AppTasks,
+		FavouriteButton,
 		FieldValue,
 		ModelLink,
 		SectionCard,

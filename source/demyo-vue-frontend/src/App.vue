@@ -74,6 +74,7 @@
 			<template v-if="!suppressSearch">
 				TODO: search
 			</template>
+			<portal-target name="appBarAddons" />
 			<portal-target name="appTasks" />
 		</v-app-bar>
 
