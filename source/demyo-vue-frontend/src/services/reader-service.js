@@ -1,6 +1,6 @@
 import i18n from '@/i18n'
 import AbstractModelService from './abstract-model-service'
-import { axiosGet } from '@/helpers/axios'
+import { axiosGet, axiosPost, axiosDelete } from '@/helpers/axios'
 import store from '@/store'
 
 /**
@@ -51,6 +51,40 @@ class ReaderService extends AbstractModelService {
 		let lists = await axiosGet(`${this.basePath}/${reader.id}/lists`)
 		console.log('Loaded reader lists', lists)
 		store.dispatch('reader/setReaderLists', lists)
+	}
+
+	addFavouriteSeries(item) {
+		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', 'series', item)
+	}
+
+	removeFavouriteSeries(item) {
+		return this.addOrRemoveListItem('removeFavouriteSeries', axiosDelete, 'favourites', 'series', item)
+	}
+
+	addFavouriteAlbum(item) {
+		return this.addOrRemoveListItem('addFavouriteAlbum', axiosPost, 'favourites', 'albums', item)
+	}
+
+	removeFavouriteAlbum(item) {
+		return this.addOrRemoveListItem('removeFavouriteAlbum', axiosDelete, 'favourites', 'albums', item)
+	}
+
+	addToReadingList(item) {
+		return this.addOrRemoveListItem('addToReadingList', axiosPost, 'readingList', 'albums', item)
+	}
+
+	removeFromReadingList(item) {
+		return this.addOrRemoveListItem('removeFromReadingList', axiosDelete, 'readingList', 'albums', item)
+	}
+
+	/** @private */
+	async addOrRemoveListItem(storeAction, handler, listType, itemType, id) {
+		let reader = store.state.reader.currentReader
+		let success = await handler(`${this.basePath}/${reader.id}/${listType}/${itemType}/${id}`, false)
+		if (success) {
+			return store.dispatch('reader/' + storeAction, id)
+		}
+		return Promise.resolve()
 	}
 }
 

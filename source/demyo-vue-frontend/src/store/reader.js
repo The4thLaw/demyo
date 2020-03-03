@@ -1,3 +1,33 @@
+import { sortedIndex, sortedIndexOf } from 'lodash'
+
+/**
+ * Inserts an item at the right position in a sorted array.
+ *
+ * @param {Array<Number>} list The array to modify
+ * @param {Number} item The item to insert
+ */
+function insert(list, item) {
+	if (sortedIndexOf(list, item) >= 0) {
+		// Don't add twice
+		return
+	}
+	let index = sortedIndex(list, item)
+	list.splice(index, 0, item)
+}
+
+/**
+ * Removes an item from a sorted array.
+ *
+ * @param {Array<Number>} list The array to modify
+ * @param {Number} item The item to remove
+ */
+function remove(list, item) {
+	let index = sortedIndexOf(list, item)
+	if (index >= 0) {
+		list.splice(index, 1)
+	}
+}
+
 export default {
 	namespaced: true,
 
@@ -26,14 +56,38 @@ export default {
 			state.favouriteSeries = list.sort((a, b) => a - b)
 		},
 
+		addFavouriteSeries(state, item) {
+			insert(state.favouriteSeries, item)
+		},
+
+		removeFavouriteSeries(state, item) {
+			remove(state.favouriteSeries, item)
+		},
+
 		setFavouriteAlbums(state, list) {
 			list = list || []
 			state.favouriteAlbums = list.sort((a, b) => a - b)
 		},
 
+		addFavouriteAlbum(state, item) {
+			insert(state.favouriteAlbums, item)
+		},
+
+		removeFavouriteAlbum(state, item) {
+			remove(state.favouriteAlbums, item)
+		},
+
 		setReadingList(state, list) {
 			list = list || []
 			state.readingList = list.sort((a, b) => a - b)
+		},
+
+		addToReadingList(state, item) {
+			insert(state.readingList, item)
+		},
+
+		removeFromReadingList(state, item) {
+			remove(state.readingList, item)
 		}
 	},
 
@@ -51,6 +105,30 @@ export default {
 			commit('setFavouriteSeries', lists.favouriteSeries)
 			commit('setFavouriteAlbums', lists.favouriteAlbums)
 			commit('setReadingList', lists.readingList)
-		}
+		},
+
+		addFavouriteSeries({ commit }, item) {
+			commit('addFavouriteSeries', item)
+		},
+
+		removeFavouriteSeries({ commit }, item) {
+			commit('removeFavouriteSeries', item)
+		},
+
+		addFavouriteAlbum({ commit }, item) {
+			commit('addFavouriteAlbum', item)
+		},
+
+		removeFavouriteAlbum({ commit }, item) {
+			commit('removeFavouriteAlbum', item)
+		},
+
+		addToReadingList({ commit }, item) {
+			commit('addToReadingList', item)
+		},
+
+		removeFromReadingList({ commit }, item) {
+			commit('removeFromReadingList', item)
+		},
 	}
 }

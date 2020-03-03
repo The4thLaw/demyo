@@ -63,7 +63,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@PostMapping("/{modelId}/favourites/series/{seriesId}")
 	public boolean addFavouriteSeries(@PathVariable long modelId, @PathVariable long seriesId) {
-		service.addFavouriteSeries(seriesId);
+		service.addFavouriteSeries(modelId, seriesId);
 		return true;
 	}
 
@@ -76,7 +76,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@DeleteMapping("/{modelId}/favourites/series/{seriesId}")
 	public boolean removeFavouriteSeries(@PathVariable long modelId, @PathVariable long seriesId) {
-		service.removeFavouriteSeries(seriesId);
+		service.removeFavouriteSeries(modelId, seriesId);
 		return true;
 	}
 
@@ -89,7 +89,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@PostMapping("/{modelId}/favourites/albums/{albumId}")
 	public boolean addFavouriteAlbum(@PathVariable long modelId, @PathVariable long albumId) {
-		service.addFavouriteAlbum(albumId);
+		service.addFavouriteAlbum(modelId, albumId);
 		return true;
 	}
 
@@ -102,7 +102,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@DeleteMapping("/{modelId}/favourites/albums/{albumId}")
 	public boolean removeFavouriteAlbum(@PathVariable long modelId, @PathVariable long albumId) {
-		service.removeFavouriteAlbum(albumId);
+		service.removeFavouriteAlbum(modelId, albumId);
 		return true;
 	}
 
@@ -115,7 +115,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@PostMapping("/{modelId}/readingList/albums/{albumId}")
 	public boolean addAlbumToReadingList(@PathVariable long modelId, @PathVariable long albumId) {
-		service.addAlbumToReadingList(albumId);
+		service.addAlbumToReadingList(modelId, albumId);
 		return true;
 	}
 
@@ -128,7 +128,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@DeleteMapping("/{modelId}/readingList/albums/{albumId}")
 	public boolean removeAlbumFromReadingList(@PathVariable long modelId, @PathVariable long albumId) {
-		service.removeAlbumFromReadingList(albumId);
+		service.removeAlbumFromReadingList(modelId, albumId);
 		return true;
 	}
 
@@ -141,7 +141,7 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 */
 	@PostMapping("/{modelId}/readingList/series/{seriesId}")
 	public boolean addSeriesToReadingList(@PathVariable long modelId, @PathVariable long seriesId) {
-		service.addSeriesToReadingList(seriesId);
+		service.addSeriesToReadingList(modelId, seriesId);
 		return true;
 	}
 

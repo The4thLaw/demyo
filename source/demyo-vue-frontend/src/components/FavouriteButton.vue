@@ -8,7 +8,7 @@
 <script>
 import { sortedIndexOf } from 'lodash'
 import { mapState } from 'vuex'
-// TODO: handle click ! :)
+import readerService from '@/services/reader-service'
 
 export default {
 	name: 'FavouriteButton',
@@ -51,9 +51,25 @@ export default {
 	},
 
 	methods: {
-		toggle() {
+		async toggle() {
+			this.loading = true
 			// Call right service method depending on type and state
-			// Service should alter the store on its own
+			// Service should alter the store on its own and reactivity should propagate here
+			// await !
+			if (this.isFavourite) {
+				if (this.type === 'Album') {
+					await readerService.removeFavouriteAlbum(this.modelId)
+				} else if (this.type === 'Series') {
+					await readerService.removeFavouriteSeries(this.modelId)
+				}
+			} else {
+				if (this.type === 'Album') {
+					await readerService.addFavouriteAlbum(this.modelId)
+				} else if (this.type === 'Series') {
+					await readerService.addFavouriteSeries(this.modelId)
+				}
+			}
+			this.loading = false
 		}
 	}
 }
