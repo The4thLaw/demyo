@@ -115,6 +115,9 @@
 					{{ $t('page.Series.albums.viewLess') }}
 				</v-btn>
 				<v-spacer />
+				<v-btn v-if="isInReadingList" :loading="readingListLoading" icon @click="markAsRead">
+					<v-icon>mdi-library</v-icon>
+				</v-btn>
 				<FavouriteButton :model-id="album.id" type="Album" />
 				<!-- Eventually, replace the following button with an overflow menu to edit, change reading list,
 				change wishlist, delete if the album can be deleted (no derivatives)... -->
@@ -127,11 +130,14 @@
 </template>
 
 <script>
+import { sortedIndexOf } from 'lodash'
+import { mapState } from 'vuex'
 import FavouriteButton from '@/components/FavouriteButton'
 import FieldValue from '@/components/FieldValue'
 import ModelLink from '@/components/ModelLink'
 import TagLink from '@/components/TagLink'
 import { getBaseImageUrl } from '@/helpers/images'
+import readerService from '@/services/reader-service'
 
 export default {
 	name: 'AlbumCard',
@@ -157,7 +163,8 @@ export default {
 
 	data() {
 		return {
-			expanded: false
+			expanded: false,
+			readingListLoading: false
 		}
 	},
 
@@ -168,6 +175,22 @@ export default {
 
 		eagerCovers() {
 			return !(navigator.connection && navigator.connection.saveData)
+		},
+
+		...mapState({
+			readingList: state => state.reader.readingList
+		}),
+
+		isInReadingList() {
+			return sortedIndexOf(this.readingList, this.album.id) > -1
+		}
+	},
+
+	methods: {
+		async markAsRead() {
+			this.readingListLoading = true
+			await readerService.removeFromReadingList(this.album.id)
+			this.readingListLoading = false
 		}
 	}
 }
