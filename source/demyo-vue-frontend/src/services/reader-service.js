@@ -54,34 +54,41 @@ class ReaderService extends AbstractModelService {
 	}
 
 	addFavouriteSeries(item) {
-		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', 'series', item)
+		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', 'series', item,
+			'readers.confirm.favourite.add')
 	}
 
 	removeFavouriteSeries(item) {
-		return this.addOrRemoveListItem('removeFavouriteSeries', axiosDelete, 'favourites', 'series', item)
+		return this.addOrRemoveListItem('removeFavouriteSeries', axiosDelete, 'favourites', 'series', item,
+			'readers.confirm.favourite.remove')
 	}
 
 	addFavouriteAlbum(item) {
-		return this.addOrRemoveListItem('addFavouriteAlbum', axiosPost, 'favourites', 'albums', item)
+		return this.addOrRemoveListItem('addFavouriteAlbum', axiosPost, 'favourites', 'albums', item,
+			'readers.confirm.favourite.add')
 	}
 
 	removeFavouriteAlbum(item) {
-		return this.addOrRemoveListItem('removeFavouriteAlbum', axiosDelete, 'favourites', 'albums', item)
+		return this.addOrRemoveListItem('removeFavouriteAlbum', axiosDelete, 'favourites', 'albums', item,
+			'readers.confirm.favourite.remove')
 	}
 
 	addToReadingList(item) {
-		return this.addOrRemoveListItem('addToReadingList', axiosPost, 'readingList', 'albums', item)
+		return this.addOrRemoveListItem('addToReadingList', axiosPost, 'readingList', 'albums', item,
+			'readers.confirm.readingList.add')
 	}
 
 	removeFromReadingList(item) {
-		return this.addOrRemoveListItem('removeFromReadingList', axiosDelete, 'readingList', 'albums', item)
+		return this.addOrRemoveListItem('removeFromReadingList', axiosDelete, 'readingList', 'albums', item,
+			'readers.confirm.readingList.remove')
 	}
 
 	/** @private */
-	async addOrRemoveListItem(storeAction, handler, listType, itemType, id) {
+	async addOrRemoveListItem(storeAction, handler, listType, itemType, id, confirmLabel) {
 		let reader = store.state.reader.currentReader
 		let success = await handler(`${this.basePath}/${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
+			store.dispatch('ui/showSnackbar', i18n.t(confirmLabel))
 			return store.dispatch('reader/' + storeAction, id)
 		}
 		return Promise.resolve()
