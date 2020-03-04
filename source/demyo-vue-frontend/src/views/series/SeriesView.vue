@@ -11,6 +11,7 @@
 				icon="mdi-animation dem-overlay-edit"
 			/>
 			<AppTask
+				v-if="albumsLoaded && albums.length <= 0 && derivativeCount <= 0"
 				:label="$t('quickTasks.delete.series')"
 				:confirm="$t('quickTasks.delete.series.confirm')"
 				icon="mdi-animation dem-overlay-delete"
@@ -152,7 +153,6 @@
 </template>
 
 <script>
-// TODO: delete if no albums or derivatives
 // TODO[long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
 import { filter, some, sortedIndexOf } from 'lodash'
 import asyncPool from 'tiny-async-pool'
