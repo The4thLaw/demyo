@@ -1,4 +1,4 @@
-import AuthorEdit from '@/views/authors/AuthorEdit'
+import SeriesEdit from '@/views/series/SeriesEdit'
 import SeriesIndex from '@/views/series/SeriesIndex'
 import SeriesView from '@/views/series/SeriesView'
 
@@ -17,11 +17,11 @@ export default [
 	{
 		path: '/series/:id/edit',
 		name: 'SeriesEdit',
-		component: AuthorEdit
+		component: SeriesEdit
 	},
 	{
 		path: '/series/new',
 		name: 'SeriesAdd',
-		component: AuthorEdit
+		component: SeriesEdit
 	}
 ]

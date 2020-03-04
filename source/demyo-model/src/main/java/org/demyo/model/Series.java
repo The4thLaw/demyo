@@ -25,7 +25,9 @@ import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -68,6 +70,7 @@ public class Series extends AbstractModel {
 			inverseJoinColumns = @JoinColumn(name = "sub"))
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonIgnoreProperties("relatedSeries")
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Series> relatedSeries;
 
 	/** The albums belonging to this series. */

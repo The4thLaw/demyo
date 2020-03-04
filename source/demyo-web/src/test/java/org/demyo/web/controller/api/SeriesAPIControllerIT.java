@@ -3,10 +3,13 @@ package org.demyo.web.controller.api;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
@@ -88,5 +91,28 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/series/99/derivatives/count"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").value(27));
+	}
+
+	@Test
+	public void saveExisting() throws Exception {
+		mockMvc.perform(put("/api/series/99")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{"
+						+ "\"id\":99,"
+						+ "\"name\":\"Sillage 2\","
+						+ "\"relatedSeries\":[{\"id\":2}]"
+						+ "}"))
+
+				.andExpect(status().isOk())
+				.andExpect(content().string("99"));
+
+		// Now that we know the save was OK, check if the content was actually saved
+		// We only check the data that was changed compared to the database
+		mockMvc.perform(get("/api/series/99"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id").value(99))
+				.andExpect(jsonPath("$.name").value("Sillage 2"))
+				.andExpect(jsonPath("$.relatedSeries", hasSize(1)))
+				.andExpect(jsonPath("$.relatedSeries[0].id").value("2"));
 	}
 }
