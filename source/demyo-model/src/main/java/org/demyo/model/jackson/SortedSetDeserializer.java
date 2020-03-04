@@ -108,9 +108,12 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 
 		TreeSet<T> set = new TreeSet<>(compInstance);
 
-		Iterator<T> i = p.getCodec().readValues(p, elementClass);
-		while (i.hasNext()) {
-			set.add(i.next());
+		// Tolerate empty arrays
+		if (JsonToken.END_ARRAY != p.currentToken()) {
+			Iterator<T> i = p.getCodec().readValues(p, elementClass);
+			while (i.hasNext()) {
+				set.add(i.next());
+			}
 		}
 
 		return set;
