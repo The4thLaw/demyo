@@ -7,11 +7,14 @@ import org.demyo.model.Derivative;
 import org.demyo.model.DerivativeSource;
 import org.demyo.model.DerivativeType;
 import org.demyo.model.QDerivative;
+import org.demyo.model.Series;
 
 /**
  * An {@link IModelFilter} for {@link Derivative}s.
  */
 public class DerivativeFilter extends AbstractModelFilter<Derivative> {
+	/** The internal ID of the {@link Series}. */
+	private Long series;
 	/** The internal ID of the {@link org.demyo.model.Author artist}. */
 	private Long artist;
 	/** The internal ID of the {@link DerivativeType}. */
@@ -23,6 +26,9 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	public Predicate getPredicate() {
 		BooleanExpression e = null;
 
+		if (series != null) {
+			e = combine(e, QDerivative.derivative.series.id.eq(series));
+		}
 		if (artist != null) {
 			e = combine(e, QDerivative.derivative.artist.id.eq(artist));
 		}
@@ -34,6 +40,24 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 		}
 
 		return e;
+	}
+
+	/**
+	 * Gets the internal ID of the {@link Series}.
+	 *
+	 * @return the internal ID of the {@link Series}
+	 */
+	public Long getSeries() {
+		return series;
+	}
+
+	/**
+	 * Sets the internal ID of the {@link Series}.
+	 *
+	 * @param series the new internal ID of the {@link Series}
+	 */
+	public void setSeries(Long series) {
+		this.series = series;
 	}
 
 	/**

@@ -13,7 +13,15 @@ class SeriesService extends AbstractModelService {
 		if (!seriesId) {
 			seriesId = 'none'
 		}
-		return axiosGet(`${this.basePath}/${seriesId}/albums`, [])
+		return axiosGet(`${this.basePath}${seriesId}/albums`, [])
+	}
+
+	/**
+	 * Finds how many Derivatives use the given series.
+	 * @param {Number} id The Series ID
+	 */
+	countDerivatives(id) {
+		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
 	}
 }
 

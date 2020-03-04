@@ -6,6 +6,7 @@
 			right: previousPage
 		}"
 		class="c-GalleryIndex"
+		:class="{ 'c-GalleryIndex--bordered': bordered }"
 		@keyup.arrow-left.exact="previousPage()"
 		@keyup.arrow-right.exact="nextPage()"
 	>
@@ -38,7 +39,6 @@
 <script>
 import { get } from 'lodash'
 import { mapState } from 'vuex'
-import { contextRoot } from '@/myenv'
 import { focusElement } from '@/helpers/dom'
 import { getBaseImageUrl } from '@/helpers/images'
 
@@ -50,9 +50,15 @@ export default {
 			type: Array,
 			required: true
 		},
+
 		imagePath: {
 			type: String,
 			default: undefined
+		},
+
+		bordered: {
+			type: Boolean,
+			default: false
 		}
 	},
 
@@ -157,6 +163,10 @@ export default {
 	width: 266px;
 	padding: 8px;
 	margin: 16px;
+}
+
+.c-GalleryIndex--bordered .c-GalleryIndex__image {
+	border: 1px solid var(--dem-base-border);
 }
 
 .v-application .c-GalleryIndex__imageLegend {

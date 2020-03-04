@@ -59,4 +59,12 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * @return the count
 	 */
 	int countDerivativesByArtist(long typeId);
+
+	/**
+	 * Counts how many Derivatives use the given series.
+	 * 
+	 * @param seriesId The internal ID of the Series
+	 * @return the count
+	 */
+	int countDerivativesBySeries(long seriesId);
 }

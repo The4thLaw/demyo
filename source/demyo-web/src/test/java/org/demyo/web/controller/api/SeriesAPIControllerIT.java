@@ -82,4 +82,11 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$[0].id").value(1313))
 				.andExpect(jsonPath("$[0].identifyingName").value("Maître d'Armes (Le)"));
 	}
+
+	@Test
+	public void countDerivativesBySeries() throws Exception {
+		mockMvc.perform(get("/api/series/99/derivatives/count"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$").value(27));
+	}
 }

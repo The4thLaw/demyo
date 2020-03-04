@@ -63,55 +63,95 @@
 			</div>
 		</SectionCard>
 
-		<SectionCard v-if="!loading && series.albumIds" :title="$t('field.Series.albums')">
-			<div v-if="albumsLoaded" class="c-Series__albumAggregateData dem-columnized pb-4">
-				<FieldValue :label="$t('field.Series.albumCount')">
-					<template v-if="albumCount === ownedAlbumCount">
-						{{ $t('field.Series.albumCount.count.full', [albumCount]) }}
-					</template>
-					<template v-else>
-						{{ $t('field.Series.albumCount.count.partial', [ownedAlbumCount, albumCount]) }}
-					</template>
-				</FieldValue>
+		<SectionCard v-if="!loading && series.albumIds" class="c-SectionCard--tabbed">
+			<v-tabs background-color="primary" dark grow>
+				<v-tab>
+					<v-icon left>
+						mdi-book-open-variant
+					</v-icon>
+					{{ $t('field.Series.albums') }}
+				</v-tab>
+				<v-tab :disabled="derivativeCount <= 0" @change="loadDerivatives">
+					<v-icon left>
+						mdi-image-frame
+					</v-icon>
+					{{ $tc('field.Series.derivatives', derivativeCount) }}
+				</v-tab>
 
-				<FieldValue v-if="allWriters.length" :label="$tc('field.Album.writers', allWriters.length)">
-					<ModelLink :model="allWriters" view="AuthorView" />
-				</FieldValue>
-				<FieldValue v-if="allArtists.length" :label="$tc('field.Album.artists', allArtists.length)">
-					<ModelLink :model="allArtists" view="AuthorView" />
-				</FieldValue>
-				<FieldValue v-if="allColorists.length" :label="$tc('field.Album.colorists', allColorists.length)">
-					<ModelLink :model="allColorists" view="AuthorView" />
-				</FieldValue>
-				<FieldValue v-if="allInkers.length" :label="$tc('field.Album.inkers', allInkers.length)">
-					<ModelLink :model="allInkers" view="AuthorView" />
-				</FieldValue>
-				<FieldValue v-if="allTranslators.length" :label="$tc('field.Album.translators', allTranslators.length)">
-					<ModelLink :model="allTranslators" view="AuthorView" />
-				</FieldValue>
+				<!-- Albums -->
+				<v-tab-item class="dem-tab">
+					<div v-if="albumsLoaded" class="c-Series__albumAggregateData dem-columnized pb-4">
+						<FieldValue :label="$t('field.Series.albumCount')">
+							<template v-if="albumCount === ownedAlbumCount">
+								{{ $t('field.Series.albumCount.count.full', [albumCount]) }}
+							</template>
+							<template v-else>
+								{{ $t('field.Series.albumCount.count.partial', [ownedAlbumCount, albumCount]) }}
+							</template>
+						</FieldValue>
 
-				<FieldValue v-if="allTags.length" :label="$tc('field.Album.tags', allTags.length)">
-					<TagLink :model="allTags" />
-				</FieldValue>
-			</div>
-			<v-switch
-				v-if="albumCount !== ownedAlbumCount" v-model="showWishlist"
-				:label="$t('page.Series.showWishlist')" prepend-icon="mdi-gift"
-			/>
-			<v-row>
-				<v-col
-					v-for="albumId in filteredIds" :key="albumId"
-					cols="12" md="6" lg="4"
-				>
-					<AlbumCard :album="albums[albumId]" :loading="albums[albumId].loading" />
-				</v-col>
-			</v-row>
+						<FieldValue v-if="allWriters.length" :label="$tc('field.Album.writers', allWriters.length)">
+							<ModelLink :model="allWriters" view="AuthorView" />
+						</FieldValue>
+						<FieldValue v-if="allArtists.length" :label="$tc('field.Album.artists', allArtists.length)">
+							<ModelLink :model="allArtists" view="AuthorView" />
+						</FieldValue>
+						<FieldValue
+							v-if="allColorists.length" :label="$tc('field.Album.colorists', allColorists.length)"
+						>
+							<ModelLink :model="allColorists" view="AuthorView" />
+						</FieldValue>
+						<FieldValue v-if="allInkers.length" :label="$tc('field.Album.inkers', allInkers.length)">
+							<ModelLink :model="allInkers" view="AuthorView" />
+						</FieldValue>
+						<FieldValue
+							v-if="allTranslators.length" :label="$tc('field.Album.translators', allTranslators.length)"
+						>
+							<ModelLink :model="allTranslators" view="AuthorView" />
+						</FieldValue>
+
+						<FieldValue v-if="allTags.length" :label="$tc('field.Album.tags', allTags.length)">
+							<TagLink :model="allTags" />
+						</FieldValue>
+					</div>
+					<v-switch
+						v-if="albumCount !== ownedAlbumCount" v-model="showWishlist"
+						:label="$t('page.Series.showWishlist')" prepend-icon="mdi-gift"
+					/>
+					<v-row>
+						<v-col
+							v-for="albumId in filteredIds" :key="albumId"
+							cols="12" md="6" lg="4"
+						>
+							<AlbumCard :album="albums[albumId]" :loading="albums[albumId].loading" />
+						</v-col>
+					</v-row>
+				</v-tab-item>
+
+				<!-- Derivatives -->
+				<v-tab-item class="dem-tab">
+					<div v-if="derivatives.length <= 0" class="text-center">
+						<v-progress-circular indeterminate color="primary" size="64" />
+					</div>
+					<GalleryIndex :items="derivatives" image-path="mainImage" bordered>
+						<template v-slot:default="slotProps">
+							<router-link :to="`/derivatives/${slotProps.item.id}/view`">
+								<div v-if="slotProps.item.album">
+									{{ slotProps.item.album.title }}
+								</div>
+								<div v-if="slotProps.item.source">
+									{{ slotProps.item.source.identifyingName }}
+								</div>
+							</router-link>
+						</template>
+					</GalleryIndex>
+				</v-tab-item>
+			</v-tabs>
 		</SectionCard>
 	</v-container>
 </template>
 
 <script>
-// TODO: derivatives
 // TODO: delete if no albums or derivatives
 // TODO[long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
 import { filter, some, sortedIndexOf } from 'lodash'
@@ -123,6 +163,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FavouriteButton from '@/components/FavouriteButton'
 import FieldValue from '@/components/FieldValue'
+import GalleryIndex from '@/components/GalleryIndex'
 import ModelLink from '@/components/ModelLink'
 import SectionCard from '@/components/SectionCard'
 import TagLink from '@/components/TagLink'
@@ -130,6 +171,7 @@ import { deleteStub } from '@/helpers/actions'
 import { mergeModels } from '@/helpers/fields'
 import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
+import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import seriesService from '@/services/series-service'
 
@@ -142,6 +184,7 @@ export default {
 		AppTasks,
 		FavouriteButton,
 		FieldValue,
+		GalleryIndex,
 		ModelLink,
 		SectionCard,
 		TagLink
@@ -161,6 +204,7 @@ export default {
 			albums: {},
 			albumsLoaded: false,
 			derivatives: [],
+			derivativeCount: -1,
 			showWishlist: true,
 			appTasksMenu: false
 		}
@@ -246,6 +290,9 @@ export default {
 			this.albums = {}
 			this.albumsLoaded = false
 			this.derivatives = []
+			this.derivativeCount = 0
+
+			let dcPromise = seriesService.countDerivatives(this.parsedId)
 
 			this.series = await seriesService.findById(this.parsedId)
 
@@ -257,6 +304,8 @@ export default {
 
 			// This is intentionnally async
 			this.loadAlbums()
+
+			this.derivativeCount = await dcPromise
 		},
 
 		async loadAlbums() {
@@ -279,6 +328,14 @@ export default {
 
 		addSeriesToReadingList() {
 			readerService.addSeriesToReadingList(this.parsedId)
+		},
+
+		async loadDerivatives() {
+			if (this.derivatives.length > 0) {
+				// Don't reload every time
+				return
+			}
+			this.derivatives = await derivativeService.findForIndex({ series: this.parsedId })
 		}
 	}
 }

@@ -1,41 +1,39 @@
 <template>
-	<v-card :loading="loading ? 'primary' : false" class="mb-4">
-		<div class="pa-6">
-			<template v-if="!loading && !image">
+	<v-card :loading="loading ? 'primary' : false" class="c-SectionCard mb-4">
+		<template v-if="!loading && !image">
+			<h1 v-if="title && !loading" class="display-1">
+				{{ title }}
+			</h1>
+			<h2 v-if="subtitle && !loading" class="subtitle-1 primary--text">
+				{{ subtitle }}
+			</h2>
+			<slot />
+		</template>
+		<div v-if="!loading && image" class="c-SectionCard__container">
+			<div class="c-SectionCard__image">
+				<!--
+				What we want for this image is:
+					- On large screens, be side to side with the text
+					- On medium screens, be a bit smaller
+					- On small screens, be above the text and use the small version
+						(so that the height is reduced as well)
+					- Be nice on HiDPI and LoDPI screens
+				-->
+				<img
+					v-img="{src: baseImageUrl}"
+					:src="`${baseImageUrl}?w=200`"
+					:srcset="`
+						${baseImageUrl}?w=200 200w,
+						${baseImageUrl}?w=400 400w,
+						${baseImageUrl}?w=700 700w`"
+					sizes="(max-width: 700px) 200px, 350px"
+				>
+			</div>
+			<div class="c-SectionCard__content">
 				<h1 v-if="title && !loading" class="display-1">
 					{{ title }}
 				</h1>
-				<h2 v-if="subtitle && !loading" class="subtitle-1 primary--text">
-					{{ subtitle }}
-				</h2>
 				<slot />
-			</template>
-			<div v-if="!loading && image" class="c-SectionCard__container">
-				<div class="c-SectionCard__image">
-					<!--
-					What we want for this image is:
-						- On large screens, be side to side with the text
-						- On medium screens, be a bit smaller
-						- On small screens, be above the text and use the small version
-							(so that the height is reduced as well)
-						- Be nice on HiDPI and LoDPI screens
-					-->
-					<img
-						v-img="{src: baseImageUrl}"
-						:src="`${baseImageUrl}?w=200`"
-						:srcset="`
-							${baseImageUrl}?w=200 200w,
-							${baseImageUrl}?w=400 400w,
-							${baseImageUrl}?w=700 700w`"
-						sizes="(max-width: 700px) 200px, 350px"
-					>
-				</div>
-				<div class="c-SectionCard__content">
-					<h1 v-if="title && !loading" class="display-1">
-						{{ title }}
-					</h1>
-					<slot />
-				</div>
 			</div>
 		</div>
 	</v-card>
@@ -86,6 +84,18 @@ export default {
 </script>
 
 <style lang="less">
+.c-SectionCard {
+	padding: 24px;
+}
+
+.c-SectionCard--tabbed {
+	padding: 0;
+
+	.v-tabs-items {
+		padding: 24px;
+	}
+}
+
 .c-SectionCard__container {
 	display: flex;
 }

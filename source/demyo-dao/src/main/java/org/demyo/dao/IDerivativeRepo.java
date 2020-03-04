@@ -42,4 +42,13 @@ public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCust
 	 */
 	@Query("select count(*) from Derivative d where d.artist.id = ?1")
 	int countDerivativesByArtist(long artistId);
+
+	/**
+	 * Counts how many Derivatives use the given series.
+	 * 
+	 * @param seriesId The internal ID of the Series
+	 * @return the count
+	 */
+	@Query("select count(*) from Derivative d where d.series.id = ?1")
+	int countDerivativesBySeries(long seriesId);
 }

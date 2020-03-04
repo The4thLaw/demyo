@@ -14,6 +14,7 @@ import org.demyo.model.Album;
 import org.demyo.model.ModelView;
 import org.demyo.model.Series;
 import org.demyo.service.IAlbumService;
+import org.demyo.service.IDerivativeService;
 import org.demyo.service.ISeriesService;
 
 /**
@@ -23,6 +24,7 @@ import org.demyo.service.ISeriesService;
 @RequestMapping("/api/series")
 public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	private final IAlbumService albumService;
+	private final IDerivativeService derivativeService;
 
 	/**
 	 * Creates the controller.
@@ -31,9 +33,11 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	 * @param albumService The service to manage the {@link Album}s.
 	 */
 	@Autowired
-	public SeriesAPIController(ISeriesService service, IAlbumService albumService) {
+	public SeriesAPIController(ISeriesService service, IAlbumService albumService,
+			IDerivativeService derivativeService) {
 		super(service);
 		this.albumService = albumService;
+		this.derivativeService = derivativeService;
 	}
 
 	/**
@@ -57,5 +61,16 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	@GetMapping(value = "none/albums")
 	public List<Album> getAlbumsWithoutSeries() {
 		return albumService.findBySeriesId(null);
+	}
+
+	/**
+	 * Counts how many Derivatives use the given series.
+	 * 
+	 * @param typeId The internal ID of the {@link Series}
+	 * @return the count
+	 */
+	@GetMapping("{modelId}/derivatives/count")
+	int countDerivativesBySeries(@PathVariable long modelId) {
+		return derivativeService.countDerivativesBySeries(modelId);
 	}
 }
