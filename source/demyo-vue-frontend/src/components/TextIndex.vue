@@ -90,7 +90,7 @@ export default {
 		},
 
 		groupedItems() {
-			return groupBy(this.paginatedItems, (i) => deburr(this.extractFirstLetter(i)))
+			return groupBy(this.paginatedItems, (i) => this.extractFirstLetter(i))
 		},
 
 		pageCount() {
@@ -117,7 +117,7 @@ export default {
 
 		extractFirstLetter(item) {
 			/** @type String */
-			let first = this.firstLetterExtractor(item)
+			let first = deburr(this.firstLetterExtractor(item))
 			if (first.match(/[A-Za-z]/)) {
 				return first
 			} else if (first.match(/[0-9]/)) {
