@@ -45,9 +45,19 @@ class AbstractModelService {
 	save(model) {
 		if (this.config.sanitizeArrays) {
 			// Transform arrays of integers in arrays of objects
-			this.config.sanitizeArrays.forEach(rule => {
-				if (Array.isArray(model[rule])) {
-					model[rule] = model[rule].map(v => isInteger(v) ? { id: v } : v)
+			this.config.sanitizeArrays.forEach(prop => {
+				if (Array.isArray(model[prop])) {
+					model[prop] = model[prop].map(v => isInteger(v) ? { id: v } : v)
+				}
+			})
+		}
+
+		if (this.config.sanitizeObjects) {
+			// In the case of clearable model link fields, the id can be set to false
+			// In such cases, we should clear the object completely
+			this.config.sanitizeObjects.forEach(prop => {
+				if (!model[prop].id) {
+					delete model[prop]
 				}
 			})
 		}

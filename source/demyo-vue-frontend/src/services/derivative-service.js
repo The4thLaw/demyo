@@ -6,7 +6,9 @@ import { axiosGet, axiosPost } from '@/helpers/axios'
  */
 class DerivativeService extends AbstractModelService {
 	constructor() {
-		super('derivatives/')
+		super('derivatives/', {
+			sanitizeObjects: ['series', 'album', 'artist', 'source']
+		})
 	}
 
 	findForIndex(filter) {
@@ -14,23 +16,6 @@ class DerivativeService extends AbstractModelService {
 			return axiosPost(this.basePath + 'index/filtered', filter, [])
 		}
 		return axiosGet(this.basePath, [])
-	}
-
-	save(model) {
-		// Sanitize the model before saving
-		if (!model.series.id) {
-			model.series = {}
-		}
-		if (!model.album.id) {
-			model.album = {}
-		}
-		if (!model.artist.id) {
-			model.artist = {}
-		}
-		if (!model.source.id) {
-			model.source = {}
-		}
-		return super.save(model)
 	}
 
 	saveFilepondImages(modelId, imageIds) {
