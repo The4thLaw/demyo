@@ -78,8 +78,8 @@
 			<portal-target name="appTasks" />
 		</v-app-bar>
 
-		<v-content>
-			<v-container fluid>
+		<v-content id="c-App__mainContent">
+			<v-container id="c-App__mainContainer" fluid>
 				<ReaderSelection
 					v-if="requireReaderSelection || promptReaderSelection" :require-selection="requireReaderSelection"
 				/>
@@ -90,7 +90,6 @@
 				<router-view />
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
-			<!-- TODO: flush this to the end of the page -->
 			<v-footer color="secondary" inset dark>
 				<v-col>
 					TODO: codename
@@ -261,6 +260,15 @@ html[lang],
 #demyo .c-App__overlay .v-overlay__content {
 	position: absolute;
 	top: 3em;
+}
+
+#c-App__mainContent > .v-content__wrap {
+	display: flex;
+	flex-direction: column;
+}
+
+#c-App__mainContainer {
+	flex: 1;
 }
 
 .c-App__overlayText {
