@@ -10,6 +10,7 @@
 		menu-props="allowOverflow"
 		:loading="loading ? 'primary' : false"
 		:rules="rules"
+		:no-data-text="$t('core.components.Autocomplete.nodata')"
 	>
 		<template v-if="refreshable" v-slot:append-outer>
 			<v-btn icon small @click.stop="$emit('refresh')">
