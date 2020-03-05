@@ -91,6 +91,10 @@
 							</template>
 						</FieldValue>
 
+						<FieldValue v-if="allPublishers.length" :label="$tc('field.Album.publisher', allPublishers.length)">
+							<ModelLink :model="allPublishers" view="PublisherView" />
+						</FieldValue>
+
 						<FieldValue v-if="allWriters.length" :label="$tc('field.Album.writers', allWriters.length)">
 							<ModelLink :model="allWriters" view="AuthorView" />
 						</FieldValue>
@@ -234,6 +238,10 @@ export default {
 
 		ownedAlbumCount() {
 			return this.ownedIds.length
+		},
+
+		allPublishers() {
+			return this.albumsLoaded ? mergeModels(this.albums, 'publisher', 'identifyingName') : []
 		},
 
 		allWriters() {

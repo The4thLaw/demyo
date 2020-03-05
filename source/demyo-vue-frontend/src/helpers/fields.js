@@ -35,7 +35,11 @@ export function mergeModels(collection, modelProperty, sortProperties) {
 	let all = reduce(collection, (aggregate, value) => {
 		let subModel = value[modelProperty]
 		if (Array.isArray(subModel)) {
+			// Arrays of models
 			aggregate.push(...subModel)
+		} else if (subModel && subModel.id) {
+			// Plain models
+			aggregate.push(subModel)
 		}
 		return aggregate
 	}, [])
