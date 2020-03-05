@@ -7,6 +7,7 @@ import { axiosGet, axiosPost } from '@/helpers/axios'
 class DerivativeService extends AbstractModelService {
 	constructor() {
 		super('derivatives/', {
+			sanitizeArrays: ['images'],
 			sanitizeObjects: ['series', 'album', 'artist', 'source']
 		})
 	}
