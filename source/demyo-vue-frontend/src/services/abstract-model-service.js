@@ -28,8 +28,26 @@ class AbstractModelService {
 	 * @param {Number} id The Model ID
 	 * @return {Promise<any>} The Model
 	 */
-	findById(id) {
-		return axiosGet(this.basePath + id, {})
+	async findById(id) {
+		let model = await axiosGet(this.basePath + id, {})
+
+		if (this.config.fillMissingObjects) {
+			this.config.fillMissingObjects.forEach(prop => {
+				if (!model[prop]) {
+					model[prop] = {}
+				}
+			})
+		}
+
+		if (this.config.fillMissingArrays) {
+			this.config.fillMissingArrays.forEach(prop => {
+				if (!model[prop]) {
+					model[prop] = []
+				}
+			})
+		}
+
+		return model
 	}
 
 	/**

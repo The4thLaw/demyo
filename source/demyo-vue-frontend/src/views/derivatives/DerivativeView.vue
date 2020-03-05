@@ -244,25 +244,6 @@ export default {
 	methods: {
 		async fetchData() {
 			this.derivative = await derivativeService.findById(this.parsedId)
-
-			if (!this.derivative.series) {
-				this.derivative.series = {}
-			}
-			if (!this.derivative.album) {
-				this.derivative.album = {}
-			}
-			if (!this.derivative.artist) {
-				this.derivative.artist = {}
-			}
-			if (!this.derivative.source) {
-				this.derivative.source = {}
-			}
-			if (!this.derivative.prices) {
-				this.derivative.prices = []
-			}
-			if (!this.derivative.images) {
-				this.derivative.images = []
-			}
 		},
 
 		async saveDndImages(data) {

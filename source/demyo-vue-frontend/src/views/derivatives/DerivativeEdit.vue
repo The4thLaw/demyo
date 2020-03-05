@@ -160,6 +160,7 @@
 </template>
 
 <script>
+// TODO: oneNotNull rule
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Vue from 'vue'
 import Autocomplete from '@/components/Autocomplete'
@@ -209,7 +210,8 @@ export default {
 				album: {},
 				artist: {},
 				source: {},
-				type: {}
+				type: {},
+				prices: []
 			},
 			tipTapExtensions: tipTapExtensions,
 
@@ -240,24 +242,6 @@ export default {
 		async fetchData() {
 			if (this.parsedId) {
 				this.derivative = await derivativeService.findById(this.parsedId)
-			}
-			if (!this.derivative.series) {
-				this.derivative.series = {}
-			}
-			if (!this.derivative.album) {
-				this.derivative.album = {}
-			}
-			if (!this.derivative.artist) {
-				this.derivative.artist = {}
-			}
-			if (!this.derivative.source) {
-				this.derivative.source = {}
-			}
-			if (!this.derivative.type) {
-				this.derivative.type = {}
-			}
-			if (!this.derivative.prices) {
-				Vue.set(this.derivative, 'prices', [])
 			}
 
 			if (!this.parsedId && this.$route.query.toSeries) {
