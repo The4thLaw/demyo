@@ -6,7 +6,9 @@ import AbstractModelService from './abstract-model-service'
  */
 class SeriesService extends AbstractModelService {
 	constructor() {
-		super('series/')
+		super('series/', {
+			sanitizeArrays: ['relatedSeries']
+		})
 	}
 
 	findAlbumsForList(seriesId) {
