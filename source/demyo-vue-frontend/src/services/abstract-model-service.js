@@ -34,7 +34,9 @@ class AbstractModelService {
 		if (this.config.fillMissingObjects) {
 			this.config.fillMissingObjects.forEach(prop => {
 				if (!model[prop]) {
-					model[prop] = {}
+					model[prop] = {
+						id: undefined
+					}
 				}
 			})
 		}

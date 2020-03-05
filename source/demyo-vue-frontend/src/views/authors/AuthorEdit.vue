@@ -94,11 +94,6 @@ export default {
 			if (this.parsedId) {
 				this.author = await authorService.findById(this.parsedId)
 			}
-			if (!this.author.portrait) {
-				this.author.portrait = {
-					id: undefined
-				}
-			}
 		},
 
 		saveHandler() {

@@ -103,9 +103,6 @@ export default {
 			if (this.parsedId) {
 				this.series = await seriesService.findById(this.parsedId)
 			}
-			if (!this.series.relatedSeries) {
-				this.series.relatedSeries = []
-			}
 
 			this.allSeries = await allSeriesP
 		},

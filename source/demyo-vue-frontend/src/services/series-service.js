@@ -7,6 +7,7 @@ import AbstractModelService from './abstract-model-service'
 class SeriesService extends AbstractModelService {
 	constructor() {
 		super('series/', {
+			fillMissingArrays: ['relatedSeries'],
 			sanitizeArrays: ['relatedSeries']
 		})
 	}
