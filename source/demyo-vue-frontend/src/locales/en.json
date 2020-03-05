@@ -1,5 +1,6 @@
 {
 	"title.home": "Home",
 
-	"core.loading": "Loading..."
+	"core.loading": "Loading...",
+	"core.reader.welcome": "Welcome back, {reader}"
 }
