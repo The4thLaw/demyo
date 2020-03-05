@@ -172,7 +172,6 @@ export default {
 						{
 							title: 'menu.publishers.browse',
 							icon: 'mdi-office-building',
-							// Collection could be folder-multiple or picture-in-picture-bottom-right if we keep Demyo 2.0/2.1
 							url: '/publishers'
 						},
 						{
@@ -214,7 +213,70 @@ export default {
 							title: 'menu.series.add',
 							icon: 'mdi-animation dem-overlay-add',
 							url: '/series/new'
+						},
+						{
+							title: 'menu.derivatives.add',
+							icon: 'mdi-image-frame dem-overlay-add',
+							url: '/derivatives/new'
+						},
+						{
+							title: 'menu.images.add',
+							icon: 'mdi-camera dem-overlay-add',
+							url: '/images/detect'
+						},
+						{
+							title: 'menu.tags.add',
+							icon: 'mdi-tag dem-overlay-add',
+							url: '/tags/new'
+						},
+						{
+							title: 'menu.publishers.add',
+							icon: 'mdi-office-building dem-overlay-add',
+							url: '/publishers/new'
+						},
+						{
+							title: 'menu.collections.add',
+							// Or picture-in-picture-bottom-right if we keep Demyo 2.0/2.1
+							icon: 'mdi-folder-multiple dem-overlay-add',
+							url: '/collections/new'
+						},
+						{
+							title: 'menu.derivative_sources.add',
+							icon: 'mdi-tooltip-account dem-overlay-add',
+							url: '/derivativeSources/new'
+						},
+						{
+							title: 'menu.derivative_types.add',
+							icon: 'mdi-brush dem-overlay-add',
+							url: '/derivativeTypes/new'
+						},
+						{
+							title: 'menu.bindings.add',
+							icon: 'mdi-notebook dem-overlay-add',
+							url: '/bindings/new'
 						}
+					]
+				},
+				{
+					title: 'menu.section.management',
+					subItems: [
+						// Advanced search would go here
+						{
+							title: 'menu.manage.export',
+							icon: 'mdi-download',
+							url: '/manage/export'
+						},
+						{
+							title: 'menu.manage.import',
+							icon: 'mdi-upload',
+							url: '/manage/import'
+						},
+						// Stats, configure, orphans and help would go here
+						{
+							title: 'menu.manage.about',
+							icon: 'mdi-information',
+							url: '/about'
+						},
 					]
 				}
 			]
