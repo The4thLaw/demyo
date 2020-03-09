@@ -3,9 +3,12 @@ package org.demyo.service;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.Album;
 import org.demyo.model.Author;
 import org.demyo.model.Collection;
+import org.demyo.model.ModelView;
 import org.demyo.model.Publisher;
 import org.demyo.model.Series;
 import org.demyo.model.Tag;
@@ -13,16 +16,22 @@ import org.demyo.model.Tag;
 /** Represents the results of a search across multiple model types. */
 public final class SearchResult {
 	/** The matching {@link Series}. */
+	@JsonView(ModelView.Basic.class)
 	private final List<Series> series;
 	/** The matching {@link Album}s. */
+	@JsonView(ModelView.Basic.class)
 	private final List<Album> albums;
 	/** The matching {@link Tag}s. */
+	@JsonView(ModelView.Basic.class)
 	private final List<Tag> tags;
 	/** The matching {@link Author}s. */
+	@JsonView(ModelView.Basic.class)
 	private final List<Author> authors;
 	/** The matching {@link Publisher}s. */
+	@JsonView(ModelView.Basic.class)
 	private final List<Publisher> publishers;
 	/** The matching {@link Collection}s. */
+	@JsonView(ModelView.Basic.class)
 	private final List<Collection> collections;
 
 	/** Creates a completely blank search result. */
