@@ -10,5 +10,9 @@
 
 export default {
 	name: 'Home',
+
+	created() {
+		this.$store.dispatch('ui/disableSearch')
+	}
 }
 </script>
