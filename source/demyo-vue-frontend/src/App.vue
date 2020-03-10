@@ -40,6 +40,15 @@
 
 				<v-divider />
 
+				<v-list-item id="c-App__menuSearch">
+					<v-list-item-content>
+						<v-text-field
+							v-model="quicksearchQuery" clearable hide-details
+							prepend-icon="mdi-magnify" @keyup="performSearch"
+						/>
+					</v-list-item-content>
+				</v-list-item>
+
 				<v-list-item to="/">
 					<v-list-item-icon>
 						<v-icon>mdi-home</v-icon>
@@ -72,7 +81,19 @@
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
 			<template v-if="!suppressSearch">
-				TODO: search
+				<v-btn id="c-App__toolbarSearchButton" icon @click="showQuicksearch = true; focus()">
+					<v-icon>mdi-magnify</v-icon>
+				</v-btn>
+				<v-expand-x-transition>
+					<div v-show="showQuicksearch" id="c-App__toolbarSearchField">
+						<v-text-field
+							ref="toolbarSearch"
+							v-model="quicksearchQuery" clearable hide-details
+							@click:clear="showQuicksearch = false"
+							@blur="blur" @keyup="performSearch"
+						/>
+					</div>
+				</v-expand-x-transition>
 			</template>
 			<portal-target name="appBarAddons" />
 			<portal-target name="appTasks" />
@@ -100,6 +121,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import { mapState } from 'vuex'
 import AppSnackbar from '@/components/AppSnackbar'
 import LetterIcon from '@/components/LetterIcon'
@@ -131,6 +153,8 @@ export default {
 			pageTitle: 'Demyo',
 
 			mainMenu: false,
+			showQuicksearch: false,
+			quicksearchQuery: '',
 
 			promptReaderSelection: false,
 
@@ -299,6 +323,30 @@ export default {
 	methods: {
 		closeSnackbar() {
 			this.$store.dispatch('ui/closeSnackbar')
+		},
+
+		focus() {
+			this.$refs.toolbarSearch.focus()
+			// Vuetify doesn't forward the Vue transition events so we delay a refocus
+			window.setTimeout(() => this.$refs.toolbarSearch.focus(), 300)
+		},
+
+		blur() {
+			this.showQuicksearch = !!this.quicksearchQuery
+		},
+
+		performSearch: debounce(
+			function () {
+				// eslint complains about "this" but it's valid in this context and it's even in the Vue docs
+				this.doPerformSearch()
+			}, 300),
+
+		doPerformSearch() {
+			if (this.quicksearchQuery.length < 3) {
+				return
+			}
+			console.log('Searching for', this.quicksearchQuery)
+			// TODO: actual search and show results. Show progress while search is running
 		}
 	}
 }
@@ -322,6 +370,23 @@ html[lang],
 #demyo .c-App__overlay .v-overlay__content {
 	position: absolute;
 	top: 3em;
+}
+
+#c-App__toolbarSearchField {
+	max-width: 20em;
+}
+
+@media screen and (max-width: 600px) { // Vuetify "xs" breakpoint
+	#c-App__toolbarSearchField,
+	#c-App__toolbarSearchButton {
+		display: none;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	#c-App__menuSearch {
+		display: none;
+	}
 }
 
 #c-App__mainContent > .v-content__wrap {
