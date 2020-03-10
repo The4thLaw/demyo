@@ -49,7 +49,7 @@
 				{{ series.location }}
 			</FieldValue>
 
-			<FieldValue v-if="series.relatedSeries" :label="$t('field.Series.relatedSeries')">
+			<FieldValue v-if="series.relatedSeries && series.relatedSeries.length > 0" :label="$t('field.Series.relatedSeries')">
 				<ModelLink :model="series.relatedSeries" view="SeriesView" />
 			</FieldValue>
 
@@ -64,9 +64,9 @@
 			</div>
 		</SectionCard>
 
-		<SectionCard v-if="!loading && series.albumIds" class="c-SectionCard--tabbed">
-			<v-tabs background-color="primary" dark grow>
-				<v-tab>
+		<SectionCard v-if="loading || series.albumIds || derivativeCount > 0" class="c-SectionCard--tabbed">
+			<v-tabs v-model="currentTab" background-color="primary" dark grow>
+				<v-tab :disabled="albumsLoaded && albumCount <= 0">
 					<v-icon left>
 						mdi-book-open-variant
 					</v-icon>
@@ -91,7 +91,9 @@
 							</template>
 						</FieldValue>
 
-						<FieldValue v-if="allPublishers.length" :label="$tc('field.Album.publisher', allPublishers.length)">
+						<FieldValue
+							v-if="allPublishers.length" :label="$tc('field.Album.publisher', allPublishers.length)"
+						>
 							<ModelLink :model="allPublishers" view="PublisherView" />
 						</FieldValue>
 
@@ -210,12 +212,16 @@ export default {
 			derivatives: [],
 			derivativeCount: -1,
 			showWishlist: true,
-			appTasksMenu: false
+			appTasksMenu: false,
+			currentTab: 0
 		}
 	},
 
 	computed: {
 		ownedIds() {
+			if (!this.series.albumIds) {
+				return []
+			}
 			return filter(this.series.albumIds, id => {
 				let album = this.albums[id]
 				if (!album) {
@@ -233,7 +239,7 @@ export default {
 		},
 
 		albumCount() {
-			return this.series.albumIds.length
+			return this.series.albumIds ? this.series.albumIds.length : 0
 		},
 
 		ownedAlbumCount() {
@@ -314,10 +320,18 @@ export default {
 			this.loadAlbums()
 
 			this.derivativeCount = await dcPromise
+
+			if (this.albumCount == 0 && this.derivativeCount > 0) {
+				// If there are no albums but there are derivatives, load the derivatives
+				this.currentTab = 1
+				this.loadDerivatives()
+			}
 		},
 
 		async loadAlbums() {
-			await asyncPool(2, this.series.albumIds, this.albumLoader)
+			if (this.series.albumIds) {
+				await asyncPool(2, this.series.albumIds, this.albumLoader)
+			}
 			this.albumsLoaded = true
 		},
 
