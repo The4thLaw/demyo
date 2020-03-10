@@ -121,11 +121,11 @@
 </template>
 
 <script>
-import { debounce } from 'lodash'
 import { mapState } from 'vuex'
 import AppSnackbar from '@/components/AppSnackbar'
 import LetterIcon from '@/components/LetterIcon'
 import ReaderSelection from '@/components/ReaderSelection'
+import quicksearch from '@/mixins/quicksearch'
 
 export default {
 	name: 'DemyoApp',
@@ -135,6 +135,8 @@ export default {
 		LetterIcon,
 		ReaderSelection
 	},
+
+	mixins: [ quicksearch ],
 
 	metaInfo() {
 		let self = this
@@ -154,7 +156,6 @@ export default {
 
 			mainMenu: false,
 			showQuicksearch: false,
-			quicksearchQuery: '',
 
 			promptReaderSelection: false,
 
@@ -333,20 +334,6 @@ export default {
 
 		blur() {
 			this.showQuicksearch = !!this.quicksearchQuery
-		},
-
-		performSearch: debounce(
-			function () {
-				// eslint complains about "this" but it's valid in this context and it's even in the Vue docs
-				this.doPerformSearch()
-			}, 300),
-
-		doPerformSearch() {
-			if (this.quicksearchQuery.length < 3) {
-				return
-			}
-			console.log('Searching for', this.quicksearchQuery)
-			// TODO: actual search and show results. Show progress while search is running
 		}
 	}
 }
