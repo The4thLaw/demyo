@@ -20,7 +20,7 @@ class AbstractModelService {
 	}
 
 	findForList() {
-		return axiosGet(this.basePath + '?view=minimal', [])
+		return axiosGet(this.basePath, { view: 'minimal' }, [])
 	}
 
 	/**

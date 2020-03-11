@@ -6,10 +6,15 @@ function baselineUrl(url) {
 	return apiRoot + url
 }
 
-export async function axiosGet(url, defaultValue) {
+export async function axiosGet(url, data, defaultValue) {
+	if (isUndefined(defaultValue)) {
+		defaultValue = data
+		data = {}
+	}
+
 	let response
 	try {
-		response = await axios.get(baselineUrl(url))
+		response = await axios.get(baselineUrl(url), { params: data })
 	} catch (e) {
 		console.warn(`Failed to get the resource at ${url}`, e)
 		return defaultValue
