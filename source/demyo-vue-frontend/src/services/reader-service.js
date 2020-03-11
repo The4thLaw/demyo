@@ -48,7 +48,7 @@ class ReaderService extends AbstractModelService {
 	}
 
 	async loadLists(reader) {
-		let lists = await axiosGet(`${this.basePath}/${reader.id}/lists`)
+		let lists = await axiosGet(`${this.basePath}${reader.id}/lists`)
 		console.log('Loaded reader lists', lists)
 		store.dispatch('reader/setReaderLists', lists)
 	}
