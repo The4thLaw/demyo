@@ -61,10 +61,12 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	@Override
 	@Query("select x from #{#entityName} x where title=?1 and wishlist = false order by title")
+	@EntityGraph("Album.forIndex")
 	List<Album> quickSearchExact(String query);
 
 	@Override
 	@Query("select x from #{#entityName} x where title like ?1 and wishlist = false order by title")
+	@EntityGraph("Album.forIndex")
 	List<Album> quickSearchLike(String query);
 
 	/**
