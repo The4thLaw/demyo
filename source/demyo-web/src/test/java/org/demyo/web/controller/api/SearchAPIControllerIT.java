@@ -16,6 +16,9 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 public class SearchAPIControllerIT extends AbstractAPIIT {
+	/**
+	 * Tests {@link SearchAPIController#quickSearch(String)}
+	 */
 	@Test
 	public void quicksearch() throws Exception {
 		mockMvc.perform(get("/api/search/quick?q=sill"))
@@ -23,13 +26,13 @@ public class SearchAPIControllerIT extends AbstractAPIIT {
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(jsonPath("$.albums").doesNotExist())
 				.andExpect(jsonPath("$.series", hasSize(2)))
-				.andExpect(jsonPath("$.series[0].identifyingName").value("Sillage"))
-		// .andExpect(jsonPath("$.id").value(1))
-		// .andExpect(jsonPath("$.configurationEntries", hasSize(greaterThan(2))))
-		;
+				.andExpect(jsonPath("$.series[0].identifyingName").value("Sillage"));
 
 		mockMvc.perform(get("/api/search/quick?q=feu"))
 				.andExpect(status().isOk())
-				.andDo(MockMvcResultHandlers.print());
+				.andDo(MockMvcResultHandlers.print())
+				.andExpect(jsonPath("$.albums[0].series.identifyingName").value("Sillage"))
+				.andExpect(jsonPath("$.albums[0].title").value("À Feu et à Cendres"));
+
 	}
 }
