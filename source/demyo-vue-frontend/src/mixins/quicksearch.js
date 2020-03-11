@@ -1,5 +1,6 @@
 import { debounce } from 'lodash'
 import QuickSearchResults from '@/components/QuickSearchResults'
+import searchService from '@/services/search-service'
 
 export default {
 	components: {
@@ -20,13 +21,12 @@ export default {
 				this.doPerformSearch()
 			}, 300),
 
-		doPerformSearch() {
+		async doPerformSearch() {
 			if (this.quicksearchQuery.length < 3) {
 				return
 			}
 			this.quicksearchLoading = true
-			console.log('Searching for', this.quicksearchQuery)
-			// TODO: actual search and show results. Show progress while search is running
+			this.quicksearchResults = await searchService.quicksearch(this.quicksearchQuery)
 			this.quicksearchLoading = false
 		}
 	}
