@@ -24,9 +24,9 @@ class ReaderService extends AbstractModelService {
 			// Already set it in store, it could be used temporarily at least
 			this.setCurrentReader(reader)
 			// Revalidate the reader. Who knows, it could have been deleted in the mean time
-			reader = await axiosGet(this.basePath + '/' + reader.id, null)
+			reader = await axiosGet(this.basePath + reader.id, null)
 		} else {
-			reader = await axiosGet(this.basePath + '/autoSelect', null)
+			reader = await axiosGet(this.basePath + 'autoSelect', null)
 		}
 
 		if (reader) {
