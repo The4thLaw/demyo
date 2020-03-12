@@ -17,6 +17,11 @@ export default {
 	},
 
 	methods: {
+		clearSearch() {
+			this.lastQuery = ''
+			this.quicksearchResults = undefined
+		},
+
 		performSearch() {
 			if (this.quicksearchQuery === this.lastQuery) {
 				// Avoids triggering the search on non-defining key strokes
@@ -45,7 +50,7 @@ export default {
 
 	computed: {
 		isRelevantSearchQuery() {
-			return this.quicksearchQuery.length >= 3
+			return this.quicksearchQuery && this.quicksearchQuery.length >= 3
 		}
 	}
 }

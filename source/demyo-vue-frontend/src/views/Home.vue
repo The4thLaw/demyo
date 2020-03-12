@@ -7,6 +7,7 @@
 				v-model="quicksearchQuery" clearable hide-details
 				:placeholder="$t('widget.search.label')"
 				prepend-icon="mdi-magnify" @keyup="performSearch"
+				@click:clear="clearSearch"
 			/>
 		</SectionCard>
 
