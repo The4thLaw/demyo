@@ -45,6 +45,7 @@
 						<v-text-field
 							v-model="quicksearchQuery" clearable hide-details
 							prepend-icon="mdi-magnify" @keyup="performSearch"
+							@click:clear="clearSearch"
 						/>
 					</v-list-item-content>
 				</v-list-item>
@@ -89,7 +90,7 @@
 						<v-text-field
 							ref="toolbarSearch"
 							v-model="quicksearchQuery" clearable hide-details
-							@click:clear="showQuicksearch = false"
+							@click:clear="showQuicksearch = false; clearSearch()"
 							@blur="blur" @keyup="performSearch"
 						/>
 					</div>
@@ -108,7 +109,11 @@
 					<v-progress-circular :indeterminate="true" color="primary" size="96" width="8" />
 					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
 				</v-overlay>
-				<router-view />
+				<QuickSearchResults
+					v-if="isRelevantSearchQuery" :results="quicksearchResults" :loading="quicksearchLoading"
+				/>
+				<!-- Do it on show so that the element stays alive -->
+				<router-view v-show="!isRelevantSearchQuery" />
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
 			<v-footer color="secondary" inset dark>
