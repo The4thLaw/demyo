@@ -39,7 +39,6 @@
 </template>
 
 <script>
-// TODO: fix loading indicator being impacted by margins
 import { isUndefined } from 'lodash'
 import SectionCard from '@/components/SectionCard'
 

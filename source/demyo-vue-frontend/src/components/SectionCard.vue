@@ -1,6 +1,6 @@
 <template>
 	<v-card :loading="loading ? 'primary' : false" class="c-SectionCard mb-4">
-		<template v-if="!loading && !image">
+		<div v-if="!loading && !image" class="c-SectionCard__container">
 			<h1 v-if="title && !loading" class="display-1">
 				{{ title }}
 			</h1>
@@ -8,8 +8,8 @@
 				{{ subtitle }}
 			</h2>
 			<slot />
-		</template>
-		<div v-if="!loading && image" class="c-SectionCard__container">
+		</div>
+		<div v-if="!loading && image" class="c-SectionCard__container c-SectionCard__container--image">
 			<div class="c-SectionCard__image">
 				<!--
 				What we want for this image is:
@@ -85,7 +85,12 @@ export default {
 
 <style lang="less">
 .c-SectionCard {
+	padding-bottom: 24px;
+}
+
+.c-SectionCard__container {
 	padding: 24px;
+	padding-bottom: 0;
 }
 
 .c-SectionCard--tabbed {
@@ -96,7 +101,7 @@ export default {
 	}
 }
 
-.c-SectionCard__container {
+.c-SectionCard__container--image {
 	display: flex;
 }
 
@@ -105,7 +110,7 @@ export default {
 }
 
 @media (max-width: 550px) {
-	.c-SectionCard__container {
+	.c-SectionCard__container--image {
 		flex-direction: column;
 	}
 
