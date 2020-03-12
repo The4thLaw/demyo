@@ -343,6 +343,7 @@ export default {
 :root {
 	// TODO[dark]: alternate colors
 	--dem-text: rgba(0, 0, 0, 0.87);
+	--dem-text-lighter: rgba(0, 0, 0, 0.54);
 	--dem-primary-contrast: #fff;
 	--dem-bg-contrast: #ddd;
 	--dem-base-border: #ccc;

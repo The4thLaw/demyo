@@ -10,7 +10,9 @@
 			/>
 		</SectionCard>
 
-		<QuickSearchResults />
+		<QuickSearchResults
+			v-if="isRelevantSearchQuery" :results="quicksearchResults" :loading="quicksearchLoading"
+		/>
 	</container>
 </template>
 

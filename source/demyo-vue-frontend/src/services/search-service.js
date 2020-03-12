@@ -5,7 +5,7 @@ import { axiosGet } from '@/helpers/axios'
  */
 class SearchService {
 	quicksearch(query) {
-		console.debug('Searching for', this.quicksearchQuery)
+		console.debug('Searching for', query)
 		return axiosGet('search/quick', { q: query }, [])
 	}
 }
