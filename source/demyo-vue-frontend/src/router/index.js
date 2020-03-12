@@ -7,6 +7,7 @@ import authorRoutes from './authors'
 import derivativeRoutes from './derivatives'
 import derivativeTypeRoutes from './derivativeTypes'
 import imageRoutes from './images'
+import managementRoutes from './manage'
 import seriesRoutes from './series'
 
 Vue.use(VueRouter)
@@ -22,6 +23,7 @@ const routes = [
 	...derivativeRoutes,
 	...derivativeTypeRoutes,
 	...imageRoutes,
+	...managementRoutes,
 	...seriesRoutes,
 	{
 		path: '/about',

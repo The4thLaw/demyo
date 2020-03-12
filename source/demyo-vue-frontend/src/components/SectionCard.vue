@@ -86,6 +86,10 @@ export default {
 <style lang="less">
 .c-SectionCard {
 	padding-bottom: 24px;
+
+	.display-1 {
+		margin-bottom: 16px;
+	}
 }
 
 .c-SectionCard__container {

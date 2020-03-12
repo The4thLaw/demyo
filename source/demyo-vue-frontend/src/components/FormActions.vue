@@ -1,14 +1,16 @@
 <template>
 	<div class="c-FormActions">
-		<v-btn color="accent" class="c-FormActions__button" @click="$emit('save')">
-			{{ $t('button.save') }}
-		</v-btn>
-		<v-btn
-			v-if="showReset" text color="primary"
-			class="c-FormActions__button" @click="$emit('reset')"
-		>
-			{{ $t('button.reset') }}
-		</v-btn>
+		<template v-if="!hasDefaultSlot">
+			<v-btn color="accent" @click="$emit('save')">
+				{{ $t('button.save') }}
+			</v-btn>
+			<v-btn v-if="showReset" text color="primary" @click="$emit('reset')">
+				{{ $t('button.reset') }}
+			</v-btn>
+		</template>
+		<template v-else>
+			<slot />
+		</template>
 	</div>
 </template>
 
@@ -21,6 +23,12 @@ export default {
 			type: Boolean,
 			default: true
 		}
+	},
+
+	computed: {
+		hasDefaultSlot() {
+			return !!this.$slots.default
+		}
 	}
 }
 </script>
@@ -29,7 +37,7 @@ export default {
 .c-FormActions {
 	text-align: center;
 
-	&__button {
+	& button.v-btn {
 		margin-right: 16px;
 	}
 }
