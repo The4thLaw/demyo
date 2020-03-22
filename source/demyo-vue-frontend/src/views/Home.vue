@@ -1,5 +1,5 @@
 <template>
-	<container id="v-Home">
+	<v-container id="v-Home">
 		<SectionCard :title="$t('widget.search.title')">
 			<p class="mt-8 mb-2" v-text="$t('widget.search.description')" />
 
@@ -14,7 +14,7 @@
 		<QuickSearchResults
 			v-if="isRelevantSearchQuery" :results="quicksearchResults" :loading="quicksearchLoading"
 		/>
-	</container>
+	</v-container>
 </template>
 
 <script>
