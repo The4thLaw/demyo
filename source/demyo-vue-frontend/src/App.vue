@@ -440,6 +440,14 @@ html[lang],
 	@media (min-width: 1264px) { // Vuetify "lg" breakpoint
 		columns: 2;
 	}
+
+	> * {
+		// Never break the main item of a columnized layout
+		// This notably fixes a Webkit issue where text would be horizontally split
+		// between two columns (top part of the letters in one column and bottom
+		// part in the other)
+		break-inside: avoid;
+	}
 }
 
 .dem-fieldset {
