@@ -25,7 +25,7 @@ import org.demyo.service.impl.ExportService.Output;
  */
 @RestController
 @RequestMapping("/api/manage/export")
-public class ExportAPIController /*extends AbstractController*/ {
+public class ExportAPIController {
 	@Autowired
 	private IExportService exportService;
 
