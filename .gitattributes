@@ -1,0 +1,9 @@
+# Expect LF as 
+*	text=auto
+*.nsi	text eol=crlf
+*.nsh	text eol=crlf
+*.png	binary
+*.jpg	binary
+*.xcf	binary
+*.dll	binary
+
