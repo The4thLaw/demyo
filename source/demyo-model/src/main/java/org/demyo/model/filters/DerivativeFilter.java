@@ -43,30 +43,12 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	}
 
 	/**
-	 * Gets the internal ID of the {@link Series}.
-	 *
-	 * @return the internal ID of the {@link Series}
-	 */
-	public Long getSeries() {
-		return series;
-	}
-
-	/**
 	 * Sets the internal ID of the {@link Series}.
 	 *
 	 * @param series the new internal ID of the {@link Series}
 	 */
 	public void setSeries(Long series) {
 		this.series = series;
-	}
-
-	/**
-	 * Gets the internal ID of the {@link org.demyo.model.Author artist}.
-	 *
-	 * @return the internal ID of the {@link org.demyo.model.Author artist}.
-	 */
-	public Long getArtist() {
-		return artist;
 	}
 
 	/**
@@ -79,30 +61,12 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	}
 
 	/**
-	 * Gets the internal ID of the {@link DerivativeType}.
-	 *
-	 * @return the internal ID of the {@link DerivativeType}
-	 */
-	public Long getType() {
-		return type;
-	}
-
-	/**
 	 * Sets the internal ID of the {@link DerivativeType}.
 	 *
 	 * @param type the new internal ID of the {@link DerivativeType}
 	 */
 	public void setType(Long type) {
 		this.type = type;
-	}
-
-	/**
-	 * Gets the internal ID of the {@link DerivativeSource}.
-	 *
-	 * @return the internal ID of the {@link DerivativeSource}
-	 */
-	public Long getSource() {
-		return source;
 	}
 
 	/**
