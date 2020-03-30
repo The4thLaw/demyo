@@ -45,7 +45,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)))
 				.andExpect(jsonPath("$[0].id").value(90))
-				.andExpect(jsonPath("$[0].series.name").value("Sillage"))
+				.andExpect(jsonPath("$[0].series.identifyingName").value("Sillage"))
 				.andExpect(jsonPath("$[0].album.id").doesNotExist())
 				.andExpect(jsonPath("$[0].total").doesNotExist())
 				.andExpect(jsonPath("$[0].artist").doesNotExist());
