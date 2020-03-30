@@ -1,10 +1,19 @@
 package org.demyo.web.controller.api;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.Album;
+import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.filters.AlbumFilter;
 import org.demyo.service.IAlbumService;
 
 /**
@@ -13,6 +22,8 @@ import org.demyo.service.IAlbumService;
 @RestController
 @RequestMapping("/api/albums")
 public class AlbumAPIController extends AbstractModelAPIController<Album> {
+	private final IAlbumService service;
+
 	/**
 	 * Creates the controller.
 	 * 
@@ -21,5 +32,20 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	@Autowired
 	public AlbumAPIController(IAlbumService service) {
 		super(service);
+		this.service = service;
+	}
+
+	@Override
+	@GetMapping({ "/", "/index" })
+	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
+		Iterable<MetaSeriesNG> value = service.findAllForIndex();
+		return getIndexView(view, value);
+	}
+
+	@PostMapping({ "/index/filtered" })
+	public MappingJacksonValue index(@RequestParam("view") Optional<String> view,
+			@RequestBody AlbumFilter filter) {
+		Iterable<MetaSeriesNG> value = service.findAllForIndex(filter);
+		return getIndexView(view, value);
 	}
 }

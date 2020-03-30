@@ -61,7 +61,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 * @param models The list of models to filter.
 	 * @return The entity to return in the mapping.
 	 */
-	protected MappingJacksonValue getIndexView(Optional<String> view, Iterable<M> models) {
+	protected static MappingJacksonValue getIndexView(Optional<String> view, Iterable<?> models) {
 		MappingJacksonValue jackson = new MappingJacksonValue(models);
 		Optional<Class<?>> viewClass = ModelView.byName(view);
 		LOGGER.debug("View class is {}", viewClass);

@@ -1,8 +1,12 @@
 package org.demyo.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.Future;
 
 import javax.persistence.EntityNotFoundException;
@@ -36,6 +40,8 @@ import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Image;
 import org.demyo.model.MetaSeries;
+import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IImageService;
@@ -82,6 +88,44 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			throw new EntityNotFoundException("No Album for ID " + id);
 		}
 		return entity;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<MetaSeriesNG> findAllForIndex() {
+		return findAllForIndex(null);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<MetaSeriesNG> findAllForIndex(AlbumFilter filter) {
+		List<Album> albums;
+		if (filter == null) {
+			albums = repo.findAll();
+		} else {
+			albums = repo.findAll(filter.getPredicate());
+		}
+
+		HashMap<Long, MetaSeriesNG> seriesMap = new HashMap<>();
+		SortedSet<MetaSeriesNG> sortedMetas = new TreeSet<>();
+
+		for (Album a : albums) {
+			if (a.getSeries() == null) {
+				MetaSeriesNG meta = new MetaSeriesNG(a);
+				sortedMetas.add(meta);
+			} else {
+				MetaSeriesNG meta = seriesMap.get(a.getSeries().getId());
+				if (meta != null) {
+					meta.addAlbum(a);
+				} else {
+					meta = new MetaSeriesNG(a);
+					seriesMap.put(a.getSeries().getId(), meta);
+					sortedMetas.add(meta);
+				}
+			}
+		}
+
+		return sortedMetas;
 	}
 
 	/**

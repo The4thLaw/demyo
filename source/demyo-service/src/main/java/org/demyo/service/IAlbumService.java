@@ -1,10 +1,13 @@
 package org.demyo.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Album;
 import org.demyo.model.Series;
+import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.filters.AlbumFilter;
 
 /**
  * Service for management of {@link Album}s.
@@ -40,5 +43,20 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 * @throws DemyoException In case of error during recovery.
 	 */
 	void recoverFromFilePond(long albumId, String coverFilePondId, String[] otherFilePondIds) throws DemyoException;
+
+	/**
+	 * Finds all {@link Album}s grouped by series, in the suitable order.
+	 * 
+	 * @return The {@link Album}s grouped by series.
+	 */
+	Collection<MetaSeriesNG> findAllForIndex();
+
+	/**
+	 * Finds all {@link Album}s grouped by series, in the suitable order.
+	 * 
+	 * @param filter The filter to apply to the albums to fetch.
+	 * @return The {@link Album}s grouped by series.
+	 */
+	Collection<MetaSeriesNG> findAllForIndex(AlbumFilter filter);
 
 }

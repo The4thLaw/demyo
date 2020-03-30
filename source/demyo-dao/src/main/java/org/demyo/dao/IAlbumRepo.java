@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.querydsl.core.types.Predicate;
+
 import org.demyo.model.Album;
 import org.demyo.model.Series;
 import org.demyo.model.projections.IAuthorAlbum;
@@ -78,6 +80,27 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@Override
 	@EntityGraph("Album.forIndex")
 	List<Album> findAll(Iterable<Long> albumIds);
+
+	/**
+	 * Returns a {@link List} of entities. Will also fetch the related {@link Series}.
+	 * 
+	 * @return The entities
+	 */
+	@Override
+	@EntityGraph("Album.forIndex")
+	@Query("select x from Album x")
+	// TODO: Spring 5: Try to rename this to readAll
+	List<Album> findAll();
+
+	/**
+	 * Returns a {@link List} of entities meeting the requested predicate. Will also fetch the related {@link Series}.
+	 * 
+	 * @param p The predicate to filter the entities.
+	 * @return The entities
+	 */
+	@Override
+	@EntityGraph("Album.forIndex")
+	List<Album> findAll(Predicate p);
 
 	/**
 	 * Finds the albums to which an Author participated, in a structured manner.

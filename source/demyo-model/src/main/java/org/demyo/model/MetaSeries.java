@@ -12,7 +12,11 @@ import javax.persistence.Table;
 /**
  * A view of series names where albums without series are also listed (in that case, the title becomes the series name).
  * This is used to paginate lists of albums in a meaningful manner. The ID is positive for series, negative for albums.
+ * 
+ * @deprecated To be removed
  */
+@Deprecated
+// TODO [Vue] remove this and the view
 @Entity
 @Table(name = "V_META_SERIES")
 @NamedEntityGraph(name = "MetaSeries.forIndex", attributeNodes = { @NamedAttributeNode("series"),
