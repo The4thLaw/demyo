@@ -52,18 +52,15 @@
 </template>
 
 <script>
-import { groupBy, deburr } from 'lodash'
-import { mapState } from 'vuex'
 import { focusElement } from '@/helpers/dom'
+import paginatedTextMixin from '@/mixins/paginated-text'
 
 export default {
 	name: 'TextIndex',
 
+	mixins: [paginatedTextMixin],
+
 	props: {
-		items: {
-			type: Array,
-			required: true
-		},
 		splitByFirstLetter: {
 			type: Boolean,
 			default: true
@@ -74,58 +71,9 @@ export default {
 		}
 	},
 
-	data() {
-		return {
-			currentPage: 1
-		}
-	},
-
-	computed: {
-		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForText || 40
-		}),
-
-		paginatedItems() {
-			return this.items.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
-		},
-
-		groupedItems() {
-			return groupBy(this.paginatedItems, (i) => this.extractFirstLetter(i))
-		},
-
-		pageCount() {
-			return Math.ceil(this.items.length / this.itemsPerPage)
-		}
-	},
-
 	mounted() {
 		focusElement(this.$refs.keyTarget)
-	},
-
-	methods: {
-		previousPage() {
-			if (this.currentPage > 1) {
-				this.currentPage--
-			}
-		},
-
-		nextPage() {
-			if (this.currentPage < this.pageCount) {
-				this.currentPage++
-			}
-		},
-
-		extractFirstLetter(item) {
-			/** @type String */
-			let first = deburr(this.firstLetterExtractor(item))
-			if (first.match(/[A-Za-z]/)) {
-				return first
-			} else if (first.match(/[0-9]/)) {
-				return '0-9'
-			}
-			return '#'
-		}
-	}
+	}	
 }
 </script>
 
