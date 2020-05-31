@@ -1,8 +1,10 @@
 package org.demyo.model.beans;
 
-import java.util.Comparator;
+import java.text.Collator;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -16,9 +18,6 @@ import org.demyo.model.util.AlbumComparator;
  */
 // TODO [Vue]: rename this class, remove the other
 public class MetaSeriesNG implements Comparable<MetaSeriesNG> {
-	private static final Comparator<MetaSeriesNG> COMPARATOR = Comparator.comparing(MetaSeriesNG::getTitle)
-			.thenComparing(MetaSeriesNG::getId);
-
 	@JsonView(Basic.class)
 	private final Series series;
 	@JsonView(Basic.class)
@@ -58,6 +57,10 @@ public class MetaSeriesNG implements Comparable<MetaSeriesNG> {
 		if (o == null) {
 			return -1;
 		}
-		return COMPARATOR.compare(this, o);
+		int comp = Collator.getInstance(LocaleContextHolder.getLocale()).compare(getTitle(), o.getTitle());
+		if (comp != 0) {
+			return comp;
+		}
+		return Long.compare(getId(), o.getId());
 	}
 }
