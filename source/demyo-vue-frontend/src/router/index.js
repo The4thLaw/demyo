@@ -3,6 +3,7 @@ import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
 import store from '@/store/index'
 import Home from '@/views/Home.vue'
+import albumRoutes from './albums'
 import authorRoutes from './authors'
 import derivativeRoutes from './derivatives'
 import derivativeTypeRoutes from './derivativeTypes'
@@ -19,6 +20,7 @@ const routes = [
 		name: 'home',
 		component: Home
 	},
+	...albumRoutes,
 	...authorRoutes,
 	...derivativeRoutes,
 	...derivativeTypeRoutes,
