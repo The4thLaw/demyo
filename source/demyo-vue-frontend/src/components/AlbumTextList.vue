@@ -12,6 +12,11 @@
 						<v-list-item-content>
 							<v-list-item-title v-text="value.identifyingName" />
 						</v-list-item-content>
+						<v-list-item-action>
+							<v-btn :to="`/series/${value.id}/view`" icon>
+								<v-icon>mdi-eye</v-icon>
+							</v-btn>
+						</v-list-item-action>
 					</template>
 
 					<v-list-item v-for="album in value.albums" :key="album.id" :to="`/albums/${album.id}/view`">
