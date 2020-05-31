@@ -1,6 +1,6 @@
 <template>
 	<div>
-		Hello, albums
+		<MetaSeriesIndex :items="albums" />
 		<v-btn
 			fab to="/albums/new" color="accent" fixed
 			bottom right
@@ -11,10 +11,15 @@
 </template>
 
 <script>
+import MetaSeriesIndex from '@/components/MetaSeriesIndex'
 import albumService from '@/services/album-service'
 
 export default {
 	name: 'AlbumIndex',
+
+	components: {
+		MetaSeriesIndex
+	},
 
 	metaInfo() {
 		return {
