@@ -18,6 +18,7 @@ export default {
 
 	methods: {
 		clearSearch() {
+			this.quicksearchQuery = ''
 			this.lastQuery = ''
 			this.quicksearchResults = undefined
 		},

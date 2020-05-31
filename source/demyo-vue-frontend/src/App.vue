@@ -110,7 +110,8 @@
 					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
 				</v-overlay>
 				<QuickSearchResults
-					v-if="isRelevantSearchQuery" :results="quicksearchResults" :loading="quicksearchLoading"
+					v-if="isRelevantSearchQuery" :results="quicksearchResults"
+					:loading="quicksearchLoading" @click="showQuicksearch = false; clearSearch()"
 				/>
 				<!-- Do it on show so that the element stays alive -->
 				<router-view v-show="!isRelevantSearchQuery" />

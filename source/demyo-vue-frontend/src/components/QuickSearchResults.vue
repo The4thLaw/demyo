@@ -10,7 +10,7 @@
 						<v-list-item v-for="item in results[key]" :key="item.id">
 							<v-list-item-content>
 								<div>
-									<router-link :to="`/${key}/${item.id}/view`">
+									<router-link :to="`/${key}/${item.id}/view`" @click.native="$emit('click')">
 										<template v-if="key !== 'albums'">
 											{{ item.identifyingName }}
 										</template>
@@ -20,7 +20,7 @@
 									</router-link>
 								</div>
 								<div v-if="key === 'albums' && item.series" class="c-QuickSearchResults__albumSeries">
-									<router-link :to="`/series/${item.series.id}/view`">
+									<router-link :to="`/series/${item.series.id}/view`" @click="$emit('click')">
 										{{ item.series.identifyingName }}
 									</router-link>
 								</div>
