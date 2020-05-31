@@ -252,7 +252,7 @@ export default {
 						{
 							title: 'menu.images.add',
 							icon: 'mdi-camera dem-overlay-add',
-							url: '/images/detect'
+							url: '/images/new'
 						},
 						{
 							title: 'menu.tags.add',
