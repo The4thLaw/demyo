@@ -25,23 +25,23 @@
 			:title="$t('page.Image.usedIn')"
 		>
 			<v-list>
-				<template v-for="(value, key) in parsedDependencies">
+				<template v-for="(value, modelType) in parsedDependencies">
 					<v-list-group
 						v-if="value.length > 0"
-						:key="key"
+						:key="modelType"
 						:value="true"
 						sub-group
 					>
 						<template v-slot:activator>
 							<v-list-item-content>
-								<v-list-item-title v-text="$t('page.Image.usedIn.' + key)" />
+								<v-list-item-title v-text="$t('page.Image.usedIn.' + modelType)" />
 							</v-list-item-content>
 						</template>
 
-						<v-list-item v-for="item in value" :key="item.id" :to="`/${key}/${item.id}/view`">
+						<v-list-item v-for="item in value" :key="item.id" :to="`/${modelType}/${item.id}/view`">
 							<v-list-item-content class="pl-4">
 								<v-list-item-title>
-									<template v-if="key === 'albums' && item.series">
+									<template v-if="modelType === 'albums' && item.series">
 										{{ item.series.name }} -
 									</template>
 									{{ item.identifyingName }}

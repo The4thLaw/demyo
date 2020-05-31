@@ -124,6 +124,8 @@
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Derivative.prices.history') }}</label>
+						<!-- Note: keyed by index, which is not ideal,
+						because the price doesn't have a technical ID -->
 						<v-row
 							v-for="(price, index) in derivative.prices" :key="'price_' + index"
 							dense class="v-DerivativeEdit__priceRow"

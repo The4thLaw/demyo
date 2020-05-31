@@ -1,7 +1,7 @@
 <template>
 	<SectionCard :loading="loading" class="c-QuickSearchResults">
 		<template v-if="hasResults">
-			<template v-for="key in keys">
+			<template v-for="key in modelTypes">
 				<template v-if="results[key]">
 					<h2 :key="`ti-${key}-title`" class="subtitle-1 primary--text">
 						{{ $t('quicksearch.results.title.' + key) }}
@@ -63,7 +63,7 @@ export default {
 
 	data() {
 		return {
-			keys: ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
+			modelTypes: ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
 		}
 	},
 

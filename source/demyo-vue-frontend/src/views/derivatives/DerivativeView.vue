@@ -159,6 +159,8 @@
 										</tr>
 									</thead>
 									<tbody>
+										<!-- Note: keyed by index, which is not ideal,
+										because the price doesn't have a technical ID -->
 										<tr v-for="(price, index) in derivative.prices" :key="index">
 											<td>{{ $d(new Date(price.date), 'long') }}</td>
 											<td>{{ price.price }}</td>
