@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="c-AlbumIndex">
 		<MetaSeriesIndex :items="albums" />
 		<v-btn
 			fab to="/albums/new" color="accent" fixed

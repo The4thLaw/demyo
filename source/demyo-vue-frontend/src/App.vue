@@ -1,5 +1,14 @@
 <template>
 	<v-app id="demyo">
+		<v-navigation-drawer
+			v-if="!$vuetify.breakpoint.smAndDown"
+			v-model="displayDetailsPane" right app clipped
+			width="33vw" :mobile-break-point="$vuetify.breakpoint.thresholds.sm"
+			disable-resize-watcher="true"
+		>
+			<portal-target name="appSidePane" />
+		</v-navigation-drawer>
+
 		<v-navigation-drawer v-model="mainMenu" app temporary width="20em">
 			<v-list class="c-App__menuList">
 				<v-list-group v-if="readerLoaded">
@@ -77,7 +86,7 @@
 				</v-list-group>
 			</v-list>
 		</v-navigation-drawer>
-		<v-app-bar color="primary" dark app>
+		<v-app-bar color="primary" dark app clipped-right>
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
@@ -101,6 +110,12 @@
 		</v-app-bar>
 
 		<v-content id="c-App__mainContent">
+			<!-- First part of the details pane management -->
+			<v-dialog v-if="$vuetify.breakpoint.smAndDown" v-model="displayDetailsPane">
+				<v-card>
+					<portal-target name="appSidePane" />
+				</v-card>
+			</v-dialog>
 			<v-container id="c-App__mainContainer" fluid>
 				<ReaderSelection
 					v-if="requireReaderSelection || promptReaderSelection" :require-selection="requireReaderSelection"
@@ -117,12 +132,12 @@
 				<router-view v-show="!isRelevantSearchQuery" />
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
-			<v-footer color="secondary" inset dark>
-				<v-col>
-					TODO: codename
-				</v-col>
-			</v-footer>
 		</v-content>
+		<v-footer color="secondary" app dark>
+			<v-col>
+				TODO: codename
+			</v-col>
+		</v-footer>
 	</v-app>
 </template>
 
@@ -161,6 +176,8 @@ export default {
 			pageTitle: 'Demyo',
 
 			mainMenu: false,
+			foo: true,
+			bar: this.$vuetify,
 			showQuicksearch: false,
 
 			promptReaderSelection: false,
@@ -324,6 +341,7 @@ export default {
 			globalOverlay: state => state.ui.globalOverlay,
 			displaySnackbar: state => state.ui.displaySnackbar,
 			snackbarMessage: state => state.ui.snackbarMessages[0],
+			displayDetailsPane: state => state.ui.displayDetailsPane
 		})
 	},
 

@@ -10,15 +10,28 @@
 		@keyup.arrow-right.exact="nextPage()"
 	>
 		Hello, MetaSeriesIndex
+		<DetailView>
+			<template v-slot:list>
+				The list of series
+			</template>
+			<template v-slot:detail>
+				The series details
+			</template>
+		</DetailView>
 	</div>
 </template>
 
 <script>
+import DetailView from '@/components/DetailView'
 import { focusElement } from '@/helpers/dom'
 import paginatedTextMixin from '@/mixins/paginated-text'
 
 export default {
 	name: 'MetaSeriesIndex',
+
+	components: {
+		DetailView
+	},
 
 	mixins: [paginatedTextMixin],
 

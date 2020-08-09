@@ -7,7 +7,8 @@ export default {
 		suppressSearch: false,
 		globalOverlay: false,
 		displaySnackbar: false,
-		snackbarMessages: []
+		snackbarMessages: [],
+		displayDetailsPane: false
 	},
 
 	mutations: {
@@ -35,6 +36,10 @@ export default {
 			if (state.snackbarMessages[0] && !state.displaySnackbar) {
 				state.displaySnackbar = true
 			}
+		},
+
+		toggleDetailsPane(state, value) {
+			state.displayDetailsPane = value
 		}
 	},
 
@@ -62,6 +67,14 @@ export default {
 		closeSnackbar({ commit }) {
 			commit('closeSnackbar')
 			delay(() => commit('nextSnackbarMessage'), 1000)
+		},
+
+		showDetailsPane({ commit }) {
+			commit('toggleDetailsPane', true)
+		},
+
+		hideDetailsPane({ commit }) {
+			commit('toggleDetailsPane', false)
 		}
 	}
 }
