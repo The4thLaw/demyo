@@ -4,7 +4,7 @@
 			v-if="!$vuetify.breakpoint.smAndDown"
 			v-model="displayDetailsPane" right app clipped
 			width="33vw" :mobile-break-point="$vuetify.breakpoint.thresholds.sm"
-			disable-resize-watcher="true"
+			:disable-resize-watcher="true"
 		>
 			<portal-target name="appSidePane" />
 		</v-navigation-drawer>
