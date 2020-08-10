@@ -1,42 +1,30 @@
 <template>
-	<div
-		ref="keyTarget"
-		v-touch="{
-			left: nextPage,
-			right: previousPage
-		}"
-		class="c-MetaSeriesIndex"
-		@keyup.arrow-left.exact="previousPage()"
-		@keyup.arrow-right.exact="nextPage()"
-	>
-		Hello, MetaSeriesIndex
-		<DetailView>
-			<template v-slot:list>
-				The list of series
+	<div class="c-MetaSeriesIndex">
+		<CardTextIndex :items="items" :first-letter-extractor="firstLetterExtractor">
+			<template v-slot:default="slotProps">
+				<MetaSeriesCard :meta="slotProps.item" />
 			</template>
-			<template v-slot:detail>
-				The series details
-			</template>
-		</DetailView>
+		</CardTextIndex>
 	</div>
 </template>
 
 <script>
-import DetailView from '@/components/DetailView'
-import { focusElement } from '@/helpers/dom'
-import paginatedTextMixin from '@/mixins/paginated-text'
+import CardTextIndex from '@/components/CardTextIndex'
+import MetaSeriesCard from '@/components/MetaSeriesCard'
 
 export default {
 	name: 'MetaSeriesIndex',
 
 	components: {
-		DetailView
+		CardTextIndex,
+		MetaSeriesCard
 	},
 
-	mixins: [paginatedTextMixin],
-
-	mounted() {
-		focusElement(this.$refs.keyTarget)
+	props: {
+		items: {
+			type: Array,
+			required: true
+		}
 	},
 
 	methods: {
