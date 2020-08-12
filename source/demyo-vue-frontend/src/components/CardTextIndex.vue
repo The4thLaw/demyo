@@ -83,8 +83,13 @@ export default {
 	justify-content: space-between;
 }
 
+// TODO: below a certain media query, switch to 100% width
+// Alternative: use a responsive 12-cell grid from Vuetify ?
+// Alternative 2: use a responsive CSS grid, it will be able to align items properly in all cases
 .c-CardTextIndex__item {
-	width: 15em;
+	flex: 1;
+	min-width: 15em;
+	max-width: 25em;
 	margin-right: 1em;
 	margin-bottom: 1em;
 }

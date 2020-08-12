@@ -10,7 +10,14 @@ export default {
 	props: {
 		items: {
 			type: Array,
-			required: true
+			required: false,
+			default: null
+		}
+	},
+
+	mounted() {
+		if (!(this.items || this.itemsToPaginate)) {
+			console.error('This component has neither items nor itemsToPaginate')
 		}
 	},
 
@@ -25,8 +32,14 @@ export default {
 			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForText || 40
 		}),
 
+		// Allows overriding the list of items
+		itemsToPaginate() {
+			return this.items
+		},
+
 		paginatedItems() {
-			return this.items.slice((this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
+			return this.itemsToPaginate.slice(
+				(this.currentPage - 1) * this.itemsPerPage, this.currentPage * this.itemsPerPage)
 		},
 
 		groupedItems() {
@@ -34,7 +47,7 @@ export default {
 		},
 
 		pageCount() {
-			return Math.ceil(this.items.length / this.itemsPerPage)
+			return Math.ceil(this.itemsToPaginate.length / this.itemsPerPage)
 		}
 	},
 
