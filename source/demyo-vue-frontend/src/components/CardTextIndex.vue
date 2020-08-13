@@ -76,22 +76,22 @@ export default {
 	font-family: serif !important;
 }
 
+// A responsive grid of items that take at least 15em and grow if needed.
+// Rows will be created of needed
 .c-CardTextIndex__panel {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+	grid-gap: 2em;
 }
 
-// TODO: below a certain media query, switch to 100% width
-// Alternative: use a responsive 12-cell grid from Vuetify ?
-// Alternative 2: use a responsive CSS grid, it will be able to align items properly in all cases
+// Items will grow to take the full grid row height, to follow the Material Design advice of having scannable grids
 .c-CardTextIndex__item {
-	flex: 1;
-	min-width: 15em;
-	max-width: 25em;
-	margin-right: 1em;
-	margin-bottom: 1em;
+	display: flex;
+	flex-direction: column;
+
+	& > * {
+		flex: 1;
+	}
 }
 
 #demyo .c-CardTextIndex__list {
