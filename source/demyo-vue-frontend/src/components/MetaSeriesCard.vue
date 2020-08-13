@@ -1,6 +1,5 @@
 <template>
 	<v-card :flat="true" :hover="true" class="c-MetaSeriesCard">
-		<!-- TODO: fix layout when only two series on a wide page -->
 		<template v-if="meta.album">
 			<router-link
 				v-ripple :to="cardLink"
@@ -8,9 +7,15 @@
 			>
 				{{ meta.album.title }}
 			</router-link>
-			<div class="c-MetaSeriesCard__one-shot">
-				{{ $t('field.Album.oneShot.view') }}
-			</div>
+			<v-list dense>
+				<v-list-item :href="cardLink" class="c-MetaSeriesCard__one-shot">
+					<v-list-item-content>
+						<v-list-item-title>
+							{{ $t('field.Album.oneShot.view') }}
+						</v-list-item-title>
+					</v-list-item-content>
+				</v-list-item>
+			</v-list>
 		</template>
 		<template v-if="meta.series">
 			<router-link
@@ -27,14 +32,20 @@
 						</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
-				<v-list-item v-if="pageCount > 1">
+				<!--
+					Pad the last page to keep a constant height.
+					If we don't pad and the grid row doesn't have an element that is tall enough, the web page will jump
+					when we reach the last item page (e.g. it's suddenly 1 item long and needs a lot less space).
+				-->
+				<template v-if="pageCount > 1 && !hasNextPage">
+					<v-list-item v-for="pad in (itemsPerPage - paginatedItems.length)" :key="pad" />
+				</template>
+				<v-list-item v-if="pageCount > 1" class="c-MetaSeriesCard__pagination">
 					<!-- Custom pagination because vuetify doesn't provide no-count pagination -->
-					<v-btn text icon @click.stop="previousPage">
+					<v-btn :disabled="!hasPreviousPage" text icon @click.stop="previousPage">
 						<v-icon>mdi-chevron-left</v-icon>
 					</v-btn>
-					<!-- TODO: disable links when not working -->
-					<!-- TODO: try to keep a fixed height to the element (pad with empty lines ?) -->
-					<v-btn text icon @click.stop="nextPage">
+					<v-btn :disabled="!hasNextPage" text icon @click.stop="nextPage">
 						<v-icon>mdi-chevron-right</v-icon>
 					</v-btn>
 				</v-list-item>
@@ -95,7 +106,7 @@ export default {
 	color: inherit;
 	text-decoration: none;
 	cursor: pointer;
-	padding: 8px 16px;
+	padding: 16px 16px;
 
 	&:hover,
 	&:focus {
@@ -104,8 +115,17 @@ export default {
 	}
 }
 
-// TODO: better styling
 .c-MetaSeriesCard__one-shot {
 	font-style: italic;
+}
+
+// Need an ID override for this particular case
+#demyo .c-MetaSeriesCard__one-shot {
+	color: var(--dem-text-lighter) !important;
+}
+
+// Align the pagination buttons
+.c-MetaSeriesCard__pagination {
+	justify-content: space-around;
 }
 </style>

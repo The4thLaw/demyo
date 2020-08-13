@@ -48,18 +48,26 @@ export default {
 
 		pageCount() {
 			return Math.ceil(this.itemsToPaginate.length / this.itemsPerPage)
+		},
+
+		hasPreviousPage() {
+			return this.currentPage > 1
+		},
+
+		hasNextPage() {
+			return this.currentPage < this.pageCount
 		}
 	},
 
 	methods: {
 		previousPage() {
-			if (this.currentPage > 1) {
+			if (this.hasPreviousPage) {
 				this.currentPage--
 			}
 		},
 
 		nextPage() {
-			if (this.currentPage < this.pageCount) {
+			if (this.hasNextPage) {
 				this.currentPage++
 			}
 		},
