@@ -133,7 +133,7 @@
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
 		</v-content>
-		<v-footer color="secondary" app dark>
+		<v-footer color="secondary" dark>
 			<v-col>
 				TODO: codename
 			</v-col>
