@@ -1,4 +1,4 @@
-import i18n from '@/i18n'
+import i18n, { switchLanguage } from '@/i18n'
 import AbstractModelService from './abstract-model-service'
 import { axiosGet, axiosPost, axiosDelete } from '@/helpers/axios'
 import store from '@/store'
@@ -49,6 +49,9 @@ class ReaderService extends AbstractModelService {
 		console.log('Setting reader in store', reader)
 		let storeProm = store.dispatch('reader/setCurrentReader', reader)
 		localStorage.setItem('currentReader', JSON.stringify(reader))
+		if (reader.configuration.language) {
+			switchLanguage(reader.configuration.language)
+		}
 		await storeProm
 	}
 

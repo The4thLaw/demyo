@@ -5,6 +5,8 @@ import { apiRoot, defaultLanguage, fallbackLanguage } from '@/myenv'
 
 Vue.use(VueI18n)
 
+const loadedLanguages = []
+
 const dateTimeFormats = {
 	en: {
 		numeric: {
@@ -46,8 +48,8 @@ function loadLocaleMessages() {
 	return messages
 }
 
-// TODO: eventually, load the Reader preferences to get the right language, and load that one and
-// the fallback. Stop relying on the navigator language.
+// The default lang fallback languages are only guessed from the client configuration.
+// They will be overridden by the reader service as soon as a reader is available
 
 const i18n = new VueI18n({
 	locale: defaultLanguage,
@@ -63,9 +65,14 @@ console.log(`Initialized i18n with '${defaultLanguage}' as default language and 
  * @return {Promise} A Promise that always resolves to true
  */
 async function loadLanguageFromServer(lang) {
+	if (loadedLanguages.includes(lang)) {
+		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
+		return true
+	}
 	let response = await axios.get(apiRoot + 'translations/' + lang)
 	i18n.setLocaleMessage(lang, response.data)
 	console.log(`Loaded ${Object.keys(response.data).length} translations from the server in ${lang}`)
+	loadedLanguages.push(lang)
 	return true
 }
 
@@ -74,5 +81,15 @@ async function loadLanguageFromServer(lang) {
 // Load the default language, and then the fallback (prioritise the default rather than relying on luck)
 loadLanguageFromServer(defaultLanguage).then(
 	() => loadLanguageFromServer(fallbackLanguage))
+
+/**
+ * Switches to a different language, potentially loading translations if needed
+ * @param {String} lang the new language
+ */
+export async function switchLanguage(lang) {
+	console.log(`Switching language to ${lang}`)
+	await loadLanguageFromServer(lang)
+	i18n.locale = lang
+}
 
 export default i18n
