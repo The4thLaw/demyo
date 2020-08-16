@@ -54,6 +54,16 @@ class ReaderService extends AbstractModelService {
 		store.dispatch('reader/setReaderLists', lists)
 	}
 
+	findFavouriteAlbums(readerId) {
+		//return []
+		return axiosGet(`${this.basePath}${readerId}/favourites/albums`, [])
+	}
+
+	findReadingList(readerId) {
+		//return []
+		return axiosGet(`${this.basePath}${readerId}/readingList/albums`, [])
+	}
+
 	addFavouriteSeries(item) {
 		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', 'series', item,
 			'readers.confirm.favourite.add')

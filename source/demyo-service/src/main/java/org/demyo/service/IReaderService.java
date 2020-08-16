@@ -5,6 +5,7 @@ import java.util.Set;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.model.Series;
+import org.demyo.model.beans.MetaSeriesNG;
 import org.demyo.model.beans.ReaderLists;
 
 /**
@@ -167,4 +168,21 @@ public interface IReaderService extends IModelService<Reader> {
 	 * @return The reading listS
 	 */
 	Set<Number> getReadingList(long readerId);
+
+	/**
+	 * Finds all {@link Album}s in the {@link Reader}'s favourites, grouped by series, in the suitable order.
+	 * <p>
+	 * {@link Album}s from favourite {@link Series} are also retrieved.
+	 * </p>
+	 * 
+	 * @return The {@link Album}s grouped by series.
+	 */
+	Iterable<MetaSeriesNG> getFavouriteAlbums(long modelId);
+
+	/**
+	 * Finds all {@link Album}s in the {@link Reader}'s reading list, grouped by series, in the suitable order.
+	 * 
+	 * @return The {@link Album}s grouped by series.
+	 */
+	Iterable<MetaSeriesNG> getReadingListAlbums(long modelId);
 }

@@ -9,6 +9,7 @@ import derivativeRoutes from './derivatives'
 import derivativeTypeRoutes from './derivativeTypes'
 import imageRoutes from './images'
 import managementRoutes from './manage'
+import readerRoutes from './readers'
 import seriesRoutes from './series'
 
 Vue.use(VueRouter)
@@ -26,6 +27,7 @@ const routes = [
 	...derivativeTypeRoutes,
 	...imageRoutes,
 	...managementRoutes,
+	...readerRoutes,
 	...seriesRoutes,
 	{
 		path: '/about',

@@ -1,18 +1,22 @@
 package org.demyo.web.controller.api;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.model.Series;
+import org.demyo.model.beans.MetaSeriesNG;
 import org.demyo.model.beans.ReaderLists;
 import org.demyo.service.IReaderService;
 
@@ -54,6 +58,19 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	@GetMapping("/{modelId}/lists")
 	public ReaderLists getLists(@PathVariable long modelId) {
 		return service.getLists(modelId);
+	}
+
+	@GetMapping("/{modelId}/favourites/albums")
+	public MappingJacksonValue getFavouriteAlbums(@PathVariable long modelId,
+			@RequestParam("view") Optional<String> view) {
+		Iterable<MetaSeriesNG> value = service.getFavouriteAlbums(modelId);
+		return getIndexView(view, value);
+	}
+
+	@GetMapping("/{modelId}/readingList/albums")
+	public MappingJacksonValue getReadingList(@PathVariable long modelId, @RequestParam("view") Optional<String> view) {
+		Iterable<MetaSeriesNG> value = service.getReadingListAlbums(modelId);
+		return getIndexView(view, value);
 	}
 
 	/**

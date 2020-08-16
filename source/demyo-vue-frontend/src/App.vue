@@ -21,7 +21,7 @@
 						</v-list-item-content>
 					</template>
 
-					<v-list-item href="/TODO">
+					<v-list-item :to="`/readers/${currentReader.id}/favourites`">
 						<v-list-item-icon>
 							<v-icon>mdi-heart</v-icon>
 						</v-list-item-icon>
@@ -29,7 +29,7 @@
 							<v-list-item-title>{{ $t('menu.reader.faves') }}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
-					<v-list-item href="/TODO">
+					<v-list-item :to="`/readers/${currentReader.id}/readingList`">
 						<v-list-item-icon>
 							<v-icon>mdi-library</v-icon>
 						</v-list-item-icon>
