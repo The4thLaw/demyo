@@ -32,8 +32,7 @@ const dateTimeFormats = {
 }
 
 // By default, we start with partial messages covering all above-the-fold content in all supported languages
-// (mainly titles)
-// TODO: add more messages to those files (list them all)
+// (mainly titles, but also the search widget)
 function loadLocaleMessages() {
 	const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
 	const messages = {}

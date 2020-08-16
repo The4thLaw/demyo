@@ -2,5 +2,9 @@
 	"title.home": "Accueil",
 
 	"core.loading": "Chargement...",
-	"core.reader.welcome": "Bienvenue, {reader}"
+	"core.reader.welcome": "Bienvenue, {reader}",
+
+	"widget.search.description": "Entrez les termes à rechercher :",
+	"widget.search.label": "e.g. Franquin",
+	"widget.search.title": "Recherche"
 }

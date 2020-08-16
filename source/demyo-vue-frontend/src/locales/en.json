@@ -2,5 +2,9 @@
 	"title.home": "Home",
 
 	"core.loading": "Loading...",
-	"core.reader.welcome": "Welcome back, {reader}"
+	"core.reader.welcome": "Welcome back, {reader}",
+
+	"widget.search.description": "Enter some terms to search your collection:",
+	"widget.search.label": "e.g. Stan Lee",
+	"widget.search.title": "Search"
 }
