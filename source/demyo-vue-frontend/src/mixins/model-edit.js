@@ -4,7 +4,7 @@ export default {
 			title: this.initialized
 				? (this.parsedId
 					? this.$t(this.mixinConfig.modelEdit.titleKeys.edit)
-					: this.$t(this.mixinConfig.modelEdit.titleKeys.edit))
+					: this.$t(this.mixinConfig.modelEdit.titleKeys.add))
 				: ''
 		}
 	},
