@@ -49,13 +49,15 @@
 				{{ series.location }}
 			</FieldValue>
 
-			<FieldValue v-if="series.relatedSeries && series.relatedSeries.length > 0" :label="$t('field.Series.relatedSeries')">
+			<FieldValue
+				v-if="series.relatedSeries && series.relatedSeries.length > 0"
+				:label="$t('field.Series.relatedSeries')"
+			>
 				<ModelLink :model="series.relatedSeries" view="SeriesView" />
 			</FieldValue>
 
-			<!-- TODO: test this layout once we can edit Series to add data -->
 			<div class="dem-columnized">
-				<FieldValue v-if="series.biography" :label="$t('field.Series.summary')">
+				<FieldValue v-if="series.summary" :label="$t('field.Series.summary')">
 					<div v-html="series.summary" />
 				</FieldValue>
 				<FieldValue v-if="series.comment" :label="$t('field.Series.comment')">
