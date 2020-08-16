@@ -177,6 +177,7 @@ public class Image extends AbstractModel {
 	 * @return The full set of {@link Album}s.
 	 */
 	// TODO: @JsonIgnore might be more relevant here... to be determined later
+	// Maybe we should even remove the method
 	public SortedSet<Album> getAllAlbums() {
 		SortedSet<Album> all = new TreeSet<>(new AlbumAndSeriesComparator());
 		if (Hibernate.isInitialized(albumCovers)) {

@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @deprecated To be removed
  */
 @Deprecated
-// TODO [Vue] remove this and the view
+// TODO [Vue] remove this and the database view
 @Entity
 @Table(name = "V_META_SERIES")
 @NamedEntityGraph(name = "MetaSeries.forIndex", attributeNodes = { @NamedAttributeNode("series"),
