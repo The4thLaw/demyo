@@ -37,7 +37,7 @@
 							<v-list-item-title>{{ $t('menu.reader.readingList') }}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
-					<v-list-item href="/readers">
+					<v-list-item @click="promptReaderSelection = true">
 						<v-list-item-icon>
 							<v-icon>mdi-account-convert</v-icon>
 						</v-list-item-icon>
@@ -119,6 +119,7 @@
 			<v-container id="c-App__mainContainer" fluid>
 				<ReaderSelection
 					v-if="requireReaderSelection || promptReaderSelection" :require-selection="requireReaderSelection"
+					@cancel="promptReaderSelection = false" @select="promptReaderSelection = false"
 				/>
 				<v-overlay absolute z-index="4" :value="globalOverlay" class="c-App__overlay">
 					<v-progress-circular :indeterminate="true" color="primary" size="96" width="8" />
@@ -176,8 +177,6 @@ export default {
 			pageTitle: 'Demyo',
 
 			mainMenu: false,
-			foo: true,
-			bar: this.$vuetify,
 			showQuicksearch: false,
 
 			promptReaderSelection: false,

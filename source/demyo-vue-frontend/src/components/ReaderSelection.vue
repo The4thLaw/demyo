@@ -1,5 +1,8 @@
 <template>
-	<v-dialog v-model="dialog" :persistent="requireSelection" max-width="400px">
+	<v-dialog
+		v-model="dialog" :persistent="requireSelection" max-width="400px"
+		@click:outside="$emit('cancel')"
+	>
 		<v-card>
 			<v-card-title>
 				{{ $t('page.Reader.select.title') }}
@@ -33,7 +36,6 @@
 
 <script>
 // TODO: add / edit readers
-// TODO: Switch from App
 import LetterIcon from '@/components/LetterIcon'
 import readerService from '@/services/reader-service'
 
@@ -69,6 +71,7 @@ export default {
 
 		async select(reader) {
 			await readerService.setCurrentReader(reader)
+			this.$emit('select')
 		}
 	}
 }
