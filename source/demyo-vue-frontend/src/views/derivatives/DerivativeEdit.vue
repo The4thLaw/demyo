@@ -164,7 +164,6 @@
 <script>
 // TODO: oneNotNull rule
 import { TiptapVuetify } from 'tiptap-vuetify'
-import Vue from 'vue'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
