@@ -1,15 +1,12 @@
 <template>
 	<v-autocomplete
 		v-model="inputVal"
-		:items="items"
+		v-bind="$attrs"
 		:label="$t(labelKey)"
-		:clearable="clearable"
-		:multiple="multiple"
 		item-text="identifyingName"
 		item-value="id"
 		menu-props="allowOverflow"
 		:loading="loading ? 'primary' : false"
-		:rules="rules"
 		:no-data-text="$t('core.components.Autocomplete.nodata')"
 	>
 		<template v-if="refreshable" v-slot:append-outer>
@@ -21,39 +18,19 @@
 </template>
 
 <script>
-// TODO: try to use v-bind="$attrs" rather than redeclaring everything as own props
 export default {
 	name: 'Autocomplete',
 
 	props: {
+		// Using v-bind="$attrs" means we can avoid re-declaring everything we want to pass as-is to v-autocomplete
 		value: {
 			type: null,
 			default: false
 		},
 
-		items: {
-			type: Array,
-			required: true
-		},
-
 		labelKey: {
 			type: String,
 			required: true
-		},
-
-		clearable: {
-			type: Boolean,
-			default: true
-		},
-
-		multiple: {
-			type: Boolean,
-			default: false
-		},
-
-		rules: {
-			type: Array,
-			default: undefined
 		},
 
 		refreshable: {
