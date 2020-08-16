@@ -55,12 +55,10 @@ class ReaderService extends AbstractModelService {
 	}
 
 	findFavouriteAlbums(readerId) {
-		//return []
 		return axiosGet(`${this.basePath}${readerId}/favourites/albums`, [])
 	}
 
 	findReadingList(readerId) {
-		//return []
 		return axiosGet(`${this.basePath}${readerId}/readingList/albums`, [])
 	}
 
