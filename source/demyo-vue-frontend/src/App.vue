@@ -188,11 +188,6 @@ export default {
 					active: true,
 					subItems: [
 						{
-							title: 'menu.series.browse',
-							icon: 'mdi-animation',
-							url: '/series'
-						},
-						{
 							title: 'menu.albums.browse',
 							icon: 'mdi-book-open-variant',
 							url: '/albums'

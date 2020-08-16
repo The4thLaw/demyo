@@ -4,6 +4,8 @@ import SeriesView from '@/views/series/SeriesView'
 
 export default [
 	{
+		// This is no longer used but remains for now, in case I want to add it back
+		// after end-user testing
 		path: '/series',
 		name: 'SeriesIndex',
 		component: SeriesIndex
