@@ -185,4 +185,14 @@ public interface IReaderService extends IModelService<Reader> {
 	 * @return The {@link Album}s grouped by series.
 	 */
 	Iterable<MetaSeriesNG> getReadingListAlbums(long modelId);
+
+	/**
+	 * Checks if it's safe to delete readers.
+	 * <p>
+	 * The library cannot be left without at least one reader.
+	 * </p>
+	 * 
+	 * @return <code>true</code> if it's safe to delete one reader.
+	 */
+	boolean mayDeleteReader();
 }

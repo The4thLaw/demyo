@@ -244,7 +244,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Override
 	public void delete(long id) {
 		// Override to ensure we don't delete the last reader
-		if (getRepo().count() < 2) {
+		if (!mayDeleteReader()) {
 			throw new DemyoRuntimeException(DemyoErrorCode.READER_CANNOT_DELETE_LAST,
 					"Cannot delete the last reader in the database");
 		}
@@ -252,6 +252,11 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	}
 
 	@Transactional(readOnly = true)
+	@Override
+	public boolean mayDeleteReader() {
+		return getRepo().count() >= 2;
+	}
+
 	@Override
 	public ReaderLists getLists(long readerId) {
 		Set<Number> series = repo.getFavouriteSeriesForReader(readerId);

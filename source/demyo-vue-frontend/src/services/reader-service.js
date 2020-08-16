@@ -41,6 +41,10 @@ class ReaderService extends AbstractModelService {
 		}
 	}
 
+	mayDeleteReader() {
+		return axiosGet(`${this.basePath}mayDelete`, false)
+	}
+
 	async setCurrentReader(reader) {
 		console.log('Setting reader in store', reader)
 		let storeProm = store.dispatch('reader/setCurrentReader', reader)

@@ -1,34 +1,30 @@
+import ReaderEdit from '@/views/readers/ReaderEdit'
 import ReaderFavourites from '@/views/readers/ReaderFavourites'
+import ReaderIndex from '@/views/readers/ReaderIndex'
 import ReadingList from '@/views/readers/ReadingList'
-import SeriesEdit from '@/views/series/SeriesEdit'
-import SeriesIndex from '@/views/series/SeriesIndex'
-import SeriesView from '@/views/series/SeriesView'
+import ReaderView from '@/views/readers/ReaderView'
 
 export default [
 	{
-		// TODO: implement this
 		path: '/readers',
 		name: 'ReaderIndex',
-		component: SeriesIndex
+		component: ReaderIndex
 	},
 	{
-		// TODO: implement this
 		path: '/readers/:id/view',
 		alias: '/readers/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
 		name: 'ReaderView',
-		component: SeriesView
+		component: ReaderView
 	},
 	{
-		// TODO: implement this
 		path: '/readers/:id/edit',
 		name: 'ReaderEdit',
-		component: SeriesEdit
+		component: ReaderEdit
 	},
 	{
-		// TODO: implement this
 		path: '/readers/new',
 		name: 'ReaderAdd',
-		component: SeriesEdit
+		component: ReaderEdit
 	},
 	{
 		path: '/readers/:id/favourites',

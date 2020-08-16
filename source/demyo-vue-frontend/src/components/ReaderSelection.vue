@@ -35,7 +35,6 @@
 </template>
 
 <script>
-// TODO: add / edit readers
 import LetterIcon from '@/components/LetterIcon'
 import readerService from '@/services/reader-service'
 

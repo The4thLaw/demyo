@@ -50,6 +50,19 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	}
 
 	/**
+	 * Checks if it's safe to delete readers.
+	 * <p>
+	 * The library cannot be left without at least one reader.
+	 * </p>
+	 * 
+	 * @return <code>true</code> if it's safe to delete one reader.
+	 */
+	@GetMapping("mayDelete")
+	public boolean mayDeleteReader() {
+		return service.mayDeleteReader();
+	}
+
+	/**
 	 * Gets the {@link ReaderLists} for a specific {@link Reader}.
 	 * 
 	 * @param modelId The {@link Reader} ID.
