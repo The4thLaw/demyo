@@ -45,6 +45,14 @@
 							<v-list-item-title>{{ $t('menu.reader.switch') }}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
+					<v-list-item :href="`/readers/`">
+						<v-list-item-icon>
+							<v-icon>mdi-account-multiple</v-icon>
+						</v-list-item-icon>
+						<v-list-item-content>
+							<v-list-item-title>{{ $t('menu.reader.manage') }}</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
 				</v-list-group>
 
 				<v-divider />
