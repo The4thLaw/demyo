@@ -47,7 +47,7 @@ import modelViewMixin from '@/mixins/model-view'
 import readerService from '@/services/reader-service'
 
 export default {
-	name: 'DerivativeTypeView',
+	name: 'ReaderView',
 
 	components: {
 		AppTask,

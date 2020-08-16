@@ -11,9 +11,9 @@
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">
 							{{ $t('field.Reader.colour') }}
-							<v-checkbox v-model="noColour" :label="$t('special.form.noColour')" />
-							<v-color-picker v-if="!noColour" v-model="reader.colour" />
 						</label>
+						<v-checkbox v-model="noColour" :label="$t('special.form.noColour')" />
+						<v-color-picker v-if="!noColour" v-model="reader.colour" />
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -53,8 +53,6 @@ export default {
 			},
 
 			reader: {},
-			// TODO: figure out why this checkbox value doesn't change, or rather changes but
-			// immediately reverts
 			noColour: true,
 
 			rules: {
@@ -73,12 +71,17 @@ export default {
 
 			this.noColour = !this.reader.colour
 			if (!this.reader.colour) {
-				// TODO: improve this handling: will use rgba by default (or an object)
 				this.reader.colour = ''
 			}
 		},
 
 		saveHandler() {
+			// Truncate RGBA color
+			if (this.noColour) {
+				this.reader.colour = null
+			} else if (this.reader.colour) {
+				this.reader.colour = this.reader.colour.substring(0, 7)
+			}
 			return readerService.save(this.reader)
 		}
 	}
