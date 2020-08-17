@@ -10,7 +10,8 @@ class DerivativeService extends AbstractModelService {
 			fillMissingObjects: ['series', 'album', 'artist', 'source', 'type'],
 			fillMissingArrays: ['prices', 'images'],
 			sanitizeArrays: ['images'],
-			sanitizeObjects: ['series', 'album', 'artist', 'source']
+			sanitizeObjects: ['series', 'album', 'artist', 'source'],
+			sanitizeHtml: ['description']
 		})
 	}
 

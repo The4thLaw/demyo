@@ -51,7 +51,6 @@
 </template>
 
 <script>
-// TODO: eveywhere this is used, <p></p> should be rewritten in the service as null
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'

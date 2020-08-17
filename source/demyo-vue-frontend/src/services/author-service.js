@@ -7,7 +7,8 @@ import { axiosGet } from '@/helpers/axios'
 class AuthorService extends AbstractModelService {
 	constructor() {
 		super('authors/', {
-			fillMissingObjects: ['portrait']
+			fillMissingObjects: ['portrait'],
+			sanitizeHtml: ['biography']
 		})
 	}
 

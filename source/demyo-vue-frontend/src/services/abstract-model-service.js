@@ -82,6 +82,15 @@ class AbstractModelService {
 			})
 		}
 
+		if (this.config.sanitizeHtml) {
+			// TipTap may leave empty <p></p> markup if the user deletes the text
+			this.config.sanitizeHtml.forEach(prop => {
+				if (model[prop] === '<p></p>') {
+					model[prop] = null
+				}
+			})
+		}
+
 		if (model.id) {
 			return axiosPut(this.basePath + model.id, model, -1)
 		}
