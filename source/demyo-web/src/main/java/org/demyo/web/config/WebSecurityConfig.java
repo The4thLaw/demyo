@@ -11,7 +11,7 @@ import org.demyo.web.servlet.StagemonitorInitializer;
 /**
  * Java-based configuration for Spring Security.
  */
-// TODO: Review this after switch to Vue
+// TODO: Review this after switch to Vue. Think about CSRF, and make sure the csp doesn't impact Vue.
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
