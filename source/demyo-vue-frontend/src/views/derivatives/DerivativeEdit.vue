@@ -6,13 +6,14 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
-							@input="loadAlbums"
+							clearable :rules="rules.albumOrSeries" @input="loadAlbums(); $refs.form.validate()"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
-							label-key="field.Derivative.album" refreshable @refresh="loadAlbums"
+							label-key="field.Derivative.album" refreshable clearable
+							:rules="rules.albumOrSeries" @input="$refs.form.validate()" @refresh="loadAlbums"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -162,7 +163,6 @@
 </template>
 
 <script>
-// TODO: oneNotNull rule
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
@@ -222,12 +222,22 @@ export default {
 				prices: {
 					date: [ mandatory(this) ],
 					price: [ mandatory(this) ]
-				}
+				},
+				albumOrSeries: [ this.oneNotNull ]
 			}
 		}
 	},
 
 	methods: {
+		oneNotNull() {
+			// In addition to this rule, an @input handler forces full form validation when one of the relevant
+			// input changes. This guarantees that errors on other fields are cleared when only one changes
+			if (!this.derivative.series.id && !this.derivative.album.id) {
+				return this.$t('validation.Derivative.albumOrSeries')
+			}
+			return true
+		},
+
 		addPrice() {
 			let newPrice = {
 				date: null,
