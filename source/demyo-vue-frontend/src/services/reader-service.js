@@ -6,7 +6,6 @@ import store from '@/store'
 /**
  * API service for Readers.
  */
-// TODO: saving an album should impact the reader lists
 class ReaderService extends AbstractModelService {
 	constructor() {
 		super('readers/')
@@ -53,6 +52,11 @@ class ReaderService extends AbstractModelService {
 			switchLanguage(reader.configuration.language)
 		}
 		await storeProm
+	}
+
+	loadCurrentReaderLists() {
+		let reader = store.state.reader.currentReader
+		return this.loadLists(reader)
 	}
 
 	async loadLists(reader) {
