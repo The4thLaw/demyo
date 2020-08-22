@@ -1,6 +1,6 @@
 <template>
 	<v-card :loading="loading ? 'primary' : false" class="c-SectionCard mb-4">
-		<div v-if="!loading && !image" class="c-SectionCard__container">
+		<div v-if="!loading && !hasImage" class="c-SectionCard__container">
 			<h1 v-if="title && !loading" class="display-1">
 				{{ title }}
 			</h1>
@@ -9,7 +9,7 @@
 			</h2>
 			<slot />
 		</div>
-		<div v-if="!loading && image" class="c-SectionCard__container c-SectionCard__container--image">
+		<div v-if="!loading && hasImage" class="c-SectionCard__container c-SectionCard__container--image">
 			<div class="c-SectionCard__image">
 				<!--
 				What we want for this image is:
@@ -76,6 +76,10 @@ export default {
 	},
 
 	computed: {
+		hasImage() {
+			return this.image && this.image.id
+		},
+
 		baseImageUrl() {
 			return getBaseImageUrl(this.image)
 		}
