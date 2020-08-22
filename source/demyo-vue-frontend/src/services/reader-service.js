@@ -45,6 +45,10 @@ class ReaderService extends AbstractModelService {
 	}
 
 	async setCurrentReader(reader) {
+		if (!reader.configuration) {
+			console.log('The provided reader doesn\'t have a configuration, reloading from the server...')
+			reader = await this.findById(reader.id)
+		}
 		console.log('Setting reader in store', reader)
 		let storeProm = store.dispatch('reader/setCurrentReader', reader)
 		localStorage.setItem('currentReader', JSON.stringify(reader))
