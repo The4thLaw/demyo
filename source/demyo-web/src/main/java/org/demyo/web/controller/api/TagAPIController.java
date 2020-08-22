@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.Tag;
+import org.demyo.service.IAlbumService;
 import org.demyo.service.ITagService;
 
 /**
@@ -19,7 +21,8 @@ import org.demyo.service.ITagService;
 @RestController
 @RequestMapping("/api/tags")
 public class TagAPIController extends AbstractModelAPIController<Tag> {
-	private ITagService service;
+	private final ITagService service;
+	private final IAlbumService albumService;
 
 	/**
 	 * Creates the controller.
@@ -27,9 +30,10 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 	 * @param service The service to manage the entries.
 	 */
 	@Autowired
-	public TagAPIController(ITagService service) {
+	public TagAPIController(ITagService service, IAlbumService albumService) {
 		super(service);
 		this.service = service;
+		this.albumService = albumService;
 	}
 
 	/**
@@ -43,5 +47,16 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<Tag> value = service.findAllForIndex();
 		return getIndexView(view, value);
+	}
+
+	/**
+	 * Counts how many Albums use the given Tag.
+	 * 
+	 * @param modelId The internal ID of the Tag
+	 * @return the count
+	 */
+	@GetMapping("{modelId}/albums/count")
+	int countDerivativesByType(@PathVariable long modelId) {
+		return albumService.countAlbumsByTag(modelId);
 	}
 }

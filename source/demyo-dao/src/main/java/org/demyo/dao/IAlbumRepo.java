@@ -134,4 +134,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@Query("select a.id from Album a where a.series.id=?1 order by cycle asc, number asc, numberSuffix asc, "
 			+ "firstEditionDate asc, currentEditionDate asc, title asc")
 	List<Long> findAlbumIdsBySeries(long seriesId);
+
+	/**
+	 * Counts the number of Albums that feature the provided tag.
+	 * 
+	 * @param tagId The Tag internal ID
+	 * @return The album count
+	 */
+	// Way more efficient than any JPA query we could make
+	@Query(value = "select count(*) from albums_tags where tag_id = ?1", nativeQuery = true)
+	int countAlbumsByTag(long tagId);
 }

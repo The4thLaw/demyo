@@ -1,5 +1,6 @@
 import AbstractModelService from './abstract-model-service'
 import readerService from './reader-service'
+import { axiosGet, axiosPost } from '@/helpers/axios'
 
 /**
  * API service for Albums.
@@ -7,6 +8,13 @@ import readerService from './reader-service'
 class AlbumService extends AbstractModelService {
 	constructor() {
 		super('albums/')
+	}
+
+	findForIndex(filter) {
+		if (filter) {
+			return axiosPost(this.basePath + 'index/filtered', filter, [])
+		}
+		return axiosGet(this.basePath, [])
 	}
 
 	save(model) {

@@ -12,6 +12,7 @@
 
 <script>
 import MetaSeriesIndex from '@/components/MetaSeriesIndex'
+import { retrieveFilter } from '@/helpers/filter'
 import albumService from '@/services/album-service'
 
 export default {
@@ -40,7 +41,8 @@ export default {
 	methods: {
 		async fetchData() {
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			this.albums = await albumService.findForIndex()
+			let filter = retrieveFilter(this.$route)
+			this.albums = await albumService.findForIndex(filter)
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		}
 	}

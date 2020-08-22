@@ -1,6 +1,6 @@
 import AuthorEdit from '@/views/authors/AuthorEdit'
 import TagIndex from '@/views/tags/TagIndex'
-import AuthorView from '@/views/authors/AuthorView'
+import TagView from '@/views/tags/TagView'
 
 export default [
 	{
@@ -12,7 +12,7 @@ export default [
 		path: '/tags/:id/view',
 		alias: '/tags/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
 		name: 'TagView',
-		component: AuthorView
+		component: TagView
 	},
 	{
 		path: '/tags/:id/edit',

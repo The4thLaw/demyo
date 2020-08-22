@@ -59,4 +59,12 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 */
 	Collection<MetaSeriesNG> findAllForIndex(AlbumFilter filter);
 
+	/**
+	 * Counts the number of Albums that feature the provided tag.
+	 * 
+	 * @param tagId The Tag internal ID
+	 * @return The album count
+	 */
+	int countAlbumsByTag(long tagId);
+
 }

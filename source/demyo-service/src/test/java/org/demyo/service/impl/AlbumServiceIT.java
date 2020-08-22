@@ -40,4 +40,12 @@ public class AlbumServiceIT extends AbstractServiceTest {
 		assertThat(new Date(price2.getDate().getTime())).isEqualTo("2011-09-26");
 		assertThat(price2.getPrice()).isEqualTo("150.0");
 	}
+
+	/**
+	 * Tests {@link IAlbumService#countAlbumsByTag(long)}.
+	 */
+	@Test
+	public void testCountAlbumByFilter() {
+		assertThat(service.countAlbumsByTag(1L)).isEqualTo(24);
+	}
 }

@@ -17,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.util.AlbumAndSeriesComparator;
@@ -50,6 +51,7 @@ public class Tag extends AbstractModel {
 	private String bgColour;
 
 	/** The Albums tagged with this Tag. */
+	// TODO: remove this, it's asynchronously loaded now. Also remove the related fetch/subgraph
 	@ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
 	@SortComparator(AlbumAndSeriesComparator.class)
 	private SortedSet<Album> taggedAlbums;
@@ -124,6 +126,7 @@ public class Tag extends AbstractModel {
 	 * 
 	 * @return the Albums tagged with this Tag
 	 */
+	@JsonIgnore
 	public SortedSet<Album> getTaggedAlbums() {
 		return taggedAlbums;
 	}

@@ -7,6 +7,7 @@ import org.demyo.model.Album;
 import org.demyo.model.Binding;
 import org.demyo.model.QAlbum;
 import org.demyo.model.Reader;
+import org.demyo.model.Tag;
 
 /**
  * An {@link IModelFilter} for {@link Album}s.
@@ -14,6 +15,8 @@ import org.demyo.model.Reader;
 public class AlbumFilter extends AbstractModelFilter<Album> {
 	/** The internal ID of the {@link Binding}. */
 	private Long binding;
+	/** The internal ID of the {@link Tag}. */
+	private Long tag;
 	/** The internal ID of the {@link Reader} that has this {@link Album} as favourite. */
 	private Long readerIdFavourite;
 	/** The internal ID of the {@link Reader} that has this {@link Album} in their reading list. */
@@ -25,6 +28,9 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 
 		if (binding != null) {
 			e = combine(e, QAlbum.album.binding.id.eq(binding));
+		}
+		if (tag != null) {
+			e = combine(e, QAlbum.album.tags.any().id.eq(tag));
 		}
 		if (readerIdFavourite != null) {
 			e = combine(e, QAlbum.album.readersFavourites.any().id.eq(readerIdFavourite)
@@ -47,6 +53,15 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 	}
 
 	/**
+	 * Sets the internal ID of the {@link Tag}.
+	 *
+	 * @param tag the new internal ID of the {@link Tag}
+	 */
+	public void setTag(Long tag) {
+		this.tag = tag;
+	}
+
+	/**
 	 * Sets the internal ID of the {@link Reader} that has this {@link Album} as favourite.
 	 *
 	 * @param readerIdFavourite the {@link Reader} ID
@@ -63,4 +78,5 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 	public void setReaderIdReadingList(Long readerIdReadingList) {
 		this.readerIdReadingList = readerIdReadingList;
 	}
+
 }
