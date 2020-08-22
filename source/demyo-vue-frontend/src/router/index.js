@@ -11,6 +11,7 @@ import imageRoutes from './images'
 import managementRoutes from './manage'
 import readerRoutes from './readers'
 import seriesRoutes from './series'
+import tagRoutes from './tags'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -29,6 +30,7 @@ const routes = [
 	...managementRoutes,
 	...readerRoutes,
 	...seriesRoutes,
+	...tagRoutes,
 	{
 		path: '/about',
 		name: 'about',

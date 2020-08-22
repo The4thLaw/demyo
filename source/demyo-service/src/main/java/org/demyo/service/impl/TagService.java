@@ -5,10 +5,6 @@ import java.util.concurrent.Future;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.demyo.dao.IModelRepo;
-import org.demyo.dao.ITagRepo;
-import org.demyo.model.Tag;
-import org.demyo.service.ITagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
@@ -16,6 +12,11 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ITagRepo;
+import org.demyo.model.Tag;
+import org.demyo.service.ITagService;
 
 /**
  * Implements the contract defined by {@link ITagService}.
@@ -42,6 +43,12 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 		return entity;
 	}
 
+	@Override
+	public List<Tag> findAllForIndex() {
+		return repo.findAllWithUsageCounts();
+	}
+
+	// TODO: remove this method
 	@Transactional(readOnly = true)
 	@Override
 	public Slice<Tag> findPaginated(int currentPage, Order... orders) {
@@ -59,5 +66,4 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 	protected IModelRepo<Tag> getRepo() {
 		return repo;
 	}
-
 }

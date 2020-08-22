@@ -3,6 +3,10 @@
 		<template v-slot:default="slotProps">
 			<span :style="getStyle(slotProps.item)" class="d-Tag">
 				{{ slotProps.item.identifyingName }}
+				<span
+					v-if="hasCount(slotProps.item)"
+					class="d-Tag__count" v-text="slotProps.item.usageCount"
+				/>
 			</span>
 			<!-- Need to allow line breaks between tags -->
 			<wbr>
@@ -36,7 +40,14 @@ export default {
 			if (tag.bgColour) {
 				style['background-color'] = tag.bgColour
 			}
+			if (tag.relativeWeight) {
+				style['font-size'] = tag.relativeWeight + '%'
+			}
 			return style
+		},
+
+		hasCount(tag) {
+			return tag.usageCount === 0 || tag.usageCount
 		}
 	}
 }
@@ -44,9 +55,9 @@ export default {
 
 <style lang="less">
 .d-Tag {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
 	background-color: var(--dem-bg-contrast);
 	margin-right: 1em;
 	padding: 4px 12px;

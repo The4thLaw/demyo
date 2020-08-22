@@ -17,6 +17,8 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
@@ -84,6 +86,7 @@ public class Tag extends AbstractModel {
 	 * 
 	 * @return the foreground colour
 	 */
+	@JsonView(ModelView.Basic.class)
 	public String getFgColour() {
 		return fgColour;
 	}
@@ -102,6 +105,7 @@ public class Tag extends AbstractModel {
 	 * 
 	 * @return the background colour
 	 */
+	@JsonView(ModelView.Basic.class)
 	public String getBgColour() {
 		return bgColour;
 	}
@@ -138,12 +142,13 @@ public class Tag extends AbstractModel {
 	 * 
 	 * @return the number of times this Tag has been used
 	 */
+	@JsonView(ModelView.Basic.class)
 	public Integer getUsageCount() {
-		if (!Hibernate.isInitialized(taggedAlbums)) {
-			return null;
-		}
-
 		if (usageCount == null) {
+			if (!Hibernate.isInitialized(taggedAlbums)) {
+				return null;
+			}
+
 			return taggedAlbums.size();
 		}
 
