@@ -33,7 +33,7 @@ public class DerivativeTypeAPIController extends AbstractModelAPIController<Deri
 	/**
 	 * Counts how many Derivatives use the given type.
 	 * 
-	 * @param typeId The internal ID of the DerivativeType
+	 * @param modelId The internal ID of the DerivativeType
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
