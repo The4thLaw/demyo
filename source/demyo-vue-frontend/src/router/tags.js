@@ -1,4 +1,4 @@
-import AuthorEdit from '@/views/authors/AuthorEdit'
+import TagEdit from '@/views/tags/TagEdit'
 import TagIndex from '@/views/tags/TagIndex'
 import TagView from '@/views/tags/TagView'
 
@@ -17,11 +17,11 @@ export default [
 	{
 		path: '/tags/:id/edit',
 		name: 'TagEdit',
-		component: AuthorEdit
+		component: TagEdit
 	},
 	{
 		path: '/tags/new',
 		name: 'TagAdd',
-		component: AuthorEdit
+		component: TagEdit
 	}
 ]
