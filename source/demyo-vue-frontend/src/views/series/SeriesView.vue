@@ -66,7 +66,10 @@
 			</div>
 		</SectionCard>
 
-		<SectionCard v-if="loading || series.albumIds || derivativeCount > 0" class="c-SectionCard--tabbed">
+		<SectionCard
+			v-if="loading || series.albumIds || derivativeCount > 0"
+			ref="contentSection" class="c-SectionCard--tabbed"
+		>
 			<v-tabs v-model="currentTab" background-color="primary" dark grow>
 				<v-tab :disabled="albumsLoaded && albumCount <= 0">
 					<v-icon left>
@@ -138,11 +141,14 @@
 				</v-tab-item>
 
 				<!-- Derivatives -->
-				<v-tab-item class="dem-tab">
+				<v-tab-item class="dem-tab" ref="foo">
 					<div v-if="derivatives.length <= 0" class="text-center">
 						<v-progress-circular indeterminate color="primary" size="64" />
 					</div>
-					<GalleryIndex :items="derivatives" image-path="mainImage" bordered>
+					<GalleryIndex
+						:items="derivatives" image-path="mainImage" bordered
+						@page-change="$refs.contentSection.$el.scrollIntoView()"
+					>
 						<template v-slot:default="slotProps">
 							<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 								<div v-if="slotProps.item.album">

@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<TextIndex :items="series" :first-letter-extractor="(item) => item.identifyingName[0]">
+		<TextIndex
+			:items="series" :first-letter-extractor="(item) => item.identifyingName[0]"
+			@page-change="scrollTop"
+		>
 			<template v-slot:default="slotProps">
 				<router-link :to="`/series/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
@@ -48,6 +51,10 @@ export default {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.series = await seriesService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
+		},
+
+		scrollTop() {
+			window.scroll(0, 0)
 		}
 	}
 }

@@ -48,6 +48,10 @@ export default {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.types = await typeService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
+		},
+
+		scrollTop() {
+			window.scroll(0, 0)
 		}
 	}
 }

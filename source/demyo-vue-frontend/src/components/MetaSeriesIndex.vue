@@ -1,6 +1,9 @@
 <template>
 	<div class="c-MetaSeriesIndex">
-		<CardTextIndex :items="items" :first-letter-extractor="firstLetterExtractor">
+		<CardTextIndex
+			:items="items" :first-letter-extractor="firstLetterExtractor"
+			@page-change="$emit('page-change')"
+		>
 			<template v-slot:default="slotProps">
 				<MetaSeriesCard :meta="slotProps.item" />
 			</template>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<TextIndex :items="readers" :split-by-first-letter="false">
+		<TextIndex :items="readers" :split-by-first-letter="false" @page-change="scrollTop">
 			<template v-slot:default="slotProps">
 				<router-link :to="`/readers/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
@@ -48,6 +48,10 @@ export default {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.readers = await readerService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
+		},
+
+		scrollTop() {
+			window.scroll(0, 0)
 		}
 	}
 }

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<GalleryIndex :items="images">
+		<GalleryIndex :items="images" @page-change="scrollTop">
 			<template v-slot:default="slotProps">
 				<router-link :to="`/images/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
@@ -48,6 +48,10 @@ export default {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.images = await imageService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
+		},
+
+		scrollTop() {
+			window.scroll(0, 0)
 		}
 	}
 }

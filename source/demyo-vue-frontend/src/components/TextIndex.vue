@@ -47,6 +47,7 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
+			@input="$emit('page-change')"
 		/>
 	</div>
 </template>
