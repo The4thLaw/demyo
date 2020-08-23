@@ -104,6 +104,10 @@ export default {
 .c-SectionCard--tabbed {
 	padding: 0;
 
+	> .c-SectionCard__container {
+		padding: 0;
+	}
+
 	.v-tabs-items {
 		padding: 24px;
 	}
