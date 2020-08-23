@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<TextIndex :items="authors" :first-letter-extractor="(item) => item.name[0]" @page-change="scrollTop">
+		<TextIndex :items="authors" :first-letter-extractor="(item) => item.name[0]" @page-change="scrollToTop">
 			<template v-slot:default="slotProps">
 				<router-link :to="`/authors/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
@@ -48,10 +48,6 @@ export default {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.authors = await authorService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
-		},
-
-		scrollTop() {
-			window.scroll(0, 0)
 		}
 	}
 }

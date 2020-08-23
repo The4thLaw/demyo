@@ -1,6 +1,6 @@
 <template>
 	<div class="c-AlbumIndex">
-		<MetaSeriesIndex :items="albums" @page-change="scrollTop" />
+		<MetaSeriesIndex :items="albums" @page-change="scrollToTop" />
 		<v-btn
 			fab to="/albums/new" color="accent" fixed
 			bottom right
@@ -44,10 +44,6 @@ export default {
 			let filter = retrieveFilter(this.$route)
 			this.albums = await albumService.findForIndex(filter)
 			this.$store.dispatch('ui/disableGlobalOverlay')
-		},
-
-		scrollTop() {
-			window.scroll(0, 0)
 		}
 	}
 }

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<TextIndex :items="types" :split-by-first-letter="false">
+		<TextIndex :items="types" :split-by-first-letter="false" @page-change="scrollToTop">
 			<template v-slot:default="slotProps">
 				<router-link :to="`/derivativeTypes/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
@@ -48,10 +48,6 @@ export default {
 			this.$store.dispatch('ui/enableGlobalOverlay')
 			this.types = await typeService.findForIndex()
 			this.$store.dispatch('ui/disableGlobalOverlay')
-		},
-
-		scrollTop() {
-			window.scroll(0, 0)
 		}
 	}
 }

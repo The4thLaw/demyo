@@ -22,3 +22,10 @@ new Vue({
 	vuetify,
 	render: h => h(App)
 }).$mount('#app')
+
+// Global mixin to allow components to scroll to the top of the page
+Vue.mixin({
+	methods: {
+		scrollToTop: () => window.scroll(0, 0)
+	}
+})

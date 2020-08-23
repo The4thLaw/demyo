@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<GalleryIndex :items="derivatives" image-path="mainImage" @page-change="scrollTop">
+		<GalleryIndex :items="derivatives" image-path="mainImage" @page-change="scrollToTop">
 			<template v-slot:default="slotProps">
 				<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 					<div v-if="slotProps.item.series">
@@ -58,10 +58,6 @@ export default {
 			let filter = retrieveFilter(this.$route)
 			this.derivatives = await derivativeService.findForIndex(filter)
 			this.$store.dispatch('ui/disableGlobalOverlay')
-		},
-
-		scrollTop() {
-			window.scroll(0, 0)
 		}
 	}
 }
