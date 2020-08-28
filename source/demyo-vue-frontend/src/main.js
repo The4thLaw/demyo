@@ -15,6 +15,13 @@ Vue.config.productionTip = false
 // Do this as soon as possible. It's asynchronous and will work during bootstrap
 readerService.init()
 
+// Global mixin to allow components to scroll to the top of the page
+Vue.mixin({
+	methods: {
+		scrollToTop: () => window.scroll(0, 0)
+	}
+})
+
 new Vue({
 	router,
 	store,
@@ -22,10 +29,3 @@ new Vue({
 	vuetify,
 	render: h => h(App)
 }).$mount('#app')
-
-// Global mixin to allow components to scroll to the top of the page
-Vue.mixin({
-	methods: {
-		scrollToTop: () => window.scroll(0, 0)
-	}
-})
