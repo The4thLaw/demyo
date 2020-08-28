@@ -5,8 +5,9 @@ import store from '@/store/index'
 import Home from '@/views/Home.vue'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
+import bindingRoutes from './bindings'
 import derivativeRoutes from './derivatives'
-import derivativeTypeRoutes from './derivativeTypes'
+import derivativeTypeRoutes from './derivative-types'
 import imageRoutes from './images'
 import managementRoutes from './manage'
 import readerRoutes from './readers'
@@ -24,6 +25,7 @@ const routes = [
 	},
 	...albumRoutes,
 	...authorRoutes,
+	...bindingRoutes,
 	...derivativeRoutes,
 	...derivativeTypeRoutes,
 	...imageRoutes,

@@ -316,4 +316,9 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	public int countAlbumsByTag(long tagId) {
 		return repo.countAlbumsByTag(tagId);
 	}
+
+	@Override
+	public int countAlbumsByBinding(long bindingId) {
+		return repo.countAlbumsByBinding(bindingId);
+	}
 }

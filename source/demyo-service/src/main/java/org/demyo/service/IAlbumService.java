@@ -67,4 +67,12 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 */
 	int countAlbumsByTag(long tagId);
 
+	/**
+	 * Counts how many Albums use the given Binding.
+	 * 
+	 * @param bindingId The internal ID of the Binding
+	 * @return the count
+	 */
+	int countAlbumsByBinding(long bindingId);
+
 }

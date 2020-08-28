@@ -144,4 +144,13 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	// Way more efficient than any JPA query we could make
 	@Query(value = "select count(*) from albums_tags where tag_id = ?1", nativeQuery = true)
 	int countAlbumsByTag(long tagId);
+
+	/**
+	 * Counts how many Albums use the given Binding.
+	 * 
+	 * @param bindingId The internal ID of the Binding
+	 * @return the count
+	 */
+	@Query("select count(*) from Album a where a.binding.id = ?1")
+	int countAlbumsByBinding(long typeId);
 }
