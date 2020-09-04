@@ -304,9 +304,20 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * Gets the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}.
 	 * 
 	 * @return the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}
+	 * @deprecated Use {@link #getDefaultSort()} instead.
 	 */
+	@Deprecated
 	protected Order[] getDefaultOrder() {
 		return defaultOrder;
+	}
+
+	/**
+	 * Gets the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Sort}.
+	 * 
+	 * @return the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Sort}
+	 */
+	protected Sort getDefaultSort() {
+		return defaultOrder.length == 0 ? null : new Sort(defaultOrder);
 	}
 
 	/**

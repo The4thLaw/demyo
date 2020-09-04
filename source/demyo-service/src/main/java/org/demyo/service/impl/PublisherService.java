@@ -5,16 +5,17 @@ import java.util.concurrent.Future;
 
 import javax.persistence.EntityNotFoundException;
 
-import org.demyo.dao.IModelRepo;
-import org.demyo.dao.IPublisherRepo;
-import org.demyo.model.Publisher;
-import org.demyo.service.IPublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.demyo.dao.IModelRepo;
+import org.demyo.dao.IPublisherRepo;
+import org.demyo.model.Publisher;
+import org.demyo.service.IPublisherService;
 
 /**
  * Implements the contract defined by {@link IPublisherService}.
@@ -33,8 +34,14 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<Publisher> findAllForIndex() {
+		return repo.findAllForIndex(getDefaultSort());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public Slice<Publisher> findPaginated(int currentPage, Order... orders) {
-		return repo.findAllForIndex(getPageable(currentPage, orders));
+		return repo.findAllForIndexOld(getPageable(currentPage, orders));
 	}
 
 	@Override

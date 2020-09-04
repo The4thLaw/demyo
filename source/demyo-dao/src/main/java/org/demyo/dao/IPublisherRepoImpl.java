@@ -1,11 +1,11 @@
 package org.demyo.dao;
 
-import org.demyo.model.Publisher;
-
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+
+import org.demyo.model.Publisher;
 
 /**
  * Implements the contract defined by {@link IPublisherCustomRepo}.
@@ -16,7 +16,7 @@ import org.springframework.data.domain.Slice;
 	private IPublisherRepo repo;
 
 	@Override
-	public Slice<Publisher> findAllForIndex(Pageable pageable) {
+	public Slice<Publisher> findAllForIndexOld(Pageable pageable) {
 		/* Using an EntityGraph to load all entities messes with Hibernate, as it doesn't know how many results
 		 * to fetch (HHH000104). The best solution is to fetch the paged entities without dependencies, and then to
 		 * initialise the lazy properties. They should be configured to use batch fetching for limited impacts.

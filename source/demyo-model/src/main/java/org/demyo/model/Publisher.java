@@ -19,6 +19,7 @@ import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
@@ -31,6 +32,7 @@ import org.demyo.model.util.StartsWithField;
 @Table(name = "PUBLISHERS")
 @DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
 @NamedEntityGraphs({
+		@NamedEntityGraph(name = "Publisher.forIndex", attributeNodes = @NamedAttributeNode("collections")),
 		@NamedEntityGraph(name = "Publisher.forView", attributeNodes =
 		{ @NamedAttributeNode("collections"),
 				@NamedAttributeNode("logo") }),
@@ -61,6 +63,7 @@ public class Publisher extends AbstractModel {
 	@BatchSize(size = BATCH_SIZE)
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonIgnoreProperties("publisher")
+	@JsonView(ModelView.Basic.class)
 	private SortedSet<Collection> collections;
 
 	@Override
