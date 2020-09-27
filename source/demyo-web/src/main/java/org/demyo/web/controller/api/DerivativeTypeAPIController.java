@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.DerivativeType;
+import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IDerivativeService;
 import org.demyo.service.IDerivativeTypeService;
 
@@ -37,7 +38,7 @@ public class DerivativeTypeAPIController extends AbstractModelAPIController<Deri
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	int countDerivativesByType(@PathVariable long modelId) {
-		return derivativeService.countDerivativesByType(modelId);
+	public long countDerivativesByType(@PathVariable long modelId) {
+		return derivativeService.countDerivativesByFilter(DerivativeFilter.forType(modelId));
 	}
 }

@@ -112,17 +112,7 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	}
 
 	@Override
-	public int countDerivativesByType(long typeId) {
-		return repo.countDerivativesByType(typeId);
-	}
-
-	@Override
-	public int countDerivativesByArtist(long artistId) {
-		return repo.countDerivativesByArtist(artistId);
-	}
-
-	@Override
-	public int countDerivativesBySeries(long seriesId) {
-		return repo.countDerivativesBySeries(seriesId);
+	public long countDerivativesByFilter(DerivativeFilter filter) {
+		return repo.count(filter.toPredicate());
 	}
 }

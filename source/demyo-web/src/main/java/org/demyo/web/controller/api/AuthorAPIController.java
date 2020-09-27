@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.demyo.model.Author;
 import org.demyo.model.ModelView;
 import org.demyo.model.beans.AuthorAlbums;
+import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IDerivativeService;
 
@@ -55,7 +56,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	int countDerivativesByArtist(@PathVariable long modelId) {
-		return derivativeService.countDerivativesByArtist(modelId);
+	public long countDerivativesByArtist(@PathVariable long modelId) {
+		return derivativeService.countDerivativesByFilter(DerivativeFilter.forArtist(modelId));
 	}
 }

@@ -13,6 +13,42 @@ import org.demyo.model.Series;
  * An {@link IModelFilter} for {@link Derivative}s.
  */
 public class DerivativeFilter extends AbstractModelFilter<Derivative> {
+	/**
+	 * Factory method that creates a filter based on the {@link Series} internal ID.
+	 * 
+	 * @param The internal ID of the {@link Series}.
+	 * @return the filter instance
+	 */
+	public static DerivativeFilter forSeries(long modelId) {
+		DerivativeFilter filter = new DerivativeFilter();
+		filter.series = modelId;
+		return filter;
+	}
+
+	/**
+	 * Factory method that creates a filter based on the {@link org.demyo.model.Author artist} internal ID.
+	 * 
+	 * @param The internal ID of the {@link org.demyo.model.Author artist}.
+	 * @return the filter instance
+	 */
+	public static DerivativeFilter forArtist(long modelId) {
+		DerivativeFilter filter = new DerivativeFilter();
+		filter.artist = modelId;
+		return filter;
+	}
+
+	/**
+	 * Factory method that creates a filter based on the {@link DerivativeType} internal ID.
+	 * 
+	 * @param The internal ID of the {@link DerivativeType}.
+	 * @return the filter instance
+	 */
+	public static DerivativeFilter forType(long modelId) {
+		DerivativeFilter filter = new DerivativeFilter();
+		filter.type = modelId;
+		return filter;
+	}
+
 	/** The internal ID of the {@link Series}. */
 	private Long series;
 	/** The internal ID of the {@link org.demyo.model.Author artist}. */
@@ -77,5 +113,4 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	public void setSource(Long source) {
 		this.source = source;
 	}
-
 }

@@ -22,33 +22,4 @@ public interface IDerivativeRepo extends IModelRepo<Derivative>, IDerivativeCust
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Derivative.forEdition")
 	Derivative findOneForEdition(long id);
-
-	/**
-	 * Counts how many Derivatives use the given type.
-	 * 
-	 * @param typeId The internal ID of the DerivativeType
-	 * @return the count
-	 */
-	// Having a native query avoids Spring date making a join to DERIVATIVE_TYPE just to get the ID
-	// (the method would be named countDerivativesByTypeId)
-	@Query("select count(*) from Derivative d where d.type.id = ?1")
-	int countDerivativesByType(long typeId);
-
-	/**
-	 * Counts how many Derivatives use the given artist.
-	 * 
-	 * @param artistId The internal ID of the Author
-	 * @return the count
-	 */
-	@Query("select count(*) from Derivative d where d.artist.id = ?1")
-	int countDerivativesByArtist(long artistId);
-
-	/**
-	 * Counts how many Derivatives use the given series.
-	 * 
-	 * @param seriesId The internal ID of the Series
-	 * @return the count
-	 */
-	@Query("select count(*) from Derivative d where d.series.id = ?1")
-	int countDerivativesBySeries(long seriesId);
 }

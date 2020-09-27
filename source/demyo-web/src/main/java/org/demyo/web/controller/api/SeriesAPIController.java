@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.demyo.model.Album;
 import org.demyo.model.ModelView;
 import org.demyo.model.Series;
+import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IDerivativeService;
 import org.demyo.service.ISeriesService;
@@ -70,7 +71,7 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	int countDerivativesBySeries(@PathVariable long modelId) {
-		return derivativeService.countDerivativesBySeries(modelId);
+	public long countDerivativesBySeries(@PathVariable long modelId) {
+		return derivativeService.countDerivativesByFilter(DerivativeFilter.forSeries(modelId));
 	}
 }
