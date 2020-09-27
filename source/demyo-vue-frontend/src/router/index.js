@@ -10,6 +10,7 @@ import derivativeRoutes from './derivatives'
 import derivativeTypeRoutes from './derivative-types'
 import imageRoutes from './images'
 import managementRoutes from './manage'
+import publisherRoutes from './publishers'
 import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
@@ -30,6 +31,7 @@ const routes = [
 	...derivativeTypeRoutes,
 	...imageRoutes,
 	...managementRoutes,
+	...publisherRoutes,
 	...readerRoutes,
 	...seriesRoutes,
 	...tagRoutes,
