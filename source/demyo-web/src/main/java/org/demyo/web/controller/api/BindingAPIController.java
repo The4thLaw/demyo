@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.Binding;
+import org.demyo.model.filters.AlbumFilter;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IBindingService;
 
@@ -37,7 +38,7 @@ public class BindingAPIController extends AbstractModelAPIController<Binding> {
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
-	int countAlbumsByBinding(@PathVariable long modelId) {
-		return albumService.countAlbumsByBinding(modelId);
+	public long countAlbumsByBinding(@PathVariable long modelId) {
+		return albumService.countAlbumsByFilter(AlbumFilter.forBinding(modelId));
 	}
 }

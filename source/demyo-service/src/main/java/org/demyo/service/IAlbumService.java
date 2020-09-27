@@ -61,19 +61,14 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 
 	/**
 	 * Counts the number of Albums that feature the provided tag.
+	 * <p>
+	 * This method is more efficient than an equivalent call to {@link #countAlbumsByFilter(AlbumFilter)}.
+	 * </p>
 	 * 
 	 * @param tagId The Tag internal ID
 	 * @return The album count
 	 */
 	int countAlbumsByTag(long tagId);
-
-	/**
-	 * Counts how many Albums use the given Binding.
-	 * 
-	 * @param bindingId The internal ID of the Binding
-	 * @return the count
-	 */
-	int countAlbumsByBinding(long bindingId);
 
 	/**
 	 * Counts how many Albums use the given criteria.

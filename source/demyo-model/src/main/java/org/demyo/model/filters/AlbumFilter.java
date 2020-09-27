@@ -27,6 +27,18 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 		return filter;
 	}
 
+	/**
+	 * Factory method that creates a filter based on the {@link Binding} internal ID.
+	 * 
+	 * @param The internal ID of the {@link Binding}.
+	 * @return the filter instance
+	 */
+	public static AlbumFilter forBinding(long modelId) {
+		AlbumFilter filter = new AlbumFilter();
+		filter.binding = modelId;
+		return filter;
+	}
+
 	/** The internal ID of the {@link Publisher}. */
 	private Long publisher;
 	/** The internal ID of the {@link Collection}. */
