@@ -35,6 +35,7 @@ import org.demyo.model.util.StartsWithField;
 		{ @NamedAttributeNode("portrait") }),
 		@NamedEntityGraph(name = "Author.forView", attributeNodes =
 		{ @NamedAttributeNode("portrait"),
+		// TODO [Vue]: remove those nodes
 		/*@NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
 			@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
 			@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album"),
