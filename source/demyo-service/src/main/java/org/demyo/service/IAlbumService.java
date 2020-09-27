@@ -75,4 +75,12 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 */
 	int countAlbumsByBinding(long bindingId);
 
+	/**
+	 * Counts how many Albums use the given criteria.
+	 * 
+	 * @param filter The criteria.
+	 * @return the count
+	 */
+	long countAlbumsByFilter(AlbumFilter filter);
+
 }

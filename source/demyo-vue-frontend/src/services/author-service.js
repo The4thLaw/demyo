@@ -22,7 +22,7 @@ class AuthorService extends AbstractModelService {
 
 	/**
 	 * Finds how many Derivatives use the given artist.
-	 * @param {Number} id The Derivative Type ID
+	 * @param {Number} id The Author ID
 	 */
 	countDerivatives(id) {
 		return axiosGet(`authors/${id}/derivatives/count`, 0)

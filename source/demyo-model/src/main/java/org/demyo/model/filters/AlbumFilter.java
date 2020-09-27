@@ -5,6 +5,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import org.demyo.model.Album;
 import org.demyo.model.Binding;
+import org.demyo.model.Collection;
+import org.demyo.model.Publisher;
 import org.demyo.model.QAlbum;
 import org.demyo.model.Reader;
 import org.demyo.model.Tag;
@@ -13,6 +15,22 @@ import org.demyo.model.Tag;
  * An {@link IModelFilter} for {@link Album}s.
  */
 public class AlbumFilter extends AbstractModelFilter<Album> {
+	/**
+	 * Factory method that creates a filter based on the {@link Publisher} internal ID.
+	 * 
+	 * @param The internal ID of the {@link Publisher}.
+	 * @return the filter instance
+	 */
+	public static AlbumFilter forPublisher(long modelId) {
+		AlbumFilter filter = new AlbumFilter();
+		filter.publisher = modelId;
+		return filter;
+	}
+
+	/** The internal ID of the {@link Publisher}. */
+	private Long publisher;
+	/** The internal ID of the {@link Collection}. */
+	private Long collection;
 	/** The internal ID of the {@link Binding}. */
 	private Long binding;
 	/** The internal ID of the {@link Tag}. */
@@ -26,6 +44,12 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 	public Predicate getPredicate() {
 		BooleanExpression e = null;
 
+		if (publisher != null) {
+			e = combine(e, QAlbum.album.publisher.id.eq(publisher));
+		}
+		if (collection != null) {
+			e = combine(e, QAlbum.album.collection.id.eq(collection));
+		}
 		if (binding != null) {
 			e = combine(e, QAlbum.album.binding.id.eq(binding));
 		}
@@ -41,6 +65,24 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 		}
 
 		return e;
+	}
+
+	/**
+	 * Sets the internal ID of the {@link Publisher}.
+	 *
+	 * @param publisher the new internal ID of the {@link Publisher}
+	 */
+	public void setPublisher(Long publisher) {
+		this.publisher = publisher;
+	}
+
+	/**
+	 * Sets the internal ID of the {@link Collection}.
+	 *
+	 * @param collection the new internal ID of the {@link Collection}
+	 */
+	public void setCollection(Long collection) {
+		this.collection = collection;
 	}
 
 	/**
@@ -78,5 +120,4 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 	public void setReaderIdReadingList(Long readerIdReadingList) {
 		this.readerIdReadingList = readerIdReadingList;
 	}
-
 }

@@ -318,6 +318,11 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
+	public long countAlbumsByFilter(AlbumFilter filter) {
+		return repo.count(filter.getPredicate());
+	}
+
+	@Override
 	public int countAlbumsByBinding(long bindingId) {
 		return repo.countAlbumsByBinding(bindingId);
 	}

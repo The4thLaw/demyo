@@ -13,11 +13,11 @@ class PublisherService extends AbstractModelService {
 	}
 
 	/**
-	 * Finds how many Derivatives use the given artist.
-	 * @param {Number} id The Derivative Type ID
+	 * Finds how many Albums use the given Publisher.
+	 * @param {Number} id The Publisher ID
 	 */
-	countDerivatives(id) {
-		return axiosGet(`authors/${id}/derivatives/count`, 0)
+	countAlbums(id) {
+		return axiosGet(`publishers/${id}/albums/count`, 0)
 	}
 }
 
