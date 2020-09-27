@@ -20,7 +20,9 @@ import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 import org.demyo.model.util.StartsWithField;
@@ -64,6 +66,7 @@ public class Publisher extends AbstractModel {
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonIgnoreProperties("publisher")
 	@JsonView(ModelView.Basic.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Collection> collections;
 
 	@Override
