@@ -24,6 +24,7 @@
 				icon="mdi-library"
 				@click="addSeriesToReadingList"
 			/>
+			<!-- TODO: add album to series -->
 			<AppTask
 				:label="$t('quickTasks.add.derivative.to.series')"
 				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
