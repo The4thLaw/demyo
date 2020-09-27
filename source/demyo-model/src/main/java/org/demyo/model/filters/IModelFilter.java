@@ -11,9 +11,9 @@ import org.demyo.model.IModel;
  */
 public interface IModelFilter<M extends IModel> {
 	/**
-	 * Gets the {@link Predicate} associated with this filter.
+	 * Converts this filter to a QueryDSL {@link Predicate}.
 	 * 
-	 * @return The predicate.
+	 * @return the predicate.
 	 */
-	Predicate getPredicate();
+	Predicate toPredicate();
 }

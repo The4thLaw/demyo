@@ -67,7 +67,7 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 		if (filter == null) {
 			return repo.findAllForIndex(sort);
 		} else {
-			return repo.findAllForIndex(filter.getPredicate(), sort);
+			return repo.findAllForIndex(filter.toPredicate(), sort);
 		}
 	}
 

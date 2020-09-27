@@ -103,7 +103,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		if (filter == null) {
 			albums = repo.findAll();
 		} else {
-			albums = repo.findAll(filter.getPredicate());
+			albums = repo.findAll(filter.toPredicate());
 		}
 
 		HashMap<Long, MetaSeriesNG> seriesMap = new HashMap<>();
@@ -319,6 +319,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 	@Override
 	public long countAlbumsByFilter(AlbumFilter filter) {
-		return repo.count(filter.getPredicate());
+		return repo.count(filter.toPredicate());
 	}
 }

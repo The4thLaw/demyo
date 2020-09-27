@@ -23,7 +23,7 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	private Long source;
 
 	@Override
-	public Predicate getPredicate() {
+	public Predicate toPredicate() {
 		BooleanExpression e = null;
 
 		if (series != null) {

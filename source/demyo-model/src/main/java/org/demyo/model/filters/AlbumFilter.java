@@ -53,7 +53,7 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 	private Long readerIdReadingList;
 
 	@Override
-	public Predicate getPredicate() {
+	public Predicate toPredicate() {
 		BooleanExpression e = null;
 
 		if (publisher != null) {
