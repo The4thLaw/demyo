@@ -103,6 +103,8 @@ export default {
 		async fetchData() {
 			if (this.parsedId) {
 				this.publisher = await publisherService.findById(this.parsedId)
+				// Clear the collections: we won't be editing those and don't want to save them
+				delete this.publisher.collections
 			}
 		},
 
