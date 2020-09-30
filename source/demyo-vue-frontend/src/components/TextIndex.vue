@@ -6,11 +6,12 @@
 			right: previousPage
 		}"
 		class="c-TextIndex"
+		:class="{ 'c-TextIndex__compact': compact }"
 		@keyup.arrow-left.exact="previousPage()"
 		@keyup.arrow-right.exact="nextPage()"
 	>
 		<div v-if="!splitByFirstLetter">
-			<v-card>
+			<v-card :flat="compact">
 				<v-card-text>
 					<v-list class="dem-columnized c-TextIndex__list" dense>
 						<v-list-item v-for="item in paginatedItems" :key="item.id">
@@ -28,7 +29,7 @@
 				<h2 class="c-TextIndex__firstLetter display-1 mx-2 my-4 accent--text">
 					{{ letter }}
 				</h2>
-				<v-card>
+				<v-card :flat="compact">
 					<v-card-text>
 						<v-list class="dem-columnized c-TextIndex__list" dense>
 							<v-list-item v-for="item in value" :key="item.id">
@@ -69,6 +70,10 @@ export default {
 		firstLetterExtractor: {
 			type: Function,
 			default: () => '#'
+		},
+		compact: {
+			type: Boolean,
+			default: false
 		}
 	},
 
@@ -82,6 +87,12 @@ export default {
 .c-TextIndex {
 	// No outline on this artifically focused element
 	outline: 0;
+}
+
+.c-TextIndex__compact {
+	.v-card__text {
+		padding: 0;
+	}
 }
 
 #demyo .c-TextIndex__firstLetter {
