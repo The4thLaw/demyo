@@ -3,16 +3,15 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import org.demyo.dao.ICollectionRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Collection;
 import org.demyo.service.ICollectionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implements the contract defined by {@link ICollectionService}.
@@ -32,9 +31,7 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 	@Override
 	@Transactional(readOnly = true)
 	public List<Collection> findByPublisherId(long publisherId) {
-		Order[] defaultOrder = getDefaultOrder();
-		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
-		return repo.findByPublisherId(publisherId, sort);
+		return repo.findByPublisherId(publisherId, getDefaultSort());
 	}
 
 	@Async
