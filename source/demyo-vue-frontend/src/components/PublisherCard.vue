@@ -29,15 +29,10 @@
 				<template v-if="pageCount > 1 && !hasNextPage">
 					<v-list-item v-for="pad in (itemsPerPage - paginatedItems.length)" :key="pad" />
 				</template>
-				<v-list-item v-if="pageCount > 1" class="c-PublisherCard__pagination">
-					<!-- Custom pagination because vuetify doesn't provide no-count pagination -->
-					<v-btn :disabled="!hasPreviousPage" text icon @click.stop="previousPage">
-						<v-icon>mdi-chevron-left</v-icon>
-					</v-btn>
-					<v-btn :disabled="!hasNextPage" text icon @click.stop="nextPage">
-						<v-icon>mdi-chevron-right</v-icon>
-					</v-btn>
-				</v-list-item>
+				<ItemCardPagination
+					:page-count="pageCount" :has-previous-page="hasPreviousPage"
+					:has-next-page="hasNextPage" @prev-page="previousPage" @next-page="nextPage"
+				/>
 			</v-list>
 		</template>
 	</v-card>
@@ -45,10 +40,15 @@
 
 <script>
 import { mapState } from 'vuex'
+import ItemCardPagination from '@/components/ItemCardPagination'
 import paginatedTextMixin from '@/mixins/paginated-text'
 
 export default {
 	name: 'PublisherCard',
+
+	components: {
+		ItemCardPagination
+	},
 
 	mixins: [paginatedTextMixin],
 
@@ -96,10 +96,5 @@ export default {
 
 .v-application a.c-PublisherCard__title {
 	@dem-dr-model-card-title();
-}
-
-// Align the pagination buttons
-.c-PublisherCard__pagination {
-	@dem-dr-model-card-pagination();
 }
 </style>
