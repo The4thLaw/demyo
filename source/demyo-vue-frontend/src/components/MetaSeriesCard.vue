@@ -94,25 +94,15 @@ export default {
 </script>
 
 <style lang="less">
+@import "../styles/detached-rulesets.less";
+
 // Override default style since the card cannot be clicked
 .c-MetaSeriesCard.v-card--hover {
-	cursor: default;
+	@dem-dr-model-card--hover();
 }
 
 .v-application a.c-MetaSeriesCard__title {
-	font-size: 18px;
-	font-weight: 600;
-	display: block;
-	color: inherit;
-	text-decoration: none;
-	cursor: pointer;
-	padding: 16px 16px;
-
-	&:hover,
-	&:focus {
-		background: rgba(0, 0, 0, 0.04);
-		text-decoration: none;
-	}
+	@dem-dr-model-card-title();
 }
 
 .c-MetaSeriesCard__one-shot {
@@ -126,6 +116,6 @@ export default {
 
 // Align the pagination buttons
 .c-MetaSeriesCard__pagination {
-	justify-content: space-around;
+	@dem-dr-model-card-pagination();
 }
 </style>

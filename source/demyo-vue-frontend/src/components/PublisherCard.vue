@@ -82,9 +82,11 @@ export default {
 </script>
 
 <style lang="less">
+@import "../styles/detached-rulesets.less";
+
 // Override default style since the card cannot be clicked
 .c-PublisherCard.v-card--hover {
-	cursor: default;
+	@dem-dr-model-card--hover();
 }
 
 // The following allows taking the full height if the publisher has no collections
@@ -93,23 +95,11 @@ export default {
 }
 
 .v-application a.c-PublisherCard__title {
-	font-size: 18px;
-	font-weight: 600;
-	display: block;
-	color: inherit;
-	text-decoration: none;
-	cursor: pointer;
-	padding: 16px 16px;
-
-	&:hover,
-	&:focus {
-		background: rgba(0, 0, 0, 0.04);
-		text-decoration: none;
-	}
+	@dem-dr-model-card-title();
 }
 
 // Align the pagination buttons
 .c-PublisherCard__pagination {
-	justify-content: space-around;
+	@dem-dr-model-card-pagination();
 }
 </style>
