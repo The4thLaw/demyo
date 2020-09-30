@@ -330,7 +330,7 @@ export default {
 
 			this.derivativeCount = await dcPromise
 
-			if (this.albumCount == 0 && this.derivativeCount > 0) {
+			if (this.albumCount === 0 && this.derivativeCount > 0) {
 				// If there are no albums but there are derivatives, load the derivatives
 				this.currentTab = 1
 				this.loadDerivatives()

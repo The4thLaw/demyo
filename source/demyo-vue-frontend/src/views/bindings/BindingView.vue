@@ -7,7 +7,7 @@
 				icon="mdi-brush dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="count == 0"
+				v-if="count === 0"
 				:label="$t('quickTasks.delete.binding')"
 				:confirm="$t('quickTasks.delete.binding.confirm')"
 				icon="mdi-brush dem-overlay-delete"
@@ -25,7 +25,7 @@
 				{{ $tc('page.Binding.viewAlbums', count) }}
 			</v-btn>
 			<v-alert
-				v-if="count == 0"
+				v-if="count === 0"
 				border="left" type="info" text class="my-4"
 			>
 				{{ $t('page.Binding.noAlbums') }}

@@ -29,7 +29,7 @@
 				{{ $tc('page.Author.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
-				v-if="count == 0"
+				v-if="count === 0"
 				border="left" type="info" text class="my-4"
 			>
 				{{ $t('page.Author.noDerivatives') }}
