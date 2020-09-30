@@ -468,6 +468,10 @@ html[lang],
 		// between two columns (top part of the letters in one column and bottom
 		// part in the other)
 		break-inside: avoid;
+		// The following also solves some issues with margins spanning across columns
+		// https://css-tricks.com/when-do-you-use-inline-block/#column-children-that-dont-break-in-the-middle-of-themselves
+		display: inline-block;
+		width: 100%; // Else we may get more than one item per line in a single columns
 	}
 }
 
