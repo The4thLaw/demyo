@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { focusElement } from '@/helpers/dom'
 import paginatedTextMixin from '@/mixins/paginated-text'
 
@@ -59,6 +60,12 @@ export default {
 			type: Function,
 			default: () => '#'
 		}
+	},
+
+	computed: {
+		...mapState({
+			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForCards || 40
+		})
 	},
 
 	mounted() {

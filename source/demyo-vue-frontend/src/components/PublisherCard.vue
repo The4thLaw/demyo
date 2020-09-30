@@ -1,34 +1,23 @@
 <template>
-	<v-card :flat="true" :hover="true" class="c-MetaSeriesCard">
-		<template v-if="meta.album">
+	<v-card
+		:class="{ 'c-PublisherCard__noCollections': !hasCollections }"
+		:flat="true" :hover="true" class="c-PublisherCard"
+	>
+		<template>
 			<router-link
-				v-ripple :to="cardLink"
-				class="c-MetaSeriesCard__title" role="heading" arial-level="3"
+				v-ripple :to="`/publishers/${publisher.id}/view` "
+				class="c-PublisherCard__title" role="heading" arial-level="3"
 			>
-				{{ meta.album.title }}
+				{{ publisher.identifyingName }}
 			</router-link>
-			<v-list dense>
-				<v-list-item :href="cardLink" class="c-MetaSeriesCard__one-shot">
+			<v-list v-if="hasCollections" dense>
+				<v-list-item
+					v-for="collection in paginatedItems"
+					:key="collection.id" :href="`/collections/${collection.id}/view`"
+				>
 					<v-list-item-content>
-						<v-list-item-title>
-							{{ $t('field.Album.oneShot.view') }}
-						</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-			</v-list>
-		</template>
-		<template v-if="meta.series">
-			<router-link
-				v-ripple :to="cardLink"
-				class="c-MetaSeriesCard__title" role="heading" arial-level="3"
-			>
-				{{ meta.series.identifyingName }}
-			</router-link>
-			<v-list dense>
-				<v-list-item v-for="album in paginatedItems" :key="album.id" :href="`/albums/${album.id}/view`">
-					<v-list-item-content>
-						<v-list-item-title :title="album.title">
-							{{ album.title }}
+						<v-list-item-title :title="collection.identifyingName">
+							{{ collection.identifyingName }}
 						</v-list-item-title>
 					</v-list-item-content>
 				</v-list-item>
@@ -40,7 +29,7 @@
 				<template v-if="pageCount > 1 && !hasNextPage">
 					<v-list-item v-for="pad in (itemsPerPage - paginatedItems.length)" :key="pad" />
 				</template>
-				<v-list-item v-if="pageCount > 1" class="c-MetaSeriesCard__pagination">
+				<v-list-item v-if="pageCount > 1" class="c-PublisherCard__pagination">
 					<!-- Custom pagination because vuetify doesn't provide no-count pagination -->
 					<v-btn :disabled="!hasPreviousPage" text icon @click.stop="previousPage">
 						<v-icon>mdi-chevron-left</v-icon>
@@ -59,12 +48,12 @@ import { mapState } from 'vuex'
 import paginatedTextMixin from '@/mixins/paginated-text'
 
 export default {
-	name: 'MetaSeriesCard',
+	name: 'PublisherCard',
 
 	mixins: [paginatedTextMixin],
 
 	props: {
-		meta: {
+		publisher: {
 			type: null,
 			required: true
 		}
@@ -73,16 +62,15 @@ export default {
 	computed: {
 		// Having these allows us to reuse the logic from paginated-text
 		itemsToPaginate() {
-			return this.meta.albums || []
+			return this.publisher.collections || []
 		},
 
 		...mapState({
 			itemsPerPage: state => state.reader.currentReader.configuration.subItemsInCardIndex || 5
 		}),
 
-		cardLink() {
-			return this.meta.series
-				? `/series/${this.meta.series.id}/view` : `/albums/${this.meta.album.id}/view`
+		hasCollections() {
+			return this.publisher.collections && this.publisher.collections.length >= 0
 		}
 	},
 
@@ -95,11 +83,16 @@ export default {
 
 <style lang="less">
 // Override default style since the card cannot be clicked
-.c-MetaSeriesCard.v-card--hover {
+.c-PublisherCard.v-card--hover {
 	cursor: default;
 }
 
-.v-application a.c-MetaSeriesCard__title {
+// The following allows taking the full height if the publisher has no collections
+.c-PublisherCard__noCollections a.c-PublisherCard__title {
+	height: 100%;
+}
+
+.v-application a.c-PublisherCard__title {
 	font-size: 18px;
 	font-weight: 600;
 	display: block;
@@ -115,17 +108,8 @@ export default {
 	}
 }
 
-.c-MetaSeriesCard__one-shot {
-	font-style: italic;
-}
-
-// Need an ID override for this particular case
-#demyo .c-MetaSeriesCard__one-shot {
-	color: var(--dem-text-lighter) !important;
-}
-
 // Align the pagination buttons
-.c-MetaSeriesCard__pagination {
+.c-PublisherCard__pagination {
 	justify-content: space-around;
 }
 </style>
