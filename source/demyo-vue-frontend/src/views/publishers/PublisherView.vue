@@ -7,7 +7,7 @@
 				icon="mdi-brush dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="count == 0"
+				v-if="albumCount === 0 && collectionCount === 0"
 				:label="$t('quickTasks.delete.publisher')"
 				:confirm="$t('quickTasks.delete.publisher.confirm')"
 				icon="mdi-brush dem-overlay-delete"
@@ -34,20 +34,31 @@
 			</FieldValue>
 
 			<v-btn
-				v-if="count > 0"
+				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withPublisher: publisher.id } }"
 				color="accent" class="my-4" small outlined
 			>
-				{{ $tc('page.Publisher.viewAlbums', count) }}
+				{{ $tc('page.Publisher.viewAlbums', albumCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count == 0"
+				v-if="albumCount === 0"
 				border="left" type="info" text class="my-4"
 			>
 				{{ $t('page.Publisher.noAlbums') }}
 			</v-alert>
+		</SectionCard>
 
-			<!-- TODO: collections (field.Publisher.collections) -->
+		<SectionCard
+			v-if="loading || collectionCount > 0" :loading="loading"
+			:title="$t('field.Publisher.collections')"
+		>
+			<TextIndex :items="publisher.collections" :split-by-first-letter="false" compact>
+				<template v-slot:default="slotProps">
+					<router-link :to="`/collections/${slotProps.item.id}/view`">
+						{{ slotProps.item.identifyingName }}
+					</router-link>
+				</template>
+			</TextIndex>
 		</SectionCard>
 	</v-container>
 </template>
@@ -57,6 +68,7 @@ import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
+import TextIndex from '@/components/TextIndex'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import publisherService from '@/services/publisher-service'
@@ -68,7 +80,8 @@ export default {
 		AppTask,
 		AppTasks,
 		FieldValue,
-		SectionCard
+		SectionCard,
+		TextIndex
 	},
 
 	mixins: [modelViewMixin],
@@ -82,15 +95,25 @@ export default {
 	data() {
 		return {
 			publisher: {},
-			count: -1,
+			albumCount: -1,
 			appTasksMenu: false
+		}
+	},
+
+	computed: {
+		collectionCount() {
+			if (!this.publisher || !this.publisher.collections) {
+				return 0
+			}
+
+			return this.publisher.collections.length
 		}
 	},
 
 	methods: {
 		async fetchData() {
 			let publisherP = publisherService.findById(this.parsedId)
-			this.count = await publisherService.countAlbums(this.parsedId)
+			this.albumCount = await publisherService.countAlbums(this.parsedId)
 			this.publisher = await publisherP // Resolve calls in parallel
 		},
 
