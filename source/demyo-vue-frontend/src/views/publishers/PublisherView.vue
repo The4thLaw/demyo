@@ -14,7 +14,6 @@
 				@cancel="appTasksMenu = false"
 				@confirm="deletePublisher"
 			/>
-			<!-- TODO: handle this -->
 			<AppTask
 				:label="$t('quickTasks.add.collection.to.publisher')"
 				:to="{ name: 'CollectionAdd', query: { toPublisher: publisher.id }}"

@@ -69,6 +69,9 @@ export default {
 			if (this.refreshImages) {
 				loadPromises.push(this.refreshImages())
 			}
+			if (this.refreshPublishers) {
+				loadPromises.push(this.refreshPublishers())
+			}
 
 			await Promise.all(loadPromises)
 

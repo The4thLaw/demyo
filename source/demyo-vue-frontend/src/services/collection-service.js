@@ -6,7 +6,10 @@ import { axiosGet } from '@/helpers/axios'
  */
 class CollectionService extends AbstractModelService {
 	constructor() {
-		super('collections/')
+		super('collections/', {
+			fillMissingObjects: ['logo'],
+			sanitizeHtml: ['history']
+		})
 	}
 
 	/**
