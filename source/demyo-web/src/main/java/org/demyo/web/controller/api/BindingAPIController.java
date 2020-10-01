@@ -32,9 +32,9 @@ public class BindingAPIController extends AbstractModelAPIController<Binding> {
 	}
 
 	/**
-	 * Counts how many Albums use the given Binding.
+	 * Counts how many Albums use the given {@link Binding}
 	 * 
-	 * @param modelId The internal ID of the Binding
+	 * @param modelId The internal ID of the {@link Binding}
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
