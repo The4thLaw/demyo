@@ -1,4 +1,5 @@
 <template>
+	<!-- TODO: remove dependency to normalize ? -->
 	<v-app id="demyo">
 		<v-navigation-drawer
 			v-if="!$vuetify.breakpoint.smAndDown"

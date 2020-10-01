@@ -1,0 +1,44 @@
+[
+	{
+		"name": "FilePond",
+		"url": "https://pqina.nl/filepond/",
+		"copyright": "Rik Schennink",
+		"license": "<a href='https://www.opensource.org/licenses/mit-license.php'>MIT License</a>"
+	},
+	{
+		"name": "Jetty",
+		"url": "https://www.eclipse.org/jetty/",
+		"copyright": "Eclipse Foundation",
+		"license": "<a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License 2.0</a> &amp; <a href='https://eclipse.org/org/documents/epl-v10.php'>Eclipse Public License</a>"
+	},
+	{
+		"name": "Less",
+		"url": "http://lesscss.org/",
+		"copyright": "Less Team",
+		"license": "<a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License 2.0</a>"
+	},
+	{
+		"name": "Material Design Icons",
+		"url": "https://materialdesignicons.com/",
+		"copyright": "Pictogrammers Icon Group",
+		"license": "<a href='https://github.com/Templarian/MaterialDesign/blob/master/LICENSE'>Pictogrammers Free License</a>"
+	},
+	{
+		"name": "Spring Framework",
+		"url": "https://spring.io/",
+		"copyright": "Pivotal Software",
+		"license": "<a href='https://www.apache.org/licenses/LICENSE-2.0'>Apache License 2.0</a>"
+	},
+	{
+		"name": "Vue.js",
+		"url": "https://vuejs.org/",
+		"copyright": "Evan You",
+		"license": "<a href='https://www.opensource.org/licenses/mit-license.php'>MIT License</a>"
+	},
+	{
+		"name": "Vuetify",
+		"url": "https://vuetifyjs.com/",
+		"copyright": "Vuetify team",
+		"license": "<a href='https://www.opensource.org/licenses/mit-license.php'>MIT License</a>"
+	}
+]
