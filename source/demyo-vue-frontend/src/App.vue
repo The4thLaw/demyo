@@ -144,7 +144,7 @@
 		</v-content>
 		<v-footer color="secondary" dark>
 			<v-col>
-				TODO: codename
+				Demyo "{{ demyoCodename }}"
 			</v-col>
 		</v-footer>
 	</v-app>
@@ -152,6 +152,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { demyoCodename } from '@/myenv'
 import AppSnackbar from '@/components/AppSnackbar'
 import LetterIcon from '@/components/LetterIcon'
 import ReaderSelection from '@/components/ReaderSelection'
@@ -183,6 +184,7 @@ export default {
 	data() {
 		return {
 			pageTitle: 'Demyo',
+			demyoCodename: demyoCodename,
 
 			mainMenu: false,
 			showQuicksearch: false,

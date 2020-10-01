@@ -26,3 +26,15 @@ if (navigatorLanguage !== 'en' && navigatorLanguage !== 'fr') {
 export const defaultLanguage = navigatorLanguage
 // English would have no fallback but we're sure French will remain a first-class citizen
 export const fallbackLanguage = navigatorLanguage === 'en' ? 'fr' : 'en'
+
+// Extract the version and codename
+let bodyVersion = document.body.dataset.version
+if (bodyVersion === undefined) {
+	bodyVersion = 'x.y.z'
+}
+let bodyCodename = document.body.dataset.codename
+if (bodyCodename === undefined) {
+	bodyCodename = '[Vue]'
+}
+export const demyoVersion = bodyVersion
+export const demyoCodename = bodyCodename
