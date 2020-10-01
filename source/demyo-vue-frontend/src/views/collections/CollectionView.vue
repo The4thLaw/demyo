@@ -100,7 +100,7 @@ export default {
 			deleteStub(this,
 				() => collectionService.deleteModel(this.collection.id),
 				'quickTasks.delete.collection.confirm.done',
-				'CollectionIndex')
+				'PublisherIndex')
 		}
 	}
 }
