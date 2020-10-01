@@ -44,14 +44,10 @@
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('field.DerivativeSource.history')">
-				<v-row>
-					<v-col cols="12">
-						<tiptap-vuetify
-							v-model="source.history" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-					</v-col>
-				</v-row>
+				<tiptap-vuetify
+					v-model="source.history" :extensions="tipTapExtensions"
+					:card-props="{ outlined: true }"
+				/>
 			</SectionCard>
 
 			<FormActions v-if="initialized" @save="save" @reset="reset" />

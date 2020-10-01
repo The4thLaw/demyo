@@ -15,15 +15,11 @@
 						/>
 					</v-col>
 				</v-row>
-				<v-row>
-					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Publisher.history') }}</label>
-						<tiptap-vuetify
-							v-model="publisher.history" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-					</v-col>
-				</v-row>
+				<label class="dem-fieldlabel">{{ $t('field.Publisher.history') }}</label>
+				<tiptap-vuetify
+					v-model="publisher.history" :extensions="tipTapExtensions"
+					:card-props="{ outlined: true }"
+				/>
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Publisher.internet')">

@@ -21,15 +21,11 @@
 						/>
 					</v-col>
 				</v-row>
-				<v-row>
-					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Collection.history') }}</label>
-						<tiptap-vuetify
-							v-model="collection.history" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-					</v-col>
-				</v-row>
+				<label class="dem-fieldlabel">{{ $t('field.Collection.history') }}</label>
+				<tiptap-vuetify
+					v-model="collection.history" :extensions="tipTapExtensions"
+					:card-props="{ outlined: true }"
+				/>
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Collection.internet')">
