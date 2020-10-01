@@ -28,6 +28,18 @@ public class AlbumFilter extends AbstractModelFilter<Album> {
 	}
 
 	/**
+	 * Factory method that creates a filter based on the {@link Collection} internal ID.
+	 * 
+	 * @param The internal ID of the {@link Collection}.
+	 * @return the filter instance
+	 */
+	public static AlbumFilter forCollection(long modelId) {
+		AlbumFilter filter = new AlbumFilter();
+		filter.collection = modelId;
+		return filter;
+	}
+
+	/**
 	 * Factory method that creates a filter based on the {@link Binding} internal ID.
 	 * 
 	 * @param The internal ID of the {@link Binding}.

@@ -6,6 +6,7 @@ import Home from '@/views/Home.vue'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
+import collectionRoutes from './collections'
 import derivativeRoutes from './derivatives'
 import derivativeSourceRoutes from './derivative-sources'
 import derivativeTypeRoutes from './derivative-types'
@@ -28,6 +29,7 @@ const routes = [
 	...albumRoutes,
 	...authorRoutes,
 	...bindingRoutes,
+	...collectionRoutes,
 	...derivativeRoutes,
 	...derivativeSourceRoutes,
 	...derivativeTypeRoutes,
