@@ -34,7 +34,7 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<Autocomplete
-							v-model="derivative.type.id" :items="allTypes" :clearable="false"
+							v-model="derivative.type.id" :items="allTypes"
 							label-key="field.Derivative.type" :rules="rules.type"
 						/>
 					</v-col>
