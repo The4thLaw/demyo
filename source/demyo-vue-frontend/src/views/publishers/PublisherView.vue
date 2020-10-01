@@ -23,12 +23,18 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading" :image="publisher.logo" :title="publisher.identifyingName">
-			<FieldValue v-if="publisher.website" :label="$t('field.Publisher.website')">
-				<a :href="publisher.website">{{ publisher.website }}</a>
-			</FieldValue>
-			<FieldValue v-if="publisher.feed" :label="$t('field.Publisher.feed')">
-				<a :href="publisher.feed">{{ publisher.feed }}</a>
-			</FieldValue>
+			<v-row>
+				<v-col v-if="publisher.website" cols="12" md="6">
+					<FieldValue :label="$t('field.Publisher.website')">
+						<a :href="publisher.website">{{ publisher.website }}</a>
+					</FieldValue>
+				</v-col>
+				<v-col v-if="publisher.feed" cols="12" md="6">
+					<FieldValue :label="$t('field.Publisher.feed')">
+						<a :href="publisher.feed">{{ publisher.feed }}</a>
+					</FieldValue>
+				</v-col>
+			</v-row>
 			<FieldValue v-if="publisher.history" :label="$t('field.Publisher.history')">
 				<div v-html="publisher.history" />
 			</FieldValue>

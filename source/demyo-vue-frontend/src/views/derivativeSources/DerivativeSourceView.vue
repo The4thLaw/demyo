@@ -18,25 +18,25 @@
 
 		<SectionCard :loading="loading" :title="source.identifyingName">
 			<v-row>
-				<v-col cols="12" md="6">
-					<FieldValue v-if="source.owner" :label="$t('field.DerivativeSource.owner')">
+				<v-col v-if="source.owner" cols="12" md="6">
+					<FieldValue :label="$t('field.DerivativeSource.owner')">
 						{{ source.owner }}
 					</FieldValue>
 				</v-col>
-				<v-col cols="12" md="6">
-					<FieldValue v-if="source.phoneNumber" :label="$t('field.DerivativeSource.phoneNumber')">
+				<v-col v-if="source.phoneNumber" cols="12" md="6">
+					<FieldValue :label="$t('field.DerivativeSource.phoneNumber')">
 						<a :href="phoneLink">{{ source.phoneNumber }}</a>
 					</FieldValue>
 				</v-col>
 			</v-row>
 			<v-row>
-				<v-col cols="12" md="6">
-					<FieldValue v-if="source.website" :label="$t('field.DerivativeSource.website')">
+				<v-col v-if="source.website" cols="12" md="6">
+					<FieldValue :label="$t('field.DerivativeSource.website')">
 						<a :href="source.website">{{ source.website }}</a>
 					</FieldValue>
 				</v-col>
-				<v-col cols="12" md="6">
-					<FieldValue v-if="source.email" :label="$t('field.DerivativeSource.email')">
+				<v-col v-if="source.email" cols="12" md="6">
+					<FieldValue :label="$t('field.DerivativeSource.email')">
 						<a :href="'mailto:' + source.email">{{ source.email }}</a>
 					</FieldValue>
 				</v-col>
