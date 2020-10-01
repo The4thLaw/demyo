@@ -12,10 +12,19 @@ function regexMatch(comp, regex, key) {
 	}
 }
 
+export function email(comp) {
+	// Not really the right regex but it's sufficient
+	return regexMatch(comp, /^[^@]+@[^@]+$/, 'validation.email')
+}
+
 export function integer(comp) {
 	// Note that this rule only works partially because browsers will return an empty value for
 	// number fields. But that's the best we can do while keeping up/down arrows.
 	return regexMatch(comp, /^[0-9]*$/, 'validation.integer')
+}
+
+export function phone(comp) {
+	return regexMatch(comp, /^\+?[0-9() /-]+$/, 'validation.phone')
 }
 
 export function url(comp) {

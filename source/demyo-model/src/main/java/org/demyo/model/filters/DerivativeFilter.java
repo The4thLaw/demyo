@@ -49,6 +49,18 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 		return filter;
 	}
 
+	/**
+	 * Factory method that creates a filter based on the {@link DerivativeSource} internal ID.
+	 * 
+	 * @param The internal ID of the {@link DerivativeSource}.
+	 * @return the filter instance
+	 */
+	public static DerivativeFilter forSource(long modelId) {
+		DerivativeFilter filter = new DerivativeFilter();
+		filter.source = modelId;
+		return filter;
+	}
+
 	/** The internal ID of the {@link Series}. */
 	private Long series;
 	/** The internal ID of the {@link org.demyo.model.Author artist}. */

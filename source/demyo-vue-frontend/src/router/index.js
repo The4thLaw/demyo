@@ -7,6 +7,7 @@ import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
 import derivativeRoutes from './derivatives'
+import derivativeSourceRoutes from './derivative-sources'
 import derivativeTypeRoutes from './derivative-types'
 import imageRoutes from './images'
 import managementRoutes from './manage'
@@ -28,6 +29,7 @@ const routes = [
 	...authorRoutes,
 	...bindingRoutes,
 	...derivativeRoutes,
+	...derivativeSourceRoutes,
 	...derivativeTypeRoutes,
 	...imageRoutes,
 	...managementRoutes,

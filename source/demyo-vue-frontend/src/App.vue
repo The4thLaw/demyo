@@ -546,4 +546,8 @@ html[lang],
 	content: "\F1C0"; // Minus is \F374
 }
 
+.dem-multiline-value {
+	white-space: pre;
+}
+
 </style>
