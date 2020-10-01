@@ -119,6 +119,7 @@ export default {
 
 .c-SectionCard__content {
 	padding-left: 24px;
+	flex: 1;
 }
 
 @media (max-width: 550px) {
