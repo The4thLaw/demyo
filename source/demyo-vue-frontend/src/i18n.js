@@ -33,6 +33,9 @@ const dateTimeFormats = {
 	}
 }
 
+// Define the variants we support
+dateTimeFormats['fr-BE'] = dateTimeFormats.fr
+
 // By default, we start with partial messages covering all above-the-fold content in all supported languages
 // (mainly titles, but also the search widget)
 function loadLocaleMessages() {
@@ -87,6 +90,8 @@ loadLanguageFromServer(defaultLanguage).then(
  * @param {String} lang the new language
  */
 export async function switchLanguage(lang) {
+	// Java and browsers have a different way of formatting language variants
+	lang = lang.replace(/_/, '-')
 	console.log(`Switching language to ${lang}`)
 	await loadLanguageFromServer(lang)
 	i18n.locale = lang
