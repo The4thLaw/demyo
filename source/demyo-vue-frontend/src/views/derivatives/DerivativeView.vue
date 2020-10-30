@@ -29,24 +29,24 @@
 			<div class="dem-fieldset">
 				<v-row>
 					<v-col v-if="derivative.series.id" cols="12" md="6">
-						<FieldValue v-if="derivative.series.id" :label="$t('field.Derivative.series')">
+						<FieldValue :label="$t('field.Derivative.series')">
 							<ModelLink :model="derivative.series" view="SeriesView" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="derivative.album.id" cols="12" md="6">
-						<FieldValue v-if="derivative.album.id" :label="$t('field.Derivative.album')">
+						<FieldValue :label="$t('field.Derivative.album')">
 							<ModelLink :model="derivative.album" view="AlbumView" />
 						</FieldValue>
 					</v-col>
 				</v-row>
 				<v-row>
-					<v-col cols="12" md="6">
-						<FieldValue v-if="derivative.artist.id" :label="$t('field.Derivative.artist')">
+					<v-col v-if="derivative.artist.id" cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.artist')">
 							<ModelLink :model="derivative.artist" view="AuthorView" />
 						</FieldValue>
 					</v-col>
-					<v-col cols="12" md="6">
-						<FieldValue v-if="derivative.source.id" :label="$t('field.Derivative.source')">
+					<v-col v-if="derivative.source.id" cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.source')">
 							<ModelLink :model="derivative.source" view="DerivativeSourceView" />
 						</FieldValue>
 					</v-col>
@@ -56,15 +56,17 @@
 			<div class="dem-fieldset">
 				<v-row>
 					<v-col cols="12" md="6">
-						<FieldValue v-if="derivative.type.id" :label="$t('field.Derivative.type')">
+						<FieldValue :label="$t('field.Derivative.type')">
 							<ModelLink :model="derivative.type" view="DerivativeTypeView" />
 						</FieldValue>
 					</v-col>
-					<v-col cols="12" md="6">
-						<FieldValue v-if="derivative.colours" :label="$t('field.Derivative.colours')">
+					<v-col v-if="derivative.colours" cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.colours')">
 							{{ derivative.colours }}
 						</FieldValue>
 					</v-col>
+				</v-row>
+				<v-row>
 					<v-col v-if="sizeSpec" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.size')">
 							{{ sizeSpec }}
@@ -171,7 +173,7 @@
 			</div>
 		</SectionCard>
 
-		<SectionCard v-if="derivative.images.length > 1" :loading="loading" :title="$t('page.Derivative.gallery')">
+		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Derivative.gallery')">
 			<GalleryIndex :items="derivative.images">
 				<template v-slot:default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
@@ -221,7 +223,10 @@ export default {
 			appTasksMenu: false,
 			dndDialog: false,
 			derivative: {
-				series: {}
+				series: {},
+				album: {},
+				artist: {},
+				source: {}
 			}
 		}
 	},
