@@ -27,6 +27,11 @@ class AlbumService extends AbstractModelService {
 
 		return promise
 	}
+
+	saveFilepondImages(modelId, coverId, otherImageIds) {
+		return axiosPost(`${this.basePath}${modelId}/images`,
+			{ filePondMainImage: coverId, filePondOtherImages: otherImageIds }, false)
+	}
 }
 
 export default new AlbumService()
