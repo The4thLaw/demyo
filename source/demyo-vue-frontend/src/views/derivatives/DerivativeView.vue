@@ -131,7 +131,7 @@
 			</div>
 
 			<div
-				v-if="derivative.purchasePrice || derivative.acquisitionDate || derivative.prices.length > 0"
+				v-if="derivative.purchasePrice || derivative.acquisitionDate || hasPrices"
 				class="dem-fieldset"
 			>
 				<v-row>
@@ -146,10 +146,7 @@
 						</FieldValue>
 					</v-col>
 					<v-col cols="12" md="6">
-						<FieldValue
-							v-if="derivative.prices.length > 0"
-							:label="$t('field.Derivative.prices.history')"
-						>
+						<FieldValue v-if="hasPrices" :label="$t('field.Derivative.prices.history')">
 							<v-simple-table>
 								<template v-slot:default>
 									<thead>
@@ -230,6 +227,14 @@ export default {
 	},
 
 	computed: {
+		hasPrices() {
+			return this.derivative.prices && this.derivative.prices.length > 0
+		},
+
+		hasImages() {
+			return this.derivative.otherImages && this.derivative.otherImages.length > 1
+		},
+
 		sizeSpec() {
 			if (this.derivative.width && this.derivative.height && this.derivative.depth) {
 				return `${this.derivative.width} x ${this.derivative.height} x ${this.derivative.depth}`
