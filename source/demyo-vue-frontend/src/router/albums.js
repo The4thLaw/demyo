@@ -1,6 +1,6 @@
 import AuthorEdit from '@/views/authors/AuthorEdit'
 import AlbumIndex from '@/views/albums/AlbumIndex'
-import AuthorView from '@/views/authors/AuthorView'
+import AlbumView from '@/views/albums/AlbumView'
 
 export default [
 	{
@@ -12,7 +12,7 @@ export default [
 		path: '/albums/:id/view',
 		alias: '/albums/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
 		name: 'AlbumView',
-		component: AuthorView
+		component: AlbumView
 	},
 	{
 		path: '/albums/:id/edit',
