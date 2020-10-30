@@ -380,7 +380,7 @@ export default {
 
 html[lang],
 #demyo {
-	font-family: -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-family: BlinkMacSystemFont, -apple-system, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	background: #eee;
 }
 
