@@ -12,3 +12,7 @@ This project is the Java port / upgrade of a PHP software whose releases are sti
 ## Contributing
 
 See our [guidelines](.github/CONTRIBUTING.md).
+
+## Copyright
+
+Demyo is Copyright &copy; Xavier Dalem, 2007-2020. See [LICENSE.md](LICENSE.md) for details.
