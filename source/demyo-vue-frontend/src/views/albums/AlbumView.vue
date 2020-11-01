@@ -147,7 +147,7 @@
 			<div class="dem-fieldset">
 				<v-row>
 					<v-col cols="12" md="4">
-						<FieldValue :label="$t('field.Album.binding')">
+						<FieldValue v-if="album.binding" :label="$t('field.Album.binding')">
 							<ModelLink :model="album.binding" view="BindingView" />
 						</FieldValue>
 					</v-col>
