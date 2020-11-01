@@ -102,7 +102,7 @@
 			</div>
 		</SectionCard>
 
-		<SectionCard :subtitle="$t('page.Album.aboutEdition')">
+		<SectionCard :loading="loading" :subtitle="$t('page.Album.aboutEdition')">
 			<div
 				v-if="album.firstEditionDate || album.currentEditionDate || album.wishlist
 					|| album.acquisitionDate || album.isbn"
