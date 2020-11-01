@@ -31,6 +31,9 @@
 							{{ album.title }}
 						</v-list-item-title>
 					</v-list-item-content>
+					<v-list-item-action v-if="album.wishlist">
+						<v-icon color="grey lighten-1" small>mdi-gift</v-icon>
+					</v-list-item-action>
 				</v-list-item>
 				<!--
 					Pad the last page to keep a constant height.
@@ -95,6 +98,10 @@ export default {
 
 <style lang="less">
 @import "../styles/detached-rulesets.less";
+
+.v-application .c-MetaSeriesCard .v-list-item--link:hover {
+	text-decoration: none;
+}
 
 // Override default style since the card cannot be clicked
 .c-MetaSeriesCard.v-card--hover {

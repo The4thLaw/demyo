@@ -128,6 +128,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/** The flag indicating whether an item is part of the wishlist. */
 	@Column(name = "wishlist")
+	@JsonView(ModelView.Basic.class)
 	private boolean wishlist;
 
 	/** The physical location of this Album. */
