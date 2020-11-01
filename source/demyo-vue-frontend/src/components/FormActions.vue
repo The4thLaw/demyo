@@ -1,7 +1,7 @@
 <template>
 	<div class="c-FormActions">
 		<template v-if="!hasDefaultSlot">
-			<v-btn color="accent" @click="$emit('save')">
+			<v-btn color="accent" type="submit" @click.prevent="$emit('save')">
 				{{ $t('button.save') }}
 			</v-btn>
 			<v-btn v-if="showReset" text color="primary" @click="$emit('reset')">
