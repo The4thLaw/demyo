@@ -220,10 +220,10 @@
 		</SectionCard>
 
 		<SectionCard v-if="album.summary || album.comment">
-			<FieldValue :label="$t('field.Album.summary')">
+			<FieldValue v-if="album.summary" :label="$t('field.Album.summary')">
 				<div v-html="album.summary" />
 			</FieldValue>
-			<FieldValue :label="$t('field.Album.comment')">
+			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')">
 				<div v-html="album.comment" />
 			</FieldValue>
 		</SectionCard>
