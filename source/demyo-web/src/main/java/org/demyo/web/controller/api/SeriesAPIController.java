@@ -65,7 +65,7 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	}
 
 	/**
-	 * Counts how many Derivatives use the given series.
+	 * Counts how many Derivatives use the given Series.
 	 * 
 	 * @param typeId The internal ID of the {@link Series}
 	 * @return the count

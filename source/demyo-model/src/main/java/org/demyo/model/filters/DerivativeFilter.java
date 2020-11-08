@@ -3,6 +3,7 @@ package org.demyo.model.filters;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
+import org.demyo.model.Album;
 import org.demyo.model.Derivative;
 import org.demyo.model.DerivativeSource;
 import org.demyo.model.DerivativeType;
@@ -22,6 +23,18 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	public static DerivativeFilter forSeries(long modelId) {
 		DerivativeFilter filter = new DerivativeFilter();
 		filter.series = modelId;
+		return filter;
+	}
+
+	/**
+	 * Factory method that creates a filter based on the {@link Album} internal ID.
+	 * 
+	 * @param The internal ID of the {@link Album}.
+	 * @return the filter instance
+	 */
+	public static DerivativeFilter forAlbum(long modelId) {
+		DerivativeFilter filter = new DerivativeFilter();
+		filter.album = modelId;
 		return filter;
 	}
 
@@ -63,6 +76,8 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 
 	/** The internal ID of the {@link Series}. */
 	private Long series;
+	/** The internal ID of the {@link Album}. */
+	private Long album;
 	/** The internal ID of the {@link org.demyo.model.Author artist}. */
 	private Long artist;
 	/** The internal ID of the {@link DerivativeType}. */
@@ -76,6 +91,9 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 
 		if (series != null) {
 			e = combine(e, QDerivative.derivative.series.id.eq(series));
+		}
+		if (album != null) {
+			e = combine(e, QDerivative.derivative.album.id.eq(album));
 		}
 		if (artist != null) {
 			e = combine(e, QDerivative.derivative.artist.id.eq(artist));
@@ -97,6 +115,15 @@ public class DerivativeFilter extends AbstractModelFilter<Derivative> {
 	 */
 	public void setSeries(Long series) {
 		this.series = series;
+	}
+
+	/**
+	 * Sets the internal ID of the {@link Album}.
+	 *
+	 * @param album the new internal ID of the {@Album}.
+	 */
+	public void setAlbum(Long album) {
+		this.album = album;
 	}
 
 	/**

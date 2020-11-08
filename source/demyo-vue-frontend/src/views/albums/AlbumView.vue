@@ -238,7 +238,29 @@
 			</GalleryIndex>
 		</SectionCard>
 
-		<!-- TODO: list of derivatives -->
+		<SectionCard
+			v-if="derivativeCount > 0" ref="derivativeSection" v-intersect="loadDerivatives"
+			:title="$t('field.Album.derivatives')"
+		>
+			<div v-if="derivativesLoading" class="text-center">
+				<v-progress-circular indeterminate color="primary" size="64" />
+			</div>
+			<GalleryIndex
+				:items="derivatives" image-path="mainImage" bordered
+				@page-change="$refs.derivativeSection.$el.scrollIntoView()"
+			>
+				<template v-slot:default="slotProps">
+					<router-link :to="`/derivatives/${slotProps.item.id}/view`">
+						<div v-if="slotProps.item.album">
+							{{ slotProps.item.album.title }}
+						</div>
+						<div v-if="slotProps.item.source">
+							{{ slotProps.item.source.identifyingName }}
+						</div>
+					</router-link>
+				</template>
+			</GalleryIndex>
+		</SectionCard>
 
 		<v-btn
 			v-if="isInReadingList" fab color="accent" fixed
@@ -299,7 +321,11 @@ export default {
 				publisher: {},
 				collection: {},
 				binding: {}
-			}
+			},
+			derivativeCount: 0,
+			inhibitObserver: true,
+			derivativesLoading: false,
+			derivatives: []
 		}
 	},
 
@@ -337,7 +363,12 @@ export default {
 
 	methods: {
 		async fetchData() {
+			let dcPromise = albumService.countDerivatives(this.parsedId)
 			this.album = await albumService.findById(this.parsedId)
+			this.derivativeCount = await dcPromise
+			// If we enable the v-intersect observer immediately, it will be triggered on page load as well
+			// Probably because the page fills too slowly
+			setTimeout(() => { this.inhibitObserver = false }, 500)
 		},
 
 		async saveDndImages(data) {
@@ -355,6 +386,20 @@ export default {
 				() => albumService.deleteModel(this.album.id),
 				'quickTasks.delete.album.confirm.done',
 				'AlbumIndex')
+		},
+
+		async loadDerivatives() {
+			if (this.inhibitObserver || this.derivativeCount <= 0) {
+				// The page isn't loaded yet. Don't do anything
+				return
+			}
+			if (this.derivativesLoading || this.derivatives.length > 0) {
+				// The page is loading or has loaded. Don't do anything
+				return
+			}
+			this.derivativesLoading = true
+			this.derivatives = await derivativeService.findForIndex({ album: this.album.id })
+			this.derivativesLoading = false
 		},
 
 		addToReadingList() {

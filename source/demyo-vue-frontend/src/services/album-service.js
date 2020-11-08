@@ -34,6 +34,14 @@ class AlbumService extends AbstractModelService {
 		return axiosPost(`${this.basePath}${modelId}/images`,
 			{ filePondMainImage: coverId, filePondOtherImages: otherImageIds }, false)
 	}
+
+	/**
+	 * Finds how many Derivatives use the given Album.
+	 * @param {Number} id The Album ID
+	 */
+	countDerivatives(id) {
+		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
+	}
 }
 
 export default new AlbumService()

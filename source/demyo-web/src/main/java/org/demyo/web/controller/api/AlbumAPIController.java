@@ -19,7 +19,9 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Album;
 import org.demyo.model.beans.MetaSeriesNG;
 import org.demyo.model.filters.AlbumFilter;
+import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAlbumService;
+import org.demyo.service.IDerivativeService;
 
 /**
  * Controller handling the API calls for {@link Albums}s.
@@ -30,6 +32,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AlbumAPIController.class);
 
 	private final IAlbumService service;
+	private final IDerivativeService derivativeService;
 
 	/**
 	 * Creates the controller.
@@ -37,9 +40,10 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	 * @param service The service to manage the entries.
 	 */
 	@Autowired
-	public AlbumAPIController(IAlbumService service) {
+	public AlbumAPIController(IAlbumService service, IDerivativeService derivativeService) {
 		super(service);
 		this.service = service;
+		this.derivativeService = derivativeService;
 	}
 
 	@Override
@@ -78,5 +82,16 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 		service.recoverFromFilePond(modelId, mainImage, otherImages);
 
 		return true;
+	}
+
+	/**
+	 * Counts how many Derivatives use the given Album.
+	 * 
+	 * @param typeId The internal ID of the {@link Album}
+	 * @return the count
+	 */
+	@GetMapping("{modelId}/derivatives/count")
+	public long countDerivativesBySeries(@PathVariable long modelId) {
+		return derivativeService.countDerivativesByFilter(DerivativeFilter.forAlbum(modelId));
 	}
 }
