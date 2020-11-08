@@ -63,12 +63,14 @@ export default {
 		previousPage() {
 			if (this.hasPreviousPage) {
 				this.currentPage--
+				this.$emit('page-change')
 			}
 		},
 
 		nextPage() {
 			if (this.hasNextPage) {
 				this.currentPage++
+				this.$emit('page-change')
 			}
 		},
 
