@@ -510,9 +510,27 @@ html[lang],
 }
 
 /** Overlays for icons. */
+.dem-overlay-add::after {
+	content: "\F0217";
+	font-size: 58%;
+}
+
+.dem-overlay-edit::after {
+	content: "\F3EB";
+}
+
+.dem-overlay-delete::after {
+	content: "\F1C0"; // Minus is \F374
+}
+
+.dem-overlay-check::after {
+	content: "\F12C";
+}
+
 .dem-overlay-add,
 .dem-overlay-edit,
-.dem-overlay-delete {
+.dem-overlay-delete,
+.dem-overlay-check {
 	&.v-icon {
 		position: relative;
 	}
@@ -534,19 +552,17 @@ html[lang],
 			2px 0 #fff,
 			-2px 0 #fff;
 	}
-}
 
-.dem-overlay-add::after {
-	content: "\F0217";
-	font-size: 58%;
-}
+	.v-btn--fab &::after {
+		bottom: -5px;
+	}
 
-.dem-overlay-edit::after {
-	content: "\F3EB";
-}
-
-.dem-overlay-delete::after {
-	content: "\F1C0"; // Minus is \F374
+	.v-btn.accent &::after {
+		// The text-shadow trick doesn't work wonders with mdi-library dem-overlay-delete/check on a FAB
+		text-shadow: none;
+		background: var(--v-accent-base);
+		border-radius: 50%;
+	}
 }
 
 .dem-multiline-value {

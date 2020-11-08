@@ -1,6 +1,4 @@
 <template>
-	<!-- TODO: add to reading list (if not in wishlist) -->
-	<!-- TODO: FAB to mark as read -->
 	<v-container fluid>
 		<portal v-if="!loading" to="appBarAddons">
 			<FavouriteButton :model-id="album.id" type="Album" />
@@ -27,6 +25,12 @@
 				:label="$t('quickTasks.add.images.to.album')"
 				icon="mdi-camera dem-overlay-add"
 				@click="appTasksMenu = false; dndDialog = true"
+			/>
+			<AppTask
+				v-if="!isInReadingList"
+				:label="$t('quickTasks.add.album.to.readingList')"
+				icon="mdi-library dem-overlay-add"
+				@click="appTasksMenu = false; addToReadingList()"
 			/>
 		</AppTasks>
 		<DnDImage
@@ -235,10 +239,19 @@
 		</SectionCard>
 
 		<!-- TODO: list of derivatives -->
+
+		<v-btn
+			v-if="isInReadingList" fab color="accent" fixed
+			bottom right @click="markAsRead"
+		>
+			<v-icon>mdi-library dem-overlay-check</v-icon>
+		</v-btn>
 	</v-container>
 </template>
 
 <script>
+import { sortedIndexOf } from 'lodash'
+import { mapState } from 'vuex'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import DnDImage from '@/components/DnDImage'
@@ -252,6 +265,7 @@ import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
+import readerService from '@/services/reader-service'
 
 export default {
 	name: 'AlbumView',
@@ -312,7 +326,13 @@ export default {
 			}
 
 			return null
-		}
+		},
+
+		...mapState({
+			isInReadingList: function (state) {
+				return sortedIndexOf(state.reader.readingList, this.album.id) > -1
+			}
+		})
 	},
 
 	methods: {
@@ -335,6 +355,14 @@ export default {
 				() => albumService.deleteModel(this.album.id),
 				'quickTasks.delete.album.confirm.done',
 				'AlbumIndex')
+		},
+
+		addToReadingList() {
+			readerService.addToReadingList(this.album.id)
+		},
+
+		markAsRead() {
+			readerService.removeFromReadingList(this.album.id)
 		}
 	}
 }

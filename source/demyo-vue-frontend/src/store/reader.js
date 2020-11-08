@@ -133,6 +133,6 @@ export default {
 
 		removeFromReadingList({ commit }, item) {
 			commit('removeFromReadingList', item)
-		},
+		}
 	}
 }
