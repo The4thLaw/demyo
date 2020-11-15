@@ -17,7 +17,8 @@ module.exports = {
 			'enableInSFC': false
 		},
 		'webpackBundleAnalyzer': {
-			'openAnalyzer': false
+			'openAnalyzer': false,
+			'defaultSizes': 'parsed'
 		}
 	},
 
