@@ -20,7 +20,20 @@ module.exports = {
 			'openAnalyzer': false
 		}
 	},
+
 	'transpileDependencies': [
 		'vuetify'
-	]
+	],
+
+	chainWebpack: config => {
+		config.module
+			.rule('vue')
+			.use('vue-loader')
+			.loader('vue-loader')
+			.tap(options => {
+				// modify the options...
+				options.whitespace = 'condense'
+				return options
+			})
+	}
 }
