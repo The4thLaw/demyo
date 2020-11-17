@@ -1,5 +1,5 @@
 module.exports = {
-	'lintOnSave': false,
+	lintOnSave: false,
 
 	devServer: {
 		// Route requests to unknown URLs to the backend (can be JSON server or Spring)
@@ -9,20 +9,20 @@ module.exports = {
 		}
 	},
 
-	'pluginOptions': {
-		'i18n': {
-			'locale': 'en',
-			'fallbackLocale': 'en',
-			'localeDir': 'locales',
-			'enableInSFC': false
+	pluginOptions: {
+		i18n: {
+			locale: 'en',
+			fallbackLocale: 'en',
+			localeDir: 'locales',
+			enableInSFC: false
 		},
-		'webpackBundleAnalyzer': {
-			'openAnalyzer': false,
-			'defaultSizes': 'parsed'
+		webpackBundleAnalyzer: {
+			openAnalyzer: false,
+			defaultSizes: 'parsed'
 		}
 	},
 
-	'transpileDependencies': [
+	transpileDependencies: [
 		'vuetify'
 	],
 
