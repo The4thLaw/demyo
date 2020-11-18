@@ -8,7 +8,6 @@
 							v-model="album.series.id" :items="allSeries" label-key="field.Album.series"
 							clearable
 						/>
-						<!-- TODO: reminder for publishers / collections @input="loadAlbums()" -->
 					</v-col>
 				</v-row>
 				<v-row>
@@ -38,6 +37,25 @@
 							v-model="album.tags" :items="allTags" :loading="allTagsLoading"
 							multiple clearable
 							label-key="field.Album.tags" refreshable @refresh="refreshTags"
+						/>
+					</v-col>
+				</v-row>
+			</SectionCard>
+
+			<SectionCard :subtitle="$t('fieldset.Album.publishing')">
+				<v-row>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.publisher.id" :items="allPublishers"
+							label-key="field.Album.publisher" required :rules="rules.publisher"
+							refreshable @refresh="refreshPublishers" @input="loadCollections"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.collection.id" :items="relatedCollections"
+							label-key="field.Album.collection" clearable
+							refreshable @refresh="loadCollections"
 						/>
 					</v-col>
 				</v-row>
@@ -238,6 +256,7 @@ export default {
 				cycle: [integer(this)],
 				number: [number(this)],
 				title: [mandatory(this)],
+				publisher: [mandatory(this)],
 				prices: {
 					date: [mandatory(this)],
 					price: [mandatory(this)]

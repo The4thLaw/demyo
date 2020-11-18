@@ -2,7 +2,7 @@
 	<v-autocomplete
 		v-model="inputVal"
 		v-bind="$attrs"
-		:label="$t(labelKey)"
+		:label="$tc(labelKey, multiple ? 2 : 1)"
 		item-text="identifyingName"
 		item-value="id"
 		menu-props="allowOverflow"
