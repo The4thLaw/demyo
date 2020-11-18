@@ -6,6 +6,9 @@
 		item-text="identifyingName"
 		item-value="id"
 		menu-props="allowOverflow"
+		:multiple="multiple"
+		:chips="multiple"
+		:deletable-chips="multiple"
 		:loading="loading ? 'primary' : false"
 		:no-data-text="$t('core.components.Autocomplete.nodata')"
 	>
@@ -39,6 +42,12 @@ export default {
 		},
 
 		loading: {
+			type: Boolean,
+			default: false
+		},
+
+		// Re-declared to always be able to set multiple input as chips
+		multiple: {
 			type: Boolean,
 			default: false
 		}
