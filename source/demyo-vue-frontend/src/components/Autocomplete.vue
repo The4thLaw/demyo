@@ -11,6 +11,8 @@
 		:deletable-chips="multiple"
 		:loading="loading ? 'primary' : false"
 		:no-data-text="$t('core.components.Autocomplete.nodata')"
+		:search-input.sync="search"
+		@input="search = ''"
 	>
 		<template v-if="refreshable" v-slot:append-outer>
 			<v-btn icon small @click.stop="$emit('refresh')">
@@ -55,7 +57,9 @@ export default {
 
 	data() {
 		return {
-			inputVal: this.value
+			inputVal: this.value,
+			// See https://stackoverflow.com/a/55809183/109813
+			search: ''
 		}
 	},
 
