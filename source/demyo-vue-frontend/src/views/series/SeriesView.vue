@@ -24,7 +24,11 @@
 				icon="mdi-library"
 				@click="addSeriesToReadingList"
 			/>
-			<!-- TODO: add album to series -->
+			<AppTask
+				:label="$t('quickTasks.add.album.to.series')"
+				:to="{ name: 'AlbumAdd', query: { toSeries: series.id }}"
+				icon="mdi-book-open-variant dem-overlay-add"
+			/>
 			<AppTask
 				:label="$t('quickTasks.add.derivative.to.series')"
 				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
@@ -284,7 +288,7 @@ export default {
 		},
 
 		derivativeQuery() {
-			let query = {
+			const query = {
 				toSeries: this.series.id
 			}
 			if (this.allArtists.length === 1) {
