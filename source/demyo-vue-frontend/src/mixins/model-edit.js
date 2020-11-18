@@ -72,6 +72,9 @@ export default {
 			if (this.refreshPublishers) {
 				loadPromises.push(this.refreshPublishers())
 			}
+			if (this.refreshTags) {
+				loadPromises.push(this.refreshTags())
+			}
 
 			await Promise.all(loadPromises)
 
