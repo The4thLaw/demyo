@@ -1,4 +1,4 @@
-import AuthorEdit from '@/views/authors/AuthorEdit'
+import AlbumEdit from '@/views/albums/AlbumEdit'
 import AlbumIndex from '@/views/albums/AlbumIndex'
 import AlbumView from '@/views/albums/AlbumView'
 
@@ -17,11 +17,11 @@ export default [
 	{
 		path: '/albums/:id/edit',
 		name: 'AlbumEdit',
-		component: AuthorEdit
+		component: AlbumEdit
 	},
 	{
 		path: '/albums/new',
 		name: 'AlbumAdd',
-		component: AuthorEdit
+		component: AlbumEdit
 	}
 ]
