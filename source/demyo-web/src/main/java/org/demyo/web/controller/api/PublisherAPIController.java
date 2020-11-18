@@ -1,5 +1,7 @@
 package org.demyo.web.controller.api;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import org.demyo.model.Collection;
+import org.demyo.model.ModelView;
 import org.demyo.model.Publisher;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.service.IAlbumService;
+import org.demyo.service.ICollectionService;
 import org.demyo.service.IPublisherService;
 
 /**
@@ -22,18 +29,22 @@ import org.demyo.service.IPublisherService;
 @RequestMapping("/api/publishers")
 public class PublisherAPIController extends AbstractModelAPIController<Publisher> {
 	private final IPublisherService service;
+	private final ICollectionService collectionService;
 	private final IAlbumService albumService;
 
 	/**
 	 * Creates the controller.
 	 * 
 	 * @param service The service to manage the entries.
+	 * @param collectionService The service to manage {@link Collections}.
 	 * @param albumService The service to manage Albums.
 	 */
 	@Autowired
-	public PublisherAPIController(IPublisherService service, IAlbumService albumService) {
+	public PublisherAPIController(IPublisherService service, ICollectionService collectionService,
+			IAlbumService albumService) {
 		super(service);
 		this.service = service;
+		this.collectionService = collectionService;
 		this.albumService = albumService;
 	}
 
@@ -53,5 +64,17 @@ public class PublisherAPIController extends AbstractModelAPIController<Publisher
 	@GetMapping("{modelId}/albums/count")
 	public long countAlbumsByPublisher(@PathVariable long modelId) {
 		return albumService.countAlbumsByFilter(AlbumFilter.forPublisher(modelId));
+	}
+
+	/**
+	 * Finds the Collections for a given Publisher.
+	 * 
+	 * @param publisherId The Publisher ID
+	 * @return The Publisher's Collections
+	 */
+	@JsonView(ModelView.Minimal.class)
+	@GetMapping("/{publisherId}/collections")
+	public List<Collection> getCollectionsForPublisher(@PathVariable("publisherId") long publisherId) {
+		return collectionService.findByPublisherId(publisherId);
 	}
 }
