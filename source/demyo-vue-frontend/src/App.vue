@@ -511,20 +511,20 @@ html[lang],
 
 /** Overlays for icons. */
 .dem-overlay-add::after {
-	content: "\F0217";
+	content: "\F0415";
 	font-size: 58%;
 }
 
 .dem-overlay-edit::after {
-	content: "\F3EB";
+	content: "\F03EB";
 }
 
 .dem-overlay-delete::after {
-	content: "\F1C0"; // Minus is \F374
+	content: "\F01B4"; // Minus could also be used
 }
 
 .dem-overlay-check::after {
-	content: "\F12C";
+	content: "\F012C";
 }
 
 .dem-overlay-add,
