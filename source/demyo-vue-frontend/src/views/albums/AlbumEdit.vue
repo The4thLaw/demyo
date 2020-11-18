@@ -97,6 +97,14 @@
 				</v-row>
 			</SectionCard>
 
+			<SectionCard :subtitle="$t('page.Album.aboutEdition')">
+				<v-col cols="12">
+					<v-text-field
+						v-model="album.isbn" :label="$t('field.Album.isbn')" :rules="rules.isbn"
+					/>
+				</v-col>
+			</SectionCard>
+
 			<!--<SectionCard :subtitle="$t('fieldset.Derivative.format')">
 				<v-row>
 					<v-col cols="12" md="6">
@@ -241,7 +249,7 @@ import authorRefreshMixin from '@/mixins/refresh-author-list'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
 import publisherRefreshMixin from '@/mixins/refresh-publisher-list'
 import tagRefreshMixin from '@/mixins/refresh-tag-list'
-import { integer, mandatory, number } from '@/helpers/rules'
+import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import albumService from '@/services/album-service'
 import bindingService from '@/services/binding-service'
 import publisherService from '@/services/publisher-service'
@@ -293,6 +301,7 @@ export default {
 				number: [number(this)],
 				title: [mandatory(this)],
 				publisher: [mandatory(this)],
+				isbn: [isbn(this)],
 				prices: {
 					date: [mandatory(this)],
 					price: [mandatory(this)]
