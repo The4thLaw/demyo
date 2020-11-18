@@ -5,7 +5,7 @@ module.exports = {
 		browser: true
 	},
 	parserOptions: {
-		'parser': 'babel-eslint'
+		parser: 'babel-eslint'
 	},
 	extends: [
 		'eslint:recommended',
@@ -20,10 +20,10 @@ module.exports = {
 
 		// Best practies
 		'consistent-return': 'error',
-		'curly': 'error',
+		curly: 'error',
 		'default-case': 'warn',
 		'dot-location': ['warn', 'property'],
-		'eqeqeq': ['error', 'smart'],
+		eqeqeq: ['error', 'smart'],
 		'no-alert': 'error',
 		'no-caller': 'error',
 		'no-else-return': 'error',
@@ -45,29 +45,29 @@ module.exports = {
 		// 'no-useless-catch': 'error', // v5.11
 		'no-useless-concat': 'error',
 		'no-useless-return': 'error',
-		'radix': 'warn',
+		radix: 'warn',
 		'require-await': 'error',
 		'wrap-iife': 'error',
 
 		// Style
 		'block-spacing': 'error',
-		'indent': ['error', 'tab'],
+		indent: ['error', 'tab'],
 		'max-len': ['error', {
-			'code': 120
+			code: 120
 		}],
 		'no-tabs': 'off',
 		'space-before-blocks': 'error',
 		'space-before-function-paren': ['error', {
-			'anonymous': 'always',
-			'named': 'never',
-			'asyncArrow': 'always'
+			anonymous: 'always',
+			named: 'never',
+			asyncArrow: 'always'
 		}],
 
 		// Vue
 		'vue/html-indent': ['error', 'tab'],
 		'vue/max-attributes-per-line': ['error', {
-			'singleline': 4,
-			'multiline': 4
+			singleline: 4,
+			multiline: 4
 		}]
 	}
 }
