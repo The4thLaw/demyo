@@ -13,6 +13,14 @@ class PublisherService extends AbstractModelService {
 	}
 
 	/**
+	 * Finds the Collections belonging to a Publisher.
+	 * @param {Number} publisherId The Publisher ID
+	 */
+	findCollectionsForList(publisherId) {
+		return axiosGet(`${this.basePath}${publisherId}/collections`, [])
+	}
+
+	/**
 	 * Finds how many Albums use the given Publisher.
 	 * @param {Number} id The Publisher ID
 	 */
