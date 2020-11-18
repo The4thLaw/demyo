@@ -23,6 +23,12 @@ export function integer(comp) {
 	return regexMatch(comp, /^[0-9]*$/, 'validation.integer')
 }
 
+export function number(comp) {
+	// Note that this rule only works partially because browsers will return an empty value for
+	// number fields. But that's the best we can do while keeping up/down arrows.
+	return regexMatch(comp, /^([0-9]*|[0-9]+\.[0-9]+)$/, 'validation.number')
+}
+
 export function phone(comp) {
 	return regexMatch(comp, /^\+?[0-9() /-]+$/, 'validation.phone')
 }
