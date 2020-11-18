@@ -104,7 +104,7 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="derivative.images" :items="allImages" :loading="allImagesLoading"
-							:multiple="true"
+							multiple clearable
 							label-key="field.Derivative.images" refreshable @refresh="refreshImages"
 						/>
 					</v-col>
