@@ -60,6 +60,42 @@
 					</v-col>
 				</v-row>
 			</SectionCard>
+			<!-- TODO: ISBN -->
+
+			<SectionCard :subtitle="$t('fieldset.Album.authoring')">
+				<v-row>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.writers" :items="allAuthors" label-key="field.Album.writers"
+							multiple refreshable @refresh="refreshAuthors"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.artists" :items="allAuthors" label-key="field.Album.artists"
+							multiple refreshable @refresh="refreshAuthors"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.colorists" :items="allAuthors" label-key="field.Album.colorists"
+							multiple refreshable @refresh="refreshAuthors"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.inkers" :items="allAuthors" label-key="field.Album.inkers"
+							multiple refreshable @refresh="refreshAuthors"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.translators" :items="allAuthors" label-key="field.Album.translators"
+							multiple refreshable @refresh="refreshAuthors"
+						/>
+					</v-col>
+				</v-row>
+			</SectionCard>
 
 			<!--<SectionCard :subtitle="$t('fieldset.Derivative.format')">
 				<v-row>
