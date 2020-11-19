@@ -18,7 +18,7 @@ module.exports = {
 		// Logging to the console is OK in some cases
 		'no-console': 'off',
 
-		// Best practies
+		// Best practices
 		'consistent-return': 'error',
 		curly: 'error',
 		'default-case': 'warn',
@@ -56,6 +56,7 @@ module.exports = {
 			code: 120
 		}],
 		'no-tabs': 'off',
+		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
 		'space-before-blocks': 'error',
 		'space-before-function-paren': ['error', {
 			anonymous: 'always',
