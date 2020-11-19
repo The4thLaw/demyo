@@ -542,15 +542,24 @@ html[lang],
 		bottom: -2px;
 		right: -4px;
 		// TODO [dark]: handle shadows on dark theme
+		--icon-outline-color: #fff;
 		text-shadow:
-			-2px -2px 0 #fff,
-			2px -2px #fff,
-			-2px 2px #fff,
-			2px 2px #fff,
-			0 -2px #fff,
-			0 2px #fff,
-			2px 0 #fff,
-			-2px 0 #fff;
+			-2px -2px var(--icon-outline-color),
+			-2px -1px var(--icon-outline-color),
+			-2px 0 var(--icon-outline-color),
+			-2px 1px var(--icon-outline-color),
+			-2px 2px var(--icon-outline-color),
+			2px -2px var(--icon-outline-color),
+			2px -1px var(--icon-outline-color),
+			2px 0 var(--icon-outline-color),
+			2px 1px var(--icon-outline-color),
+			2px 2px var(--icon-outline-color),
+			-1px -2px var(--icon-outline-color),
+			0 -2px var(--icon-outline-color),
+			1px -2px var(--icon-outline-color),
+			-1px 2px var(--icon-outline-color),
+			0 2px var(--icon-outline-color),
+			1px 2px var(--icon-outline-color);
 	}
 
 	.v-btn--fab &::after {
@@ -558,10 +567,7 @@ html[lang],
 	}
 
 	.v-btn.accent &::after {
-		// The text-shadow trick doesn't work wonders with mdi-library dem-overlay-delete/check on a FAB
-		text-shadow: none;
-		background: var(--v-accent-base);
-		border-radius: 50%;
+		--icon-outline-color: var(--v-accent-base);
 	}
 }
 
