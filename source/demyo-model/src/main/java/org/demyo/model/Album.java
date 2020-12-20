@@ -32,8 +32,10 @@ import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import org.demyo.model.constraints.ISBN;
+import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.ComparableComparator;
 import org.demyo.model.util.DefaultOrder;
@@ -44,13 +46,13 @@ import org.demyo.model.util.IdentifyingNameComparator;
  */
 @Entity
 @Table(name = "ALBUMS")
-@DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"), @DefaultOrder.Order(property = "cycle"),
+@DefaultOrder(expression =
+{ @DefaultOrder.Order(property = "series.name"), @DefaultOrder.Order(property = "cycle"),
 		@DefaultOrder.Order(property = "number"), @DefaultOrder.Order(property = "numberSuffix"),
 		// All other things being equal, sort by title. It's more intuitive for one shots in Album indexes, for example
 		@DefaultOrder.Order(property = "title") })
-@NamedEntityGraphs({ //
-		@NamedEntityGraph(name = "Album.forIndex", attributeNodes =
-		{ @NamedAttributeNode("series") }), //
+@NamedEntityGraphs(
+{ @NamedEntityGraph(name = "Album.forIndex", attributeNodes = { @NamedAttributeNode("series") }),
 		@NamedEntityGraph(name = "Album.forView", attributeNodes =
 		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 				@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
@@ -173,6 +175,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Tag> tags;
 
 	/** The {@link Author}s who wrote this Album. */
@@ -180,6 +183,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_writers", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "writer_id"))
 	@SortComparator(AuthorComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Author> writers;
 
 	/** The {@link Author}s who drew this Album. */
@@ -187,6 +191,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_artists", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "artist_id"))
 	@SortComparator(AuthorComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Author> artists;
 
 	/** The {@link Author}s who colored this Album. */
@@ -194,6 +199,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_colorists", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "colorist_id"))
 	@SortComparator(AuthorComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Author> colorists;
 
 	/** The {@link Author}s who inked this Album. */
@@ -201,6 +207,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_inkers", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "inker_id"))
 	@SortComparator(AuthorComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Author> inkers;
 
 	/** The {@link Author}s who translated this Album. */
@@ -208,6 +215,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JoinTable(name = "albums_translators", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "translator_id"))
 	@SortComparator(AuthorComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Author> translators;
 
 	/** The {@link Image}s related to this Album. */
@@ -216,16 +224,19 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 			inverseJoinColumns = @JoinColumn(name = "image_id"))
 	@BatchSize(size = BATCH_SIZE)
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Image> images;
 
 	/** The {@link Reader}s who favourited this Album. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAlbums")
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Reader> readersFavourites;
 
 	/** The {@link Reader}s who have this Album in their reading list. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "readingList")
 	@SortComparator(IdentifyingNameComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Reader> readersReadingList;
 
 	@Override
