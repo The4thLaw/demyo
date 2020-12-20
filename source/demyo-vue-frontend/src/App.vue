@@ -456,6 +456,11 @@ html[lang],
 	}
 }
 
+#demyo .v-input--is-readonly:not(.v-input--is-disabled) input,
+#demyo .v-input--checkbox.v-input--is-readonly:not(.v-input--is-disabled) label {
+	color: var(--dem-bg-contrast);
+}
+
 .dem-columnized {
 	column-gap: 2em;
 	column-count: 1;

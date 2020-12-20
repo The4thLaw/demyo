@@ -109,6 +109,7 @@
 						<v-text-field
 							v-model="album.currentEditionDate" :label="$t('field.Album.currentEditionDate')"
 							type="date" :readonly="sameEditionDates"
+							:append-icon="sameEditionDates ? 'mdi-pencil-off-outline' : ''"
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
