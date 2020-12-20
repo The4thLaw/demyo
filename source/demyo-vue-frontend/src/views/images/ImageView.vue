@@ -32,7 +32,7 @@
 						:value="true"
 						sub-group
 					>
-						<template v-slot:activator>
+						<template #activator>
 							<v-list-item-content>
 								<v-list-item-title v-text="$t('page.Image.usedIn.' + modelType)" />
 							</v-list-item-content>
@@ -106,11 +106,11 @@ export default {
 		},
 
 		parsedDependencies() {
-			let covs = this.dependencies.albumCovers || []
-			let other = this.dependencies.albumOtherImages || []
+			const covs = this.dependencies.albumCovers || []
+			const other = this.dependencies.albumOtherImages || []
 			// This won't work if an image is used twice in an Album, although that hardly makes any sense
 			return {
-				albums: [ ...covs, ...other ],
+				albums: [...covs, ...other],
 				authors: this.dependencies.authors || [],
 				collections: this.dependencies.collections || [],
 				derivatives: this.dependencies.derivatives || [],

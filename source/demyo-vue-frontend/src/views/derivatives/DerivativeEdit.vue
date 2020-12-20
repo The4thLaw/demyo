@@ -217,13 +217,13 @@ export default {
 			tipTapExtensions: tipTapExtensions,
 
 			rules: {
-				type: [ mandatory(this) ],
-				colours: [ integer(this) ],
+				type: [mandatory(this)],
+				colours: [integer(this)],
 				prices: {
-					date: [ mandatory(this) ],
-					price: [ mandatory(this) ]
+					date: [mandatory(this)],
+					price: [mandatory(this)]
 				},
-				albumOrSeries: [ this.oneNotNull ]
+				albumOrSeries: [this.oneNotNull]
 			}
 		}
 	},
@@ -239,7 +239,7 @@ export default {
 		},
 
 		addPrice() {
-			let newPrice = {
+			const newPrice = {
 				date: null,
 				price: null
 			}

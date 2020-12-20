@@ -196,7 +196,7 @@
 					<v-col cols="12" md="6">
 						<FieldValue v-if="hasPrices" :label="$t('field.Album.prices.history')">
 							<v-simple-table>
-								<template v-slot:default>
+								<template #default>
 									<thead>
 										<tr>
 											<th>{{ $t('field.Album.prices.date') }}</th>
@@ -230,7 +230,7 @@
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Album.gallery')">
 			<GalleryIndex :items="album.images">
-				<template v-slot:default="slotProps">
+				<template #default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
 						{{ slotProps.item.identifyingName }}
 					</router-link>
@@ -249,7 +249,7 @@
 				:items="derivatives" image-path="mainImage" bordered
 				@page-change="$refs.derivativeSection.$el.scrollIntoView()"
 			>
-				<template v-slot:default="slotProps">
+				<template #default="slotProps">
 					<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 						<div v-if="slotProps.item.album">
 							{{ slotProps.item.album.title }}
@@ -363,7 +363,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let dcPromise = albumService.countDerivatives(this.parsedId)
+			const dcPromise = albumService.countDerivatives(this.parsedId)
 			this.album = await albumService.findById(this.parsedId)
 			this.derivativeCount = await dcPromise
 			// If we enable the v-intersect observer immediately, it will be triggered on page load as well
@@ -372,7 +372,7 @@ export default {
 		},
 
 		async saveDndImages(data) {
-			let ok = await albumService.saveFilepondImages(this.album.id, data.mainImage, data.otherImages)
+			const ok = await albumService.saveFilepondImages(this.album.id, data.mainImage, data.otherImages)
 			if (ok) {
 				this.$store.dispatch('ui/showSnackbar', this.$t('draganddrop.snack.confirm'))
 				this.fetchDataInternal()
