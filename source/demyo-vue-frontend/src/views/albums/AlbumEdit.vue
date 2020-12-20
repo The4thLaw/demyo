@@ -112,7 +112,7 @@
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
-							@change="adjustEditionDates" :readonly="album.markedAsFirstEdition"
+							:readonly="album.markedAsFirstEdition" @change="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
