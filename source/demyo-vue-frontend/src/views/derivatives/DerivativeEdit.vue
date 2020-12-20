@@ -123,37 +123,7 @@
 							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Derivative.prices.history') }}</label>
-						<!-- Note: keyed by index, which is not ideal,
-						because the price doesn't have a technical ID -->
-						<v-row
-							v-for="(price, index) in derivative.prices" :key="'price_' + index"
-							dense class="v-DerivativeEdit__priceRow"
-						>
-							<v-col cols="12" md="6">
-								<v-text-field
-									v-model="price.date" :label="$t('field.Derivative.prices.date')"
-									type="date" :rules="rules.prices.date" required
-								/>
-							</v-col>
-							<v-col cols="12" md="6">
-								<v-text-field
-									v-model="price.price" :label="$t('field.Derivative.prices.price')"
-									type="number" inputmode="decimal" step="any" :rules="rules.prices.price"
-									required
-								/>
-								<v-btn icon @click="removePrice(index)">
-									<v-icon>mdi-minus</v-icon>
-								</v-btn>
-							</v-col>
-						</v-row>
-						<div class="v-DerivativeEdit__priceAdder">
-							<v-btn icon @click="addPrice">
-								<v-icon>mdi-plus</v-icon>
-							</v-btn>
-						</div>
-					</v-col>
+					<PriceManagement v-model="derivative" model-name="Derivative" cols="12" md="6" />
 				</v-row>
 			</SectionCard>
 
@@ -166,6 +136,7 @@
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
+import PriceManagement from '@/components/PriceManagement'
 import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
 import modelEditMixin from '@/mixins/model-edit'
@@ -183,6 +154,7 @@ export default {
 	components: {
 		Autocomplete,
 		FormActions,
+		PriceManagement,
 		SectionCard,
 		TiptapVuetify
 	},
@@ -219,10 +191,6 @@ export default {
 			rules: {
 				type: [mandatory(this)],
 				colours: [integer(this)],
-				prices: {
-					date: [mandatory(this)],
-					price: [mandatory(this)]
-				},
 				albumOrSeries: [this.oneNotNull]
 			}
 		}
@@ -236,18 +204,6 @@ export default {
 				return this.$t('validation.Derivative.albumOrSeries')
 			}
 			return true
-		},
-
-		addPrice() {
-			const newPrice = {
-				date: null,
-				price: null
-			}
-			this.derivative.prices.push(newPrice)
-		},
-
-		removePrice(index) {
-			this.derivative.prices.splice(index, 1)
 		},
 
 		async fetchData() {
@@ -297,20 +253,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="less">
-.v-DerivativeEdit__priceRow {
-	> :last-child {
-		display: flex;
-		align-items: center;
-
-		> button {
-			margin-left: 1em;
-		}
-	}
-}
-
-.v-DerivativeEdit__priceAdder {
-	text-align: right;
-}
-</style>

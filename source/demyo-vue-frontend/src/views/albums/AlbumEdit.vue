@@ -180,9 +180,7 @@
 							type="number" inputmode="decimal" step="any" :disabled="album.wishlist"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
-						<!-- TODO: prices (extract a component from DerivativeEdit) -->
-					</v-col>
+					<PriceManagement v-model="album" model-name="Album" cols="12" md="6" />
 				</v-row>
 			</SectionCard>
 
@@ -232,6 +230,7 @@
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
 import FormActions from '@/components/FormActions'
+import PriceManagement from '@/components/PriceManagement'
 import SectionCard from '@/components/SectionCard'
 import { tipTapExtensions } from '@/helpers/fields'
 import modelEditMixin from '@/mixins/model-edit'
@@ -251,6 +250,7 @@ export default {
 	components: {
 		Autocomplete,
 		FormActions,
+		PriceManagement,
 		SectionCard,
 		TiptapVuetify
 	},
@@ -292,28 +292,12 @@ export default {
 				number: [number(this)],
 				title: [mandatory(this)],
 				publisher: [mandatory(this)],
-				isbn: [isbn(this)],
-				prices: {
-					date: [mandatory(this)],
-					price: [mandatory(this)]
-				}
+				isbn: [isbn(this)]
 			}
 		}
 	},
 
 	methods: {
-		addPrice() {
-			const newPrice = {
-				date: null,
-				price: null
-			}
-			this.album.prices.push(newPrice)
-		},
-
-		removePrice(index) {
-			this.album.prices.splice(index, 1)
-		},
-
 		adjustEditionDates() {
 			if (this.album.markedAsFirstEdition) {
 				this.sameEditionDates = true
@@ -366,21 +350,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="less">
-// TODO: make this common with derivatives. Perhaps extract the price management to a component
-.v-AlbumEdit__priceRow {
-	> :last-child {
-		display: flex;
-		align-items: center;
-
-		> button {
-			margin-left: 1em;
-		}
-	}
-}
-
-.v-AlbumEdit__priceAdder {
-	text-align: right;
-}
-</style>
