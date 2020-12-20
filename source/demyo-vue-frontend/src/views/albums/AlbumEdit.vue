@@ -60,7 +60,6 @@
 					</v-col>
 				</v-row>
 			</SectionCard>
-			<!-- TODO: ISBN -->
 
 			<SectionCard :subtitle="$t('fieldset.Album.authoring')">
 				<v-row>
@@ -98,140 +97,131 @@
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('page.Album.aboutEdition')">
-				<v-col cols="12">
-					<v-text-field
-						v-model="album.isbn" :label="$t('field.Album.isbn')" :rules="rules.isbn"
-					/>
-				</v-col>
+				<!-- TODO: https://github.com/The4thLaw/demyo/issues/106 -->
+				<v-row>
+					<v-col cols="12" md="4">
+						<v-text-field
+							v-model="album.firstEditionDate" :label="$t('field.Album.firstEditionDate')"
+							type="date" @change="adjustEditionDates"
+						/>
+					</v-col>
+					<v-col cols="12" md="4">
+						<v-text-field
+							v-model="album.currentEditionDate" :label="$t('field.Album.currentEditionDate')"
+							type="date" :readonly="sameEditionDates"
+						/>
+						<v-checkbox
+							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
+							@change="adjustEditionDates" :readonly="album.markedAsFirstEdition"
+						/>
+					</v-col>
+					<v-col cols="12" md="4">
+						<v-checkbox
+							v-model="album.markedAsFirstEdition" :label="$t('field.Album.markedAsFirstEdition.edit')"
+							@change="adjustEditionDates"
+						/>
+					</v-col>
+					<v-col cols="12" md="4">
+						<v-text-field
+							v-model="album.isbn" :label="$t('field.Album.isbn')" :rules="rules.isbn"
+						/>
+					</v-col>
+				</v-row>
 			</SectionCard>
 
-			<!--<SectionCard :subtitle="$t('fieldset.Derivative.format')">
+			<SectionCard :subtitle="$t('fieldset.Album.format')">
 				<v-row>
 					<v-col cols="12" md="6">
 						<Autocomplete
-							v-model="derivative.type.id" :items="allTypes"
-							label-key="field.Derivative.type" :rules="rules.type"
+							v-model="album.binding.id" :items="allBindings"
+							label-key="field.Album.binding" clearable
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<v-text-field
-							v-model="derivative.colours" :label="$t('field.Derivative.colours')"
-							:rules="rules.colours" type="number" inputmode="numeric"
-						/>
+						<v-text-field v-model="album.location" :label="$t('field.Album.location')" />
 					</v-col>
 				</v-row>
 				<v-row>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="derivative.width" :label="$t('field.Derivative.width')"
+							v-model="album.width" :label="$t('field.Album.width')"
 							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="derivative.height" :label="$t('field.Derivative.height')"
+							v-model="album.height" :label="$t('field.Album.height')"
 							type="number" inputmode="decimal" step="any"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="derivative.depth" :label="$t('field.Derivative.depth')"
-							type="number" inputmode="decimal" step="any"
+							v-model="album.pages" :label="$t('field.Album.pages')"
+							type="number" inputmode="decimal"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Derivative.description')">
+			<SectionCard :subtitle="$t('fieldset.Album.acquisition')">
 				<v-row>
-					<v-col cols="12" sm="6" lg="2">
+					<v-col cols="12" md="4">
+						<v-checkbox v-model="album.wishlist" :label="$t('field.Album.wishlist.edit')" />
+					</v-col>
+					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="derivative.number" :label="$t('field.Derivative.number')"
-							type="number" inputmode="decimal" step="any"
+							v-model="album.acquisitionDate" :label="$t('field.Album.acquisitionDate')"
+							type="date" :disabled="album.wishlist"
 						/>
 					</v-col>
-					<v-col cols="12" sm="6" lg="2">
+					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="derivative.total" :label="$t('field.Derivative.total')"
-							type="number" inputmode="decimal" step="any"
+							v-model="album.purchasePrice" :label="$t('field.Album.purchasePrice')"
+							type="number" inputmode="decimal" step="any" :disabled="album.wishlist"
 						/>
 					</v-col>
-					<v-col cols="12" sm="6" md="4" lg="2">
-						<v-checkbox v-model="derivative.signed" :label="$t('field.Derivative.signed.edit')" />
-					</v-col>
-					<v-col cols="12" sm="6" md="4" lg="3">
-						<v-checkbox v-model="derivative.authorsCopy" :label="$t('field.Derivative.authorsCopy.edit')" />
-					</v-col>
-					<v-col cols="12" sm="6" md="4" lg="3">
-						<v-checkbox
-							v-model="derivative.restrictedSale" :label="$t('field.Derivative.restrictedSale.edit')"
-						/>
+					<v-col cols="12" md="6">
+						<!-- TODO: prices (extract a component from DerivativeEdit) -->
 					</v-col>
 				</v-row>
+			</SectionCard>
+
+			<SectionCard :subtitle="$t('fieldset.Album.freeText')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Derivative.description') }}</label>
+						<label class="dem-fieldlabel">{{ $t('field.Album.summary') }}</label>
 						<tiptap-vuetify
-							v-model="derivative.description" :extensions="tipTapExtensions"
+							v-model="album.summary" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="derivative.images" :items="allImages" :loading="allImagesLoading"
-							:multiple="true"
-							label-key="field.Derivative.images" refreshable @refresh="refreshImages"
+						<label class="dem-fieldlabel">{{ $t('field.Album.comment') }}</label>
+						<tiptap-vuetify
+							v-model="album.comment" :extensions="tipTapExtensions"
+							:card-props="{ outlined: true }"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Derivative.acquisition')">
+			<SectionCard :subtitle="$t('fieldset.Album.images')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<v-text-field
-							v-model="derivative.acquisitionDate" :label="$t('field.Derivative.acquisitionDate')"
-							type="date"
-						/>
-						<v-text-field
-							v-model="derivative.purchasePrice" :label="$t('field.Derivative.purchasePrice')"
-							type="number" inputmode="decimal" step="any"
+						<Autocomplete
+							v-model="album.cover.id" :items="allImages" :loading="allImagesLoading"
+							label-key="field.Album.cover" refreshable @refresh="refreshImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Derivative.prices.history') }}</label>
-						-->
-						<!-- Note: keyed by index, which is not ideal,
-						because the price doesn't have a technical ID -->
-						<!--<v-row
-							v-for="(price, index) in derivative.prices" :key="'price_' + index"
-							dense class="v-DerivativeEdit__priceRow"
-						>
-							<v-col cols="12" md="6">
-								<v-text-field
-									v-model="price.date" :label="$t('field.Derivative.prices.date')"
-									type="date" :rules="rules.prices.date" required
-								/>
-							</v-col>
-							<v-col cols="12" md="6">
-								<v-text-field
-									v-model="price.price" :label="$t('field.Derivative.prices.price')"
-									type="number" inputmode="decimal" step="any" :rules="rules.prices.price"
-									required
-								/>
-								<v-btn icon @click="removePrice(index)">
-									<v-icon>mdi-minus</v-icon>
-								</v-btn>
-							</v-col>
-						</v-row>
-						<div class="v-DerivativeEdit__priceAdder">
-							<v-btn icon @click="addPrice">
-								<v-icon>mdi-plus</v-icon>
-							</v-btn>
-						</div>
+						<Autocomplete
+							v-model="album.images" :items="allImages" :loading="allImagesLoading"
+							:multiple="true"
+							label-key="field.Album.images" refreshable @refresh="refreshImages"
+						/>
 					</v-col>
 				</v-row>
-			</SectionCard>-->
+			</SectionCard>
 
 			<FormActions v-if="initialized" @save="save" @reset="reset" />
 		</v-form>
@@ -293,6 +283,7 @@ export default {
 				binding: {},
 				prices: []
 			},
+			sameEditionDates: false,
 
 			tipTapExtensions: tipTapExtensions,
 
@@ -316,11 +307,20 @@ export default {
 				date: null,
 				price: null
 			}
-			this.derivative.prices.push(newPrice)
+			this.album.prices.push(newPrice)
 		},
 
 		removePrice(index) {
-			this.derivative.prices.splice(index, 1)
+			this.album.prices.splice(index, 1)
+		},
+
+		adjustEditionDates() {
+			if (this.album.markedAsFirstEdition) {
+				this.sameEditionDates = true
+			}
+			if (this.sameEditionDates) {
+				this.album.currentEditionDate = this.album.firstEditionDate
+			}
 		},
 
 		async fetchData() {
@@ -339,6 +339,9 @@ export default {
 
 			// Load collections with the currently available data
 			this.loadCollections()
+
+			// Check the edition dates
+			this.sameEditionDates = this.album.firstEditionDate === this.album.currentEditionDate
 
 			// Assign all reference data
 			this.allBindings = await pBindings
