@@ -126,6 +126,7 @@
 					</v-col>
 					<v-col cols="12">
 						<FieldValue v-if="derivative.description" :label="$t('field.Derivative.description')">
+							<!-- eslint-disable-next-line vue/no-v-html -->
 							<div v-html="derivative.description" />
 						</FieldValue>
 					</v-col>
@@ -137,37 +138,18 @@
 				class="dem-fieldset"
 			>
 				<v-row>
-					<v-col cols="12" md="6">
-						<FieldValue v-if="derivative.acquisitionDate" :label="$t('field.Derivative.acquisitionDate')">
+					<v-col v-if="derivative.acquisitionDate" cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.acquisitionDate')">
 							{{ $d(new Date(derivative.acquisitionDate), 'long') }}
 						</FieldValue>
 					</v-col>
-					<v-col cols="12" md="6">
-						<FieldValue v-if="derivative.purchasePrice" :label="$t('field.Derivative.purchasePrice')">
+					<v-col v-if="derivative.purchasePrice" cols="12" md="6">
+						<FieldValue :label="$t('field.Derivative.purchasePrice')">
 							{{ derivative.purchasePrice }}
 						</FieldValue>
 					</v-col>
-					<v-col cols="12" md="6">
-						<FieldValue v-if="hasPrices" :label="$t('field.Derivative.prices.history')">
-							<v-simple-table>
-								<template v-slot:default>
-									<thead>
-										<tr>
-											<th>{{ $t('field.Derivative.prices.date') }}</th>
-											<th>{{ $t('field.Derivative.prices.price') }}</th>
-										</tr>
-									</thead>
-									<tbody>
-										<!-- Note: keyed by index, which is not ideal,
-										because the price doesn't have a technical ID -->
-										<tr v-for="(price, index) in derivative.prices" :key="index">
-											<td>{{ $d(new Date(price.date), 'long') }}</td>
-											<td>{{ price.price }}</td>
-										</tr>
-									</tbody>
-								</template>
-							</v-simple-table>
-						</FieldValue>
+					<v-col v-if="hasPrices" cols="12" md="6">
+						<PriceTable :prices="derivative.prices" model-name="Derivative" />
 					</v-col>
 				</v-row>
 			</div>
@@ -175,7 +157,7 @@
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Derivative.gallery')">
 			<GalleryIndex :items="derivative.images">
-				<template v-slot:default="slotProps">
+				<template #default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
 						{{ slotProps.item.identifyingName }}
 					</router-link>
@@ -192,6 +174,7 @@ import DnDImage from '@/components/DnDImage'
 import FieldValue from '@/components/FieldValue'
 import GalleryIndex from '@/components/GalleryIndex'
 import ModelLink from '@/components/ModelLink'
+import PriceTable from '@/components/PriceTable'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
@@ -207,6 +190,7 @@ export default {
 		FieldValue,
 		GalleryIndex,
 		ModelLink,
+		PriceTable,
 		SectionCard
 	},
 
@@ -259,7 +243,7 @@ export default {
 		},
 
 		async saveDndImages(data) {
-			let ok = await derivativeService.saveFilepondImages(this.derivative.id, data.otherImages)
+			const ok = await derivativeService.saveFilepondImages(this.derivative.id, data.otherImages)
 			if (ok) {
 				this.$store.dispatch('ui/showSnackbar', this.$t('draganddrop.snack.confirm'))
 				this.fetchDataInternal()
