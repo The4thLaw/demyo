@@ -13,6 +13,8 @@ import '@mdi/font/css/materialdesignicons.css'
 Vue.config.productionTip = false
 
 // Do this as soon as possible. It's asynchronous and will work during bootstrap
+// TODO: the init is good but we should load the config from the localStorage synchronously
+// and use it in i18n and, later, in the theme. Then the asynchronous load will override it
 readerService.init()
 
 // Global mixin to allow components to scroll to the top of the page
