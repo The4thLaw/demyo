@@ -65,6 +65,18 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	}
 
 	/**
+	 * Creates a template for a new Album in a Series.
+	 *
+	 * @param seriesId The Series ID
+	 * @return The list of associated Albums
+	 */
+	@JsonView(ModelView.AlbumTemplate.class)
+	@GetMapping("/{seriesId}/albums/template")
+	public Album getAlbumTemplate(@PathVariable("seriesId") long seriesId) {
+		return albumService.getAlbumTemplateForSeries(seriesId);
+	}
+
+	/**
 	 * Counts how many Derivatives use the given Series.
 	 * 
 	 * @param typeId The internal ID of the {@link Series}

@@ -281,8 +281,11 @@ export default {
 				colorists: [],
 				inkers: [],
 				translators: [],
+				publisher: {},
+				collection: {},
 				binding: {},
-				prices: []
+				prices: [],
+				cover: {}
 			},
 			sameEditionDates: false,
 
@@ -314,8 +317,7 @@ export default {
 			}
 
 			if (!this.parsedId && this.$route.query.toSeries) {
-				// TODO: load a template like we used to do
-				this.album.series.id = parseInt(this.$route.query.toSeries, 10)
+				this.album = await seriesService.getAlbumTemplate(parseInt(this.$route.query.toSeries, 10))
 			}
 
 			// Find all reference data
@@ -326,7 +328,8 @@ export default {
 			this.loadCollections()
 
 			// Check the edition dates
-			this.sameEditionDates = this.album.firstEditionDate === this.album.currentEditionDate
+			this.sameEditionDates = this.album.firstEditionDate &&
+				this.album.firstEditionDate === this.album.currentEditionDate
 
 			// Assign all reference data
 			this.allBindings = await pBindings

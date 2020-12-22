@@ -71,4 +71,10 @@ public final class ModelView {
 	 */
 	public interface ImageDependencies extends Basic {
 	}
+
+	/**
+	 * A view used specifically to get the fields needed for a template Album.
+	 */
+	public interface AlbumTemplate extends Basic {
+	}
 }

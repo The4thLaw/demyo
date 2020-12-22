@@ -1,5 +1,6 @@
 import { axiosGet } from '@/helpers/axios'
 import AbstractModelService from './abstract-model-service'
+import albumService from './album-service'
 
 /**
  * API service for Series.
@@ -18,6 +19,15 @@ class SeriesService extends AbstractModelService {
 			seriesId = 'none'
 		}
 		return axiosGet(`${this.basePath}${seriesId}/albums`, [])
+	}
+
+	/**
+	 * Gets the template for a new Album in a Series.
+	 * @param {Number} seriesId The Series ID
+	 */
+	async getAlbumTemplate(seriesId) {
+		const template = await axiosGet(`${this.basePath}${seriesId}/albums/template`, {})
+		return albumService.fillMissingData(template)
 	}
 
 	/**

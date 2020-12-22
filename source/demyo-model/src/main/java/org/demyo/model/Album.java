@@ -66,6 +66,7 @@ import org.demyo.model.util.IdentifyingNameComparator;
 				@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
 				@NamedAttributeNode("prices") })//
 })
+@JsonView(ModelView.AlbumTemplate.class)
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -251,7 +252,10 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 		if (sb.length() > 0) {
 			sb.append(" - ");
 		}
-		sb.append(title);
+		if (title != null) {
+			// Can happen in some edge cases, like album templates
+			sb.append(title);
+		}
 
 		return sb.toString();
 	}
