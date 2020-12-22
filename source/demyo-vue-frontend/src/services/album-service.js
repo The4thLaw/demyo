@@ -8,7 +8,7 @@ import { axiosGet, axiosPost } from '@/helpers/axios'
 class AlbumService extends AbstractModelService {
 	constructor() {
 		super('albums/', {
-			fillMissingObjects: ['series', 'collection']
+			fillMissingObjects: ['series', 'collection', 'cover']
 		})
 	}
 
