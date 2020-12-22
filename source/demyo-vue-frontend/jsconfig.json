@@ -1,4 +1,13 @@
 {
+	// See https://lmichelin.fr/vscode-intellisense-jsconfig-vue-js-nuxt-js-absolute-imports/
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			// Make Intellisense work with absolute imports
+			"@/*": ["./src/*"],
+		}
+	},
+	"exclude": ["node_modules", "dist"],
 	"include": [
 		"./src/**/*"
 	]
