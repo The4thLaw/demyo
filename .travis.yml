@@ -2,7 +2,9 @@ language: java
 # Needed for openjdk11
 dist: bionic
 jdk:
-  - openjdk11
+# Note: uncomment this once we switch to Spring 5.1+. Earlier versions don't support JDK11 and will cause NoClassDefFoundErrors, e.g. due to missing JAXB dependencies. Unfortunately this means that SonarCloud won't run. See https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-with-Java-9-and-above
+#  - openjdk11
+  - openjdk8
 addons:
   sonarcloud:
     organization: "the4thlaw"
