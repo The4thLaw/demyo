@@ -34,6 +34,38 @@
 		"i18n-ally.forceEnabled": true,
 		"i18n-ally.localesPaths": "demyo-vue-frontend/src/locales",
 
-		"java.checkstyle.configuration": "${workspaceFolder}\\demyo-checkstyle-config.xml"
+		"java.checkstyle.configuration": "${workspaceFolder}/demyo-checkstyle-config.xml",
+		"java.format.settings.url": "../config/eclipse-formatter.xml"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "java",
+				"name": "Launch Current File",
+				"request": "launch",
+				"mainClass": "${file}"
+			},
+			{
+				"type": "java",
+				"name": "Start server",
+				"request": "launch",
+				"mainClass": "org.demyo.desktop.Start",
+				"projectName": "demyo-app",
+				"vmArgs": ["-Ddemyo.http.port=1607"],
+				"cwd": "${workspaceFolder}/demyo-app"
+			}
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Maven install (dev, skip tests)",
+				"type": "shell",
+				"command": "mvn -B install -Pdev -DskipTests",
+				"group": "build"
+			}
+		]
 	}
 }
