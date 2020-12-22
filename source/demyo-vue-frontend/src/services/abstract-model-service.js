@@ -29,7 +29,18 @@ class AbstractModelService {
 	 * @return {Promise<any>} The Model
 	 */
 	async findById(id) {
-		let model = await axiosGet(this.basePath + id, {})
+		const model = await axiosGet(this.basePath + id, {})
+		return this.fillMissingData(model)
+	}
+
+	/**
+	 * Fills any data that is required by the frontend but missing from server-side data.
+	 * @param {*} model The model to fill
+	 */
+	fillMissingData(model) {
+		if (model instanceof Promise) {
+			console.error('You need to resolve the Promises before calling fillMissingData')
+		}
 
 		if (this.config.fillMissingObjects) {
 			this.config.fillMissingObjects.forEach(prop => {
