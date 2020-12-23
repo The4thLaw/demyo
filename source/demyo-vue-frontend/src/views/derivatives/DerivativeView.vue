@@ -221,7 +221,7 @@ export default {
 		},
 
 		hasImages() {
-			return this.derivative.otherImages && this.derivative.otherImages.length > 1
+			return this.derivative.images && this.derivative.images.length > 1
 		},
 
 		sizeSpec() {
