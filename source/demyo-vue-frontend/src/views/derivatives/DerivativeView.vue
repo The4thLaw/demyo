@@ -97,7 +97,7 @@
 					<v-col cols="12" md="6" xl="3">
 						<template v-if="derivative.number && derivative.total">
 							<FieldValue :label="$t('field.Derivative.numberOverTotal')">
-								{{ derivative.number }} / {{ derivative.total }}
+								{{ $n(derivative.number) }} / {{ $n(derivative.total) }}
 							</FieldValue>
 						</template>
 						<template v-if="!derivative.number || !derivative.total">
