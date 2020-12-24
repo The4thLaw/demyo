@@ -9,7 +9,7 @@ class AlbumService extends AbstractModelService {
 	constructor() {
 		super('albums/', {
 			fillMissingObjects: ['series', 'collection', 'cover'],
-			fillMissingArrays: ['writers', 'artists', 'colorists', 'inkers', 'translators', 'tags', 'images'],
+			fillMissingArrays: ['writers', 'artists', 'colorists', 'inkers', 'translators', 'tags', 'images', 'prices']
 		})
 	}
 
