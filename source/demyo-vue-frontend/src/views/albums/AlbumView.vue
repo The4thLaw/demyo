@@ -316,19 +316,19 @@ export default {
 
 	computed: {
 		hasAuthors() {
-			return (this.album.writers && this.album.writers.length) ||
-				(this.album.artists && this.album.artists.length) ||
-				(this.album.colorists && this.album.colorists.length) ||
-				(this.album.inkers && this.album.inkers.length) ||
-				(this.album.translators && this.album.translators.length)
+			return this.album.writers?.length ||
+				this.album.artists?.length ||
+				this.album.colorists?.length ||
+				this.album.inkers?.length ||
+				this.album.translators?.length
 		},
 
 		hasPrices() {
-			return this.album.prices && this.album.prices.length
+			return this.album.prices?.length
 		},
 
 		hasImages() {
-			return this.album.images && this.album.images.length
+			return this.album.images?.length
 		},
 
 		sizeSpec() {
