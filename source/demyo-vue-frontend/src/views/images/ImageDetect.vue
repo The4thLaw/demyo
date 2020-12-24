@@ -26,7 +26,7 @@
 			</GalleryIndex>
 		</SectionCard>
 
-		<FormActions v-if="detectedImages.length > 0" :show-reset="false" @save="save" />
+		<FormActions v-if="detectedImages.length > 0" :show-reset="false" :show-back="false" @save="save" />
 	</v-container>
 </template>
 

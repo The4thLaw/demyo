@@ -7,6 +7,9 @@
 			<v-btn v-if="showReset" text color="primary" @click="$emit('reset')">
 				{{ $t('button.reset') }}
 			</v-btn>
+			<v-btn v-if="showBack" text color="primary" @click="$router.go(-1)">
+				{{ $t('button.back') }}
+			</v-btn>
 		</template>
 		<template v-else>
 			<slot />
@@ -20,6 +23,11 @@ export default {
 
 	props: {
 		showReset: {
+			type: Boolean,
+			default: true
+		},
+
+		showBack: {
 			type: Boolean,
 			default: true
 		}
