@@ -1,7 +1,7 @@
 <template>
 	<portal to="appTasks">
 		<v-menu v-model="inputVal" offset-y>
-			<template v-slot:activator="{ on }">
+			<template #activator="{ on }">
 				<v-btn text icon v-on="on">
 					<v-icon>mdi-dots-vertical</v-icon>
 				</v-btn>

@@ -4,13 +4,14 @@
 			<p>
 				Demyo v{{ demyoVersion }} "{{ demyoCodename }}"
 			</p>
+			<!-- eslint-disable-next-line vue/no-v-html -->
 			<p v-html="$t('page.About.aboutDemyo.description')" />
 		</SectionCard>
 
 		<SectionCard :subtitle="$t('page.About.aboutLibs')">
 			<p v-text="$t('page.About.aboutLibs.description')" />
 			<v-simple-table>
-				<template v-slot:default>
+				<template #default>
 					<thead>
 						<tr>
 							<th>
@@ -30,6 +31,7 @@
 								<a :href="lib.url">{{ lib.name }}</a>
 							</td>
 							<td v-text="lib.copyright" />
+							<!-- eslint-disable-next-line vue/no-v-html -->
 							<td v-html="lib.license" />
 						</tr>
 					</tbody>
@@ -39,7 +41,7 @@
 
 			<p v-text="$t('page.About.aboutLibs.env')" />
 			<v-simple-table>
-				<template v-slot:default>
+				<template #default>
 					<thead>
 						<tr>
 							<th>
@@ -125,7 +127,7 @@
 		<SectionCard :subtitle="$t('page.About.aboutInstall')">
 			<p v-text="$t('page.About.aboutInstall.description')" />
 			<v-simple-table>
-				<template v-slot:default>
+				<template #default>
 					<thead>
 						<tr>
 							<th>

@@ -41,7 +41,7 @@ export default {
 	methods: {
 		async fetchData() {
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			let filter = retrieveFilter(this.$route)
+			const filter = retrieveFilter(this.$route)
 			this.albums = await albumService.findForIndex(filter)
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		}

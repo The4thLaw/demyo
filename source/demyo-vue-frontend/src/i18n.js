@@ -72,7 +72,7 @@ async function loadLanguageFromServer(lang) {
 		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
 		return true
 	}
-	let response = await axios.get(apiRoot + 'translations/' + lang)
+	const response = await axios.get(apiRoot + 'translations/' + lang)
 	i18n.setLocaleMessage(lang, response.data)
 	console.log(`Loaded ${Object.keys(response.data).length} translations from the server in ${lang}`)
 	loadedLanguages.push(lang)

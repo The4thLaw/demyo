@@ -13,7 +13,7 @@ export async function saveStub(component, handler, routeName) {
 		return
 	}
 	store.dispatch('ui/enableGlobalOverlay')
-	let id = await handler()
+	const id = await handler()
 	store.dispatch('ui/disableGlobalOverlay')
 	if (id <= 0) {
 		store.dispatch('ui/showSnackbar', i18n.t('core.exception.api.title'))
@@ -31,7 +31,7 @@ export async function saveStub(component, handler, routeName) {
  */
 export async function deleteStub(component, handler, confirmationLabel, routeName) {
 	component.appTasksMenu = false
-	let deleted = await handler()
+	const deleted = await handler()
 	if (deleted) {
 		store.dispatch('ui/showSnackbar', i18n.t(confirmationLabel))
 		router.push({ name: routeName })

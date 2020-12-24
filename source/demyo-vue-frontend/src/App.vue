@@ -13,7 +13,7 @@
 		<v-navigation-drawer v-model="mainMenu" app temporary width="20em">
 			<v-list class="c-App__menuList">
 				<v-list-group v-if="readerLoaded">
-					<template v-slot:activator>
+					<template #activator>
 						<v-list-item-icon>
 							<LetterIcon :letter="currentReader.name[0]" :color="currentReader.colour" />
 						</v-list-item-icon>
@@ -78,7 +78,7 @@
 				</v-list-item>
 
 				<v-list-group v-for="section in menuItems" :key="section.title" v-model="section.active">
-					<template v-slot:activator>
+					<template #activator>
 						<v-list-item-content>
 							<v-list-item-title v-text="$t(section.title)" />
 						</v-list-item-content>
@@ -168,10 +168,10 @@ export default {
 		ReaderSelection
 	},
 
-	mixins: [ quicksearch ],
+	mixins: [quicksearch],
 
 	metaInfo() {
-		let self = this
+		const self = this
 
 		return {
 			title: this.$t('title.home'),
@@ -329,7 +329,7 @@ export default {
 							title: 'menu.manage.about',
 							icon: 'mdi-information',
 							url: '/about'
-						},
+						}
 					]
 				}
 			]

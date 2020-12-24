@@ -19,6 +19,7 @@
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
 			<FieldValue v-if="author.biography" :label="$t('field.Author.biography')">
+				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="author.biography" />
 			</FieldValue>
 			<v-btn
@@ -42,7 +43,7 @@
 			:title="$t('page.Author.works')"
 		>
 			<AlbumTextList :albums="albums">
-				<template v-slot:default="slotProps">
+				<template #default="slotProps">
 					({{ describeAuthor(slotProps.album.id) }})
 				</template>
 			</AlbumTextList>
@@ -109,7 +110,7 @@ export default {
 	methods: {
 		async fetchData() {
 			this.mainLoading = true
-			let countP = authorService.countDerivatives(this.parsedId)
+			const countP = authorService.countDerivatives(this.parsedId)
 			this.author = await authorService.findById(this.parsedId)
 			this.mainLoading = false
 
@@ -120,7 +121,7 @@ export default {
 		},
 
 		describeAuthor(albumId) {
-			let qualifiers = []
+			const qualifiers = []
 			if (this.works.asArtist.has(albumId)) {
 				qualifiers.push(this.$t('page.Author.works.role.artist'))
 			}

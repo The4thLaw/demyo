@@ -36,6 +36,7 @@ export default {
 		debouncedSearch: debounce(
 			function () {
 				// eslint complains about "this" but it's valid in this context and it's even in the Vue docs
+				// eslint-disable-next-line no-invalid-this
 				this.doPerformSearch()
 			}, 300),
 

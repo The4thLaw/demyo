@@ -1,5 +1,5 @@
-let faker = require('faker')
-let actualData = require('./mock-data-actual.json')
+const faker = require('faker')
+const actualData = require('./mock-data-actual.json')
 
 faker.seed(42)
 
@@ -9,7 +9,7 @@ faker.seed(42)
  * @return {boolean}
  */
 function luckRatio(ratio) {
-	let number = (faker.random.number() % 10 + 1) / 10
+	const number = (faker.random.number() % 10 + 1) / 10
 	return number <= ratio
 }
 
@@ -23,18 +23,18 @@ function paragraphs(maxNum) {
 }
 
 // AUTHORS
-let authors = []
+const authors = []
 for (let i = 0; i < 250; i++) {
-	let lname = faker.name.lastName()
-	let fname = faker.name.firstName()
-	let author = {
+	const lname = faker.name.lastName()
+	const fname = faker.name.firstName()
+	const author = {
 		id: i,
 		name: lname,
 		firstName: fname,
 		identifyingName: `${fname} ${lname}`
 	}
 	if (luckRatio(0.2)) {
-		let nick = faker.name.firstName()
+		const nick = faker.name.firstName()
 		author.nickname = nick
 		author.identifyingName = `${fname} '${nick}' ${lname}`
 	}

@@ -45,7 +45,7 @@ export default {
 				return 0
 			}
 
-			let max = Math.max.apply(Math, this.tags.map(t => t.usageCount))
+			const max = Math.max.apply(Math, this.tags.map(t => t.usageCount))
 			// Have a reasonable minimum else it just looks silly if there are few tags and they are seldom used
 			return Math.max(max, 10)
 		}
@@ -62,7 +62,7 @@ export default {
 
 			// Post-process tags: compute the relative weight in %
 			// (the base is 100% and the max is 200%, which is very convenient for the font-size)
-			for (let tag of this.tags) {
+			for (const tag of this.tags) {
 				tag.relativeWeight = Math.round(100 * tag.usageCount / this.maxUsageCount + 100)
 			}
 

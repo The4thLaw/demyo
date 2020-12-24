@@ -18,7 +18,7 @@
 
 		<SectionCard v-if="addedImages.length" :subtitle="$t('page.Image.detect.lastBatch')">
 			<GalleryIndex :items="addedImages">
-				<template v-slot:default="slotProps">
+				<template #default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
 						{{ slotProps.item.identifyingName }}
 					</router-link>
@@ -82,8 +82,8 @@ export default {
 
 			this.addedImages = []
 
-			let selectedImages = []
-			for (let k in this.imageSelections) {
+			const selectedImages = []
+			for (const k in this.imageSelections) {
 				if (this.imageSelections[k]) {
 					selectedImages.push(k)
 				}

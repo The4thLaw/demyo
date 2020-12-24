@@ -4,7 +4,7 @@
 			:items="series" :first-letter-extractor="(item) => item.identifyingName[0]"
 			@page-change="scrollToTop"
 		>
-			<template v-slot:default="slotProps">
+			<template #default="slotProps">
 				<router-link :to="`/series/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>

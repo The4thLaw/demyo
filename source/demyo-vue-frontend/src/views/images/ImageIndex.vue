@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<GalleryIndex :items="images" @page-change="scrollToTop">
-			<template v-slot:default="slotProps">
+			<template #default="slotProps">
 				<router-link :to="`/images/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>

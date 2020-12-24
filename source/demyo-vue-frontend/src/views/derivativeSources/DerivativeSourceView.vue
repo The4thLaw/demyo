@@ -42,6 +42,7 @@
 				</v-col>
 			</v-row>
 			<FieldValue v-if="source.history" :label="$t('field.DerivativeSource.history')">
+				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="source.history" />
 			</FieldValue>
 			<v-btn
@@ -119,14 +120,14 @@ export default {
 		},
 
 		mapUrl() {
-			let encoded = encodeURI(this.source.name + ', ' + this.source.address)
+			const encoded = encodeURI(this.source.name + ', ' + this.source.address)
 			return 'https://maps.google.com/maps?&t=&z=15&ie=UTF8&iwloc=&output=embed&q=' + encoded
 		}
 	},
 
 	methods: {
 		async fetchData() {
-			let sourceP = sourceService.findById(this.parsedId)
+			const sourceP = sourceService.findById(this.parsedId)
 			this.count = await sourceService.countDerivatives(this.parsedId)
 			this.source = await sourceP // Resolve calls in parallel
 		},

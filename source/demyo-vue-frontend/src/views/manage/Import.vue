@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { apiRoot } from '@/myenv'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
 import service from '@/services/management-service'
@@ -42,7 +41,7 @@ export default {
 		async doImport() {
 			if (this.file) {
 				this.$store.dispatch('ui/enableGlobalOverlay')
-				let success = await service.doImport(this.file)
+				const success = await service.doImport(this.file)
 				this.$store.dispatch('ui/disableGlobalOverlay')
 				if (success) {
 					this.$store.dispatch('ui/showSnackbar', this.$t('page.Import.success'))

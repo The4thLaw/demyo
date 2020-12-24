@@ -4,7 +4,7 @@
 			:items="items" :first-letter-extractor="firstLetterExtractor"
 			@page-change="$emit('page-change')"
 		>
-			<template v-slot:default="slotProps">
+			<template #default="slotProps">
 				<MetaSeriesCard :meta="slotProps.item" />
 			</template>
 		</CardTextIndex>

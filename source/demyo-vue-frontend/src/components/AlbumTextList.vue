@@ -8,7 +8,7 @@
 					:value="false"
 					sub-group
 				>
-					<template v-slot:activator>
+					<template #activator>
 						<v-list-item-content>
 							<v-list-item-title v-text="value.identifyingName" />
 						</v-list-item-content>
@@ -70,7 +70,7 @@ export default {
 
 	computed: {
 		albumsBySeries() {
-			let bySeries = {}
+			const bySeries = {}
 			this.albums.forEach(a => {
 				let id
 				if (a.series) {
@@ -84,7 +84,7 @@ export default {
 					if (id > 0) {
 						bySeries[id] = a.series
 						bySeries[id].isSeries = true
-						bySeries[id].albums = [ a ]
+						bySeries[id].albums = [a]
 						bySeries[id].sortName = a.series.identifyingName
 					} else {
 						bySeries[id] = a
@@ -96,7 +96,7 @@ export default {
 			})
 
 			// Albums within a Series are already sorted, and Series are sorted, but one shots aren't
-			let ret = Object.values(bySeries)
+			const ret = Object.values(bySeries)
 			ret.sort((a, b) => {
 				return a.sortName.localeCompare(b.sortName)
 			})

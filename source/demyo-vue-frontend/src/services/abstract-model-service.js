@@ -69,7 +69,7 @@ class AbstractModelService {
 	 * @return {Promise<any[]>} The Models
 	 */
 	findMultipleById(ids) {
-		let idString = ids.join(',')
+		const idString = ids.join(',')
 		return axiosGet(`${this.basePath}/batch/${idString}`, {})
 	}
 

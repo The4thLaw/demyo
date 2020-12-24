@@ -17,7 +17,7 @@ export default {
 	},
 
 	watch: {
-		'$route': 'fetchDataInternal'
+		$route: 'fetchDataInternal'
 	},
 
 	created() {
@@ -87,7 +87,7 @@ export default {
 				return
 			}
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			let id = await this.saveHandler()
+			const id = await this.saveHandler()
 			this.$store.dispatch('ui/disableGlobalOverlay')
 			if (id <= 0) {
 				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))

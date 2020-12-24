@@ -69,7 +69,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let bindingP = bindingService.findById(this.parsedId)
+			const bindingP = bindingService.findById(this.parsedId)
 			this.count = await bindingService.countAlbums(this.parsedId)
 			this.binding = await bindingP // Resolve calls in parallel
 		},

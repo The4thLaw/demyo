@@ -7,7 +7,7 @@ export default {
 	},
 
 	watch: {
-		'$route': 'fetchDataInternal'
+		$route: 'fetchDataInternal'
 	},
 
 	created() {

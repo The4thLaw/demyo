@@ -33,6 +33,7 @@
 				</v-col>
 			</v-row>
 			<FieldValue v-if="collection.history" :label="$t('field.Collection.history')">
+				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="collection.history" />
 			</FieldValue>
 			<v-btn
@@ -91,7 +92,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let collectionP = collectionService.findById(this.parsedId)
+			const collectionP = collectionService.findById(this.parsedId)
 			this.count = await collectionService.countAlbums(this.parsedId)
 			this.collection = await collectionP // Resolve calls in parallel
 		},

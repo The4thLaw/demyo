@@ -35,6 +35,7 @@
 				</v-col>
 			</v-row>
 			<FieldValue v-if="publisher.history" :label="$t('field.Publisher.history')">
+				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="publisher.history" />
 			</FieldValue>
 
@@ -58,7 +59,7 @@
 			:title="$t('field.Publisher.collections')"
 		>
 			<TextIndex :items="publisher.collections" :split-by-first-letter="false" compact>
-				<template v-slot:default="slotProps">
+				<template #default="slotProps">
 					<router-link :to="`/collections/${slotProps.item.id}/view`">
 						{{ slotProps.item.identifyingName }}
 					</router-link>
@@ -117,7 +118,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let publisherP = publisherService.findById(this.parsedId)
+			const publisherP = publisherService.findById(this.parsedId)
 			this.albumCount = await publisherService.countAlbums(this.parsedId)
 			this.publisher = await publisherP // Resolve calls in parallel
 		},

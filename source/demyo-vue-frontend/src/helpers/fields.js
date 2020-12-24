@@ -1,6 +1,8 @@
 import { reduce, sortBy, uniqBy } from 'lodash'
-import { Heading, Bold, Italic, Strike, Underline, BulletList,
-	OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History, Image } from 'tiptap-vuetify'
+import {
+	Heading, Bold, Italic, Strike, Underline, BulletList,
+	OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History, Image
+} from 'tiptap-vuetify'
 
 export const tipTapExtensions = [
 	History,
@@ -32,8 +34,8 @@ export const tipTapExtensions = [
  * @param {String|Array<String>} sortProperties The property or properties to sort the models by.
  */
 export function mergeModels(collection, modelProperty, sortProperties) {
-	let all = reduce(collection, (aggregate, value) => {
-		let subModel = value[modelProperty]
+	const all = reduce(collection, (aggregate, value) => {
+		const subModel = value[modelProperty]
 		if (Array.isArray(subModel)) {
 			// Arrays of models
 			aggregate.push(...subModel)
@@ -43,6 +45,6 @@ export function mergeModels(collection, modelProperty, sortProperties) {
 		}
 		return aggregate
 	}, [])
-	let uniq = uniqBy(all, 'id')
+	const uniq = uniqBy(all, 'id')
 	return sortBy(uniq, [sortProperties])
 }

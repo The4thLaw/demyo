@@ -14,7 +14,7 @@
 		:search-input.sync="search"
 		@input="search = ''"
 	>
-		<template v-if="refreshable" v-slot:append-outer>
+		<template v-if="refreshable" #append-outer>
 			<v-btn icon small @click.stop="$emit('refresh')">
 				<v-icon>mdi-refresh</v-icon>
 			</v-btn>

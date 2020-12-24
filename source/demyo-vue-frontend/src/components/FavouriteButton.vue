@@ -1,7 +1,14 @@
 <template>
-	<v-btn v-if="initialized" icon :loading="loading" v-bind="$attrs" @click="toggle">
-		<v-icon v-if="isFavourite">mdi-heart</v-icon>
-		<v-icon v-else>mdi-heart-outline</v-icon>
+	<v-btn
+		v-if="initialized" icon :loading="loading"
+		v-bind="$attrs" @click="toggle"
+	>
+		<v-icon v-if="isFavourite">
+			mdi-heart
+		</v-icon>
+		<v-icon v-else>
+			mdi-heart-outline
+		</v-icon>
 	</v-btn>
 </template>
 

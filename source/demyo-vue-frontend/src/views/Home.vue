@@ -28,7 +28,7 @@ export default {
 		SectionCard
 	},
 
-	mixins: [ quicksearch ],
+	mixins: [quicksearch],
 
 	created() {
 		this.$store.dispatch('ui/disableSearch')

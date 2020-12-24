@@ -155,7 +155,7 @@ export default {
 	methods: {
 		showDialog(e) {
 			e.preventDefault()
-			this.value = true
+			this.inputVal = true
 		},
 
 		cancel() {
@@ -165,7 +165,7 @@ export default {
 			if (this.$refs.otherPond) {
 				this.$refs.otherPond.removeFiles()
 			}
-			this.value = false
+			this.inputVal = false
 		},
 
 		save() {
@@ -173,8 +173,8 @@ export default {
 			if (mainId) {
 				mainId = mainId[0]
 			}
-			let otherIds = this.getServerIds(this.$refs.otherPond)
-			let saveData = {
+			const otherIds = this.getServerIds(this.$refs.otherPond)
+			const saveData = {
 				mainImage: mainId,
 				otherImages: otherIds
 			}
@@ -193,11 +193,11 @@ export default {
 			if (!filepond) {
 				return null
 			}
-			let objects = filepond.getFiles()
+			const objects = filepond.getFiles()
 			if (!objects || !objects.length) {
 				return null
 			}
-			let ids = objects.map(e => e.serverId)
+			const ids = objects.map(e => e.serverId)
 			return ids
 		}
 	}

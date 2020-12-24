@@ -80,7 +80,7 @@ export default {
 		},
 
 		paginatedItems() {
-			let slice = this.items.slice((this.currentPage - 1) * this.itemsPerPage,
+			const slice = this.items.slice((this.currentPage - 1) * this.itemsPerPage,
 				this.currentPage * this.itemsPerPage)
 			slice.map(item => {
 				let image

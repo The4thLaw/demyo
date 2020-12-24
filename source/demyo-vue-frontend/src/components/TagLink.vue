@@ -1,6 +1,6 @@
 <template>
 	<ModelLink :model="model" :comma-separated="false" css-class="c-TagLink" view="TagView">
-		<template v-slot:default="slotProps">
+		<template #default="slotProps">
 			<span :style="getStyle(slotProps.item)" class="d-Tag">
 				{{ slotProps.item.identifyingName }}
 				<span
@@ -33,9 +33,9 @@ export default {
 
 	methods: {
 		getStyle(tag) {
-			let style = {}
+			const style = {}
 			if (tag.fgColour) {
-				style['color'] = tag.fgColour
+				style.color = tag.fgColour
 			}
 			if (tag.bgColour) {
 				style['background-color'] = tag.bgColour

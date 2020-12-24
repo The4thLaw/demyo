@@ -4,7 +4,7 @@ module.exports = {
 	extends: 'stylelint-config-standard',
 	rules: {
 		'declaration-empty-line-before': null,
-		'indentation': 'tab',
+		indentation: 'tab',
 		'block-opening-brace-space-before': 'always'
 	}
 }

@@ -11,7 +11,7 @@ function insert(list, item) {
 		// Don't add twice
 		return
 	}
-	let index = sortedIndex(list, item)
+	const index = sortedIndex(list, item)
 	list.splice(index, 0, item)
 }
 
@@ -22,7 +22,7 @@ function insert(list, item) {
  * @param {Number} item The item to remove
  */
 function remove(list, item) {
-	let index = sortedIndexOf(list, item)
+	const index = sortedIndexOf(list, item)
 	if (index >= 0) {
 		list.splice(index, 1)
 	}

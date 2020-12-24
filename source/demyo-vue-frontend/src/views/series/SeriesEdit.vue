@@ -98,7 +98,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let allSeriesP = seriesService.findForList()
+			const allSeriesP = seriesService.findForList()
 
 			if (this.parsedId) {
 				this.series = await seriesService.findById(this.parsedId)

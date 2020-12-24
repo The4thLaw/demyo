@@ -8,11 +8,11 @@ class ManagementService {
 	async doImport(file) {
 		console.debug('Going to upload', file)
 
-		let data = new FormData()
+		const data = new FormData()
 		data.append('importFile', file)
 
 		try {
-			let response = await axios.post(`${apiRoot}manage/import`, data, {
+			const response = await axios.post(`${apiRoot}manage/import`, data, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}

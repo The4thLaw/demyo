@@ -32,7 +32,9 @@
 						</v-list-item-title>
 					</v-list-item-content>
 					<v-list-item-action v-if="album.wishlist">
-						<v-icon color="grey lighten-1" small>mdi-gift</v-icon>
+						<v-icon color="grey lighten-1" small>
+							mdi-gift
+						</v-icon>
 					</v-list-item-action>
 				</v-list-item>
 				<!--

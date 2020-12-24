@@ -4,7 +4,7 @@
 			:items="publishers" :first-letter-extractor="(item) => item.identifyingName[0]"
 			@page-change="$emit('page-change')"
 		>
-			<template v-slot:default="slotProps">
+			<template #default="slotProps">
 				<PublisherCard :publisher="slotProps.item" />
 			</template>
 		</CardTextIndex>

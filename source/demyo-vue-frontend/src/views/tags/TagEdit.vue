@@ -94,9 +94,9 @@ export default {
 
 	computed: {
 		style() {
-			let style = {}
+			const style = {}
 			if (!this.noFgColour) {
-				style['color'] = this.fgColour
+				style.color = this.fgColour
 			}
 			if (!this.noBgColour) {
 				style['background-color'] = this.bgColour

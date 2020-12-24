@@ -21,7 +21,7 @@ class AlbumService extends AbstractModelService {
 	}
 
 	save(model) {
-		let promise = super.save(model)
+		const promise = super.save(model)
 
 		// Saving an album may impact the reading list, etc. We should reload them when the save is done
 		promise.then(() => {

@@ -63,9 +63,11 @@
 
 			<div class="dem-columnized">
 				<FieldValue v-if="series.summary" :label="$t('field.Series.summary')">
+					<!-- eslint-disable-next-line vue/no-v-html -->
 					<div v-html="series.summary" />
 				</FieldValue>
 				<FieldValue v-if="series.comment" :label="$t('field.Series.comment')">
+					<!-- eslint-disable-next-line vue/no-v-html -->
 					<div v-html="series.comment" />
 				</FieldValue>
 			</div>
@@ -146,7 +148,7 @@
 				</v-tab-item>
 
 				<!-- Derivatives -->
-				<v-tab-item class="dem-tab" ref="foo">
+				<v-tab-item ref="foo" class="dem-tab">
 					<div v-if="derivatives.length <= 0" class="text-center">
 						<v-progress-circular indeterminate color="primary" size="64" />
 					</div>
@@ -154,7 +156,7 @@
 						:items="derivatives" image-path="mainImage" bordered
 						@page-change="$refs.contentSection.$el.scrollIntoView()"
 					>
-						<template v-slot:default="slotProps">
+						<template #default="slotProps">
 							<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 								<div v-if="slotProps.item.album">
 									{{ slotProps.item.album.title }}
@@ -236,7 +238,7 @@ export default {
 				return []
 			}
 			return filter(this.series.albumIds, id => {
-				let album = this.albums[id]
+				const album = this.albums[id]
 				if (!album) {
 					return false
 				}
@@ -319,7 +321,7 @@ export default {
 			this.derivatives = []
 			this.derivativeCount = 0
 
-			let dcPromise = seriesService.countDerivatives(this.parsedId)
+			const dcPromise = seriesService.countDerivatives(this.parsedId)
 
 			this.series = await seriesService.findById(this.parsedId)
 
@@ -349,7 +351,7 @@ export default {
 		},
 
 		async albumLoader(id) {
-			let album = await albumService.findById(id)
+			const album = await albumService.findById(id)
 			this.albums[id] = album
 			this.albums[id].loading = false
 		},

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<GalleryIndex :items="derivatives" image-path="mainImage" @page-change="scrollToTop">
-			<template v-slot:default="slotProps">
+			<template #default="slotProps">
 				<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 					<div v-if="slotProps.item.series">
 						{{ slotProps.item.series.name }}
@@ -55,7 +55,7 @@ export default {
 	methods: {
 		async fetchData() {
 			this.$store.dispatch('ui/enableGlobalOverlay')
-			let filter = retrieveFilter(this.$route)
+			const filter = retrieveFilter(this.$route)
 			this.derivatives = await derivativeService.findForIndex(filter)
 			this.$store.dispatch('ui/disableGlobalOverlay')
 		}

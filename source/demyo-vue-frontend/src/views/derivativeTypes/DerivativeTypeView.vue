@@ -69,7 +69,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let typeP = typeService.findById(this.parsedId)
+			const typeP = typeService.findById(this.parsedId)
 			this.count = await typeService.countDerivatives(this.parsedId)
 			this.type = await typeP // Resolve calls in parallel
 		},

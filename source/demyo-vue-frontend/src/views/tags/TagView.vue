@@ -74,9 +74,9 @@ export default {
 
 	computed: {
 		style() {
-			let style = {}
+			const style = {}
 			if (this.tag.fgColour) {
-				style['color'] = this.tag.fgColour
+				style.color = this.tag.fgColour
 			}
 			if (this.tag.bgColour) {
 				style['background-color'] = this.tag.bgColour
@@ -87,7 +87,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let tagP = tagService.findById(this.parsedId)
+			const tagP = tagService.findById(this.parsedId)
 			this.count = await tagService.countAlbums(this.parsedId)
 			this.tag = await tagP // Resolve calls in parallel
 		},

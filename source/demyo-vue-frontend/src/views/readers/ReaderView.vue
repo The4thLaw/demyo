@@ -74,7 +74,7 @@ export default {
 
 	methods: {
 		async fetchData() {
-			let readerP = readerService.findById(this.parsedId)
+			const readerP = readerService.findById(this.parsedId)
 			this.mayDelete = await readerService.mayDeleteReader()
 			this.reader = await readerP // Resolve calls in parallel
 		},

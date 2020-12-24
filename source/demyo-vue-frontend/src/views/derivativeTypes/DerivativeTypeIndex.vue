@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<TextIndex :items="types" :split-by-first-letter="false" @page-change="scrollToTop">
-			<template v-slot:default="slotProps">
+			<template #default="slotProps">
 				<router-link :to="`/derivativeTypes/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>

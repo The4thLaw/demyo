@@ -11,7 +11,8 @@
 					<v-col cols="12" md="4">
 						<Autocomplete
 							v-model="collection.publisher.id" :items="allPublishers" :loading="allPublishersLoading"
-							:rules="rules.publisher" label-key="field.Collection.publisher" refreshable @refresh="refreshPublishers"
+							:rules="rules.publisher" label-key="field.Collection.publisher"
+							refreshable @refresh="refreshPublishers"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">

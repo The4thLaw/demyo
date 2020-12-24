@@ -50,7 +50,7 @@ class ReaderService extends AbstractModelService {
 			reader = await this.findById(reader.id)
 		}
 		console.log('Setting reader in store', reader)
-		let storeProm = store.dispatch('reader/setCurrentReader', reader)
+		const storeProm = store.dispatch('reader/setCurrentReader', reader)
 		localStorage.setItem('currentReader', JSON.stringify(reader))
 		if (reader.configuration.language) {
 			switchLanguage(reader.configuration.language)
@@ -59,12 +59,12 @@ class ReaderService extends AbstractModelService {
 	}
 
 	loadCurrentReaderLists() {
-		let reader = store.state.reader.currentReader
+		const reader = store.state.reader.currentReader
 		return this.loadLists(reader)
 	}
 
 	async loadLists(reader) {
-		let lists = await axiosGet(`${this.basePath}${reader.id}/lists`)
+		const lists = await axiosGet(`${this.basePath}${reader.id}/lists`)
 		console.log('Loaded reader lists', lists)
 		store.dispatch('reader/setReaderLists', lists)
 	}
@@ -108,16 +108,16 @@ class ReaderService extends AbstractModelService {
 	}
 
 	async addSeriesToReadingList(item) {
-		let reader = store.state.reader.currentReader
-		let newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
+		const reader = store.state.reader.currentReader
+		const newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
 		store.dispatch('ui/showSnackbar', i18n.t('readers.confirm.readingList.add'))
 		return store.dispatch('reader/setReadingList', newList)
 	}
 
 	/** @private */
 	async addOrRemoveListItem(storeAction, handler, listType, itemType, id, confirmLabel) {
-		let reader = store.state.reader.currentReader
-		let success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
+		const reader = store.state.reader.currentReader
+		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
 			store.dispatch('ui/showSnackbar', i18n.t(confirmLabel))
 			return store.dispatch('reader/' + storeAction, id)
