@@ -144,7 +144,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			throw new UnsupportedOperationException("It is not possible to override the order for pages of albums");
 		}
 		Pageable pageable = new PageRequest(currentPage,
-				readerService.getContext().getConfiguration().getPageSizeForAlbums());
+				readerService.getContext().getConfiguration().getPageSizeForCards());
 
 		Slice<MetaSeries> metaSlice = metaSeriesRepo.findAll(pageable);
 

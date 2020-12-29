@@ -43,7 +43,6 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IImageRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
-import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
 import org.demyo.service.IReaderService;
@@ -183,9 +182,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Override
 	@Transactional(readOnly = true)
 	public File getImageThumbnail(long id) throws DemyoException {
-		ApplicationConfiguration config = readerService.getContext().getConfiguration();
-		int thumbnailWidth = config.getThumbnailWidth();
-		int thumbnailHeight = config.getThumbnailHeight();
+		int thumbnailWidth = 200;
+		int thumbnailHeight = 200;
 		File directoryBySize = new File(SystemConfiguration.getInstance().getThumbnailDirectory(),
 				thumbnailWidth + "x" + thumbnailHeight);
 

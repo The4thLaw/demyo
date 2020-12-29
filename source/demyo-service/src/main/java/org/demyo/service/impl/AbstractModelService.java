@@ -184,6 +184,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 */
 	@Transactional(readOnly = true)
 	@Override
+	@Deprecated
 	public Slice<M> findPaginated(int currentPage, Order... orders) {
 		Pageable pageable = getPageable(currentPage, orders);
 		return getRepo().findAll(pageable);

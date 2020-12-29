@@ -1,8 +1,5 @@
 package org.demyo.model.config;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
@@ -11,12 +8,6 @@ import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.RuntimeJsonMappingException;
-import com.fasterxml.jackson.databind.type.CollectionType;
 
 import org.demyo.common.config.SystemConfiguration;
 
@@ -41,12 +32,6 @@ public class ApplicationConfiguration {
 	 */
 	public static final String CONFIG_KEY_LANGUAGE = "language";
 
-	private static final int DEFAULT_PAGE_SIZE_TEXT = 60;
-	private static final int DEFAULT_PAGE_SIZE_IMAGES = 15;
-	private static final int DEFAULT_PAGE_SIZE_ALBUMS = 20;
-	private static final int DEFAULT_THUMB_WIDTH = 220;
-	private static final int DEFAULT_THUMB_HEIGHT = 200;
-
 	/**
 	 * Gets a default configuration with default values.
 	 * 
@@ -55,37 +40,25 @@ public class ApplicationConfiguration {
 	public static ApplicationConfiguration getDefaultConfiguration() {
 		ApplicationConfiguration config = new ApplicationConfiguration();
 
+		// The default values for the configuration are managed on the client side. Let's just set the
 		config.setLanguage(SYSTEM_LOCALE);
-		config.headerLinksSpec = "[]";
-		config.headerLinks = new ArrayList<>();
-		config.pageSizeForText = DEFAULT_PAGE_SIZE_TEXT;
-		config.pageSizeForImages = DEFAULT_PAGE_SIZE_IMAGES;
-		config.pageSizeForAlbums = DEFAULT_PAGE_SIZE_ALBUMS;
-		config.thumbnailWidth = DEFAULT_THUMB_WIDTH;
-		config.thumbnailHeight = DEFAULT_THUMB_HEIGHT;
 
 		return config;
 	}
 
 	/** The language in which the application is displayed. */
 	private Locale language;
-	/** The specification for list of quick links in the header. */
-	private String headerLinksSpec;
-	/** The list of quick links in the header. */
-	private List<HeaderLink> headerLinks;
 	/** The number of items per page of textual entries. */
 	private int pageSizeForText;
 	/** The number of items per page of images. */
 	private int pageSizeForImages;
-	/** The number of series per page of albums. */
-	private int pageSizeForAlbums;
-	/** The maximum thumbnail width in pixels. */
-	private int thumbnailWidth;
-	/** The maximum thumbnail height in pixels. */
-	private int thumbnailHeight;
+	/** The number of items per page of cards. */
+	private int pageSizeForCards;
+	/** The number of items in a card. */
+	private int subItemsInCardIndex;
 
 	/**
-	 * Default construtor with no values.
+	 * Default constructor with no values.
 	 */
 	private ApplicationConfiguration() {
 	}
@@ -116,25 +89,8 @@ public class ApplicationConfiguration {
 
 		pageSizeForText = getInt(config, "paging.textPageSize");
 		pageSizeForImages = getInt(config, "paging.imagePageSize");
-		pageSizeForAlbums = getInt(config, "paging.albumPageSize");
-		thumbnailWidth = getInt(config, "thumbnail.width");
-		thumbnailHeight = getInt(config, "thumbnail.height");
-
-		// Load the header links as JSON data
-		headerLinksSpec = getString(config, "header.quickLinks", "[]");
-		JsonFactory jsonFactory = new JsonFactory();
-		ObjectMapper jsonMapper = new ObjectMapper(jsonFactory);
-		CollectionType jsonType = jsonMapper.getTypeFactory().constructCollectionType(ArrayList.class,
-				HeaderLink.class);
-		List<HeaderLink> links = new ArrayList<>();
-		try {
-			LOGGER.debug("Header links: {}", headerLinksSpec);
-			JsonParser jsonParser = jsonFactory.createParser(headerLinksSpec);
-			links = jsonMapper.<List<HeaderLink>>readValue(jsonParser, jsonType);
-		} catch (RuntimeJsonMappingException | IOException e) {
-			LOGGER.warn("Failed to load the header configuration", e);
-		}
-		headerLinks = links;
+		pageSizeForCards = getInt(config, "paging.pageSizeForCards");
+		subItemsInCardIndex = getInt(config, "paging.subItemsInCardIndex");
 	}
 
 	private static String getString(Map<String, String> config, String key) {
@@ -164,10 +120,10 @@ public class ApplicationConfiguration {
 		config.put(CONFIG_KEY_LANGUAGE, language.toLanguageTag());
 		config.put("paging.textPageSize", String.valueOf(pageSizeForText));
 		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
-		config.put("paging.albumPageSize", String.valueOf(pageSizeForAlbums));
-		config.put("thumbnail.width", String.valueOf(thumbnailWidth));
-		config.put("thumbnail.height", String.valueOf(thumbnailHeight));
-		config.put("header.quickLinks", headerLinksSpec);
+		config.put("paging.pageSizeForCards", String.valueOf(pageSizeForCards));
+		config.put("paging.subItemsInCardIndex", String.valueOf(subItemsInCardIndex));
+
+		LOGGER.debug("Configuration as map: {}", config);
 
 		return config;
 	}
@@ -195,15 +151,6 @@ public class ApplicationConfiguration {
 	}
 
 	/**
-	 * Gets the list of quick links in the header.
-	 * 
-	 * @return the list of quick links in the header
-	 */
-	public List<HeaderLink> getHeaderLinks() {
-		return headerLinks;
-	}
-
-	/**
 	 * Gets the number of items per page of textual entries.
 	 * 
 	 * @return the number of items per page of textual entries
@@ -222,29 +169,21 @@ public class ApplicationConfiguration {
 	}
 
 	/**
-	 * Gets the number of series per page of albums.
-	 * 
-	 * @return the number of series per page of albums
+	 * Gets the number of items per page of cards.
+	 *
+	 * @return the number of items per page of cards
 	 */
-	public int getPageSizeForAlbums() {
-		return pageSizeForAlbums;
+	public int getPageSizeForCards() {
+		return pageSizeForCards;
 	}
 
 	/**
-	 * Gets the maximum thumbnail width in pixels.
-	 * 
-	 * @return the maximum thumbnail width in pixels
+	 * Gets the number of items in a card.
+	 *
+	 * @return the number of items in a card
 	 */
-	public int getThumbnailWidth() {
-		return thumbnailWidth;
+	public int getSubItemsInCardIndex() {
+		return subItemsInCardIndex;
 	}
 
-	/**
-	 * Gets the maximum thumbnail height in pixels.
-	 * 
-	 * @return the maximum thumbnail height in pixels
-	 */
-	public int getThumbnailHeight() {
-		return thumbnailHeight;
-	}
 }
