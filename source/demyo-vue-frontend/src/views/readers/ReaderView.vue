@@ -23,7 +23,7 @@
 
 		<SectionCard :loading="loading">
 			<h1 class="display-1">
-				<LetterIcon :letter="reader.name.charAt(0)" :color="reader.colour" />
+				<LetterIcon :letter="letter" :color="reader.colour" />
 				{{ reader.identifyingName }}
 			</h1>
 			<v-btn
@@ -74,6 +74,12 @@ export default {
 			reader: {},
 			mayDelete: false,
 			appTasksMenu: false
+		}
+	},
+
+	computed: {
+		letter() {
+			return this.reader.name?.charAt(0)
 		}
 	},
 
