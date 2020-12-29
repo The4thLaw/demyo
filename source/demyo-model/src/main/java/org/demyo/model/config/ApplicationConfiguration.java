@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -49,13 +50,13 @@ public class ApplicationConfiguration {
 	/** The language in which the application is displayed. */
 	private Locale language;
 	/** The number of items per page of textual entries. */
-	private int pageSizeForText;
+	private Integer pageSizeForText;
 	/** The number of items per page of images. */
-	private int pageSizeForImages;
+	private Integer pageSizeForImages;
 	/** The number of items per page of cards. */
-	private int pageSizeForCards;
+	private Integer pageSizeForCards;
 	/** The number of items in a card. */
-	private int subItemsInCardIndex;
+	private Integer subItemsInCardIndex;
 
 	/**
 	 * Default constructor with no values.
@@ -105,8 +106,9 @@ public class ApplicationConfiguration {
 		return value;
 	}
 
-	private static int getInt(Map<String, String> config, String key) {
-		return Integer.valueOf(config.get(key));
+	private static Integer getInt(Map<String, String> config, String key) {
+		String value = config.get(key);
+		return StringUtils.isNotBlank(value) ? Integer.valueOf(value) : null;
 	}
 
 	/**
@@ -155,7 +157,7 @@ public class ApplicationConfiguration {
 	 * 
 	 * @return the number of items per page of textual entries
 	 */
-	public int getPageSizeForText() {
+	public Integer getPageSizeForText() {
 		return pageSizeForText;
 	}
 
@@ -164,7 +166,7 @@ public class ApplicationConfiguration {
 	 * 
 	 * @return the number of items per page of images
 	 */
-	public int getPageSizeForImages() {
+	public Integer getPageSizeForImages() {
 		return pageSizeForImages;
 	}
 
@@ -173,7 +175,7 @@ public class ApplicationConfiguration {
 	 *
 	 * @return the number of items per page of cards
 	 */
-	public int getPageSizeForCards() {
+	public Integer getPageSizeForCards() {
 		return pageSizeForCards;
 	}
 
@@ -182,7 +184,7 @@ public class ApplicationConfiguration {
 	 *
 	 * @return the number of items in a card
 	 */
-	public int getSubItemsInCardIndex() {
+	public Integer getSubItemsInCardIndex() {
 		return subItemsInCardIndex;
 	}
 
