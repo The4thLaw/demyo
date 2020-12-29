@@ -234,7 +234,11 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 		if (isNew) {
 			configService.createDefaultConfiguration(ret);
+		} else {
+			configService.save(model.getConfiguration(), ret);
 		}
+
+		// TODO: fix save clearing the favourite and reading lists
 
 		return ret.getId();
 	}
