@@ -72,7 +72,7 @@ export default {
 
 	computed: {
 		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForImages || 20
+			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForImages
 		}),
 
 		hasDefaultSlot() {

@@ -64,7 +64,7 @@ export default {
 
 	computed: {
 		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForCards || 40
+			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForCards
 		})
 	},
 

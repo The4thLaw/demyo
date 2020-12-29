@@ -29,7 +29,7 @@ export default {
 
 	computed: {
 		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForText || 40
+			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForText
 		}),
 
 		// Allows overriding the list of items

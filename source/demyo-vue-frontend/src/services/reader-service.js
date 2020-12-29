@@ -40,6 +40,26 @@ class ReaderService extends AbstractModelService {
 		}
 	}
 
+	/**
+	 * Finds a Model by its ID.
+	 * @param {Number} id The Model ID
+	 * @return {Promise<any>} The Model
+	 */
+	async findById(id) {
+		const model = await super.findById(id)
+
+		// Provide a default configuration
+		model.configuration = Object.assign({
+			language: 'en',
+			pageSizeForText: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORTEXT, 10),
+			pageSizeForCards: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORCARDS, 10),
+			subItemsInCardIndex: parseInt(process.env.VUE_APP_DEF_CFG_RDR_SUBITEMSINCARDINDEX, 10),
+			pageSizeForImages: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORIMAGES, 10)
+		}, model.configuration)
+
+		return model
+	}
+
 	mayDeleteReader() {
 		return axiosGet(`${this.basePath}mayDelete`, false)
 	}

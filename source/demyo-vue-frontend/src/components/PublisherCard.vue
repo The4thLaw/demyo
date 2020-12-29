@@ -66,7 +66,7 @@ export default {
 		},
 
 		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.subItemsInCardIndex || 5
+			itemsPerPage: state => state.reader.currentReader.configuration.subItemsInCardIndex
 		}),
 
 		hasCollections() {
