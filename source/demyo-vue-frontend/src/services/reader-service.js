@@ -52,6 +52,18 @@ class ReaderService extends AbstractModelService {
 		return model
 	}
 
+	async save(model) {
+		const superReturn = await super.save(model)
+
+		// If we just saved the current reader, we should reload it from the server to have a fresh copy
+		if (model.id === store.state.reader.currentReader.id) {
+			console.log('The current reader was just edited, reloading it from the server')
+			this.setCurrentReader(model)
+		}
+
+		return superReturn
+	}
+
 	/**
 	 * Sets a default configuration to the provided Reader. Only missing configuration values are set.
 	 * @param {any} reader The Reader to configure
