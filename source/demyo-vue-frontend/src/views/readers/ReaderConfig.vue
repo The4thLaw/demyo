@@ -61,7 +61,10 @@ export default {
 				}
 			},
 
-			reader: {},
+			reader: {
+				configuration: {}
+			},
+
 			languages: [],
 
 			rules: {
