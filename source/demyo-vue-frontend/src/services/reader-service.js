@@ -60,6 +60,8 @@ class ReaderService extends AbstractModelService {
 		return model
 	}
 
+	// TODO: override save to reload the current reader if needed
+
 	mayDeleteReader() {
 		return axiosGet(`${this.basePath}mayDelete`, false)
 	}
@@ -75,6 +77,7 @@ class ReaderService extends AbstractModelService {
 		if (reader.configuration.language) {
 			switchLanguage(reader.configuration.language)
 		}
+		// TODO: reload the reader lists if needed
 		await storeProm
 	}
 

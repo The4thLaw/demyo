@@ -7,6 +7,11 @@
 				icon="mdi-account dem-overlay-edit"
 			/>
 			<AppTask
+				:label="$t('quickTasks.configure.reader')"
+				:to="`/readers/${reader.id}/configuration`"
+				icon="mdi-cog"
+			/>
+			<AppTask
 				v-if="mayDelete"
 				:label="$t('quickTasks.delete.reader')"
 				:confirm="$t('quickTasks.delete.reader.confirm')"

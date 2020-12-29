@@ -1,3 +1,4 @@
+import ReaderConfig from '@/views/readers/ReaderConfig'
 import ReaderEdit from '@/views/readers/ReaderEdit'
 import ReaderFavourites from '@/views/readers/ReaderFavourites'
 import ReaderIndex from '@/views/readers/ReaderIndex'
@@ -35,5 +36,10 @@ export default [
 		path: '/readers/:id/readingList',
 		name: 'ReadingList',
 		component: ReadingList
+	},
+	{
+		path: '/readers/:id/configuration',
+		name: 'ReaderConfig',
+		component: ReaderConfig
 	}
 ]

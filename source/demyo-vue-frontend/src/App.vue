@@ -38,6 +38,14 @@
 							<v-list-item-title>{{ $t('menu.reader.readingList') }}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
+					<v-list-item :to="`/readers/${currentReader.id}/configuration`">
+						<v-list-item-icon>
+							<v-icon>mdi-cog</v-icon>
+						</v-list-item-icon>
+						<v-list-item-content>
+							<v-list-item-title>{{ $t('menu.reader.configuration') }}</v-list-item-title>
+						</v-list-item-content>
+					</v-list-item>
 					<v-list-item @click="promptReaderSelection = true">
 						<v-list-item-icon>
 							<v-icon>mdi-account-convert</v-icon>
