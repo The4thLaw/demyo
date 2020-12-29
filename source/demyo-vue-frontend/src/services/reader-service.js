@@ -1,6 +1,7 @@
 import i18n, { switchLanguage } from '@/i18n'
 import AbstractModelService from './abstract-model-service'
 import { axiosGet, axiosPost, axiosDelete } from '@/helpers/axios'
+import { defaultLanguage } from '@/myenv'
 import store from '@/store'
 
 /**
@@ -70,7 +71,7 @@ class ReaderService extends AbstractModelService {
 	 */
 	setDefaultConfiguration(reader) {
 		reader.configuration = Object.assign({
-			language: 'en',
+			language: defaultLanguage,
 			pageSizeForText: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORTEXT, 10),
 			pageSizeForCards: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORCARDS, 10),
 			subItemsInCardIndex: parseInt(process.env.VUE_APP_DEF_CFG_RDR_SUBITEMSINCARDINDEX, 10),
