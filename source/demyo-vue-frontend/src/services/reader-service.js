@@ -22,7 +22,7 @@ class ReaderService extends AbstractModelService {
 			console.debug('Restoring Reader from local storage...')
 			reader = JSON.parse(readerStr)
 			// Already set it in store, it could be used temporarily at least
-			this.setCurrentReader(reader)
+			this.setCurrentReader(reader, false)
 			// Revalidate the reader. Who knows, it could have been deleted in the mean time
 			reader = await axiosGet(this.basePath + reader.id, null)
 		} else {
@@ -30,7 +30,8 @@ class ReaderService extends AbstractModelService {
 		}
 
 		if (reader) {
-			await this.setCurrentReader(reader)
+			await this.setCurrentReader(reader, false)
+			// Manually load the lists because we requested no reload because we just loaded one
 			this.loadLists(reader)
 			console.log('Reader is initialized to', reader)
 			store.dispatch('ui/showSnackbar', i18n.t('core.reader.welcome', { reader: reader.name }))
@@ -47,17 +48,22 @@ class ReaderService extends AbstractModelService {
 	 */
 	async findById(id) {
 		const model = await super.findById(id)
+		this.setDefaultConfiguration(model)
+		return model
+	}
 
-		// Provide a default configuration
-		model.configuration = Object.assign({
+	/**
+	 * Sets a default configuration to the provided Reader. Only missing configuration values are set.
+	 * @param {any} reader The Reader to configure
+	 */
+	setDefaultConfiguration(reader) {
+		reader.configuration = Object.assign({
 			language: 'en',
 			pageSizeForText: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORTEXT, 10),
 			pageSizeForCards: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORCARDS, 10),
 			subItemsInCardIndex: parseInt(process.env.VUE_APP_DEF_CFG_RDR_SUBITEMSINCARDINDEX, 10),
 			pageSizeForImages: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORIMAGES, 10)
-		}, model.configuration)
-
-		return model
+		}, reader.configuration)
 	}
 
 	// TODO: override save to reload the current reader if needed
@@ -66,19 +72,35 @@ class ReaderService extends AbstractModelService {
 		return axiosGet(`${this.basePath}mayDelete`, false)
 	}
 
-	async setCurrentReader(reader) {
-		if (!reader.configuration) {
-			console.log('The provided reader doesn\'t have a configuration, reloading from the server...')
+	/**
+	 * Sets the current reader in the store and local storage.
+	 *
+	 * @param {any} reader The reader to set
+	 * @param {Boolean} reload Whether to reload fresh data from the server
+	 */
+	async setCurrentReader(reader, reload = true) {
+		let listLoadProm
+
+		if (reload) {
+			console.log('Loading a fresh copy of the Reader from the server...')
 			reader = await this.findById(reader.id)
+			listLoadProm = this.loadLists(reader)
+		} else {
+			// Done by findByID in the previous branch, but we don't want to do it twice
+			this.setDefaultConfiguration(reader)
 		}
+
 		console.log('Setting reader in store', reader)
 		const storeProm = store.dispatch('reader/setCurrentReader', reader)
 		localStorage.setItem('currentReader', JSON.stringify(reader))
 		if (reader.configuration.language) {
 			switchLanguage(reader.configuration.language)
 		}
-		// TODO: reload the reader lists if needed
+
 		await storeProm
+		if (listLoadProm) {
+			await listLoadProm
+		}
 	}
 
 	loadCurrentReaderLists() {
