@@ -420,6 +420,14 @@ html[lang],
 	flex: 1;
 }
 
+@media (max-width: 435px) {
+	#l-DefaultLayout__mainContainer,
+	#l-DefaultLayout__mainContainer > .container {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
 .l-DefaultLayout__overlayText {
 	font-size: 1.5rem;
 	padding-left: 1em;
