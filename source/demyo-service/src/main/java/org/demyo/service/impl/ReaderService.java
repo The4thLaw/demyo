@@ -98,7 +98,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 			return null;
 		}
 		// TODO: this won't be very efficient if there is a large number of readers.
-		// It would be best to find with a limit
+		// It would be best to find with a limit, or to run a findFirst ordered by ID
 		long uniqueId = repo.findAll().iterator().next().getId();
 		return getByIdForView(uniqueId);
 	}
@@ -230,15 +230,24 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Override
 	public long save(@NotNull Reader model) {
 		boolean isNew = model.getId() == null;
+
+		if (!isNew) {
+			// Preserve the favourites and reading list. Not particularly efficient, but I can't think of a better
+			// way while preserving the mapping on the Album side, which is used for QueryDSL queries
+			Reader old = repo.findOne(model.getId());
+			model.setReadingList(old.getReadingList());
+			model.setFavouriteSeries(old.getFavouriteSeries());
+			model.setFavouriteAlbums(old.getFavouriteAlbums());
+		}
+
 		Reader ret = saveAndGetModel(model);
 
 		if (isNew) {
 			configService.createDefaultConfiguration(ret);
 		} else {
+			// Save any configuration update, since this method is used both for the reader and config saves
 			configService.save(model.getConfiguration(), ret);
 		}
-
-		// TODO: fix save clearing the favourite and reading lists
 
 		return ret.getId();
 	}

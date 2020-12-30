@@ -79,8 +79,6 @@ class ReaderService extends AbstractModelService {
 		}, reader.configuration)
 	}
 
-	// TODO: override save to reload the current reader if needed
-
 	mayDeleteReader() {
 		return axiosGet(`${this.basePath}mayDelete`, false)
 	}

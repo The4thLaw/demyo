@@ -36,8 +36,8 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "READERS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraph(name = "Reader.forView", attributeNodes = { //
-		@NamedAttributeNode("configurationEntries") })
+@NamedEntityGraph(name = "Reader.forView", attributeNodes =
+{ @NamedAttributeNode("configurationEntries") })
 public class Reader extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
@@ -66,7 +66,7 @@ public class Reader extends AbstractModel {
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Series> favouriteSeries;
 
-	/** The favourite albums. */
+	/** The reader's favourite albums. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "readers_favourite_albums", joinColumns = @JoinColumn(name = "reader_id"), //
 			inverseJoinColumns = @JoinColumn(name = "album_id"))
