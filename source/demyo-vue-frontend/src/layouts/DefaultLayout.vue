@@ -10,7 +10,7 @@
 		</v-navigation-drawer>
 
 		<v-navigation-drawer v-model="mainMenu" app temporary width="20em">
-			<v-list class="c-App__menuList">
+			<v-list class="l-DefaultLayout__menuList">
 				<v-list-group v-if="readerLoaded">
 					<template #activator>
 						<v-list-item-icon>
@@ -65,7 +65,7 @@
 
 				<v-divider />
 
-				<v-list-item id="c-App__menuSearch">
+				<v-list-item id="l-DefaultLayout__menuSearch">
 					<v-list-item-content>
 						<v-text-field
 							v-model="quicksearchQuery" clearable hide-details
@@ -107,11 +107,11 @@
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
 			<template v-if="!suppressSearch">
-				<v-btn id="c-App__toolbarSearchButton" icon @click="showQuicksearch = true; focus()">
+				<v-btn id="l-DefaultLayout__toolbarSearchButton" icon @click="showQuicksearch = true; focus()">
 					<v-icon>mdi-magnify</v-icon>
 				</v-btn>
 				<v-expand-x-transition>
-					<div v-show="showQuicksearch" id="c-App__toolbarSearchField">
+					<div v-show="showQuicksearch" id="l-DefaultLayout__toolbarSearchField">
 						<v-text-field
 							ref="toolbarSearch"
 							v-model="quicksearchQuery" clearable hide-details
@@ -125,21 +125,21 @@
 			<portal-target name="appTasks" />
 		</v-app-bar>
 
-		<v-content id="c-App__mainContent">
+		<v-content id="l-DefaultLayout__mainContent">
 			<!-- First part of the details pane management -->
 			<v-dialog v-if="$vuetify.breakpoint.smAndDown" v-model="displayDetailsPane">
 				<v-card>
 					<portal-target name="appSidePane" />
 				</v-card>
 			</v-dialog>
-			<v-container id="c-App__mainContainer" fluid>
+			<v-container id="l-DefaultLayout__mainContainer" fluid>
 				<ReaderSelection
 					v-if="requireReaderSelection || promptReaderSelection" :require-selection="requireReaderSelection"
 					@cancel="promptReaderSelection = false" @select="promptReaderSelection = false"
 				/>
-				<v-overlay absolute z-index="4" :value="globalOverlay" class="c-App__overlay">
+				<v-overlay absolute z-index="4" :value="globalOverlay" class="l-DefaultLayout__overlay">
 					<v-progress-circular :indeterminate="true" color="primary" size="96" width="8" />
-					<span class="c-App__overlayText">{{ $t('core.loading') }}</span>
+					<span class="l-DefaultLayout__overlayText">{{ $t('core.loading') }}</span>
 				</v-overlay>
 				<QuickSearchResults
 					v-if="isRelevantSearchQuery" :results="quicksearchResults"
@@ -389,38 +389,38 @@ html[lang],
 	background: #eee;
 }
 
-#demyo .c-App__overlay .v-overlay__content {
+#demyo .l-DefaultLayout__overlay .v-overlay__content {
 	position: absolute;
 	top: 3em;
 }
 
-#c-App__toolbarSearchField {
+#l-DefaultLayout__toolbarSearchField {
 	max-width: 20em;
 }
 
 @media screen and (max-width: 600px) { // Vuetify "xs" breakpoint
-	#c-App__toolbarSearchField,
-	#c-App__toolbarSearchButton {
+	#l-DefaultLayout__toolbarSearchField,
+	#l-DefaultLayout__toolbarSearchButton {
 		display: none;
 	}
 }
 
 @media screen and (min-width: 600px) {
-	#c-App__menuSearch {
+	#l-DefaultLayout__menuSearch {
 		display: none;
 	}
 }
 
-#c-App__mainContent > .v-content__wrap {
+#l-DefaultLayout__mainContent > .v-content__wrap {
 	display: flex;
 	flex-direction: column;
 }
 
-#c-App__mainContainer {
+#l-DefaultLayout__mainContainer {
 	flex: 1;
 }
 
-.c-App__overlayText {
+.l-DefaultLayout__overlayText {
 	font-size: 1.5rem;
 	padding-left: 1em;
 }
@@ -441,7 +441,7 @@ html[lang],
 	}
 }
 
-.v-application .c-App__menuList,
+.v-application .l-DefaultLayout__menuList,
 .v-application .c-AppTasks__list {
 	a,
 	a:hover {
