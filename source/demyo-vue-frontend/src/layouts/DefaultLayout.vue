@@ -422,7 +422,8 @@ html[lang],
 
 @media (max-width: 435px) {
 	#l-DefaultLayout__mainContainer,
-	#l-DefaultLayout__mainContainer > .container {
+	#l-DefaultLayout__mainContainer > .container,
+	.container.v-TagIndex__list {
 		padding-left: 0;
 		padding-right: 0;
 	}
