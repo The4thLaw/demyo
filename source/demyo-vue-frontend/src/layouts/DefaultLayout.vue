@@ -91,7 +91,7 @@
 						</v-list-item-content>
 					</template>
 
-					<v-list-item v-for="item in section.subItems" :key="item.title" :to="item.url">
+					<v-list-item v-for="item in section.subItems" :key="item.title" :to="item.url" exact>
 						<v-list-item-icon>
 							<v-icon v-text="item.icon" />
 						</v-list-item-icon>
