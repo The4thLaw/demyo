@@ -12,7 +12,7 @@
 		<v-card v-else outlined class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
 				<v-img
-					v-if="album.cover"
+					v-if="album.cover.id"
 					:src="`${baseImageUrl}?w=400`"
 					:srcset="`
 							${baseImageUrl}?w=400 400w,
