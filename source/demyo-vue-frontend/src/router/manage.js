@@ -1,5 +1,5 @@
-import Export from '@/views/manage/Export'
-import Import from '@/views/manage/Import'
+import Export from '@/pages/manage/Export'
+import Import from '@/pages/manage/Import'
 
 export default [
 	{

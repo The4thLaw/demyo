@@ -1,6 +1,6 @@
-import BindingEdit from '@/views/bindings/BindingEdit'
-import BindingIndex from '@/views/bindings/BindingIndex'
-import BindingView from '@/views/bindings/BindingView'
+import BindingEdit from '@/pages/bindings/BindingEdit'
+import BindingIndex from '@/pages/bindings/BindingIndex'
+import BindingView from '@/pages/bindings/BindingView'
 
 export default [
 	{

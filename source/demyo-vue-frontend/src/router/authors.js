@@ -1,6 +1,6 @@
-import AuthorEdit from '@/views/authors/AuthorEdit'
-import AuthorIndex from '@/views/authors/AuthorIndex'
-import AuthorView from '@/views/authors/AuthorView'
+import AuthorEdit from '@/pages/authors/AuthorEdit'
+import AuthorIndex from '@/pages/authors/AuthorIndex'
+import AuthorView from '@/pages/authors/AuthorView'
 
 export default [
 	{

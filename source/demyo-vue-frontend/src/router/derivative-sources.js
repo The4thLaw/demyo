@@ -1,6 +1,6 @@
-import DerivativeSourceEdit from '@/views/derivativeSources/DerivativeSourceEdit'
-import DerivativeSourceIndex from '@/views/derivativeSources/DerivativeSourceIndex'
-import DerivativeSourceView from '@/views/derivativeSources/DerivativeSourceView'
+import DerivativeSourceEdit from '@/pages/derivativeSources/DerivativeSourceEdit'
+import DerivativeSourceIndex from '@/pages/derivativeSources/DerivativeSourceIndex'
+import DerivativeSourceView from '@/pages/derivativeSources/DerivativeSourceView'
 
 export default [
 	{

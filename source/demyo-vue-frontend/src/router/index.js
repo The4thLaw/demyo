@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
 import store from '@/store/index'
-import Home from '@/views/Home.vue'
+import Home from '@/pages/Home.vue'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
@@ -45,7 +45,7 @@ const routes = [
 		// route level code-splitting
 		// this generates a separate chunk (about.[hash].js) for this route
 		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+		component: () => import(/* webpackChunkName: "about" */ '../pages/About.vue')
 	}
 ]
 

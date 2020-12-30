@@ -1,6 +1,6 @@
-import SeriesEdit from '@/views/series/SeriesEdit'
-import SeriesIndex from '@/views/series/SeriesIndex'
-import SeriesView from '@/views/series/SeriesView'
+import SeriesEdit from '@/pages/series/SeriesEdit'
+import SeriesIndex from '@/pages/series/SeriesIndex'
+import SeriesView from '@/pages/series/SeriesView'
 
 export default [
 	{

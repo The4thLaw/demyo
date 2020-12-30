@@ -1,5 +1,5 @@
-import CollectionEdit from '@/views/collections/CollectionEdit'
-import CollectionView from '@/views/collections/CollectionView'
+import CollectionEdit from '@/pages/collections/CollectionEdit'
+import CollectionView from '@/pages/collections/CollectionView'
 
 export default [
 	{

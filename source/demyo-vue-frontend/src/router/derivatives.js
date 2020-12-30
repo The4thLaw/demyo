@@ -1,8 +1,8 @@
 import MinimalLayout from '@/layouts/MinimalLayout'
-import DerivativeEdit from '@/views/derivatives/DerivativeEdit'
-import DerivativeIndex from '@/views/derivatives/DerivativeIndex'
-import DerivativeStickers from '@/views/derivatives/DerivativeStickers'
-import DerivativeView from '@/views/derivatives/DerivativeView'
+import DerivativeEdit from '@/pages/derivatives/DerivativeEdit'
+import DerivativeIndex from '@/pages/derivatives/DerivativeIndex'
+import DerivativeStickers from '@/pages/derivatives/DerivativeStickers'
+import DerivativeView from '@/pages/derivatives/DerivativeView'
 
 export default [
 	{

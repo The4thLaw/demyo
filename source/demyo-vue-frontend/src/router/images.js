@@ -1,7 +1,7 @@
-import ImageDetect from '@/views/images/ImageDetect'
-import ImageEdit from '@/views/images/ImageEdit'
-import ImageIndex from '@/views/images/ImageIndex'
-import ImageView from '@/views/images/ImageView'
+import ImageDetect from '@/pages/images/ImageDetect'
+import ImageEdit from '@/pages/images/ImageEdit'
+import ImageIndex from '@/pages/images/ImageIndex'
+import ImageView from '@/pages/images/ImageView'
 
 export default [
 	{

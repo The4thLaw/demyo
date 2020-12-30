@@ -1,6 +1,6 @@
-import TagEdit from '@/views/tags/TagEdit'
-import TagIndex from '@/views/tags/TagIndex'
-import TagView from '@/views/tags/TagView'
+import TagEdit from '@/pages/tags/TagEdit'
+import TagIndex from '@/pages/tags/TagIndex'
+import TagView from '@/pages/tags/TagView'
 
 export default [
 	{

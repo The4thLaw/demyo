@@ -1,9 +1,9 @@
-import ReaderConfig from '@/views/readers/ReaderConfig'
-import ReaderEdit from '@/views/readers/ReaderEdit'
-import ReaderFavourites from '@/views/readers/ReaderFavourites'
-import ReaderIndex from '@/views/readers/ReaderIndex'
-import ReadingList from '@/views/readers/ReadingList'
-import ReaderView from '@/views/readers/ReaderView'
+import ReaderConfig from '@/pages/readers/ReaderConfig'
+import ReaderEdit from '@/pages/readers/ReaderEdit'
+import ReaderFavourites from '@/pages/readers/ReaderFavourites'
+import ReaderIndex from '@/pages/readers/ReaderIndex'
+import ReadingList from '@/pages/readers/ReadingList'
+import ReaderView from '@/pages/readers/ReaderView'
 
 export default [
 	{

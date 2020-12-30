@@ -1,6 +1,6 @@
-import AlbumEdit from '@/views/albums/AlbumEdit'
-import AlbumIndex from '@/views/albums/AlbumIndex'
-import AlbumView from '@/views/albums/AlbumView'
+import AlbumEdit from '@/pages/albums/AlbumEdit'
+import AlbumIndex from '@/pages/albums/AlbumIndex'
+import AlbumView from '@/pages/albums/AlbumView'
 
 export default [
 	{

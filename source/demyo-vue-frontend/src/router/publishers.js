@@ -1,6 +1,6 @@
-import PublisherEdit from '@/views/publishers/PublisherEdit'
-import PublisherIndex from '@/views/publishers/PublisherIndex'
-import PublisherView from '@/views/publishers/PublisherView'
+import PublisherEdit from '@/pages/publishers/PublisherEdit'
+import PublisherIndex from '@/pages/publishers/PublisherIndex'
+import PublisherView from '@/pages/publishers/PublisherView'
 
 export default [
 	{

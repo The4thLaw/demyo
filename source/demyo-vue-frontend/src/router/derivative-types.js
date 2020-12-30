@@ -1,6 +1,6 @@
-import DerivativeTypeEdit from '@/views/derivativeTypes/DerivativeTypeEdit'
-import DerivativeTypeIndex from '@/views/derivativeTypes/DerivativeTypeIndex'
-import DerivativeTypeView from '@/views/derivativeTypes/DerivativeTypeView'
+import DerivativeTypeEdit from '@/pages/derivativeTypes/DerivativeTypeEdit'
+import DerivativeTypeIndex from '@/pages/derivativeTypes/DerivativeTypeIndex'
+import DerivativeTypeView from '@/pages/derivativeTypes/DerivativeTypeView'
 
 export default [
 	{
