@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.Reader;
+import org.demyo.model.beans.ReaderLists;
 import org.demyo.service.IReaderService;
 import org.demyo.service.impl.AbstractServiceTest;
 
@@ -50,13 +51,14 @@ public class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(readers).hasSize(1);
 		Reader reader = readers.get(0);
 
-		assertThat(reader.getFavouriteAlbums()).hasSize(1);
-		assertThat(reader.getFavouriteAlbums().first().getId()).isEqualTo(1);
+		ReaderLists lists = readerService.getLists(reader.getId());
+		assertThat(lists.getFavouriteAlbums()).hasSize(1);
+		assertThat(lists.getFavouriteAlbums()).contains(1);
 
-		assertThat(reader.getFavouriteSeries()).hasSize(1);
-		assertThat(reader.getFavouriteSeries().first().getId()).isEqualTo(2);
+		assertThat(lists.getFavouriteSeries()).hasSize(1);
+		assertThat(lists.getFavouriteSeries()).contains(2);
 
-		assertThat(reader.getReadingList()).hasSize(1);
-		assertThat(reader.getReadingList().first().getId()).isEqualTo(3);
+		assertThat(lists.getReadingList()).hasSize(1);
+		assertThat(lists.getReadingList()).contains(3);
 	}
 }
