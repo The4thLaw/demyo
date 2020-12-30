@@ -9,16 +9,6 @@ $quickTasks.prepare($javascript)
 				<!-- Add spacer, to align navigation to the right -->
 				<div class="mdl-layout-spacer"></div>
 				
-				#if (! $appConfig.headerLinks.empty)
-				<!-- Quick links -->
-				<nav class="mdl-navigation mdl-layout--large-screen-only" id="header-quick-links">
-					#foreach ($entry in $appConfig.headerLinks)
-						<a href="$link.contextPath/$entry.urlFromRoot" class="mdl-button mdl-js-button mdl-button--icon" id="$entry.id">#icon($entry.iconSpec)</a>
-						<div class="mdl-tooltip" for="$entry.id">#_("$entry.label")</div>
-					#end
-				</nav>
-				#end
-				
 				#if (!$!suppressQuickSearch)
 				<!-- Quick search -->
 				<div id="header-quicksearch" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right  mdl-layout--large-screen-only">
