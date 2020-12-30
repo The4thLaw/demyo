@@ -15,11 +15,15 @@ class DerivativeService extends AbstractModelService {
 		})
 	}
 
-	findForIndex(filter) {
+	findForIndex(filter, view) {
 		if (filter) {
 			return axiosPost(this.basePath + 'index/filtered', filter, [])
 		}
-		return axiosGet(this.basePath, [])
+		const params = {}
+		if (view) {
+			params.view = view
+		}
+		return axiosGet(this.basePath, params, [])
 	}
 
 	saveFilepondImages(modelId, imageIds) {
