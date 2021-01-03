@@ -4,7 +4,7 @@
 			<template #default="slotProps">
 				<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 					<div v-if="slotProps.item.series">
-						{{ slotProps.item.series.name }}
+						{{ slotProps.item.series.identifyingName }}
 					</div>
 					<div v-if="slotProps.item.album">
 						{{ slotProps.item.album.title }}
