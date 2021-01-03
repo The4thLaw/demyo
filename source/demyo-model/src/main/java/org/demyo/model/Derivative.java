@@ -44,15 +44,18 @@ import org.demyo.model.util.IdentifyingNameComparator;
  */
 @Entity
 @Table(name = "DERIVATIVES")
-@DefaultOrder(expression = { @DefaultOrder.Order(property = "series.name"),
+@DefaultOrder(expression =
+{ @DefaultOrder.Order(property = "series.name"),
 		@DefaultOrder.Order(property = "album.cycle"), @DefaultOrder.Order(property = "album.number"),
 		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
-@NamedEntityGraphs({
+@NamedEntityGraphs(
+{
 		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes =
 		{ @NamedAttributeNode("images") }),
 		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
 		{ @NamedAttributeNode("artist"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") }) })
-@OneNotNull(fields = { "series.id", "album.id" })
+@OneNotNull(fields =
+{ "series.id", "album.id" })
 public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -159,7 +162,10 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 		if (album != null) {
 			sb.append(album.getIdentifyingName()).append(" - ");
 		}
-		sb.append(type.getIdentifyingName());
+		if (type != null) {
+			// null would never happen on saved entities but could happen in unsaved ones using toString
+			sb.append(type.getIdentifyingName());
+		}
 		if (source != null) {
 			sb.append(" ").append(source.getIdentifyingName());
 		}
