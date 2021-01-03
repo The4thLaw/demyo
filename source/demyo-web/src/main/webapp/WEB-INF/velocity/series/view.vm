@@ -54,10 +54,6 @@ $quickTasks.add({
 		"icon": "gift+eye_slashed"
 	})
 #end
-##TODO: QT to add a derivative to the series
-##TODO: QT to lend albums if at least one album
-##TODO: QT to tag all albums if at least one album
-##TODO: QT to remove a tag if at least one album
 
 <input type="hidden" id="is_favourite" value="$demyoReaderService.context.isFavouriteSeries($series)">
 
@@ -104,9 +100,6 @@ $quickTasks.add({
 		#entityFieldRichText('field.Series.comment', $series.comment)
 	#end
 </div>
-##TODO: derivatives
-
-##TODO: cover slider or equivalent
 
 #if (!$series.albums.empty)
 <div id="dem-series-album-list" class="mdl-grid">
@@ -130,7 +123,6 @@ $quickTasks.add({
 					</div>
 				</div>
 				<div class="dem-album-card__details">
-					## TODO: have some JavaScript to avoid loading images (defer loading) if the layout is small
 					#thumbnail($album.cover, {})
 					#set ($isRL = $demyoReaderService.context.isAlbumInReadingList($album))
 					#set ($isFave = $demyoReaderService.context.isFavouriteAlbum($album))

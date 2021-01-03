@@ -18,27 +18,5 @@
 			</div>
 		</div>
 	#end
-##	
-##	#@mdlGridCell([6,8,0])
-##		<div class="mdl-card mdl-shadow--2dp dem-widget">
-##			<div class="mdl-card__title">
-##				<h2 class="mdl-card__title-text">#_('widget.random_album.title')</h2>
-##			</div>
-##			<div class="mdl-card__supporting-text">
-##				<p>TODO</p>
-##			</div>
-##		</div>
-##	#@mdlGridCell([12,0,0])
-##	
-##	#@mdlGridCell([6,8,0])
-##		<div class="mdl-card mdl-shadow--2dp dem-widget">
-##			<div class="mdl-card__title">
-##				<h2 class="mdl-card__title-text">#_('widget.random_images.title')</h2>
-##			</div>
-##			<div class="mdl-card__supporting-text">
-##				<p>TODO</p>
-##			</div>
-##		</div>
-##	#@mdlGridCell([12,0,0])
 
 </div>

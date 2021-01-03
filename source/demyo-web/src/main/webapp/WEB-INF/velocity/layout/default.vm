@@ -57,7 +57,6 @@ $quickTasks.prepare($javascript)
 					<a href="$tab.url" class="mdl-layout__tab #if($tab.active)is-active#end">#_($tab.label)</a>
 				#end
 				</div>
-				## TODO: check MDL issue #4072 for a fix to the tab thing. Then, remove this hack.
 				<script type="text/javascript">
 					jQuery(function () {
 						jQuery('a.mdl-layout__tab').click(function () {

@@ -385,7 +385,7 @@ html[lang],
 		"Apple Color Emoji",
 		"Segoe UI Emoji",
 		"Segoe UI Symbol";
-	// TODO: handle the dark theme
+	// TODO [dark]: handle the dark theme
 	background: #eee;
 }
 

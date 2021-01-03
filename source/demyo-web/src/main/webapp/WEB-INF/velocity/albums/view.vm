@@ -35,8 +35,6 @@ $quickTasks.add({
 	"icon": "open_book+delete",
 	"confirm" : true
 })
-##TODO: QT to add a derivative to the Album
-##TODO: QT to lend album
 $quickTasks.add({
 	"id" : "qt-add-images-to-album",
 	"url" : "#",
@@ -210,5 +208,3 @@ $quickTasks.add({
 		#thumbGalleryPlain($album.images)
 	</div>
 #end
-
-## TODO: list of derivatives

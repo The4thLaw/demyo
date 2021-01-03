@@ -32,6 +32,11 @@
 				icon="mdi-library dem-overlay-add"
 				@click="appTasksMenu = false; addToReadingList()"
 			/>
+			<AppTask
+				:label="$t('quickTasks.add.derivative.to.album')"
+				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
+				icon="mdi-image-frame dem-overlay-add"
+			/>
 		</AppTasks>
 		<DnDImage
 			v-model="dndDialog" main-image-label="field.Album.cover"
@@ -337,6 +342,16 @@ export default {
 			}
 
 			return null
+		},
+
+		derivativeQuery() {
+			const query = {
+				toAlbum: this.album.id
+			}
+			if (this.album.artists.length === 1) {
+				query.toArtist = this.album.artists[0].id
+			}
+			return query
 		},
 
 		...mapState({

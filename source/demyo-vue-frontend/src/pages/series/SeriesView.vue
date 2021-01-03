@@ -174,7 +174,7 @@
 </template>
 
 <script>
-// TODO[long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
+// TODO [long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
 import { filter, some, sortedIndexOf } from 'lodash'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
