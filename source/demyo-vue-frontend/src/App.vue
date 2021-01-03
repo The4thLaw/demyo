@@ -1,5 +1,4 @@
 <template>
-	<!-- TODO: remove dependency to normalize ? -->
 	<component :is="layout">
 		<router-view />
 	</component>
