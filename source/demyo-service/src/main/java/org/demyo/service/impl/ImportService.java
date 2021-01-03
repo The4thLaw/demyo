@@ -24,7 +24,6 @@ import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IImportService;
-import org.demyo.service.IReaderContext;
 import org.demyo.service.importing.IImporter;
 import org.demyo.utils.io.DIOUtils;
 
@@ -38,7 +37,6 @@ public class ImportService implements IImportService {
 	@Autowired
 	private IRawSQLDao rawSqlDao;
 	@Autowired
-	private IReaderContext readerContext;
 	private List<IImporter> importers = new Vector<>();
 
 	@Override
@@ -90,7 +88,6 @@ public class ImportService implements IImportService {
 			DIOUtils.closeQuietly(content);
 			DIOUtils.closeQuietly(bos);
 			DIOUtils.closeQuietly(fos);
-			readerContext.clearCurrentReader();
 		}
 	}
 }

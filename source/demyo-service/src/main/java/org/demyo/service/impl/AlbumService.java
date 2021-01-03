@@ -1,6 +1,5 @@
 package org.demyo.service.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -18,35 +17,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.core.types.Predicate;
-
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IAlbumRepo;
-import org.demyo.dao.IMetaSeriesRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Image;
-import org.demyo.model.MetaSeries;
 import org.demyo.model.beans.MetaSeriesNG;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IReaderContext;
-import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
 /**
@@ -58,12 +46,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 	@Autowired
 	private IAlbumRepo repo;
-	@Autowired
-	private IMetaSeriesRepo metaSeriesRepo;
-	@Autowired
-	private IReaderService readerService;
-	@Autowired
-	private IReaderContext context;
 	@Autowired
 	private ISeriesRepo seriesRepo;
 	@Autowired
@@ -126,57 +108,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		}
 
 		return sortedMetas;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * This specific implementation pages by series.
-	 * </p>
-	 */
-	@Override
-	@Transactional(readOnly = true)
-	public Slice<Album> findPaginated(int currentPage, Order... orders) {
-		// Adjust the page number: Spring Data counts from 0
-		currentPage--;
-
-		if (orders.length > 0) {
-			throw new UnsupportedOperationException("It is not possible to override the order for pages of albums");
-		}
-		Pageable pageable = new PageRequest(currentPage,
-				readerService.getContext().getConfiguration().getPageSizeForCards());
-
-		Slice<MetaSeries> metaSlice = metaSeriesRepo.findAll(pageable);
-
-		// At the very least, there will be that many elements
-		List<Album> albumList = new ArrayList<Album>(metaSlice.getNumberOfElements());
-		// Add all albums
-		for (MetaSeries meta : metaSlice) {
-			if (meta.getSeries() != null) {
-				LOGGER.debug("Adding all {} albums from {}", meta.getSeries().getAlbums().size(),
-						meta.getSeries().getIdentifyingName());
-				albumList.addAll(meta.getSeries().getAlbums());
-			} else {
-				LOGGER.debug("Adding one shot album: {}", meta.getAlbum().getIdentifyingName());
-				albumList.add(meta.getAlbum());
-			}
-		}
-
-		return new SliceImpl<Album>(albumList, pageable, metaSlice.hasNext());
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Slice<Album> findPaginated(int currentPage, Predicate predicate, Order... orders) {
-		// Use the MetaSeries if we don't have a criteria
-		if (predicate == null) {
-			return findPaginated(currentPage, orders);
-		}
-
-		// The side effect here is that it will list the one shots first :/
-		Pageable pageable = getPageable(currentPage, orders);
-
-		return repo.findAllForIndex(predicate, pageable);
 	}
 
 	@Override
@@ -266,9 +197,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			// wishlist
 			LOGGER.debug("Removing the album from the reading list of all users");
 			readerRepo.deleteFromAllReadingLists(id);
-			// Refresh the context of the current reader at least. Other readers won't see the change until the
-			// session expires, but it's better if the current reader sees his changes
-			context.clearCurrentReader();
 		} else if (// Add it to the reading list of all users if...
 		// New album, not part of the wishlist
 		(isNewAlbum && !newAlbum.isWishlist())
@@ -282,8 +210,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			// this will prevent the issue
 			readerRepo.deleteFromAllReadingLists(id);
 			readerRepo.insertInAllReadingLists(id);
-			// Refresh the context of the current reader at least. See above
-			context.clearCurrentReader();
 		}
 
 		return id;

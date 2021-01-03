@@ -193,7 +193,7 @@
 				<artifactId>spring-context</artifactId>
 				<version>${org.springframework.version}</version>
 			</dependency>
-			<!-- Defines VelocityEngineFactory, among others -->
+			<!-- TODO [Vue]: remove this dependency? -->
 			<dependency>
 			    <groupId>org.springframework</groupId>
 			    <artifactId>spring-context-support</artifactId>

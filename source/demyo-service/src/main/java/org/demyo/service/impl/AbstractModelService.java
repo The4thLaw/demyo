@@ -12,30 +12,22 @@ import javax.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.core.types.Predicate;
-
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IQuickSearchableRepo;
 import org.demyo.model.IModel;
-import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.PreSave;
 import org.demyo.service.IModelService;
-import org.demyo.service.IReaderService;
 
 /**
  * Implementation of base operations on models.
@@ -44,9 +36,6 @@ import org.demyo.service.IReaderService;
  */
 public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractModelService.class);
-
-	@Autowired
-	private IReaderService readerService;
 
 	private final Class<M> modelClass;
 	/**
@@ -175,56 +164,6 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 		return getRepo().findAll(sort);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * The default implementation uses the amount of items per page of text. If the service needs to change that amount
-	 * (e.g. for pages of images), it should override this method.
-	 * </p>
-	 */
-	@Transactional(readOnly = true)
-	@Override
-	@Deprecated
-	public Slice<M> findPaginated(int currentPage, Order... orders) {
-		Pageable pageable = getPageable(currentPage, orders);
-		return getRepo().findAll(pageable);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * <p>
-	 * The default implementation uses the amount of items per page of text. If the service needs to change that amount
-	 * (e.g. for pages of images), it should override this method.
-	 * </p>
-	 */
-	@Transactional(readOnly = true)
-	@Override
-	public Slice<M> findPaginated(int currentPage, Predicate predicate, Order... orders) {
-		Pageable pageable = getPageable(currentPage, orders);
-		return getRepo().findAll(predicate, pageable);
-	}
-
-	/**
-	 * Gets a Spring Data {@link Pageable} object from the current page and orders.
-	 * 
-	 * @param currentPage The page number (starting at 1).
-	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
-	 *            ordering is defined, the ordering is defined by the database.
-	 * @return The {@link Pageable} instance
-	 */
-	protected Pageable getPageable(int currentPage, Order... orders) {
-		// Adjust the page number: Spring Data counts from 0
-		currentPage--;
-
-		if (orders.length == 0) {
-			orders = defaultOrder;
-		}
-		Sort sort = orders.length == 0 ? null : new Sort(orders);
-		ApplicationConfiguration config = readerService.getContext().getConfiguration();
-		Pageable pageable = new PageRequest(currentPage, config.getPageSizeForText(), sort);
-		return pageable;
-	}
-
 	@Transactional(rollbackFor = Throwable.class)
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
@@ -299,17 +238,6 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Override
 	public void delete(long id) {
 		getRepo().delete(id);
-	}
-
-	/**
-	 * Gets the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}.
-	 * 
-	 * @return the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Order}
-	 * @deprecated Use {@link #getDefaultSort()} instead.
-	 */
-	@Deprecated
-	protected Order[] getDefaultOrder() {
-		return defaultOrder;
 	}
 
 	/**

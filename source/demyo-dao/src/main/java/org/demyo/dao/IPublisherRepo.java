@@ -13,8 +13,7 @@ import org.demyo.model.Publisher;
  * This class provides methods to manipulate {@link Publisher}s.
  */
 @Repository
-public interface IPublisherRepo extends IModelRepo<Publisher>, IQuickSearchableRepo<Publisher>,
-		IPublisherCustomRepo {
+public interface IPublisherRepo extends IModelRepo<Publisher>, IQuickSearchableRepo<Publisher> {
 	@Query("select x from Publisher x")
 	@EntityGraph("Publisher.forIndex")
 	List<Publisher> findAllForIndex(Sort sort);

@@ -31,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.IDemyoException;
-import org.demyo.service.IReaderService;
 import org.demyo.service.ITranslationService;
 
 /**
@@ -40,11 +39,9 @@ import org.demyo.service.ITranslationService;
 public abstract class AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractController.class);
 	private static final String MODEL_KEY_LAYOUT = "layout";
-	private static final String MODEL_KEY_CONFIG = "appConfig";
 	private static final String MODEL_KEY_VERSION = "appVersion";
 	private static final String MODEL_KEY_CODENAME = "appCodename";
 	private static final String MODEL_KEY_I18N_SERV = "demyoTranslationService";
-	private static final String MODEL_KEY_READER_SERV = "demyoReaderService";
 	private static final String MODEL_KEY_ASYNC_LESS = "loadLessInAsync";
 	private static final String MODEL_KEY_BODY_CLASSES = "bodyClasses";
 	/** The view model key for the main image uploaded through FilePond. */
@@ -56,8 +53,6 @@ public abstract class AbstractController {
 
 	@Autowired
 	private ITranslationService translationService;
-	@Autowired
-	private IReaderService readerService;
 
 	protected MimetypesFileTypeMap mimeTypes = new MimetypesFileTypeMap();
 
@@ -93,10 +88,8 @@ public abstract class AbstractController {
 		ModelAndView model = new ModelAndView(viewName);
 		model.addObject("exception", ex);
 		model.addObject(MODEL_KEY_I18N_SERV, translationService);
-		model.addObject(MODEL_KEY_CONFIG, readerService.getContext().getConfiguration());
 		model.addObject(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		model.addObject(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
-		model.addObject(MODEL_KEY_READER_SERV, readerService);
 		return model;
 	}
 
@@ -144,23 +137,12 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Sets the reader service into the model.
-	 * 
-	 * @param model The view model.
-	 */
-	@ModelAttribute
-	private void initReaderService(Model model) {
-		model.addAttribute(MODEL_KEY_READER_SERV, readerService);
-	}
-
-	/**
 	 * Sets the application configuration into the model.
 	 * 
 	 * @param model The view model.
 	 */
 	@ModelAttribute
 	private void initConfiguration(Model model) {
-		model.addAttribute(MODEL_KEY_CONFIG, readerService.getContext().getConfiguration());
 		model.addAttribute(MODEL_KEY_VERSION, SystemConfiguration.getInstance().getVersion());
 		model.addAttribute(MODEL_KEY_CODENAME, SystemConfiguration.getInstance().getCodename());
 	}

@@ -1,5 +1,7 @@
 package org.demyo.model.config;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +21,6 @@ public class ApplicationConfigurationTest {
 		configStrings.put("paging.textPageSize", "50");
 		configStrings.put("paging.imagePageSize", "25");
 		ApplicationConfiguration config = new ApplicationConfiguration(configStrings);
-
+		assertThat(config.getPageSizeForText()).isEqualTo(50);
 	}
 }

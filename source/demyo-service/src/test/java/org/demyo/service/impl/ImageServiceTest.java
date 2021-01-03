@@ -14,8 +14,6 @@ import java.util.UUID;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -29,8 +27,6 @@ import org.demyo.utils.io.DIOUtils;
  * Unit tests for {@link ImageService}.
  */
 public class ImageServiceTest extends AbstractServiceTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ImageServiceTest.class);
-
 	private static File generateDummyImmage() {
 		String fileName = "target/ImageServiceTest_" + UUID.randomUUID().toString() + ".jpg";
 		File file = new File(fileName);

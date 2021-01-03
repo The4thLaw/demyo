@@ -28,42 +28,6 @@ public interface IReaderService extends IModelService<Reader> {
 	Reader getUniqueReader();
 
 	/**
-	 * Adds a {@link Series} to the favourites of the currently selected {@link Reader}.
-	 * 
-	 * @param seriesId The {@link Series} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void addFavouriteSeries(long seriesId);
-
-	/**
-	 * Removes a {@link Series} from the favourites of the currently selected {@link Reader}.
-	 * 
-	 * @param seriesId The {@link Series} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void removeFavouriteSeries(long seriesId);
-
-	/**
-	 * Adds an {@link Album} to the favourites of the currently selected {@link Reader}.
-	 * 
-	 * @param albumId The {@link Album} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void addFavouriteAlbum(long albumId);
-
-	/**
-	 * Removes an {@link Album} from the favourites of the currently selected {@link Reader}.
-	 * 
-	 * @param albumId The {@link Album} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void removeFavouriteAlbum(long albumId);
-
-	/**
 	 * Adds a {@link Series} to the favourites of the specified {@link Reader}.
 	 * 
 	 * @param readerId The {@link Reader} ID.
@@ -94,40 +58,6 @@ public interface IReaderService extends IModelService<Reader> {
 	 * @param albumId The {@link Album} ID.
 	 */
 	void removeFavouriteAlbum(long readerId, long albumId);
-
-	/**
-	 * Gets the current reader context.
-	 * 
-	 * @return The {@link IReaderContext context}.
-	 */
-	IReaderContext getContext();
-
-	/**
-	 * Adds an {@link Album} to the reading list of the current {@link Reader}.
-	 * 
-	 * @param albumId The {@link Album} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void addAlbumToReadingList(long albumId);
-
-	/**
-	 * Removes an {@link Album} from the reading list of the current {@link Reader}.
-	 * 
-	 * @param albumId The {@link Album} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void removeAlbumFromReadingList(long albumId);
-
-	/**
-	 * Adds an entire {@link Series} to the reading list of the current {@link Reader}.
-	 * 
-	 * @param seriesId The {@link Series} ID.
-	 * @deprecated Specify the reader instead
-	 */
-	@Deprecated
-	void addSeriesToReadingList(long seriesId);
 
 	/**
 	 * Adds an {@link Album} to the reading list of the specified {@link Reader}.

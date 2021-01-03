@@ -25,7 +25,6 @@ import org.demyo.model.beans.ReaderLists;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IConfigurationService;
-import org.demyo.service.IReaderContext;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITranslationService;
@@ -40,8 +39,6 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Autowired
 	private IReaderRepo repo;
 	@Autowired
-	private IReaderContext context;
-	@Autowired
 	private IAlbumRepo albumRepo;
 	@Autowired
 	private IAlbumService albumService;
@@ -55,11 +52,6 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	 */
 	public ReaderService() {
 		super(Reader.class);
-	}
-
-	@Override
-	public IReaderContext getContext() {
-		return context;
 	}
 
 	@Override
@@ -105,15 +97,6 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional
 	@Override
-	public void addFavouriteSeries(long seriesId) {
-		long readerId = context.getCurrentReader().getId();
-		addFavouriteSeries(readerId, seriesId);
-		// Clear the context so that it's reloaded for next request
-		context.clearCurrentReader();
-	}
-
-	@Transactional
-	@Override
 	public void addFavouriteSeries(long readerId, long seriesId) {
 		LOGGER.debug("Adding favourite series {} to reader {}", seriesId, readerId);
 
@@ -125,27 +108,9 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional
 	@Override
-	public void removeFavouriteSeries(long seriesId) {
-		long readerId = context.getCurrentReader().getId();
-		removeFavouriteSeries(readerId, seriesId);
-		// Clear the context so that it's reloaded for next request
-		context.clearCurrentReader();
-	}
-
-	@Transactional
-	@Override
 	public void removeFavouriteSeries(long readerId, long seriesId) {
 		LOGGER.debug("Removing favourite series {} from reader {}", seriesId, readerId);
 		repo.deleteFavouriteSeries(readerId, seriesId);
-	}
-
-	@Transactional
-	@Override
-	public void addFavouriteAlbum(long albumId) {
-		long readerId = context.getCurrentReader().getId();
-		addFavouriteAlbum(readerId, albumId);
-		// Clear the context so that it's reloaded for next request
-		context.clearCurrentReader();
 	}
 
 	@Transactional
@@ -161,26 +126,9 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional
 	@Override
-	public void removeFavouriteAlbum(long albumId) {
-		long readerId = context.getCurrentReader().getId();
-		removeFavouriteAlbum(readerId, albumId);
-		// Clear the context so that it's reloaded for next request
-		context.clearCurrentReader();
-	}
-
-	@Transactional
-	@Override
 	public void removeFavouriteAlbum(long readerId, long albumId) {
 		LOGGER.debug("Removing favourite album {} from reader", albumId, readerId);
 		repo.deleteFavouriteAlbum(readerId, albumId);
-	}
-
-	@Transactional
-	@Override
-	public void addAlbumToReadingList(long albumId) {
-		long readerId = context.getCurrentReader().getId();
-		addAlbumToReadingList(readerId, albumId);
-		context.clearCurrentReader();
 	}
 
 	@Override
@@ -193,25 +141,9 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional
 	@Override
-	public void removeAlbumFromReadingList(long albumId) {
-		long readerId = context.getCurrentReader().getId();
-		removeAlbumFromReadingList(readerId, albumId);
-		context.clearCurrentReader();
-	}
-
-	@Transactional
-	@Override
 	public void removeAlbumFromReadingList(long readerId, long albumId) {
 		LOGGER.debug("Removing album {} from the reading list of reader {}", albumId, readerId);
 		repo.deleteFromReadingList(readerId, albumId);
-	}
-
-	@Transactional
-	@Override
-	public void addSeriesToReadingList(long seriesId) {
-		long readerId = context.getCurrentReader().getId();
-		addSeriesToReadingList(readerId, seriesId);
-		context.clearCurrentReader();
 	}
 
 	@Transactional

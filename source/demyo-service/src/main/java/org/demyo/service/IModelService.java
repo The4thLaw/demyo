@@ -3,10 +3,6 @@ package org.demyo.service;
 import java.util.List;
 
 import org.demyo.model.IModel;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort.Order;
-
-import com.querydsl.core.types.Predicate;
 
 /**
  * This interface defines a common set of operation on models.
@@ -45,29 +41,6 @@ public interface IModelService<M extends IModel> {
 	 * @return The full list of entities.
 	 */
 	List<M> findAll();
-
-	/**
-	 * Finds the list of entities for the given page. The number of entities per page is defined by the service,
-	 * depending on the configuration.
-	 * 
-	 * @param currentPage The page number (starting at 1).
-	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
-	 *            ordering is defined, the ordering is defined by the database.
-	 * @return The list of entities.
-	 */
-	Slice<M> findPaginated(int currentPage, Order... orders);
-
-	/**
-	 * Finds the list of entities for the given page for a given criterion. The number of entities per page is defined
-	 * by the service, depending on the configuration.
-	 * 
-	 * @param currentPage The page number (starting at 1).
-	 * @param orders Ordering of the result set. May be <code>null</code> to use the default ordering. If no default
-	 *            ordering is defined, the ordering is defined by the database.
-	 * @param predicate The predicate defining the filter to apply.
-	 * @return The list of entities.
-	 */
-	Slice<M> findPaginated(int currentPage, Predicate predicate, Order... orders);
 
 	/**
 	 * Saves the given model.

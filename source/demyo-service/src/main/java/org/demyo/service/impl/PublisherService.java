@@ -6,8 +6,6 @@ import java.util.concurrent.Future;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,12 +34,6 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	@Transactional(readOnly = true)
 	public List<Publisher> findAllForIndex() {
 		return repo.findAllForIndex(getDefaultSort());
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Slice<Publisher> findPaginated(int currentPage, Order... orders) {
-		return repo.findAllForIndexOld(getPageable(currentPage, orders));
 	}
 
 	@Override

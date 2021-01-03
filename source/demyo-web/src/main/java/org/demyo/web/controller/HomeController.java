@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import org.demyo.service.IReaderService;
-
 /**
  * Controller for the home, manifest and about pages.
  */
@@ -24,8 +22,6 @@ import org.demyo.service.IReaderService;
 public class HomeController extends AbstractController {
 	@Autowired
 	private MessageSource messageSource;
-	@Autowired
-	private IReaderService readerService;
 
 	@Value("#{servletContext.contextPath}")
 	private String servletContextPath;
@@ -70,7 +66,8 @@ public class HomeController extends AbstractController {
 	@GetMapping("/manifest.json")
 	@ResponseBody
 	public Map<String, Object> getApplicationManifest() {
-		Locale language = readerService.getContext().getConfiguration().getLanguage();
+		// TODO [Vue] we will need the language in the description. Probably best through a language parameter
+		Locale language = Locale.getDefault();
 
 		Map<String, Object> manifest = new HashMap<>();
 		manifest.put("name", "Demyo");

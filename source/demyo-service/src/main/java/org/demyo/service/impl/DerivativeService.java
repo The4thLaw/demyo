@@ -5,13 +5,9 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.querydsl.core.types.Predicate;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IDerivativeRepo;
@@ -44,18 +40,6 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 
 	@Override
 	@Transactional(readOnly = true)
-	public Slice<Derivative> findPaginated(int currentPage, Order... orders) {
-		return findPaginated(currentPage, null, orders);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Slice<Derivative> findPaginated(int currentPage, Predicate predicate, Order... orders) {
-		return repo.findAllForIndex(predicate, getPageable(currentPage, orders));
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public Iterable<Derivative> findAllForIndex() {
 		return findAllForIndex(null);
 	}
@@ -63,7 +47,7 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@Override
 	@Transactional(readOnly = true)
 	public Iterable<Derivative> findAllForIndex(DerivativeFilter filter) {
-		Sort sort = new Sort(getDefaultOrder());
+		Sort sort = getDefaultSort();
 		if (filter == null) {
 			return repo.findAllForIndex(sort);
 		} else {
@@ -74,8 +58,7 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@Override
 	@Transactional(readOnly = true)
 	public List<Derivative> findAllForStickers() {
-		Sort sort = new Sort(getDefaultOrder());
-		return repo.findAllForStickers(sort);
+		return repo.findAllForStickers(getDefaultSort());
 	}
 
 	@Override

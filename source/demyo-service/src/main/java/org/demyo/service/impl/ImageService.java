@@ -45,7 +45,6 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
-import org.demyo.service.IReaderService;
 import org.demyo.utils.io.DIOUtils;
 
 /**
@@ -58,8 +57,6 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 	@Autowired
 	private IImageRepo repo;
-	@Autowired
-	private IReaderService readerService;
 	@Autowired
 	private IFilePondService filePondService;
 

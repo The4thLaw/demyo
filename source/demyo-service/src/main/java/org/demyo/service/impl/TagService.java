@@ -6,9 +6,6 @@ import java.util.concurrent.Future;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,13 +43,6 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 	@Override
 	public List<Tag> findAllForIndex() {
 		return repo.findAllWithUsageCounts();
-	}
-
-	// TODO: remove this method
-	@Transactional(readOnly = true)
-	@Override
-	public Slice<Tag> findPaginated(int currentPage, Order... orders) {
-		return new SliceImpl<>(repo.findAllWithUsageCounts());
 	}
 
 	@Async
