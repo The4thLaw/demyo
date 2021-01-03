@@ -155,7 +155,8 @@ export default {
 	img {
 		// Crop overly large images
 		width: 250px;
-		// TODO: switch to max-height ? Would put a greater emphasis on the size diversity of derivatives
+		// Note: max-height would put a greater emphasis on the size diversity of derivatives,
+		// but would look less like a grid
 		height: 400px;
 		object-fit: contain;
 	}
