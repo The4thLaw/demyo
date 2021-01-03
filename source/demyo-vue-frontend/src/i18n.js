@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import axios from 'axios'
-import { apiRoot, defaultLanguage, fallbackLanguage } from '@/myenv'
+import { apiRoot, defaultLanguage } from '@/myenv'
+import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 
 Vue.use(VueI18n)
 
@@ -51,16 +52,25 @@ function loadLocaleMessages() {
 	return messages
 }
 
-// The default lang fallback languages are only guessed from the client configuration.
-// They will be overridden by the reader service as soon as a reader is available
-
+/* The base language is
+ * - Loaded from the local storage if possible
+ * - Taken from the navigator otherwise
+ * - Replaced with the up-to-date reader config as soon as possible
+ */
+const localStorageLanguage = loadReaderLanguageFromLocalStorage()
+if (localStorageLanguage) {
+	console.log('Restoring language from local storage to', localStorageLanguage)
+}
+const selectedLocale = localStorageLanguage || defaultLanguage
+// English would have no fallback but we're sure French will remain a first-class citizen
+const fallbackLanguage = selectedLocale.replace(/[-_].*/, '') === 'en' ? 'fr' : 'en'
 const i18n = new VueI18n({
-	locale: defaultLanguage,
+	locale: selectedLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: loadLocaleMessages(),
 	dateTimeFormats
 })
-console.log(`Initialized i18n with '${defaultLanguage}' as default language and '${fallbackLanguage}' as fallback`)
+console.log(`Initialized i18n with '${selectedLocale}' as default language and '${fallbackLanguage}' as fallback`)
 
 /**
  * Asynchronously gets translations for a given language from the server, and sets them in vue-i18n.

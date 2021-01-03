@@ -1,6 +1,7 @@
 import i18n, { switchLanguage } from '@/i18n'
 import AbstractModelService from './abstract-model-service'
 import { axiosGet, axiosPost, axiosDelete } from '@/helpers/axios'
+import { loadReaderFromLocalStorage, saveReaderToLocalStorage } from '@/helpers/reader'
 import { defaultLanguage } from '@/myenv'
 import store from '@/store'
 
@@ -16,12 +17,10 @@ class ReaderService extends AbstractModelService {
 		console.debug('Initializing reader')
 
 		// Check if we already have a Reader in the local storage
-		const readerStr = localStorage.getItem('currentReader')
-		let reader
+		let reader = loadReaderFromLocalStorage()
 
-		if (readerStr) {
+		if (reader) {
 			console.debug('Restoring Reader from local storage...')
-			reader = JSON.parse(readerStr)
 			// Already set it in store, it could be used temporarily at least
 			this.setCurrentReader(reader, false)
 			// Revalidate the reader. Who knows, it could have been deleted in the mean time
@@ -103,7 +102,7 @@ class ReaderService extends AbstractModelService {
 
 		console.log('Setting reader in store', reader)
 		const storeProm = store.dispatch('reader/setCurrentReader', reader)
-		localStorage.setItem('currentReader', JSON.stringify(reader))
+		saveReaderToLocalStorage(reader)
 		if (reader.configuration.language) {
 			switchLanguage(reader.configuration.language)
 		}
