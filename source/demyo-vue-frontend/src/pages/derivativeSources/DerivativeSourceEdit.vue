@@ -92,16 +92,16 @@ export default {
 
 			rules: {
 				name: [
-					mandatory(this)
+					mandatory()
 				],
 				email: [
-					email(this)
+					email()
 				],
 				website: [
-					url(this)
+					url()
 				],
 				phoneNumber: [
-					phone(this)
+					phone()
 				]
 			}
 		}

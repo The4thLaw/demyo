@@ -189,8 +189,8 @@ export default {
 			tipTapExtensions: tipTapExtensions,
 
 			rules: {
-				type: [mandatory(this)],
-				colours: [integer(this)],
+				type: [mandatory()],
+				colours: [integer()],
 				albumOrSeries: [this.oneNotNull]
 			}
 		}

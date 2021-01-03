@@ -292,11 +292,11 @@ export default {
 			tipTapExtensions: tipTapExtensions,
 
 			rules: {
-				cycle: [integer(this)],
-				number: [number(this)],
-				title: [mandatory(this)],
-				publisher: [mandatory(this)],
-				isbn: [isbn(this)]
+				cycle: [integer()],
+				number: [number()],
+				title: [mandatory()],
+				publisher: [mandatory()],
+				isbn: [isbn()]
 			}
 		}
 	},

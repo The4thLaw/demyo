@@ -83,13 +83,13 @@ export default {
 
 			rules: {
 				name: [
-					mandatory(this)
+					mandatory()
 				],
 				website: [
-					url(this)
+					url()
 				],
 				feed: [
-					url(this)
+					url()
 				]
 			}
 		}

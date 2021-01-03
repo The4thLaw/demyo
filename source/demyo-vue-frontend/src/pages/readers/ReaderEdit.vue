@@ -57,7 +57,7 @@ export default {
 
 			rules: {
 				name: [
-					mandatory(this)
+					mandatory()
 				]
 			}
 		}

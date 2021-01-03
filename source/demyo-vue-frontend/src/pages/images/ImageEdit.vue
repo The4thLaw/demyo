@@ -50,7 +50,7 @@ export default {
 
 			rules: {
 				description: [
-					mandatory(this)
+					mandatory()
 				]
 			}
 		}

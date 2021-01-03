@@ -56,8 +56,8 @@ export default {
 
 			rules: {
 				prices: {
-					date: [mandatory(this)],
-					price: [mandatory(this), number(this)]
+					date: [mandatory()],
+					price: [mandatory(), number()]
 				}
 			}
 		}
