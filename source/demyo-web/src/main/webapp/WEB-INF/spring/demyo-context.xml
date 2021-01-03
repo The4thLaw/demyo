@@ -23,19 +23,6 @@
 	<mvc:resources mapping="/icons/**" location="/icons/" />
 	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
 	
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<!-- Ignore resources -->
-		    <mvc:exclude-mapping path="/css/**"/>
-		    <mvc:exclude-mapping path="/fonts/**"/>
-		    <mvc:exclude-mapping path="/js/**"/>
-		    <mvc:exclude-mapping path="/icons/**"/>
-		    <mvc:exclude-mapping path="/favicon.ico"/>
-			<bean id="readerInterceptor" class="org.demyo.web.interceptors.ReaderInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
-	
 	<!--
 	Cache management
 	We can rely on a pure memory implementation for now, without advanced features:
