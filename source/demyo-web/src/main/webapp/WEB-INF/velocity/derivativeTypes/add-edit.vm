@@ -1,9 +1,0 @@
-#setPageTitleCond($derivativeType.id 'title.edit.derivativeType', 'title.add.derivativeType')
-
-#@form()
-
-#inputHidden('derivativeType.id')
-#inputText('field.DerivativeType.name', 'derivativeType.name')
-#saveButtons
-
-#end

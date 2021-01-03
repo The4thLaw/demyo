@@ -1,8 +1,0 @@
-#setPageTitle('title.exception')
-
-<h1 class="mdl-typography--title">#_('core.exception.explanation.generic.title')</h1>
-<p>#_('core.exception.explanation.generic.detail')</p>
-
-<div class="dem-exception-message">
-	$!exception.message
-</div>

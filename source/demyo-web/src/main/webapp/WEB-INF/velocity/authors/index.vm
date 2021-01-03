@@ -1,9 +1,0 @@
-#setPageTitle('title.index.author')
-
-#@fabs()
-	#fab('./add', 'add')
-#end
-
-#textCardListStdBody($authorList "name" "identifyingName" "/authors/view/" true)
-
-$paging.pageLinks($authorList, $request, $javascript)

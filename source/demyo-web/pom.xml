@@ -84,29 +84,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.7</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity-tools</artifactId>
-			<version>2.0</version>
-			<exclusions>
-				<!-- Conflicts with v3+ -->
-				<exclusion>
-					<artifactId>servlet-api</artifactId>
-					<groupId>javax.servlet</groupId>
-				</exclusion>
-				<!-- Conflicts with v1.6.1 -->
-				<exclusion>
-					<artifactId>dom4j</artifactId>
-					<groupId>dom4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-test</artifactId>
 		</dependency>
@@ -153,19 +130,7 @@
 					<webResources>
 						<resource>
 							<directory>src/main/webapp</directory>
-							<filtering>true</filtering>
-							<includes>
-								<include>WEB-INF/spring/demyo-context.xml</include>
-								<include>WEB-INF/velocity/layout/default.vm</include>
-							</includes>
-						</resource>
-						<resource>
-							<directory>src/main/webapp</directory>
 							<filtering>false</filtering>
-							<excludes>
-								<exclude>WEB-INF/spring/demyo-context.xml</exclude>
-								<exclude>WEB-INF/velocity/layout/default.vm</exclude>
-							</excludes>
 						</resource>
 					</webResources>
 				</configuration>

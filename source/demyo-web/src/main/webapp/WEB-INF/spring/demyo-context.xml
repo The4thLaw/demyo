@@ -78,33 +78,4 @@
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
-	<bean id="velocityConfig"
-		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-		<property name="resourceLoaderPath">
-			<value>/WEB-INF/velocity/</value>
-		</property>
-		<property name="velocityProperties">
-			<props>
-				<!--Doesn't work with Spring's macros... -->
-				<prop key="runtime.references.strict">true</prop>
-				<prop key="velocimacro.arguments.strict">true</prop>
-				<prop key="velocimacro.library">macros/common.vm,macros/forms.vm,macros/form-values.vm,macros/i18n.vm,macros/images.vm,macros/lists.vm</prop>
-				<!-- Only use for development of macros -->
-				<!-- <prop key="velocimacro.library.autoreload">true</prop>  -->
-			</props>
-		</property>
-	</bean>
-	<bean id="viewResolver"
-		class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-		<property name="suffix" value=".vm" />
-		<property name="layoutUrl" value="layout/default.vm" />
-		<property name="contentType" value="text/html; charset=UTF-8"></property>
-		<property name="viewClass"
-			value="org.demyo.web.velocity.view.Velocity2ToolboxView" />
-		<property name="toolboxConfigLocation" value="WEB-INF/velocity/velocity-tools.xml" />
-		<!-- The following is needed to redirect with relative paths, hence avoiding to redirect HTTPS to HTTP -->
-		<property name="redirectHttp10Compatible" value="false" />
-		<!-- Only use for development -->
-		<!-- <property name="cache" value="false" /> -->
-	</bean>
 </beans>

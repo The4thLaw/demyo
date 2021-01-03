@@ -97,7 +97,6 @@
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<!-- 1.9.4 causes issues with Velocity : https://issues.apache.org/jira/browse/VELTOOLS-183 -->
 				<!-- TODO: Spring 5: Bump to latest version -->
 				<version>1.9.3</version>
 			</dependency>
