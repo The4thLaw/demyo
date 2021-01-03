@@ -6,7 +6,7 @@ import java.util.List;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Album;
 import org.demyo.model.Series;
-import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
 
 /**
@@ -49,7 +49,7 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 * 
 	 * @return The {@link Album}s grouped by series.
 	 */
-	Collection<MetaSeriesNG> findAllForIndex();
+	Collection<MetaSeries> findAllForIndex();
 
 	/**
 	 * Finds all {@link Album}s grouped by series, in the suitable order.
@@ -57,7 +57,7 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 * @param filter The filter to apply to the albums to fetch.
 	 * @return The {@link Album}s grouped by series.
 	 */
-	Collection<MetaSeriesNG> findAllForIndex(AlbumFilter filter);
+	Collection<MetaSeries> findAllForIndex(AlbumFilter filter);
 
 	/**
 	 * Counts the number of Albums that feature the provided tag.

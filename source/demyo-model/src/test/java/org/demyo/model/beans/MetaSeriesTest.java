@@ -9,9 +9,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.demyo.model.Album;
 
 /**
- * Tests from {@link MetaSeriesNG}
+ * Tests from {@link MetaSeries}
  */
-public class MetaSeriesNGTest {
+public class MetaSeriesTest {
 	@Test
 	public void compare() {
 		LocaleContextHolder.setLocale(Locale.FRENCH);
@@ -22,8 +22,8 @@ public class MetaSeriesNGTest {
 		Album fAlb = new Album();
 		fAlb.setTitle("F");
 
-		MetaSeriesNG elephant = new MetaSeriesNG(elephantAlb);
-		MetaSeriesNG f = new MetaSeriesNG(fAlb);
+		MetaSeries elephant = new MetaSeries(elephantAlb);
+		MetaSeries f = new MetaSeries(fAlb);
 
 		Assert.assertEquals(-1, elephant.compareTo(f));
 	}

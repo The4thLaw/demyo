@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.model.Series;
-import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.beans.ReaderLists;
 import org.demyo.service.IReaderService;
 
@@ -76,13 +76,13 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	@GetMapping("/{modelId}/favourites/albums")
 	public MappingJacksonValue getFavouriteAlbums(@PathVariable long modelId,
 			@RequestParam("view") Optional<String> view) {
-		Iterable<MetaSeriesNG> value = service.getFavouriteAlbums(modelId);
+		Iterable<MetaSeries> value = service.getFavouriteAlbums(modelId);
 		return getIndexView(view, value);
 	}
 
 	@GetMapping("/{modelId}/readingList/albums")
 	public MappingJacksonValue getReadingList(@PathVariable long modelId, @RequestParam("view") Optional<String> view) {
-		Iterable<MetaSeriesNG> value = service.getReadingListAlbums(modelId);
+		Iterable<MetaSeries> value = service.getReadingListAlbums(modelId);
 		return getIndexView(view, value);
 	}
 

@@ -16,8 +16,7 @@ import org.demyo.model.util.AlbumComparator;
 /**
  * Represents a logical series, i.e. either a real series or a one-shot album.
  */
-// TODO [Vue]: rename this class, remove the other
-public class MetaSeriesNG implements Comparable<MetaSeriesNG> {
+public class MetaSeries implements Comparable<MetaSeries> {
 	@JsonView(Basic.class)
 	private final Series series;
 	@JsonView(Basic.class)
@@ -25,7 +24,7 @@ public class MetaSeriesNG implements Comparable<MetaSeriesNG> {
 	@JsonView(Basic.class)
 	private final SortedSet<Album> albums = new TreeSet<Album>(new AlbumComparator());
 
-	public MetaSeriesNG(Album album) {
+	public MetaSeries(Album album) {
 		if (album.getSeries() != null) {
 			this.series = album.getSeries();
 			this.album = null;
@@ -53,7 +52,7 @@ public class MetaSeriesNG implements Comparable<MetaSeriesNG> {
 	}
 
 	@Override
-	public int compareTo(MetaSeriesNG o) {
+	public int compareTo(MetaSeries o) {
 		if (o == null) {
 			return -1;
 		}

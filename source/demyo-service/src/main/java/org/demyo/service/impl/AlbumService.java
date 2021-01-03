@@ -30,7 +30,7 @@ import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Image;
-import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
@@ -74,13 +74,13 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<MetaSeriesNG> findAllForIndex() {
+	public Collection<MetaSeries> findAllForIndex() {
 		return findAllForIndex(null);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<MetaSeriesNG> findAllForIndex(AlbumFilter filter) {
+	public Collection<MetaSeries> findAllForIndex(AlbumFilter filter) {
 		List<Album> albums;
 		if (filter == null) {
 			albums = repo.findAll();
@@ -88,19 +88,19 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			albums = repo.findAll(filter.toPredicate());
 		}
 
-		HashMap<Long, MetaSeriesNG> seriesMap = new HashMap<>();
-		SortedSet<MetaSeriesNG> sortedMetas = new TreeSet<>();
+		HashMap<Long, MetaSeries> seriesMap = new HashMap<>();
+		SortedSet<MetaSeries> sortedMetas = new TreeSet<>();
 
 		for (Album a : albums) {
 			if (a.getSeries() == null) {
-				MetaSeriesNG meta = new MetaSeriesNG(a);
+				MetaSeries meta = new MetaSeries(a);
 				sortedMetas.add(meta);
 			} else {
-				MetaSeriesNG meta = seriesMap.get(a.getSeries().getId());
+				MetaSeries meta = seriesMap.get(a.getSeries().getId());
 				if (meta != null) {
 					meta.addAlbum(a);
 				} else {
-					meta = new MetaSeriesNG(a);
+					meta = new MetaSeries(a);
 					seriesMap.put(a.getSeries().getId(), meta);
 					sortedMetas.add(meta);
 				}

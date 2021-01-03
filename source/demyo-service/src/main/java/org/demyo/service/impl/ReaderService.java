@@ -20,7 +20,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
-import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.beans.ReaderLists;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.service.IAlbumService;
@@ -218,7 +218,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional(readOnly = true)
 	@Override
-	public Iterable<MetaSeriesNG> getFavouriteAlbums(long readerId) {
+	public Iterable<MetaSeries> getFavouriteAlbums(long readerId) {
 		AlbumFilter filter = new AlbumFilter();
 		filter.setReaderIdFavourite(readerId);
 		return albumService.findAllForIndex(filter);
@@ -226,7 +226,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Transactional(readOnly = true)
 	@Override
-	public Iterable<MetaSeriesNG> getReadingListAlbums(long readerId) {
+	public Iterable<MetaSeries> getReadingListAlbums(long readerId) {
 		AlbumFilter filter = new AlbumFilter();
 		filter.setReaderIdReadingList(readerId);
 		return albumService.findAllForIndex(filter);

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Album;
-import org.demyo.model.beans.MetaSeriesNG;
+import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAlbumService;
@@ -49,14 +49,14 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	@Override
 	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
-		Iterable<MetaSeriesNG> value = service.findAllForIndex();
+		Iterable<MetaSeries> value = service.findAllForIndex();
 		return getIndexView(view, value);
 	}
 
 	@PostMapping({ "/index/filtered" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view,
 			@RequestBody AlbumFilter filter) {
-		Iterable<MetaSeriesNG> value = service.findAllForIndex(filter);
+		Iterable<MetaSeries> value = service.findAllForIndex(filter);
 		return getIndexView(view, value);
 	}
 
