@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
@@ -98,6 +99,12 @@ public final class Start {
 		LOGGER.info("Starting server on {}:{}{} ...", httpAddress, httpPort, contextRoot);
 
 		final Server server = new Server(new InetSocketAddress(httpAddress, httpPort));
+
+		// Needed for proper JSP/JSTL support
+		Configuration.ClassList classlist = Configuration.ClassList.setServerDefault(server);
+		classlist.addBefore(
+				"org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
+				"org.eclipse.jetty.annotations.AnnotationConfiguration");
 
 		WebAppContext webapp = new WebAppContext();
 		webapp.setContextPath(contextRoot);

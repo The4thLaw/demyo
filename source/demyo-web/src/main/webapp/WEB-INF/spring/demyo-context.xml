@@ -17,9 +17,9 @@
 	Not needed anymore due to a transition to @EnableWebMvc
 	<mvc:annotation-driven />
 	-->
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/fonts/**" location="/fonts/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/css/**" location="/css/,classpath:/public/css/" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/,classpath:/public/fonts/" />
+	<mvc:resources mapping="/js/**" location="/js/,classpath:/public/js/" />
 	<mvc:resources mapping="/icons/**" location="/icons/" />
 	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
 	
@@ -64,5 +64,9 @@
 	<alias name="messageSource" alias="demyo.core.messageSource"/>
 	
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp" />
+	</bean>
 </beans>

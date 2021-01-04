@@ -38,6 +38,12 @@ Includes the Web server, H2 server, and startup program.</description>
 			<artifactId>jetty-plus</artifactId>
 			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
+		<!-- Needed for JSP -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>apache-jsp</artifactId>
+			<version>${org.eclipse.jetty.version}</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>com.h2database</groupId>

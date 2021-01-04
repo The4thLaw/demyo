@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-                <groupId>org.demyo</groupId>
-                <artifactId>demyo</artifactId>
-                <version>2.2.0-SNAPSHOT</version>
-        </parent>
+		<groupId>org.demyo</groupId>
+		<artifactId>demyo</artifactId>
+		<version>2.2.0-SNAPSHOT</version>
+	</parent>
 
 	<artifactId>demyo-vue-frontend</artifactId>
 
@@ -23,82 +23,98 @@
 					<include>**/*.js</include>
 					<include>**/*.css</include>
 					<include>**/*.map</include>
-					<include>**/*.ico</include>
+					<include>**/*.eot</include>
+					<include>**/*.ttf</include>
+					<include>**/*.woff</include>
+					<include>**/*.woff2</include>
 				</includes>
 				<targetPath>public</targetPath>
 			</resource>
 		</resources>
-	
-		<plugins>
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${js.frontend-maven-plugin.version}</version>
-				
-				<executions>
-					<!-- Install our node and npm version to run npm/node scripts-->
-					<!-- This is a requirement for the plugin -->
-					<execution>
-						<id>install node and npm</id>
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
-						<configuration>
-							<nodeVersion>${js.node.version}</nodeVersion>
-						</configuration>
-					</execution>
-
-					<!-- Install all project dependencies -->
-					<execution>
-						<id>npm install</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>install</arguments>
-						</configuration>
-					</execution>
-
-					<!-- Sync the version from the POM to the package.json automatically -->
-					<execution>
-						<id>sync version to package.json</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run sync-pom-version</arguments>
-						</configuration>
-					</execution>
-					
-					<execution>
-						<id>npm run build</id>
-						<goals>
-							<goal>npm</goal>
-						</goals>
-						<configuration>
-							<arguments>run build</arguments>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<verbose>false</verbose>
-					<filesets>
-						<fileset>
-							<directory>dist</directory>
-							<followSymlinks>false</followSymlinks>
-							<includes>
-								<include>**/**</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 	
-	<!-- TODO: extract node installation to a profile -->
+	<profiles>
+		<profile>
+			<!--
+				This profile, disabled by default, compiles the Vue frontend.
+				This is a bit time-consuming and not really useful during development
+			-->
+			<id>vue</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.eirslett</groupId>
+						<artifactId>frontend-maven-plugin</artifactId>
+						<version>${js.frontend-maven-plugin.version}</version>
+						
+						<executions>
+							<!-- Install our node and npm version to run npm/node scripts-->
+							<!-- This is a requirement for the plugin -->
+							<execution>
+								<id>install node and npm</id>
+								<goals>
+									<goal>install-node-and-npm</goal>
+								</goals>
+								<configuration>
+									<nodeVersion>${js.node.version}</nodeVersion>
+								</configuration>
+							</execution>
+		
+							<!-- Install all project dependencies -->
+							<execution>
+								<id>npm install</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>install</arguments>
+								</configuration>
+							</execution>
+		
+							<!-- Sync the version from the POM to the package.json automatically -->
+							<execution>
+								<id>sync version to package.json</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run sync-pom-version</arguments>
+								</configuration>
+							</execution>
+							
+							<execution>
+								<id>npm run build</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<configuration>
+									<arguments>run build</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<configuration>
+							<verbose>false</verbose>
+							<filesets>
+								<fileset>
+									<directory>dist</directory>
+									<followSymlinks>false</followSymlinks>
+									<includes>
+										<include>**/**</include>
+									</includes>
+								</fileset>
+							</filesets>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

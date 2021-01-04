@@ -50,6 +50,8 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>L\u00e2thy</project.versionCodename>
+		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
+		<js.node.version>v15.5.0</js.node.version>
 	</properties>
 	
 	<dependencies>
@@ -86,6 +88,11 @@
 			<dependency>
 				<groupId>org.demyo</groupId>
 				<artifactId>demyo-utils</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-vue-frontend</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
@@ -226,6 +233,21 @@
 				<artifactId>javax.activation-api</artifactId>
 				<version>1.2.0</version>
 			</dependency>
+			
+			<!-- TODO: switch to this? -->
+			<!-- 
+			<dependency>
+			    <groupId>javax.servlet.jsp.jstl</groupId>
+			    <artifactId>jstl</artifactId>
+			    <version>1.2</version>
+			</dependency>
+			-->
+			<dependency>
+	            <groupId>javax.servlet</groupId>
+	            <artifactId>jstl</artifactId>
+	            <version>1.2</version>
+	            <!-- Must not be "provided" -->
+	        </dependency>
 			
 			<dependency>
 				<groupId>org.springframework.data</groupId>
@@ -373,6 +395,7 @@
 		<module>demyo-test</module>
 		<module>demyo-dao</module>
 		<module>demyo-service</module>
+		<module>demyo-vue-frontend</module>
 		<module>demyo-web</module>
 		<module>demyo-app</module>
 	</modules>

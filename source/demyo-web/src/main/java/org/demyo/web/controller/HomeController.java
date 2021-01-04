@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +23,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class HomeController extends AbstractController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+
 	@Autowired
 	private MessageSource messageSource;
 
 	@Value("#{servletContext.contextPath}")
 	private String servletContextPath;
+
+	@Value("classpath*:public/js/app.*.js")
+	private Resource[] appJs;
+	private String appJsFilename;
+
+	@Value("classpath*:public/css/app.*.css")
+	private Resource[] appCss;
+	private String appCssFilename;
+
+	@Value("classpath*:public/js/chunk-vendors.*.js")
+	private Resource[] vendorJs;
+	private String vendorJsFilename;
+
+	@Value("classpath*:public/js/app-legacy.*.js")
+	private Resource[] appLegacyJs;
+	private String appLegacyJsFilename;
+
+	@Value("classpath*:public/js/chunk-vendors-legacy.*.js")
+	private Resource[] vendorLegacyJs;
+	private String vendorLegacyJsFilename;
+
+	@Value("classpath*:public/css/chunk-vendors.*.css")
+	private Resource[] vendorCss;
+	private String vendorCssFilename;
+
+	@PostConstruct
+	private void init() {
+		appJsFilename = getFrontendResource(appJs, "app.*.js");
+		appCssFilename = getFrontendResource(appCss, "app.*.css");
+		vendorJsFilename = getFrontendResource(vendorJs, "chunk-vendors.*.js");
+		appLegacyJsFilename = getFrontendResource(appLegacyJs, "app-legacy.*.js");
+		vendorLegacyJsFilename = getFrontendResource(vendorLegacyJs, "chunk-vendors-legacy.*.js");
+		vendorCssFilename = getFrontendResource(vendorCss, "chunk-vendors.*.css");
+	}
 
 	/**
 	 * Displays the home page.
@@ -32,29 +71,33 @@ public class HomeController extends AbstractController {
 	 * @param model The view model
 	 * @return The view name
 	 */
-	@GetMapping("/")
-	public String viewHome(Model model) {
-		suppressQuickSearch(model);
-		return "core/home";
+	@GetMapping({
+			// Regular root
+			"/",
+			// Anything that is not the API
+			// TODO: more paths
+			"/XXXX/**",
+	})
+
+	public String index(Model model) {
+		LOGGER.trace("Accessing the home page");
+		model.addAttribute("appJsFilename", appJsFilename);
+		model.addAttribute("appCssFilename", appCssFilename);
+		model.addAttribute("vendorJsFilename", vendorJsFilename);
+		model.addAttribute("appLegacyJsFilename", appLegacyJsFilename);
+		model.addAttribute("vendorLegacyJsFilename", vendorLegacyJsFilename);
+		model.addAttribute("vendorCssFilename", vendorCssFilename);
+		return "index";
 	}
 
-	/**
-	 * Displays the about page.
-	 * 
-	 * @param request The HTTP request
-	 * @param model The view model
-	 * @return The view name
-	 */
-	@GetMapping("/about")
-	public String viewAbout(HttpServletRequest request, Model model) {
-		suppressQuickSearch(model);
-		model.addAttribute("javaVersion", System.getProperty("java.version"));
-		model.addAttribute("javaVendor", System.getProperty("java.vendor"));
-		model.addAttribute("osName", System.getProperty("os.name"));
-		model.addAttribute("osVersion", System.getProperty("os.version"));
-		model.addAttribute("osArch", System.getProperty("os.arch"));
-		model.addAttribute("userAgent", request.getHeader("User-Agent"));
-		return "core/about";
+	private static String getFrontendResource(Resource[] resources, String name) {
+		if (resources.length < 1) {
+			LOGGER.warn("Failed to find the resource named '{}'; this is only fine during development");
+		} else if (resources.length > 1) {
+			throw new IllegalArgumentException(
+					"Could not find a unique resource for " + name + ":" + Arrays.asList(resources));
+		}
+		return resources[0].getFilename();
 	}
 
 	/**

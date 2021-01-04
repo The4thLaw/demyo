@@ -1,5 +1,8 @@
 /dist
 
+# Node installation from frontend-maven-plugin
+/node
+
 # local env files
 .env.local
 .env.*.local
