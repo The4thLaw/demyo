@@ -1,13 +1,42 @@
 <!DOCTYPE html>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html lang="en">
-    <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="icon" href="${pageContext.request.contextPath}/favicon.ico">
-    <title>Demyo</title>
+<html>
+
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+    
+	<title>Demyo</title>
+    
+	<meta name="application-name" content="Demyo">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="manifest" href="${pageContext.request.contextPath}/manifest.json">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="Demyo">
+	<meta name="msapplication-starturl" content="/">
+	
+	<%-- In case someone exposes it publicly by mistake --%>
+	<meta name="robots" content="noindex,nofollow">
+	<%-- Don't send info to linked sites, this is supposed to be a private application --%>
+	<meta name="referrer" content="never">
+	
+	<link rel="copyright" href="${pageContext.request.contextPath}/about">
+	
+	<c:set var="appleIconSizes" value="${[76, 120, 152, 180]}" scope="application" />
+	<c:forEach items="${appleIconSizes}" var="size">
+	    <link rel="apple-touch-icon-precomposed" sizes="${size}x${size}" href="${pageContext.request.contextPath}/icons/demyo-${size}-whitebg.png">
+	</c:forEach>
+	
+	<c:set var="faviconSizes" value="${[16, 24, 32, 48, 64, 144, 192, 196, 270, 558]}" scope="application" />
+	<c:forEach items="${faviconSizes}" var="size">
+		<link rel="icon" sizes="${size}x${size}" href="${pageContext.request.contextPath}/icons/demyo-${size}.png" >
+	</c:forEach>
+	
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="${pageContext.request.contextPath}/icons/demyo-144.png">
+    
     <link href="${pageContext.request.contextPath}/css/${appCssFilename}" rel="preload" as="style">
     <link href="${pageContext.request.contextPath}/css/${vendorCssFilename}" rel="preload" as="style">
     <link href="${pageContext.request.contextPath}/js/${appJsFilename}" rel="modulepreload" as="script">
