@@ -15,10 +15,10 @@ before_script:
   cd source
 script:
   # Build with the JDK11 first, and send to SonarCloud (which requires 11+)
-  mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.projectKey=The4thLaw_demyo -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -B
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.projectKey=The4thLaw_demyo -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml -B
   # Now build with OpenJDK 8 to be sure the unit tests are still OK on that platform. Don't run jacoco or 
-  jdk_switcher use openjdk8
-  mvn clean verify -B
+  - jdk_switcher use openjdk8
+  - mvn clean verify -B
 cache:
   directories:
     - $HOME/.m2
