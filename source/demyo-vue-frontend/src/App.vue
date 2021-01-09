@@ -5,15 +5,23 @@
 </template>
 
 <script>
+import { contextRoot } from '@/myenv'
 import DefaultLayout from '@/layouts/DefaultLayout'
 
 export default {
 	name: 'DemyoApp',
 
 	metaInfo() {
+		const self = this
 		return {
 			title: this.$t('title.home'),
-			titleTemplate: '%s — Demyo'
+			titleTemplate: '%s — Demyo',
+			link: [
+				{
+					rel: 'manifest',
+					href: contextRoot + 'manifest.json?lang=' + self.$i18n.locale
+				}
+			]
 		}
 	},
 

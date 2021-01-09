@@ -118,11 +118,10 @@ public class HomeController extends AbstractController {
 	@GetMapping("/manifest.json")
 	@ResponseBody
 	public Map<String, Object> getApplicationManifest(@RequestParam(name = "lang", required = false) Locale lang) {
-		// TODO [Vue] we will need the language in the description. Probably best through a language parameter
 		if (lang == null) {
 			lang = Locale.getDefault();
 		}
-		// Eventually, we could generate this on the client side :
+		// Note: Eventually, we could generate this on the client side :
 		// https://medium.com/@alshakero/how-to-setup-your-web-app-manifest-dynamically-using-javascript-f7fbee899a61
 
 		Map<String, Object> manifest = new HashMap<>();

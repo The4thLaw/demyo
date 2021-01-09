@@ -12,7 +12,7 @@
     
 	<meta name="application-name" content="Demyo">
 	<meta name="mobile-web-app-capable" content="yes">
-	<link rel="manifest" href="${pageContext.request.contextPath}/manifest.json">
+	<%-- The manifest will be injected by the Vue app -->
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-title" content="Demyo">
 	<meta name="msapplication-starturl" content="/">
