@@ -11,7 +11,6 @@
 	<description>The entry point for Demyo usage.
 Includes the Web server, H2 server, and startup program.</description>
 	<properties>
-		<org.eclipse.jetty.version>9.4.25.v20191220</org.eclipse.jetty.version>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
 		<windows.version>2.0.0.6</windows.version>
 	</properties>
@@ -42,7 +41,6 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>apache-jsp</artifactId>
-			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
 		
 		<dependency>
