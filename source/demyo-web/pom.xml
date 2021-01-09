@@ -13,7 +13,6 @@
 	
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
-		<org.stagemonitor.version>0.89.0</org.stagemonitor.version>
 	</properties>
 
 	<dependencies>
@@ -156,36 +155,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<!-- TODO: cleanly remove stagemonitor -->
-			<!-- <dependencies>
-				<dependency>
-					<groupId>org.stagemonitor</groupId>
-					<artifactId>stagemonitor-web-servlet</artifactId>
-					<version>${org.stagemonitor.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.stagemonitor</groupId>
-					<artifactId>stagemonitor-dispatcher</artifactId>
-					<version>${org.stagemonitor.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.stagemonitor</groupId>
-					<artifactId>stagemonitor-jvm</artifactId>
-					<version>${org.stagemonitor.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.stagemonitor</groupId>
-					<artifactId>stagemonitor-os</artifactId>
-					<version>${org.stagemonitor.version}</version>
-				</dependency>
-			</dependencies> -->
-		</profile>
-	</profiles>
 </project>

@@ -6,12 +6,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import org.demyo.web.servlet.StagemonitorInitializer;
-
 /**
  * Java-based configuration for Spring Security.
  */
-// TODO: Review this after switch to Vue. Think about CSRF, and make sure the csp doesn't impact Vue.
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -21,19 +18,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		LOGGER.debug("Configuring Spring Security");
 
-		boolean allowUnsafeEval = StagemonitorInitializer.isStagemonitorAvailable();
-		if (allowUnsafeEval) {
-			LOGGER.warn("Stagemonitor is available, the CSP will allow unsafe-eval for JavaScript");
-		}
-
 		// Using recommendations from https://content-security-policy.com/
 		String csp = "default-src 'none'; connect-src 'self'; font-src 'self'; ";
-		// Data is used by Material Design for e.g. the check mark in checkboxes
+		// Data is used by Filepond, notably (in the CSS, though. Not sure whether that would be an issue)
 		csp += "img-src 'self' data:; ";
-		// unsafe-inline is required, notably because of LESS on the server side
-		csp += "script-src 'self' 'unsafe-inline' "//
-				+ (allowUnsafeEval ? "'unsafe-eval'" : "")//
-				+ "; style-src 'self' 'unsafe-inline';";
 
 		LOGGER.debug("Configuring headers");
 		http.headers()
@@ -45,6 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Don't care for HSTS: It's not supported by Demyo yet anyway
 				// Do the following even though we will implement CSP afterwards
 				.and().frameOptions().sameOrigin().xssProtection().block(true).and().contentSecurityPolicy(csp);
+
+		// TODO: figure out why this security config is not set on / (and thus is not working on any page
+		// since we only have /). Perhaps Spring-Security is not called at all on the root?
+		// The headers are set by
+		// org.springframework.security.web.header.writers.ContentSecurityPolicyHeaderWriter.writeHeaders(HttpServletRequest,
+		// HttpServletResponse)
+		// but something seems to be removing them
+		// It could be because JSP's are handled by Jetty afterwards and Jetty removes the headers, so check after
+		// updating jetty, Spring and Spring security. Meanwhile we should set the headers in HomeController
 
 		// Disable CSRF protection for now
 		http.csrf().disable();
