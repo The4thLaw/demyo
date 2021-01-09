@@ -16,6 +16,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -72,11 +73,19 @@ public class HomeController extends AbstractController {
 	 * @return The view name
 	 */
 	@GetMapping({
-			// Regular root
+			// Index
 			"/",
-			// Anything that is not the API
-			// TODO: more paths
-			"/XXXX/**",
+			// Static pages
+			"/about",
+			// Management
+			"/manage/**",
+			// Model pages (except images, which have special rules)
+			"/albums", "/authors", "/bindings", "/collections", "/derivativeSources",
+			"/derivativeTypes", "/derivatives", "/publishers", "/readers", "/series", "/tags", //
+			"/albums/**", "/authors/**", "/bindings/**", "/collections/**", "/derivativeSources/**",
+			"/derivativeTypes/**", "/derivatives/**", "/publishers/**", "/readers/**", "/series/**", "/tags/**",
+			// Images
+			"/images", "/images/", "/images/*/view", "/images/view/**", "/images/*/edit", "/images/new"
 	})
 
 	public String index(Model model) {
@@ -108,18 +117,22 @@ public class HomeController extends AbstractController {
 	 */
 	@GetMapping("/manifest.json")
 	@ResponseBody
-	public Map<String, Object> getApplicationManifest() {
+	public Map<String, Object> getApplicationManifest(@RequestParam(name = "lang", required = false) Locale lang) {
 		// TODO [Vue] we will need the language in the description. Probably best through a language parameter
-		Locale language = Locale.getDefault();
+		if (lang == null) {
+			lang = Locale.getDefault();
+		}
+		// Eventually, we could generate this on the client side :
+		// https://medium.com/@alshakero/how-to-setup-your-web-app-manifest-dynamically-using-javascript-f7fbee899a61
 
 		Map<String, Object> manifest = new HashMap<>();
 		manifest.put("name", "Demyo");
 		manifest.put("short_name", "Demyo");
 		manifest.put("background_color", "#2196f3");
 		manifest.put("theme_color", "#2196f3");
-		manifest.put("description", messageSource.getMessage("app.description", null, language));
+		manifest.put("description", messageSource.getMessage("app.description", null, lang));
 		manifest.put("display", "standalone");
-		manifest.put("lang", language.toLanguageTag());
+		manifest.put("lang", lang.toLanguageTag());
 		manifest.put("orientation", "portrait-primary");
 		manifest.put("start_url", servletContextPath);
 		manifest.put("icons",
