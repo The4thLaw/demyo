@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.demyo.common.config.SystemConfiguration;
+
 /**
  * Controller for the home, manifest and about pages.
  */
@@ -56,6 +58,14 @@ public class HomeController extends AbstractController {
 	private Resource[] vendorCss;
 	private String vendorCssFilename;
 
+	private final String appVersion;
+	private final String appCodename;
+
+	public HomeController() {
+		this.appVersion = SystemConfiguration.getInstance().getVersion();
+		this.appCodename = SystemConfiguration.getInstance().getCodename();
+	}
+
 	@PostConstruct
 	private void init() {
 		appJsFilename = getFrontendResource(appJs, "app.*.js");
@@ -90,12 +100,17 @@ public class HomeController extends AbstractController {
 
 	public String index(Model model) {
 		LOGGER.trace("Accessing the home page");
+
+		model.addAttribute("appVersion", appVersion);
+		model.addAttribute("appCodename", appCodename);
+
 		model.addAttribute("appJsFilename", appJsFilename);
 		model.addAttribute("appCssFilename", appCssFilename);
 		model.addAttribute("vendorJsFilename", vendorJsFilename);
 		model.addAttribute("appLegacyJsFilename", appLegacyJsFilename);
 		model.addAttribute("vendorLegacyJsFilename", vendorLegacyJsFilename);
 		model.addAttribute("vendorCssFilename", vendorCssFilename);
+
 		return "index";
 	}
 

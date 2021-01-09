@@ -44,7 +44,12 @@
     <link href="${pageContext.request.contextPath}/css/${appCssFilename}" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/${vendorCssFilename}" rel="stylesheet">
 </head>
-<body data-contextRoot="${pageContext.request.contextPath}/" data-apiRoot="${pageContext.request.contextPath}/api/">
+<body
+	data-contextRoot="${pageContext.request.contextPath}/"
+	data-apiRoot="${pageContext.request.contextPath}/api/"
+	data-version="${appVersion}"
+	data-codename="${appCodename}"
+>
     <noscript>
         <strong>We're sorry but the Vue frontend to Demyo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
