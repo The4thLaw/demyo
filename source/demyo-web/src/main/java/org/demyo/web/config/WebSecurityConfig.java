@@ -34,15 +34,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Do the following even though we will implement CSP afterwards
 				.and().frameOptions().sameOrigin().xssProtection().block(true).and().contentSecurityPolicy(csp);
 
-		// TODO: figure out why this security config is not set on / (and thus is not working on any page
-		// since we only have /). Perhaps Spring-Security is not called at all on the root?
-		// The headers are set by
-		// org.springframework.security.web.header.writers.ContentSecurityPolicyHeaderWriter.writeHeaders(HttpServletRequest,
-		// HttpServletResponse)
-		// but something seems to be removing them
-		// It could be because JSP's are handled by Jetty afterwards and Jetty removes the headers, so check after
-		// updating jetty, Spring and Spring security. Meanwhile we should set the headers in HomeController
-
 		// Disable CSRF protection for now
 		http.csrf().disable();
 

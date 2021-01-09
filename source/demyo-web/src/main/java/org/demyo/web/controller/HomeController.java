@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +99,7 @@ public class HomeController extends AbstractController {
 			"/images", "/images/", "/images/*/view", "/images/view/**", "/images/*/edit", "/images/new"
 	})
 
-	public String index(Model model) {
+	public String index(Model model, HttpServletResponse resp) {
 		LOGGER.trace("Accessing the home page");
 
 		model.addAttribute("appVersion", appVersion);
@@ -110,6 +111,20 @@ public class HomeController extends AbstractController {
 		model.addAttribute("appLegacyJsFilename", appLegacyJsFilename);
 		model.addAttribute("vendorLegacyJsFilename", vendorLegacyJsFilename);
 		model.addAttribute("vendorCssFilename", vendorCssFilename);
+
+		// TODO [Spring 5]: for some reason, the headers set by Spring Security are not taken into account
+		// It is probably because we're using JSPs and Jetty is using its own response or sending the data too soon,
+		// as annotating this method with @ResponseBody yields the right headers.
+		// After updating Jetty, Spring and Spring security, try to remove this
+		// If this doesn't work, maybe switch to Thymeleaf?
+		resp.setHeader("X-Content-Type-Options", "nosniff");
+		resp.setHeader("X-XSS-Protection", "1; mode=block");
+		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
+		resp.setHeader("Content-Security-Policy",
+				"default-src 'none'; connect-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';");
+		// TODO [Vue]: add the hash of the index script, see
+		// https://content-security-policy.com/examples/allow-inline-script/
+		// TODO [Vue]: adapt the CSP in the WebSecurityConfig as well
 
 		return "index";
 	}
