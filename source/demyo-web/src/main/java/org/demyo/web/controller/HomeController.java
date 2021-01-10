@@ -120,10 +120,14 @@ public class HomeController extends AbstractController {
 		resp.setHeader("X-Content-Type-Options", "nosniff");
 		resp.setHeader("X-XSS-Protection", "1; mode=block");
 		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-		// Note: this CSP will yield an unsafe-eval from Webpack (in global.js), but it's perfectly fine
-		// blob: and data: are used by filepond. Perhaps we could avoid this with strict-dynamic?
+		// Note: this CSP may yield an unsafe-eval from Webpack (in global.js), but it's perfectly fine
 		resp.setHeader("Content-Security-Policy",
-				"default-src 'none'; connect-src 'self'; font-src 'self'; img-src 'self' data: blob:; script-src 'self'; style-src 'self' 'unsafe-inline';");
+				"default-src 'none'; connect-src 'self'; font-src 'self'; "
+						// blob: and data: are used by filepond. Perhaps we could avoid this with strict-dynamic?
+						+ "img-src 'self' data: blob:; "
+						// The hash is that of the inline script on the home page (with the modules)
+						+ "script-src 'self' 'sha256-TlufLF0Ir1Udx8wN/tvCTn0TaeQSjT1ByUzz1kjYqQM='; "
+						+ "style-src 'self' 'unsafe-inline'; manifest-src 'self';");
 		// TODO [Vue]: add the hash of the index script, see
 		// https://content-security-policy.com/examples/allow-inline-script/
 		// TODO [Vue]: adapt the CSP in the WebSecurityConfig as well
