@@ -120,7 +120,8 @@ public class HomeController extends AbstractController {
 		resp.setHeader("X-Content-Type-Options", "nosniff");
 		resp.setHeader("X-XSS-Protection", "1; mode=block");
 		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-		// Note: this CSP may yield an unsafe-eval from Webpack (in global.js), but it's perfectly fine
+		// Note: this CSP may yield an unsafe-eval from Webpack (in global.js) and FilePond, but it's perfectly fine
+		// because there's a fallback
 		resp.setHeader("Content-Security-Policy",
 				"default-src 'none'; connect-src 'self'; font-src 'self'; "
 						// blob: and data: are used by filepond. Perhaps we could avoid this with strict-dynamic?
@@ -128,10 +129,9 @@ public class HomeController extends AbstractController {
 						// The hash is that of the inline script on the home page (with the modules)
 						+ "script-src 'self' 'sha256-TlufLF0Ir1Udx8wN/tvCTn0TaeQSjT1ByUzz1kjYqQM='; "
 						+ "style-src 'self' 'unsafe-inline'; manifest-src 'self';");
-		// TODO [Vue]: add the hash of the index script, see
-		// https://content-security-policy.com/examples/allow-inline-script/
 		// TODO [Vue]: adapt the CSP in the WebSecurityConfig as well
-		// TODO [Vue]: By generating a nonce and passing it to Vuetify, we could avoid the 'unsafe-inline' for Vuetify
+		// TODO [Vue]: By generating a nonce and passing it to Vuetify, we could maybe avoid the 'unsafe-inline'
+		// for Vuetify
 
 		return "index";
 	}

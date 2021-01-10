@@ -19,7 +19,7 @@ export default {
 			link: [
 				{
 					rel: 'manifest',
-					href: contextRoot + 'manifest.json?lang=' + self.$i18n.locale
+					href: contextRoot + 'manifest.json?lang=' + self.$i18n.locale.replace(/-/, '_')
 				}
 			]
 		}
