@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.demyo.common.config.SystemConfiguration;
+import org.demyo.web.config.NoncedCSPHeaderWriter;
 
 /**
  * Controller for the home, manifest and about pages.
@@ -99,7 +101,7 @@ public class HomeController extends AbstractController {
 			"/images", "/images/", "/images/*/view", "/images/view/**", "/images/*/edit", "/images/new"
 	})
 
-	public String index(Model model, HttpServletResponse resp) {
+	public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.trace("Accessing the home page");
 
 		model.addAttribute("appVersion", appVersion);
@@ -116,22 +118,11 @@ public class HomeController extends AbstractController {
 		// It is probably because we're using JSPs and Jetty is using its own response or sending the data too soon,
 		// as annotating this method with @ResponseBody yields the right headers.
 		// After updating Jetty, Spring and Spring security, try to remove this
-		// If this doesn't work, maybe switch to Thymeleaf?
-		resp.setHeader("X-Content-Type-Options", "nosniff");
-		resp.setHeader("X-XSS-Protection", "1; mode=block");
-		resp.setHeader("X-Frame-Options", "SAMEORIGIN");
-		// Note: this CSP may yield an unsafe-eval from Webpack (in global.js) and FilePond, but it's perfectly fine
-		// because there's a fallback
-		resp.setHeader("Content-Security-Policy",
-				"default-src 'none'; connect-src 'self'; font-src 'self'; "
-						// blob: and data: are used by filepond. Perhaps we could avoid this with strict-dynamic?
-						+ "img-src 'self' data: blob:; "
-						// The hash is that of the inline script on the home page (with the modules)
-						+ "script-src 'self' 'sha256-TlufLF0Ir1Udx8wN/tvCTn0TaeQSjT1ByUzz1kjYqQM='; "
-						+ "style-src 'self' 'unsafe-inline'; manifest-src 'self';");
-		// TODO [Vue]: adapt the CSP in the WebSecurityConfig as well
-		// TODO [Vue]: By generating a nonce and passing it to Vuetify, we could maybe avoid the 'unsafe-inline'
-		// for Vuetify
+		// If this doesn't work, maybe switch to Thymeleaf? It looks like a heavy change for such an easy workaround
+		response.setHeader("X-Content-Type-Options", "nosniff");
+		response.setHeader("X-XSS-Protection", "1; mode=block");
+		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+		new NoncedCSPHeaderWriter().writeHeaders(request, response);
 
 		return "index";
 	}
@@ -171,7 +162,7 @@ public class HomeController extends AbstractController {
 		manifest.put("display", "standalone");
 		manifest.put("lang", lang.toLanguageTag());
 		manifest.put("orientation", "portrait-primary");
-		manifest.put("start_url", servletContextPath);
+		manifest.put("start_url", servletContextPath + "/");
 		manifest.put("icons",
 				Arrays.asList(getManifestIcon(16), getManifestIcon(32), getManifestIcon(48), getManifestIcon(64),
 						getManifestIcon(144), getManifestIcon(192), getManifestIcon(196), getManifestIcon(270),

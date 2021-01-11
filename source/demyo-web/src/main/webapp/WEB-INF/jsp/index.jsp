@@ -12,10 +12,10 @@
     
 	<meta name="application-name" content="Demyo">
 	<meta name="mobile-web-app-capable" content="yes">
-	<%-- The manifest will be injected by the Vue app -->
+	<%-- The manifest link will be injected by the Vue app -->
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-title" content="Demyo">
-	<meta name="msapplication-starturl" content="/">
+	<meta name="msapplication-starturl" content="${pageContext.request.contextPath}/">
 	
 	<%-- In case someone exposes it publicly by mistake --%>
 	<meta name="robots" content="noindex,nofollow">
@@ -49,17 +49,19 @@
 	data-apiRoot="${pageContext.request.contextPath}/api/"
 	data-version="${appVersion}"
 	data-codename="${appCodename}"
+	data-cspStyleNonce="${cspStyleNonce}"
 >
     <noscript>
         <strong>We're sorry but the Vue frontend to Demyo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id=app></div>
-    <script type="module" src="${pageContext.request.contextPath}/js/${vendorJsFilename}"></script>
-    <script type="module" src="${pageContext.request.contextPath}/js/${appJsFilename}"></script>
-    <script>
+    <%-- Note: the nonce is required on external scripts too on Firefox. Chromium Edge doesn't seem to care. --%>
+    <script type="module" src="${pageContext.request.contextPath}/js/${vendorJsFilename}" nonce="${cspScriptNonce}"></script>
+    <script type="module" src="${pageContext.request.contextPath}/js/${appJsFilename}" nonce="${cspScriptNonce}"></script>
+    <script nonce="${cspScriptNonce}">
     !function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()},!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();
     </script>
-    <script src="${pageContext.request.contextPath}/js/${vendorLegacyJsFilename}" nomodule></script>
-    <script src="${pageContext.request.contextPath}/js/${appLegacyJsFilename}" nomodule></script>
+    <script src="${pageContext.request.contextPath}/js/${vendorLegacyJsFilename}" nomodule nonce="${cspScriptNonce}"></script>
+    <script src="${pageContext.request.contextPath}/js/${appLegacyJsFilename}" nomodule nonce="${cspScriptNonce}"></script>
 </body>
 </html>

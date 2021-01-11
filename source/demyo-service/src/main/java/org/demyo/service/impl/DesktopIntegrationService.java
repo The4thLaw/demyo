@@ -93,6 +93,7 @@ public class DesktopIntegrationService {
 				desktop.stopServer();
 			}
 		});
+		// Note: cannot add a shutdown hook to remove the icons, see https://bugs.openjdk.java.net/browse/JDK-8042114
 		popup.add(exitItem);
 
 		URL iconUrl = getClass().getResource("/org/demyo/common/desktop/app-icon.png");
