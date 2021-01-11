@@ -36,5 +36,10 @@ module.exports = {
 				options.whitespace = 'condense'
 				return options
 			})
+
+		if (process.env.NODE_ENV === 'production') {
+			// Use eval-less source maps
+			config.merge({ devtool: 'source-map' })
+		}
 	}
 }
