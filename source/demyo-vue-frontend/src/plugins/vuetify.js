@@ -4,10 +4,16 @@ import { Touch } from 'vuetify/lib/directives'
 import colors from 'vuetify/lib/util/colors'
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 import 'tiptap-vuetify/dist/main.css'
+import { cspStyleNonce } from '@/myenv'
 
 Vue.use(Vuetify, {
 	directives: {
 		Touch
+	},
+	theme: {
+		options: {
+			cspNonce: cspStyleNonce
+		}
 	}
 })
 
