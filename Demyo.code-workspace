@@ -35,7 +35,13 @@
 		"i18n-ally.localesPaths": "demyo-vue-frontend/src/locales",
 
 		"java.checkstyle.configuration": "${workspaceFolder}/demyo-checkstyle-config.xml",
-		"java.format.settings.url": "../config/eclipse-formatter.xml"
+		"java.format.settings.url": "../config/eclipse-formatter.xml",
+		"files.watcherExclude": {
+			"**/target/**": true
+		},
+		"search.exclude": {
+			"**/target": true
+		}
 	},
 	"launch": {
 		"version": "0.2.0",
