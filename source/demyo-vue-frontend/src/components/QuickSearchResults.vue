@@ -3,7 +3,7 @@
 		<template v-if="hasResults">
 			<template v-for="key in modelTypes">
 				<template v-if="results[key]">
-					<h2 :key="`ti-${key}-title`" class="subtitle-1 primary--text">
+					<h2 :key="`ti-${key}-title`" class="text-subtitle-1 primary--text">
 						{{ $t('quicksearch.results.title.' + key) }}
 					</h2>
 					<v-list :key="`ti-${key}`" class="dem-columnized c-QuickSearchResults__list" dense>

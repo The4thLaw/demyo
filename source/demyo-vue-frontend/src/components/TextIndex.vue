@@ -26,7 +26,7 @@
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, letter) in groupedItems" :key="letter">
-				<h2 class="c-TextIndex__firstLetter display-1 mx-2 my-4 accent--text">
+				<h2 class="c-TextIndex__firstLetter text-h4 mx-2 my-4 accent--text">
 					{{ letter }}
 				</h2>
 				<v-card :flat="compact">

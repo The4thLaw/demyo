@@ -1,10 +1,10 @@
 <template>
 	<v-card :loading="loading ? 'primary' : false" class="c-SectionCard mb-4">
 		<div v-if="!loading && !hasImage" class="c-SectionCard__container">
-			<h1 v-if="title && !loading" class="display-1">
+			<h1 v-if="title && !loading" class="text-h4">
 				{{ title }}
 			</h1>
-			<h2 v-if="subtitle && !loading" class="subtitle-1 primary--text">
+			<h2 v-if="subtitle && !loading" class="text-subtitle-1 primary--text mb-4">
 				{{ subtitle }}
 			</h2>
 			<slot />
@@ -30,7 +30,7 @@
 				>
 			</div>
 			<div class="c-SectionCard__content">
-				<h1 v-if="title && !loading" class="display-1">
+				<h1 v-if="title && !loading" class="text-h4">
 					{{ title }}
 				</h1>
 				<slot />
@@ -91,7 +91,7 @@ export default {
 .c-SectionCard {
 	padding-bottom: 24px;
 
-	.display-1 {
+	.text-h4 {
 		margin-bottom: 16px;
 	}
 }

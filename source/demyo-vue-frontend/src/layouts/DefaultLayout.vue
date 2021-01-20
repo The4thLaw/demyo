@@ -3,7 +3,7 @@
 		<v-navigation-drawer
 			v-if="!$vuetify.breakpoint.smAndDown"
 			v-model="displayDetailsPane" right app clipped
-			width="33vw" :mobile-break-point="$vuetify.breakpoint.thresholds.sm"
+			width="33vw" mobile-breakpoint="sm"
 			:disable-resize-watcher="true"
 		>
 			<portal-target name="appSidePane" />
@@ -125,7 +125,7 @@
 			<portal-target name="appTasks" />
 		</v-app-bar>
 
-		<v-content id="l-DefaultLayout__mainContent">
+		<v-main id="l-DefaultLayout__mainContent">
 			<!-- First part of the details pane management -->
 			<v-dialog v-if="$vuetify.breakpoint.smAndDown" v-model="displayDetailsPane">
 				<v-card>
@@ -149,7 +149,7 @@
 				<slot v-show="!isRelevantSearchQuery" />
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
-		</v-content>
+		</v-main>
 		<v-footer color="secondary" dark>
 			<v-col>
 				Demyo "{{ demyoCodename }}"
@@ -385,7 +385,8 @@ html[lang],
 		"Apple Color Emoji",
 		"Segoe UI Emoji",
 		"Segoe UI Symbol";
-	// TODO [dark]: handle the dark theme
+	// TODO [dark]: handle the dark theme.
+	// Maybe use the overrides listed on https://github.com/vuetifyjs/vuetify/releases/tag/v2.2.6 ?
 	background: #eee;
 }
 
@@ -411,7 +412,7 @@ html[lang],
 	}
 }
 
-#l-DefaultLayout__mainContent > .v-content__wrap {
+#l-DefaultLayout__mainContent > .v-main__wrap {
 	display: flex;
 	flex-direction: column;
 }
@@ -500,6 +501,7 @@ html[lang],
 .dem-fieldset {
 	margin-top: 8px;
 	margin-bottom: 8px;
+	padding-top: 8px;
 
 	.theme--light & {
 		border-top: 1px solid var(--dem-base-border);
@@ -511,6 +513,7 @@ html[lang],
 
 	&:first-of-type {
 		border-top: 0;
+		padding-top: 0;
 	}
 }
 

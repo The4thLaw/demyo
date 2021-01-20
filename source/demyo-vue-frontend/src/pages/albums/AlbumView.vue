@@ -105,9 +105,13 @@
 			</div>
 
 			<div v-if="album.aggregatedLocation" class="dem-fieldset">
-				<FieldValue :label="$t('field.Album.location')">
-					{{ album.aggregatedLocation }}
-				</FieldValue>
+				<v-row>
+					<v-col cols="12">
+						<FieldValue :label="$t('field.Album.location')">
+							{{ album.aggregatedLocation }}
+						</FieldValue>
+					</v-col>
+				</v-row>
 			</div>
 		</SectionCard>
 
@@ -226,6 +230,7 @@
 			</GalleryIndex>
 		</SectionCard>
 
+		<!-- TODO: the page seems to jump here immediately. Not sure why -->
 		<SectionCard
 			v-if="derivativeCount > 0" ref="derivativeSection" v-intersect="loadDerivatives"
 			:title="$t('field.Album.derivatives')"

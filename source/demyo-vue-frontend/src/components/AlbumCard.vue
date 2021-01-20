@@ -22,7 +22,7 @@
 					gradient="to top, rgba(0, 0, 0, 0.8) 0%, transparent 72px"
 				>
 					<v-row align="end" class="fill-height px-4	">
-						<v-col class="title">
+						<v-col class="text-h6">
 							{{ album.identifyingName }}
 						</v-col>
 					</v-row>

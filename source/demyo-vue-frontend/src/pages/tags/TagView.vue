@@ -17,7 +17,7 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading">
-			<h1 v-if="!loading" class="display-1">
+			<h1 v-if="!loading" class="text-h4">
 				<span class="d-Tag" :style="style">
 					{{ tag.identifyingName }}
 				</span>

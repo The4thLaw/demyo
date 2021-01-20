@@ -22,7 +22,7 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading">
-			<h1 class="display-1">
+			<h1 class="text-h4">
 				<LetterIcon :letter="letter" :color="reader.colour" />
 				{{ reader.identifyingName }}
 			</h1>
