@@ -1,5 +1,4 @@
 import MinimalLayout from '@/layouts/MinimalLayout'
-import DerivativeEdit from '@/pages/derivatives/DerivativeEdit'
 import DerivativeIndex from '@/pages/derivatives/DerivativeIndex'
 import DerivativeStickers from '@/pages/derivatives/DerivativeStickers'
 import DerivativeView from '@/pages/derivatives/DerivativeView'
@@ -27,11 +26,11 @@ export default [
 	{
 		path: '/derivatives/:id/edit',
 		name: 'DerivativeEdit',
-		component: DerivativeEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivatives/DerivativeEdit')
 	},
 	{
 		path: '/derivatives/new',
 		name: 'DerivativeAdd',
-		component: DerivativeEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivatives/DerivativeEdit')
 	}
 ]

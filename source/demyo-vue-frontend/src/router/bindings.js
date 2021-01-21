@@ -1,4 +1,3 @@
-import BindingEdit from '@/pages/bindings/BindingEdit'
 import BindingIndex from '@/pages/bindings/BindingIndex'
 import BindingView from '@/pages/bindings/BindingView'
 
@@ -17,11 +16,11 @@ export default [
 	{
 		path: '/bindings/:id/edit',
 		name: 'BindingEdit',
-		component: BindingEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/bindings/BindingEdit')
 	},
 	{
 		path: '/bindings/new',
 		name: 'BindingAdd',
-		component: BindingEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/bindings/BindingEdit')
 	}
 ]

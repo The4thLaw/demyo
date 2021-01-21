@@ -1,16 +1,13 @@
-import Export from '@/pages/manage/Export'
-import Import from '@/pages/manage/Import'
-
 export default [
 	{
 		path: '/manage/export',
 		name: 'Export',
-		component: Export
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/manage/Export')
 	},
 
 	{
 		path: '/manage/import',
 		name: 'Import',
-		component: Import
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/manage/Import')
 	}
 ]

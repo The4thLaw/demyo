@@ -1,5 +1,3 @@
-import ImageDetect from '@/pages/images/ImageDetect'
-import ImageEdit from '@/pages/images/ImageEdit'
 import ImageIndex from '@/pages/images/ImageIndex'
 import ImageView from '@/pages/images/ImageView'
 
@@ -18,11 +16,11 @@ export default [
 	{
 		path: '/images/:id/edit',
 		name: 'ImageEdit',
-		component: ImageEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/images/ImageEdit')
 	},
 	{
 		path: '/images/new',
 		name: 'ImageDetect',
-		component: ImageDetect
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/images/ImageDetect')
 	}
 ]

@@ -1,4 +1,3 @@
-import DerivativeTypeEdit from '@/pages/derivativeTypes/DerivativeTypeEdit'
 import DerivativeTypeIndex from '@/pages/derivativeTypes/DerivativeTypeIndex'
 import DerivativeTypeView from '@/pages/derivativeTypes/DerivativeTypeView'
 
@@ -17,11 +16,11 @@ export default [
 	{
 		path: '/derivativeTypes/:id/edit',
 		name: 'DerivativeTypeEdit',
-		component: DerivativeTypeEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivativeTypes/DerivativeTypeEdit')
 	},
 	{
 		path: '/derivativeTypes/new',
 		name: 'DerivativeTypeAdd',
-		component: DerivativeTypeEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivativeTypes/DerivativeTypeEdit')
 	}
 ]

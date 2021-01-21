@@ -1,4 +1,3 @@
-import AuthorEdit from '@/pages/authors/AuthorEdit'
 import AuthorIndex from '@/pages/authors/AuthorIndex'
 import AuthorView from '@/pages/authors/AuthorView'
 
@@ -17,11 +16,11 @@ export default [
 	{
 		path: '/authors/:id/edit',
 		name: 'AuthorEdit',
-		component: AuthorEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/authors/AuthorEdit')
 	},
 	{
 		path: '/authors/new',
 		name: 'AuthorAdd',
-		component: AuthorEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/authors/AuthorEdit')
 	}
 ]

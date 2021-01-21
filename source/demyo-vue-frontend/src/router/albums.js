@@ -1,4 +1,3 @@
-import AlbumEdit from '@/pages/albums/AlbumEdit'
 import AlbumIndex from '@/pages/albums/AlbumIndex'
 import AlbumView from '@/pages/albums/AlbumView'
 
@@ -17,11 +16,11 @@ export default [
 	{
 		path: '/albums/:id/edit',
 		name: 'AlbumEdit',
-		component: AlbumEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/albums/AlbumEdit')
 	},
 	{
 		path: '/albums/new',
 		name: 'AlbumAdd',
-		component: AlbumEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/albums/AlbumEdit')
 	}
 ]

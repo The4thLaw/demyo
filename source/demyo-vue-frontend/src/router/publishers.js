@@ -1,4 +1,3 @@
-import PublisherEdit from '@/pages/publishers/PublisherEdit'
 import PublisherIndex from '@/pages/publishers/PublisherIndex'
 import PublisherView from '@/pages/publishers/PublisherView'
 
@@ -17,11 +16,11 @@ export default [
 	{
 		path: '/publishers/:id/edit',
 		name: 'PublisherEdit',
-		component: PublisherEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/publishers/PublisherEdit')
 	},
 	{
 		path: '/publishers/new',
 		name: 'PublisherAdd',
-		component: PublisherEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/publishers/PublisherEdit')
 	}
 ]

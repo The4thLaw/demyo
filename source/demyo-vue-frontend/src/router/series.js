@@ -1,4 +1,3 @@
-import SeriesEdit from '@/pages/series/SeriesEdit'
 import SeriesIndex from '@/pages/series/SeriesIndex'
 import SeriesView from '@/pages/series/SeriesView'
 
@@ -19,11 +18,11 @@ export default [
 	{
 		path: '/series/:id/edit',
 		name: 'SeriesEdit',
-		component: SeriesEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/series/SeriesEdit')
 	},
 	{
 		path: '/series/new',
 		name: 'SeriesAdd',
-		component: SeriesEdit
+		component: () => import(/* webpackChunkName: "manage" */ '@/pages/series/SeriesEdit')
 	}
 ]
