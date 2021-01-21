@@ -91,14 +91,13 @@
 </template>
 
 <script>
-import FilePond from '@/helpers/filepond'
 import { apiRoot } from '@/myenv'
 
 export default {
 	name: 'DnDImage',
 
 	components: {
-		FilePond
+		FilePond: () => import(/* webpackChunkName: "vendor-filepond" */'@/helpers/filepond')
 	},
 
 	props: {
