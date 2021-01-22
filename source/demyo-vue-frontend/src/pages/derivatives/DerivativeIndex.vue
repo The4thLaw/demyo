@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<GalleryIndex :items="derivatives" image-path="mainImage" @page-change="scrollToTop">
+		<GalleryIndex
+			:items="derivatives" :keyboard-navigation="true"
+			image-path="mainImage" @page-change="scrollToTop"
+		>
 			<template #default="slotProps">
 				<router-link :to="`/derivatives/${slotProps.item.id}/view`">
 					<div v-if="slotProps.item.series">

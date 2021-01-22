@@ -230,7 +230,6 @@
 			</GalleryIndex>
 		</SectionCard>
 
-		<!-- TODO: the page seems to jump here immediately. Not sure why -->
 		<SectionCard
 			v-if="derivativeCount > 0" ref="derivativeSection" v-intersect="loadDerivatives"
 			:title="$t('field.Album.derivatives')"

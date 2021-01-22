@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<GalleryIndex :items="images" @page-change="scrollToTop">
+		<GalleryIndex :items="images" :keyboard-navigation="true" @page-change="scrollToTop">
 			<template #default="slotProps">
 				<router-link :to="`/images/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}

@@ -1,5 +1,6 @@
 <template>
 	<div
+		v-if="items"
 		ref="keyTarget"
 		v-touch="{
 			left: nextPage,
@@ -7,8 +8,8 @@
 		}"
 		class="c-GalleryIndex"
 		:class="{ 'c-GalleryIndex--bordered': bordered }"
-		@keyup.arrow-left.exact="previousPage()"
-		@keyup.arrow-right.exact="nextPage()"
+		@keyup.arrow-left.exact="previousPageKeyboard()"
+		@keyup.arrow-right.exact="nextPageKeyboard()"
 	>
 		<div class="c-GalleryIndex__list">
 			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
@@ -60,6 +61,11 @@ export default {
 		bordered: {
 			type: Boolean,
 			default: false
+		},
+
+		keyboardNavigation: {
+			type: Boolean,
+			default: false
 		}
 	},
 
@@ -102,7 +108,11 @@ export default {
 	},
 
 	mounted() {
-		focusElement(this.$refs.keyTarget)
+		if (this.keyboardNavigation) {
+			// Focus may cause the browser to scroll to the element. It's fine if the element is the main one on the
+			// page but causes issues once it's further down, like in the AlbumView
+			focusElement(this.$refs.keyTarget)
+		}
 	},
 
 	methods: {
@@ -114,6 +124,18 @@ export default {
 			this.vimg = false
 			// Refocus to allow keyboard navigation again
 			focusElement(this.$refs.keyTarget)
+		},
+
+		previousPageKeyboard() {
+			if (this.keyboardNavigation) {
+				this.previousPage()
+			}
+		},
+
+		nextPageKeyboard() {
+			if (this.keyboardNavigation) {
+				this.nextPage()
+			}
 		},
 
 		previousPage() {
