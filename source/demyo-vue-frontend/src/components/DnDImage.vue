@@ -202,3 +202,10 @@ export default {
 	}
 }
 </script>
+
+<style lang="less">
+.filepond--credits {
+	// Hide the credits, we have a nice entry in the About page for that
+	display: none;
+}
+</style>
