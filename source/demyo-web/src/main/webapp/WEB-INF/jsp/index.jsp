@@ -36,7 +36,11 @@
 	
 	<meta name="msapplication-TileColor" content="#FFFFFF">
 	<meta name="msapplication-TileImage" content="${pageContext.request.contextPath}/icons/demyo-144.png">
-    
+	
+	<link href="${pageContext.request.contextPath}/css/${manageCssFilename}" rel="prefetch">
+	<link href="${pageContext.request.contextPath}/css/${vendorFilepondCssFilename}" rel="prefetch">
+	<link href="${pageContext.request.contextPath}/js/${manageJsFilename}" rel="prefetch">
+	<link href="${pageContext.request.contextPath}/js/${vendorFilepondJsFilename}" rel="prefetch">
     <link href="${pageContext.request.contextPath}/css/${appCssFilename}" rel="preload" as="style">
     <link href="${pageContext.request.contextPath}/css/${vendorCssFilename}" rel="preload" as="style">
     <link href="${pageContext.request.contextPath}/js/${appJsFilename}" rel="modulepreload" as="script">

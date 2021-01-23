@@ -45,9 +45,29 @@ public class HomeController extends AbstractController {
 	private Resource[] appCss;
 	private String appCssFilename;
 
+	@Value("classpath*:public/js/manage.*.js")
+	private Resource[] manageJs;
+	private String manageJsFilename;
+
+	@Value("classpath*:public/css/manage.*.css")
+	private Resource[] manageCss;
+	private String manageCssFilename;
+
 	@Value("classpath*:public/js/chunk-vendors.*.js")
 	private Resource[] vendorJs;
 	private String vendorJsFilename;
+
+	@Value("classpath*:public/css/chunk-vendors.*.css")
+	private Resource[] vendorCss;
+	private String vendorCssFilename;
+
+	@Value("classpath*:public/js/vendor-filepond.*.js")
+	private Resource[] vendorFilepondJs;
+	private String vendorFilepondJsFilename;
+
+	@Value("classpath*:public/css/vendor-filepond.*.css")
+	private Resource[] vendorFilepondCss;
+	private String vendorFilepondCssFilename;
 
 	@Value("classpath*:public/js/app-legacy.*.js")
 	private Resource[] appLegacyJs;
@@ -56,10 +76,6 @@ public class HomeController extends AbstractController {
 	@Value("classpath*:public/js/chunk-vendors-legacy.*.js")
 	private Resource[] vendorLegacyJs;
 	private String vendorLegacyJsFilename;
-
-	@Value("classpath*:public/css/chunk-vendors.*.css")
-	private Resource[] vendorCss;
-	private String vendorCssFilename;
 
 	private final String appVersion;
 	private final String appCodename;
@@ -71,12 +87,21 @@ public class HomeController extends AbstractController {
 
 	@PostConstruct
 	private void init() {
+		// Demyo
 		appJsFilename = getFrontendResource(appJs, "app.*.js");
 		appCssFilename = getFrontendResource(appCss, "app.*.css");
+		manageJsFilename = getFrontendResource(manageJs, "manage.*.js");
+		manageCssFilename = getFrontendResource(manageCss, "manage.*.css");
+
+		// Vendors
 		vendorJsFilename = getFrontendResource(vendorJs, "chunk-vendors.*.js");
+		vendorCssFilename = getFrontendResource(vendorCss, "chunk-vendors.*.css");
+		vendorFilepondJsFilename = getFrontendResource(vendorFilepondJs, "vendor-filepond.*.js");
+		vendorFilepondCssFilename = getFrontendResource(vendorFilepondCss, "vendor-filepond.*.css");
+
+		// Legacy
 		appLegacyJsFilename = getFrontendResource(appLegacyJs, "app-legacy.*.js");
 		vendorLegacyJsFilename = getFrontendResource(vendorLegacyJs, "chunk-vendors-legacy.*.js");
-		vendorCssFilename = getFrontendResource(vendorCss, "chunk-vendors.*.css");
 	}
 
 	/**
@@ -109,10 +134,16 @@ public class HomeController extends AbstractController {
 
 		model.addAttribute("appJsFilename", appJsFilename);
 		model.addAttribute("appCssFilename", appCssFilename);
+		model.addAttribute("manageJsFilename", manageJsFilename);
+		model.addAttribute("manageCssFilename", manageCssFilename);
+
 		model.addAttribute("vendorJsFilename", vendorJsFilename);
+		model.addAttribute("vendorCssFilename", vendorCssFilename);
+		model.addAttribute("vendorFilepondJsFilename", vendorFilepondJsFilename);
+		model.addAttribute("vendorFilepondCssFilename", vendorFilepondCssFilename);
+
 		model.addAttribute("appLegacyJsFilename", appLegacyJsFilename);
 		model.addAttribute("vendorLegacyJsFilename", vendorLegacyJsFilename);
-		model.addAttribute("vendorCssFilename", vendorCssFilename);
 
 		// TODO [Spring 5]: for some reason, the headers set by Spring Security are not taken into account
 		// It is probably because we're using JSPs and Jetty is using its own response or sending the data too soon,
