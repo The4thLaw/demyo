@@ -175,7 +175,7 @@
 
 <script>
 // TODO [long term]: Tag all albums if at least one, remove a tag if at least one album is tagged
-import { filter, some, sortedIndexOf } from 'lodash'
+import { sortedIndexOf } from 'lodash'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
 import { mapState } from 'vuex'
@@ -237,7 +237,7 @@ export default {
 			if (!this.series.albumIds) {
 				return []
 			}
-			return filter(this.series.albumIds, id => {
+			return this.series.albumIds.filter(id => {
 				const album = this.albums[id]
 				if (!album) {
 					return false
@@ -305,7 +305,7 @@ export default {
 				return false
 			}
 
-			return some(this.albums, a => sortedIndexOf(this.readingList, a.id) <= -1)
+			return this.albums.some(a => sortedIndexOf(this.readingList, a.id) <= -1)
 		},
 
 		...mapState({
