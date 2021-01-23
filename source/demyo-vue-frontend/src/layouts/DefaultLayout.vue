@@ -493,7 +493,7 @@ html[lang],
 		break-inside: avoid;
 		// The following also solves some issues with margins spanning across columns
 		// https://css-tricks.com/when-do-you-use-inline-block/
-		display: inline-block;
+		display: inline-block !important;
 		width: 100%; // Else we may get more than one item per line in a single columns
 	}
 }
