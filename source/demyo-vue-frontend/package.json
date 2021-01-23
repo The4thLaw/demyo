@@ -56,8 +56,10 @@
     "vuetify-loader": "^1.6.0"
   },
   "browserslist": [
+    "defaults",
     "> 0.8%",
-    "not ie < 11",
-    "Firefox ESR"
+    "not IE <= 11",
+    "Firefox ESR",
+    "last 2 FirefoxAndroid versions"
   ]
 }
