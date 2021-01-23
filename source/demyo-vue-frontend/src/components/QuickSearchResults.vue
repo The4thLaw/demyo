@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import { isUndefined } from 'lodash'
 import SectionCard from '@/components/SectionCard'
 
 export default {
@@ -69,7 +68,7 @@ export default {
 
 	computed: {
 		hasLoadedResults() {
-			return !isUndefined(this.results)
+			return this.results !== undefined
 		},
 
 		hasResults() {

@@ -1,18 +1,16 @@
-import { reduce } from 'lodash'
-
 /**
  * Retrieves a filter from the route parameters.
  * @param {Route} route The Vue route
  * @return a filter object, suitable for the API calls.
  */
 export function retrieveFilter(route) {
-	const filter = reduce(route.query, (accumulator, value, /** @type String */ key) => {
+	const filter = {}
+	for (const key of Object.keys(route.query)) {
 		if (key.startsWith('with')) {
 			const newKey = key.replace(/^with/, '').toLowerCase()
-			accumulator[newKey] = value
+			filter[newKey] = route.query[key]
 		}
-		return accumulator
-	}, {})
+	}
 
 	if (!Object.keys(filter).length) {
 		return null

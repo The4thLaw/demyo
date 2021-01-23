@@ -1,4 +1,3 @@
-import { isInteger } from 'lodash'
 import { axiosGet, axiosPost, axiosPut, axiosDelete } from '@/helpers/axios'
 
 /**
@@ -78,7 +77,7 @@ class AbstractModelService {
 			// Transform arrays of integers in arrays of objects
 			this.config.sanitizeArrays.forEach(prop => {
 				if (Array.isArray(model[prop])) {
-					model[prop] = model[prop].map(v => isInteger(v) ? { id: v } : v)
+					model[prop] = model[prop].map(v => Number.isInteger(v) ? { id: v } : v)
 				}
 			})
 		}

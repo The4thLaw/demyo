@@ -1,4 +1,4 @@
-import { reduce, sortBy, uniqBy } from 'lodash'
+import { sortBy, uniqBy } from 'lodash'
 import {
 	Heading, Bold, Italic, Strike, Underline, BulletList,
 	OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History, Image
@@ -34,7 +34,10 @@ export const tipTapExtensions = [
  * @param {String|Array<String>} sortProperties The property or properties to sort the models by.
  */
 export function mergeModels(collection, modelProperty, sortProperties) {
-	const all = reduce(collection, (aggregate, value) => {
+	if (!Array.isArray(sortProperties)) {
+		sortProperties = [sortProperties]
+	}
+	const all = Object.values(collection).reduce((aggregate, value) => {
 		const subModel = value[modelProperty]
 		if (Array.isArray(subModel)) {
 			// Arrays of models
@@ -46,5 +49,5 @@ export function mergeModels(collection, modelProperty, sortProperties) {
 		return aggregate
 	}, [])
 	const uniq = uniqBy(all, 'id')
-	return sortBy(uniq, [sortProperties])
+	return sortBy(uniq, sortProperties)
 }

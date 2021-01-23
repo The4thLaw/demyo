@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { isUndefined } from 'lodash'
 import { apiRoot } from '@/myenv'
 
 function baselineUrl(url) {
@@ -7,7 +6,7 @@ function baselineUrl(url) {
 }
 
 export async function axiosGet(url, data, defaultValue) {
-	if (isUndefined(defaultValue)) {
+	if (defaultValue === undefined) {
 		defaultValue = data
 		data = {}
 	}
@@ -23,7 +22,7 @@ export async function axiosGet(url, data, defaultValue) {
 }
 
 export async function axiosPost(url, data, defaultValue) {
-	if (isUndefined(defaultValue)) {
+	if (defaultValue === undefined) {
 		defaultValue = data
 		data = {}
 	}

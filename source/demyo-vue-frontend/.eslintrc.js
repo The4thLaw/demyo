@@ -10,7 +10,8 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:vue/essential',
 		'@vue/standard',
-		'plugin:vue/recommended'
+		'plugin:vue/recommended',
+		'plugin:you-dont-need-lodash-underscore/all'
 	],
 	rules: {
 		// Possible errors
