@@ -17,5 +17,9 @@ export function retrieveFilter(route) {
 	if (!Object.keys(filter).length) {
 		return null
 	}
+
+	// Default to AND
+	filter.mode = route.query.mode === 'OR' ? 'OR' : 'AND'
+
 	return filter
 }
