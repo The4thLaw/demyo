@@ -106,7 +106,7 @@
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<!-- TODO: Spring 5: Bump to latest version -->
-				<version>1.9.3</version>
+				<version>1.9.4</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-configuration</groupId>
