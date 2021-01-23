@@ -3,8 +3,6 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.Future;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -28,16 +26,6 @@ public class TagService extends AbstractModelService<Tag> implements ITagService
 	 */
 	public TagService() {
 		super(Tag.class);
-	}
-
-	@Transactional(readOnly = true)
-	@Override
-	public Tag getByIdForView(long id) {
-		Tag entity = repo.findOneForView(id);
-		if (entity == null) {
-			throw new EntityNotFoundException("No Tag for ID " + id);
-		}
-		return entity;
 	}
 
 	@Override

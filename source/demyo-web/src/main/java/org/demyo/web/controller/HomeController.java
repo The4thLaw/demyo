@@ -30,6 +30,8 @@ import org.demyo.web.config.NoncedCSPHeaderWriter;
 @Controller
 public class HomeController extends AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	private static final String MODEL_KEY_VERSION = "appVersion";
+	private static final String MODEL_KEY_CODENAME = "appCodename";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -129,8 +131,8 @@ public class HomeController extends AbstractController {
 	public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.trace("Accessing the home page");
 
-		model.addAttribute("appVersion", appVersion);
-		model.addAttribute("appCodename", appCodename);
+		model.addAttribute(MODEL_KEY_VERSION, appVersion);
+		model.addAttribute(MODEL_KEY_CODENAME, appCodename);
 
 		model.addAttribute("appJsFilename", appJsFilename);
 		model.addAttribute("appCssFilename", appCssFilename);

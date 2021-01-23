@@ -1,7 +1,5 @@
 package org.demyo.service;
 
-import java.util.List;
-
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
 import org.demyo.model.filters.DerivativeFilter;
@@ -36,13 +34,6 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * @return The Derivatives
 	 */
 	Iterable<Derivative> findAllForIndex(DerivativeFilter filter);
-
-	/**
-	 * Finds all Derivatives in a format and order suitable for the sticker sheet.
-	 * 
-	 * @return The Derivatives
-	 */
-	List<Derivative> findAllForStickers();
 
 	/**
 	 * Counts how many Derivatives use the given criteria.

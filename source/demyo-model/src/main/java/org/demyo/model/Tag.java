@@ -1,26 +1,13 @@
 package org.demyo.model;
 
-import java.util.SortedSet;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
-import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.Hibernate;
-import org.hibernate.annotations.SortComparator;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
-import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
 
@@ -30,11 +17,6 @@ import org.demyo.model.util.StartsWithField;
 @Entity
 @Table(name = "TAGS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = "Tag.forView", attributeNodes =
-		{ @NamedAttributeNode(value = "taggedAlbums", subgraph = "Tag.Album") }, subgraphs = {
-				@NamedSubgraph(name = "Tag.Album", attributeNodes =
-				{ @NamedAttributeNode("series") }) }) })
 public class Tag extends AbstractModel {
 	/** The name of the Tag. */
 	@Column(name = "name")
@@ -49,12 +31,6 @@ public class Tag extends AbstractModel {
 	/** The background colour. */
 	@Column(name = "bgcolour")
 	private String bgColour;
-
-	/** The Albums tagged with this Tag. */
-	// TODO: remove this, it's asynchronously loaded now. Also remove the related fetch/subgraph
-	@ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
-	@SortComparator(AlbumAndSeriesComparator.class)
-	private SortedSet<Album> taggedAlbums;
 
 	/** The number of times this Tag has been used. */
 	@Transient
@@ -122,39 +98,12 @@ public class Tag extends AbstractModel {
 	}
 
 	/**
-	 * Gets the Albums tagged with this Tag.
-	 * 
-	 * @return the Albums tagged with this Tag
-	 */
-	@JsonIgnore
-	public SortedSet<Album> getTaggedAlbums() {
-		return taggedAlbums;
-	}
-
-	/**
-	 * Sets the Albums tagged with this Tag.
-	 * 
-	 * @param taggedAlbums the new Albums tagged with this Tag
-	 */
-	public void setTaggedAlbums(SortedSet<Album> taggedAlbums) {
-		this.taggedAlbums = taggedAlbums;
-	}
-
-	/**
 	 * Gets the number of times this Tag has been used.
 	 * 
 	 * @return the number of times this Tag has been used
 	 */
 	@JsonView(ModelView.Basic.class)
 	public Integer getUsageCount() {
-		if (usageCount == null) {
-			if (!Hibernate.isInitialized(taggedAlbums)) {
-				return null;
-			}
-
-			return taggedAlbums.size();
-		}
-
 		return usageCount;
 	}
 

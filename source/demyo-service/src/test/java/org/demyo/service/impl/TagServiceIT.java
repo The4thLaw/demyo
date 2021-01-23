@@ -24,8 +24,6 @@ public class TagServiceIT extends AbstractServiceTest {
 		Tag tag = tagService.getByIdForView(1);
 		assertThat(tag.getId()).isEqualTo(1);
 		assertThat(tag.getName()).isEqualTo("science-fiction");
-		assertThat(tag.getTaggedAlbums().size()).isEqualTo(24);
-		assertThat(tag.getTaggedAlbums().first().getTitle()).isEqualTo("Le Collectionneur");
 	}
 
 	@Test
@@ -39,9 +37,5 @@ public class TagServiceIT extends AbstractServiceTest {
 		Tag savedTag = tagService.getByIdForView(21L);
 		assertThat(savedTag.getId()).isEqualTo(21L);
 		assertThat(savedTag.getBgColour()).isEqualTo("000000");
-		// Check that the association was preserved even though we don't set the albums
-		assertThat(savedTag.getTaggedAlbums()).isNotNull();
-		assertThat(savedTag.getTaggedAlbums().size()).isEqualTo(1);
-		assertThat(savedTag.getTaggedAlbums().first().getTitle()).isEqualTo("Maître d'Armes (Le)");
 	}
 }

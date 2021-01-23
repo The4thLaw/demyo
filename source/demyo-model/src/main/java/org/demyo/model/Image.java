@@ -1,7 +1,6 @@
 package org.demyo.model;
 
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -30,7 +28,8 @@ import org.demyo.utils.io.DIOUtils;
 @Entity
 @Table(name = "IMAGES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "description"))
-@NamedEntityGraph(name = "Image.forDependencies", attributeNodes = { @NamedAttributeNode("albumCovers"),
+@NamedEntityGraph(name = "Image.forDependencies", attributeNodes =
+{ @NamedAttributeNode("albumCovers"),
 		@NamedAttributeNode("albumOtherImages"), @NamedAttributeNode("authors"), @NamedAttributeNode("collections"),
 		@NamedAttributeNode("derivatives"), @NamedAttributeNode("publishers") })
 public class Image extends AbstractModel {
@@ -169,24 +168,6 @@ public class Image extends AbstractModel {
 	 */
 	public void setAlbumOtherImages(SortedSet<Album> albumOtherImages) {
 		this.albumOtherImages = albumOtherImages;
-	}
-
-	/**
-	 * Gets the {@link Album}s which use this Image in one way or another.
-	 *
-	 * @return The full set of {@link Album}s.
-	 */
-	// TODO: @JsonIgnore might be more relevant here... to be determined later
-	// Maybe we should even remove the method
-	public SortedSet<Album> getAllAlbums() {
-		SortedSet<Album> all = new TreeSet<>(new AlbumAndSeriesComparator());
-		if (Hibernate.isInitialized(albumCovers)) {
-			all.addAll(getAlbumCovers());
-		}
-		if (Hibernate.isInitialized(albumOtherImages)) {
-			all.addAll(getAlbumOtherImages());
-		}
-		return all;
 	}
 
 	/**

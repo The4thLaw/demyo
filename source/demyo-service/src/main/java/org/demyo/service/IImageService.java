@@ -23,17 +23,6 @@ public interface IImageService extends IModelService<Image> {
 	File getImageFile(Image image) throws DemyoException;
 
 	/**
-	 * Gets the thumbnail file for an image from the collection. Thumbnails are generated if necessary and cached.
-	 * 
-	 * @param id The id of the image.
-	 * @return The image file.
-	 * @throws DemyoException In case of security or I/O error.
-	 * @deprecated Use {@link #getImage(long, Optional, boolean)} instead.
-	 */
-	@Deprecated
-	File getImageThumbnail(long id) throws DemyoException;
-
-	/**
 	 * Processes the upload of an image.
 	 * 
 	 * @param originalFileName The name of the uploaded image.

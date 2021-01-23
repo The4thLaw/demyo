@@ -1,12 +1,9 @@
 package org.demyo.model;
 
-import java.util.SortedSet;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
@@ -15,12 +12,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.StartsWithField;
 
@@ -29,19 +24,15 @@ import org.demyo.model.util.StartsWithField;
  */
 @Entity
 @Table(name = "AUTHORS")
-@DefaultOrder(expression = { @DefaultOrder.Order(property = "name"), @DefaultOrder.Order(property = "firstName") })
-@NamedEntityGraphs({
+@DefaultOrder(expression =
+{ @DefaultOrder.Order(property = "name"), @DefaultOrder.Order(property = "firstName") })
+@NamedEntityGraphs(
+{
 		@NamedEntityGraph(name = "Author.forEdition", attributeNodes =
 		{ @NamedAttributeNode("portrait") }),
 		@NamedEntityGraph(name = "Author.forView", attributeNodes =
-		{ @NamedAttributeNode("portrait"),
-		// TODO [Vue]: remove those nodes
-		/*@NamedAttributeNode(value = "albumsAsWriter", subgraph = "Author.Album"),
-			@NamedAttributeNode(value = "albumsAsArtist", subgraph = "Author.Album"),
-			@NamedAttributeNode(value = "albumsAsColorist", subgraph = "Author.Album"),
-			@NamedAttributeNode(value = "albumsAsInker", subgraph = "Author.Album"),
-			@NamedAttributeNode(value = "albumsAsTranslator", subgraph = "Author.Album") }, subgraphs =
-				{ @NamedSubgraph(name = "Author.Album", attributeNodes = { @NamedAttributeNode("series") })*/ }) })
+		{ @NamedAttributeNode("portrait") })
+})
 public class Author extends AbstractModel {
 	/** The last name. */
 	@Column(name = "name")
@@ -67,32 +58,6 @@ public class Author extends AbstractModel {
 	@Column(name = "website")
 	@URL
 	private String website;
-
-	// TODO: remove these when the switch to Vue is done
-	/** The {@link Album}s that this Author wrote. */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "writers")
-	@SortComparator(AlbumAndSeriesComparator.class)
-	private SortedSet<Album> albumsAsWriter;
-
-	/** The {@link Album}s that this Author drew. */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "artists")
-	@SortComparator(AlbumAndSeriesComparator.class)
-	private SortedSet<Album> albumsAsArtist;
-
-	/** The {@link Album}s that this Author colored. */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "colorists")
-	@SortComparator(AlbumAndSeriesComparator.class)
-	private SortedSet<Album> albumsAsColorist;
-
-	/** The {@link Album}s that this Author inked. */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "inkers")
-	@SortComparator(AlbumAndSeriesComparator.class)
-	private SortedSet<Album> albumsAsInker;
-
-	/** The {@link Album}s that this Author translated. */
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "translators")
-	@SortComparator(AlbumAndSeriesComparator.class)
-	private SortedSet<Album> albumsAsTranslator;
 
 	@Override
 	public String getIdentifyingName() {
@@ -222,95 +187,5 @@ public class Author extends AbstractModel {
 	 */
 	public void setWebsite(String website) {
 		this.website = website;
-	}
-
-	/**
-	 * Gets the {@link Album}s that this Author wrote.
-	 * 
-	 * @return the {@link Album}s that this Author wrote
-	 */
-	public SortedSet<Album> getAlbumsAsWriter() {
-		return albumsAsWriter;
-	}
-
-	/**
-	 * Sets the {@link Album}s that this Author wrote.
-	 * 
-	 * @param albumsAsWriter the new {@link Album}s that this Author wrote
-	 */
-	public void setAlbumsAsWriter(SortedSet<Album> albumsAsWriter) {
-		this.albumsAsWriter = albumsAsWriter;
-	}
-
-	/**
-	 * Gets the {@link Album}s that this Author drew.
-	 * 
-	 * @return the {@link Album}s that this Author drew
-	 */
-	public SortedSet<Album> getAlbumsAsArtist() {
-		return albumsAsArtist;
-	}
-
-	/**
-	 * Sets the {@link Album}s that this Author drew.
-	 * 
-	 * @param albumsAsArtist the new {@link Album}s that this Author drew
-	 */
-	public void setAlbumsAsArtist(SortedSet<Album> albumsAsArtist) {
-		this.albumsAsArtist = albumsAsArtist;
-	}
-
-	/**
-	 * Gets the {@link Album}s that this Author colored.
-	 * 
-	 * @return the {@link Album}s that this Author colored
-	 */
-	public SortedSet<Album> getAlbumsAsColorist() {
-		return albumsAsColorist;
-	}
-
-	/**
-	 * Sets the {@link Album}s that this Author colored.
-	 * 
-	 * @param albumsAsColorist the new {@link Album}s that this Author colored
-	 */
-	public void setAlbumsAsColorist(SortedSet<Album> albumsAsColorist) {
-		this.albumsAsColorist = albumsAsColorist;
-	}
-
-	/**
-	 * Gets the {@link Album}s that this Author inked.
-	 * 
-	 * @return the {@link Album}s that this Author inked
-	 */
-	public SortedSet<Album> getAlbumsAsInker() {
-		return albumsAsInker;
-	}
-
-	/**
-	 * Sets the {@link Album}s that this Author inked.
-	 * 
-	 * @param albumsAsInker the new {@link Album}s that this Author inked
-	 */
-	public void setAlbumsAsInker(SortedSet<Album> albumsAsInker) {
-		this.albumsAsInker = albumsAsInker;
-	}
-
-	/**
-	 * Gets the {@link Album}s that this Author translated.
-	 * 
-	 * @return the {@link Album}s that this Author translated
-	 */
-	public SortedSet<Album> getAlbumsAsTranslator() {
-		return albumsAsTranslator;
-	}
-
-	/**
-	 * Sets the {@link Album}s that this Author translated.
-	 * 
-	 * @param albumsAsTranslator the new {@link Album}s that this Author translated
-	 */
-	public void setAlbumsAsTranslator(SortedSet<Album> albumsAsTranslator) {
-		this.albumsAsTranslator = albumsAsTranslator;
 	}
 }

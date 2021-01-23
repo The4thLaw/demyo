@@ -56,12 +56,6 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public List<Derivative> findAllForStickers() {
-		return repo.findAllForStickers(getDefaultSort());
-	}
-
-	@Override
 	protected IModelRepo<Derivative> getRepo() {
 		return repo;
 	}
