@@ -412,15 +412,6 @@ html[lang],
 	}
 }
 
-#l-DefaultLayout__mainContent > .v-main__wrap {
-	display: flex;
-	flex-direction: column;
-}
-
-#l-DefaultLayout__mainContainer {
-	flex: 1;
-}
-
 @media (max-width: 435px) {
 	#l-DefaultLayout__mainContainer,
 	#l-DefaultLayout__mainContainer > .container,
