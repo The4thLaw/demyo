@@ -145,8 +145,10 @@
 					v-if="isRelevantSearchQuery" :results="quicksearchResults"
 					:loading="quicksearchLoading" @click="showQuicksearch = false; clearSearch()"
 				/>
-				<!-- Do it on show so that the element stays alive -->
-				<slot v-show="!isRelevantSearchQuery" />
+				<!-- Do it on show so that the element stays alive. v-show doesn't work on slot so use a div -->
+				<div v-show="!isRelevantSearchQuery">
+					<slot />
+				</div>
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
 		</v-main>
