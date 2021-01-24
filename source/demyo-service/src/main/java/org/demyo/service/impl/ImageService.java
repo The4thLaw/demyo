@@ -325,7 +325,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public void delete(long id) {
-		Image image = getRepo().findOne(id);
+		Image image = getRepo().getOne(id);
 		super.delete(id);
 		String path = image.getUrl();
 		if (path.startsWith(UPLOAD_DIRECTORY_NAME)) {

@@ -9,14 +9,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.demyo.model.Tag;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
+import org.demyo.model.Tag;
+
 /**
- * Custom implementation of some methods from {@link ITagCustomRepo}, to be used as base implementation by Spring
- * Data for {@link ITagRepo}.
+ * Custom implementation of some methods from {@link ITagCustomRepo}, to be used as base implementation by Spring Data
+ * for {@link ITagRepo}.
  */
 // Unfortunately, the "I" has to remain as Spring Data expects <InterfaceName>Impl. Also, the implementation has
 // to be in the same package as the interface.
@@ -31,7 +31,7 @@ import org.springframework.data.domain.Sort;
 	@Override
 	public List<Tag> findAllWithUsageCounts() {
 		// Find all tags
-		List<Tag> tags = repo.findAll(new Sort("name"));
+		List<Tag> tags = repo.findAll(Sort.by("name"));
 
 		// Custom query to get usage counts
 		Query query = entityManager
@@ -42,7 +42,8 @@ import org.springframework.data.domain.Sort;
 		Map<Long, Integer> occurrences = new HashMap<>();
 		for (Object result : results) {
 			Object[] row = (Object[]) result;
-			occurrences.put(Long.valueOf((int) row[0]), ((BigInteger) row[1]).intValue()); // Doubt we'll have > 2^32 albums
+			occurrences.put(Long.valueOf((int) row[0]), ((BigInteger) row[1]).intValue()); // Doubt we'll have > 2^32
+																							// albums
 		}
 
 		// Set all counts one by one

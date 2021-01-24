@@ -43,9 +43,9 @@
 
 	<properties>
 		<org.slf4j.version>1.7.30</org.slf4j.version>
-		<org.springframework.version>4.3.25.RELEASE</org.springframework.version>
-		<org.hibernate.version>5.2.18.Final</org.hibernate.version> <!-- Spring 4.3 supports Hibernate 5.2 -->
-		<com.querydsl.version>4.2.2</com.querydsl.version>
+		<org.springframework.version>5.3.3</org.springframework.version>
+		<org.hibernate.version>5.4.27.Final</org.hibernate.version> <!-- Spring 5.3 supports Hibernate 5.4 -->
+		<com.querydsl.version>4.4.0</com.querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -105,8 +105,7 @@
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<!-- TODO: Spring 5: Bump to latest version -->
-				<version>1.9.3</version>
+				<version>1.9.4</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-configuration</groupId>
@@ -149,7 +148,7 @@
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy</artifactId>
-				<version>2.5.8</version>
+				<version>3.0.7</version>
 			</dependency>
 			
 			<dependency>
@@ -169,9 +168,9 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.hibernate</groupId>
+				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>6.1.0.Final</version>
+				<version>6.2.0.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.el</groupId>
@@ -252,7 +251,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
-				<version>1.11.23.RELEASE</version>
+				<version>2.4.3</version>
 			</dependency>
 
 			<dependency>
@@ -278,21 +277,21 @@
 				<version>4.2</version>
 			</dependency>
 			
-			<!-- Spring 4.3 supports Jackson 2.9 -->
+			<!-- Spring 5.3 supports Jackson 2.12 -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
-				<version>2.9.10</version>
+				<version>2.12.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>2.9.10.1</version>
+				<version>2.12.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
 				<artifactId>jackson-datatype-hibernate5</artifactId>
-				<version>2.9.10</version>
+				<version>2.12.1</version>
 			</dependency>
 			
 			<dependency>
@@ -374,11 +373,11 @@
 			</dependency>
 			<!-- Lock to the version used by mockito, which is also used by Hibernate -->
 			<!-- TODO: Spring 5: Try to unlock this when migrating to a more recent Hibernate -->
-			<dependency>
+			<!--<dependency>
 				<groupId>net.bytebuddy</groupId>
 				<artifactId>byte-buddy</artifactId>
 				<version>1.10.5</version>
-			</dependency>
+			</dependency>-->
 			<dependency>
 				<groupId>org.dbunit</groupId>
 				<artifactId>dbunit</artifactId>
@@ -584,7 +583,7 @@
 		<profile>
 			<id>dev</id>
 			<properties>
-				<config.hibernate.debug>true</config.hibernate.debug>
+				<config.hibernate.debug>false</config.hibernate.debug>
 				<config.core.log.level>DEBUG</config.core.log.level>
 				<config.war.path>../demyo-web/target/demyo-web-${project.version}</config.war.path>
 			</properties>

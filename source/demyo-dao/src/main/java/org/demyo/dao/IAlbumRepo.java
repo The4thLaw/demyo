@@ -79,7 +79,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 */
 	@Override
 	@EntityGraph("Album.forIndex")
-	List<Album> findAll(Iterable<Long> albumIds);
+	List<Album> findAllById(Iterable<Long> albumIds);
 
 	/**
 	 * Returns a {@link List} of entities. Will also fetch the related {@link Series}.

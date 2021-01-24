@@ -56,7 +56,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 
 	@Override
 	public boolean readerExists(long readerId) {
-		return repo.exists(readerId);
+		return repo.existsById(readerId);
 	}
 
 	@Transactional(readOnly = true)
@@ -166,7 +166,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		if (!isNew) {
 			// Preserve the favourites and reading list. Not particularly efficient, but I can't think of a better
 			// way while preserving the mapping on the Album side, which is used for QueryDSL queries
-			Reader old = repo.findOne(model.getId());
+			Reader old = repo.getOne(model.getId());
 			model.setReadingList(old.getReadingList());
 			model.setFavouriteSeries(old.getFavouriteSeries());
 			model.setFavouriteAlbums(old.getFavouriteAlbums());

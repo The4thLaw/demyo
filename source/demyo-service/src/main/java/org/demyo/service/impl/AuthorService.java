@@ -64,7 +64,7 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		}
 
 		Set<Long> albumIds = ret.getAllAlbumsIds();
-		ret.setAlbums(albumRepo.findAll(albumIds));
+		ret.setAlbums(albumRepo.findAllById(albumIds));
 
 		return ret;
 	}

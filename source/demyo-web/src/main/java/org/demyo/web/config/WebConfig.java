@@ -9,18 +9,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
-// TODO: When switching to Java 8 and Spring 5, drop the adapter and implement the interface:
-// the interface has default methods
 // TODO: When migrating to Spring 5, switch the XML config to the annotation-based equivalent
 @EnableWebMvc
 @Configuration
-public class WebConfig extends WebMvcConfigurerAdapter {
+public class WebConfig implements WebMvcConfigurer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
 
 	// See https://stackoverflow.com/a/54412744

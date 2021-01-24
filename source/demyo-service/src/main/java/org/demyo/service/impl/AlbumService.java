@@ -113,7 +113,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	@Transactional(readOnly = true)
 	public Album getAlbumTemplateForSeries(long seriesId) {
-		Sort sort = new Sort(Direction.DESC, "cycle", "number", "numberSuffix", "firstEditionDate",
+		Sort sort = Sort.by(Direction.DESC, "cycle", "number", "numberSuffix", "firstEditionDate",
 				"currentEditionDate", "title");
 		Album last = repo.findTopBySeriesId(seriesId, sort);
 
@@ -135,7 +135,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setWriters(last.getWriters());
 
 		} else {
-			template.setSeries(seriesRepo.findOne(seriesId));
+			template.setSeries(seriesRepo.getOne(seriesId));
 		}
 
 		return template;
@@ -181,7 +181,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 		if (!isNewAlbum) {
 			// Check if the album is leaving the wishlist
-			Album oldAlbum = repo.findOne(newAlbum.getId());
+			Album oldAlbum = repo.getOne(newAlbum.getId());
 			isLeavingWishlist = oldAlbum.isWishlist() && !newAlbum.isWishlist();
 			if (isLeavingWishlist) {
 				LOGGER.debug("The saved album is leaving the wishlist");

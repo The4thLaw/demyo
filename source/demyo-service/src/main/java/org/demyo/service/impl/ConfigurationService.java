@@ -73,7 +73,7 @@ public class ConfigurationService implements IConfigurationService {
 		}
 
 		// Now save everything
-		Iterable<ConfigurationEntry> saved = repo.save(configurationValues.values());
+		Iterable<ConfigurationEntry> saved = repo.saveAll(configurationValues.values());
 		Set<ConfigurationEntry> savedSet = new HashSet<>();
 		CollectionUtils.addAll(savedSet, saved.iterator());
 		return savedSet;

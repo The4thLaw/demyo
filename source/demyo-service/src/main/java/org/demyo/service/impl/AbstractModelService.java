@@ -160,8 +160,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Cacheable(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public List<M> findAll() {
-		Sort sort = defaultOrder.length == 0 ? null : new Sort(defaultOrder);
-		return getRepo().findAll(sort);
+		return getRepo().findAll(getDefaultSort());
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
@@ -237,7 +236,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public void delete(long id) {
-		getRepo().delete(id);
+		getRepo().deleteById(id);
 	}
 
 	/**
@@ -246,7 +245,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * @return the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Sort}
 	 */
 	protected Sort getDefaultSort() {
-		return defaultOrder.length == 0 ? null : new Sort(defaultOrder);
+		return defaultOrder.length == 0 ? null : Sort.by(defaultOrder);
 	}
 
 	/**
