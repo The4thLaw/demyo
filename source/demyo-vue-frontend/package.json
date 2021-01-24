@@ -1,6 +1,6 @@
 {
   "name": "demyo-vue-frontend",
-  "version": "2.2.0-SNAPSHOT",
+  "version": "3.0.0-SNAPSHOT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
