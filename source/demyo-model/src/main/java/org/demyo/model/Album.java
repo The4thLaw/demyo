@@ -33,6 +33,8 @@ import org.hibernate.annotations.SortComparator;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.querydsl.core.annotations.PropertyType;
+import com.querydsl.core.annotations.QueryType;
 
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.jackson.SortedSetDeserializer;
@@ -265,6 +267,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 * 
 	 * @return A working StringBuilder. Never <code>null</code>.
 	 */
+	@QueryType(PropertyType.NONE)
 	private StringBuilder getQualifiedNumber() {
 		StringBuilder sb = new StringBuilder();
 
