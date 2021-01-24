@@ -1,5 +1,7 @@
 package org.demyo.service;
 
+import java.util.List;
+
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
 import org.demyo.model.filters.DerivativeFilter;
@@ -25,7 +27,7 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * 
 	 * @return The Derivatives
 	 */
-	Iterable<Derivative> findAllForIndex();
+	List<Derivative> findAllForIndex();
 
 	/**
 	 * Finds the Derivatives in a format and order suitable for the index.
@@ -33,7 +35,7 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * @param filter A filter to apply to the returned Derivatives.
 	 * @return The Derivatives
 	 */
-	Iterable<Derivative> findAllForIndex(DerivativeFilter filter);
+	List<Derivative> findAllForIndex(DerivativeFilter filter);
 
 	/**
 	 * Counts how many Derivatives use the given criteria.

@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -27,6 +28,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	public void index() throws Exception {
 		mockMvc.perform(get("/api/derivatives/")) //
 				.andExpect(status().isOk()) //
+				.andDo(MockMvcResultHandlers.print()) //
 				.andExpect(jsonPath("$", hasSize(28))) //
 				// Check first entry. Includes some checks for properties that shouldn't be mentioned
 				.andExpect(jsonPath("$[0].id").value(205)) //

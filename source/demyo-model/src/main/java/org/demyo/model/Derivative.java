@@ -36,7 +36,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demyo.model.constraints.OneNotNull;
 import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.ComparableComparator;
-import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 
 /**
@@ -44,27 +43,26 @@ import org.demyo.model.util.IdentifyingNameComparator;
  */
 @Entity
 @Table(name = "DERIVATIVES")
-@DefaultOrder(expression =
-{ @DefaultOrder.Order(property = "series.name"),
-		@DefaultOrder.Order(property = "album.cycle"), @DefaultOrder.Order(property = "album.number"),
-		@DefaultOrder.Order(property = "album.numberSuffix"), @DefaultOrder.Order(property = "album.title") })
 @NamedEntityGraphs(
 {
 		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes =
-		{ @NamedAttributeNode("images") }),
+		{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("type"),
+				@NamedAttributeNode("source"), @NamedAttributeNode("images") }),
 		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
-		{ @NamedAttributeNode("artist"), @NamedAttributeNode("images"), @NamedAttributeNode("prices") }) })
+		{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("artist"),
+				@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images"),
+				@NamedAttributeNode("prices") }) })
 @OneNotNull(fields =
 { "series.id", "album.id" })
 public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
 	/** The parent {@link Series}. */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
 	@JsonView(ModelView.Basic.class)
 	private Series series;
 
 	/** The parent {@link Album}. */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "album_id")
 	@JsonView(ModelView.Basic.class)
 	private Album album;
@@ -77,7 +75,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/** The {@link DerivativeType type} of this Derivative. */
 	@NotNull
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "derivative_type_id")
 	private DerivativeType type;
 
@@ -86,7 +84,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	private Integer colours;
 
 	/** The {@link DerivativeSource source} of this Derivative. */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "source_id")
 	@JsonView(ModelView.Basic.class)
 	private DerivativeSource source;

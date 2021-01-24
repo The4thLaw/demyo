@@ -15,6 +15,17 @@ public class AlbumComparator extends AbstractModelComparator<Album> {
 	public int compare(Album a1, Album a2) {
 		int comparison;
 
+		if (a1 == a2) {
+			return 0;
+		}
+		// Can happen when coming from DerivativeComparator
+		if (a1 == null) {
+			return -1;
+		}
+		if (a2 == null) {
+			return 1;
+		}
+
 		comparison = nullSafeComparison(a1.getCycle(), a2.getCycle());
 		if (comparison != 0) {
 			return comparison;

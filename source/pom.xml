@@ -583,7 +583,7 @@
 		<profile>
 			<id>dev</id>
 			<properties>
-				<config.hibernate.debug>false</config.hibernate.debug>
+				<config.hibernate.debug>true</config.hibernate.debug>
 				<config.core.log.level>DEBUG</config.core.log.level>
 				<config.war.path>../demyo-web/target/demyo-web-${project.version}</config.war.path>
 			</properties>

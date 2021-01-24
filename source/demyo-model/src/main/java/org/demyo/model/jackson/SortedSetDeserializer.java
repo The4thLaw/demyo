@@ -47,7 +47,7 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 		this.elementClass = elementClass;
 		this.compInstance = compClass == null ? null : compClass.newInstance();
 
-		LOGGER.debug("Created a new SortedSetDeserializer({}, {})", compClass, elementClass);
+		LOGGER.trace("Created a new SortedSetDeserializer({}, {})", compClass, elementClass);
 	}
 
 	@Override

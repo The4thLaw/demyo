@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +14,7 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.model.Derivative;
 import org.demyo.model.Image;
 import org.demyo.model.filters.DerivativeFilter;
+import org.demyo.model.util.DerivativeComparator;
 import org.demyo.service.IDerivativeService;
 import org.demyo.service.IImageService;
 import org.demyo.service.ITranslationService;
@@ -40,19 +40,26 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 
 	@Override
 	@Transactional(readOnly = true)
-	public Iterable<Derivative> findAllForIndex() {
+	public List<Derivative> findAllForIndex() {
 		return findAllForIndex(null);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Iterable<Derivative> findAllForIndex(DerivativeFilter filter) {
-		Sort sort = getDefaultSort();
+	public List<Derivative> findAllForIndex(DerivativeFilter filter) {
+		// Sort manually:
+		// - The Sort + entity graph cause a CROSS JOIN that's not even outer, messing with the results
+		// - We get control on one shots, which would otherwise be listed first or last
+		List<Derivative> derivatives;
 		if (filter == null) {
-			return repo.findAllForIndex(sort);
+			derivatives = repo.findAll();
 		} else {
-			return repo.findAllForIndex(filter.toPredicate(), sort);
+			derivatives = repo.findAll(filter.toPredicate());
 		}
+
+		derivatives.sort(new DerivativeComparator());
+
+		return derivatives;
 	}
 
 	@Override
