@@ -79,12 +79,10 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>4.2.13.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>4.2.13.RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -95,14 +93,6 @@
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-test</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.htmlunit</groupId>
-			<artifactId>htmlunit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>htmlunit-driver</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.skyscreamer</groupId>

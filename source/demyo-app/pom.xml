@@ -73,6 +73,12 @@ Includes the Web server, H2 server, and startup program.</description>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
 		</dependency>
+		<!-- We need the bridge here because we don't have a dependency on Spring yet,
+		and want to use this everywhere in the application -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jcl</artifactId>
+		</dependency>
 		<!-- Used for logback groovy configuration -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>

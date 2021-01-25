@@ -44,6 +44,7 @@
 	<properties>
 		<org.slf4j.version>1.7.30</org.slf4j.version>
 		<org.springframework.version>5.3.3</org.springframework.version>
+		<org.springframework.security.version>5.4.2</org.springframework.security.version><!-- 4.2.13.RELEASE -->
 		<org.hibernate.version>5.4.27.Final</org.hibernate.version> <!-- Spring 5.3 supports Hibernate 5.4 -->
 		<com.querydsl.version>4.4.0</com.querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -103,14 +104,30 @@
 				<version>3.9</version>
 			</dependency>
 			<dependency>
-				<groupId>commons-beanutils</groupId>
+				<groupId>commons-beanutils </groupId>
 				<artifactId>commons-beanutils</artifactId>
 				<version>1.9.4</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>commons-configuration</groupId>
 				<artifactId>commons-configuration</artifactId>
 				<version>1.10</version>
+				<!--
+				We can't exclude commons-logging from here beacause we need it when loading the
+				system configuration, 
+				-->
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
@@ -219,6 +236,22 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
 				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jcl</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${org.springframework.security.version}</version>
 			</dependency>
 
 			<!-- Used at least for MimetypesFileTypeMap -->
@@ -352,32 +385,11 @@
 			    <scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>net.sourceforge.htmlunit</groupId>
-				<artifactId>htmlunit</artifactId>
-				<version>2.23</version> <!-- The version recommended by Spring 4.3.18 -->
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.seleniumhq.selenium</groupId>
-				<artifactId>htmlunit-driver</artifactId>
-				<!-- Last Java version. After that (2.23+), it pulls selenium-support 3.14.0,
-					which relies on Java 8 Function in FluentWait -->
-				<version>2.22</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
 				<version>3.2.4</version>
 				<scope>test</scope>
 			</dependency>
-			<!-- Lock to the version used by mockito, which is also used by Hibernate -->
-			<!-- TODO: Spring 5: Try to unlock this when migrating to a more recent Hibernate -->
-			<!--<dependency>
-				<groupId>net.bytebuddy</groupId>
-				<artifactId>byte-buddy</artifactId>
-				<version>1.10.5</version>
-			</dependency>-->
 			<dependency>
 				<groupId>org.dbunit</groupId>
 				<artifactId>dbunit</artifactId>

@@ -38,11 +38,9 @@ appender("3rdParty", RollingFileAppender ) {
 if (isCi) {
     logger("org.demyo", DEBUG, ["console", "demyo"], false)
     
-    logger("com.gargoylesoftware.htmlunit", ERROR, ["console", "3rdParty"], false)
     root(WARN, ["console", "3rdParty"])
 } else {
     logger("org.demyo", DEBUG, ["demyo"], false)
     
-    logger("com.gargoylesoftware.htmlunit", ERROR, ["3rdParty"], false)
     root(WARN, ["3rdParty"])
 }
