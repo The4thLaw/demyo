@@ -21,7 +21,7 @@
 					aspect-ratio="3"
 					gradient="to top, rgba(0, 0, 0, 0.8) 0%, transparent 72px"
 				>
-					<v-row align="end" class="fill-height px-4	">
+					<v-row align="end" class="fill-height px-4">
 						<v-col class="text-h6">
 							{{ album.identifyingName }}
 						</v-col>
@@ -207,7 +207,7 @@ export default {
 }
 
 .c-AlbumCard {
-	.v-card__title, {
+	.v-card__title {
 		background-color: var(--v-primary-base);
 		color: var(--dem-primary-contrast);
 	}
@@ -221,9 +221,14 @@ export default {
 			text-decoration: none !important;
 		}
 
-		& .v-image {
+		& .theme--light.v-image,
+		& .theme--dark.v-image {
 			color: white;
 		}
+	}
+
+	.v-responsive__content .row {
+		margin: 0;
 	}
 }
 
