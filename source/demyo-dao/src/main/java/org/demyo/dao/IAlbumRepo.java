@@ -31,8 +31,6 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
-	// TODO [P3]: open a feature request to Spring Data to support some genericity in @EntityGraph: automatic context
-	// with the class name, or spEL support
 	Album findOneForEdition(long id);
 
 	/**
@@ -88,8 +86,6 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 */
 	@Override
 	@EntityGraph("Album.forIndex")
-	@Query("select x from Album x")
-	// TODO: Spring 5: Try to rename this to readAll
 	List<Album> findAll();
 
 	/**
@@ -108,20 +104,20 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 * @param id The Author ID
 	 * @return The identifiers of all matching albums, split by author role
 	 */
-	@Query(value = "select artist_id as author_id, album_id as as_artist, null as as_colorist, null as as_inker,"
-			+ " null as as_translator, null as as_writer from albums_artists where artist_id = ?1"
+	@Query(value = "select artist_id as authorId, album_id as asArtist, null as asColorist, null as asInker,"
+			+ " null as asTranslator, null as asWriter from albums_artists where artist_id = ?1"
 			+ " union all "
-			+ "select colorist_id as author_id, null as as_artist, album_id as as_colorist, null as as_inker,"
-			+ " null as as_translator, null as as_writer from albums_colorists where colorist_id = ?1"
+			+ "select colorist_id as authorId, null as asArtist, album_id as asColorist, null as asInker,"
+			+ " null as asTranslator, null as asWriter from albums_colorists where colorist_id = ?1"
 			+ " union all "
-			+ "select inker_id as author_id, null as as_artist, null as as_colorist, album_id as as_inker,"
-			+ " null as as_translator, null as as_writer from albums_inkers where inker_id = ?1"
+			+ "select inker_id as authorId, null as asArtist, null as asColorist, album_id as asInker,"
+			+ " null as asTranslator, null as asWriter from albums_inkers where inker_id = ?1"
 			+ " union all "
-			+ "select translator_id as author_id, null as as_artist, null as as_colorist, null as as_inker,"
-			+ " album_id as as_translator, null as as_writer from albums_translators where translator_id = ?1"
+			+ "select translator_id as authorId, null as asArtist, null as asColorist, null as asInker,"
+			+ " album_id as asTranslator, null as asWriter from albums_translators where translator_id = ?1"
 			+ " union all "
-			+ "select writer_id as author_id, null as as_artist, null as as_colorist, null as as_inker,"
-			+ " null as as_translator, album_id as as_writer from albums_writers where writer_id = ?1"
+			+ "select writer_id as authorId, null as asArtist, null as asColorist, null as asInker,"
+			+ " null as asTranslator, album_id as asWriter from albums_writers where writer_id = ?1"
 			+ "", nativeQuery = true)
 	List<IAuthorAlbum> findAlbumsFromAuthor(long id);
 
