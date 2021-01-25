@@ -2,15 +2,16 @@ package org.demyo.web.controller.api;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,13 +50,13 @@ public class ExportAPIController {
 		headers.setLastModified(file.lastModified());
 		headers.setContentLength(file.length());
 
-		// TODO [Spring 5] Use MediaTypeFactory
-		headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		headers.setContentType(
+				MediaTypeFactory.getMediaType(file.getName()).orElse(MediaType.APPLICATION_OCTET_STREAM));
 
-		// TODO [Spring 5] use https://stackoverflow.com/a/53857047
-		String targetFilename = URLEncoder.encode(exportedData.getFileName(), "UTF-8");
-		targetFilename = URLDecoder.decode(targetFilename, "ISO8859_1");
-		headers.add("Content-disposition", "attachment; filename=" + targetFilename);
+		ContentDisposition contentDisp = ContentDisposition.builder("attachment")
+				.filename(exportedData.getFileName(), StandardCharsets.UTF_8)
+				.build();
+		headers.setContentDisposition(contentDisp);
 
 		return new HttpEntity<Resource>(new FileSystemResource(file), headers);
 	}

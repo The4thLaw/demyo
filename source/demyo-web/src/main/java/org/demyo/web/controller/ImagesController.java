@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.CacheControl;
 import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,10 +39,14 @@ public class ImagesController extends AbstractController {
 			@RequestParam("w") Optional<Integer> maxWidth,
 			@RequestParam(value = "lenient", defaultValue = "false") boolean lenient)
 			throws DemyoException, IOException {
+
 		Resource res = imageService.getImage(imageId, maxWidth, lenient);
-		// TODO [Spring 5]: When migrating to Spring 5, rely on MediaTypeFactory
-		String type = mimeTypes.getContentType(res.getFile());
-		return ResponseEntity.ok().cacheControl(CACHE_FOR_IMAGES).contentType(MediaType.valueOf(type))
-				/*.contentType(MediaTypeFactory.getMediaType(res).get())*/.body(res);
+
+		Optional<MediaType> media = MediaTypeFactory.getMediaType(res);
+		BodyBuilder schwarzenegger = ResponseEntity.ok().cacheControl(CACHE_FOR_IMAGES);
+		if (media.isPresent()) {
+			schwarzenegger.contentType(media.get());
+		}
+		return schwarzenegger.body(res);
 	}
 }
