@@ -25,6 +25,7 @@ public abstract class AbstractPersistenceTest {
 	 * @throws NamingException If binding fails.
 	 */
 	@BeforeClass
+	// TODO: Might not be needed if we migrate to Spring Boot
 	public static void setupJNDI() throws NamingException {
 		SimpleNamingContextBuilder builder = SimpleNamingContextBuilder.emptyActivatedContextBuilder();
 		DataSource ds = new DriverManagerDataSource("jdbc:h2:mem:demyo_tests;DB_CLOSE_DELAY=120;IGNORECASE=TRUE");
