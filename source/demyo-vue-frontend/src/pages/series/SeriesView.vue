@@ -305,7 +305,7 @@ export default {
 				return false
 			}
 
-			return this.albums.some(a => sortedIndexOf(this.readingList, a.id) <= -1)
+			return Object.values(this.albums).some(a => sortedIndexOf(this.readingList, a.id) <= -1)
 		},
 
 		...mapState({
