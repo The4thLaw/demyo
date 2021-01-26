@@ -6,6 +6,10 @@ import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 
 Vue.use(VueI18n)
 
+function setHtmlLang(lang) {
+	document.documentElement.setAttribute('lang', lang.replace(/_/g, ' '))
+}
+
 const loadedLanguages = []
 
 const dateTimeFormats = {
@@ -70,6 +74,7 @@ const i18n = new VueI18n({
 	messages: loadLocaleMessages(),
 	dateTimeFormats
 })
+setHtmlLang(selectedLocale)
 console.log(`Initialized i18n with '${selectedLocale}' as default language and '${fallbackLanguage}' as fallback`)
 
 /**
@@ -100,10 +105,11 @@ loadLanguageFromServer(defaultLanguage).then(
  */
 export async function switchLanguage(lang) {
 	// Java and browsers have a different way of formatting language variants
-	lang = lang.replace(/_/, '-')
+	lang = lang.replace(/_/g, '-')
 	console.log(`Switching language to ${lang}`)
 	await loadLanguageFromServer(lang)
 	i18n.locale = lang
+	setHtmlLang(lang)
 }
 
 export default i18n
