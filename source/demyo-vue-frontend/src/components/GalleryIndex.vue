@@ -20,6 +20,7 @@
 					:srcset="`
 						${item.baseImageUrl}?w=250 1x,
 						${item.baseImageUrl}?w=500 2x`"
+					:alt="item.identifyingName"
 				>
 				<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
 					<slot :item="item" />

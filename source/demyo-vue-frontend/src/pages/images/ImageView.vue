@@ -15,7 +15,10 @@
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" class="c-ImageView__image">
-			<img :src="imageUrl">
+			<img
+				:src="imageUrl"
+				:alt="image.description"
+			>
 			<p>{{ image.description }}</p>
 		</SectionCard>
 
