@@ -14,13 +14,13 @@
 				<template #default>
 					<thead>
 						<tr>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutLibs.libName') }}
 							</th>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutLibs.libCopyright') }}
 							</th>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutLibs.libLicense') }}
 							</th>
 						</tr>
@@ -44,13 +44,13 @@
 				<template #default>
 					<thead>
 						<tr>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutLibs.libName') }}
 							</th>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutLibs.libCopyright') }}
 							</th>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutLibs.libLicense') }}
 							</th>
 						</tr>
@@ -130,10 +130,10 @@
 				<template #default>
 					<thead>
 						<tr>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutInstall.parameter') }}
 							</th>
-							<th>
+							<th scope="col">
 								{{ $t('page.About.aboutInstall.value') }}
 							</th>
 						</tr>
