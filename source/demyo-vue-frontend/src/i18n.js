@@ -75,18 +75,17 @@ console.log(`Initialized i18n with '${selectedLocale}' as default language and '
 /**
  * Asynchronously gets translations for a given language from the server, and sets them in vue-i18n.
  * @param {string} lang The language to get translations for
- * @return {Promise} A Promise that always resolves to true
+ * @return {Promise<void>} An Promise without value (void)
  */
 async function loadLanguageFromServer(lang) {
 	if (loadedLanguages.includes(lang)) {
 		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
-		return true
+		return
 	}
 	const response = await axios.get(apiRoot + 'translations/' + lang)
 	i18n.setLocaleMessage(lang, response.data)
 	console.log(`Loaded ${Object.keys(response.data).length} translations from the server in ${lang}`)
 	loadedLanguages.push(lang)
-	return true
 }
 
 // i18n is already initialized and serving the critical messages in the language of choice
