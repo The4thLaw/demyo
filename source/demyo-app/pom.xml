@@ -12,7 +12,7 @@
 Includes the Web server, H2 server, and startup program.</description>
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
-		<windows.version>2.0.0.6</windows.version>
+		<windows.version>3.0.0.0</windows.version>
 	</properties>
 	<dependencies>
 		<!-- Needed for SystemConfiguration -->
@@ -170,7 +170,7 @@ Includes the Web server, H2 server, and startup program.</description>
 										<fileVersion>${windows.version}</fileVersion>
 										<txtFileVersion>${project.version}</txtFileVersion>
 										<fileDescription>Demyo Comic Manager v${project.version}, Windows executable</fileDescription>
-										<copyright>2007-2020 Xavier Dalem</copyright>
+										<copyright>2007-2021 Xavier Dalem</copyright>
 										<productVersion>${windows.version}</productVersion>
 										<txtProductVersion>${project.version}</txtProductVersion>
 										<productName>Demyo</productName>

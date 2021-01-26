@@ -15,6 +15,11 @@
 		It can be used in a standalone fashion during development or can be integrated in a backend.
 	</description>
 
+	<properties>
+		<!-- Override since this is not really a Maven / Java project -->
+		<sonar.sources>src</sonar.sources> 
+	</properties>
+
 	<build>
 		<resources>
 			<resource>

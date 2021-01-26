@@ -1,4 +1,4 @@
-# Demyo [![GitHub version](https://badge.fury.io/gh/the4thlaw%2Fdemyo.svg)](https://badge.fury.io/gh/the4thlaw%2Fdemyo) ![License](https://img.shields.io/badge/license-AGPL%20v3-blue.svg)
+# Demyo ![License](https://img.shields.io/badge/license-AGPL%20v3-blue.svg)
 
 [![Build Status](https://travis-ci.org/The4thLaw/demyo.svg?branch=master)](https://travis-ci.org/The4thLaw/demyo) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=The4thLaw_demyo&metric=alert_status)](https://sonarcloud.io/dashboard?id=The4thLaw_demyo) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=The4thLaw_demyo&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=The4thLaw_demyo) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=The4thLaw_demyo&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=The4thLaw_demyo) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=The4thLaw_demyo&metric=security_rating)](https://sonarcloud.io/dashboard?id=The4thLaw_demyo)
 
