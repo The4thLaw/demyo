@@ -2,14 +2,10 @@ package org.demyo.model.filters;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 
-import org.demyo.model.IModel;
-
 /**
  * Base class for implementations of {@link IModelFilter}.
- * 
- * @param <M> The model type.
  */
-public abstract class AbstractModelFilter<M extends IModel> implements IModelFilter<M> {
+public abstract class AbstractModelFilter implements IModelFilter {
 	/** The combination mode for this filter. */
 	private CombinationMode mode;
 
