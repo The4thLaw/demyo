@@ -13,8 +13,6 @@ This project is the Java port / upgrade of a PHP software whose releases are sti
 
 See our [guidelines](.github/CONTRIBUTING.md).
 
-## License
+## Copyright
 
-See [LICENSE.md](LICENSE.md).
-
-Demyo is Copyright © Xavier Dalem, 2007-2021.
+Demyo is Copyright © Xavier Dalem, 2007-2021, licensed under the [GNU Affero General Public License version 3](LICENSE.md)
