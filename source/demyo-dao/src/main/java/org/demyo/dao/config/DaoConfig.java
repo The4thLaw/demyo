@@ -23,6 +23,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * Configuration for the DAO layer.
+ */
 @Configuration
 @ComponentScan("org.demyo")
 @EnableJpaRepositories(basePackages = "org.demyo.dao", bootstrapMode = BootstrapMode.DEFERRED)

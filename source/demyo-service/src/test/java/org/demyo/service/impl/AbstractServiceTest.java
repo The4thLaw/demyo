@@ -9,11 +9,12 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import org.demyo.dao.config.DaoConfig;
 import org.demyo.test.AbstractPersistenceTest;
+import org.demyo.test.config.TestConfiguration;
 
 /**
  * Base class for Spring Data Repository tests.
  */
-@ContextConfiguration(locations = "classpath:org/demyo/test/spring/unit-test-scope-adapter.xml", classes = DaoConfig.class)
+@ContextConfiguration(classes = { DaoConfig.class, TestConfiguration.class })
 @TestExecutionListeners(
 { DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })

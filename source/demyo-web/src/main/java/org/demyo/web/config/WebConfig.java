@@ -31,7 +31,9 @@ import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.demyo.dao.config.DaoConfig;
 import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
 
-// TODO: When migrating to Spring 5, switch the XML config to the annotation-based equivalent
+/**
+ * Configuration for the Web layer.
+ */
 @Configuration
 @ComponentScan("org.demyo")
 @Import(
