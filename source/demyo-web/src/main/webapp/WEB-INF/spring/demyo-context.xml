@@ -10,63 +10,6 @@
            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
            http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
-	<context:component-scan base-package="org.demyo" />
 	<import resource="classpath:org/demyo/dao/demyo-dao-context.xml" />
-	<tx:annotation-driven/>
-	<!--
-	Not needed anymore due to a transition to @EnableWebMvc
-	<mvc:annotation-driven />
-	-->
-	<mvc:resources mapping="/css/**" location="/css/,classpath:/public/css/" />
-	<mvc:resources mapping="/fonts/**" location="/fonts/,classpath:/public/fonts/" />
-	<mvc:resources mapping="/js/**" location="/js/,classpath:/public/js/" />
-	<mvc:resources mapping="/icons/**" location="/icons/" />
-	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" />
 	
-	<!--
-	Cache management
-	We can rely on a pure memory implementation for now, without advanced features:
-	 - It's very fast
-	 - It's easy to set up
-	 - We don't really need persistence between application executions. At least not with the current use cases.
-	-->
-	<cache:annotation-driven />
-	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
-		<property name="caches">
-			<set>
-				<!-- This cache is used to store lists of model (e.g. results of findAll).
-				It can be very useful in constrained environments like a Raspberry Pi, when the Album edit page
-				fetches large amounts of mostly static data -->
-				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ModelLists"/>
-				<!-- Same reationale, but for reference data (e.g. translations) -->
-				<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" name="ReferenceData"/>
-			</set>
-		</property>
-	</bean>
-	
-	<jee:jndi-lookup id="desktopCallbacks" jndi-name="org.demyo.services.desktop" />
-
-	<bean id="messageSource"
-		class="org.demyo.service.i18n.BrowsableResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>org/demyo/i18n/core</value>
-				<value>org/demyo/i18n/desktop</value>
-				<value>org/demyo/i18n/fields</value>
-				<value>org/demyo/i18n/menu</value>
-				<value>org/demyo/i18n/pages</value>
-				<value>org/demyo/i18n/javascript</value>
-				<value>org/demyo/i18n/special</value>
-				<value>org/demyo/i18n/widgets</value>
-			</list>
-		</property>
-	</bean>
-	<alias name="messageSource" alias="demyo.core.messageSource"/>
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-	
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/jsp/"/>
-		<property name="suffix" value=".jsp" />
-	</bean>
 </beans>
