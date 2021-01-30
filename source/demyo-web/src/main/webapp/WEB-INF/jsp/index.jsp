@@ -55,6 +55,7 @@
 	data-version="${appVersion}"
 	data-codename="${appCodename}"
 	data-cspStyleNonce="${cspStyleNonce}"
+	data-lol="${requestScope.cspStyleNonce}"
 >
     <noscript>
         <strong>We're sorry but the Vue frontend to Demyo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>

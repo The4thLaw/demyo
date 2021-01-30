@@ -6,20 +6,30 @@ import java.util.Base64;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.web.header.HeaderWriter;
 
 /**
  * Handles the Content-Security-Policy header by providing a dynamic nonce for scripts.
  */
 public class NoncedCSPHeaderWriter implements HeaderWriter {
+	private static final String REQ_ATTRIB_SCRIPT_NONCE = "cspScriptNonce";
+
 	public static final String BEAN_NAME = "noncedCSPHeaderWriter";
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(NoncedCSPHeaderWriter.class);
 	private static final int NONCE_SIZE = 16;
 
 	private SecureRandom rand = new SecureRandom();
 
 	@Override
 	public void writeHeaders(HttpServletRequest request, HttpServletResponse response) {
+		if (request.getAttribute(REQ_ATTRIB_SCRIPT_NONCE) != null) {
+			LOGGER.trace("The request already has a nonce, not generating a second one");
+			return;
+		}
+
 		byte[] nonceArray = new byte[NONCE_SIZE];
 		rand.nextBytes(nonceArray);
 		String scriptNonce = Base64.getEncoder().encodeToString(nonceArray);
@@ -41,7 +51,7 @@ public class NoncedCSPHeaderWriter implements HeaderWriter {
 				+ "style-src 'self' 'unsafe-inline';";
 
 		response.addHeader("Content-Security-Policy", csp);
-		request.setAttribute("cspScriptNonce", scriptNonce);
+		request.setAttribute(REQ_ATTRIB_SCRIPT_NONCE, scriptNonce);
 		request.setAttribute("cspStyleNonce", styleNonce);
 	}
 

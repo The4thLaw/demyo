@@ -51,7 +51,7 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>L\u00e2thy</project.versionCodename>
-		<org.eclipse.jetty.version>9.4.25.v20191220</org.eclipse.jetty.version>
+		<org.eclipse.jetty.version>9.4.36.v20210114</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v15.5.0</js.node.version>
 	</properties>

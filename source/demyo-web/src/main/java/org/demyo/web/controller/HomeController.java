@@ -147,14 +147,11 @@ public class HomeController extends AbstractController {
 		model.addAttribute("appLegacyJsFilename", appLegacyJsFilename);
 		model.addAttribute("vendorLegacyJsFilename", vendorLegacyJsFilename);
 
-		// TODO [Jetty]: for some reason, the headers set by Spring Security are not taken into account
-		// It is probably because we're using JSPs and Jetty is using its own response or sending the data too soon,
-		// as annotating this method with @ResponseBody yields the right headers.
-		// After updating Jetty, try to remove this
-		// If this doesn't work, maybe switch to Thymeleaf? It looks like a heavy change for such an easy workaround
-		response.setHeader("X-Content-Type-Options", "nosniff");
-		response.setHeader("X-XSS-Protection", "1; mode=block");
-		response.setHeader("X-Frame-Options", "SAMEORIGIN");
+		// The fact that this is a JSP request means that the headers and
+		// attributes are altered. So the standard header writer attributes
+		// are not properly exposed. We thus need to call the writer ourselves.
+		// Not very clean, but the alternative of switching to something like
+		// Thymeleaf is even worse.
 		new NoncedCSPHeaderWriter().writeHeaders(request, response);
 
 		return "index";
