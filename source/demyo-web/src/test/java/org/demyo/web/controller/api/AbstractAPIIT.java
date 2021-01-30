@@ -14,10 +14,12 @@ import org.springframework.web.context.WebApplicationContext;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import org.demyo.test.AbstractPersistenceTest;
+import org.demyo.web.config.WebConfig;
 
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/demyo-context.xml")
+@ContextConfiguration(classes = WebConfig.class)
 @WebAppConfiguration
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
+@TestExecutionListeners(
+{ DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
 // TODO [boot]: use @WebMvcTest when migrating to Spring Boot
 public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 

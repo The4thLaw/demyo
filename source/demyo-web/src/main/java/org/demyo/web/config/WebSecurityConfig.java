@@ -13,6 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebSecurityConfig.class);
 
+	public WebSecurityConfig() {
+		LOGGER.info("Parsing configuration");
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		LOGGER.debug("Configuring Spring Security");

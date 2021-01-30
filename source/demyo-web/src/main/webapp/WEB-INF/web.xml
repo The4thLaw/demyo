@@ -6,18 +6,14 @@
 
     <display-name>Demyo</display-name>
     
-    <!-- Configuration files of the Spring application -->
+    <!-- Configuration classes of the Spring application -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
-            /WEB-INF/spring/demyo-context.xml
-        </param-value>
-    </context-param>
-    
-    <!-- Automatically escape HTML characters in form fields (values and error msg) -->
-    <context-param>
-        <param-name>defaultHtmlEscape</param-name>
-        <param-value>true</param-value>
+        <param-value>org.demyo.web.config.WebConfig</param-value>
     </context-param>
     
     <!-- Force UTF-8 for the requests. -->

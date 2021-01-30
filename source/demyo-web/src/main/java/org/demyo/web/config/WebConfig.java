@@ -14,10 +14,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.jndi.JndiObjectFactoryBean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,16 +28,22 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
+import org.demyo.dao.config.DaoConfig;
 import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
 
 // TODO: When migrating to Spring 5, switch the XML config to the annotation-based equivalent
 @Configuration
 @ComponentScan("org.demyo")
+@Import(
+{ DaoConfig.class, WebSecurityConfig.class })
 @EnableWebMvc
-@EnableTransactionManagement
 @EnableCaching
 public class WebConfig implements WebMvcConfigurer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
+
+	public WebConfig() {
+		LOGGER.info("Parsing configuration");
+	}
 
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
