@@ -1,7 +1,7 @@
 package org.demyo.service.impl;
 
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -37,7 +37,7 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 	@Async
 	@Override
 	@Transactional(readOnly = true)
-	public Future<List<Collection>> quickSearch(String query, boolean exact) {
+	public CompletableFuture<List<Collection>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
 

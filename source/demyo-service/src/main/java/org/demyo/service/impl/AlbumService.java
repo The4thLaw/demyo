@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
@@ -152,7 +152,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Async
 	@Override
 	@Transactional(readOnly = true)
-	public Future<List<Album>> quickSearch(String query, boolean exact) {
+	public CompletableFuture<List<Album>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
 

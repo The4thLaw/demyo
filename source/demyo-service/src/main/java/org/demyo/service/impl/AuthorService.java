@@ -2,7 +2,7 @@ package org.demyo.service.impl;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -49,7 +49,7 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	@Async
 	@Override
 	@Transactional(readOnly = true)
-	public Future<List<Author>> quickSearch(String query, boolean exact) {
+	public CompletableFuture<List<Author>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
 

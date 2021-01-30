@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
@@ -17,7 +17,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.common.exception.DemyoErrorCode;
@@ -257,10 +256,10 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * @return The matches, as a future.
 	 */
 	// Note: caching cannot be supported here. See https://jira.spring.io/browse/SPR-12967
-	protected Future<List<M>> quickSearch(String query, boolean exact, IQuickSearchableRepo<M> searchRepo) {
+	protected CompletableFuture<List<M>> quickSearch(String query, boolean exact, IQuickSearchableRepo<M> searchRepo) {
 		if (exact) {
-			return new AsyncResult<>(searchRepo.quickSearchExact(query));
+			return CompletableFuture.completedFuture(searchRepo.quickSearchExact(query));
 		}
-		return new AsyncResult<>(searchRepo.quickSearchLike(query));
+		return CompletableFuture.completedFuture(searchRepo.quickSearchLike(query));
 	}
 }

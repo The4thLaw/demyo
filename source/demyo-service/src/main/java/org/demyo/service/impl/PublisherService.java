@@ -1,7 +1,7 @@
 package org.demyo.service.impl;
 
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -48,7 +48,7 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 
 	@Async
 	@Override
-	public Future<List<Publisher>> quickSearch(String query, boolean exact) {
+	public CompletableFuture<List<Publisher>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
 

@@ -1,7 +1,7 @@
 package org.demyo.service;
 
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import org.demyo.model.IModel;
 
@@ -11,5 +11,5 @@ import org.demyo.model.IModel;
  * @param <M> The model type.
  */
 public interface IQuickSearchableService<M extends IModel> {
-	Future<List<M>> quickSearch(String query, boolean exact);
+	CompletableFuture<List<M>> quickSearch(String query, boolean exact);
 }

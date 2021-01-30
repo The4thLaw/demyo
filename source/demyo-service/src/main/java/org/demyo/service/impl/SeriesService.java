@@ -1,7 +1,7 @@
 package org.demyo.service.impl;
 
 import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.CompletableFuture;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
@@ -63,7 +63,7 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	@Transactional(readOnly = true)
 	@Async
 	@Override
-	public Future<List<Series>> quickSearch(String query, boolean exact) {
+	public CompletableFuture<List<Series>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
 
