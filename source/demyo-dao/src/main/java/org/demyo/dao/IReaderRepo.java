@@ -17,6 +17,13 @@ import org.demyo.model.Series;
 @Repository
 public interface IReaderRepo extends IModelRepo<Reader> {
 	/**
+	 * Finds the first available {@link Reader}.
+	 * 
+	 * @return The first reader by ID.
+	 */
+	Reader findFirstByOrderById();
+
+	/**
 	 * Finds a {@link Reader}, and all his connections to show on a "View" page.
 	 * 
 	 * @param id The {@link Reader} ID.

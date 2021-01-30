@@ -66,6 +66,8 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		if (entity == null) {
 			throw new EntityNotFoundException("No Reader for ID " + id);
 		}
+		// Initialize the configuration
+		entity.getConfiguration();
 		return entity;
 	}
 
@@ -89,9 +91,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		} else if (count != 1) {
 			return null;
 		}
-		// TODO: this won't be very efficient if there is a large number of readers.
-		// It would be best to find with a limit, or to run a findFirst ordered by ID
-		long uniqueId = repo.findAll().iterator().next().getId();
+		long uniqueId = repo.findFirstByOrderById().getId();
 		return getByIdForView(uniqueId);
 	}
 
