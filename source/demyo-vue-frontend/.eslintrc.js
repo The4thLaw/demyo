@@ -1,11 +1,14 @@
 module.exports = {
 	root: true,
+
 	env: {
 		browser: true
 	},
+
 	parserOptions: {
 		parser: 'babel-eslint'
 	},
+
 	extends: [
 		'eslint:recommended',
 		'plugin:vue/essential',
@@ -13,6 +16,7 @@ module.exports = {
 		'plugin:vue/recommended',
 		'plugin:you-dont-need-lodash-underscore/all'
 	],
+
 	rules: {
 		// Possible errors
 		// Logging to the console is OK in some cases
@@ -70,5 +74,17 @@ module.exports = {
 			singleline: 4,
 			multiline: 4
 		}]
-	}
+	},
+
+	overrides: [
+		{
+			files: [
+				'**/__tests__/*.{j,t}s?(x)',
+				'**/tests/unit/**/*.spec.{j,t}s?(x)'
+			],
+			env: {
+				jest: true
+			}
+		}
+	]
 }
