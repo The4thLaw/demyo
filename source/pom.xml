@@ -326,7 +326,7 @@
 				<!-- 
 				1.4.197 should be avoided due to https://github.com/h2database/h2database/issues/1073
 				1.4.200 is not possible due to https://github.com/h2database/h2database/issues/2078
-				TODO: Demyo should have a way of using the recommended upgrade procedure from
+				For the next update, Demyo should have a way of using the recommended upgrade procedure from
 				https://h2database.com/html/tutorial.html#upgrade_backup_restore
 				-->
 				<version>1.4.196</version>
