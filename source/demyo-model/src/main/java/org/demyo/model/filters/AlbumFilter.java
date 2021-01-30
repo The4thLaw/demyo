@@ -14,7 +14,7 @@ import org.demyo.model.Tag;
 /**
  * An {@link IModelFilter} for {@link Album}s.
  */
-public class AlbumFilter extends AbstractModelFilter<Album> {
+public class AlbumFilter extends AbstractModelFilter {
 	/**
 	 * Factory method that creates a filter based on the {@link Publisher} internal ID.
 	 * 

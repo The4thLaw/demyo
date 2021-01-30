@@ -6,6 +6,10 @@ import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 
 Vue.use(VueI18n)
 
+function setHtmlLang(lang) {
+	document.documentElement.setAttribute('lang', lang.replace(/_/g, ' '))
+}
+
 const loadedLanguages = []
 
 const dateTimeFormats = {
@@ -70,23 +74,23 @@ const i18n = new VueI18n({
 	messages: loadLocaleMessages(),
 	dateTimeFormats
 })
+setHtmlLang(selectedLocale)
 console.log(`Initialized i18n with '${selectedLocale}' as default language and '${fallbackLanguage}' as fallback`)
 
 /**
  * Asynchronously gets translations for a given language from the server, and sets them in vue-i18n.
  * @param {string} lang The language to get translations for
- * @return {Promise} A Promise that always resolves to true
+ * @return {Promise<void>} An Promise without value (void)
  */
 async function loadLanguageFromServer(lang) {
 	if (loadedLanguages.includes(lang)) {
 		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
-		return true
+		return
 	}
 	const response = await axios.get(apiRoot + 'translations/' + lang)
 	i18n.setLocaleMessage(lang, response.data)
 	console.log(`Loaded ${Object.keys(response.data).length} translations from the server in ${lang}`)
 	loadedLanguages.push(lang)
-	return true
 }
 
 // i18n is already initialized and serving the critical messages in the language of choice
@@ -101,10 +105,11 @@ loadLanguageFromServer(defaultLanguage).then(
  */
 export async function switchLanguage(lang) {
 	// Java and browsers have a different way of formatting language variants
-	lang = lang.replace(/_/, '-')
+	lang = lang.replace(/_/g, '-')
 	console.log(`Switching language to ${lang}`)
 	await loadLanguageFromServer(lang)
 	i18n.locale = lang
+	setHtmlLang(lang)
 }
 
 export default i18n

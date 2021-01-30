@@ -15,4 +15,4 @@ See our [guidelines](.github/CONTRIBUTING.md).
 
 ## Copyright
 
-Demyo is Copyright &copy; Xavier Dalem, 2007-2020. See [LICENSE.md](LICENSE.md) for details.
+Demyo is Copyright © Xavier Dalem, 2007-2021, licensed under the [GNU Affero General Public License version 3](LICENSE.md)

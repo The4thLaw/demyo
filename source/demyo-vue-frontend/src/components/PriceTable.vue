@@ -4,8 +4,12 @@
 			<template #default>
 				<thead>
 					<tr>
-						<th>{{ $t(`field.${modelName}.prices.date`) }}</th>
-						<th>{{ $t(`field.${modelName}.prices.price`) }}</th>
+						<th scope="col">
+							{{ $t(`field.${modelName}.prices.date`) }}
+						</th>
+						<th scope="col">
+							{{ $t(`field.${modelName}.prices.price`) }}
+						</th>
 					</tr>
 				</thead>
 				<tbody>

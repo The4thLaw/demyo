@@ -13,7 +13,7 @@ import org.demyo.model.Series;
 /**
  * An {@link IModelFilter} for {@link Derivative}s.
  */
-public class DerivativeFilter extends AbstractModelFilter<Derivative> {
+public class DerivativeFilter extends AbstractModelFilter {
 	/**
 	 * Factory method that creates a filter based on the {@link Series} internal ID.
 	 * 

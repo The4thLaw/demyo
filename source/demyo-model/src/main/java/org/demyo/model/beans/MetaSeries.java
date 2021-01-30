@@ -22,7 +22,7 @@ public class MetaSeries implements Comparable<MetaSeries> {
 	@JsonView(Basic.class)
 	private final Album album;
 	@JsonView(Basic.class)
-	private final SortedSet<Album> albums = new TreeSet<Album>(new AlbumComparator());
+	private final SortedSet<Album> albums = new TreeSet<>(new AlbumComparator());
 
 	public MetaSeries(Album album) {
 		if (album.getSeries() != null) {

@@ -27,6 +27,7 @@
 						${baseImageUrl}?w=400 400w,
 						${baseImageUrl}?w=700 700w`"
 					sizes="(max-width: 700px) 200px, 350px"
+					:alt="image.identifyingName"
 				>
 			</div>
 			<div class="c-SectionCard__content">

@@ -34,8 +34,12 @@
 		"i18n-ally.forceEnabled": true,
 		"i18n-ally.localesPaths": "demyo-vue-frontend/src/locales",
 
+		"jest.rootPath": "demyo-vue-frontend",
+		"jest.pathToJest": "node_modules/.bin/jest",
+
 		"java.checkstyle.configuration": "${workspaceFolder}/demyo-checkstyle-config.xml",
 		"java.format.settings.url": "../config/eclipse-formatter.xml",
+
 		"files.watcherExclude": {
 			"**/target/**": true
 		},

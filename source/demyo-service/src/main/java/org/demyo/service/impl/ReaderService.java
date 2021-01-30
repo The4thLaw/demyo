@@ -127,7 +127,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@Transactional
 	@Override
 	public void removeFavouriteAlbum(long readerId, long albumId) {
-		LOGGER.debug("Removing favourite album {} from reader", albumId, readerId);
+		LOGGER.debug("Removing favourite album {} from reader {}", albumId, readerId);
 		repo.deleteFavouriteAlbum(readerId, albumId);
 	}
 
