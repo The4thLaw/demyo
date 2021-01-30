@@ -261,14 +261,7 @@
 				<version>1.2.0</version>
 			</dependency>
 			
-			<!-- TODO: switch to this? -->
-			<!-- 
-			<dependency>
-			    <groupId>javax.servlet.jsp.jstl</groupId>
-			    <artifactId>jstl</artifactId>
-			    <version>1.2</version>
-			</dependency>
-			-->
+			<!-- javax.servlet.jsp.jstl:jstl:1.2 only has sources on Maven Central -->
 			<dependency>
 	            <groupId>javax.servlet</groupId>
 	            <artifactId>jstl</artifactId>
