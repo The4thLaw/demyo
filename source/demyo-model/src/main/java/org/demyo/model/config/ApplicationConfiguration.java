@@ -120,14 +120,20 @@ public class ApplicationConfiguration {
 		SortedMap<String, String> config = new TreeMap<>();
 
 		config.put(CONFIG_KEY_LANGUAGE, language.toLanguageTag());
-		config.put("paging.textPageSize", String.valueOf(pageSizeForText));
-		config.put("paging.imagePageSize", String.valueOf(pageSizeForImages));
-		config.put("paging.pageSizeForCards", String.valueOf(pageSizeForCards));
-		config.put("paging.subItemsInCardIndex", String.valueOf(subItemsInCardIndex));
+		setIfNotNull(config, "paging.textPageSize", pageSizeForText);
+		setIfNotNull(config, "paging.imagePageSize", pageSizeForImages);
+		setIfNotNull(config, "paging.pageSizeForCards", pageSizeForCards);
+		setIfNotNull(config, "paging.subItemsInCardIndex", subItemsInCardIndex);
 
 		LOGGER.debug("Configuration as map: {}", config);
 
 		return config;
+	}
+
+	private static void setIfNotNull(SortedMap<String, String> config, String key, Integer value) {
+		if (value != null) {
+			config.put(key, String.valueOf(value));
+		}
 	}
 
 	/**
