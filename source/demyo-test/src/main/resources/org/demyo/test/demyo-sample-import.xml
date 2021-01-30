@@ -664,7 +664,7 @@
 		</derivative>
 	</derivatives>
 	<derivatives_prices>
-		<!-- TODO -->
+		<!-- We should eventually test the import of prices -->
 	</derivatives_prices>
 	<readers>
 		<reader id="1" name="Xavier" colour="#304ffe">
@@ -684,9 +684,5 @@
 		<configuration-entry id="9" config_key="language" config_value="en" reader_id="1" />
 		<configuration-entry id="10" config_key="paging.imagePageSize" config_value="15" reader_id="1" />
 		<configuration-entry id="13" config_key="paging.albumPageSize" config_value="20" reader_id="1" />
-		<!-- Required while we migrate to Vue, can be removed after. -->
-		<configuration-entry id="11" config_key="thumbnail.width" config_value="220" reader_id="1"/>
-		<configuration-entry id="12" config_key="header.quickLinks" config_value="[]" reader_id="1"/>
-		<configuration-entry id="14" config_key="thumbnail.height" config_value="200" reader_id="1"/>
 	</configuration>
 </library>
