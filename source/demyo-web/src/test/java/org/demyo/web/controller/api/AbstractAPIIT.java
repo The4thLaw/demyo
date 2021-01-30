@@ -20,7 +20,6 @@ import org.demyo.web.config.WebConfig;
 @WebAppConfiguration
 @TestExecutionListeners(
 { DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
-// TODO [boot]: use @WebMvcTest when migrating to Spring Boot
 public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 
 	@Autowired
@@ -44,7 +43,6 @@ public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 	public void clearCaches() {
 		// We must clear all caches for each test case, else the reloads by
 		// DBUnit break the tests
-		// TODO: test if this is still true
 		for (String cacheName : cacheManager.getCacheNames()) {
 			cacheManager.getCache(cacheName).clear();
 		}

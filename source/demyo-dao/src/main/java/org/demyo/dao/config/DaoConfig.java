@@ -47,7 +47,6 @@ public class DaoConfig {
 		return lookup.getDataSource("org.demyo.services.dataSource");
 	}
 
-	// TODO [Spring Boot]: https://www.baeldung.com/database-migrations-with-flyway#2-spring-boot-2x
 	@Bean(name = FLYWAY_BEAN_NAME, initMethod = "migrate")
 	public Flyway flyway() {
 		ClassicConfiguration conf = new ClassicConfiguration();

@@ -78,7 +78,6 @@ public class WebConfig implements WebMvcConfigurer {
 		}
 	}
 
-	// TODO: [Spring Boot] see https://www.baeldung.com/spring-cache-tutorial#1-using-spring-boot
 	/*
 	 * Cache management
 	 * We can rely on a pure memory implementation for now, without advanced features:
