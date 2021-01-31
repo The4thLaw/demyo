@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.dbunit.ext.h2.H2DataTypeFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.CustomScopeConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,8 +20,6 @@ import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
  */
 @Configuration
 public class TestConfiguration {
-	private static final Logger LOGGER = LoggerFactory.getLogger(TestConfiguration.class);
-
 	// Thanks to https://stackoverflow.com/a/8803166/109813
 	@Bean
 	public CustomScopeConfigurer customScope() {
