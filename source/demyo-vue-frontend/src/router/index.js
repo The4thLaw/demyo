@@ -17,8 +17,6 @@ import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
 
-// TODO: define chunks for the edit / new pages
-
 Vue.use(VueRouter)
 Vue.use(VueMeta)
 
