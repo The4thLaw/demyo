@@ -125,7 +125,7 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean("desktopCallbacks")
-	public JndiObjectFactoryBean desktopCallbacks() {
+	public Object desktopCallbacks() {
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
 		bean.setJndiName("org.demyo.services.desktop");
 		return bean;

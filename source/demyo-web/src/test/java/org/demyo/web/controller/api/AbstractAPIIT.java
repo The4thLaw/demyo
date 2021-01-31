@@ -14,9 +14,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
 import org.demyo.test.AbstractPersistenceTest;
-import org.demyo.web.config.WebConfig;
+import org.demyo.web.config.TestWebConfig;
 
-@ContextConfiguration(classes = WebConfig.class)
+@ContextConfiguration(classes = TestWebConfig.class)
 @WebAppConfiguration
 @TestExecutionListeners(
 { DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class })
