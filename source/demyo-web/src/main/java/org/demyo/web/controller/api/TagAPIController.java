@@ -58,7 +58,7 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
-	int countDerivativesByType(@PathVariable long modelId) {
+	public int countDerivativesByType(@PathVariable long modelId) {
 		return albumService.countAlbumsByTag(modelId);
 	}
 }
