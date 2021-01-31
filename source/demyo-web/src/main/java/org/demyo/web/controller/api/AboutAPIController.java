@@ -20,7 +20,7 @@ public class AboutAPIController {
 	 */
 	@GetMapping("/environment")
 	public Map<String, String> getEnvironment() {
-		Map<String, String> env = new HashMap<String, String>();
+		Map<String, String> env = new HashMap<>();
 		env.put("javaVersion", System.getProperty("java.version"));
 		env.put("javaVendor", System.getProperty("java.vendor"));
 		env.put("osName", System.getProperty("os.name"));

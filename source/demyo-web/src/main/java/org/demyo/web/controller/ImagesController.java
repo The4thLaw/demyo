@@ -1,6 +1,5 @@
 package org.demyo.web.controller;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +37,7 @@ public class ImagesController extends AbstractController {
 	public ResponseEntity<Resource> getImageFile(@PathVariable("imageId") long imageId,
 			@RequestParam("w") Optional<Integer> maxWidth,
 			@RequestParam(value = "lenient", defaultValue = "false") boolean lenient)
-			throws DemyoException, IOException {
+			throws DemyoException {
 
 		Resource res = imageService.getImage(imageId, maxWidth, lenient);
 

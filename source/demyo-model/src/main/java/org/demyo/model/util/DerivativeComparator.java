@@ -11,7 +11,7 @@ public class DerivativeComparator extends AbstractModelComparator<Derivative> {
 	private static final long serialVersionUID = -6911490901403756503L;
 
 	private AlbumAndSeriesComparator albumComparator = new AlbumAndSeriesComparator();
-	private Comparator<Derivative> fallbackComparator = Comparator //
+	private transient Comparator<Derivative> fallbackComparator = Comparator //
 			.<Derivative, String>comparing(d -> d.getType().getName()) //
 			.thenComparing(Derivative::getId);
 

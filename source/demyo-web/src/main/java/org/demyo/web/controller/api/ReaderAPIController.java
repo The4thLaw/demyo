@@ -73,6 +73,13 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 		return service.getLists(modelId);
 	}
 
+	/**
+	 * Gets the Reader's favourite Albums.
+	 * 
+	 * @param modelId The {@link Reader} ID.
+	 * @param view The Jackson view to apply.
+	 * @return The favourite Albums, as a list of {@link MetaSeries}
+	 */
 	@GetMapping("/{modelId}/favourites/albums")
 	public MappingJacksonValue getFavouriteAlbums(@PathVariable long modelId,
 			@RequestParam("view") Optional<String> view) {
@@ -80,6 +87,13 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 		return getIndexView(view, value);
 	}
 
+	/**
+	 * Gets the Reader's reading list.
+	 * 
+	 * @param modelId The {@link Reader} ID.
+	 * @param view The Jackson view to apply.
+	 * @return The Albums, as a list of {@link MetaSeries}
+	 */
 	@GetMapping("/{modelId}/readingList/albums")
 	public MappingJacksonValue getReadingList(@PathVariable long modelId, @RequestParam("view") Optional<String> view) {
 		Iterable<MetaSeries> value = service.getReadingListAlbums(modelId);

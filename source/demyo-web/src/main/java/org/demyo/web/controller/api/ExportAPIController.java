@@ -58,6 +58,6 @@ public class ExportAPIController {
 				.build();
 		headers.setContentDisposition(contentDisp);
 
-		return new HttpEntity<Resource>(new FileSystemResource(file), headers);
+		return new HttpEntity<>(new FileSystemResource(file), headers);
 	}
 }

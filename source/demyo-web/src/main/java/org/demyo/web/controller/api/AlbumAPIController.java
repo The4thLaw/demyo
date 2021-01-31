@@ -37,7 +37,8 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	/**
 	 * Creates the controller.
 	 * 
-	 * @param service The service to manage the entries.
+	 * @param service The service to manage the Albums.
+	 * @param derivativeService The service to manage the Derivatives.
 	 */
 	@Autowired
 	public AlbumAPIController(IAlbumService service, IDerivativeService derivativeService) {
@@ -46,13 +47,27 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 		this.derivativeService = derivativeService;
 	}
 
+	/**
+	 * Retrieves the full list of Albums.
+	 * 
+	 * @param view The Jackson view to apply.
+	 * @return The list.
+	 */
 	@Override
-	@GetMapping({ "/", "/index" })
+	@GetMapping(
+	{ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		Iterable<MetaSeries> value = service.findAllForIndex();
 		return getIndexView(view, value);
 	}
 
+	/**
+	 * Retrieves the filtered list of Albums.
+	 * 
+	 * @param view The Jackson view to apply.
+	 * @param filter The filter to apply.
+	 * @return The list.
+	 */
 	@PostMapping({ "/index/filtered" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view,
 			@RequestBody AlbumFilter filter) {
@@ -87,11 +102,11 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	/**
 	 * Counts how many Derivatives use the given Album.
 	 * 
-	 * @param typeId The internal ID of the {@link Album}
+	 * @param modelId The internal ID of the {@link Album}
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	public long countDerivativesBySeries(@PathVariable long modelId) {
+	public long countDerivativesByAlbums(@PathVariable long modelId) {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forAlbum(modelId));
 	}
 }

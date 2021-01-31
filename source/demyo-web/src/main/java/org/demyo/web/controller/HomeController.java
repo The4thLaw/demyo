@@ -159,7 +159,7 @@ public class HomeController extends AbstractController {
 
 	private static String getFrontendResource(Resource[] resources, String name) {
 		if (resources.length < 1) {
-			LOGGER.warn("Failed to find the resource named '{}'; this is only fine during development");
+			LOGGER.warn("Failed to find the resource named '{}'; this is only fine during development", name);
 			return null;
 		} else if (resources.length > 1) {
 			throw new IllegalArgumentException(
