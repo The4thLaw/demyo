@@ -70,7 +70,7 @@ export default {
 		}),
 
 		hasCollections() {
-			return this.publisher.collections && this.publisher.collections.length >= 0
+			return this.publisher.collections && this.publisher.collections.length > 0
 		}
 	},
 
