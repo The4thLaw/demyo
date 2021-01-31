@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -26,13 +25,10 @@ import org.demyo.model.util.StartsWithField;
 @Table(name = "AUTHORS")
 @DefaultOrder(expression =
 { @DefaultOrder.Order(property = "name"), @DefaultOrder.Order(property = "firstName") })
-@NamedEntityGraphs(
-{
-		@NamedEntityGraph(name = "Author.forEdition", attributeNodes =
-		{ @NamedAttributeNode("portrait") }),
-		@NamedEntityGraph(name = "Author.forView", attributeNodes =
-		{ @NamedAttributeNode("portrait") })
-})
+@NamedEntityGraph(name = "Author.forEdition", attributeNodes =
+{ @NamedAttributeNode("portrait") })
+@NamedEntityGraph(name = "Author.forView", attributeNodes =
+{ @NamedAttributeNode("portrait") })
 public class Author extends AbstractModel {
 	/** The last name. */
 	@Column(name = "name")

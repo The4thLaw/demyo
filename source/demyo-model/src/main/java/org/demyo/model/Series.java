@@ -12,7 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
@@ -34,9 +33,7 @@ import org.demyo.model.util.StartsWithField;
 @Entity
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraphs(
-{
-		@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries")) })
+@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries"))
 public class Series extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")

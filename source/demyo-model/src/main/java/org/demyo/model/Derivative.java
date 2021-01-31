@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,15 +42,13 @@ import org.demyo.model.util.IdentifyingNameComparator;
  */
 @Entity
 @Table(name = "DERIVATIVES")
-@NamedEntityGraphs(
-{
-		@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes =
-		{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("type"),
-				@NamedAttributeNode("source"), @NamedAttributeNode("images") }),
-		@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
-		{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("artist"),
-				@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images"),
-				@NamedAttributeNode("prices") }) })
+@NamedEntityGraph(name = "Derivative.forIndex", attributeNodes =
+{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("type"),
+		@NamedAttributeNode("source"), @NamedAttributeNode("images") })
+@NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
+{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("artist"),
+		@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images"),
+		@NamedAttributeNode("prices") })
 @OneNotNull(fields =
 { "series.id", "album.id" })
 public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {

@@ -18,7 +18,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,21 +52,20 @@ import org.demyo.model.util.IdentifyingNameComparator;
 		@DefaultOrder.Order(property = "number"), @DefaultOrder.Order(property = "numberSuffix"),
 		// All other things being equal, sort by title. It's more intuitive for one shots in Album indexes, for example
 		@DefaultOrder.Order(property = "title") })
-@NamedEntityGraphs(
-{ @NamedEntityGraph(name = "Album.forIndex", attributeNodes = { @NamedAttributeNode("series") }),
-		@NamedEntityGraph(name = "Album.forView", attributeNodes =
-		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-				@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
-				@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-				@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
-				@NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites") }), //
-		@NamedEntityGraph(name = "Album.forEdition", attributeNodes =
-		{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-				@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
-				@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-				@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
-				@NamedAttributeNode("prices") })//
-})
+@NamedEntityGraph(name = "Album.forIndex", attributeNodes =
+{ @NamedAttributeNode("series") })
+@NamedEntityGraph(name = "Album.forView", attributeNodes =
+{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
+		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
+		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
+		@NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites") })
+@NamedEntityGraph(name = "Album.forEdition", attributeNodes =
+{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
+		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
+		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
+		@NamedAttributeNode("prices") })
 @JsonView(ModelView.AlbumTemplate.class)
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	/** The parent {@link Series}. */

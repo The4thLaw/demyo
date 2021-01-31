@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
-import javax.persistence.NamedEntityGraphs;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -32,13 +31,13 @@ import org.demyo.model.util.StartsWithField;
  */
 @Entity
 @Table(name = "PUBLISHERS")
-@DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
-@NamedEntityGraphs({
-		@NamedEntityGraph(name = "Publisher.forIndex", attributeNodes = @NamedAttributeNode("collections")),
-		@NamedEntityGraph(name = "Publisher.forView", attributeNodes =
-		{ @NamedAttributeNode("collections"),
-				@NamedAttributeNode("logo") }),
-		@NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo")) })
+@DefaultOrder(expression =
+{ @DefaultOrder.Order(property = "name") })
+@NamedEntityGraph(name = "Publisher.forIndex", attributeNodes = @NamedAttributeNode("collections"))
+@NamedEntityGraph(name = "Publisher.forView", attributeNodes =
+{ @NamedAttributeNode("collections"),
+		@NamedAttributeNode("logo") })
+@NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo"))
 public class Publisher extends AbstractModel {
 	/** The name. */
 	@Column(name = "name")
