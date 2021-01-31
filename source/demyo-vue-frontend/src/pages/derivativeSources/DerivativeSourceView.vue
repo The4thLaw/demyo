@@ -66,8 +66,8 @@
 				<!-- Thanks to https://www.embedgooglemap.net -->
 				<div class="v-DerivativeSourceView__mapCanvas">
 					<iframe
+						:title="$t('field.DerivativeSource.address')"
 						:src="mapUrl" class="v-DerivativeSourceView__mapFrame"
-						frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
 					/>
 				</div>
 			</div>
@@ -121,7 +121,7 @@ export default {
 
 		mapUrl() {
 			const encoded = encodeURI(this.source.name + ', ' + this.source.address)
-			return 'https://maps.google.com/maps?&t=&z=15&ie=UTF8&iwloc=&output=embed&q=' + encoded
+			return 'https://maps.google.com/maps?t=&z=15&ie=UTF8&iwloc=&output=embed&q=' + encoded
 		}
 	},
 
@@ -165,5 +165,11 @@ export default {
 .v-DerivativeSourceView__mapFrame {
 	height: 3000px;
 	max-height: 80vh;
+}
+
+.v-DerivativeSourceView__mapFrame {
+	overflow: hidden;
+	border: 0;
+	margin: 0;
 }
 </style>
