@@ -97,7 +97,6 @@
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('page.Album.aboutEdition')">
-				<!-- TODO: https://github.com/The4thLaw/demyo/issues/106 -->
 				<v-row>
 					<v-col cols="12" md="4">
 						<v-text-field
