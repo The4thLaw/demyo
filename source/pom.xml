@@ -54,6 +54,11 @@
 		<org.eclipse.jetty.version>9.4.36.v20210114</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v15.5.0</js.node.version>
+		
+		<sonar.projectKey>The4thLaw_demyo</sonar.projectKey>
+		<sonar.organization>the4thlaw</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	
 	<dependencies>
