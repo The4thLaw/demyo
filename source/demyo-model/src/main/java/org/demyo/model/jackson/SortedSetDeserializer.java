@@ -1,6 +1,7 @@
 package org.demyo.model.jackson;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Objects;
@@ -37,15 +38,17 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 	private Class<T> elementClass;
 	private Comparator<T> compInstance;
 
-	public SortedSetDeserializer() throws InstantiationException, IllegalAccessException {
+	public SortedSetDeserializer() throws InstantiationException, IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException, SecurityException {
 		this(null, null);
 	}
 
 	SortedSetDeserializer(Class<C> compClass, Class<T> elementClass)
-			throws InstantiationException, IllegalAccessException {
+			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+			SecurityException {
 		this.compClass = compClass;
 		this.elementClass = elementClass;
-		this.compInstance = compClass == null ? null : compClass.newInstance();
+		this.compInstance = compClass == null ? null : compClass.getDeclaredConstructor().newInstance();
 
 		LOGGER.trace("Created a new SortedSetDeserializer({}, {})", compClass, elementClass);
 	}
@@ -78,7 +81,7 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 
 		try {
 			return createSerializer(scCompClass, elClass);
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (ReflectiveOperationException e) {
 			throw new JsonMappingException(ctxt.getParser(),
 					"Failed to create a new SortedSetdeserializer instance", e);
 		}
@@ -88,7 +91,8 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 	// At least it's limited to a single line (which is why this is extracted to a specific method)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static JsonDeserializer<?> createSerializer(Class<?> scCompClass, Class<?> elClass)
-			throws InstantiationException, IllegalAccessException {
+			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+			SecurityException {
 		return new SortedSetDeserializer(scCompClass, elClass);
 	}
 
