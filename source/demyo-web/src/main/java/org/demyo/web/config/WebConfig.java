@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -28,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
+import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.dao.config.DaoConfig;
 import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
 
@@ -124,10 +127,11 @@ public class WebConfig implements WebMvcConfigurer {
 		return resolver;
 	}
 
-	@Bean("desktopCallbacks")
-	public Object desktopCallbacks() {
+	@Bean
+	public DesktopCallbacks desktopCallbacks() throws NamingException {
 		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
 		bean.setJndiName("org.demyo.services.desktop");
-		return bean;
+		bean.afterPropertiesSet();
+		return (DesktopCallbacks) bean.getObject();
 	}
 }

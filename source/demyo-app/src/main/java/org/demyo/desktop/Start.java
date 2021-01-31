@@ -100,9 +100,9 @@ public final class Start {
 
 		final Server server = new Server(new InetSocketAddress(httpAddress, httpPort));
 
-		// Needed for proper JSP/JSTL support
 		Configuration.ClassList classlist = Configuration.ClassList.setServerDefault(server);
 		classlist.addBefore(
+				// Needed for proper JSP/JSTL support
 				"org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
 				"org.eclipse.jetty.annotations.AnnotationConfiguration");
 
