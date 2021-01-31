@@ -103,6 +103,12 @@
 			<artifactId>json-path</artifactId>
 		</dependency>
 		
+		<!-- Needed for JDK9+ compatibility -->
+		<dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+        </dependency>
+		
 		<!-- Some dependencies related to JEE, provided by the container.
 			We need to declare them for unit tests to work -->
 		<dependency>
