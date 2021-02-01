@@ -64,7 +64,7 @@
 		Maybe one day https://github.com/jacoco/jacoco/pull/1007 will get implemented
 		and we'll have a full report.
 		-->
-		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco*/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>${project.rootdir}/*/target/site/jacoco*/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	
 	<dependencies>
