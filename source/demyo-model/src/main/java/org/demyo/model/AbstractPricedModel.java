@@ -118,7 +118,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 		// To keep the delete-orphan, preserve any Set set by the entity manager
 		if (this.getPrices() == null) {
-			setPricesRaw(new TreeSet<P>());
+			setPricesRaw(new TreeSet<>());
 		} else {
 			this.getPrices().clear();
 		}
@@ -161,7 +161,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 	public void setPricesFromList() {
 		if (priceList != null) {
 			if (getPrices() == null) {
-				setPricesRaw(new TreeSet<P>());
+				setPricesRaw(new TreeSet<>());
 			}
 			getPrices().clear();
 			getPrices().addAll(priceList);

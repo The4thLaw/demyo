@@ -78,7 +78,7 @@ public enum DemyoErrorCode {
 
 	private final int numericCode;
 
-	private DemyoErrorCode(int numericCode) {
+	DemyoErrorCode(int numericCode) {
 		this.numericCode = numericCode;
 	}
 

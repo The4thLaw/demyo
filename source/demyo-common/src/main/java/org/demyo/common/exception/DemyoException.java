@@ -52,6 +52,6 @@ public class DemyoException extends Exception implements IDemyoException {
 
 	@Override
 	public boolean is(DemyoErrorCode targetCode) {
-		return code.equals(targetCode);
+		return code == targetCode;
 	}
 }

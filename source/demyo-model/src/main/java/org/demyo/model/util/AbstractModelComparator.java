@@ -38,12 +38,12 @@ public abstract class AbstractModelComparator<M extends IModel> implements Compa
 		return c1.compareTo(c2);
 	}
 
-	private final Collator collator;
+	private final transient Collator collator;
 
 	/**
 	 * The Constructor.
 	 */
-	public AbstractModelComparator() {
+	protected AbstractModelComparator() {
 		// This relies on the French locale, like in the database. Should not be an issue in English at least.
 		collator = Collator.getInstance(Locale.FRENCH);
 	}

@@ -37,14 +37,12 @@ import javanet.staxutils.IndentingXMLStreamWriter;
  */
 @Component
 public class Demyo2Exporter implements IExporter {
+	private static final String ALBUM_KEY = "ALBUM_ID";
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Exporter.class);
 
-	private static final ThreadLocal<DateFormat> DATE_FORMAT = new ThreadLocal<DateFormat>() {
-		@Override
-		protected DateFormat initialValue() {
-			return new SimpleDateFormat("yyyy-MM-dd");
-		}
-	};
+	private static final ThreadLocal<DateFormat> DATE_FORMAT = ThreadLocal
+			.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
 
 	@Autowired
 	private IExportService exportService;
@@ -63,10 +61,8 @@ public class Demyo2Exporter implements IExporter {
 
 		File out = SystemConfiguration.getInstance().createTempFile("demyo2-export-", ".xml");
 
-		OutputStream outputStream = null;
 		XMLStreamWriter xsw = null;
-		try {
-			outputStream = new FileOutputStream(out);
+		try (OutputStream outputStream = new FileOutputStream(out)) {
 
 			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(outputStream, StandardCharsets.UTF_8.toString());
 			xsw = new IndentingXMLStreamWriter(xsw);
@@ -86,27 +82,25 @@ public class Demyo2Exporter implements IExporter {
 
 			// Series
 			exportModel(xsw, "series-list", "series", "SERIES",
-					new ManyToManyRelation[]
-					{ new ManyToManyRelation("related_series-list", "related_series", "MAIN", "SUB",
-							rawSqlDao.getRawRecords("SERIES_RELATIONS")) });
+					new ManyToManyRelation("related_series-list", "related_series", "MAIN", "SUB",
+							rawSqlDao.getRawRecords("SERIES_RELATIONS")));
 
 			// Albums
 			exportModel(xsw, "albums", "album", "ALBUMS",
-					new ManyToManyRelation[]
-					{ new ManyToManyRelation("writers", "writer", "ALBUM_ID", "WRITER_ID",
+					new ManyToManyRelation("writers", "writer", ALBUM_KEY, "WRITER_ID",
 							rawSqlDao.getRawRecords("ALBUMS_WRITERS")),
-							new ManyToManyRelation("artists", "artist", "ALBUM_ID", "ARTIST_ID",
-									rawSqlDao.getRawRecords("ALBUMS_ARTISTS")),
-							new ManyToManyRelation("colorists", "colorist", "ALBUM_ID", "COLORIST_ID",
-									rawSqlDao.getRawRecords("ALBUMS_COLORISTS")),
-							new ManyToManyRelation("inkers", "inker", "ALBUM_ID", "INKER_ID",
-									rawSqlDao.getRawRecords("ALBUMS_INKERS")),
-							new ManyToManyRelation("translators", "translator", "ALBUM_ID", "TRANSLATOR_ID",
-									rawSqlDao.getRawRecords("ALBUMS_TRANSLATORS")),
-							new ManyToManyRelation("album-tags", "album-tag", "ALBUM_ID", "TAG_ID",
-									rawSqlDao.getRawRecords("ALBUMS_TAGS")),
-							new ManyToManyRelation("album-images", "album-image", "ALBUM_ID", "IMAGE_ID",
-									rawSqlDao.getRawRecords("ALBUMS_IMAGES")) });
+					new ManyToManyRelation("artists", "artist", ALBUM_KEY, "ARTIST_ID",
+							rawSqlDao.getRawRecords("ALBUMS_ARTISTS")),
+					new ManyToManyRelation("colorists", "colorist", ALBUM_KEY, "COLORIST_ID",
+							rawSqlDao.getRawRecords("ALBUMS_COLORISTS")),
+					new ManyToManyRelation("inkers", "inker", ALBUM_KEY, "INKER_ID",
+							rawSqlDao.getRawRecords("ALBUMS_INKERS")),
+					new ManyToManyRelation("translators", "translator", ALBUM_KEY, "TRANSLATOR_ID",
+							rawSqlDao.getRawRecords("ALBUMS_TRANSLATORS")),
+					new ManyToManyRelation("album-tags", "album-tag", ALBUM_KEY, "TAG_ID",
+							rawSqlDao.getRawRecords("ALBUMS_TAGS")),
+					new ManyToManyRelation("album-images", "album-image", ALBUM_KEY, "IMAGE_ID",
+							rawSqlDao.getRawRecords("ALBUMS_IMAGES")));
 
 			exportModel(xsw, "album_prices", "album_price", "ALBUMS_PRICES");
 			exportModel(xsw, "borrowers", "borrower", "BORROWERS");
@@ -124,13 +118,12 @@ public class Demyo2Exporter implements IExporter {
 
 			// Readers
 			exportModel(xsw, "readers", "reader", "READERS",
-					new ManyToManyRelation[]
-					{ new ManyToManyRelation("favourite-series-list", "favourite-series", "READER_ID", "SERIES_ID",
+					new ManyToManyRelation("favourite-series-list", "favourite-series", "READER_ID", "SERIES_ID",
 							rawSqlDao.getRawRecords("READERS_FAVOURITE_SERIES")),
-							new ManyToManyRelation("favourite-albums", "favourite-album", "READER_ID", "ALBUM_ID",
-									rawSqlDao.getRawRecords("READERS_FAVOURITE_ALBUMS")),
-							new ManyToManyRelation("reading-list", "reading-list-entry", "READER_ID", "ALBUM_ID",
-									rawSqlDao.getRawRecords("READERS_READING_LIST")) });
+					new ManyToManyRelation("favourite-albums", "favourite-album", "READER_ID", ALBUM_KEY,
+							rawSqlDao.getRawRecords("READERS_FAVOURITE_ALBUMS")),
+					new ManyToManyRelation("reading-list", "reading-list-entry", "READER_ID", ALBUM_KEY,
+							rawSqlDao.getRawRecords("READERS_READING_LIST")));
 
 			exportModel(xsw, "configuration", "configuration-entry", "CONFIGURATION");
 
@@ -148,7 +141,6 @@ public class Demyo2Exporter implements IExporter {
 			DATE_FORMAT.remove();
 
 			DIOUtils.closeQuietly(xsw);
-			DIOUtils.closeQuietly(outputStream);
 		}
 
 		return out;

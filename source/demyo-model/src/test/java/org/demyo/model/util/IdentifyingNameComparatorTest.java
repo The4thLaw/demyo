@@ -1,9 +1,9 @@
 package org.demyo.model.util;
 
-import org.demyo.model.Series;
-
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+
+import org.demyo.model.Series;
 
 /**
  * Tests for {@link IdentifyingNameComparator}.
@@ -28,9 +28,9 @@ public class IdentifyingNameComparatorTest {
 
 		IdentifyingNameComparator comp = new IdentifyingNameComparator();
 
-		Assertions.assertThat(comp.compare(s1, s2)).isLessThan(0);
-		Assertions.assertThat(comp.compare(s2, s1)).isGreaterThan(0);
-		Assertions.assertThat(comp.compare(s2, s3)).isEqualTo(0);
+		Assertions.assertThat(comp.compare(s1, s2)).isNegative();
+		Assertions.assertThat(comp.compare(s2, s1)).isPositive();
+		Assertions.assertThat(comp.compare(s2, s3)).isZero();
 	}
 
 }

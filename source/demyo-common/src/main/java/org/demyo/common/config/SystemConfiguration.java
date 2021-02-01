@@ -22,6 +22,8 @@ import org.demyo.common.exception.DemyoRuntimeException;
  * @see ApplicationConfiguration
  */
 public final class SystemConfiguration {
+	private static final String APP_NAME = "Demyo";
+
 	/**
 	 * Singleton holder following the solution of Bill Pugh.
 	 */
@@ -137,7 +139,7 @@ public final class SystemConfiguration {
 				if (StringUtils.isBlank(baseDirectory)) {
 					baseDirectory = SystemUtils.USER_HOME;
 				}
-				userDirectory = new File(baseDirectory, "Demyo");
+				userDirectory = new File(baseDirectory, APP_NAME);
 				tempDirectory = new File(userDirectory, "temp").toPath();
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
@@ -145,13 +147,13 @@ public final class SystemConfiguration {
 				// MOSXAppProgrammingGuide/AppRuntime/AppRuntime.html
 				userDirectory = new File(
 						SystemUtils.USER_HOME + File.separator + "Library" + File.separator + "Application Support",
-						"Demyo");
-				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo").toPath();
+						APP_NAME);
+				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, APP_NAME).toPath();
 			} else {
 				userDirectory = new File(SystemUtils.USER_HOME, ".demyo");
 				// Unices may have special temporary directories residing in RAM or being cleaned automatically,
 				// so use them
-				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo").toPath();
+				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, APP_NAME).toPath();
 			}
 		}
 
