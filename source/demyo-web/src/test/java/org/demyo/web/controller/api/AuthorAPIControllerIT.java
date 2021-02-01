@@ -36,6 +36,17 @@ public class AuthorAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
+	public void view() throws Exception {
+		mockMvc.perform(get("/api/authors/610"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id").value(610))
+				.andExpect(jsonPath("$.name").value("Chan"))
+				.andExpect(jsonPath("$.firstName").value("Pierre-Mony"))
+				.andExpect(jsonPath("$.identifyingName").value("Pierre-Mony Chan"))
+				.andExpect(jsonPath("$.website").value("http://pmchan.fr.nf/"));
+	}
+
+	@Test
 	public void getAuthorAlbums() throws Exception {
 		mockMvc.perform(get("/api/authors/610/albums"))
 				.andExpect(status().isOk())
