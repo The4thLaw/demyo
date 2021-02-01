@@ -57,7 +57,7 @@
 		
 		<sonar.organization>the4thlaw</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.coverage.jacoco.reportPaths>${project.rootdir}/target/jacoco.exec</sonar.coverage.jacoco.reportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml,target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	
 	<dependencies>
@@ -450,9 +450,6 @@
 						<excludes>
 							<exclude>com.*</exclude>
 						</excludes>
-						<append>true</append>
-						<destFile>${project.rootdir}/target/jacoco.exec</destFile>
-						<dataFile>${project.rootdir}/target/jacoco.exec</dataFile>
 					</configuration>
 					<executions>
 						<execution>
