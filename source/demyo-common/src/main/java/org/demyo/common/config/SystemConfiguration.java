@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -54,7 +55,7 @@ public final class SystemConfiguration {
 	/** The directory to store user images. */
 	private final File imagesDirectory;
 	/** The directory to store temporary files. */
-	private final File tempDirectory;
+	private final Path tempDirectory;
 	/** The directory to store image thumbnails. */
 	private final File thumbnailDirectory;
 	/** The directory where system-wide plugins are located. */
@@ -127,7 +128,7 @@ public final class SystemConfiguration {
 		// Prepare all paths
 		if (portable) {
 			userDirectory = new File(applicationDirectory, "data");
-			tempDirectory = new File(applicationDirectory, "temp");
+			tempDirectory = new File(applicationDirectory, "temp").toPath();
 		} else {
 			if (SystemUtils.IS_OS_WINDOWS) {
 				// On Windows, try to send the settings to the Application Data folder
@@ -137,7 +138,7 @@ public final class SystemConfiguration {
 					baseDirectory = SystemUtils.USER_HOME;
 				}
 				userDirectory = new File(baseDirectory, "Demyo");
-				tempDirectory = new File(userDirectory, "temp");
+				tempDirectory = new File(userDirectory, "temp").toPath();
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
 				// https://developer.apple.com/library/mac/#documentation/General/Conceptual/
@@ -145,12 +146,12 @@ public final class SystemConfiguration {
 				userDirectory = new File(
 						SystemUtils.USER_HOME + File.separator + "Library" + File.separator + "Application Support",
 						"Demyo");
-				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo");
+				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo").toPath();
 			} else {
 				userDirectory = new File(SystemUtils.USER_HOME, ".demyo");
 				// Unices may have special temporary directories residing in RAM or being cleaned automatically,
 				// so use them
-				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo");
+				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, "Demyo").toPath();
 			}
 		}
 
@@ -177,6 +178,15 @@ public final class SystemConfiguration {
 	 */
 	public static SystemConfiguration getInstance() {
 		return SingletonHolder.INSTANCE;
+	}
+
+	/**
+	 * Creates the directory if it doesn't exist already.
+	 * 
+	 * @param dir The directory to create.
+	 */
+	private static void createDirectoryIfNeeded(Path dir) {
+		createDirectoryIfNeeded(dir.toFile());
 	}
 
 	/**
@@ -228,14 +238,14 @@ public final class SystemConfiguration {
 	 *            temporary-file directory is to be used
 	 * @return The created file.
 	 */
-	public File createTempFile(String prefix, String suffix, File directory) {
+	public File createTempFile(String prefix, String suffix, Path directory) {
 		if (directory == null) {
 			directory = getTempDirectory();
 		}
 
 		File temp;
 		try {
-			temp = Files.createTempFile(directory.toPath(), prefix, suffix).toFile();
+			temp = Files.createTempFile(directory, prefix, suffix).toFile();
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
@@ -352,11 +362,11 @@ public final class SystemConfiguration {
 	}
 
 	/**
-	 * Gets the directory to store temporary files.
+	 * Gets the directory to store temporary files, as a {@link Path}.
 	 * 
 	 * @return the directory to store temporary files
 	 */
-	public File getTempDirectory() {
+	public Path getTempDirectory() {
 		return tempDirectory;
 	}
 

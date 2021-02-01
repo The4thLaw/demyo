@@ -1,10 +1,11 @@
 package org.demyo.service.impl;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Vector;
 
@@ -51,14 +52,14 @@ public class ImportService implements IImportService {
 	@CacheEvict(cacheNames = "ModelLists", allEntries = true)
 	@Override
 	public void importFile(@NotEmpty String originalFilename, @NotNull InputStream content) throws DemyoException {
-		File importFile = null;
-		FileOutputStream fos = null;
+		Path importFile = null;
+		OutputStream fos = null;
 		BufferedOutputStream bos = null;
 		try {
 			// Copy the file to some place we know, so that importers can peek
-			importFile = File.createTempFile("demyo-import", ".tmp",
-					SystemConfiguration.getInstance().getTempDirectory());
-			fos = new FileOutputStream(importFile);
+			importFile = Files.createTempFile(SystemConfiguration.getInstance().getTempDirectory(), "demyo-import",
+					".tmp");
+			fos = Files.newOutputStream(importFile);
 			bos = new BufferedOutputStream(fos);
 			IOUtils.copy(content, bos);
 			DIOUtils.closeQuietly(bos);

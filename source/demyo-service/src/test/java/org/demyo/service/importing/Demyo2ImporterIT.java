@@ -13,20 +13,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
+import org.demyo.model.Album;
 import org.demyo.model.Reader;
 import org.demyo.model.beans.ReaderLists;
+import org.demyo.service.IAlbumService;
 import org.demyo.service.IReaderService;
 import org.demyo.service.impl.AbstractServiceTest;
 
 /**
  * Tests for the {@link Demyo2Importer}.
  */
-// @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 public class Demyo2ImporterIT extends AbstractServiceTest {
 	@Autowired
 	private IRawSQLDao rawSqlDao;
 	@Autowired
 	private IReaderService readerService;
+	@Autowired
+	IAlbumService albumService;
 	@Autowired
 	@Qualifier("demyo2Importer")
 	private IImporter importer;
@@ -45,7 +48,10 @@ public class Demyo2ImporterIT extends AbstractServiceTest {
 		rawSqlDao.pruneAllTables();
 
 		File sourceFile = new File("src/test/resources/demyo-2-export.xml");
-		importer.importFile(sourceFile.getName(), sourceFile);
+		importer.importFile(sourceFile.getName(), sourceFile.toPath());
+
+		List<Album> albums = albumService.findAll();
+		assertThat(albums).hasSize(3);
 
 		List<Reader> readers = readerService.findAll();
 		assertThat(readers).hasSize(1);

@@ -1,6 +1,6 @@
 package org.demyo.service.importing;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import org.demyo.common.exception.DemyoException;
 
@@ -19,7 +19,7 @@ public interface IImporter {
 	 * @return <code>true</code> if the importer supports this file. Else, <code>false</code>.
 	 * @throws DemyoException In case of unrecoverable error during check.
 	 */
-	boolean supports(String originalFilename, File file) throws DemyoException;
+	boolean supports(String originalFilename, Path file) throws DemyoException;
 
 	/**
 	 * Performs the import.
@@ -28,5 +28,5 @@ public interface IImporter {
 	 * @param file The content of the uploaded file (name is meaningless).
 	 * @throws DemyoException In case of error during import.
 	 */
-	void importFile(String originalFilename, File file) throws DemyoException;
+	void importFile(String originalFilename, Path file) throws DemyoException;
 }

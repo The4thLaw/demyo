@@ -4,9 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -33,35 +35,37 @@ public final class ZipUtils {
 	 * @param destination The destination directory.
 	 * @throws IOException In case of error during extraction.
 	 */
-	public static void extractZip(File source, File destination) throws IOException {
+	public static void extractZip(Path source, Path destination) throws IOException {
 		// Alternative: use ant-compress: http://stackoverflow.com/a/14620551
-		if (!destination.exists()) {
-			destination.mkdirs();
-		}
-		if (!destination.isDirectory()) {
-			throw new IOException("Destination is not a directory: " + destination.getAbsolutePath());
+		Files.createDirectories(destination);
+		if (!Files.isDirectory(destination)) {
+			throw new IOException("Destination is not a directory: " + destination.toAbsolutePath());
 		}
 
-		LOGGER.debug("Extracting {} to {}", source.getName(), destination.getPath());
+		LOGGER.debug("Extracting {} to {}", source.getFileName(), destination);
 
 		ZipFile zipFile = null;
 		try {
-			zipFile = new ZipFile(source);
+			zipFile = new ZipFile(source.toFile());
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();
-				File entryDestination = new File(destination, entry.getName());
+				Path entryDestination = destination.resolve(entry.getName());
+				DIOUtils.assertChildOf(destination, entryDestination);
 				if (entry.isDirectory()) {
-					entryDestination.mkdirs();
+					Files.createDirectories(entryDestination);
 				} else {
-					entryDestination.getParentFile().mkdirs();
+					Files.createDirectories(entryDestination.getParent());
 					try (InputStream in = zipFile.getInputStream(entry);
-							FileOutputStream fos = new FileOutputStream(entryDestination);
+							OutputStream fos = Files.newOutputStream(entryDestination);
 							BufferedOutputStream bos = new BufferedOutputStream(fos)) {
 						IOUtils.copy(in, fos);
 					}
 				}
 			}
+		} catch (Exception e) {
+			LOGGER.warn("Failed to extract the ZIP file; clearing the destination...", e);
+			DIOUtils.deleteDirectory(destination.toFile());
 		} finally {
 			DIOUtils.closeQuietly(zipFile);
 		}

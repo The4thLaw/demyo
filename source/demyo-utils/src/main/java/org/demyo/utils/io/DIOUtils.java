@@ -2,11 +2,12 @@ package org.demyo.utils.io;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 
@@ -109,17 +110,42 @@ public final class DIOUtils {
 	 * @param file The file to delete.
 	 */
 	public static void delete(File file) {
-		if (!file.exists() || !file.isFile()) {
-			LOGGER.debug("Doesn't exist or not a regular file: {}", file.getAbsolutePath());
+		delete(file.toPath());
+	}
+
+	/**
+	 * Deletes a file, but logs if deletion failed. If deletion failed, the file is marked for deletion on exit, in case
+	 * the lock has disappeared in the mean time.
+	 * <p>
+	 * This method ignores the file if it is not a regular file.
+	 * </p>
+	 * 
+	 * @param file The file to delete.
+	 */
+	public static void delete(Path file) {
+		if (Files.exists(file) || Files.isRegularFile(file)) {
+			LOGGER.debug("Doesn't exist or not a regular file: {}", file.toAbsolutePath());
 			return;
 		}
 
 		try {
-			Files.delete(file.toPath());
+			Files.delete(file);
 		} catch (IOException e) {
-			LOGGER.warn("Failed to delete file at {}", file.getAbsolutePath(), e);
-			file.deleteOnExit();
+			LOGGER.warn("Failed to delete file at {}", file.toAbsolutePath(), e);
+			file.toFile().deleteOnExit();
 		}
+	}
+
+	/**
+	 * Deletes a directory recursively, and log if deletion failed but don't throw an exception.
+	 * 
+	 * @param directory The directory to delete.
+	 */
+	public static void deleteDirectory(Path directory) {
+		if (directory == null) {
+			return;
+		}
+		deleteDirectory(directory.toFile());
 	}
 
 	/**
@@ -181,11 +207,11 @@ public final class DIOUtils {
 	 * @param byteCount The maximum number of bytes to sniff
 	 * @param charset The excepted character set of the file
 	 * @param pattern The pattern to match
-	 * @return <code>true</code> if sniffing was successfull and the sniffed content matches the pattern.
+	 * @return <code>true</code> if sniffing was successful and the sniffed content matches the pattern.
 	 *         <code>false</code> otherwise.
 	 */
-	public static boolean sniffFile(File file, int byteCount, Charset charset, Pattern pattern) {
-		try (FileInputStream input = new FileInputStream(file)) {
+	public static boolean sniffFile(Path file, int byteCount, Charset charset, Pattern pattern) {
+		try (InputStream input = Files.newInputStream(file)) {
 			byte[] buffer = new byte[byteCount];
 			int count = IOUtils.read(input, buffer);
 			LOGGER.debug("Sniffed the first {} bytes of {}", count, file);
@@ -205,10 +231,25 @@ public final class DIOUtils {
 	 * 
 	 * @param file The file to sniff
 	 * @param pattern The pattern to match
-	 * @return <code>true</code> if sniffing was successfull and the sniffed content matches the pattern.
+	 * @return <code>true</code> if sniffing was successful and the sniffed content matches the pattern.
 	 *         <code>false</code> otherwise.
 	 */
-	public static boolean sniffFile(File file, Pattern pattern) {
+	public static boolean sniffFile(Path file, Pattern pattern) {
 		return sniffFile(file, SNIFF_DEFAULT_BUFFER, StandardCharsets.UTF_8, pattern);
+	}
+
+	/**
+	 * Ensures that a child path is indeed child to the provided parent path.
+	 * 
+	 * @param parent The parent path.
+	 * @param child The child path.
+	 * @throws SecurityException if the assertion fails.
+	 */
+	public static void assertChildOf(Path parent, Path child) {
+		Path absoluteParent = parent.toAbsolutePath().normalize();
+		Path absoluteChild = child.toAbsolutePath().normalize();
+		if (!absoluteChild.startsWith(absoluteParent)) {
+			throw new SecurityException("Attempted directory traversal: " + parent + " is not a parent of " + child);
+		}
 	}
 }

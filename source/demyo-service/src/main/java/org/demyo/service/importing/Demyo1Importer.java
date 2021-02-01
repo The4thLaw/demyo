@@ -1,10 +1,10 @@
 package org.demyo.service.importing;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
@@ -39,7 +39,7 @@ public class Demyo1Importer extends Demyo2Importer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo1Importer.class);
 
 	@Override
-	public boolean supports(String originalFilename, File file) throws DemyoException {
+	public boolean supports(String originalFilename, Path file) throws DemyoException {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
@@ -50,12 +50,12 @@ public class Demyo1Importer extends Demyo2Importer {
 	}
 
 	@Override
-	public void importFile(String originalFilename, File file) throws DemyoException {
+	public void importFile(String originalFilename, Path file) throws DemyoException {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		File archiveDirectory = null;
+		Path archiveDirectory = null;
 		InputStream xslSheet = null;
-		FileInputStream xmlFis = null;
+		InputStream xmlFis = null;
 		BufferedInputStream xmlBis = null;
 
 		try {
@@ -63,14 +63,14 @@ public class Demyo1Importer extends Demyo2Importer {
 			String originalFilenameLc = originalFilename.toLowerCase();
 			boolean isArchive = originalFilenameLc.endsWith(".zip");
 
-			File xmlFile;
+			Path xmlFile;
 			if (isArchive) {
 				try {
 					archiveDirectory = extractZip(file);
 				} catch (IOException e) {
 					throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
 				}
-				xmlFile = new File(archiveDirectory, "demyo.xml");
+				xmlFile = archiveDirectory.resolve("demyo.xml");
 			} else {
 				xmlFile = file;
 			}
@@ -90,7 +90,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			Transformer trans = transFactory.newTransformer(style);
 
 			// Input is the XML from Demyo 1.5, output is a bridge to the Demyo 2.x SAX parser
-			xmlFis = new FileInputStream(xmlFile);
+			xmlFis = Files.newInputStream(xmlFile);
 			xmlBis = new BufferedInputStream(xmlFis);
 			Source source = new SAXSource(xmlReader, new InputSource(xmlBis));
 			Result result = new SAXResult(new Demyo2Handler());
@@ -117,7 +117,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			DIOUtils.closeQuietly(xslSheet);
 			DIOUtils.closeQuietly(xmlBis);
 			DIOUtils.closeQuietly(xmlFis);
-			DIOUtils.deleteDirectory(archiveDirectory);
+			DIOUtils.deleteDirectory(archiveDirectory.toFile());
 		}
 	}
 }

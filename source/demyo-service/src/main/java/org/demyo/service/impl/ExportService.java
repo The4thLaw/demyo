@@ -4,6 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -57,11 +59,11 @@ public class ExportService implements IExportService {
 	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	private final List<IExporter> exporters = new Vector<>();
-	private final File exportDirectory;
+	private final Path exportDirectory;
 
-	public ExportService() {
-		exportDirectory = new File(SystemConfiguration.getInstance().getUserDirectory(), EXPORT_DIRECTORY_NAME);
-		exportDirectory.mkdirs();
+	public ExportService() throws IOException {
+		exportDirectory = SystemConfiguration.getInstance().getUserDirectory().toPath().resolve(EXPORT_DIRECTORY_NAME);
+		Files.createDirectories(exportDirectory);
 	}
 
 	@Override

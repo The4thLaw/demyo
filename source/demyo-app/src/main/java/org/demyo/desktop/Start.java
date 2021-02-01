@@ -110,7 +110,7 @@ public final class Start {
 		webapp.setContextPath(contextRoot);
 		webapp.setWar(sysConfig.getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
-		webapp.setTempDirectory(new File(sysConfig.getTempDirectory(), "jetty"));
+		webapp.setTempDirectory(sysConfig.getTempDirectory().resolve("jetty").toFile());
 
 		// Set paths to plugins
 		PluginManager pluginMgr = new PluginManager(sysConfig.getSystemPluginDirectory(),

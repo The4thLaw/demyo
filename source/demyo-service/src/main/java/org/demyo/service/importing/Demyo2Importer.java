@@ -2,8 +2,10 @@ package org.demyo.service.importing;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +58,7 @@ public class Demyo2Importer implements IImporter {
 	}
 
 	@Override
-	public boolean supports(String originalFilename, File file) throws DemyoException {
+	public boolean supports(String originalFilename, Path file) throws DemyoException {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
@@ -73,19 +75,19 @@ public class Demyo2Importer implements IImporter {
 	 * @return The temporary directory where the file was extracted.
 	 * @throws IOException in case of error during extraction.
 	 */
-	protected File extractZip(File file) throws IOException {
-		File extractionDir = DIOUtils.createTempDirectory("extracted-import",
-				SystemConfiguration.getInstance().getTempDirectory());
+	protected Path extractZip(Path file) throws IOException {
+		Path extractionDir = Files.createTempDirectory(SystemConfiguration.getInstance().getTempDirectory(),
+				"extracted-import-");
 		ZipUtils.extractZip(file, extractionDir);
 		return extractionDir;
 	}
 
 	@Override
-	public void importFile(String originalFilename, File file) throws DemyoException {
+	public void importFile(String originalFilename, Path file) throws DemyoException {
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		File archiveDirectory = null;
-		FileInputStream xmlFis = null;
+		Path archiveDirectory = null;
+		InputStream xmlFis = null;
 		BufferedInputStream xmlBis = null;
 
 		try {
@@ -93,14 +95,14 @@ public class Demyo2Importer implements IImporter {
 			String originalFilenameLc = originalFilename.toLowerCase();
 			boolean isArchive = originalFilenameLc.endsWith(".dea");
 
-			File xmlFile;
+			Path xmlFile;
 			if (isArchive) {
 				try {
 					archiveDirectory = extractZip(file);
 				} catch (IOException e) {
 					throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
 				}
-				xmlFile = new File(archiveDirectory, "demyo.xml");
+				xmlFile = archiveDirectory.resolve("demyo.xml");
 			} else {
 				xmlFile = file;
 			}
@@ -110,7 +112,7 @@ public class Demyo2Importer implements IImporter {
 
 			// Create a SAX parser for the input file
 			XMLReader xmlReader = XMLUtils.createXmlReader();
-			xmlFis = new FileInputStream(xmlFile);
+			xmlFis = Files.newInputStream(xmlFile);
 			xmlBis = new BufferedInputStream(xmlFis);
 
 			// Import
@@ -150,9 +152,9 @@ public class Demyo2Importer implements IImporter {
 	 * @param imagesDirectoryName The name of the images directory in the archive.
 	 * @throws DemyoException If moving the images fails.
 	 */
-	protected void restoreImages(File archiveDirectory, String imagesDirectoryName) throws DemyoException {
+	protected void restoreImages(Path archiveDirectory, String imagesDirectoryName) throws DemyoException {
 		File systemDirectory = SystemConfiguration.getInstance().getImagesDirectory();
-		File extractedDirectory = new File(archiveDirectory, imagesDirectoryName);
+		File extractedDirectory = archiveDirectory.resolve(imagesDirectoryName).toFile();
 
 		LOGGER.debug("Keeping backup copy of current images directory");
 		File backupCopyDestination = new File(systemDirectory.getParentFile(), systemDirectory.getName() + ".bak");

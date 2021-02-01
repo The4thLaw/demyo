@@ -1,9 +1,11 @@
 package org.demyo.service.impl;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IFilePondService;
 import org.demyo.utils.io.DIOUtils;
 
@@ -34,14 +37,18 @@ public class FilePondService implements IFilePondService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FilePondService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "filepond";
 
-	private final File uploadDirectory;
+	private final Path uploadDirectory;
 
 	/**
 	 * Default constructor.
 	 */
 	public FilePondService() {
-		uploadDirectory = new File(SystemConfiguration.getInstance().getTempDirectory(), UPLOAD_DIRECTORY_NAME);
-		uploadDirectory.mkdirs();
+		uploadDirectory = SystemConfiguration.getInstance().getTempDirectory().resolve(UPLOAD_DIRECTORY_NAME);
+		try {
+			Files.createDirectories(uploadDirectory);
+		} catch (IOException e) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+		}
 	}
 
 	/**
@@ -50,7 +57,7 @@ public class FilePondService implements IFilePondService {
 	@Scheduled(initialDelay = AUTOCLEAN_DELAY, fixedRate = AUTOCLEAN_PERIOD)
 	public void cleanFilePondDirectory() {
 		LOGGER.debug("Auto-cleaning FilePond directory...");
-		Collection<File> filesToDelete = FileUtils.listFiles(uploadDirectory, new AbstractFileFilter() {
+		Collection<File> filesToDelete = FileUtils.listFiles(uploadDirectory.toFile(), new AbstractFileFilter() {
 			@Override
 			public boolean accept(File file) {
 				return System.currentTimeMillis() - file.lastModified() > AUTOCLEAN_MIN_AGE;
@@ -73,48 +80,42 @@ public class FilePondService implements IFilePondService {
 		}
 
 		String id = UUID.randomUUID().toString();
-		File destinationFile = new File(uploadDirectory, id + "." + extension);
 
-		try (FileOutputStream fos = new FileOutputStream(destinationFile)) {
+		String filename = id + "." + extension;
+		Path destinationFile = uploadDirectory.resolve(filename);
+
+		try (OutputStream fos = Files.newOutputStream(uploadDirectory)) {
 			IOUtils.copy(input, fos);
 		} catch (IOException ioe) {
 			DIOUtils.delete(destinationFile);
 		}
 		// Request to delete on exit, just in case
-		destinationFile.deleteOnExit();
+		destinationFile.toFile().deleteOnExit();
 
-		LOGGER.debug("{} was stored to {}", originalFileName, destinationFile.getAbsolutePath());
+		LOGGER.debug("{} was stored to {}", originalFileName, destinationFile.toAbsolutePath());
 
-		return destinationFile.getName();
+		return filename;
 	}
 
 	@Override
 	public void revert(String id) {
-		File file = new File(uploadDirectory, id);
-
-		if (!file.exists()) {
-			LOGGER.debug("{} doesn't exist already, not doing anything", file.getAbsolutePath());
-			return;
-		}
-
-		if (!file.delete()) {
-			LOGGER.debug("Failed to delete {}", file.getAbsolutePath());
-			return;
-		}
-
-		LOGGER.debug("Successfully deleted {}", file.getAbsolutePath());
+		Path file = uploadDirectory.resolve(id);
+		DIOUtils.assertChildOf(uploadDirectory, file);
+		DIOUtils.delete(file);
 	}
 
 	@Override
 	public File getFileForId(String id) throws DemyoException {
-		File file = new File(uploadDirectory, id);
+		Path file = uploadDirectory.resolve(id);
 
-		if (!file.exists()) {
-			LOGGER.warn("{} doesn't exist", file.getAbsolutePath());
+		DIOUtils.assertChildOf(uploadDirectory, file);
+
+		if (!(Files.exists(file) && Files.isRegularFile(file))) {
+			LOGGER.warn("{} doesn't exist or isn't a regular file", file.toAbsolutePath());
 			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_MISSING, id + " doesn't exist");
 		}
 
-		return file;
+		return file.toFile();
 	}
 
 }
