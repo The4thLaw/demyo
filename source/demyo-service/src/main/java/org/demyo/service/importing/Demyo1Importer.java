@@ -117,7 +117,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			DIOUtils.closeQuietly(xslSheet);
 			DIOUtils.closeQuietly(xmlBis);
 			DIOUtils.closeQuietly(xmlFis);
-			DIOUtils.deleteDirectory(archiveDirectory.toFile());
+			DIOUtils.deleteDirectory(archiveDirectory);
 		}
 	}
 }
