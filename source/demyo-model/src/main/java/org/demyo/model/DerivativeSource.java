@@ -4,12 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.URL;
 
 import org.demyo.model.util.DefaultOrder;
-import org.demyo.model.util.StartsWithField;
 
 /**
  * Represents the source of a Derivative.
@@ -17,13 +15,7 @@ import org.demyo.model.util.StartsWithField;
 @Entity
 @Table(name = "SOURCES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-public class DerivativeSource extends AbstractModel {
-	/** The name of the Source. */
-	@Column(name = "name")
-	@NotBlank
-	@StartsWithField
-	private String name;
-
+public class DerivativeSource extends AbstractNamedModel {
 	/** The owner name. */
 	@Column(name = "owner")
 	private String owner;
@@ -49,29 +41,6 @@ public class DerivativeSource extends AbstractModel {
 	/** The history of this Source. */
 	@Column(name = "history")
 	private String history;
-
-	@Override
-	public String getIdentifyingName() {
-		return getName();
-	}
-
-	/**
-	 * Gets the name of the Source.
-	 * 
-	 * @return the name of the Source
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name of the Source.
-	 * 
-	 * @param name the new name of the Source
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * Gets the owner name.

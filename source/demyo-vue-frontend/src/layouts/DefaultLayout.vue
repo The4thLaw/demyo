@@ -14,10 +14,10 @@
 				<v-list-group v-if="readerLoaded">
 					<template #activator>
 						<v-list-item-icon>
-							<LetterIcon :letter="currentReader.name[0]" :color="currentReader.colour" />
+							<LetterIcon :letter="currentReader.identifyingName[0]" :color="currentReader.colour" />
 						</v-list-item-icon>
 						<v-list-item-content>
-							<v-list-item-title>{{ currentReader.name }}</v-list-item-title>
+							<v-list-item-title>{{ currentReader.identifyingName }}</v-list-item-title>
 						</v-list-item-content>
 					</template>
 

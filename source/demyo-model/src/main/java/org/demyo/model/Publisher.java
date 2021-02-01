@@ -11,7 +11,6 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
@@ -24,7 +23,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.model.util.StartsWithField;
 
 /**
  * Represents a Publisher of comics.
@@ -38,12 +36,7 @@ import org.demyo.model.util.StartsWithField;
 { @NamedAttributeNode("collections"),
 		@NamedAttributeNode("logo") })
 @NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo"))
-public class Publisher extends AbstractModel {
-	/** The name. */
-	@Column(name = "name")
-	@NotBlank
-	@StartsWithField
-	private String name;
+public class Publisher extends AbstractNamedModel {
 	/** The website. */
 	@Column(name = "website")
 	@URL
@@ -67,29 +60,6 @@ public class Publisher extends AbstractModel {
 	@JsonView(ModelView.Basic.class)
 	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Collection> collections;
-
-	@Override
-	public String getIdentifyingName() {
-		return getName();
-	}
-
-	/**
-	 * Gets the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name the new name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * Gets the history of this Publisher.

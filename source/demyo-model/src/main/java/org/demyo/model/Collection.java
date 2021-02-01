@@ -8,27 +8,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.URL;
 
 import org.demyo.model.util.DefaultOrder;
-import org.demyo.model.util.StartsWithField;
 
 /**
  * Represents a Collection of comics within a {@link Publisher}.
  */
 @Entity
 @Table(name = "COLLECTIONS")
-@DefaultOrder(expression = { @DefaultOrder.Order(property = "name") })
-@NamedEntityGraph(name = "Collection.forEdition", attributeNodes = { @NamedAttributeNode(value = "logo"),
+@DefaultOrder(expression =
+{ @DefaultOrder.Order(property = "name") })
+@NamedEntityGraph(name = "Collection.forEdition", attributeNodes =
+{ @NamedAttributeNode(value = "logo"),
 		@NamedAttributeNode(value = "publisher") })
-public class Collection extends AbstractModel {
-	/** The name. */
-	@Column(name = "name")
-	@NotBlank
-	@StartsWithField
-	private String name;
+public class Collection extends AbstractNamedModel {
 	/** The website. */
 	@Column(name = "website")
 	@URL
@@ -48,29 +43,6 @@ public class Collection extends AbstractModel {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
-
-	@Override
-	public String getIdentifyingName() {
-		return getName();
-	}
-
-	/**
-	 * Gets the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name the new name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * Gets the history of this Publisher.

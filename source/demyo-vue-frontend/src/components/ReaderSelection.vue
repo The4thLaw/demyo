@@ -14,10 +14,10 @@
 				<v-list>
 					<v-list-item v-for="reader in readers" :key="reader.id" @click="select(reader)">
 						<v-list-item-icon>
-							<LetterIcon :letter="reader.name.charAt(0)" :color="reader.colour" />
+							<LetterIcon :letter="reader.identifyingName.charAt(0)" :color="reader.colour" />
 						</v-list-item-icon>
 						<v-list-item-content>
-							{{ reader.name }}
+							{{ reader.identifyingName }}
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>

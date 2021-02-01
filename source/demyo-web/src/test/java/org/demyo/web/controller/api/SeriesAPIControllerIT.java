@@ -31,7 +31,7 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$", hasSize(3)))
 				.andExpect(jsonPath("$[1].id").value(99))
 				.andExpect(jsonPath("$[1].identifyingName").value("Sillage"))
-				.andExpect(jsonPath("$[1].name").doesNotExist())
+				.andExpect(jsonPath("$[1].comment").doesNotExist())
 				.andExpect(jsonPath("$[1].location").doesNotExist());
 	}
 

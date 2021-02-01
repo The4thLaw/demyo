@@ -14,7 +14,6 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
@@ -25,7 +24,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.model.util.StartsWithField;
 
 /**
  * Represents a Series.
@@ -34,12 +32,7 @@ import org.demyo.model.util.StartsWithField;
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries"))
-public class Series extends AbstractModel {
-	/** The name. */
-	@Column(name = "name")
-	@NotBlank
-	@StartsWithField
-	private String name;
+public class Series extends AbstractNamedModel {
 	/** The summary. */
 	@Column(name = "summary")
 	private String summary;
@@ -73,29 +66,6 @@ public class Series extends AbstractModel {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteSeries")
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Reader> readersFavourites;
-
-	@Override
-	public String getIdentifyingName() {
-		return name;
-	}
-
-	/**
-	 * Gets the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name the new name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * Gets the summary.

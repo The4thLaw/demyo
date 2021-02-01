@@ -16,7 +16,6 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
 
@@ -38,13 +37,7 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraph(name = "Reader.forView", attributeNodes =
 { @NamedAttributeNode("configurationEntries") })
-public class Reader extends AbstractModel {
-	/** The name. */
-	@Column(name = "name")
-	@NotBlank
-	@JsonView(ModelView.Basic.class)
-	private String name;
-
+public class Reader extends AbstractNamedModel {
 	/** The preferred colour of the reader. */
 	@Column(name = "colour")
 	@JsonView(ModelView.Basic.class)
@@ -79,29 +72,6 @@ public class Reader extends AbstractModel {
 			inverseJoinColumns = @JoinColumn(name = "album_id"))
 	@SortComparator(AlbumComparator.class)
 	private SortedSet<Album> readingList;
-
-	@Override
-	public String getIdentifyingName() {
-		return name;
-	}
-
-	/**
-	 * Gets the name.
-	 *
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Sets the name.
-	 *
-	 * @param name the new name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * Gets the preferred colour of the reader.
