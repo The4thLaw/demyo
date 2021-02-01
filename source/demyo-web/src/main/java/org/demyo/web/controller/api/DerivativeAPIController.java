@@ -42,18 +42,26 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 	}
 
 	/**
-	 * Retrieves the full list of the entities.
+	 * Retrieves the full list of Derivatives.
 	 * 
 	 * @param view The Jackson view to apply.
 	 * @return The list.
 	 */
 	@Override
-	@GetMapping({ "/", "/index" })
+	@GetMapping(
+	{ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		Iterable<Derivative> value = service.findAllForIndex();
 		return getIndexView(view, value);
 	}
 
+	/**
+	 * Retrieves the filtered list of Derivatives.
+	 * 
+	 * @param view The Jackson view to apply.
+	 * @param filter The filter to apply.
+	 * @return The list.
+	 */
 	@PostMapping({ "/index/filtered" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view,
 			@RequestBody DerivativeFilter filter) {

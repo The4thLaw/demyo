@@ -23,6 +23,8 @@ public enum DemyoErrorCode {
 	SYS_IO_ERROR(10005),
 	/** Generic error during application startup. */
 	SYS_STARTUP_ERROR(10006),
+	/** The Spring configuration is inconsistent. */
+	SYS_SPRING_CONFIG_INCONSISTENT(10007),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */

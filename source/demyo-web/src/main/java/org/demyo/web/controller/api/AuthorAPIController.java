@@ -52,7 +52,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	/**
 	 * Counts how many Derivatives use the given artist.
 	 * 
-	 * @param typeId The internal ID of the Author
+	 * @param modelId The internal ID of the Author
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")

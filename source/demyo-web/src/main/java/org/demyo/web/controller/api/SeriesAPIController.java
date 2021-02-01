@@ -30,8 +30,9 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	/**
 	 * Creates the controller.
 	 * 
-	 * @param service The service to manage the entries.
+	 * @param service The service to manage the {@link Series}.
 	 * @param albumService The service to manage the {@link Album}s.
+	 * @param derivativeService The service to manage the Derivatives.
 	 */
 	@Autowired
 	public SeriesAPIController(ISeriesService service, IAlbumService albumService,
@@ -79,7 +80,7 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	/**
 	 * Counts how many Derivatives use the given Series.
 	 * 
-	 * @param typeId The internal ID of the {@link Series}
+	 * @param modelId The internal ID of the {@link Series}
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")

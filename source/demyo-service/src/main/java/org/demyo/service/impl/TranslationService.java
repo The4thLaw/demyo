@@ -13,6 +13,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
 
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
@@ -36,7 +38,8 @@ public class TranslationService implements ITranslationService {
 	@Override
 	public Map<String, String> getAllTranslations(String locale) {
 		if (!(messageSource instanceof BrowsableResourceBundleMessageSource)) {
-			throw new RuntimeException("Unexpected MessageSource class: " + messageSource.getClass());
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_SPRING_CONFIG_INCONSISTENT,
+					"Unexpected MessageSource class: " + messageSource.getClass());
 		}
 		LOGGER.debug("Detecting translations for all messages of locale {}", locale);
 		return ((BrowsableResourceBundleMessageSource) messageSource)//
