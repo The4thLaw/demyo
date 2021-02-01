@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,9 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 
 /**
  * Configuration for the DAO layer.
@@ -87,7 +91,11 @@ public class DaoConfig {
 	 */
 	@Bean("transactionManager")
 	public TransactionManager transactionManager() {
-		return new HibernateTransactionManager(entityManagerFactory().getObject());
+		SessionFactory sessionFactory = entityManagerFactory().getObject();
+		if (sessionFactory == null) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_STARTUP_ERROR, "The session factory is null");
+		}
+		return new HibernateTransactionManager(sessionFactory);
 	}
 
 	@Bean

@@ -21,6 +21,8 @@ public enum DemyoErrorCode {
 	SYS_DIR_CANNOT_CREATE(10004),
 	/** Generic I/O operation error. */
 	SYS_IO_ERROR(10005),
+	/** Generic error during application startup. */
+	SYS_STARTUP_ERROR(10006),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */
