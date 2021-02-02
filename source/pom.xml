@@ -57,12 +57,15 @@
 		
 		<sonar.organization>the4thlaw</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<!-- Note: The Jacoco aggregate intentionally does not include the current module
-		See https://github.com/jacoco/jacoco/issues/812
-		This means that code coverage on Sonar is unreliable because it seems like
-		despite importing both reports, in only considers the main one and not the aggregate
-		Maybe one day https://github.com/jacoco/jacoco/pull/1007 will get implemented
-		and we'll have a full report.
+		<!--
+		This one took a while to guess:
+		 - Jacoco reports only include the current module
+		 - Jacoco aggregate reports never include the current module (by design, see
+		   https://github.com/jacoco/jacoco/issues/812 though
+		   https://github.com/jacoco/jacoco/pull/1007 could eventually change that
+		 - demyo-service is aggregate-covered by demyo-web
+		 - Sonar needs the coverage of service when parsing the service module
+		The solution is thus that, for each module, Sonar sees all regular and aggregate reports from all modules.
 		-->
 		<sonar.coverage.jacoco.xmlReportPaths>${project.rootdir}/*/target/site/jacoco*/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
