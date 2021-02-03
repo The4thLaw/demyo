@@ -353,6 +353,9 @@ export default {
 			const query = {
 				toAlbum: this.album.id
 			}
+			if (this.album.series) {
+				query.toSeries = this.album.series.id
+			}
 			if (this.album.artists.length === 1) {
 				query.toArtist = this.album.artists[0].id
 			}
