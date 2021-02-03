@@ -438,6 +438,7 @@ html[lang],
 
 .v-application a {
 	text-decoration: none;
+	text-decoration-skip-ink: all;
 
 	&:not(.v-btn):hover {
 		text-decoration: underline;
