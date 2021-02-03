@@ -75,7 +75,7 @@
 		<dependency>
 			<groupId>com.github.ppodgorsek</groupId>
 			<artifactId>spring-test-dbunit-core</artifactId>
-			<version>5.2.0</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>

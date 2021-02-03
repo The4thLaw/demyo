@@ -284,8 +284,34 @@
 	        </dependency>
 	        <dependency>
 				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-server</artifactId>
+				<version>${org.eclipse.jetty.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-webapp</artifactId>
+				<version>${org.eclipse.jetty.version}</version>
+			</dependency>
+			<!-- Needed for JNDI -->
+			<dependency>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-plus</artifactId>
+				<version>${org.eclipse.jetty.version}</version>
+			</dependency>
+	        <dependency>
+				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>apache-jsp</artifactId>
 				<version>${org.eclipse.jetty.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>xml-apis</groupId>
+				<artifactId>xml-apis</artifactId>
+				<version>1.4.01</version>
 			</dependency>
 			
 			<dependency>
@@ -350,6 +376,19 @@
 				<groupId>com.sun.activation</groupId>
 				<artifactId>javax.activation</artifactId>
 				<version>1.2.0</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>net.java.dev.stax-utils</groupId>
+				<artifactId>stax-utils</artifactId>
+				<version>20070216</version>
+				<exclusions>
+					<!-- Already in JDK6+ -->
+					<exclusion>
+						<groupId>com.bea.xml</groupId>
+						<artifactId>jsr173-ri</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
@@ -423,6 +462,13 @@
 						<artifactId>postgresql</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.github.ppodgorsek</groupId>
+				<artifactId>spring-test-dbunit-core</artifactId>
+				<version>5.2.0</version>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -538,6 +584,24 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>3.1.1</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>3.2.2</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>com.akathist.maven.plugins.launch4j</groupId>
+					<artifactId>launch4j-maven-plugin</artifactId>
+					<version>1.7.11</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>com.mysema.maven</groupId>
+					<artifactId>apt-maven-plugin</artifactId>
+					<version>1.1.3</version>
 				</plugin>
 				
 				<!--

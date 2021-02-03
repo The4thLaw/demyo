@@ -63,14 +63,6 @@
 		<dependency>
 			<groupId>net.java.dev.stax-utils</groupId>
 			<artifactId>stax-utils</artifactId>
-			<version>20070216</version>
-			<exclusions>
-				<!-- Already in JDK6+ -->
-				<exclusion>
-					<groupId>com.bea.xml</groupId>
-					<artifactId>jsr173-ri</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 </project>

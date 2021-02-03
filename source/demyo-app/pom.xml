@@ -24,18 +24,15 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-webapp</artifactId>
-			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
 		<!-- Needed for JNDI -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-plus</artifactId>
-			<version>${org.eclipse.jetty.version}</version>
 		</dependency>
 		<!-- Needed for JSP -->
 		<dependency>
@@ -133,7 +130,6 @@ Includes the Web server, H2 server, and startup program.</description>
 					<plugin>
 						<groupId>com.akathist.maven.plugins.launch4j</groupId>
 						<artifactId>launch4j-maven-plugin</artifactId>
-						<version>1.7.11</version>
 						<executions>
 							<execution>
 								<id>launch4j-gui</id>
