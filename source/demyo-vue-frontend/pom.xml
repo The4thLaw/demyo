@@ -16,6 +16,7 @@
 	</description>
 
 	<properties>
+		<project.rootdir>${project.basedir}/..</project.rootdir>
 		<!-- Override since this is not really a Maven / Java project -->
 		<sonar.sources>src</sonar.sources> 
 		<!-- Specify the path to the Jest coverage -->

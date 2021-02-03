@@ -12,8 +12,8 @@ import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -30,7 +30,7 @@ import org.demyo.service.impl.AbstractServiceTest;
  * Not actually meant to be run as a JUnit test in CI.
  * </p>
  */
-@Ignore("This is just an utility class") // Comment this to launch this utility
+@Disabled("This is just an utility class") // Comment this to launch this utility
 public class DBUnitExtractor extends AbstractServiceTest {
 	@Autowired
 	private IImportService importService;

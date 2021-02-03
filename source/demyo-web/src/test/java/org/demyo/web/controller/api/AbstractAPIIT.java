@@ -1,6 +1,6 @@
 package org.demyo.web.controller.api;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,7 +28,7 @@ public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 	private CacheManager cacheManager;
 	protected MockMvc mockMvc;
 
-	@Before
+	@BeforeEach
 	public void setup() {
 		// MockMvc is not guaranteed to be reuseable between tests so we create it as an instance field in a @Before
 		// Moreover, we use the more costly webAppContextSetup rather than standaloneSetup to make sure that everything
@@ -39,7 +39,7 @@ public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 	/**
 	 * Clears all caches.
 	 */
-	@Before
+	@BeforeEach
 	public void clearCaches() {
 		// We must clear all caches for each test case, else the reloads by
 		// DBUnit break the tests

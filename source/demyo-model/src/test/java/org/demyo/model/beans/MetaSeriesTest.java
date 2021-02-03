@@ -1,9 +1,10 @@
 package org.demyo.model.beans;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Locale;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import org.demyo.model.Album;
@@ -25,6 +26,6 @@ public class MetaSeriesTest {
 		MetaSeries elephant = new MetaSeries(elephantAlb);
 		MetaSeries f = new MetaSeries(fAlb);
 
-		Assert.assertEquals(-1, elephant.compareTo(f));
+		assertThat(elephant.compareTo(f)).isNegative();
 	}
 }

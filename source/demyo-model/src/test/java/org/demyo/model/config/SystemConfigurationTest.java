@@ -1,7 +1,8 @@
 package org.demyo.model.config;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 import org.demyo.common.config.SystemConfiguration;
 
@@ -17,7 +18,7 @@ public class SystemConfigurationTest {
 	@Test
 	public void testLoadDefaultConfig() {
 		SystemConfiguration config = SystemConfiguration.getInstance();
-		Assert.assertEquals(EXPECTED_DEFAULT_PORT, config.getHttpPort());
-		Assert.assertEquals("/", config.getContextRoot());
+		assertThat(config.getHttpPort()).isEqualTo(EXPECTED_DEFAULT_PORT);
+		assertThat(config.getContextRoot()).isEqualTo("/");
 	}
 }

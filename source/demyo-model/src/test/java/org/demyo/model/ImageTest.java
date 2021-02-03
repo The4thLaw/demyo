@@ -1,7 +1,8 @@
 package org.demyo.model;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link Image}.
@@ -12,6 +13,6 @@ public class ImageTest {
 		Image i1 = new Image();
 		i1.setDescription("My nice image");
 		i1.setUrl("/path/to/stuff.png");
-		Assert.assertEquals("My nice image.png", i1.getUserFileName());
+		assertThat(i1.getUserFileName()).isEqualTo("My nice image.png");
 	}
 }

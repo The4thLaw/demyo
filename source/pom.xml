@@ -383,12 +383,17 @@
 				<version>2.3.0</version>
 				<scope>test</scope>
 			</dependency>
-			
-			
+
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>5.7.0</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>5.7.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -406,8 +411,18 @@
 			<dependency>
 				<groupId>org.dbunit</groupId>
 				<artifactId>dbunit</artifactId>
-				<version>2.6.0</version>
+				<version>2.7.0</version>
 				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -619,12 +634,13 @@
 		
 		<profile>
 			<id>check-deps</id>
+			<!-- Run with e.g. mvn site -Pdev,check-deps -DskipTests -U -->
 			<reporting>
 				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>versions-maven-plugin</artifactId>
-						<version>2.2</version>
+						<version>2.8.1</version>
 						<configuration>
 							<rulesUri>file://${project.rootdir}/maven-version-rules.xml</rulesUri>
 						</configuration>

@@ -1,7 +1,7 @@
 package org.demyo.model.util;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.demyo.model.Series;
 
