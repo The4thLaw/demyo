@@ -15,6 +15,7 @@
 			disappear because the AppTask isn't rendered anymore
 			-->
 			<AppTask
+				v-if="!loading && derivativeCount <= 0"
 				:label="$t('quickTasks.delete.album')"
 				:confirm="$t('quickTasks.delete.album.confirm')"
 				icon="mdi-book-open-variant dem-overlay-delete"
