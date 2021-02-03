@@ -525,16 +525,16 @@ html[lang],
 }
 
 /** Overlays for icons. */
-.dem-overlay-add::after {
+.v-icon.dem-overlay-add::after {
 	content: "\F0415";
 	font-size: 58%;
 }
 
-.dem-overlay-edit::after {
+.v-icon.dem-overlay-edit::after {
 	content: "\F03EB";
 }
 
-.dem-overlay-delete::after {
+.v-icon.dem-overlay-delete::after {
 	content: "\F01B4"; // Minus could also be used
 }
 
@@ -542,19 +542,31 @@ html[lang],
 	content: "\F012C";
 }
 
-.dem-overlay-add,
-.dem-overlay-edit,
-.dem-overlay-delete,
-.dem-overlay-check {
+.v-icon.dem-overlay-add,
+.v-icon.dem-overlay-edit,
+.v-icon.dem-overlay-delete,
+.v-icon.dem-overlay-check {
 	&.v-icon {
 		position: relative;
 	}
 
 	&::after {
+		// We need to completely override the default styles from Vuetify to be able to do this
+		opacity: initial;
+		top: initial;
+		left: initial;
+		background-color: initial;
+		border-radius: initial;
+		display: initial;
+		height: initial;
+		transform: initial;
+		pointer-events: initial;
+		width: initial;
+		// Here are our styles
 		font: normal normal normal 67%/1 "Material Design Icons";
 		text-rendering: auto;
 		position: absolute;
-		bottom: -2px;
+		bottom: -4px;
 		right: -4px;
 		// TODO [dark]: handle shadows on dark theme
 		--icon-outline-color: #fff;
