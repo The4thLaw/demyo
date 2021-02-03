@@ -68,9 +68,10 @@
 				<v-list-item id="l-DefaultLayout__menuSearch">
 					<v-list-item-content>
 						<v-text-field
+							ref="menuSearch"
 							v-model="quicksearchQuery" clearable hide-details
 							prepend-icon="mdi-magnify" @keyup="performSearch"
-							@click:clear="clearSearch"
+							@click:clear="clearSearch" @keydown.enter="enterSearch"
 						/>
 					</v-list-item-content>
 				</v-list-item>
@@ -116,7 +117,7 @@
 							ref="toolbarSearch"
 							v-model="quicksearchQuery" clearable hide-details
 							@click:clear="showQuicksearch = false; clearSearch()"
-							@blur="blur" @keyup="performSearch"
+							@blur="blur" @keyup="performSearch" @keydown.enter="enterSearch"
 						/>
 					</div>
 				</v-expand-x-transition>
@@ -358,6 +359,12 @@ export default {
 	},
 
 	methods: {
+		enterSearch() {
+			this.$refs.menuSearch.blur()
+			this.$refs.toolbarSearch.blur()
+			this.performSearch()
+		},
+
 		closeSnackbar() {
 			this.$store.dispatch('ui/closeSnackbar')
 		},
