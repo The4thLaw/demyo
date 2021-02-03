@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.config.BootstrapMode;
@@ -32,6 +34,7 @@ import org.demyo.common.exception.DemyoRuntimeException;
  */
 @Configuration
 @ComponentScan("org.demyo")
+@PropertySource("classpath:/org/demyo/dao/config.properties")
 @EnableJpaRepositories(basePackages = "org.demyo.dao", bootstrapMode = BootstrapMode.DEFERRED)
 @EnableTransactionManagement
 public class DaoConfig {
@@ -72,6 +75,7 @@ public class DaoConfig {
 		factory.setDataSource(dataSource());
 
 		Properties props = new Properties();
+		LOGGER.info("Hibernate debug is enabled: {}", hibernateDebug);
 		props.setProperty("hibernate.show_sql", hibernateDebug);
 		props.setProperty("hibernate.format_sql", hibernateDebug);
 		props.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
@@ -103,4 +107,8 @@ public class DaoConfig {
 		return new PersistenceExceptionTranslationPostProcessor();
 	}
 
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
+	}
 }
