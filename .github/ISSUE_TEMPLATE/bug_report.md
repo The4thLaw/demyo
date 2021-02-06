@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Report what you perceive as an actual issue in the software
 title: ''
 labels: 'type:bug :boom:'
 assignees: ''
@@ -30,11 +30,11 @@ If possible, provide an export of your library.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. MacOS, Linux]
- - Browser: [e.g. FireFox, Chrome, Safari, Edge]
- - Version: [e.g. 22]
+ - Browser and browser version: [e.g. FireFox, Chrome, Safari, Edge]
+ - Demyo Version: [e.g. 2.1.0]
 
 **Smartphone (please complete the following information):**
  - Device: [e.g. iPhone6]
  - OS: [e.g. iOS8.1]
- - Browser: [e.g. stock browser, safari]
- - Version: [e.g. 22]
+ - Browser and browser version: [e.g. stock browser, safari]
+ - Demyo Version: [e.g. 2.1.0]
