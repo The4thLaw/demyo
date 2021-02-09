@@ -7,8 +7,6 @@ import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -61,37 +59,24 @@ public class DesktopIntegrationService {
 			LOGGER.warn("Failed to set the Look and Feel", e);
 		}
 
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				createSysTray();
-			}
-		});
+		SwingUtilities.invokeLater(this::createSysTray);
 	}
 
 	private void createSysTray() {
 		final PopupMenu popup = new PopupMenu();
 
 		MenuItem browserItem = new MenuItem(translationService.translate("desktop.tray.browser.label"));
-		browserItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DesktopUtils.startBrowser();
-			}
-		});
+		browserItem.addActionListener(e -> DesktopUtils.startBrowser());
 		popup.add(browserItem);
 
 		MenuItem exitItem = new MenuItem(translationService.translate("desktop.tray.exit.label"));
-		exitItem.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LOGGER.info("Stopping Demyo");
-				for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
-					SystemTray.getSystemTray().remove(icon);
-				}
-
-				desktop.stopServer();
+		exitItem.addActionListener(e -> {
+			LOGGER.info("Stopping Demyo");
+			for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
+				SystemTray.getSystemTray().remove(icon);
 			}
+
+			desktop.stopServer();
 		});
 		// Note: cannot add a shutdown hook to remove the icons, see https://bugs.openjdk.java.net/browse/JDK-8042114
 		popup.add(exitItem);

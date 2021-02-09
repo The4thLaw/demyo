@@ -40,7 +40,7 @@ public class DBUnitExtractor extends AbstractServiceTest {
 	private PlatformTransactionManager txMgr;
 
 	@Test
-	public void importXmlAndExportDBUnit() throws Exception {
+	void importXmlAndExportDBUnit() throws Exception {
 		// Manage transaction manually to be able to read directly afterwards
 		TransactionTemplate transactionTemplate = new TransactionTemplate(txMgr);
 		transactionTemplate.execute(new TransactionCallback<Void>() {

@@ -22,7 +22,7 @@ public class DIOUtilsTest {
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
-	public void testCloseQuietlyCloseableNormal() throws IOException {
+	void testCloseQuietlyCloseableNormal() throws IOException {
 		DIOUtils.closeQuietly((Closeable) null);
 		Closeable closeable = Mockito.mock(Closeable.class);
 		DIOUtils.closeQuietly(closeable);
@@ -35,7 +35,7 @@ public class DIOUtilsTest {
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
-	public void testCloseQuietlyCloseableException() throws IOException {
+	void testCloseQuietlyCloseableException() throws IOException {
 		Closeable closeable = Mockito.mock(Closeable.class);
 		Mockito.doThrow(IOException.class).when(closeable).close();
 		DIOUtils.closeQuietly(closeable);
@@ -48,7 +48,7 @@ public class DIOUtilsTest {
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
-	public void testCloseQuietlyZipFileNormal() throws IOException {
+	void testCloseQuietlyZipFileNormal() throws IOException {
 		DIOUtils.closeQuietly((ZipFile) null);
 		ZipFile closeable = Mockito.mock(ZipFile.class);
 		DIOUtils.closeQuietly(closeable);
@@ -61,7 +61,7 @@ public class DIOUtilsTest {
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
-	public void testCloseQuietlyZipFileException() throws IOException {
+	void testCloseQuietlyZipFileException() throws IOException {
 		ZipFile closeable = Mockito.mock(ZipFile.class);
 		Mockito.doThrow(IOException.class).when(closeable).close();
 		DIOUtils.closeQuietly(closeable);
@@ -74,7 +74,7 @@ public class DIOUtilsTest {
 	 * @throws XMLStreamException should never be thrown.
 	 */
 	@Test
-	public void testCloseQuietlyXMLStreamWriterNormal() throws XMLStreamException {
+	void testCloseQuietlyXMLStreamWriterNormal() throws XMLStreamException {
 		DIOUtils.closeQuietly((XMLStreamWriter) null);
 		XMLStreamWriter closeable = Mockito.mock(XMLStreamWriter.class);
 		DIOUtils.closeQuietly(closeable);
@@ -87,7 +87,7 @@ public class DIOUtilsTest {
 	 * @throws XMLStreamException should never be thrown.
 	 */
 	@Test
-	public void testCloseQuietlyXMLStreamWriterException() throws XMLStreamException {
+	void testCloseQuietlyXMLStreamWriterException() throws XMLStreamException {
 		XMLStreamWriter closeable = Mockito.mock(XMLStreamWriter.class);
 		Mockito.doThrow(XMLStreamException.class).when(closeable).close();
 		DIOUtils.closeQuietly(closeable);
@@ -98,7 +98,7 @@ public class DIOUtilsTest {
 	 * Tests {@link DIOUtils#getFileExtension(String)}.
 	 */
 	@Test
-	public void getFileExtension() {
+	void getFileExtension() {
 		assertThat(DIOUtils.getFileExtension(null)).isNull();
 		assertThat(DIOUtils.getFileExtension("foo")).isNull();
 		assertThat(DIOUtils.getFileExtension("foo.jpg")).isEqualTo("jpg");

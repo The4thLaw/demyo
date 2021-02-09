@@ -15,7 +15,7 @@ public class AlbumTest {
 	 * 985b825e65dcf0949a4f6ccd5b0f39d2f528b11a.
 	 */
 	@Test
-	public void testNumberFormatting() {
+	void testNumberFormatting() {
 		Album album = new Album();
 		album.setTitle("Title");
 		album.setNumber(BigDecimal.valueOf(1));

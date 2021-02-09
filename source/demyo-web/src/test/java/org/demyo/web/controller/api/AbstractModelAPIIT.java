@@ -20,7 +20,7 @@ public abstract class AbstractModelAPIIT extends AbstractAPIIT {
 
 	/** Generic test for index methods that ensures at least one entity is returned. */
 	@Test
-	public void genTestIndex() throws Exception {
+	void genTestIndex() throws Exception {
 		mockMvc.perform(get(apiRoot)) //
 				// .andDo(MockMvcResultHandlers.print()) //
 				.andExpect(status().isOk()) //
@@ -31,7 +31,7 @@ public abstract class AbstractModelAPIIT extends AbstractAPIIT {
 	 * Generic test for view methods that ensures 404 errors are returned.
 	 */
 	@Test
-	public void genTestMissingEntityView() throws Exception {
+	void genTestMissingEntityView() throws Exception {
 		mockMvc.perform(get(apiRoot + "421337")) //
 				.andExpect(status().isNotFound());
 	}

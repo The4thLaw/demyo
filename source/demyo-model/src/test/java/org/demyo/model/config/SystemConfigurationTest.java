@@ -16,7 +16,7 @@ public class SystemConfigurationTest {
 	 * Tests the loading of the default system configuration.
 	 */
 	@Test
-	public void testLoadDefaultConfig() {
+	void testLoadDefaultConfig() {
 		SystemConfiguration config = SystemConfiguration.getInstance();
 		assertThat(config.getHttpPort()).isEqualTo(EXPECTED_DEFAULT_PORT);
 		assertThat(config.getContextRoot()).isEqualTo("/");

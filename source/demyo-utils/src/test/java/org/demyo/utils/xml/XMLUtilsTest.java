@@ -18,7 +18,7 @@ public class XMLUtilsTest {
 	 * @throws SAXException In case of test issue
 	 */
 	@Test
-	public void createXmlReader() throws ParserConfigurationException, SAXException {
+	void createXmlReader() throws ParserConfigurationException, SAXException {
 		assertThat(XMLUtils.createXmlReader()).isNotNull();
 	}
 }

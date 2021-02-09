@@ -38,7 +38,7 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 	 * @throws IOException In case of I/O error.
 	 */
 	@Test
-	public void testExportCompleteness() throws DemyoException, IOException {
+	void testExportCompleteness() throws DemyoException, IOException {
 		File expFile = exporter.export();
 		String expContent = FileUtils.readFileToString(expFile, StandardCharsets.UTF_8);
 		DIOUtils.delete(expFile);

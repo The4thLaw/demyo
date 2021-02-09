@@ -20,7 +20,7 @@ public class SearchAPIControllerIT extends AbstractAPIIT {
 	 * Tests {@link SearchAPIController#quickSearch(String)}
 	 */
 	@Test
-	public void quicksearch() throws Exception {
+	void quicksearch() throws Exception {
 		mockMvc.perform(get("/api/search/quick?q=sill"))
 				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())

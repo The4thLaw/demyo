@@ -25,7 +25,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void index() throws Exception {
+	void index() throws Exception {
 		mockMvc.perform(get("/api/derivatives/")) //
 				.andExpect(status().isOk()) //
 				.andDo(MockMvcResultHandlers.print()) //
@@ -38,7 +38,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void indexWithFilter() throws Exception {
+	void indexWithFilter() throws Exception {
 		mockMvc.perform(post("/api/derivatives/index/filtered")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
@@ -54,7 +54,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void saveExisting() throws Exception {
+	void saveExisting() throws Exception {
 		mockMvc.perform(put("/api/derivatives/205")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
@@ -96,7 +96,7 @@ public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void saveWithValidationErrors() throws Exception {
+	void saveWithValidationErrors() throws Exception {
 		// Save a new entity with validation errors
 		mockMvc.perform(post("/api/derivatives/")
 				.contentType(MediaType.APPLICATION_JSON)

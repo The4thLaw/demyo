@@ -23,7 +23,7 @@ public class AlbumAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void index() throws Exception {
+	void index() throws Exception {
 		mockMvc.perform(get("/api/albums/"))
 
 				.andExpect(status().isOk())
@@ -43,7 +43,7 @@ public class AlbumAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void indexWithFilter() throws Exception {
+	void indexWithFilter() throws Exception {
 		mockMvc.perform(post("/api/albums/index/filtered")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"

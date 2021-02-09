@@ -20,14 +20,14 @@ public class TagServiceIT extends AbstractServiceTest {
 	private ITagService tagService;
 
 	@Test
-	public void testGetByIdForView() {
+	void testGetByIdForView() {
 		Tag tag = tagService.getByIdForView(1);
 		assertThat(tag.getId()).isEqualTo(1);
 		assertThat(tag.getName()).isEqualTo("science-fiction");
 	}
 
 	@Test
-	public void testSave() {
+	void testSave() {
 		Tag tagToSave = new Tag();
 		tagToSave.setId(21L);
 		tagToSave.setName("one shot");

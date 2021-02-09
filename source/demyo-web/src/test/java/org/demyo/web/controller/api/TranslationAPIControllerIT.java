@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  */
 public class TranslationAPIControllerIT extends AbstractAPIIT {
 	@Test
-	public void getTranslations() throws Exception {
+	void getTranslations() throws Exception {
 		mockMvc.perform(get("/api/translations/en")) //
 				.andExpect(status().isOk()) //
 				.andExpect(jsonPath("$['title.home']").value("Home"));

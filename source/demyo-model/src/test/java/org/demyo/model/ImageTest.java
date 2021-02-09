@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ImageTest {
 	@Test
-	public void testGetUserFileName() {
+	void testGetUserFileName() {
 		Image i1 = new Image();
 		i1.setDescription("My nice image");
 		i1.setUrl("/path/to/stuff.png");

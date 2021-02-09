@@ -23,7 +23,7 @@ public class ReaderAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void autoSelect() throws Exception {
+	void autoSelect() throws Exception {
 		mockMvc.perform(get("/api/readers/autoSelect"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(1))
@@ -34,7 +34,7 @@ public class ReaderAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void getLists() throws Exception {
+	void getLists() throws Exception {
 		mockMvc.perform(get("/api/readers/1/lists"))
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())

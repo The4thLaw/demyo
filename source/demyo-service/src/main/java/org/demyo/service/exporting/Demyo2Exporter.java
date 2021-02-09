@@ -37,6 +37,8 @@ import javanet.staxutils.IndentingXMLStreamWriter;
  */
 @Component
 public class Demyo2Exporter implements IExporter {
+	private static final String SERIES_KEY = "SERIES_ID";
+	private static final String READER_KEY = "READER_ID";
 	private static final String ALBUM_KEY = "ALBUM_ID";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Exporter.class);
@@ -118,11 +120,11 @@ public class Demyo2Exporter implements IExporter {
 
 			// Readers
 			exportModel(xsw, "readers", "reader", "READERS",
-					new ManyToManyRelation("favourite-series-list", "favourite-series", "READER_ID", "SERIES_ID",
+					new ManyToManyRelation("favourite-series-list", "favourite-series", READER_KEY, SERIES_KEY,
 							rawSqlDao.getRawRecords("READERS_FAVOURITE_SERIES")),
-					new ManyToManyRelation("favourite-albums", "favourite-album", "READER_ID", ALBUM_KEY,
+					new ManyToManyRelation("favourite-albums", "favourite-album", READER_KEY, ALBUM_KEY,
 							rawSqlDao.getRawRecords("READERS_FAVOURITE_ALBUMS")),
-					new ManyToManyRelation("reading-list", "reading-list-entry", "READER_ID", ALBUM_KEY,
+					new ManyToManyRelation("reading-list", "reading-list-entry", READER_KEY, ALBUM_KEY,
 							rawSqlDao.getRawRecords("READERS_READING_LIST")));
 
 			exportModel(xsw, "configuration", "configuration-entry", "CONFIGURATION");

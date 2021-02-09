@@ -181,24 +181,24 @@ public class Demyo2Importer implements IImporter {
 	 * SAX handler for import of Demyo 2.x files.
 	 */
 	public class Demyo2Handler extends DefaultHandler {
-		private String seriesId = null;
-		private String albumId = null;
-		private String derivativeId = null;
-		private String readerId = null;
+		private String seriesId;
+		private String albumId;
+		private String derivativeId;
+		private String readerId;
 
-		private List<Map<String, String>> relatedSeries = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumArtists = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumWriters = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumColorists = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumInkers = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumTranslators = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumTags = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> albumImages = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> derivativeImages = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> readerFavouriteSeries = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> readerFavouriteAlbums = new ArrayList<Map<String, String>>();
-		private List<Map<String, String>> readerReadingList = new ArrayList<Map<String, String>>();
-		private Map<String, List<Map<String, String>>> allRelations = new HashMap<String, List<Map<String, String>>>();
+		private List<Map<String, String>> relatedSeries = new ArrayList<>();
+		private List<Map<String, String>> albumArtists = new ArrayList<>();
+		private List<Map<String, String>> albumWriters = new ArrayList<>();
+		private List<Map<String, String>> albumColorists = new ArrayList<>();
+		private List<Map<String, String>> albumInkers = new ArrayList<>();
+		private List<Map<String, String>> albumTranslators = new ArrayList<>();
+		private List<Map<String, String>> albumTags = new ArrayList<>();
+		private List<Map<String, String>> albumImages = new ArrayList<>();
+		private List<Map<String, String>> derivativeImages = new ArrayList<>();
+		private List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
+		private List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
+		private List<Map<String, String>> readerReadingList = new ArrayList<>();
+		private Map<String, List<Map<String, String>>> allRelations = new HashMap<>();
 
 		/**
 		 * Initializes structures for the handler.
@@ -239,7 +239,7 @@ public class Demyo2Importer implements IImporter {
 				seriesId = attributes.getValue("id");
 				createLine("series", attributes);
 			} else if ("related_series".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("main", seriesId);
 				columns.put("sub", attributes.getValue("ref"));
 				relatedSeries.add(columns);
@@ -247,37 +247,37 @@ public class Demyo2Importer implements IImporter {
 				albumId = attributes.getValue("id");
 				createLine("albums", attributes);
 			} else if ("artist".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("artist_id", attributes.getValue("ref"));
 				albumArtists.add(columns);
 			} else if ("writer".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("writer_id", attributes.getValue("ref"));
 				albumWriters.add(columns);
 			} else if ("colorist".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("colorist_id", attributes.getValue("ref"));
 				albumColorists.add(columns);
 			} else if ("inker".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("inker_id", attributes.getValue("ref"));
 				albumInkers.add(columns);
 			} else if ("translator".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("translator_id", attributes.getValue("ref"));
 				albumTranslators.add(columns);
 			} else if ("album-tag".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("tag_id", attributes.getValue("ref"));
 				albumTags.add(columns);
 			} else if ("album-image".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("album_id", albumId);
 				columns.put("image_id", attributes.getValue("ref"));
 				albumImages.add(columns);
@@ -295,7 +295,7 @@ public class Demyo2Importer implements IImporter {
 				derivativeId = attributes.getValue("id");
 				createLine("derivatives", attributes);
 			} else if ("derivative-image".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("derivative_id", derivativeId);
 				columns.put("image_id", attributes.getValue("ref"));
 				derivativeImages.add(columns);
@@ -305,17 +305,17 @@ public class Demyo2Importer implements IImporter {
 				readerId = attributes.getValue("id");
 				createLine("readers", attributes);
 			} else if ("favourite-series".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("reader_id", readerId);
 				columns.put("series_id", attributes.getValue("ref"));
 				readerFavouriteSeries.add(columns);
 			} else if ("favourite-album".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("reader_id", readerId);
 				columns.put("album_id", attributes.getValue("ref"));
 				readerFavouriteAlbums.add(columns);
 			} else if ("reading-list-entry".equals(localName)) {
-				HashMap<String, String> columns = new HashMap<String, String>();
+				HashMap<String, String> columns = new HashMap<>();
 				columns.put("reader_id", readerId);
 				columns.put("album_id", attributes.getValue("ref"));
 				readerReadingList.add(columns);
@@ -357,7 +357,7 @@ public class Demyo2Importer implements IImporter {
 		}
 
 		private void createLine(String tableName, Attributes attributes) {
-			Map<String, String> attributeMap = new HashMap<String, String>(attributes.getLength());
+			Map<String, String> attributeMap = new HashMap<>(attributes.getLength());
 			for (int i = 0; i < attributes.getLength(); i++) {
 				attributeMap.put(attributes.getLocalName(i), attributes.getValue(i));
 			}

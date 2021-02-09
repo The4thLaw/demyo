@@ -27,7 +27,7 @@ public class AlbumServiceIT extends AbstractServiceTest {
 	 * Ensures that prices can be loaded from the database in the correct order.
 	 */
 	@Test
-	public void testFindPrices() {
+	void testFindPrices() {
 		Album a = service.getByIdForEdition(764);
 		assertThat(a.getPrices()).hasSize(2);
 		Iterator<AlbumPrice> priceIterator = a.getPrices().iterator();
@@ -45,7 +45,7 @@ public class AlbumServiceIT extends AbstractServiceTest {
 	 * Tests {@link IAlbumService#countAlbumsByTag(long)}.
 	 */
 	@Test
-	public void testCountAlbumByFilter() {
+	void testCountAlbumByFilter() {
 		assertThat(service.countAlbumsByTag(1L)).isEqualTo(24);
 	}
 }

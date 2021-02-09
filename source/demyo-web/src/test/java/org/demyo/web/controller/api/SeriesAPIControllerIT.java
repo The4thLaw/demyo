@@ -25,7 +25,7 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void index() throws Exception {
+	void index() throws Exception {
 		mockMvc.perform(get("/api/series/"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(3)))
@@ -36,7 +36,7 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void view() throws Exception {
+	void view() throws Exception {
 		mockMvc.perform(get("/api/series/99"))
 				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
@@ -54,7 +54,7 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void getAlbumsForSeries() throws Exception {
+	void getAlbumsForSeries() throws Exception {
 		mockMvc.perform(get("/api/series/2/albums"))
 				.andExpect(status().isOk())
 				// Sample empty series
@@ -78,7 +78,7 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void getAlbumsWithoutSeries() throws Exception {
+	void getAlbumsWithoutSeries() throws Exception {
 		mockMvc.perform(get("/api/series/none/albums"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)))
@@ -87,14 +87,14 @@ public class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void countDerivativesBySeries() throws Exception {
+	void countDerivativesBySeries() throws Exception {
 		mockMvc.perform(get("/api/series/99/derivatives/count"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").value(27));
 	}
 
 	@Test
-	public void saveExisting() throws Exception {
+	void saveExisting() throws Exception {
 		mockMvc.perform(put("/api/series/99")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"

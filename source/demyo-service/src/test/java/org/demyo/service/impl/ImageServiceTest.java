@@ -62,7 +62,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
-	public void testRecoverSingleImageNoneExisting() throws DemyoException {
+	void testRecoverSingleImageNoneExisting() throws DemyoException {
 		ImageService service = createImageServiceForRecovery();
 
 		List<Image> saved = service.recoverImagesFromFilePond("Album Name 01 - Cover", false, "filePondFile1");
@@ -79,7 +79,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
-	public void testRecoverSingleImageButExists() throws DemyoException {
+	void testRecoverSingleImageButExists() throws DemyoException {
 		ImageService service = createImageServiceForRecovery();
 
 		IImageRepo repo = (IImageRepo) service.getRepo();
@@ -103,7 +103,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
-	public void testRecoverMultipleImageNoneExisting() throws DemyoException {
+	void testRecoverMultipleImageNoneExisting() throws DemyoException {
 		ImageService service = createImageServiceForRecovery();
 
 		List<Image> saved = service.recoverImagesFromFilePond("Album Name 01 - Image", true, "filePondFile1",
@@ -124,7 +124,7 @@ public class ImageServiceTest extends AbstractServiceTest {
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
-	public void testRecoverMultipleImageButExists() throws DemyoException {
+	void testRecoverMultipleImageButExists() throws DemyoException {
 		ImageService service = createImageServiceForRecovery();
 
 		IImageRepo repo = (IImageRepo) service.getRepo();

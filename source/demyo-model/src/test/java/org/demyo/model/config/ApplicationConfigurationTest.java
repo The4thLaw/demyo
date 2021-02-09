@@ -15,7 +15,7 @@ public class ApplicationConfigurationTest {
 	 * Tests that the configuration can be loaded from a simple hard-coded set of properties.
 	 */
 	@Test
-	public void testInitialisationFromStrings() {
+	void testInitialisationFromStrings() {
 		Map<String, String> configStrings = new HashMap<>();
 		configStrings.put("language", "en");
 		configStrings.put("paging.textPageSize", "50");

@@ -15,7 +15,7 @@ public class PaginatedListTest {
 
 	/** Tests {@link PaginatedList#getMaxPages()}. */
 	@Test
-	public void testMaxPages() {
+	void testMaxPages() {
 		PaginatedList<Void> list;
 
 		list = new PaginatedList<Void>(EMPTY_LIST, 1, 10, 9);
@@ -30,7 +30,7 @@ public class PaginatedListTest {
 
 	/** Tests {@link PaginatedList#hasPreviousPage()} and {@link PaginatedList#hasNextPage()}. */
 	@Test
-	public void testPreviousNext() {
+	void testPreviousNext() {
 		PaginatedList<Void> list;
 
 		list = new PaginatedList<Void>(EMPTY_LIST, 1, 10, 95);

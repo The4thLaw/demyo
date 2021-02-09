@@ -20,7 +20,7 @@ public class AuthorAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void index() throws Exception {
+	void index() throws Exception {
 		mockMvc.perform(get("/api/authors/"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(7)))
@@ -36,7 +36,7 @@ public class AuthorAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void view() throws Exception {
+	void view() throws Exception {
 		mockMvc.perform(get("/api/authors/610"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(610))
@@ -47,7 +47,7 @@ public class AuthorAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void getAuthorAlbums() throws Exception {
+	void getAuthorAlbums() throws Exception {
 		mockMvc.perform(get("/api/authors/610/albums"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.asArtist", hasSize(1)))
@@ -63,7 +63,7 @@ public class AuthorAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void countDerivativesByArtist() throws Exception {
+	void countDerivativesByArtist() throws Exception {
 		mockMvc.perform(get("/api/authors/52/derivatives/count"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").value(27));

@@ -14,7 +14,7 @@ import org.demyo.model.Album;
  */
 public class MetaSeriesTest {
 	@Test
-	public void compare() {
+	void compare() {
 		LocaleContextHolder.setLocale(Locale.FRENCH);
 
 		Album elephantAlb = new Album();

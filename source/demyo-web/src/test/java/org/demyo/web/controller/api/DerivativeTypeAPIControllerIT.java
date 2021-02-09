@@ -20,7 +20,7 @@ public class DerivativeTypeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void index() throws Exception {
+	void index() throws Exception {
 		mockMvc.perform(get("/api/derivativeTypes/"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(5)))
@@ -30,7 +30,7 @@ public class DerivativeTypeAPIControllerIT extends AbstractModelAPIIT {
 	}
 
 	@Test
-	public void countDerivativesByType() throws Exception {
+	void countDerivativesByType() throws Exception {
 		mockMvc.perform(get("/api/derivativeTypes/5/derivatives/count"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").value(1));

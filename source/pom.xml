@@ -514,6 +514,7 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
+				<!-- TODO: move this to a profile, use the profile in the GitHub workflow -->
 				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>

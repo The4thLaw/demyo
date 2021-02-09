@@ -14,7 +14,7 @@ public class IdentifyingNameComparatorTest {
 	 * Main test.
 	 */
 	@Test
-	public void test() {
+	void test() {
 		Series s1 = new Series();
 		s1.setName("A");
 
