@@ -12,7 +12,7 @@ import org.demyo.model.Album;
 /**
  * Tests from {@link MetaSeries}
  */
-public class MetaSeriesTest {
+class MetaSeriesTest {
 	@Test
 	void compare() {
 		LocaleContextHolder.setLocale(Locale.FRENCH);

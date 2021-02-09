@@ -196,8 +196,7 @@ export default {
 			if (!objects || !objects.length) {
 				return null
 			}
-			const ids = objects.map(e => e.serverId)
-			return ids
+			return objects.map(e => e.serverId)
 		}
 	}
 }
