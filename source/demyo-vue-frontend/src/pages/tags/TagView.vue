@@ -22,6 +22,10 @@
 					{{ tag.identifyingName }}
 				</span>
 			</h1>
+			<FieldValue v-if="tag.description" :label="$t('field.Tag.description')">
+				<!-- eslint-disable-next-line vue/no-v-html -->
+				<div v-html="tag.description" />
+			</FieldValue>
 			<v-btn
 				v-if="count > 0"
 				:to="{ name: 'AlbumIndex', query: { withTag: tag.id } }"
@@ -42,6 +46,7 @@
 <script>
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
+import FieldValue from '@/components/FieldValue'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
@@ -53,6 +58,7 @@ export default {
 	components: {
 		AppTask,
 		AppTasks,
+		FieldValue,
 		SectionCard
 	},
 

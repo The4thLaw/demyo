@@ -24,6 +24,10 @@ public class Tag extends AbstractNamedModel {
 	@Column(name = "bgcolour")
 	private String bgColour;
 
+	/** The description for this tag. */
+	@Column(name = "description")
+	private String description;
+
 	/** The number of times this Tag has been used. */
 	@Transient
 	private Integer usageCount;
@@ -64,6 +68,24 @@ public class Tag extends AbstractNamedModel {
 	 */
 	public void setBgColour(String bgColour) {
 		this.bgColour = bgColour;
+	}
+
+	/**
+	 * Gets the description for this tag.
+	 *
+	 * @return the description for this tag
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * Sets the description for this tag.
+	 *
+	 * @param description the new description for this tag
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	/**

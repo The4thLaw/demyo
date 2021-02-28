@@ -19,6 +19,15 @@
 						</div>
 					</v-col>
 				</v-row>
+				<v-row>
+					<v-col cols="12" md="6">
+						<label class="dem-fieldlabel">{{ $t('field.Tag.description') }}</label>
+						<tiptap-vuetify
+							v-model="tag.description" :extensions="tipTapExtensions"
+							:card-props="{ outlined: true }"
+						/>
+					</v-col>
+				</v-row>
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Tag.colours')">
@@ -46,8 +55,10 @@
 </template>
 
 <script>
+import { TiptapVuetify } from 'tiptap-vuetify'
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
+import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import tagService from '@/services/tag-service'
@@ -57,7 +68,8 @@ export default {
 
 	components: {
 		FormActions,
-		SectionCard
+		SectionCard,
+		TiptapVuetify
 	},
 
 	mixins: [modelEditMixin],
@@ -83,6 +95,8 @@ export default {
 			// with the value
 			fgColour: '',
 			bgColour: '',
+
+			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [
