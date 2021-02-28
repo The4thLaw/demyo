@@ -122,6 +122,9 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
+						<v-text-field v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date" />
+					</v-col>
+					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="album.isbn" :label="$t('field.Album.isbn')" :rules="rules.isbn"
 						/>

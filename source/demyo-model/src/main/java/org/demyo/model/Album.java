@@ -111,6 +111,10 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@Column(name = "this_edition")
 	private Date currentEditionDate;
 
+	/** The date of printing for this edition. Usually equal to the current edition, plus or minus 1 month. */
+	@Column(name = "printing")
+	private Date printingDate;
+
 	/** The flag indicating the Album was explicitly marked as being a first edition. */
 	@Column(name = "marked_as_first_edition")
 	private boolean markedAsFirstEdition;
@@ -457,6 +461,24 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	public Date getCurrentEditionDate() {
 		return currentEditionDate;
+	}
+
+	/**
+	 * Sets the date of printing for this edition.
+	 *
+	 * @param printingDate the new date of printing for this edition
+	 */
+	public void setPrintingDate(Date printingDate) {
+		this.printingDate = printingDate;
+	}
+
+	/**
+	 * Gets the date of printing for this edition.
+	 *
+	 * @return the date of printing for this edition
+	 */
+	public Date getPrintingDate() {
+		return printingDate;
 	}
 
 	/**

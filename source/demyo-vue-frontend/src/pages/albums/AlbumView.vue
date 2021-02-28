@@ -140,6 +140,11 @@
 							{{ $d(new Date(album.currentEditionDate), 'long') }}
 						</FieldValue>
 					</v-col>
+					<v-col v-if="album.printingDate" cols="12" md="4">
+						<FieldValue :label="$t('field.Album.printingDate')">
+							{{ $d(new Date(album.printingDate), 'long') }}
+						</FieldValue>
+					</v-col>
 					<v-col v-if="album.acquisitionDate" cols="12" md="4">
 						<FieldValue :label="$t('field.Album.acquisitionDate')">
 							{{ $d(new Date(album.acquisitionDate), 'long') }}
