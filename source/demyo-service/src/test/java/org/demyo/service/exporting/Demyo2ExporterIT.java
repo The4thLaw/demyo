@@ -44,7 +44,11 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 		DIOUtils.delete(expFile);
 		LOGGER.error(expContent);
 
-		assertThat(expContent).contains("<reader id=\"1\" name=\"Xavier\" colour=\"#304ffe\">")
+		assertThat(expContent)
+				// Tag assertions
+				.contains("<tag id=\"1\" name=\"science-fiction\" description=\"SF\"/>")
+				// Reader assertions
+				.contains("<reader id=\"1\" name=\"Xavier\" colour=\"#304ffe\">")
 				.contains("<favourite-series ref=\"99\"/>")
 				.contains("<favourite-album ref=\"1313\"/>")
 				.contains("<reading-list-entry ref=\"1459\"/>");

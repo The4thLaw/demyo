@@ -69,7 +69,7 @@
   <SERIES ID="232" NAME="Sillage - Premières Armes" COMPLETED="false" LOCATION="Bibliothèque, F2"/>
   <SERIES_RELATIONS MAIN="99" SUB="232"/>
   <SERIES_RELATIONS MAIN="232" SUB="99"/>
-  <TAGS ID="1" NAME="science-fiction"/>
+  <TAGS ID="1" NAME="science-fiction" DESCRIPTION="SF" />
   <TAGS ID="3" NAME="comic" FGCOLOUR="#ffffff" BGCOLOUR="#1c1d82"/>
   <TAGS ID="7" NAME="dédicacé"/>
   <TAGS ID="10" NAME="vernis sélectif"/>

@@ -13,7 +13,7 @@
   </collections>
   <tags>
     <tag id="1" name="action"/>
-    <tag id="2" name="humour"/>
+    <tag id="2" name="humour" description="rofl"/>
     <tag id="3" name="science-fiction" fgcolour="#ffffff" bgcolour="#ff0000"/>
   </tags>
   <series-list>

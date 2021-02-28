@@ -15,9 +15,11 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.Album;
 import org.demyo.model.Reader;
+import org.demyo.model.Tag;
 import org.demyo.model.beans.ReaderLists;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IReaderService;
+import org.demyo.service.ITagService;
 import org.demyo.service.impl.AbstractServiceTest;
 
 /**
@@ -29,7 +31,9 @@ public class Demyo2ImporterIT extends AbstractServiceTest {
 	@Autowired
 	private IReaderService readerService;
 	@Autowired
-	IAlbumService albumService;
+	private ITagService tagService;
+	@Autowired
+	private IAlbumService albumService;
 	@Autowired
 	@Qualifier("demyo2Importer")
 	private IImporter importer;
@@ -52,6 +56,11 @@ public class Demyo2ImporterIT extends AbstractServiceTest {
 
 		List<Album> albums = albumService.findAll();
 		assertThat(albums).hasSize(3);
+
+		List<Tag> tags = tagService.findAll();
+		assertThat(tags).hasSize(3);
+		Tag tag2 = tags.get(1);
+		assertThat(tag2.getDescription()).isEqualTo("rofl");
 
 		List<Reader> readers = readerService.findAll();
 		assertThat(readers).hasSize(1);
