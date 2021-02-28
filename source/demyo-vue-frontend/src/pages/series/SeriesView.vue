@@ -42,11 +42,17 @@
 			</FieldValue>
 
 			<FieldValue :label="$t('field.Series.completed.view')">
-				<template v-if="series.completed">
-					{{ $t('field.Series.completed.value.true') }}
+				<template v-if="series.completed && (!minAlbumYear || !maxAlbumYear)">
+					{{ $t('field.Series.completed.value.trueNoDates') }}
 				</template>
-				<template v-if="!series.completed">
-					{{ $t('field.Series.completed.value.false') }}
+				<template v-if="series.completed && minAlbumYear && maxAlbumYear">
+					{{ $t('field.Series.completed.value.true', { min: minAlbumYear, max: maxAlbumYear }) }}
+				</template>
+				<template v-if="!series.completed && !minAlbumYear">
+					{{ $t('field.Series.completed.value.falseNoDates') }}
+				</template>
+				<template v-if="!series.completed && minAlbumYear">
+					{{ $t('field.Series.completed.value.false', { min: minAlbumYear }) }}
 				</template>
 			</FieldValue>
 
@@ -306,6 +312,38 @@ export default {
 			}
 
 			return Object.values(this.albums).some(a => sortedIndexOf(this.readingList, a.id) <= -1)
+		},
+
+		albumDates() {
+			if (!this.albumsLoaded) {
+				return []
+			}
+
+			return Object.values(this.albums)
+				.map(a => a.firstEditionDate || a.currentEditionDate || a.printingDate)
+				.filter(Boolean)
+				.map(d => new Date(d))
+		},
+
+		minAlbumYear() {
+			if (!this.albumDates.length) {
+				return null
+			}
+
+			const minDate = new Date(Math.min.apply(null, this.albumDates))
+			return minDate.getFullYear()
+		},
+
+		maxAlbumYear() {
+			if (!this.albumDates.length) {
+				return null
+			}
+			if (!this.series.completed) {
+				return null
+			}
+
+			const maxDate = new Date(Math.max.apply(null, this.albumDates))
+			return maxDate.getFullYear()
 		},
 
 		...mapState({
