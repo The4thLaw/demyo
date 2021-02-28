@@ -514,65 +514,6 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!-- TODO: move this to a profile, use the profile in the GitHub workflow -->
-				<plugin>
-					<groupId>org.jacoco</groupId>
-					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.8.6</version>
-					<configuration>
-						<excludes>
-							<exclude>com.*</exclude>
-						</excludes>
-					</configuration>
-					<executions>
-						<execution>
-							<id>default-prepare-agent</id>
-							<goals>
-								<goal>prepare-agent</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>default-report</id>
-							<phase>prepare-package</phase>
-							<goals>
-								<goal>report</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>default-check</id>
-							<goals>
-								<goal>check</goal>
-							</goals>
-							<configuration>
-								<rules>
-									<rule>
-										<element>BUNDLE</element>
-										<limits>
-											<limit>
-												<counter>COMPLEXITY</counter>
-												<value>COVEREDRATIO</value>
-												<minimum>0.00</minimum> <!-- Currently more interested in reports than in ensuring good coverage -->
-											</limit>
-										<!-- Check configuration used to specify rules on element types (BUNDLE, 
-											PACKAGE, CLASS, SOURCEFILE or METHOD) with a list of limits. Each limit applies 
-											to a certain counter (INSTRUCTION, LINE, BRANCH, COMPLEXITY, METHOD, CLASS) 
-											and defines a minimum or maximum for the corresponding value (TOTALCOUNT, 
-											COVEREDCOUNT, MISSEDCOUNT, COVEREDRATIO, MISSEDRATIO). -->
-										</limits>
-									</rule>
-								</rules>
-							</configuration>
-						</execution>
-						<execution>
-							<id>report-aggregate</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>report-aggregate</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
@@ -697,7 +638,54 @@
 				<config.war.path>war/demyo-web-${project.version}.war</config.war.path>
 			</properties>
 		</profile>
-		
+
+		<profile>
+			<id>coverage</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.jacoco</groupId>
+							<artifactId>jacoco-maven-plugin</artifactId>
+							<version>0.8.6</version>
+							<configuration>
+								<excludes>
+									<exclude>com.*</exclude>
+								</excludes>
+							</configuration>
+							<executions>
+								<execution>
+									<id>prepare-agent</id>
+									<goals>
+										<goal>prepare-agent</goal>
+									</goals>
+								</execution>
+								<execution>
+									<id>report</id>
+									<goals>
+										<goal>report</goal>
+									</goals>
+								</execution>
+								<execution>
+									<id>report-aggregate</id>
+									<phase>verify</phase>
+									<goals>
+										<goal>report-aggregate</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 		<profile>
 			<id>check-deps</id>
 			<!-- Run with e.g. mvn site -Pdev,check-deps -DskipTests -U -->
