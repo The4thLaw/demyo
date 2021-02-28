@@ -21,7 +21,7 @@
     <series id="2" name="Sillage" completed="false"/>
   </series-list>
   <albums>
-    <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false">
+    <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false" printing="1985-12-01">
       <album-tags>
         <album-tag ref="1"/>
         <album-tag ref="3"/>

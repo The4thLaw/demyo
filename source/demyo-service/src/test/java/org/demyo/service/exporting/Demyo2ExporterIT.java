@@ -45,6 +45,8 @@ public class Demyo2ExporterIT extends AbstractServiceTest {
 		LOGGER.error(expContent);
 
 		assertThat(expContent)
+				// Album assertions
+				.containsPattern(".*<album id=\"1313\".*printing=\"2015-09-01\".*>")
 				// Tag assertions
 				.contains("<tag id=\"1\" name=\"science-fiction\" description=\"SF\"/>")
 				// Reader assertions

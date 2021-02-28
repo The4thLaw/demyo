@@ -56,6 +56,8 @@ public class Demyo2ImporterIT extends AbstractServiceTest {
 
 		List<Album> albums = albumService.findAll();
 		assertThat(albums).hasSize(3);
+		Album album1 = albumService.getByIdForView(1);
+		assertThat(album1.getPrintingDate()).isEqualToIgnoringHours("1985-12-01");
 
 		List<Tag> tags = tagService.findAll();
 		assertThat(tags).hasSize(3);
