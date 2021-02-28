@@ -1,0 +1,4 @@
+ALTER TABLE tags
+	ADD COLUMN description CLOB NULL;
+ALTER TABLE albums
+	ADD COLUMN printing DATE NULL;
