@@ -1,4 +1,4 @@
-envCi = System.getenv("CI");
+envCi = System.getProperty("CI");
 isCi = envCi != null && envCi.length() != 0;
 
 appender("console", ConsoleAppender) {
