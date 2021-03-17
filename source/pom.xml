@@ -51,7 +51,7 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
-		<org.eclipse.jetty.version>9.4.36.v20210114</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
+		<org.eclipse.jetty.version>11.0.1</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v15.5.0</js.node.version>
 		
