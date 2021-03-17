@@ -45,7 +45,8 @@
 		},
 		"search.exclude": {
 			"**/target": true
-		}
+		},
+		"files.eol": "\n"
 	},
 	"launch": {
 		"version": "0.2.0",
