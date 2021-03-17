@@ -145,7 +145,7 @@
 					</v-col>
 					<v-col v-if="derivative.purchasePrice" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.purchasePrice')">
-							{{ derivative.purchasePrice }}
+							{{ derivative.purchasePrice | price(currency) }}
 						</FieldValue>
 					</v-col>
 					<v-col v-if="hasPrices" cols="12" md="6">
@@ -177,6 +177,7 @@ import ModelLink from '@/components/ModelLink'
 import PriceTable from '@/components/PriceTable'
 import SectionCard from '@/components/SectionCard'
 import { deleteStub } from '@/helpers/actions'
+import i18nMixin from '@/mixins/i18n'
 import modelViewMixin from '@/mixins/model-view'
 import derivativeService from '@/services/derivative-service'
 
@@ -194,7 +195,7 @@ export default {
 		SectionCard
 	},
 
-	mixins: [modelViewMixin],
+	mixins: [i18nMixin, modelViewMixin],
 
 	metaInfo() {
 		return {

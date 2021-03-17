@@ -17,7 +17,7 @@
 					because the price doesn't have a technical ID -->
 					<tr v-for="(price, index) in prices" :key="index">
 						<td>{{ $d(new Date(price.date), 'long') }}</td>
-						<td>{{ price.price }}</td>
+						<td>{{ price.price | price(currency) }}</td>
 					</tr>
 				</tbody>
 			</template>
@@ -27,6 +27,7 @@
 
 <script>
 import FieldValue from '@/components/FieldValue'
+import i18nMixin from '@/mixins/i18n'
 
 export default {
 	name: 'PriceTable',
@@ -34,6 +35,8 @@ export default {
 	components: {
 		FieldValue
 	},
+
+	mixins: [i18nMixin],
 
 	props: {
 		prices: {

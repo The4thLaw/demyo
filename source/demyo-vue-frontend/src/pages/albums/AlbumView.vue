@@ -163,10 +163,10 @@
 				</v-row>
 			</div>
 
-			<div class="dem-fieldset">
+			<div v-if="album.binding.id || sizeSpec || album.pages" class="dem-fieldset">
 				<v-row>
 					<v-col cols="12" md="4">
-						<FieldValue v-if="album.binding" :label="$t('field.Album.binding')">
+						<FieldValue v-if="album.binding.id" :label="$t('field.Album.binding')">
 							<ModelLink :model="album.binding" view="BindingView" />
 						</FieldValue>
 					</v-col>
@@ -205,7 +205,7 @@
 				<v-row>
 					<v-col v-if="album.purchasePrice" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.purchasePrice')">
-							{{ album.purchasePrice }}
+							{{ album.purchasePrice | price(currency) }}
 						</FieldValue>
 					</v-col>
 					<v-col v-if="hasPrices" cols="12" md="6">
@@ -283,6 +283,7 @@ import PriceTable from '@/components/PriceTable'
 import SectionCard from '@/components/SectionCard'
 import TagLink from '@/components/TagLink'
 import { deleteStub } from '@/helpers/actions'
+import i18nMixin from '@/mixins/i18n'
 import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
@@ -304,7 +305,7 @@ export default {
 		TagLink
 	},
 
-	mixins: [modelViewMixin],
+	mixins: [i18nMixin, modelViewMixin],
 
 	metaInfo() {
 		return {
