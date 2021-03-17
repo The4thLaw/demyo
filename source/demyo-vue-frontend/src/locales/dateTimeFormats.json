@@ -1,0 +1,25 @@
+{
+	"en": {
+		"numeric": {
+			"year": "numeric", "month": "numeric", "day": "numeric"
+		},
+		"short": {
+			"year": "numeric", "month": "short", "day": "numeric"
+		},
+		"long": {
+			"year": "numeric", "month": "long", "day": "numeric"
+		}
+	},
+
+	"fr": {
+		"numeric": {
+			"year": "numeric", "month": "numeric", "day": "numeric"
+		},
+		"short": {
+			"year": "numeric", "month": "short", "day": "numeric"
+		},
+		"long": {
+			"year": "numeric", "month": "long", "day": "numeric"
+		}
+	}
+}

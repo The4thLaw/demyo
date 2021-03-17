@@ -3,6 +3,7 @@ import VueI18n from 'vue-i18n'
 import axios from 'axios'
 import { apiRoot, defaultLanguage } from '@/myenv'
 import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
+import dateTimeFormats from '@/locales/dateTimeFormats.json'
 
 Vue.use(VueI18n)
 
@@ -11,32 +12,6 @@ function setHtmlLang(lang) {
 }
 
 const loadedLanguages = []
-
-const dateTimeFormats = {
-	en: {
-		numeric: {
-			year: 'numeric', month: 'numeric', day: 'numeric'
-		},
-		short: {
-			year: 'numeric', month: 'short', day: 'numeric'
-		},
-		long: {
-			year: 'numeric', month: 'long', day: 'numeric'
-		}
-	},
-
-	fr: {
-		numeric: {
-			year: 'numeric', month: 'numeric', day: 'numeric'
-		},
-		short: {
-			year: 'numeric', month: 'short', day: 'numeric'
-		},
-		long: {
-			year: 'numeric', month: 'long', day: 'numeric'
-		}
-	}
-}
 
 // Define the variants we support
 dateTimeFormats['fr-BE'] = dateTimeFormats.fr
