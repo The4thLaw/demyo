@@ -32,6 +32,16 @@ export default {
 			// https://markus.oberlehner.net/blog/dynamic-vue-layout-components/
 			return this.$route.meta.layout || DefaultLayout
 		}
+	},
+
+	created() {
+		// Force external links to leave Android/iOS app mode, and open them in new tabs for regular browsers
+		document.body.addEventListener('click', e => {
+			if (e.target.matches('a[href^="http://"], a[href^="https://"], a[href^="ftp://"]')) {
+				e.target.setAttribute('target', '_blank')
+				e.target.setAttribute('rel', 'noopener, noreferer, external')
+			}
+		})
 	}
 }
 </script>
