@@ -40,7 +40,7 @@
 		<SectionCard
 			v-if="albumsLoading || albums.length > 0"
 			:loading="albumsLoading"
-			:title="$t('page.Author.works')"
+			:title="$tc('page.Author.works', albumCount)"
 		>
 			<AlbumTextList :albums="albums">
 				<template #default="slotProps">
@@ -94,6 +94,10 @@ export default {
 	computed: {
 		albums() {
 			return this.authorAlbums.albums || []
+		},
+
+		albumCount() {
+			return this.albums.length
 		},
 
 		works() {
