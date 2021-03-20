@@ -58,13 +58,13 @@
 					</FieldValue>
 				</template>
 				<FieldValue
-					v-if="album.writers"
+					v-if="album.writers && album.writers.length"
 					:label="$tc('field.Album.writers', album.writers ? album.writers.length : 0)"
 				>
 					<ModelLink :model="album.writers" view="AuthorView" />
 				</FieldValue>
 				<FieldValue
-					v-if="album.artists"
+					v-if="album.artists && album.artists.length"
 					:label="$tc('field.Album.artists', album.artists ? album.artists.length : 0)"
 				>
 					<ModelLink :model="album.artists" view="AuthorView" />
@@ -72,33 +72,33 @@
 				<v-fade-transition>
 					<div v-if="expanded">
 						<FieldValue
-							v-if="album.colorists"
+							v-if="album.colorists && album.colorists.length"
 							:label="$tc('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
 						>
 							<ModelLink :model="album.colorists" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
-							v-if="album.inkers"
+							v-if="album.inkers && album.inkers.length"
 							:label="$tc('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
 						>
 							<ModelLink :model="album.inkers" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
-							v-if="album.translators"
+							v-if="album.translators && album.translators.length"
 							:label="$tc('field.Album.translators', album.translators ? album.translators.length : 0)"
 						>
 							<ModelLink :model="album.translators" view="AuthorView" />
 						</FieldValue>
-						<FieldValue v-if="album.publisher" :label="$t('field.Album.publisher')">
+						<FieldValue v-if="album.publisher.id" :label="$tc('field.Album.publisher', 1)">
 							<ModelLink :model="album.publisher" view="PublisherView" />
 						</FieldValue>
-						<FieldValue v-if="album.collection" :label="$t('field.Album.collection')">
+						<FieldValue v-if="album.collection.id" :label="$t('field.Album.collection')">
 							<ModelLink :model="album.collection" view="CollectionView" />
 						</FieldValue>
-						<FieldValue v-if="album.tags" :label="$t('field.Album.tags')">
+						<FieldValue v-if="album.tags && album.tags.length" :label="$t('field.Album.tags')">
 							<TagLink :model="album.tags" />
 						</FieldValue>
-						<FieldValue v-if="album.binding" :label="$t('field.Album.binding')">
+						<FieldValue v-if="album.binding.id" :label="$t('field.Album.binding')">
 							<ModelLink :model="album.binding" view="BindingView" />
 						</FieldValue>
 						<FieldValue v-if="album.acquisitionDate" :label="$t('field.Album.acquisitionDate')">
