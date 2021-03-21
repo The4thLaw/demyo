@@ -33,6 +33,7 @@ import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.dao.config.DaoConfig;
 import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
+import org.demyo.web.jackson.NullStringModule;
 
 /**
  * Configuration for the Web layer.
@@ -59,7 +60,6 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/favicon.ico").addResourceLocations("/favicon.ico");
 	}
 
-	// See https://stackoverflow.com/a/54412744
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		LOGGER.debug("Configuring Jackson...");
@@ -67,11 +67,17 @@ public class WebConfig implements WebMvcConfigurer {
 			if (converter instanceof AbstractJackson2HttpMessageConverter) {
 				ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter) converter).getObjectMapper();
 
+				// See https://stackoverflow.com/a/54412744
 				// Add Hibernate 5 module
 				Hibernate5Module module = new Hibernate5Module();
 				module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
 				mapper.registerModule(module);
+
+				// Filter out empty values when serializing
 				mapper.setSerializationInclusion(Include.NON_EMPTY);
+
+				// Filter out empty values when deserializing
+				mapper.registerModule(new NullStringModule());
 
 				// Configure the date format
 				mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
