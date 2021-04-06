@@ -178,9 +178,9 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field
-							v-model="album.purchasePrice" :label="$t('field.Album.purchasePrice')"
-							type="number" inputmode="decimal" step="any" :disabled="album.wishlist"
+						<CurrencyField
+							v-model="album.purchasePrice" :disabled="album.wishlist"
+							label-key="field.Album.purchasePrice"
 						/>
 					</v-col>
 					<PriceManagement v-model="album" model-name="Album" cols="12" md="6" />
@@ -232,6 +232,7 @@
 <script>
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
+import CurrencyField from '@/components/CurrencyField'
 import FormActions from '@/components/FormActions'
 import PriceManagement from '@/components/PriceManagement'
 import SectionCard from '@/components/SectionCard'
@@ -252,6 +253,7 @@ export default {
 
 	components: {
 		Autocomplete,
+		CurrencyField,
 		FormActions,
 		PriceManagement,
 		SectionCard,

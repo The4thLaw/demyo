@@ -48,3 +48,23 @@ export function formatCurrency(amount, currency) {
 	}
 	return formatted.replace('$', currency)
 }
+
+/**
+ * Finds the currency symbol based on its currency code
+ * @param {String} currency The currency symbol or code
+ * @returns The currency symbol
+ */
+export function getCurrencySymbol(currency) {
+	if (!currency || currency.length !== 3) {
+		return currency
+	}
+
+	// Looks like a currency code, rely on the browser to format it
+	try {
+		const formatted = new Intl.NumberFormat('fr', { style: 'currency', currency: currency }).format(1)
+		return formatted.replace(/^1,00\s*/, '')
+	} catch {
+		// Invalid currency (note that the browser can cope with 'AAA' but not '€€€')
+		return currency
+	}
+}

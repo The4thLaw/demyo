@@ -118,10 +118,7 @@
 							v-model="derivative.acquisitionDate" :label="$t('field.Derivative.acquisitionDate')"
 							type="date"
 						/>
-						<v-text-field
-							v-model="derivative.purchasePrice" :label="$t('field.Derivative.purchasePrice')"
-							type="number" inputmode="decimal" step="any"
-						/>
+						<CurrencyField v-model="derivative.purchasePrice" label-key="field.Derivative.purchasePrice" />
 					</v-col>
 					<PriceManagement v-model="derivative" model-name="Derivative" cols="12" md="6" />
 				</v-row>
@@ -135,6 +132,7 @@
 <script>
 import { TiptapVuetify } from 'tiptap-vuetify'
 import Autocomplete from '@/components/Autocomplete'
+import CurrencyField from '@/components/CurrencyField'
 import FormActions from '@/components/FormActions'
 import PriceManagement from '@/components/PriceManagement'
 import SectionCard from '@/components/SectionCard'
@@ -153,6 +151,7 @@ export default {
 
 	components: {
 		Autocomplete,
+		CurrencyField,
 		FormActions,
 		PriceManagement,
 		SectionCard,

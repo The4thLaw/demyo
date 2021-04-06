@@ -14,10 +14,9 @@
 				/>
 			</v-col>
 			<v-col cols="12" md="6">
-				<v-text-field
-					v-model="price.price" :label="$t(`field.${modelName}.prices.price`)"
-					type="number" inputmode="decimal" step="any" :rules="rules.prices.price"
-					required @change="emitInput"
+				<CurrencyField
+					v-model="price.price" :label-key="`field.${modelName}.prices.price`"
+					:rules="rules.prices.price" required @change="emitInput"
 				/>
 				<v-btn icon @click="removePrice(index)">
 					<v-icon>mdi-minus</v-icon>
@@ -33,10 +32,15 @@
 </template>
 
 <script>
+import CurrencyField from '@/components/CurrencyField'
 import { mandatory, number } from '@/helpers/rules'
 
 export default {
 	name: 'PriceManagement',
+
+	components: {
+		CurrencyField
+	},
 
 	props: {
 		value: {
