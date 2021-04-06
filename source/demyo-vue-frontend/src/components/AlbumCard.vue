@@ -12,7 +12,7 @@
 		<v-card v-else outlined class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
 				<v-img
-					v-if="album.cover.id"
+					v-if="loadCover && album.cover.id"
 					:src="`${baseImageUrl}?w=400`"
 					:srcset="`
 							${baseImageUrl}?w=400 400w,
@@ -158,6 +158,16 @@ export default {
 		loading: {
 			type: Boolean,
 			default: false
+		},
+
+		/**
+		 * Whether to load the cover image. On pages with a lot of asynchronous data, loading all covers
+		 * can compete with the AJAX calls and make the page feel slow, especially if the thumbnails
+		 * aren't generated yet.
+		 */
+		loadCover: {
+			type: Boolean,
+			default: true
 		}
 	},
 

@@ -148,7 +148,10 @@
 							v-for="albumId in filteredIds" :key="albumId"
 							cols="12" md="6" lg="4"
 						>
-							<AlbumCard :album="albums[albumId]" :loading="albums[albumId].loading" />
+							<AlbumCard
+								:album="albums[albumId]" :loading="albums[albumId].loading"
+								:load-cover="albumsLoaded"
+							/>
 						</v-col>
 					</v-row>
 				</v-tab-item>
