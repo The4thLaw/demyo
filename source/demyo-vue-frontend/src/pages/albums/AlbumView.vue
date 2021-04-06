@@ -382,7 +382,9 @@ export default {
 			this.derivativeCount = await dcPromise
 			// If we enable the v-intersect observer immediately, it will be triggered on page load as well
 			// Probably because the page fills too slowly
-			setTimeout(() => { this.inhibitObserver = false }, 500)
+			setTimeout(() => {
+				this.inhibitObserver = false
+			}, 500)
 		},
 
 		async saveDndImages(data) {
