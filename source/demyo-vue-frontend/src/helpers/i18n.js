@@ -1,3 +1,4 @@
+import getSymbolFromCurrency from 'currency-symbol-map'
 import i18n from '@/i18n'
 
 /**
@@ -5,6 +6,7 @@ import i18n from '@/i18n'
  * @returns true if the selected locale shows currencies as prefixes.
  */
 export function isCurrencyPrefix() {
+	// TODO: ideally, this NumberFormat should be created once, at the change of locale
 	return new Intl.NumberFormat(i18n.locale, { style: 'currency', currency: 'XTS' }).format(1).startsWith('XTS')
 }
 
@@ -26,27 +28,21 @@ export function formatCurrency(amount, currency) {
 		return i18n.n(amount)
 	}
 
-	if (currency.length === 3) {
-		// Looks like a currency code, rely on the browser to format it
-		try {
-			return new Intl.NumberFormat(i18n.locale, { style: 'currency', currency: currency }).format(amount)
-		} catch {
-			// Invalid currency (note that the browser can cope with 'AAA' but not '€€€')
-		}
-	}
+	// The browser could already understand the code but the map is more complete, and gives
+	// lookup capabilities that we don't have in the browser
+	currency = getCurrencySymbol(currency)
 
-	// Either the browser doesn't recognize the currency, or it's not a currency code
-
-	// Format with a default currency that is very likely to be known
-	const formatted = new Intl.NumberFormat(i18n.locale,
-		{ style: 'currency', currency: 'USD', currencyDisplay: 'narrowSymbol' }).format(amount)
+	// Format with a default currency
+	const formatted = new Intl.NumberFormat(i18n.locale, { style: 'currency', currency: 'XTS' }).format(amount)
 
 	// Pad the currency if needed. Worst case: it's padded twice and HTML strips the extra padding
-	if (currency.length !== 1 && formatted.startsWith('$')) {
+	if (currency.length !== 1 && formatted.startsWith('XTS')) {
 		// Pad the currency
 		currency += ' '
 	}
-	return formatted.replace('$', currency)
+
+	// Adjust the currency
+	return formatted.replace('XTS', currency)
 }
 
 /**
@@ -59,12 +55,6 @@ export function getCurrencySymbol(currency) {
 		return currency
 	}
 
-	// Looks like a currency code, rely on the browser to format it
-	try {
-		const formatted = new Intl.NumberFormat('fr', { style: 'currency', currency: currency }).format(1)
-		return formatted.replace(/^1,00\s*/, '')
-	} catch {
-		// Invalid currency (note that the browser can cope with 'AAA' but not '€€€')
-		return currency
-	}
+	// Looks like a currency code, try the map
+	return getSymbolFromCurrency(currency) || currency
 }
