@@ -1,9 +1,5 @@
 package org.demyo.model;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -11,7 +7,6 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -23,18 +18,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name = "DERIVATIVES_PRICES")
 @IdClass(DerivativePriceId.class)
 public class DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> {
-	/** The date at which the price was applicable. */
-	@Column(name = "date")
-	@Id
-	@NotNull
-	private Date date;
-
-	/** The price the derivative was worth at the given date. */
-	@Column(name = "price")
-	@Min(0)
-	@NotNull
-	private BigDecimal price;
-
 	/** The parent {@link Derivative} ID. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "derivative_id")
@@ -42,26 +25,6 @@ public class DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> 
 	@Id
 	@JsonBackReference
 	private Derivative derivative;
-
-	@Override
-	public Date getDate() {
-		return date;
-	}
-
-	@Override
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	@Override
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	@Override
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
 
 	/**
 	 * Gets the parent {@link Derivative}.

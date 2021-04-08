@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
-import org.hibernate.validator.constraints.URL;
-
 import org.demyo.model.util.DefaultOrder;
 
 /**
@@ -15,7 +13,7 @@ import org.demyo.model.util.DefaultOrder;
 @Entity
 @Table(name = "SOURCES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-public class DerivativeSource extends AbstractNamedModel {
+public class DerivativeSource extends AbstractBasicLegalEntity {
 	/** The owner name. */
 	@Column(name = "owner")
 	private String owner;
@@ -25,11 +23,6 @@ public class DerivativeSource extends AbstractNamedModel {
 	@Email
 	private String email;
 
-	/** The source website. */
-	@Column(name = "website")
-	@URL
-	private String website;
-
 	/** The physical address. */
 	@Column(name = "address")
 	private String address;
@@ -37,10 +30,6 @@ public class DerivativeSource extends AbstractNamedModel {
 	/** The phone number. */
 	@Column(name = "phone_number")
 	private String phoneNumber;
-
-	/** The history of this Source. */
-	@Column(name = "history")
-	private String history;
 
 	/**
 	 * Gets the owner name.
@@ -79,24 +68,6 @@ public class DerivativeSource extends AbstractNamedModel {
 	}
 
 	/**
-	 * Gets the source website.
-	 * 
-	 * @return the source website
-	 */
-	public String getWebsite() {
-		return website;
-	}
-
-	/**
-	 * Sets the source website.
-	 * 
-	 * @param website the new source website
-	 */
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
-	/**
 	 * Gets the physical address.
 	 * 
 	 * @return the physical address
@@ -130,23 +101,5 @@ public class DerivativeSource extends AbstractNamedModel {
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	/**
-	 * Gets the history of this Source.
-	 * 
-	 * @return the history of this Source
-	 */
-	public String getHistory() {
-		return history;
-	}
-
-	/**
-	 * Sets the history of this Source.
-	 * 
-	 * @param history the new history of this Source
-	 */
-	public void setHistory(String history) {
-		this.history = history;
 	}
 }

@@ -1,6 +1,5 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -8,8 +7,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.URL;
 
 import org.demyo.model.util.DefaultOrder;
 
@@ -23,98 +20,11 @@ import org.demyo.model.util.DefaultOrder;
 @NamedEntityGraph(name = "Collection.forEdition", attributeNodes =
 { @NamedAttributeNode(value = "logo"),
 		@NamedAttributeNode(value = "publisher") })
-public class Collection extends AbstractNamedModel {
-	/** The website. */
-	@Column(name = "website")
-	@URL
-	private String website;
-	/** The RSS feed. */
-	@Column(name = "feed")
-	@URL
-	private String feed;
-	/** The history of this Collection. */
-	@Column(name = "history")
-	private String history;
-	/** The logo (visual identity) of the Collection. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "logo_id")
-	private Image logo;
+public class Collection extends AbstractLegalEntity {
 	/** The parent Publisher of the Collection. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
-
-	/**
-	 * Gets the history of this Publisher.
-	 * 
-	 * @return the history of this Publisher
-	 */
-	public String getHistory() {
-		return history;
-	}
-
-	/**
-	 * Sets the history of this Publisher.
-	 * 
-	 * @param history the new history of this Publisher
-	 */
-	public void setHistory(String history) {
-		this.history = history;
-	}
-
-	/**
-	 * Gets the website.
-	 * 
-	 * @return the website
-	 */
-	public String getWebsite() {
-		return website;
-	}
-
-	/**
-	 * Sets the website.
-	 * 
-	 * @param website the new website
-	 */
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
-	/**
-	 * Gets the RSS feed.
-	 * 
-	 * @return the RSS feed
-	 */
-	public String getFeed() {
-		return feed;
-	}
-
-	/**
-	 * Sets the RSS feed.
-	 * 
-	 * @param feed the new RSS feed
-	 */
-	public void setFeed(String feed) {
-		this.feed = feed;
-	}
-
-	/**
-	 * Gets the logo (visual identity) of the Collection.
-	 * 
-	 * @return the logo (visual identity) of the Collection
-	 */
-	public Image getLogo() {
-		return logo;
-	}
-
-	/**
-	 * Sets the logo (visual identity) of the Collection.
-	 * 
-	 * @param logo the new logo (visual identity) of the Collection
-	 */
-	public void setLogo(Image logo) {
-		this.logo = logo;
-	}
 
 	/**
 	 * Gets the parent Publisher of the Collection.

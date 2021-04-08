@@ -3,12 +3,16 @@ package org.demyo.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import org.demyo.model.util.AbstractModelComparator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
+import org.demyo.model.util.AbstractModelComparator;
 
 /**
  * Base class for models which have historised prices.
@@ -18,6 +22,18 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  */
 @MappedSuperclass
 public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IModel> implements Comparable<P> {
+	/** The date at which the price was applicable. */
+	@Column(name = "date")
+	@Id
+	@NotNull
+	private Date date;
+
+	/** The price the model was worth at the given date. */
+	@Column(name = "price")
+	@Min(0)
+	@NotNull
+	private BigDecimal price;
+
 	/**
 	 * Gets the model to which this price is linked.
 	 * 
@@ -59,28 +75,36 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 	 * 
 	 * @return the date at which the price was applicable
 	 */
-	public abstract Date getDate();
+	public Date getDate() {
+		return date;
+	}
 
 	/**
 	 * Sets the date at which the price was applicable.
 	 * 
 	 * @param date the new date at which the price was applicable
 	 */
-	public abstract void setDate(Date date);
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	/**
 	 * Gets the price the album was worth at the given date.
 	 * 
 	 * @return the price the album was worth at the given date
 	 */
-	public abstract BigDecimal getPrice();
+	public BigDecimal getPrice() {
+		return price;
+	}
 
 	/**
 	 * Sets the price the album was worth at the given date.
 	 * 
 	 * @param price the new price the album was worth at the given date
 	 */
-	public abstract void setPrice(BigDecimal price);
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
 	@Override
 	public String toString() {
