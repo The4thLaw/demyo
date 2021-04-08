@@ -526,83 +526,85 @@ html[lang],
 	}
 }
 
-// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541 is resolved, switch to it
-#demyo .v-pagination button {
-	box-shadow: none;
-	border-radius: 50%;
-}
-
-/** Overlays for icons. */
-.v-icon.dem-overlay-add::after {
-	content: "\F0415";
-	font-size: 58%;
-}
-
-.v-icon.dem-overlay-edit::after {
-	content: "\F03EB";
-}
-
-.v-icon.dem-overlay-delete::after {
-	content: "\F01B4"; // Minus could also be used
-}
-
-.dem-overlay-check::after {
-	content: "\F012C";
-}
-
-.v-icon.dem-overlay-add,
-.v-icon.dem-overlay-edit,
-.v-icon.dem-overlay-delete,
-.v-icon.dem-overlay-check {
-	&.v-icon {
-		position: relative;
+#demyo {
+	// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541 is resolved, switch to it
+	.v-pagination button {
+		box-shadow: none;
+		border-radius: 50%;
 	}
 
-	&::after {
-		// We need to completely override the default styles from Vuetify to be able to do this
-		opacity: initial;
-		top: initial;
-		left: initial;
-		background-color: initial;
-		border-radius: initial;
-		display: initial;
-		height: initial;
-		transform: initial;
-		pointer-events: initial;
-		width: initial;
-		// Here are our styles
-		font: normal normal normal 67%/1 "Material Design Icons";
-		text-rendering: auto;
-		position: absolute;
-		bottom: -4px;
-		right: -4px;
-		// TODO [dark]: handle shadows on dark theme
-		--icon-outline-color: #fff;
-		text-shadow:
-			-2px -2px var(--icon-outline-color),
-			-2px -1px var(--icon-outline-color),
-			-2px 0 var(--icon-outline-color),
-			-2px 1px var(--icon-outline-color),
-			-2px 2px var(--icon-outline-color),
-			2px -2px var(--icon-outline-color),
-			2px -1px var(--icon-outline-color),
-			2px 0 var(--icon-outline-color),
-			2px 1px var(--icon-outline-color),
-			2px 2px var(--icon-outline-color),
-			-1px -2px var(--icon-outline-color),
-			0 -2px var(--icon-outline-color),
-			1px -2px var(--icon-outline-color),
-			-1px 2px var(--icon-outline-color),
-			0 2px var(--icon-outline-color),
-			1px 2px var(--icon-outline-color);
+	/** Overlays for icons. */
+	.v-icon.dem-overlay-add::after {
+		content: "\F0415";
+		font-size: 58%;
 	}
 
-	.v-btn--fab &::after {
-		bottom: -5px;
+	.v-icon.dem-overlay-edit::after {
+		content: "\F03EB";
 	}
 
-	.v-btn.accent &::after {
-		--icon-outline-color: var(--v-accent-base);
+	.v-icon.dem-overlay-delete::after {
+		content: "\F01B4"; // Minus could also be used
+	}
+
+	.dem-overlay-check::after {
+		content: "\F012C";
+	}
+
+	.v-icon.dem-overlay-add,
+	.v-icon.dem-overlay-edit,
+	.v-icon.dem-overlay-delete,
+	.v-icon.dem-overlay-check {
+		&.v-icon {
+			position: relative;
+		}
+
+		&::after {
+			// We need to completely override the default styles from Vuetify to be able to do this
+			opacity: initial;
+			top: initial;
+			left: initial;
+			background-color: initial;
+			border-radius: initial;
+			display: initial;
+			height: initial;
+			transform: initial;
+			pointer-events: initial;
+			width: initial;
+			// Here are our styles
+			font: normal normal normal 67%/1 "Material Design Icons";
+			text-rendering: auto;
+			position: absolute;
+			bottom: -4px;
+			right: -4px;
+			// TODO [dark]: handle shadows on dark theme
+			--icon-outline-color: #fff;
+			text-shadow:
+				-2px -2px var(--icon-outline-color),
+				-2px -1px var(--icon-outline-color),
+				-2px 0 var(--icon-outline-color),
+				-2px 1px var(--icon-outline-color),
+				-2px 2px var(--icon-outline-color),
+				2px -2px var(--icon-outline-color),
+				2px -1px var(--icon-outline-color),
+				2px 0 var(--icon-outline-color),
+				2px 1px var(--icon-outline-color),
+				2px 2px var(--icon-outline-color),
+				-1px -2px var(--icon-outline-color),
+				0 -2px var(--icon-outline-color),
+				1px -2px var(--icon-outline-color),
+				-1px 2px var(--icon-outline-color),
+				0 2px var(--icon-outline-color),
+				1px 2px var(--icon-outline-color);
+		}
+
+		.v-btn--fab &::after {
+			bottom: -5px;
+		}
+
+		.v-btn.accent &::after {
+			--icon-outline-color: var(--v-accent-base);
+		}
 	}
 }
 
