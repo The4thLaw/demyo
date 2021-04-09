@@ -18,7 +18,7 @@ import org.demyo.model.Series;
 /**
  * Tests for {@link OneNotNullValidator}.
  */
-public class OneNotNullValidatorTest {
+class OneNotNullValidatorTest {
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	@Test

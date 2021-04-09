@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for {@link Image}.
  */
-public class ImageTest {
+class ImageTest {
 	@Test
 	void testGetUserFileName() {
 		Image i1 = new Image();

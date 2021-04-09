@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for the {@link ApplicationConfiguration} class.
  */
-public class ApplicationConfigurationTest {
+class ApplicationConfigurationTest {
 	/**
 	 * Tests that the configuration can be loaded from a simple hard-coded set of properties.
 	 */

@@ -8,7 +8,7 @@ import org.demyo.model.Series;
 /**
  * Tests for {@link IdentifyingNameComparator}.
  */
-public class IdentifyingNameComparatorTest {
+class IdentifyingNameComparatorTest {
 
 	/**
 	 * Main test.

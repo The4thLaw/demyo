@@ -9,7 +9,7 @@ import org.demyo.common.config.SystemConfiguration;
 /**
  * Tests from {@link SystemConfiguration}.
  */
-public class SystemConfigurationTest {
+class SystemConfigurationTest {
 	private static final int EXPECTED_DEFAULT_PORT = 8080;
 
 	/**

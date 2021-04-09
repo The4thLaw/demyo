@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests for {@link Album}.
  */
-public class AlbumTest {
+class AlbumTest {
 	/**
 	 * Tests number formatting in {@link Album#getIdentifyingName()}. Relates to commit
 	 * 985b825e65dcf0949a4f6ccd5b0f39d2f528b11a.
