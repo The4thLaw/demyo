@@ -73,15 +73,38 @@ class AbstractModelService {
 	}
 
 	save(model) {
+		this.sanitizeArrays(model)
+		this.sanitizeObjects(model)
+		this.sanitizeHtml(model)
+
+		if (model.id) {
+			return axiosPut(this.basePath + model.id, model, -1)
+		}
+		return axiosPost(this.basePath, model, -1)
+	}
+
+	/**
+	 * Sanitizes the sub-properties of a Model that link to multiple other Models.
+	 * Transforms arrays of integers in arrays of objects.
+	 * @param {*} model The Model.
+	 * @private
+	 */
+	 sanitizeArrays(model) {
 		if (this.config.sanitizeArrays) {
-			// Transform arrays of integers in arrays of objects
 			this.config.sanitizeArrays.forEach(prop => {
 				if (Array.isArray(model[prop])) {
 					model[prop] = model[prop].map(v => Number.isInteger(v) ? { id: v } : v)
 				}
 			})
 		}
+	}
 
+	/**
+	 * Sanitizes the sub-properties of a Model that link to a single other Model.
+	 * @param {*} model The Model.
+	 * @private
+	 */
+	sanitizeObjects(model) {
 		if (this.config.sanitizeObjects) {
 			// In the case of clearable model link fields, the id can be set to false
 			// In such cases, we should clear the object completely
@@ -91,7 +114,14 @@ class AbstractModelService {
 				}
 			})
 		}
+	}
 
+	/**
+	 * Sanitizes the HTML properties of a Model, clearing empty paragraphs left behind by TipTap.
+	 * @param {*} model The Model.
+	 * @private
+	 */
+	sanitizeHtml(model) {
 		if (this.config.sanitizeHtml) {
 			// TipTap may leave empty <p></p> markup if the user deletes the text
 			this.config.sanitizeHtml.forEach(prop => {
@@ -100,11 +130,6 @@ class AbstractModelService {
 				}
 			})
 		}
-
-		if (model.id) {
-			return axiosPut(this.basePath + model.id, model, -1)
-		}
-		return axiosPost(this.basePath, model, -1)
 	}
 
 	/**
