@@ -163,6 +163,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import defaultMenu from './default-menu.json'
 import { demyoCodename } from '@/myenv'
 import AppSnackbar from '@/components/AppSnackbar'
 import LetterIcon from '@/components/LetterIcon'
@@ -200,147 +201,7 @@ export default {
 
 			promptReaderSelection: false,
 
-			menuItems: [
-				{
-					title: 'menu.section.view',
-					active: true,
-					subItems: [
-						{
-							title: 'menu.albums.browse',
-							icon: 'mdi-book-open-variant',
-							url: '/albums'
-						},
-						{
-							title: 'menu.authors.browse',
-							icon: 'mdi-account',
-							url: '/authors'
-						},
-						{
-							title: 'menu.derivatives.browse',
-							icon: 'mdi-image-frame',
-							url: '/derivatives'
-						},
-						{
-							title: 'menu.derivatives.browse.stickers',
-							icon: 'mdi-note-outline',
-							url: '/derivatives/stickers'
-						},
-						{
-							title: 'menu.tags.browse',
-							icon: 'mdi-tag',
-							url: '/tags'
-						},
-						{
-							title: 'menu.publishers.browse',
-							icon: 'mdi-office-building',
-							url: '/publishers'
-						},
-						{
-							title: 'menu.derivative_sources.browse',
-							icon: 'mdi-tooltip-account',
-							url: '/derivativeSources'
-						},
-						{
-							title: 'menu.derivative_types.browse',
-							icon: 'mdi-brush',
-							url: '/derivativeTypes'
-						},
-						{
-							title: 'menu.bindings.browse',
-							icon: 'mdi-notebook',
-							url: '/bindings'
-						},
-						{
-							title: 'menu.images.browse',
-							icon: 'mdi-camera',
-							url: '/images'
-						}
-					]
-				},
-				{
-					title: 'menu.section.edit',
-					subItems: [
-						{
-							title: 'menu.albums.add',
-							icon: 'mdi-book-open-variant dem-overlay-add',
-							url: '/albums/new'
-						},
-						{
-							title: 'menu.authors.add',
-							icon: 'mdi-account dem-overlay-add',
-							url: '/authors/new'
-						},
-						{
-							title: 'menu.series.add',
-							icon: 'mdi-animation dem-overlay-add',
-							url: '/series/new'
-						},
-						{
-							title: 'menu.derivatives.add',
-							icon: 'mdi-image-frame dem-overlay-add',
-							url: '/derivatives/new'
-						},
-						{
-							title: 'menu.images.add',
-							icon: 'mdi-camera dem-overlay-add',
-							url: '/images/new'
-						},
-						{
-							title: 'menu.tags.add',
-							icon: 'mdi-tag dem-overlay-add',
-							url: '/tags/new'
-						},
-						{
-							title: 'menu.publishers.add',
-							icon: 'mdi-office-building dem-overlay-add',
-							url: '/publishers/new'
-						},
-						{
-							title: 'menu.collections.add',
-							// Or picture-in-picture-bottom-right if we keep Demyo 2.0/2.1
-							icon: 'mdi-folder-multiple dem-overlay-add',
-							url: '/collections/new'
-						},
-						{
-							title: 'menu.derivative_sources.add',
-							icon: 'mdi-tooltip-account dem-overlay-add',
-							url: '/derivativeSources/new'
-						},
-						{
-							title: 'menu.derivative_types.add',
-							icon: 'mdi-brush dem-overlay-add',
-							url: '/derivativeTypes/new'
-						},
-						{
-							title: 'menu.bindings.add',
-							icon: 'mdi-notebook dem-overlay-add',
-							url: '/bindings/new'
-						}
-					]
-				},
-				{
-					title: 'menu.section.management',
-					subItems: [
-						// Advanced search would go here
-						{
-							title: 'menu.manage.export',
-							icon: 'mdi-download',
-							url: '/manage/export'
-						},
-						{
-							title: 'menu.manage.import',
-							icon: 'mdi-upload',
-							url: '/manage/import'
-						},
-						// Stats, configure, orphans and help would go here
-						{
-							title: 'menu.manage.about',
-							icon: 'mdi-information',
-							url: '/about'
-						}
-					]
-				}
-			]
+			menuItems: defaultMenu
 		}
 	},
 
