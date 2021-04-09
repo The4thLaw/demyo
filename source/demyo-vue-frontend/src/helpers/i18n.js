@@ -1,5 +1,21 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
+import rawCurrencyMap from 'currency-symbol-map/map'
 import i18n from '@/i18n'
+
+// Process the currency map to show displayable values
+const processedCurrencyList = []
+for (const key in rawCurrencyMap) {
+	let val = rawCurrencyMap[key]
+	if (val !== key) {
+		val = `${key} (${val})`
+	}
+
+	processedCurrencyList.push({
+		value: key,
+		text: val
+	})
+}
+export const currencyList = processedCurrencyList
 
 /**
  * Checks if the selected locale shows currencies as a prefix of the amounts. en does, fr doesn't, for example.

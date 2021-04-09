@@ -30,9 +30,9 @@
 
 			<SectionCard :loading="!initialized" :title="$t('page.Configuration.global')">
 				<p v-text="$t('page.Configuration.global.description')" />
-				<v-text-field
-					v-model="reader.configuration.currency"
-					:label="$t('field.config.global.currency')"
+				<v-autocomplete
+					v-model="reader.configuration.currency" :label="$t('field.config.global.currency')"
+					:items="currencies"
 				/>
 			</SectionCard>
 
@@ -44,6 +44,7 @@
 <script>
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
+import { currencyList } from '@/helpers/i18n'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import readerService from '@/services/reader-service'
@@ -75,6 +76,7 @@ export default {
 			},
 
 			languages: [],
+			currencies: currencyList,
 
 			rules: {
 				name: [
