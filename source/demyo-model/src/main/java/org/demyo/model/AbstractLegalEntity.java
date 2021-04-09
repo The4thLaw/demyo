@@ -24,7 +24,6 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 	private Image logo;
 
 	public AbstractLegalEntity() {
-		super();
 	}
 
 	/**
