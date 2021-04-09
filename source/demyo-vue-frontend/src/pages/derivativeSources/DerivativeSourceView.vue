@@ -120,7 +120,7 @@ export default {
 		},
 
 		mapUrl() {
-			const encoded = encodeURI(this.source.name + ', ' + this.source.address)
+			const encoded = encodeURI(`${this.source.name}, ${this.source.address}`)
 			return 'https://maps.google.com/maps?t=&z=15&ie=UTF8&iwloc=&output=embed&q=' + encoded
 		}
 	},

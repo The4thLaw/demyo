@@ -23,9 +23,6 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 	@JoinColumn(name = "logo_id")
 	private Image logo;
 
-	public AbstractLegalEntity() {
-	}
-
 	/**
 	 * Gets the RSS feed.
 	 * 
