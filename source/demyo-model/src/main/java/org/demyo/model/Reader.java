@@ -97,16 +97,23 @@ public class Reader extends AbstractNamedModel {
 	 * @return the configuration for the reader
 	 */
 	public ApplicationConfiguration getConfiguration() {
-		if (configuration != null) {
-			return configuration;
+		if (configuration == null) {
+			throw new IllegalStateException("The configuration is not initialized");
 		}
+		return configuration;
+	}
 
-		Map<String, String> configurationValues = new HashMap<>();
+	/**
+	 * Initializes the configuration for the reader.
+	 *
+	 * @param globalConfig The global configuration parameters to use as base.
+	 */
+	public void initializeConfiguration(Map<String, String> globalConfig) {
+		Map<String, String> configurationValues = new HashMap<>(globalConfig);
 		for (ConfigurationEntry entry : configurationEntries) {
 			configurationValues.put(entry.getKey(), entry.getValue());
 		}
 		configuration = new ApplicationConfiguration(configurationValues);
-		return configuration;
 	}
 
 	/**

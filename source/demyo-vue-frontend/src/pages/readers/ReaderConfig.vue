@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :loading="!initialized" :title="reader.name">
+			<SectionCard :loading="!initialized" :title="$t('page.Configuration.reader', { reader: reader.name })">
 				<v-select
 					v-model="reader.configuration.language" :label="$t('field.config.reader.language')"
 					:items="languages"
@@ -26,8 +26,17 @@
 					:label="$t('field.config.reader.pageSizeForImages')"
 					type="number" inputmode="decimal" step="any"
 				/>
-				<FormActions v-if="initialized" @save="save" @reset="reset" />
 			</SectionCard>
+
+			<SectionCard :loading="!initialized" :title="$t('page.Configuration.global')">
+				<p v-text="$t('page.Configuration.global.description')" />
+				<v-text-field
+					v-model="reader.configuration.currency"
+					:label="$t('field.config.global.currency')"
+				/>
+			</SectionCard>
+
+			<FormActions v-if="initialized" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>

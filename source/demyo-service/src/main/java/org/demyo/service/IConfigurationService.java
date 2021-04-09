@@ -17,6 +17,8 @@ import org.demyo.model.config.ApplicationConfiguration;
  * </p>
  */
 public interface IConfigurationService {
+	Map<String, String> getGlobalConfiguration();
+
 	/**
 	 * Creates a default configuration for the provided Reader (the Reader must exist in the database already).
 	 * <p>

@@ -67,7 +67,7 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 			throw new EntityNotFoundException("No Reader for ID " + id);
 		}
 		// Initialize the configuration
-		entity.getConfiguration();
+		entity.initializeConfiguration(configService.getGlobalConfiguration());
 		return entity;
 	}
 

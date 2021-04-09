@@ -17,7 +17,7 @@ public interface IConfigurationEntryRepo extends IModelRepo<ConfigurationEntry> 
 	 * @param id The internal identifier of the Reader.
 	 * @return The configuration entries.
 	 */
-	List<ConfigurationEntry> findAllByReaderId(long id);
+	List<ConfigurationEntry> findAllByReaderId(Long id);
 
 	/**
 	 * Finds the first (considering the Reader identifiers as the order) entry matching the given key.

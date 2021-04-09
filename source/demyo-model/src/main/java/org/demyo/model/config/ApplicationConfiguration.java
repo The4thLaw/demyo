@@ -1,5 +1,6 @@
 package org.demyo.model.config;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
@@ -32,6 +33,15 @@ public class ApplicationConfiguration {
 	 * The configuration key corresponding to the language.
 	 */
 	public static final String CONFIG_KEY_LANGUAGE = "language";
+	/**
+	 * The configuration key corresponding to the currency.
+	 */
+	private static final String CONFIG_KEY_CURRENCY = "currency";
+	private static final HashSet<String> GLOBAL_ENTRIES = new HashSet<>();
+
+	static {
+		GLOBAL_ENTRIES.add(CONFIG_KEY_CURRENCY);
+	}
 
 	/**
 	 * Gets a default configuration with default values.
@@ -47,8 +57,20 @@ public class ApplicationConfiguration {
 		return config;
 	}
 
+	/**
+	 * Checks if the provided configuration key is a global setting that affects all readers.
+	 * 
+	 * @param key The configuration key to check.
+	 * @return <code>true</code> if this configuration is global.
+	 */
+	public static boolean isGlobalEntry(String key) {
+		return GLOBAL_ENTRIES.contains(key);
+	}
+
 	/** The language in which the application is displayed. */
 	private Locale language;
+	/** The currency used for the application. */
+	private String currency;
 	/** The number of items per page of textual entries. */
 	private Integer pageSizeForText;
 	/** The number of items per page of images. */
@@ -88,6 +110,7 @@ public class ApplicationConfiguration {
 		}
 		setLanguage(theLanguage);
 
+		currency = getString(config, CONFIG_KEY_CURRENCY);
 		pageSizeForText = getInt(config, "paging.textPageSize");
 		pageSizeForImages = getInt(config, "paging.imagePageSize");
 		pageSizeForCards = getInt(config, "paging.pageSizeForCards");
@@ -120,6 +143,7 @@ public class ApplicationConfiguration {
 		SortedMap<String, String> config = new TreeMap<>();
 
 		config.put(CONFIG_KEY_LANGUAGE, language.toLanguageTag());
+		config.put(CONFIG_KEY_CURRENCY, currency);
 		setIfNotNull(config, "paging.textPageSize", pageSizeForText);
 		setIfNotNull(config, "paging.imagePageSize", pageSizeForImages);
 		setIfNotNull(config, "paging.pageSizeForCards", pageSizeForCards);
@@ -156,6 +180,24 @@ public class ApplicationConfiguration {
 		// This won't impact the JVM locale (used notably for javax.validation messages), but we can't really do that
 		// in a multi-reader context (this would result in an edit war between readers).
 		LocaleContextHolder.setLocale(language);
+	}
+
+	/**
+	 * Gets the currency used for the application.
+	 *
+	 * @return the currency used for the application
+	 */
+	public String getCurrency() {
+		return currency;
+	}
+
+	/**
+	 * Sets the currency used for the application.
+	 *
+	 * @param currency the new currency used for the application
+	 */
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 
 	/**

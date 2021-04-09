@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
@@ -34,6 +35,17 @@ public class ConfigurationService implements IConfigurationService {
 	private IConfigurationEntryRepo repo;
 
 	@Override
+	@Transactional(readOnly = true)
+	public Map<String, String> getGlobalConfiguration() {
+		Map<String, ConfigurationEntry> configurationValues = new HashMap<>();
+		loadConfiguration(configurationValues, null);
+		return configurationValues.entrySet().stream().collect(Collectors.toMap(
+				entry -> entry.getKey(), // Preserve key
+				entry -> entry.getValue().getValue() // Map value
+		));
+	}
+
+	@Override
 	@Transactional
 	public void createDefaultConfiguration(Reader reader) {
 		Set<ConfigurationEntry> saved = save(ApplicationConfiguration.getDefaultConfiguration(), reader);
@@ -55,9 +67,10 @@ public class ConfigurationService implements IConfigurationService {
 
 		// Load from DB and index
 		Map<String, ConfigurationEntry> configurationValues = new HashMap<>();
-		for (ConfigurationEntry entry : repo.findAllByReaderId(reader.getId())) {
-			configurationValues.put(entry.getKey(), entry);
-		}
+		// Load the globals
+		loadConfiguration(configurationValues, null);
+		// Then the reader
+		loadConfiguration(configurationValues, reader.getId());
 
 		// Copy from new configuration to entities
 		for (Entry<String, String> entry : newConfig.entrySet()) {
@@ -67,7 +80,9 @@ public class ConfigurationService implements IConfigurationService {
 				ConfigurationEntry newEntry = new ConfigurationEntry();
 				newEntry.setKey(entry.getKey());
 				newEntry.setValue(entry.getValue());
-				newEntry.setReader(reader);
+				if (!ApplicationConfiguration.isGlobalEntry(entry.getKey())) {
+					newEntry.setReader(reader);
+				}
 				configurationValues.put(entry.getKey(), newEntry);
 			}
 		}
@@ -77,6 +92,12 @@ public class ConfigurationService implements IConfigurationService {
 		Set<ConfigurationEntry> savedSet = new HashSet<>();
 		CollectionUtils.addAll(savedSet, saved.iterator());
 		return savedSet;
+	}
+
+	private void loadConfiguration(Map<String, ConfigurationEntry> configurationValues, Long readerId) {
+		for (ConfigurationEntry entry : repo.findAllByReaderId(readerId)) {
+			configurationValues.put(entry.getKey(), entry);
+		}
 	}
 
 	@Override
