@@ -43,7 +43,6 @@ export default {
 				this.$store.dispatch('ui/enableGlobalOverlay')
 				const success = await service.doImport(this.file)
 				this.$store.dispatch('ui/disableGlobalOverlay')
-				// TODO: reload the reader
 				if (success) {
 					this.$store.dispatch('ui/showSnackbar', this.$t('page.Import.success'))
 				} else {

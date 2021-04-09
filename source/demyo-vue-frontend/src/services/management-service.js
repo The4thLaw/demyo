@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { apiRoot } from '@/myenv'
+import readerService from '@/services/reader-service'
 
 /**
  * Service to handle search requests.
@@ -20,6 +21,9 @@ class ManagementService {
 			return response.data
 		} catch (e) {
 			console.warn('Failed to import:', e)
+		} finally {
+			// Always reload the reader
+			readerService.init()
 		}
 		return false
 	}
