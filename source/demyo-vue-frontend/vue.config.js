@@ -1,6 +1,11 @@
 module.exports = {
 	lintOnSave: false,
 
+	// See
+	// - https://cli.vuejs.org/config/#publicpath
+	// - https://stackoverflow.com/a/65924415/109813
+	publicPath: './',
+
 	devServer: {
 		// Route requests to unknown URLs to the backend (can be JSON server or Spring)
 		proxy: {
