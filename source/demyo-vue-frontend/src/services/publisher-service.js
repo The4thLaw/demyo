@@ -17,6 +17,9 @@ class PublisherService extends AbstractModelService {
 	 * @param {Number} publisherId The Publisher ID
 	 */
 	findCollectionsForList(publisherId) {
+		if (!publisherId) {
+			return []
+		}
 		return axiosGet(`${this.basePath}${publisherId}/collections`, [])
 	}
 
