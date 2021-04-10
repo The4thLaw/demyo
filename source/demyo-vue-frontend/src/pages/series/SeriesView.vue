@@ -157,7 +157,7 @@
 				</v-tab-item>
 
 				<!-- Derivatives -->
-				<v-tab-item ref="foo" class="dem-tab">
+				<v-tab-item class="dem-tab">
 					<div v-if="derivatives.length <= 0" class="text-center">
 						<v-progress-circular indeterminate color="primary" size="64" />
 					</div>
@@ -422,5 +422,6 @@ export default {
 <style lang="less">
 .c-Series__albumAggregateData {
 	border-bottom: 1px solid var(--dem-base-border);
+	margin-bottom: 1.5em;
 }
 </style>
