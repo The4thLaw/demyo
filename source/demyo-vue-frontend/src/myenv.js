@@ -8,6 +8,9 @@ let bodyContextRoot = getDataWithDefault('contextroot', process.env.VUE_APP_CONT
 if (!bodyContextRoot.endsWith('/')) {
 	bodyContextRoot += '/'
 }
+if (!bodyContextRoot.startsWith('/')) {
+	bodyContextRoot = `/${bodyContextRoot}`
+}
 console.log('Context root is', bodyContextRoot)
 export const contextRoot = bodyContextRoot
 

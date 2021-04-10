@@ -50,7 +50,7 @@ const routes = [
 	}
 ]
 
-let baseUrl = `/${process.env.BASE_URL}/${contextRoot}/`
+let baseUrl = `/${process.env.BASE_URL}${contextRoot}`
 // Ensure this does not lead to duplicate slashes, which (1) is not correct and (2) confuses the router
 baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')
 console.log('Initializing Vue router with base:', baseUrl)
