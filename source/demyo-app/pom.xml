@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.demyo</groupId>
 		<artifactId>demyo</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
+		<version>3.0.0-beta1</version>
 	</parent>
 	<artifactId>demyo-app</artifactId>
 	<name>Demyo: Desktop Application</name>
@@ -152,7 +152,7 @@ Includes the Web server, H2 server, and startup program.</description>
 									</classPath>
 									<jre>
 										<minVersion>1.8.0</minVersion>
-										<maxVersion>1.8.0</maxVersion>
+										<maxVersion>11</maxVersion>
 										<opts>
 											<opt>-Ddemyo.applicationDirectory="%EXEDIR%"</opt>
 										</opts>
