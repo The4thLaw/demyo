@@ -458,12 +458,22 @@ html[lang],
 				0 2px var(--icon-outline-color),
 				1px 2px var(--icon-outline-color);
 		}
+	}
 
-		.v-btn--fab &::after {
+	.v-btn--fab {
+		.v-icon.dem-overlay-add::after,
+		.v-icon.dem-overlay-edit::after,
+		.v-icon.dem-overlay-delete::after,
+		.v-icon.dem-overlay-check::after {
 			bottom: -5px;
 		}
+	}
 
-		.v-btn.accent &::after {
+	.v-btn.accent {
+		.v-icon.dem-overlay-add::after,
+		.v-icon.dem-overlay-edit::after,
+		.v-icon.dem-overlay-delete::after,
+		.v-icon.dem-overlay-check::after {
 			--icon-outline-color: var(--v-accent-base);
 		}
 	}
