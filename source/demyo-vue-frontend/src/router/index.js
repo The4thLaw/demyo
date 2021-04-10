@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
-import store from '@/store/index'
+import { contextRoot } from '@/myenv'
 import Home from '@/pages/Home.vue'
+import store from '@/store/index'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
@@ -43,15 +44,19 @@ const routes = [
 		path: '/about',
 		name: 'about',
 		// route level code-splitting
-		// this generates a separate chunk (admin.[hash].js) for this route
+		// this generates a separate chunk (manage.[hash].js) for this route
 		// which is lazy-loaded when the route is visited.
 		component: () => import(/* webpackChunkName: "manage" */ '@/pages/About')
 	}
 ]
 
+let baseUrl = `/${process.env.BASE_URL}/${contextRoot}/`
+// Ensure this does not lead to duplicate slashes, which (1) is not correct and (2) confuses the router
+baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')
+console.log('Initializing Vue router with base:', baseUrl)
 const router = new VueRouter({
 	mode: 'history',
-	base: process.env.BASE_URL,
+	base: baseUrl,
 	routes
 })
 
