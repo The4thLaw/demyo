@@ -52,6 +52,7 @@ import org.demyo.utils.io.DIOUtils;
  */
 @Service
 public class ImageService extends AbstractModelService<Image> implements IImageService {
+	private static final double LENIENCY_WIDTH_FACTOR = 1.2;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "uploads";
 
@@ -139,8 +140,10 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		int originalWidth = buffImage.getWidth();
-		if (maxWidth >= originalWidth || (lenient && maxWidth * 1.1 >= originalWidth)) {
-			// Return the original image, we don't have anything larger
+		if (maxWidth >= originalWidth || (lenient && maxWidth * LENIENCY_WIDTH_FACTOR >= originalWidth)) {
+			buffImage.flush();
+			// Return the original image, we don't have anything larger or the requested width is close enough
+			// to the original not to warrant the creation of a resized version
 			return new FileSystemResource(image);
 		}
 
