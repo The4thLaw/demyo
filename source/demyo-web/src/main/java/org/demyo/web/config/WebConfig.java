@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.jndi.JndiObjectFactoryBean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -44,6 +45,7 @@ import org.demyo.web.jackson.NullStringModule;
 { DaoConfig.class, WebSecurityConfig.class })
 @EnableWebMvc
 @EnableCaching
+@EnableScheduling
 public class WebConfig implements WebMvcConfigurer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WebConfig.class);
 

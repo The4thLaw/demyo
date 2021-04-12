@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,13 @@ import org.demyo.common.exception.DemyoRuntimeException;
  * @see ApplicationConfiguration
  */
 public final class SystemConfiguration {
+	private static final String PLUGIN_DIR_NAME = "plugins";
+	private static final String CONFIG_KEY_WAR_PATH = "war.path";
+	private static final String CONFIG_KEY_CONTEXT_ROOT = "war.contextRoot";
+	private static final String CONFIG_KEY_PORTABLE = "portable";
+	private static final String CONFIG_KEY_HTTP_ADDRESS = "http.address";
+	private static final String CONFIG_KEY_HTTP_PORT = "http.port";
+	private static final String CONFIG_KEY_THUMB_MAX_THREADS = "thumbnails.maxThreads";
 	private static final String APP_NAME = "Demyo";
 
 	/**
@@ -66,11 +73,8 @@ public final class SystemConfiguration {
 	private final File userPluginDirectory;
 	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
-	/**
-	 * The flag indicating whether LESS stylesheets should be loaded asynchronously. Should never be true in production,
-	 * but needed for some tests.
-	 */
-	private boolean loadLessInAsync;
+	/** The maximum number of threads that should be used for thumbnails. If left empty, Demyo uses a heuristic. */
+	private Integer maxThumbnailThreads;
 
 	/**
 	 * Instantiates a new system configuration.
@@ -110,7 +114,8 @@ public final class SystemConfiguration {
 		}
 
 		// Allow overrides from command line
-		for (String key : new String[] { "war.path", "war.contextRoot", "portable", "http.address", "http.port" }) {
+		for (String key : new String[] { CONFIG_KEY_WAR_PATH, CONFIG_KEY_CONTEXT_ROOT, CONFIG_KEY_PORTABLE,
+				CONFIG_KEY_HTTP_ADDRESS, CONFIG_KEY_HTTP_PORT, CONFIG_KEY_THUMB_MAX_THREADS }) {
 			String value = System.getProperty("demyo." + key);
 			if (value != null) {
 				config.setProperty(key, value);
@@ -119,13 +124,15 @@ public final class SystemConfiguration {
 
 		version = config.getString("version");
 		codename = config.getString("codename");
-		warPath = config.getString("war.path");
-		contextRoot = config.getString("war.contextRoot");
-		portable = config.getBoolean("portable");
-		httpAddress = config.getString("http.address");
-		httpPort = config.getInt("http.port");
+		warPath = config.getString(CONFIG_KEY_WAR_PATH);
+		contextRoot = config.getString(CONFIG_KEY_CONTEXT_ROOT);
+		portable = config.getBoolean(CONFIG_KEY_PORTABLE);
+		httpAddress = config.getString(CONFIG_KEY_HTTP_ADDRESS);
+		httpPort = config.getInt(CONFIG_KEY_HTTP_PORT);
+		String threads = config.getString(CONFIG_KEY_THUMB_MAX_THREADS);
+		maxThumbnailThreads = StringUtils.isBlank(threads) ? null : Integer.parseInt(threads);
 		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
-		systemPluginDirectory = new File(applicationDirectory, "plugins");
+		systemPluginDirectory = new File(applicationDirectory, PLUGIN_DIR_NAME);
 
 		// Prepare all paths
 		if (portable) {
@@ -157,7 +164,7 @@ public final class SystemConfiguration {
 			}
 		}
 
-		userPluginDirectory = new File(userDirectory, "plugins");
+		userPluginDirectory = new File(userDirectory, PLUGIN_DIR_NAME);
 		imagesDirectory = new File(userDirectory, "images");
 		thumbnailDirectory = new File(userDirectory, "thumbnails");
 		databaseFile = new File(userDirectory, "demyo.h2.db");
@@ -391,24 +398,6 @@ public final class SystemConfiguration {
 	}
 
 	/**
-	 * Checks if is the flag indicating whether LESS stylesheets should be loaded asynchronously.
-	 * 
-	 * @return the flag indicating whether LESS stylesheets should be loaded asynchronously
-	 */
-	public boolean isLoadLessInAsync() {
-		return loadLessInAsync;
-	}
-
-	/**
-	 * Sets the flag indicating whether LESS stylesheets should be loaded asynchronously.
-	 * 
-	 * @param loadLessInAsync the new flag indicating whether LESS stylesheets should be loaded asynchronously
-	 */
-	public void setLoadLessInAsync(boolean loadLessInAsync) {
-		this.loadLessInAsync = loadLessInAsync;
-	}
-
-	/**
 	 * Gets the directory where system-wide plugins are located.
 	 *
 	 * @return the directory where system-wide plugins are located
@@ -424,5 +413,14 @@ public final class SystemConfiguration {
 	 */
 	public File getUserPluginDirectory() {
 		return userPluginDirectory;
+	}
+
+	/**
+	 * Gets the maximum number of threads that should be used for thumbnails.
+	 *
+	 * @return the maximum number of threads that should be used for thumbnails
+	 */
+	public Integer getMaxThumbnailThreads() {
+		return maxThumbnailThreads;
 	}
 }

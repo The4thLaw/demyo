@@ -86,4 +86,13 @@ public interface IImageService extends IModelService<Image> {
 	 * @return The Image object, populated with its dependencies.
 	 */
 	Image getImageDependencies(long id);
+
+	/**
+	 * Sets the maximum pool size for the thumbnail executor.
+	 * <p>
+	 * This method must be ran periodically based on the JavaDoc of {@link Runtime#availableProcessors()} and
+	 * {@link Runtime#maxMemory()}.
+	 * </p>
+	 */
+	void setThumbnailPoolSize();
 }
