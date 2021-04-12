@@ -37,5 +37,9 @@ export default {
 // Align the pagination buttons
 .c-ItemCardPagination {
 	justify-content: space-around;
+
+	&.v-list-item::after {
+		display: none;
+	}
 }
 </style>
