@@ -13,7 +13,7 @@
 			<v-list v-if="hasCollections" dense>
 				<v-list-item
 					v-for="collection in paginatedItems"
-					:key="collection.id" :href="`/collections/${collection.id}/view`"
+					:key="collection.id" :to="`/collections/${collection.id}/view`"
 				>
 					<v-list-item-content>
 						<v-list-item-title :title="collection.identifyingName">

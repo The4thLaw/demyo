@@ -8,7 +8,7 @@
 				{{ meta.album.title }}
 			</router-link>
 			<v-list dense>
-				<v-list-item :href="cardLink" class="c-MetaSeriesCard__one-shot">
+				<v-list-item :to="cardLink" class="c-MetaSeriesCard__one-shot">
 					<v-list-item-content>
 						<v-list-item-title>
 							{{ $t('field.Album.oneShot.view') }}
@@ -25,7 +25,7 @@
 				{{ meta.series.identifyingName }}
 			</router-link>
 			<v-list dense>
-				<v-list-item v-for="album in paginatedItems" :key="album.id" :href="`/albums/${album.id}/view`">
+				<v-list-item v-for="album in paginatedItems" :key="album.id" :to="`/albums/${album.id}/view`">
 					<v-list-item-content>
 						<v-list-item-title :title="album.title">
 							{{ album.title }}
