@@ -36,7 +36,7 @@ public class ImagesController extends AbstractController {
 	@GetMapping("/{imageId}/file/**")
 	public ResponseEntity<Resource> getImageFile(@PathVariable("imageId") long imageId,
 			@RequestParam("w") Optional<Integer> maxWidth,
-			@RequestParam(value = "lenient", defaultValue = "false") boolean lenient)
+			@RequestParam(value = "lenient", defaultValue = "true") boolean lenient)
 			throws DemyoException {
 
 		Resource res = imageService.getImage(imageId, maxWidth, lenient);

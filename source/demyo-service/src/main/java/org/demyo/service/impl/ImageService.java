@@ -60,6 +60,7 @@ import org.demyo.utils.io.DIOUtils;
 @Service
 public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final int THREAD_POOL_SCHEDULING = 60 * 60 * 1000;
+	private static final double LENIENCY_WIDTH_FACTOR = 1.2;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 	/** The maximum number of thumbs that can be pending generation. Should remain relatively small to avoid DoS. */
 	private static final int MAX_PENDING_THUMBS = 20;
@@ -207,8 +208,10 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		int originalWidth = buffImage.getWidth();
-		if (maxWidth >= originalWidth || (lenient && maxWidth * 1.1 >= originalWidth)) {
-			// Return the original image, we don't have anything larger
+		if (maxWidth >= originalWidth || (lenient && maxWidth * LENIENCY_WIDTH_FACTOR >= originalWidth)) {
+			buffImage.flush();
+			// Return the original image, we don't have anything larger or the requested width is close enough
+			// to the original not to warrant the creation of a resized version
 			return new FileSystemResource(image);
 		}
 
