@@ -190,7 +190,11 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			LOGGER.trace("Thumbnail generation submitted for image {} at width {}", id, maxWidth);
 			logThumbnailExecutorStats();
 			return submission.get(2, TimeUnit.MINUTES);
-		} catch (InterruptedException | ExecutionException | TimeoutException e) {
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			LOGGER.warn("Interrupted while generating a thumbnail for image {} at width {}", id, maxWidth, e);
+			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, "Interrupted during thumbnail generation");
+		} catch (ExecutionException | TimeoutException e) {
 			LOGGER.warn("Failed to generate a thumbnail for image {} at width {}", id, maxWidth, e);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, "Thumbnail generation failed");
 		}

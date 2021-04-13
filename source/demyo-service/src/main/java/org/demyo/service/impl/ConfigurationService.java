@@ -40,7 +40,7 @@ public class ConfigurationService implements IConfigurationService {
 		Map<String, ConfigurationEntry> configurationValues = new HashMap<>();
 		loadConfiguration(configurationValues, null);
 		return configurationValues.entrySet().stream().collect(Collectors.toMap(
-				entry -> entry.getKey(), // Preserve key
+				Map.Entry::getKey, // Preserve key
 				entry -> entry.getValue().getValue() // Map value
 		));
 	}
