@@ -147,7 +147,7 @@
 					:loading="quicksearchLoading" @click="showQuicksearch = false; clearSearch()"
 				/>
 				<!-- Do it on show so that the element stays alive. v-show doesn't work on slot so use a div -->
-				<div v-show="!isRelevantSearchQuery">
+				<div v-show="!isRelevantSearchQuery" id="l-DefaultLayout__routerView">
 					<slot />
 				</div>
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
@@ -285,6 +285,7 @@ html[lang],
 @media (max-width: 435px) {
 	#l-DefaultLayout__mainContainer,
 	#l-DefaultLayout__mainContainer > .container,
+	#l-DefaultLayout__routerView > .container,
 	.container.v-TagIndex__list {
 		padding-left: 0;
 		padding-right: 0;
@@ -361,9 +362,9 @@ html[lang],
 }
 
 .dem-fieldset {
-	margin-top: 8px;
+	margin-top: 16px;
 	margin-bottom: 8px;
-	padding-top: 8px;
+	padding-top: 16px;
 
 	.theme--light & {
 		border-top: 1px solid var(--dem-base-border);

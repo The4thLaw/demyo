@@ -123,9 +123,17 @@ export default {
 	flex: 1;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 600px) { // Vuetify "xs" breakpoint
 	.c-SectionCard__container--image {
 		flex-direction: column;
+	}
+
+	.c-SectionCard__container {
+		padding: 16px;
+	}
+
+	.c-SectionCard--tabbed .v-tabs-items {
+		padding: 16px;
 	}
 
 	.c-SectionCard__image {
