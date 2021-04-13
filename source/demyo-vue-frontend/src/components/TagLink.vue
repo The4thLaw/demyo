@@ -64,6 +64,14 @@ export default {
 	white-space: nowrap;
 	line-height: 200%;
 
+	h1 &,
+	h2 &,
+	h3 & {
+		// Avoid overflows in titles
+		white-space: initial;
+		line-height: 100%;
+	}
+
 	&__count {
 		font-size: 80%;
 
