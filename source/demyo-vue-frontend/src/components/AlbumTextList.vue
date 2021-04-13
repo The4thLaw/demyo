@@ -1,11 +1,12 @@
 <template>
-	<div>
+	<div class="c-AlbumTextList">
 		<v-list>
 			<template v-for="(value, key) in paginatedAlbumsBySeries">
 				<v-list-group
 					v-if="value.isSeries"
 					:key="key"
 					:value="false"
+					no-action
 					sub-group
 				>
 					<template #activator>
@@ -115,3 +116,33 @@ export default {
 	}
 }
 </script>
+
+<style lang="less">
+.c-AlbumTextList {
+	.v-list-item {
+		/*
+		For some reason the header can overlow.
+		I can't understand why and the official example work fine so this fix will have to do.
+		*/
+		max-width: 100%;
+	}
+
+	// All selectors below: remove excessive padding in our particular case
+	.v-list-group--sub-group .v-list-group__header {
+		padding-right: 8px;
+		padding-left: 8px;
+	}
+
+	.v-application--is-ltr & {
+		.v-list-group--no-action.v-list-group--sub-group > .v-list-group__items > .v-list-item {
+			padding-left: 32px;
+		}
+	}
+
+	.v-application--is-rtl & {
+		.v-list-group--no-action.v-list-group--sub-group > .v-list-group__items > .v-list-item {
+			padding-right: 32px;
+		}
+	}
+}
+</style>
