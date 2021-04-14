@@ -91,6 +91,10 @@ public class Demyo2Importer implements IImporter {
 		BufferedInputStream xmlBis = null;
 
 		try {
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("Starting import, file size is {} bytes", Files.size(file));
+			}
+
 			// Extract if needed
 			String originalFilenameLc = originalFilename.toLowerCase();
 			boolean isArchive = originalFilenameLc.endsWith(".dea");

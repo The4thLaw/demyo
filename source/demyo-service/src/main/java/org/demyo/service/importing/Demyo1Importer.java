@@ -59,6 +59,10 @@ public class Demyo1Importer extends Demyo2Importer {
 		BufferedInputStream xmlBis = null;
 
 		try {
+			if (LOGGER.isInfoEnabled()) {
+				LOGGER.info("Starting import, file size is {} bytes", Files.size(file));
+			}
+
 			// Extract if needed
 			String originalFilenameLc = originalFilename.toLowerCase();
 			boolean isArchive = originalFilenameLc.endsWith(".zip");
