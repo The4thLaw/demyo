@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IImageService;
+import org.demyo.service.ImageRetrievalResponse;
 
 /**
  * Controller to access image files.
@@ -26,6 +27,7 @@ import org.demyo.service.IImageService;
 @RequestMapping("/images")
 public class ImagesController extends AbstractController {
 	private static final CacheControl CACHE_FOR_IMAGES = CacheControl.maxAge(30, TimeUnit.DAYS).cachePublic();
+	private static final CacheControl NO_CACHE = CacheControl.noCache();
 
 	@Autowired
 	private IImageService imageService;
@@ -39,12 +41,18 @@ public class ImagesController extends AbstractController {
 			@RequestParam(value = "lenient", defaultValue = "true") boolean lenient)
 			throws DemyoException {
 
-		Resource res = imageService.getImage(imageId, maxWidth, lenient);
+		ImageRetrievalResponse image = imageService.getImage(imageId, maxWidth, lenient);
+		Resource res = image.getResource();
 
 		Optional<MediaType> media = MediaTypeFactory.getMediaType(res);
-		BodyBuilder schwarzenegger = ResponseEntity.ok().cacheControl(CACHE_FOR_IMAGES);
+		BodyBuilder schwarzenegger = ResponseEntity.ok();
 		if (media.isPresent()) {
 			schwarzenegger.contentType(media.get());
+		}
+		if (image.isExact()) {
+			schwarzenegger.cacheControl(CACHE_FOR_IMAGES);
+		} else {
+			schwarzenegger.cacheControl(NO_CACHE);
 		}
 		return schwarzenegger.body(res);
 	}

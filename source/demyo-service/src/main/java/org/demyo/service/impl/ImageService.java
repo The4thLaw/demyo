@@ -1,7 +1,5 @@
 package org.demyo.service.impl;
 
-import java.awt.Transparency;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,14 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
-import javax.imageio.ImageIO;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,16 +22,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOCase;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.imgscalr.Scalr;
-import org.imgscalr.Scalr.Method;
-import org.imgscalr.Scalr.Mode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +37,8 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
+import org.demyo.service.IThumbnailService;
+import org.demyo.service.ImageRetrievalResponse;
 import org.demyo.utils.io.DIOUtils;
 
 /**
@@ -59,22 +46,17 @@ import org.demyo.utils.io.DIOUtils;
  */
 @Service
 public class ImageService extends AbstractModelService<Image> implements IImageService {
-	private static final int THREAD_POOL_SCHEDULING = 60 * 60 * 1000;
-	private static final double LENIENCY_WIDTH_FACTOR = 1.2;
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
-	/** The maximum number of thumbs that can be pending generation. Should remain relatively small to avoid DoS. */
-	private static final int MAX_PENDING_THUMBS = 20;
-	/** The absolute maximum number of thumb threads that can run in parallel. */
-	private static final int MAX_RUNNING_THUMBS = 10;
 	private static final String UPLOAD_DIRECTORY_NAME = "uploads";
 
 	@Autowired
 	private IImageRepo repo;
 	@Autowired
 	private IFilePondService filePondService;
+	@Autowired
+	private IThumbnailService thumbnailService;
 
 	private final File uploadDirectory;
-	private final ThreadPoolExecutor executor;
 
 	/**
 	 * Default constructor.
@@ -84,39 +66,6 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		uploadDirectory = new File(SystemConfiguration.getInstance().getImagesDirectory(), UPLOAD_DIRECTORY_NAME);
 		uploadDirectory.mkdirs();
-
-		executor = new ThreadPoolExecutor(0, 1, 1, TimeUnit.MINUTES, new LinkedBlockingDeque<>(MAX_PENDING_THUMBS));
-		executor.allowCoreThreadTimeOut(true);
-		setThumbnailPoolSize();
-	}
-
-	@Override
-	@Scheduled(initialDelay = THREAD_POOL_SCHEDULING, fixedRate = THREAD_POOL_SCHEDULING)
-	public void setThumbnailPoolSize() {
-		Integer systemMaxThreads = SystemConfiguration.getInstance().getMaxThumbnailThreads();
-		if (systemMaxThreads != null) {
-			LOGGER.info("Setting thumbnail pool size: fixed = {}", systemMaxThreads);
-			executor.setMaximumPoolSize(systemMaxThreads);
-			executor.setCorePoolSize(systemMaxThreads);
-			return;
-		}
-
-		int cores = Runtime.getRuntime().availableProcessors();
-		long memory = Runtime.getRuntime().maxMemory();
-
-		// Allow at most one thumbnail thread per two cores
-		int coreLimit = cores / 2;
-		// Allow at most one thumbnail thread per 256MB of RAM
-		long memoryLimit = memory / (256 * 1024 * 1024);
-		// Take the minimum of those two, constrained
-		int maxThreads = (int) Math.min(Math.min(coreLimit, memoryLimit), MAX_RUNNING_THUMBS);
-
-		LOGGER.info("Setting thumbnail pool size: core = {}, memory = {}, final = {}", coreLimit, memoryLimit,
-				maxThreads);
-		// Gotcha: the maximum pool size is only used when the queue is full. What we need is a fixed pool size
-		// where the core threads can time out
-		executor.setMaximumPoolSize(maxThreads);
-		executor.setCorePoolSize(maxThreads);
 	}
 
 	@Override
@@ -156,110 +105,14 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public Resource getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException {
+	public ImageRetrievalResponse getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient)
+			throws DemyoException {
 		if (!maxWidthOpt.isPresent()) {
 			Image image = getByIdForEdition(id);
-			return new FileSystemResource(getImageFile(image));
+			return new ImageRetrievalResponse(getImageFile(image));
 		}
 
-		int maxWidth = maxWidthOpt.get();
-		File directoryBySize = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), maxWidth + "w");
-
-		// Check cache (two possible formats - jpg is more likely so check it first)
-		File jpgThumb = new File(directoryBySize, id + ".jpg");
-		if (jpgThumb.exists()) {
-			return new FileSystemResource(jpgThumb);
-		}
-		File pngThumb = new File(directoryBySize, id + ".png");
-		if (pngThumb.exists()) {
-			return new FileSystemResource(pngThumb);
-		}
-
-		/*
-		No cache hit, generate thumbnail.
-		Thumbnails are generated in parallel threads so that we can limit the number of ongoing generations.
-		However, we still block the request while waiting for the result because the browser is expecting the
-		thumbnail.
-		This is just a way to limit resource usage in constrained environments. It impacts the user experience
-		but without this, we could just kill the JVM with OutOfMemoryErrors...
-		We wait at most two minutes to avoid blocking requests for too long.
-		 */
-		Future<Resource> submission = executor
-				.submit(() -> generateThumbnail(id, lenient, maxWidth, directoryBySize, jpgThumb, pngThumb));
-		try {
-			LOGGER.trace("Thumbnail generation submitted for image {} at width {}", id, maxWidth);
-			logThumbnailExecutorStats();
-			return submission.get(2, TimeUnit.MINUTES);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-			LOGGER.warn("Interrupted while generating a thumbnail for image {} at width {}", id, maxWidth, e);
-			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, "Interrupted during thumbnail generation");
-		} catch (ExecutionException | TimeoutException e) {
-			LOGGER.warn("Failed to generate a thumbnail for image {} at width {}", id, maxWidth, e);
-			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, "Thumbnail generation failed");
-		}
-	}
-
-	private Resource generateThumbnail(long id, boolean lenient, int maxWidth, File directoryBySize, File jpgThumb,
-			File pngThumb) throws DemyoException {
-		File image = getImageFile(getByIdForEdition(id));
-		long time = System.currentTimeMillis();
-		BufferedImage buffImage;
-		try {
-			buffImage = ImageIO.read(image);
-		} catch (IOException e) {
-			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
-		}
-
-		int originalWidth = buffImage.getWidth();
-		if (maxWidth >= originalWidth || (lenient && maxWidth * LENIENCY_WIDTH_FACTOR >= originalWidth)) {
-			buffImage.flush();
-			// Return the original image, we don't have anything larger or the requested width is close enough
-			// to the original not to warrant the creation of a resized version
-			return new FileSystemResource(image);
-		}
-
-		logThumbnailExecutorStats();
-		LOGGER.trace("Generating thumbnail for image {} at width {}", id, maxWidth);
-
-		// Avoid creating the directory if we return the original image
-		if (!directoryBySize.isDirectory()) {
-			directoryBySize.mkdirs();
-			LOGGER.debug("Creating thumbnail directory: {}", directoryBySize);
-		} else {
-			LOGGER.trace("Thumbnail directory exists: {}", directoryBySize);
-		}
-
-		BufferedImage buffThumb = Scalr.resize(buffImage, Method.ULTRA_QUALITY, Mode.FIT_TO_WIDTH, maxWidth, 0,
-				Scalr.OP_ANTIALIAS);
-		LOGGER.debug("Thumbnail for {} generated in {}ms", id, System.currentTimeMillis() - time);
-
-		try {
-			// Write opaque images as JPG, transparent images as PNG
-			if (Transparency.OPAQUE == buffThumb.getTransparency()) {
-				ImageIO.write(buffThumb, "jpg", jpgThumb);
-				return new FileSystemResource(jpgThumb);
-			} else {
-				ImageIO.write(buffThumb, "png", pngThumb);
-				return new FileSystemResource(pngThumb);
-			}
-		} catch (IOException e) {
-			// Ensure we don't store invalid contents
-			DIOUtils.delete(jpgThumb);
-			DIOUtils.delete(pngThumb);
-			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
-		} finally {
-			buffImage.flush();
-			buffThumb.flush();
-		}
-	}
-
-	private void logThumbnailExecutorStats() {
-		if (LOGGER.isTraceEnabled()) {
-			LOGGER.trace("Thumbnail executor stats: {} active, {} in pool (max: {}), {} queued",
-					executor.getActiveCount(),
-					executor.getPoolSize(), executor.getMaximumPoolSize(), executor.getQueue().size());
-		}
+		return thumbnailService.getThumbnail(id, maxWidthOpt.get(), lenient, () -> getImageFile(getByIdForEdition(id)));
 	}
 
 	private void validateImagePath(File image) throws DemyoException {

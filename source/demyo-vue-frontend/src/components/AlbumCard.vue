@@ -11,9 +11,14 @@
 		</v-card>
 		<v-card v-else outlined class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
+				<!--
+					TODO: once Vuetify is available with https://github.com/vuetifyjs/vuetify/issues/13423,
+					set the src to the 400W image.
+					Meanwhile, this avoids performing useless requests at the cost of browser compatibility
+				-->
 				<v-img
 					v-if="loadCover && album.cover.id"
-					:src="`${baseImageUrl}?w=400`"
+					:src="' '"
 					:srcset="`
 							${baseImageUrl}?w=400 400w,
 							${baseImageUrl}?w=700 700w`"

@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.core.io.Resource;
-
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Image;
 
@@ -71,13 +69,13 @@ public interface IImageService extends IModelService<Image> {
 	 * 
 	 * @param id The image ID
 	 * @param maxWidthOpt The maximum desired width, if any
-	 * @param lenient When lenient, we allow a 10% difference in sizes, because it won't change a lot in terms of
+	 * @param lenient When lenient, we allow a minor difference in sizes, because it won't change a lot in terms of
 	 *            bandwidth and will save disk space and processing power. The returned image could thus be larger than
 	 *            the maximum width
 	 * @return The resized image
 	 * @throws DemyoException In case of security or I/O error.
 	 */
-	Resource getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException;
+	ImageRetrievalResponse getImage(long id, Optional<Integer> maxWidthOpt, boolean lenient) throws DemyoException;
 
 	/**
 	 * Returns an Image and its dependent albums, authors, etc.
@@ -86,13 +84,4 @@ public interface IImageService extends IModelService<Image> {
 	 * @return The Image object, populated with its dependencies.
 	 */
 	Image getImageDependencies(long id);
-
-	/**
-	 * Sets the maximum pool size for the thumbnail executor.
-	 * <p>
-	 * This method must be ran periodically based on the JavaDoc of {@link Runtime#availableProcessors()} and
-	 * {@link Runtime#maxMemory()}.
-	 * </p>
-	 */
-	void setThumbnailPoolSize();
 }

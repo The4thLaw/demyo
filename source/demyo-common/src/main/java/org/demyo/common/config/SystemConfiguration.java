@@ -29,7 +29,9 @@ public final class SystemConfiguration {
 	private static final String CONFIG_KEY_HTTP_ADDRESS = "http.address";
 	private static final String CONFIG_KEY_HTTP_PORT = "http.port";
 	private static final String CONFIG_KEY_THUMB_MAX_THREADS = "thumbnails.maxThreads";
+	private static final String CONFIG_KEY_THUMB_QUEUE_SIZE = "thumbnails.queueSize";
 	private static final String APP_NAME = "Demyo";
+	private static final int DEFAULT_THUMBNAIL_QUEUE = 40;
 
 	/**
 	 * Singleton holder following the solution of Bill Pugh.
@@ -75,6 +77,8 @@ public final class SystemConfiguration {
 	private final boolean autoStartWebBrowser;
 	/** The maximum number of threads that should be used for thumbnails. If left empty, Demyo uses a heuristic. */
 	private Integer maxThumbnailThreads;
+	/** The maximum number of thumbnails that can be queued while waiting for generation. */
+	private int thumbnailQueueSize;
 
 	/**
 	 * Instantiates a new system configuration.
@@ -115,7 +119,8 @@ public final class SystemConfiguration {
 
 		// Allow overrides from command line
 		for (String key : new String[] { CONFIG_KEY_WAR_PATH, CONFIG_KEY_CONTEXT_ROOT, CONFIG_KEY_PORTABLE,
-				CONFIG_KEY_HTTP_ADDRESS, CONFIG_KEY_HTTP_PORT, CONFIG_KEY_THUMB_MAX_THREADS }) {
+				CONFIG_KEY_HTTP_ADDRESS, CONFIG_KEY_HTTP_PORT, CONFIG_KEY_THUMB_MAX_THREADS,
+				CONFIG_KEY_THUMB_QUEUE_SIZE }) {
 			String value = System.getProperty("demyo." + key);
 			if (value != null) {
 				config.setProperty(key, value);
@@ -131,6 +136,7 @@ public final class SystemConfiguration {
 		httpPort = config.getInt(CONFIG_KEY_HTTP_PORT);
 		String threads = config.getString(CONFIG_KEY_THUMB_MAX_THREADS);
 		maxThumbnailThreads = StringUtils.isBlank(threads) ? null : Integer.parseInt(threads);
+		thumbnailQueueSize = config.getInt(CONFIG_KEY_THUMB_QUEUE_SIZE, DEFAULT_THUMBNAIL_QUEUE);
 		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
 		systemPluginDirectory = new File(applicationDirectory, PLUGIN_DIR_NAME);
 
@@ -422,5 +428,14 @@ public final class SystemConfiguration {
 	 */
 	public Integer getMaxThumbnailThreads() {
 		return maxThumbnailThreads;
+	}
+
+	/**
+	 * Gets the maximum number of thumbnails that can be queued while waiting for generation.
+	 *
+	 * @return the maximum number of thumbnails that can be queued while waiting for generation
+	 */
+	public int getThumbnailQueueSize() {
+		return thumbnailQueueSize;
 	}
 }
