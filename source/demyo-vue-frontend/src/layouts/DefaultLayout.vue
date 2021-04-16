@@ -219,6 +219,13 @@ export default {
 		})
 	},
 
+	watch: {
+		$route() {
+			// Route changed, clear the quick search
+			this.clearSearch()
+		}
+	},
+
 	methods: {
 		enterSearch() {
 			this.$refs.menuSearch.blur()
