@@ -84,9 +84,10 @@ public class FilePondService implements IFilePondService {
 		String filename = id + "." + extension;
 		Path destinationFile = uploadDirectory.resolve(filename);
 
-		try (OutputStream fos = Files.newOutputStream(uploadDirectory)) {
+		try (OutputStream fos = Files.newOutputStream(destinationFile)) {
 			IOUtils.copy(input, fos);
 		} catch (IOException ioe) {
+			LOGGER.warn("Failed to store FilePond data to {}", destinationFile, ioe);
 			DIOUtils.delete(destinationFile);
 		}
 		// Request to delete on exit, just in case
