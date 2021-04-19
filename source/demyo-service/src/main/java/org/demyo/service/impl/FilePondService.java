@@ -43,7 +43,16 @@ public class FilePondService implements IFilePondService {
 	 * Default constructor.
 	 */
 	public FilePondService() {
-		uploadDirectory = SystemConfiguration.getInstance().getTempDirectory().resolve(UPLOAD_DIRECTORY_NAME);
+		this(SystemConfiguration.getInstance().getTempDirectory().resolve(UPLOAD_DIRECTORY_NAME));
+	}
+
+	/**
+	 * Constructor allowing to set the upload directory.
+	 * 
+	 * @param uploadDirectory The temporary directory for FilePond uploads.
+	 */
+	public FilePondService(Path uploadDirectory) {
+		this.uploadDirectory = uploadDirectory;
 		try {
 			Files.createDirectories(uploadDirectory);
 		} catch (IOException e) {
@@ -67,6 +76,7 @@ public class FilePondService implements IFilePondService {
 
 		for (File f : filesToDelete) {
 			LOGGER.debug("Auto-cleaning FilePond file: {}", f);
+			DIOUtils.delete(f);
 		}
 	}
 
@@ -113,7 +123,7 @@ public class FilePondService implements IFilePondService {
 
 		if (!(Files.exists(file) && Files.isRegularFile(file))) {
 			LOGGER.warn("{} doesn't exist or isn't a regular file", file.toAbsolutePath());
-			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_MISSING, id + " doesn't exist");
+			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_MISSING, id + " doesn't exist or isn't a file");
 		}
 
 		return file.toFile();
