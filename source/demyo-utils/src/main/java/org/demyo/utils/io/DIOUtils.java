@@ -123,7 +123,7 @@ public final class DIOUtils {
 	 * @param file The file to delete.
 	 */
 	public static void delete(Path file) {
-		if (Files.exists(file) || Files.isRegularFile(file)) {
+		if (!(Files.exists(file) && Files.isRegularFile(file))) {
 			LOGGER.debug("Doesn't exist or not a regular file: {}", file.toAbsolutePath());
 			return;
 		}
