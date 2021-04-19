@@ -58,12 +58,25 @@ public class ThumbnailService implements IThumbnailService {
 	}
 
 	private final ThreadPoolExecutor executor;
+	private final File thumbnailDirectory;
 
 	/**
 	 * Default constructor.
 	 */
 	public ThumbnailService() {
-		int queueSize = SystemConfiguration.getInstance().getThumbnailQueueSize();
+		this(SystemConfiguration.getInstance().getThumbnailDirectory(),
+				SystemConfiguration.getInstance().getThumbnailQueueSize());
+	}
+
+	/**
+	 * Constructor allowing to set the thumbnail directory and queue size.
+	 * 
+	 * @param thumbnailDirectory The directory where thumbnails are stored.
+	 * @param queueSize The size of the thumbnail generation queue.
+	 */
+	public ThumbnailService(File thumbnailDirectory, int queueSize) {
+		this.thumbnailDirectory = thumbnailDirectory;
+
 		// Another option would be to use a LIFO but it seems like it will be pretty confusing for users
 		// (see https://stackoverflow.com/a/8272674/109813)
 		executor = new ThreadPoolExecutor(0, 1, 1, TimeUnit.MINUTES, new LinkedBlockingDeque<>(queueSize));
@@ -103,7 +116,7 @@ public class ThumbnailService implements IThumbnailService {
 	@Override
 	public ImageRetrievalResponse getThumbnail(long id, int maxWidth, boolean lenient, ImageSupplier imageFileLoader)
 			throws DemyoException {
-		File directoryBySize = new File(SystemConfiguration.getInstance().getThumbnailDirectory(), maxWidth + "w");
+		File directoryBySize = new File(thumbnailDirectory, maxWidth + "w");
 
 		// Check cache (two possible formats - jpg is more likely so check it first)
 		ImageRetrievalResponse cached = getCachedThumbnail(directoryBySize, id);
@@ -162,11 +175,11 @@ public class ThumbnailService implements IThumbnailService {
 		return null;
 	}
 
-	private static ImageRetrievalResponse getFallbackThumbnail(long id, int maxWidth)
+	private ImageRetrievalResponse getFallbackThumbnail(long id, int maxWidth)
 			throws ThumbnailGenerationOverload {
-		File thumbDir = SystemConfiguration.getInstance().getThumbnailDirectory();
 		List<Integer> availableWidths = Stream//
-				.of(thumbDir.listFiles((f) -> f.isDirectory() && THUMB_DIR_PATTERN.matcher(f.getName()).matches()))
+				.of(thumbnailDirectory
+						.listFiles((f) -> f.isDirectory() && THUMB_DIR_PATTERN.matcher(f.getName()).matches()))
 				// Keep only the names
 				.map(f -> f.getName())
 				// Parse the width
@@ -178,7 +191,7 @@ public class ThumbnailService implements IThumbnailService {
 		LOGGER.trace("Found the following possible thumbnail sizes: {}", availableWidths);
 
 		for (int width : availableWidths) {
-			File directoryBySize = new File(thumbDir, width + "w");
+			File directoryBySize = new File(thumbnailDirectory, width + "w");
 			ImageRetrievalResponse cached = getCachedThumbnail(directoryBySize, id);
 			if (cached != null) {
 				LOGGER.debug("Found a fallback thumbnail for image {} at size {} instead of size {}", id, width,
