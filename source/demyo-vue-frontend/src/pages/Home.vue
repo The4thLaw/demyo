@@ -30,6 +30,12 @@ export default {
 
 	mixins: [quicksearch],
 
+	metaInfo() {
+		return {
+			title: this.$t('title.home')
+		}
+	},
+
 	created() {
 		this.$store.dispatch('ui/disableSearch')
 		this.$store.dispatch('ui/disableGlobalOverlay')

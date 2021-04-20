@@ -14,7 +14,7 @@ export default {
 	metaInfo() {
 		const self = this
 		return {
-			title: this.$t('title.home'),
+			title: null,
 			titleTemplate: '%s — Demyo',
 			link: [
 				{
