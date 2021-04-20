@@ -50,14 +50,22 @@ const routes = [
 	}
 ]
 
-let baseUrl = `/${process.env.BASE_URL}${contextRoot}`
+const processBase = process.env.BASE_URL || ''
+let baseUrl = `/${processBase}${contextRoot}`
 // Ensure this does not lead to duplicate slashes, which (1) is not correct and (2) confuses the router
 baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')
 console.log('Initializing Vue router with base:', baseUrl)
 const router = new VueRouter({
 	mode: 'history',
 	base: baseUrl,
-	routes
+	routes,
+	scrollBehavior(to, from, savedPosition) {
+		// May not work due to https://github.com/vuejs/vue-router/issues/1187
+		if (savedPosition) {
+			return savedPosition
+		}
+		return { x: 0, y: 0 }
+	}
 })
 
 // Reset the UI on page transitions:
