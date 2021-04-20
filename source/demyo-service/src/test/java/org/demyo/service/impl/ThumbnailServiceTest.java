@@ -192,8 +192,9 @@ class ThumbnailServiceTest {
 		assertThat(thumbResp).isNotNull();
 		assertThat(thumbResp.isExact()).isFalse();
 		File thumbFile = thumbResp.getResource().getFile();
-		assertThat(thumbFile).exists();
-		assertThat(thumbFile).isEqualTo(thumbDir.resolve("200w").resolve("42.jpg").toFile());
+		assertThat(thumbFile)
+				.exists()
+				.isEqualTo(thumbDir.resolve("200w").resolve("42.jpg").toFile());
 		assertThat(ImageUtils.getImageWidth(thumbFile)).isEqualTo(200);
 	}
 

@@ -147,7 +147,7 @@ public class ThumbnailService implements IThumbnailService {
 
 		try {
 			Future<ImageRetrievalResponse> submission = executor
-					.submit(() -> generateThumbnail(id, image, lenient, maxWidth, directoryBySize, submissionTime));
+					.submit(() -> generateThumbnail(id, image, maxWidth, directoryBySize, submissionTime));
 			LOGGER.trace("Thumbnail generation submitted for image {} at width {}", id, maxWidth);
 			logThumbnailExecutorStats();
 			return submission.get(THUMB_TIMEOUT_SECONDS, TimeUnit.SECONDS);
@@ -179,9 +179,9 @@ public class ThumbnailService implements IThumbnailService {
 			throws ThumbnailGenerationOverload {
 		List<Integer> availableWidths = Stream//
 				.of(thumbnailDirectory
-						.listFiles((f) -> f.isDirectory() && THUMB_DIR_PATTERN.matcher(f.getName()).matches()))
+						.listFiles(f -> f.isDirectory() && THUMB_DIR_PATTERN.matcher(f.getName()).matches()))
 				// Keep only the names
-				.map(f -> f.getName())
+				.map(File::getName)
 				// Parse the width
 				.map(f -> Integer.parseInt(f.substring(0, f.length() - 1)))
 				// Sort so that the closest to maxWidth comes first
@@ -205,7 +205,7 @@ public class ThumbnailService implements IThumbnailService {
 		throw new ThumbnailGenerationOverload("Could not find a fallback thumbnail for image" + id);
 	}
 
-	private ImageRetrievalResponse generateThumbnail(long id, File image, boolean lenient, int maxWidth,
+	private ImageRetrievalResponse generateThumbnail(long id, File image, int maxWidth,
 			File directoryBySize,
 			long submissionTime) throws DemyoException {
 		// If the task was submitted but the request timed out, just complete the task without doing anything
