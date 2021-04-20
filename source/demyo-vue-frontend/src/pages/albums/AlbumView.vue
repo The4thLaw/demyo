@@ -362,7 +362,7 @@ export default {
 			if (this.album.series) {
 				query.toSeries = this.album.series.id
 			}
-			if (this.album.artists.length === 1) {
+			if (this.album.artists?.length === 1) {
 				query.toArtist = this.album.artists[0].id
 			}
 			return query
