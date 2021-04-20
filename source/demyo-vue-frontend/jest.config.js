@@ -23,3 +23,6 @@ module.exports = {
 	coverageReporters: ['lcov'],
 	coverageDirectory: 'target/jest-coverage'
 }
+
+// See https://github.com/vuejs/vue-test-utils/issues/193#issuecomment-567555536
+require('dotenv').config()
