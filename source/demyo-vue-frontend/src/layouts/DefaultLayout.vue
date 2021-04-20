@@ -70,6 +70,7 @@
 						<v-text-field
 							ref="menuSearch"
 							v-model="quicksearchQuery" clearable hide-details
+							autocomplete="off"
 							prepend-icon="mdi-magnify" @keyup="performSearch"
 							@click:clear="clearSearch" @keydown.enter="enterSearch"
 						/>
@@ -116,6 +117,7 @@
 						<v-text-field
 							ref="toolbarSearch"
 							v-model="quicksearchQuery" clearable hide-details
+							autocomplete="off"
 							@click:clear="showQuicksearch = false; clearSearch()"
 							@blur="blur" @keyup="performSearch" @keydown.enter="enterSearch"
 						/>
@@ -223,6 +225,11 @@ export default {
 		$route() {
 			// Route changed, clear the quick search
 			this.clearSearch()
+			// Restore the menu
+			this.menuItems[0].active = true
+			for (let i = 1; i < this.menuItems.length; i++) {
+				this.menuItems[i].active = false
+			}
 		}
 	},
 
