@@ -8,7 +8,8 @@ import { axiosGet, axiosPost } from '@/helpers/axios'
 class AlbumService extends AbstractModelService {
 	constructor() {
 		super('albums/', {
-			fillMissingObjects: ['series', 'collection', 'binding', 'cover'],
+			// Publishers are mandatory but could be missing from album templates
+			fillMissingObjects: ['series', 'publisher', 'collection', 'binding', 'cover'],
 			fillMissingArrays: ['writers', 'artists', 'colorists', 'inkers', 'translators', 'tags', 'images', 'prices'],
 			sanitizeArrays: ['writers', 'artists', 'colorists', 'inkers', 'translators', 'tags', 'images']
 		})
