@@ -37,9 +37,6 @@ export function isCurrencyPrefix() {
  * @param {String} currency The currency to use
  * @returns The formatted currency amount.
  */
-// TODO: use https://vuetifyjs.com/en/components/combobox/ to provide the currencies.
-// This lets users select €, $, Yen with the right currency codes. E.G. { text: 'EUR (€)', value: 'EUR' }
-// Put the known currency codes in a JSON file
 export function formatCurrency(amount, currency) {
 	if (!currency) {
 		return i18n.n(amount)
