@@ -78,7 +78,9 @@ public class TranslationService implements ITranslationService {
 		// 1. Try to get the language of the first reader, if any
 		Locale firstReaderLocale = configService.getLocaleForFirstReader();
 		if (firstReaderLocale != null) {
-			LOGGER.debug("The first reader has a locale of {}, using it", firstReaderLocale.toLanguageTag());
+			if (LOGGER.isDebugEnabled()) {
+				LOGGER.debug("The first reader has a locale of {}, using it", firstReaderLocale.toLanguageTag());
+			}
 			return firstReaderLocale;
 		}
 		// 2. Use the system language

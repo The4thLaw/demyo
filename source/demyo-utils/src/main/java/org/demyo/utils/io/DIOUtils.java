@@ -124,6 +124,11 @@ public final class DIOUtils {
 	 * @param file The file to delete.
 	 */
 	public static void delete(Path file) {
+		if (file == null) {
+			// Do nothing, could be used in finally blocks
+			return;
+		}
+
 		if (!(Files.exists(file) && Files.isRegularFile(file))) {
 			LOGGER.debug("Doesn't exist or not a regular file: {}", file.toAbsolutePath());
 			return;
