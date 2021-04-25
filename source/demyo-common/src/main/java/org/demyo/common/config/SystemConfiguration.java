@@ -93,39 +93,7 @@ public final class SystemConfiguration {
 		}
 		applicationDirectory = new File(path);
 
-		// Find the default configuration
-		URL defaultConfig = SystemConfiguration.class.getResource("/org/demyo/common/config/system.properties");
-		if (defaultConfig == null) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NO_DEFAULT);
-		}
-
-		// Load the system configuration
-		File systemConfigurationFile = new File(applicationDirectory, SYSTEM_CONFIGURATION_FILENAME);
-		PropertiesConfiguration config;
-		try {
-			// Load defaults
-			config = new PropertiesConfiguration(defaultConfig);
-			if (systemConfigurationFile.exists()) {
-				// Load overrides
-				LOGGER.debug("Loading configuration from {}", systemConfigurationFile);
-				PropertiesConfiguration overrides = new PropertiesConfiguration(systemConfigurationFile);
-				config.copy(overrides);
-			} else {
-				LOGGER.debug("No system configuration found at {}, relying on defaults", systemConfigurationFile);
-			}
-		} catch (ConfigurationException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NOT_READABLE, e);
-		}
-
-		// Allow overrides from command line
-		for (String key : new String[] { CONFIG_KEY_WAR_PATH, CONFIG_KEY_CONTEXT_ROOT, CONFIG_KEY_PORTABLE,
-				CONFIG_KEY_HTTP_ADDRESS, CONFIG_KEY_HTTP_PORT, CONFIG_KEY_THUMB_MAX_THREADS,
-				CONFIG_KEY_THUMB_QUEUE_SIZE }) {
-			String value = System.getProperty("demyo." + key);
-			if (value != null) {
-				config.setProperty(key, value);
-			}
-		}
+		PropertiesConfiguration config = loadConfig();
 
 		version = config.getString("version");
 		codename = config.getString("codename");
@@ -181,9 +149,49 @@ public final class SystemConfiguration {
 		createDirectoryIfNeeded(userPluginDirectory);
 
 		// Debug our configuration
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug(this.toString());
+		LOGGER.debug("{}", this);
+	}
+
+	/**
+	 * Loads the configuration, including defaults and CLI overrides.
+	 * 
+	 * @return The merged configuration.
+	 */
+	private PropertiesConfiguration loadConfig() {
+		// Find the default configuration
+		URL defaultConfig = SystemConfiguration.class.getResource("/org/demyo/common/config/system.properties");
+		if (defaultConfig == null) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NO_DEFAULT);
 		}
+
+		// Load the system configuration
+		File systemConfigurationFile = new File(applicationDirectory, SYSTEM_CONFIGURATION_FILENAME);
+		PropertiesConfiguration config;
+		try {
+			// Load defaults
+			config = new PropertiesConfiguration(defaultConfig);
+			if (systemConfigurationFile.exists()) {
+				// Load overrides
+				LOGGER.debug("Loading configuration from {}", systemConfigurationFile);
+				PropertiesConfiguration overrides = new PropertiesConfiguration(systemConfigurationFile);
+				config.copy(overrides);
+			} else {
+				LOGGER.debug("No system configuration found at {}, relying on defaults", systemConfigurationFile);
+			}
+		} catch (ConfigurationException e) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_CONFIG_NOT_READABLE, e);
+		}
+
+		// Allow overrides from command line
+		for (String key : new String[] { CONFIG_KEY_WAR_PATH, CONFIG_KEY_CONTEXT_ROOT, CONFIG_KEY_PORTABLE,
+				CONFIG_KEY_HTTP_ADDRESS, CONFIG_KEY_HTTP_PORT, CONFIG_KEY_THUMB_MAX_THREADS,
+				CONFIG_KEY_THUMB_QUEUE_SIZE }) {
+			String value = System.getProperty("demyo." + key);
+			if (value != null) {
+				config.setProperty(key, value);
+			}
+		}
+		return config;
 	}
 
 	/**
