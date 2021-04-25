@@ -64,11 +64,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
-    <!-- Welcome file. -->
-    <!--<welcome-file-list>
-        <welcome-file>/</welcome-file>
-    </welcome-file-list>-->
-    
     <error-page>
     	<error-code>404</error-code>
     	<location>/errors/404</location>

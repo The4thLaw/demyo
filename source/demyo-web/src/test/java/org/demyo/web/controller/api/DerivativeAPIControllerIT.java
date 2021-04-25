@@ -19,7 +19,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  * Integration tests for the Derivative API.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class DerivativeAPIControllerIT extends AbstractModelAPIIT {
+class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 	public DerivativeAPIControllerIT() {
 		super("/api/derivatives/");
 	}

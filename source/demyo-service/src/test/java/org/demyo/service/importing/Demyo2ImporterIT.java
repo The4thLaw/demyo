@@ -25,7 +25,7 @@ import org.demyo.service.impl.AbstractServiceTest;
 /**
  * Tests for the {@link Demyo2Importer}.
  */
-public class Demyo2ImporterIT extends AbstractServiceTest {
+class Demyo2ImporterIT extends AbstractServiceTest {
 	@Autowired
 	private IRawSQLDao rawSqlDao;
 	@Autowired
@@ -46,7 +46,7 @@ public class Demyo2ImporterIT extends AbstractServiceTest {
 	 */
 	@Test
 	@Transactional(readOnly = true)
-	public void testImport() throws IOException, DemyoException {
+	void testImport() throws IOException, DemyoException {
 		// This is normally done by the import service, but injecting the import service is actually
 		// a bit more tricky
 		rawSqlDao.pruneAllTables();

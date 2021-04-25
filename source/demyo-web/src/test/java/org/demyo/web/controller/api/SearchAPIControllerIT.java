@@ -15,7 +15,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  * Tests for {@link SearchAPIController}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class SearchAPIControllerIT extends AbstractAPIIT {
+class SearchAPIControllerIT extends AbstractAPIIT {
 	/**
 	 * Tests {@link SearchAPIController#quickSearch(String)}
 	 */

@@ -24,7 +24,7 @@ import org.demyo.utils.io.DIOUtils;
  * Tests for {@link Demyo2Exporter}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class Demyo2ExporterIT extends AbstractServiceTest {
+class Demyo2ExporterIT extends AbstractServiceTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2ExporterIT.class);
 
 	@Autowired

@@ -112,9 +112,8 @@ public class Demyo2Exporter implements IExporter {
 
 			// Derivatives
 			exportModel(xsw, "derivatives", "derivative", "DERIVATIVES",
-					new ManyToManyRelation[]
-					{ new ManyToManyRelation("derivative-images", "derivative-image", "DERIVATIVE_ID", "IMAGE_ID",
-							rawSqlDao.getRawRecords("DERIVATIVES_IMAGES")) });
+					new ManyToManyRelation("derivative-images", "derivative-image", "DERIVATIVE_ID", "IMAGE_ID",
+							rawSqlDao.getRawRecords("DERIVATIVES_IMAGES")));
 
 			exportModel(xsw, "derivative_prices", "derivative_price", "DERIVATIVES_PRICES");
 

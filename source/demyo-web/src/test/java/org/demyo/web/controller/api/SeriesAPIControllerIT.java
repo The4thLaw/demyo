@@ -19,7 +19,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  * Integration tests for the Author API.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class SeriesAPIControllerIT extends AbstractModelAPIIT {
+class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	public SeriesAPIControllerIT() {
 		super("/api/series/");
 	}

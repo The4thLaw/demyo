@@ -3,6 +3,7 @@ package org.demyo.service.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotEmpty;
@@ -48,6 +50,7 @@ import org.demyo.utils.io.DIOUtils;
 public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "uploads";
+	private static final Pattern FILE_EXT_PATTERN = Pattern.compile("\\.[^.]+$");
 
 	@Autowired
 	private IImageRepo repo;
@@ -115,7 +118,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		return thumbnailService.getThumbnail(id, maxWidthOpt.get(), lenient, () -> getImageFile(getByIdForEdition(id)));
 	}
 
-	private void validateImagePath(File image) throws DemyoException {
+	private static void validateImagePath(File image) throws DemyoException {
 		try {
 			String imagesDirectoryPath = SystemConfiguration.getInstance().getImagesDirectory().getCanonicalPath();
 			String imagePath = image.getCanonicalPath();
@@ -207,7 +210,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		// Strip any path attributes
 		String description = new File(originalFileName).getName();
 		// Strip the extension
-		description = description.replaceAll("\\.[^.]+$", "");
+		FILE_EXT_PATTERN.matcher(description).replaceAll("");
 		// Convert underscores into spaces
 		description = description.replace('_', ' ');
 		LOGGER.debug("Uploaded file {} led to description: {}", originalFileName, description);
@@ -271,10 +274,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			LOGGER.info("Image {} was uploaded automatically as {}; deleting it now that it is no longer used", id,
 					path);
 			try {
-				if (!getImageFile(image).delete()) {
-					LOGGER.warn("Failed to delete the image at {}", path);
-				}
-			} catch (DemyoException e) {
+				Files.delete(getImageFile(image).toPath());
+			} catch (IOException | DemyoException e) {
 				LOGGER.warn("Failed to delete the image at {}", path, e);
 			}
 		}

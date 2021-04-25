@@ -31,7 +31,7 @@ import org.demyo.service.impl.AbstractServiceTest;
  * </p>
  */
 @Disabled("This is just an utility class") // Comment this to launch this utility
-public class DBUnitExtractor extends AbstractServiceTest {
+class DBUnitExtractor extends AbstractServiceTest {
 	@Autowired
 	private IImportService importService;
 	@Autowired

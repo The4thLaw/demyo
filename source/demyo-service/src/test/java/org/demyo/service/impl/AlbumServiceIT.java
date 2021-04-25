@@ -19,7 +19,7 @@ import org.demyo.service.IAlbumService;
  * Tests for {@link AlbumService} and for the configuration of {@link Album} and {@link AlbumPrice}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class AlbumServiceIT extends AbstractServiceTest {
+class AlbumServiceIT extends AbstractServiceTest {
 	@Autowired
 	private IAlbumService service;
 

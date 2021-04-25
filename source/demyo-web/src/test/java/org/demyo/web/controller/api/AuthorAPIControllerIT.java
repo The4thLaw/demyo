@@ -14,7 +14,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  * Integration tests for the Author API.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class AuthorAPIControllerIT extends AbstractModelAPIIT {
+class AuthorAPIControllerIT extends AbstractModelAPIIT {
 	public AuthorAPIControllerIT() {
 		super("/api/authors/");
 	}

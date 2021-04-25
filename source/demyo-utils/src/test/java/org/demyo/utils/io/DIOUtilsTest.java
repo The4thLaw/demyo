@@ -15,7 +15,7 @@ import org.mockito.Mockito;
 /**
  * Tests for {@link DIOUtils}.
  */
-public class DIOUtilsTest {
+class DIOUtilsTest {
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(Closeable)}.
 	 * 

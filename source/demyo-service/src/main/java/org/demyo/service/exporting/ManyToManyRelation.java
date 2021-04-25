@@ -24,8 +24,7 @@ class ManyToManyRelation {
 	 * 
 	 * @param relationtag The name of the group of relations in the XML output.
 	 * @param entryTag The name of a single relation in the XML output.
-	 * @param primaryKey The name of the column containing the identifier of the model responsible for the
-	 *        relation.
+	 * @param primaryKey The name of the column containing the identifier of the model responsible for the relation.
 	 * @param secondaryKey The name of the column containing the identifier of the child model.
 	 * @param relations The relations, as a raw list of records.
 	 */
@@ -46,11 +45,7 @@ class ManyToManyRelation {
 				throw new DemyoRuntimeException(DemyoErrorCode.EXPORT_DB_CONSISTENCY_ERROR,
 						"null secondary value for key " + secondaryKey + " in relation " + relation.toString());
 			}
-			List<Number> secondaryValues = entries.get(primaryValue);
-			if (secondaryValues == null) {
-				secondaryValues = new ArrayList<>();
-				entries.put(primaryValue, secondaryValues);
-			}
+			List<Number> secondaryValues = entries.computeIfAbsent(primaryValue, n -> new ArrayList<>());
 			secondaryValues.add(secondaryValue);
 		}
 	}

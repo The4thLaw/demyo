@@ -17,7 +17,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
  * Integration tests for the Reader API.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class ReaderAPIControllerIT extends AbstractModelAPIIT {
+class ReaderAPIControllerIT extends AbstractModelAPIIT {
 	public ReaderAPIControllerIT() {
 		super("/api/readers/");
 	}

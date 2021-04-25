@@ -179,7 +179,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 		// Call PreSave methods
 		for (Method meth : preSaveMethods) {
 			try {
-				meth.invoke(model, new Object[] {});
+				meth.invoke(model);
 				LOGGER.debug("Called @PreSave method {}", meth);
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				throw new DemyoRuntimeException(DemyoErrorCode.ORM_INVALID_PRESAVE, e, "Calling @PreSave method failed",
@@ -198,7 +198,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 				IModel other = (IModel) getter.invoke(model);
 				if (other != null && other.getId() == null) {
 					Method setter = setterMethods[i];
-					setter.invoke(model, new Object[] { null });
+					setter.invoke(model, (Object) null);
 					LOGGER.debug("Cleared linked model: {}.{}()", modelClass.getName(), getter.getName());
 				}
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
@@ -207,8 +207,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 			}
 		}
 
-		M savedModel = getRepo().save(model);
-		return savedModel;
+		return getRepo().save(model);
 	}
 
 	/**

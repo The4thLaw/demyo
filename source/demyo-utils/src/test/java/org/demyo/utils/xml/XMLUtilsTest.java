@@ -10,7 +10,7 @@ import org.xml.sax.SAXException;
 /**
  * Tests for {@link XMLUtils}.
  */
-public class XMLUtilsTest {
+class XMLUtilsTest {
 	/**
 	 * Tests {@link XMLUtils#createXmlReader()}.
 	 * 

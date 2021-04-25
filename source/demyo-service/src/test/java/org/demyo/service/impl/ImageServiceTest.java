@@ -26,7 +26,7 @@ import org.demyo.utils.io.DIOUtils;
 /**
  * Unit tests for {@link ImageService}.
  */
-public class ImageServiceTest extends AbstractServiceTest {
+class ImageServiceTest extends AbstractServiceTest {
 	private static File generateDummyImmage() {
 		String fileName = "target/ImageServiceTest_" + UUID.randomUUID().toString() + ".jpg";
 		File file = new File(fileName);

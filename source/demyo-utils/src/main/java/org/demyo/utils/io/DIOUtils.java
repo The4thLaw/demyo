@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 // Starts with a 'D' for 'Demyo', to allow usage in parallel with Apache's version
 public final class DIOUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DIOUtils.class);
+	private static final String STREAM_CLOSE_ERROR = "Failed to close stream";
 	private static final int SNIFF_DEFAULT_BUFFER = 256;
 	private static final Pattern FILE_EXT_EXCLUSIONS = Pattern.compile("[^A-Za-z0-9]");
 
@@ -50,7 +51,7 @@ public final class DIOUtils {
 		try {
 			closeable.close();
 		} catch (IOException e) {
-			LOGGER.warn("Failed to close stream", e);
+			LOGGER.warn(STREAM_CLOSE_ERROR, e);
 		}
 	}
 
@@ -73,7 +74,7 @@ public final class DIOUtils {
 		try {
 			closeable.close();
 		} catch (IOException e) {
-			LOGGER.warn("Failed to close stream", e);
+			LOGGER.warn(STREAM_CLOSE_ERROR, e);
 		}
 	}
 
@@ -96,7 +97,7 @@ public final class DIOUtils {
 		try {
 			closeable.close();
 		} catch (XMLStreamException e) {
-			LOGGER.warn("Failed to close stream", e);
+			LOGGER.warn(STREAM_CLOSE_ERROR, e);
 		}
 	}
 

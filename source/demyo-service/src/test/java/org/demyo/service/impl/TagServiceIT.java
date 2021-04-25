@@ -15,7 +15,7 @@ import org.demyo.service.ITagService;
  * Tests for {@link TagService}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class TagServiceIT extends AbstractServiceTest {
+class TagServiceIT extends AbstractServiceTest {
 	@Autowired
 	private ITagService tagService;
 

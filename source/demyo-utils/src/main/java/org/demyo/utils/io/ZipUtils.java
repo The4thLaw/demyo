@@ -44,9 +44,7 @@ public final class ZipUtils {
 
 		LOGGER.debug("Extracting {} to {}", source.getFileName(), destination);
 
-		ZipFile zipFile = null;
-		try {
-			zipFile = new ZipFile(source.toFile());
+		try (ZipFile zipFile = new ZipFile(source.toFile())) {
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();
@@ -66,8 +64,6 @@ public final class ZipUtils {
 		} catch (Exception e) {
 			LOGGER.warn("Failed to extract the ZIP file; clearing the destination...", e);
 			DIOUtils.deleteDirectory(destination.toFile());
-		} finally {
-			DIOUtils.closeQuietly(zipFile);
 		}
 	}
 
@@ -104,7 +100,7 @@ public final class ZipUtils {
 			try (InputStream is = new BufferedInputStream(new FileInputStream(source))) {
 				IOUtils.copy(is, destination);
 			} catch (IOException e) {
-				LOGGER.warn("Failed to zip {}", newPath, e);
+				LOGGER.warn("Failed to zip {}, rethrowing exception", newPath);
 				throw e;
 			}
 			destination.closeEntry();

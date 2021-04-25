@@ -16,7 +16,7 @@ import org.demyo.service.ISeriesService;
  * Tests for {@link DerivativeService} and for the configuration of {@link Derivative}.
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
-public class DerivativeServiceIT extends AbstractServiceTest {
+class DerivativeServiceIT extends AbstractServiceTest {
 	@Autowired
 	private IDerivativeService service;
 	@Autowired
@@ -31,7 +31,7 @@ public class DerivativeServiceIT extends AbstractServiceTest {
 	 */
 	@Test
 	@Transactional
-	public void testLargeDerivativeNumbers() {
+	void testLargeDerivativeNumbers() {
 		Derivative deriv = new Derivative();
 		deriv.setType(typeService.getByIdForEdition(1L));
 		deriv.setSeries(seriesService.getByIdForEdition(232L));

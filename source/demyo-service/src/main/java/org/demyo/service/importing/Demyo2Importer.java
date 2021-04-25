@@ -185,6 +185,8 @@ public class Demyo2Importer implements IImporter {
 	 * SAX handler for import of Demyo 2.x files.
 	 */
 	public class Demyo2Handler extends DefaultHandler {
+		private static final String FK_ALBUM_ID = "album_id";
+		private static final String FK_READER_ID = "reader_id";
 		private String seriesId;
 		private String albumId;
 		private String derivativeId;
@@ -252,37 +254,37 @@ public class Demyo2Importer implements IImporter {
 				createLine("albums", attributes);
 			} else if ("artist".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("artist_id", attributes.getValue("ref"));
 				albumArtists.add(columns);
 			} else if ("writer".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("writer_id", attributes.getValue("ref"));
 				albumWriters.add(columns);
 			} else if ("colorist".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("colorist_id", attributes.getValue("ref"));
 				albumColorists.add(columns);
 			} else if ("inker".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("inker_id", attributes.getValue("ref"));
 				albumInkers.add(columns);
 			} else if ("translator".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("translator_id", attributes.getValue("ref"));
 				albumTranslators.add(columns);
 			} else if ("album-tag".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("tag_id", attributes.getValue("ref"));
 				albumTags.add(columns);
 			} else if ("album-image".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("album_id", albumId);
+				columns.put(FK_ALBUM_ID, albumId);
 				columns.put("image_id", attributes.getValue("ref"));
 				albumImages.add(columns);
 			} else if ("album_price".equals(localName)) {
@@ -310,18 +312,18 @@ public class Demyo2Importer implements IImporter {
 				createLine("readers", attributes);
 			} else if ("favourite-series".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("reader_id", readerId);
+				columns.put(FK_READER_ID, readerId);
 				columns.put("series_id", attributes.getValue("ref"));
 				readerFavouriteSeries.add(columns);
 			} else if ("favourite-album".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("reader_id", readerId);
-				columns.put("album_id", attributes.getValue("ref"));
+				columns.put(FK_READER_ID, readerId);
+				columns.put(FK_ALBUM_ID, attributes.getValue("ref"));
 				readerFavouriteAlbums.add(columns);
 			} else if ("reading-list-entry".equals(localName)) {
 				HashMap<String, String> columns = new HashMap<>();
-				columns.put("reader_id", readerId);
-				columns.put("album_id", attributes.getValue("ref"));
+				columns.put(FK_READER_ID, readerId);
+				columns.put(FK_ALBUM_ID, attributes.getValue("ref"));
 				readerReadingList.add(columns);
 			} else if ("configuration-entry".equals(localName)) {
 				createLine("configuration", attributes);

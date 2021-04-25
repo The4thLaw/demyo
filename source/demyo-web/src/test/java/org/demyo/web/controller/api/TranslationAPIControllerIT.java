@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Integration tests for the Translation API.
  */
-public class TranslationAPIControllerIT extends AbstractAPIIT {
+class TranslationAPIControllerIT extends AbstractAPIIT {
 	@Test
 	void getTranslations() throws Exception {
 		mockMvc.perform(get("/api/translations/en")) //
