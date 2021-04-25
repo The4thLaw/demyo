@@ -57,21 +57,8 @@ public final class DesktopUtils {
 
 			String os = System.getProperty("os.name");
 			if ("Linux".equals(os)) {
-				// Partially sourced from org.eclipse.oomph.util.OS
-				for (String browser : new String[] { "gnome-open", "kde-open", "xdg-open", "sensible-browser" }) {
-					String[] command = { browser, url };
-					try {
-						Process process = Runtime.getRuntime().exec(command);
-						if (process != null) {
-							// Don't check whether the process is still running; some commands just delegate to others
-							// and terminate
-							LOGGER.debug("It looks like {} is a valid browser", browser);
-							return;
-						}
-					} catch (IOException ex) {
-						LOGGER.debug("{} is not supported as a browser", browser);
-					}
-				}
+				startLinuxBrowser(url);
+				return;
 			}
 
 			LOGGER.info("Your OS ({}) does not support opening URLs directly, go manually to {}", os, url);
@@ -79,5 +66,25 @@ public final class DesktopUtils {
 					"Your OS (" + os + ") does not support opening URLs directly, go manually to " + url, "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	private static void startLinuxBrowser(String url) {
+		// Partially sourced from org.eclipse.oomph.util.OS
+		for (String browser : new String[] { "gnome-open", "kde-open", "xdg-open", "sensible-browser" }) {
+			String[] command = { browser, url };
+			try {
+				Process process = Runtime.getRuntime().exec(command);
+				if (process != null) {
+					// Don't check whether the process is still running; some commands just delegate to others
+					// and terminate
+					LOGGER.debug("It looks like {} is a valid browser", browser);
+					return;
+				}
+			} catch (IOException ex) {
+				LOGGER.debug("{} is not supported as a browser", browser);
+			}
+		}
+
+		LOGGER.info("Could not find a suitable browser, go manually to {}", url);
 	}
 }
