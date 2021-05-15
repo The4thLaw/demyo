@@ -39,10 +39,14 @@ public class ConfigurationService implements IConfigurationService {
 	public Map<String, String> getGlobalConfiguration() {
 		Map<String, ConfigurationEntry> configurationValues = new HashMap<>();
 		loadConfiguration(configurationValues, null);
-		return configurationValues.entrySet().stream().collect(Collectors.toMap(
-				Map.Entry::getKey, // Preserve key
-				entry -> entry.getValue().getValue() // Map value
-		));
+		return configurationValues.entrySet().stream()
+				// Can't insert null in the target map
+				.filter(e -> e.getValue().getValue() != null)
+				// Generate the target map
+				.collect(Collectors.toMap(
+						Map.Entry::getKey, // Preserve key
+						entry -> entry.getValue().getValue() // Map value
+				));
 	}
 
 	@Override
