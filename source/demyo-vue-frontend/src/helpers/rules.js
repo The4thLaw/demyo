@@ -36,7 +36,7 @@ export function number() {
 }
 
 export function phone() {
-	return regexMatch(/^\+?[0-9() /-]+$/, 'validation.phone')
+	return regexMatch(/^\+?[0-9() /.-]+$/, 'validation.phone')
 }
 
 export function url() {
