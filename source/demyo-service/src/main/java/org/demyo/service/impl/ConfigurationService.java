@@ -40,7 +40,8 @@ public class ConfigurationService implements IConfigurationService {
 		Map<String, ConfigurationEntry> configurationValues = new HashMap<>();
 		loadConfiguration(configurationValues, null);
 		return configurationValues.entrySet().stream()
-				// Can't insert null in the target map
+				// Can't insert null in the target map, which can happen when saving empty values
+				// after a migration
 				.filter(e -> e.getValue().getValue() != null)
 				// Generate the target map
 				.collect(Collectors.toMap(
