@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.demyo</groupId>
 		<artifactId>demyo</artifactId>
-		<version>3.0.0-beta4</version>
+		<version>3.0.0-beta5</version>
 	</parent>
 	<artifactId>demyo-service</artifactId>
 	<name>Demyo: Service</name>
