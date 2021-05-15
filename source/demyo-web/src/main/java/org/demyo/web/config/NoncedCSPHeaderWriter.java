@@ -39,6 +39,8 @@ public class NoncedCSPHeaderWriter implements HeaderWriter {
 		// Note: this CSP may yield an unsafe-eval from Webpack (in global.js) and FilePond, but it's perfectly fine
 		// because there's a fallback
 		String csp = "default-src 'none'; connect-src 'self'; font-src 'self'; manifest-src 'self'; "
+				// Allow the Google Maps iframe
+				+ "frame-src https://maps.google.com/ https://www.google.com/maps/; "
 				// blob: and data: are used by filepond. Perhaps we could avoid this with strict-dynamic?
 				+ "img-src 'self' data: blob:; "
 				// We allow only nonced scripts and self
