@@ -18,7 +18,7 @@ import org.demyo.common.exception.DemyoRuntimeException;
 
 /**
  * Demyo system configuration. These are things that the user cannot change through the application.
- * 
+ *
  * @see ApplicationConfiguration
  */
 public final class SystemConfiguration {
@@ -148,13 +148,13 @@ public final class SystemConfiguration {
 		createDirectoryIfNeeded(thumbnailDirectory);
 		createDirectoryIfNeeded(userPluginDirectory);
 
-		// Debug our configuration
-		LOGGER.debug("{}", this);
+		// Logging in info can be pretty useful to detect issues in user setups
+		LOGGER.info("The system configuration is: {}", this);
 	}
 
 	/**
 	 * Loads the configuration, including defaults and CLI overrides.
-	 * 
+	 *
 	 * @return The merged configuration.
 	 */
 	private PropertiesConfiguration loadConfig() {
@@ -196,7 +196,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the configuration instance.
-	 * 
+	 *
 	 * @return the configuration.
 	 */
 	public static SystemConfiguration getInstance() {
@@ -205,7 +205,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Creates the directory if it doesn't exist already.
-	 * 
+	 *
 	 * @param dir The directory to create.
 	 */
 	private static void createDirectoryIfNeeded(Path dir) {
@@ -214,7 +214,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Creates the directory if it doesn't exist already.
-	 * 
+	 *
 	 * @param dir The directory to create.
 	 */
 	private static void createDirectoryIfNeeded(File dir) {
@@ -231,7 +231,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on exit.
-	 * 
+	 *
 	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
 	 * @return The created file.
 	 */
@@ -241,7 +241,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Creates a temporary file in the application temporary directory. The file is marked as to be deleted on exit.
-	 * 
+	 *
 	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
 	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which case
 	 *            the suffix <code>".tmp"</code> will be used
@@ -253,7 +253,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Creates a temporary file in the specified directory. The file is marked as to be deleted on exit.
-	 * 
+	 *
 	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
 	 * @param suffix The suffix string to be used in generating the file's name; may be <code>null</code>, in which case
 	 *            the suffix <code>".tmp"</code> will be used
@@ -279,24 +279,29 @@ public final class SystemConfiguration {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("System configuration:");
-		sb.append("\n\tportable: ").append(portable);
+		sb.append("\n\tversion: ").append(version);
+		sb.append("\n\tcodename: ").append(codename);
 		sb.append("\n\tHTTP address: ").append(httpAddress);
 		sb.append("\n\tHTTP port: ").append(httpPort);
+		sb.append("\n\tstart browser automatically: ").append(autoStartWebBrowser);
 		sb.append("\n\tapplication directory: ").append(applicationDirectory);
 		sb.append("\n\tWAR path: ").append(warPath);
 		sb.append("\n\tcontext root: ").append(contextRoot);
 		sb.append("\n\tuser directory: ").append(userDirectory);
 		sb.append("\n\tdatabase file: ").append(databaseFile);
 		sb.append("\n\timages directory: ").append(imagesDirectory);
+		sb.append("\n\tthumbnail directory: ").append(thumbnailDirectory);
 		sb.append("\n\ttemporary directory: ").append(tempDirectory);
 		sb.append("\n\tsystem plugin directory: ").append(systemPluginDirectory);
 		sb.append("\n\tuser plugin directory directory: ").append(userPluginDirectory);
+		sb.append("\n\tmaximum thumbnail threads: ").append(maxThumbnailThreads);
+		sb.append("\n\tthumbnail queue size: ").append(thumbnailQueueSize);
 		return sb.toString();
 	}
 
 	/**
 	 * Gets the version of Demyo.
-	 * 
+	 *
 	 * @return the version of Demyo
 	 */
 	public String getVersion() {
@@ -314,7 +319,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the root directory for the Demyo installation.
-	 * 
+	 *
 	 * @return the root directory for the Demyo installation
 	 */
 	public File getApplicationDirectory() {
@@ -323,7 +328,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the path to the WAR file containing the Demyo Web app.
-	 * 
+	 *
 	 * @return the path to the WAR file containing the Demyo Web app
 	 */
 	public String getWarPath() {
@@ -341,7 +346,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the listening address for the HTTP server.
-	 * 
+	 *
 	 * @return the listening address for the HTTP server
 	 */
 	public String getHttpAddress() {
@@ -350,7 +355,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the port for the HTTP server.
-	 * 
+	 *
 	 * @return the port for the HTTP server
 	 */
 	public int getHttpPort() {
@@ -359,7 +364,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the directory to store user data.
-	 * 
+	 *
 	 * @return the directory to store user data
 	 */
 	public File getUserDirectory() {
@@ -368,7 +373,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the file to store the database.
-	 * 
+	 *
 	 * @return the file to store the database
 	 */
 	public File getDatabaseFile() {
@@ -377,7 +382,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the directory to store user images.
-	 * 
+	 *
 	 * @return the directory to store user images
 	 */
 	public File getImagesDirectory() {
@@ -386,7 +391,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the directory to store temporary files, as a {@link Path}.
-	 * 
+	 *
 	 * @return the directory to store temporary files
 	 */
 	public Path getTempDirectory() {
@@ -395,7 +400,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Gets the directory to store image thumbnails.
-	 * 
+	 *
 	 * @return the directory to store image thumbnails
 	 */
 	public File getThumbnailDirectory() {
@@ -404,7 +409,7 @@ public final class SystemConfiguration {
 
 	/**
 	 * Checks if is the flag indicating whether to start the Web browser automatically.
-	 * 
+	 *
 	 * @return the flag indicating whether to start the Web browser automatically
 	 */
 	public boolean isAutoStartWebBrowser() {
