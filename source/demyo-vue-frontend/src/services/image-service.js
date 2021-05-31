@@ -22,7 +22,7 @@ class ImageService extends AbstractModelService {
 	 * @return {Promise<String[]>} The image paths.
 	 */
 	detectDiskImages() {
-		return axiosGet('/images/detect')
+		return axiosGet('images/detect')
 	}
 
 	/**
@@ -31,7 +31,7 @@ class ImageService extends AbstractModelService {
 	 * @return {Promise<Number[]>} The added image IDs.
 	 */
 	saveDiskImages(images) {
-		return axiosPost('/images/detect', images, [])
+		return axiosPost('images/detect', images, [])
 	}
 }
 
