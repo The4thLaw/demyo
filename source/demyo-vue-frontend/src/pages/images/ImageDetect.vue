@@ -102,8 +102,14 @@ export default {
 </script>
 
 <style lang="less">
-.c-ImageDetect .v-messages {
-	display: none;
+.c-ImageDetect {
+	.v-messages {
+		display: none;
+	}
+
+	.v-label {
+		word-break: break-all;
+	}
 }
 
 .c-ImageDetect .v-input--selection-controls {
