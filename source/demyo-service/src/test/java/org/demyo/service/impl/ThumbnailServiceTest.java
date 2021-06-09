@@ -57,7 +57,7 @@ class ThumbnailServiceTest {
 	void setup() throws IOException {
 		testDir = Files.createTempDirectory("ThumbnailServiceTest");
 		thumbDir = testDir.resolve("thumbnails");
-		service = new ThumbnailService(thumbDir.toFile(), 1);
+		service = new ThumbnailService(thumbDir, 1);
 	}
 
 	/**
@@ -183,12 +183,12 @@ class ThumbnailServiceTest {
 		assertThumbnailGenerated(service, imagePath, 300);
 
 		// Then create another service just for this case
-		ThumbnailService serviceFail = new ThumbnailService(thumbDir.toFile(), 1);
+		ThumbnailService serviceFail = new ThumbnailService(thumbDir, 1);
 		// And set the executor to a service that will always fail
 		ReflectionTestUtils.setField(serviceFail, "executor", new FailingExecutor());
 
 		// Now call and assert
-		ImageRetrievalResponse thumbResp = serviceFail.getThumbnail(42, 225, true, () -> imagePath.toFile());
+		ImageRetrievalResponse thumbResp = serviceFail.getThumbnail(42, 225, true, () -> imagePath);
 		assertThat(thumbResp).isNotNull();
 		assertThat(thumbResp.isExact()).isFalse();
 		File thumbFile = thumbResp.getResource().getFile();
@@ -200,7 +200,7 @@ class ThumbnailServiceTest {
 
 	private static File assertThumbnailGenerated(IThumbnailService service, Path imagePath, int width)
 			throws DemyoException, IOException {
-		ImageRetrievalResponse thumbResp = service.getThumbnail(42, width, true, () -> imagePath.toFile());
+		ImageRetrievalResponse thumbResp = service.getThumbnail(42, width, true, () -> imagePath);
 		assertThat(thumbResp).isNotNull();
 		assertThat(thumbResp.isExact()).isTrue();
 		File thumbFile = thumbResp.getResource().getFile();

@@ -1,6 +1,6 @@
 package org.demyo.service;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -9,7 +9,7 @@ import org.springframework.core.io.Resource;
  * Represents the results of the request for an image.
  */
 public class ImageRetrievalResponse {
-	private final File file;
+	private final Path file;
 	private boolean exact = true;
 
 	/**
@@ -17,7 +17,7 @@ public class ImageRetrievalResponse {
 	 * 
 	 * @param file The file containing the requested image.
 	 */
-	public ImageRetrievalResponse(File file) {
+	public ImageRetrievalResponse(Path file) {
 		this.file = file;
 	}
 

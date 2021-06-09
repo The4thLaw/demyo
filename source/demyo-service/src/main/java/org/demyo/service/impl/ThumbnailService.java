@@ -2,8 +2,9 @@ package org.demyo.service.impl;
 
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -14,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IThumbnailService;
 import org.demyo.service.ImageRetrievalResponse;
 import org.demyo.service.ThumbnailGenerationOverload;
@@ -54,11 +55,11 @@ public class ThumbnailService implements IThumbnailService {
 
 	@FunctionalInterface
 	public interface ImageSupplier {
-		File getImage() throws DemyoException;
+		Path getImage() throws DemyoException;
 	}
 
 	private final ThreadPoolExecutor executor;
-	private final File thumbnailDirectory;
+	private final Path thumbnailDirectory;
 
 	/**
 	 * Default constructor.
@@ -74,7 +75,7 @@ public class ThumbnailService implements IThumbnailService {
 	 * @param thumbnailDirectory The directory where thumbnails are stored.
 	 * @param queueSize The size of the thumbnail generation queue.
 	 */
-	public ThumbnailService(File thumbnailDirectory, int queueSize) {
+	public ThumbnailService(Path thumbnailDirectory, int queueSize) {
 		this.thumbnailDirectory = thumbnailDirectory;
 
 		// Another option would be to use a LIFO but it seems like it will be pretty confusing for users
@@ -116,7 +117,7 @@ public class ThumbnailService implements IThumbnailService {
 	@Override
 	public ImageRetrievalResponse getThumbnail(long id, int maxWidth, boolean lenient, ImageSupplier imageFileLoader)
 			throws DemyoException {
-		File directoryBySize = new File(thumbnailDirectory, maxWidth + "w");
+		Path directoryBySize = thumbnailDirectory.resolve(maxWidth + "w");
 
 		// Check cache (two possible formats - jpg is more likely so check it first)
 		ImageRetrievalResponse cached = getCachedThumbnail(directoryBySize, id);
@@ -125,8 +126,8 @@ public class ThumbnailService implements IThumbnailService {
 		}
 
 		// No cache hit, check for leniency
-		File image = imageFileLoader.getImage();
-		int originalWidth = ImageUtils.getImageWidth(image);
+		Path image = imageFileLoader.getImage();
+		int originalWidth = ImageUtils.getImageWidth(image.toFile());
 		if (maxWidth >= originalWidth || (lenient && maxWidth * LENIENCY_WIDTH_FACTOR >= originalWidth)) {
 			LOGGER.debug("Leniently returning the original image for {}, it's {}px wide instead of the requested {}",
 					id, originalWidth, maxWidth);
@@ -163,13 +164,13 @@ public class ThumbnailService implements IThumbnailService {
 		}
 	}
 
-	private static ImageRetrievalResponse getCachedThumbnail(File directoryBySize, long id) {
-		File jpgThumb = new File(directoryBySize, id + ".jpg");
-		if (jpgThumb.exists()) {
+	private static ImageRetrievalResponse getCachedThumbnail(Path directoryBySize, long id) {
+		Path jpgThumb = directoryBySize.resolve(id + ".jpg");
+		if (Files.exists(jpgThumb)) {
 			return new ImageRetrievalResponse(jpgThumb);
 		}
-		File pngThumb = new File(directoryBySize, id + ".png");
-		if (pngThumb.exists()) {
+		Path pngThumb = directoryBySize.resolve(id + ".png");
+		if (Files.exists(pngThumb)) {
 			return new ImageRetrievalResponse(pngThumb);
 		}
 		return null;
@@ -177,21 +178,28 @@ public class ThumbnailService implements IThumbnailService {
 
 	private ImageRetrievalResponse getFallbackThumbnail(long id, int maxWidth)
 			throws ThumbnailGenerationOverload {
-		List<Integer> availableWidths = Stream//
-				.of(thumbnailDirectory
-						.listFiles(f -> f.isDirectory() && THUMB_DIR_PATTERN.matcher(f.getName()).matches()))
-				// Keep only the names
-				.map(File::getName)
-				// Parse the width
-				.map(f -> Integer.parseInt(f.substring(0, f.length() - 1)))
-				// Sort so that the closest to maxWidth comes first
-				.sorted((a, b) -> Math.abs(maxWidth - a) - Math.abs(maxWidth - b))
-				.collect(Collectors.toList());
+		List<Integer> availableWidths;
+		try {
+			availableWidths = Files.list(thumbnailDirectory)
+					.filter(Files::isDirectory)
+					// Keep only the names
+					.map(p -> p.getFileName().toString())
+					// Filter what seem to be thumbnail directories
+					.filter(n -> THUMB_DIR_PATTERN.matcher(n).matches())
+					// Parse the width
+					.map(f -> Integer.parseInt(f.substring(0, f.length() - 1)))
+					// Sort so that the closest to maxWidth comes first
+					.sorted((a, b) -> Math.abs(maxWidth - a) - Math.abs(maxWidth - b))
+					.collect(Collectors.toList());
+		} catch (IOException e) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e,
+					"Could not find a fallback thumbnail for image" + id);
+		}
 
 		LOGGER.trace("Found the following possible thumbnail sizes: {}", availableWidths);
 
 		for (int width : availableWidths) {
-			File directoryBySize = new File(thumbnailDirectory, width + "w");
+			Path directoryBySize = thumbnailDirectory.resolve(width + "w");
 			ImageRetrievalResponse cached = getCachedThumbnail(directoryBySize, id);
 			if (cached != null) {
 				LOGGER.debug("Found a fallback thumbnail for image {} at size {} instead of size {}", id, width,
@@ -205,9 +213,8 @@ public class ThumbnailService implements IThumbnailService {
 		throw new ThumbnailGenerationOverload("Could not find a fallback thumbnail for image" + id);
 	}
 
-	private ImageRetrievalResponse generateThumbnail(long id, File image, int maxWidth,
-			File directoryBySize,
-			long submissionTime) throws DemyoException {
+	private ImageRetrievalResponse generateThumbnail(long id, Path image, int maxWidth,
+			Path directoryBySize, long submissionTime) throws DemyoException {
 		// If the task was submitted but the request timed out, just complete the task without doing anything
 		long secondsSinceSubmission = (System.currentTimeMillis() - submissionTime) / 1000;
 		if (secondsSinceSubmission > THUMB_TIMEOUT_SECONDS) {
@@ -220,7 +227,7 @@ public class ThumbnailService implements IThumbnailService {
 
 		BufferedImage buffImage;
 		try {
-			buffImage = ImageIO.read(image);
+			buffImage = ImageIO.read(image.toFile());
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
@@ -230,8 +237,12 @@ public class ThumbnailService implements IThumbnailService {
 		LOGGER.trace("Generating thumbnail for image {} at width {}", id, maxWidth);
 
 		// Avoid creating the directory if we return the original image
-		if (!directoryBySize.isDirectory()) {
-			directoryBySize.mkdirs();
+		if (!Files.isDirectory(directoryBySize)) {
+			try {
+				Files.createDirectories(directoryBySize);
+			} catch (IOException e) {
+				throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
+			}
 			LOGGER.debug("Creating thumbnail directory: {}", directoryBySize);
 		} else {
 			LOGGER.trace("Thumbnail directory exists: {}", directoryBySize);
@@ -241,15 +252,15 @@ public class ThumbnailService implements IThumbnailService {
 				Scalr.OP_ANTIALIAS);
 		LOGGER.debug("Thumbnail for {} generated in {}ms", id, System.currentTimeMillis() - time);
 
-		File jpgThumb = new File(directoryBySize, id + ".jpg");
-		File pngThumb = new File(directoryBySize, id + ".png");
+		Path jpgThumb = directoryBySize.resolve(id + ".jpg");
+		Path pngThumb = directoryBySize.resolve(id + ".png");
 		try {
 			// Write opaque images as JPG, transparent images as PNG
 			if (Transparency.OPAQUE == buffThumb.getTransparency()) {
-				ImageIO.write(buffThumb, "jpg", jpgThumb);
+				ImageIO.write(buffThumb, "jpg", jpgThumb.toFile());
 				return new ImageRetrievalResponse(jpgThumb);
 			} else {
-				ImageIO.write(buffThumb, "png", pngThumb);
+				ImageIO.write(buffThumb, "png", pngThumb.toFile());
 				return new ImageRetrievalResponse(pngThumb);
 			}
 		} catch (IOException e) {

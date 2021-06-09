@@ -59,16 +59,22 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Autowired
 	private IThumbnailService thumbnailService;
 
-	private final File uploadDirectory;
+	private final Path uploadDirectory;
 
 	/**
 	 * Default constructor.
+	 * 
+	 * @throws DemyoException In case of issue while creating the upload directory.
 	 */
-	public ImageService() {
+	public ImageService() throws DemyoException {
 		super(Image.class);
 
-		uploadDirectory = new File(SystemConfiguration.getInstance().getImagesDirectory(), UPLOAD_DIRECTORY_NAME);
-		uploadDirectory.mkdirs();
+		uploadDirectory = SystemConfiguration.getInstance().getImagesDirectory().resolve(UPLOAD_DIRECTORY_NAME);
+		try {
+			Files.createDirectories(uploadDirectory);
+		} catch (IOException e) {
+			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
+		}
 	}
 
 	@Override
@@ -97,11 +103,11 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public File getImageFile(@NotNull Image imageModel) throws DemyoException {
+	public Path getImageFile(@NotNull Image imageModel) throws DemyoException {
 		String path = imageModel.getUrl();
-		File image = new File(SystemConfiguration.getInstance().getImagesDirectory(), path);
+		Path image = SystemConfiguration.getInstance().getImagesDirectory().resolve(path);
 		validateImagePath(image);
-		if (!image.isFile()) {
+		if (!Files.isRegularFile(image)) {
 			throw new DemyoException(DemyoErrorCode.IMAGE_NOT_FOUND, path);
 		}
 		return image;
@@ -118,12 +124,12 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		return thumbnailService.getThumbnail(id, maxWidthOpt.get(), lenient, () -> getImageFile(getByIdForEdition(id)));
 	}
 
-	private static void validateImagePath(File image) throws DemyoException {
+	private static void validateImagePath(Path image) throws DemyoException {
 		try {
-			String imagesDirectoryPath = SystemConfiguration.getInstance().getImagesDirectory().getCanonicalPath();
-			String imagePath = image.getCanonicalPath();
+			Path imagesDirectoryPath = SystemConfiguration.getInstance().getImagesDirectory().toRealPath();
+			Path imagePath = image.toRealPath();
 			if (!imagePath.startsWith(imagesDirectoryPath)) {
-				throw new DemyoException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath);
+				throw new DemyoException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath.toString());
 			}
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
@@ -151,13 +157,15 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		if (extension == null) {
 			extension = "jpg";
 		}
-		File targetFile = new File(uploadDirectory, hash + "." + extension);
+		String targetFileName = hash + "." + extension;
+		Path targetFile = uploadDirectory.resolve(targetFileName);
 
 		// Check if the file exists already
-		if (targetFile.exists()) {
+		String targetFileUrl = UPLOAD_DIRECTORY_NAME + "/" + targetFileName;
+		if (Files.exists(targetFile)) {
 			LOGGER.debug("Uploaded file {} already exists as {}", originalFileName, targetFile);
 			// Reuse the same image
-			Image foundImage = repo.findByUrl(UPLOAD_DIRECTORY_NAME + "/" + targetFile.getName());
+			Image foundImage = repo.findByUrl(targetFileUrl);
 
 			if (foundImage != null) {
 				LOGGER.debug("Already existing image found with ID {}", foundImage.getId());
@@ -169,14 +177,16 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		// Either the file does not exist, or it was removed in the previous step
 		// Move the image to its final destination
-		if (!imageFile.renameTo(targetFile)) {
-			LOGGER.error("Failed to rename {} to {}", imageFile, targetFile);
+		try {
+			Files.move(imageFile.toPath(), targetFile);
+		} catch (IOException e) {
+			LOGGER.error("Failed to rename {} to {}", imageFile, targetFile, e);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR);
 		}
 
 		// Create a new image with the right attributes
 		Image image = new Image();
-		image.setUrl(UPLOAD_DIRECTORY_NAME + "/" + targetFile.getName());
+		image.setUrl(targetFileUrl);
 
 		if (description == null) {
 			image.setDescription(inferDescription(originalFileName));
@@ -191,17 +201,15 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long addExistingImage(@NotEmpty String path) throws DemyoException {
-		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
-		File targetFile = new File(imagesDirectory, path);
-		if (!targetFile.toPath().startsWith(imagesDirectory.toPath())) {
-			throw new DemyoException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, path + " is not a valid path");
-		}
+		Path imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
+		Path targetFile = imagesDirectory.resolve(path);
+		validateImagePath(targetFile);
 
 		// Create a new image with the right attributes
 		Image image = new Image();
 		image.setUrl(path);
 
-		image.setDescription(inferDescription(targetFile.getName()));
+		image.setDescription(inferDescription(targetFile.getFileName().toString()));
 
 		return save(image);
 	}
@@ -221,7 +229,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Transactional(readOnly = true)
 	public List<String> findUnknownDiskImages() {
 		List<String> unknownFiles = new ArrayList<>();
-		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
+		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory().toFile();
 
 		// Find the files
 		Collection<File> foundFiles = FileUtils.listFiles(imagesDirectory,
@@ -254,12 +262,13 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Override
 	public void clearCachedThumbnails() {
 		LOGGER.debug("Clearing thumbnail cache");
-		File thumbnailDirectory = SystemConfiguration.getInstance().getThumbnailDirectory();
+		Path thumbnailDirectory = SystemConfiguration.getInstance().getThumbnailDirectory();
 		DIOUtils.deleteDirectory(thumbnailDirectory);
-		if (!thumbnailDirectory.mkdir()) {
-			LOGGER.warn("Failed to create directory {}", thumbnailDirectory);
-		} else {
+		try {
+			Files.createDirectories(thumbnailDirectory);
 			LOGGER.debug("Recreated thumbnail directory at {}", thumbnailDirectory);
+		} catch (IOException e) {
+			LOGGER.warn("Failed to create directory {}", thumbnailDirectory, e);
 		}
 	}
 
@@ -274,7 +283,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			LOGGER.info("Image {} was uploaded automatically as {}; deleting it now that it is no longer used", id,
 					path);
 			try {
-				Files.delete(getImageFile(image).toPath());
+				Files.delete(getImageFile(image));
 			} catch (IOException | DemyoException e) {
 				LOGGER.warn("Failed to delete the image at {}", path, e);
 			}

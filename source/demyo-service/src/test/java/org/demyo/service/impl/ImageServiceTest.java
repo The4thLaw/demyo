@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +40,7 @@ class ImageServiceTest extends AbstractServiceTest {
 	}
 
 	private static void cleanDummyImage(Image image) {
-		File f = new File(SystemConfiguration.getInstance().getImagesDirectory(), image.getUrl());
+		Path f = SystemConfiguration.getInstance().getImagesDirectory().resolve(image.getUrl());
 		DIOUtils.delete(f);
 	}
 

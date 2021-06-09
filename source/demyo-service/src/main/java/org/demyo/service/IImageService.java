@@ -1,6 +1,7 @@
 package org.demyo.service;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public interface IImageService extends IModelService<Image> {
 	 * @return The image file on disk.
 	 * @throws DemyoException In case of security or I/O error.
 	 */
-	File getImageFile(Image image) throws DemyoException;
+	Path getImageFile(Image image) throws DemyoException;
 
 	/**
 	 * Processes the upload of an image.

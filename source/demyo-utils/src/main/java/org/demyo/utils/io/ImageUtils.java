@@ -19,6 +19,10 @@ import org.demyo.common.exception.DemyoException;
 
 /**
  * Utilities to manipulate images.
+ * <p>
+ * This class still uses the old {@link File} class rather than the new Path abstraction because Java's 2D API still
+ * does as well.
+ * </p>
  */
 public final class ImageUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageUtils.class);

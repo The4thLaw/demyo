@@ -157,7 +157,7 @@ public class Demyo2Importer implements IImporter {
 	 * @throws DemyoException If moving the images fails.
 	 */
 	protected void restoreImages(Path archiveDirectory, String imagesDirectoryName) throws DemyoException {
-		File systemDirectory = SystemConfiguration.getInstance().getImagesDirectory();
+		File systemDirectory = SystemConfiguration.getInstance().getImagesDirectory().toFile();
 		File extractedDirectory = archiveDirectory.resolve(imagesDirectoryName).toFile();
 
 		LOGGER.debug("Keeping backup copy of current images directory");

@@ -64,11 +64,11 @@ public final class SystemConfiguration {
 	/** The file to store the database. */
 	private final File databaseFile;
 	/** The directory to store user images. */
-	private final File imagesDirectory;
+	private final Path imagesDirectory;
 	/** The directory to store temporary files. */
 	private final Path tempDirectory;
 	/** The directory to store image thumbnails. */
-	private final File thumbnailDirectory;
+	private final Path thumbnailDirectory;
 	/** The directory where system-wide plugins are located. */
 	private final File systemPluginDirectory;
 	/** The directory where user-specific directories are located. */
@@ -139,8 +139,8 @@ public final class SystemConfiguration {
 		}
 
 		userPluginDirectory = new File(userDirectory, PLUGIN_DIR_NAME);
-		imagesDirectory = new File(userDirectory, "images");
-		thumbnailDirectory = new File(userDirectory, "thumbnails");
+		imagesDirectory = userDirectory.toPath().resolve("images");
+		thumbnailDirectory = userDirectory.toPath().resolve("thumbnails");
 		databaseFile = new File(userDirectory, "demyo.h2.db");
 		createDirectoryIfNeeded(userDirectory);
 		createDirectoryIfNeeded(imagesDirectory);
@@ -385,7 +385,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the directory to store user images
 	 */
-	public File getImagesDirectory() {
+	public Path getImagesDirectory() {
 		return imagesDirectory;
 	}
 
@@ -403,7 +403,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the directory to store image thumbnails
 	 */
-	public File getThumbnailDirectory() {
+	public Path getThumbnailDirectory() {
 		return thumbnailDirectory;
 	}
 

@@ -98,7 +98,7 @@ public class ExportService implements IExportService {
 				ZipOutputStream zos = new ZipOutputStream(bos)) {
 			// The file inside the archive must always have the same name to be imported back
 			ZipUtils.compress(libraryExport, "demyo." + exporter.getExtension(false), zos);
-			ZipUtils.compress(SystemConfiguration.getInstance().getImagesDirectory(), "images", zos);
+			ZipUtils.compress(SystemConfiguration.getInstance().getImagesDirectory().toFile(), "images", zos);
 		} catch (IOException e) {
 			LOGGER.warn("Failed to export", e);
 			throw new DemyoException(DemyoErrorCode.EXPORT_IO_ERROR);
