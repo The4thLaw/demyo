@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.demyo</groupId>
 	<artifactId>demyo</artifactId>
-	<version>3.0.0-beta5</version>
+	<version>3.0.5-beta6</version>
 	<packaging>pom</packaging>
 	<name>Demyo</name>
 	<description>The root Demyo project</description>
