@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 
@@ -179,8 +180,8 @@ public class ThumbnailService implements IThumbnailService {
 	private ImageRetrievalResponse getFallbackThumbnail(long id, int maxWidth)
 			throws ThumbnailGenerationOverload {
 		List<Integer> availableWidths;
-		try {
-			availableWidths = Files.list(thumbnailDirectory)
+		try (Stream<Path> list = Files.list(thumbnailDirectory)) {
+			availableWidths = list
 					.filter(Files::isDirectory)
 					// Keep only the names
 					.map(p -> p.getFileName().toString())
