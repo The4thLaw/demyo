@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.demyo</groupId>
 		<artifactId>demyo</artifactId>
-		<version>3.0.5-beta6</version>
+		<version>3.0.0-beta6</version>
 	</parent>
 	<artifactId>demyo-app</artifactId>
 	<name>Demyo: Desktop Application</name>
