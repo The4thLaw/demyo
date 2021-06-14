@@ -223,8 +223,9 @@ export default {
 
 	watch: {
 		$route() {
-			// Route changed, clear the quick search
+			// Route changed, clear the quick search and collapse the field
 			this.clearSearch()
+			this.blur()
 			// Restore the menu
 			this.menuItems[0].active = true
 			for (let i = 1; i < this.menuItems.length; i++) {
