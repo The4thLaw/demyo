@@ -370,7 +370,7 @@
 				For the next update, Demyo should have a way of using the recommended upgrade procedure from
 				https://h2database.com/html/tutorial.html#upgrade_backup_restore
 				-->
-				<version>1.4.196</version>
+				<version>2.1.210</version>
 			</dependency>
 			
 			<dependency>
