@@ -40,6 +40,8 @@ import org.demyo.utils.xml.XMLUtils;
 public class Demyo1Importer extends Demyo2Importer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo1Importer.class);
 
+	private static final Pattern FORMAT_PATTERN = Pattern.compile(".*<library [^>]*demyo-version=\"1\\..*\".*",
+			Pattern.DOTALL);
 	private static final String XSL_DTD_REMOVAL_PATTERN = "<!DOCTYPE doc \\[\\s*"
 			+ "<!ATTLIST xsl:stylesheet id ID #REQUIRED>\\s*"
 			+ "\\]>";
@@ -51,8 +53,7 @@ public class Demyo1Importer extends Demyo2Importer {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file,
-					Pattern.compile(".*<library [^>]*demyo-version=\"1\\..*\".*", Pattern.DOTALL));
+			return DIOUtils.sniffFile(file, FORMAT_PATTERN);
 		}
 
 		return originalFilenameLc.endsWith(".zip");
