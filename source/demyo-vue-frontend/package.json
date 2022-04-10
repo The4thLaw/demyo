@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@mdi/font": "^5.9.55",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "babel-plugin-lodash": "^3.3.4",
     "core-js": "^3.10.2",
     "currency-symbol-map": "^5.0.1",
