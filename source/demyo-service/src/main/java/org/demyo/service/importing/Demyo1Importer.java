@@ -1,5 +1,7 @@
 package org.demyo.service.importing;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,12 +40,20 @@ import org.demyo.utils.xml.XMLUtils;
 public class Demyo1Importer extends Demyo2Importer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo1Importer.class);
 
+	private static final Pattern FORMAT_PATTERN = Pattern.compile(".*<library [^>]*demyo-version=\"1\\..*\".*",
+			Pattern.DOTALL);
+	private static final String XSL_DTD_REMOVAL_PATTERN = "<!DOCTYPE doc \\[\\s*"
+			+ "<!ATTLIST xsl:stylesheet id ID #REQUIRED>\\s*"
+			+ "\\]>";
+	private static final Pattern XSL_DTD_PRESENCE_PATTERN = Pattern
+			.compile(".*<!ATTLIST xsl:stylesheet id ID #REQUIRED>.*", Pattern.DOTALL);
+
 	@Override
 	public boolean supports(String originalFilename, Path file) throws DemyoException {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file, Pattern.compile(".*<library demyo-version=\"1\\..*\".*", Pattern.DOTALL));
+			return DIOUtils.sniffFile(file, FORMAT_PATTERN);
 		}
 
 		return originalFilenameLc.endsWith(".zip");
@@ -81,6 +91,8 @@ public class Demyo1Importer extends Demyo2Importer {
 
 			stopWatch.split();
 			long splitTime = stopWatch.getSplitTime();
+
+			stripXslDoctype(xmlFile);
 
 			// Create a SAX parser for the input file
 			XMLReader xmlReader = XMLUtils.createXmlReader();
@@ -122,6 +134,35 @@ public class Demyo1Importer extends Demyo2Importer {
 			DIOUtils.closeQuietly(xmlBis);
 			DIOUtils.closeQuietly(xmlFis);
 			DIOUtils.deleteDirectory(archiveDirectory);
+		}
+	}
+
+	/**
+	 * Strips the doctype we know we wrote in Demyo 1 if it exists.
+	 * <p>
+	 * We only strip that one. DTDs are not allowed due to security concerns but we still want to be able to parse our
+	 * own files.
+	 * </p>
+	 * <p>
+	 * The regex seems restrictibe enough to avoid any security issues but we're still reading the file in memory so
+	 * there's room for a DOS here in theory.
+	 * </p>
+	 * 
+	 * @param xmlFile The file to check
+	 */
+
+	private void stripXslDoctype(Path xmlFile) throws IOException {
+		if (DIOUtils.sniffFile(xmlFile, XSL_DTD_PRESENCE_PATTERN)) {
+			LOGGER.debug("{} contains an old Demyo 1.x DTD, removing it", xmlFile);
+
+			byte[] content = Files.readAllBytes(xmlFile);
+			String contentAsString = new String(content, UTF_8);
+
+			contentAsString = Pattern.compile(XSL_DTD_REMOVAL_PATTERN, Pattern.DOTALL).matcher(contentAsString)
+					.replaceFirst("");
+
+			content = contentAsString.getBytes(UTF_8);
+			Files.write(xmlFile, content);
 		}
 	}
 }

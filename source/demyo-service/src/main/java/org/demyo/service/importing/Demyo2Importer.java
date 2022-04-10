@@ -45,6 +45,8 @@ import org.demyo.utils.xml.XMLUtils;
 public class Demyo2Importer implements IImporter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Importer.class);
 
+	private static final Pattern FORMAT_PATTERN = Pattern.compile(".*<library>.*<meta>.*<version.*", Pattern.DOTALL);
+
 	@Autowired
 	private IImportService importService;
 	@Autowired
@@ -62,7 +64,7 @@ public class Demyo2Importer implements IImporter {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file, Pattern.compile(".*<library>.*<meta>.*<version.*", Pattern.DOTALL));
+			return DIOUtils.sniffFile(file, FORMAT_PATTERN);
 		}
 
 		return originalFilenameLc.endsWith(".dea");
