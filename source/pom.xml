@@ -43,7 +43,7 @@
 
 	<properties>
 		<org.slf4j.version>1.7.30</org.slf4j.version>
-		<org.springframework.version>5.3.5</org.springframework.version>
+		<org.springframework.version>5.3.18</org.springframework.version>
 		<org.springframework.security.version>5.4.5</org.springframework.security.version><!-- 4.2.13.RELEASE -->
 		<org.hibernate.version>5.4.30.Final</org.hibernate.version> <!-- Spring 5.3 supports Hibernate 5.4 -->
 		<com.querydsl.version>4.4.0</com.querydsl.version>
@@ -51,7 +51,7 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
-		<org.eclipse.jetty.version>9.4.42.v20210604</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
+		<org.eclipse.jetty.version>9.4.46.v20220331</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v15.5.0</js.node.version>
 		
