@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public final class DIOUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DIOUtils.class);
 	private static final String STREAM_CLOSE_ERROR = "Failed to close stream";
-	private static final int SNIFF_DEFAULT_BUFFER = 256;
+	private static final int SNIFF_DEFAULT_BUFFER = 512;
 	private static final Pattern FILE_EXT_EXCLUSIONS = Pattern.compile("[^A-Za-z0-9]");
 
 	private DIOUtils() {
