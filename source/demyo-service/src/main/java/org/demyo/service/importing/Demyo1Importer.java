@@ -43,7 +43,8 @@ public class Demyo1Importer extends Demyo2Importer {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file, Pattern.compile(".*<library demyo-version=\"1\\..*\".*", Pattern.DOTALL));
+			return DIOUtils.sniffFile(file,
+					Pattern.compile(".*<library [^>]*demyo-version=\"1\\..*\".*", Pattern.DOTALL));
 		}
 
 		return originalFilenameLc.endsWith(".zip");
