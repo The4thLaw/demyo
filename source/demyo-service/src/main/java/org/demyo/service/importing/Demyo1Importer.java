@@ -151,7 +151,7 @@ public class Demyo1Importer extends Demyo2Importer {
 	 * @param xmlFile The file to check
 	 */
 
-	private void stripXslDoctype(Path xmlFile) throws IOException {
+	private static void stripXslDoctype(Path xmlFile) throws IOException {
 		if (DIOUtils.sniffFile(xmlFile, XSL_DTD_PRESENCE_PATTERN)) {
 			LOGGER.debug("{} contains an old Demyo 1.x DTD, removing it", xmlFile);
 

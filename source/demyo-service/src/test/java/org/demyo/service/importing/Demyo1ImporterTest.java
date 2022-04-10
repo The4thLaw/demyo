@@ -14,7 +14,7 @@ import org.demyo.common.exception.DemyoException;
 /**
  * Tests for {@link Demyo1Importer}.
  */
-public class Demyo1ImporterTest {
+class Demyo1ImporterTest {
 
 	/**
 	 * Tests {@link Demyo1Importer#supports(String, Path)} for a simple 1.5 file.
