@@ -27,10 +27,10 @@
 		],
 		
 		"stylelint.enable": true,
-		"css.validate": false,
-		"scss.validate": false,
-		"less.validate": false,
-		
+		"stylelint.validate": [
+			"vue"
+		],
+
 		"i18n-ally.forceEnabled": true,
 		"i18n-ally.localesPaths": "demyo-vue-frontend/src/locales",
 

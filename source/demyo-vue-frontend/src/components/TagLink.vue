@@ -76,12 +76,12 @@ export default {
 		font-size: 80%;
 
 		&::before {
-			content: '(';
+			content: "(";
 			margin-left: 0.5em;
 		}
 
 		&::after {
-			content: ')';
+			content: ")";
 		}
 	}
 }
