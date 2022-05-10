@@ -22,6 +22,12 @@
 				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="author.biography" />
 			</FieldValue>
+			<v-alert
+				v-if="!albumsLoading && albums.length == 0"
+				border="left" type="info" text class="my-4"
+			>
+				{{ $t('page.Author.noAlbums') }}
+			</v-alert>
 			<v-btn
 				v-if="count > 0"
 				:to="{ name: 'DerivativeIndex', query: { withArtist: author.id } }"
