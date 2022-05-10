@@ -39,7 +39,7 @@
 					{{ $t('field.Album.wishlist.value.true') }}
 				</v-alert>
 				<template v-if="album.firstEditionDate && album.firstEditionDate === album.currentEditionDate">
-					<FieldValue :label="$t('field.Album.firstEditionDate')">
+					<FieldValue :label="$t('field.Album.currentEditionDate')">
 						{{ $d(new Date(album.firstEditionDate), 'long') }}
 						<template v-if="album.markedAsFirstEdition">
 							{{ $t('field.Album.markedAsFirstEdition.view') }}

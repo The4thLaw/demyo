@@ -124,12 +124,15 @@
 			>
 				<v-row>
 					<v-col v-if="album.firstEditionDate" cols="12" md="4">
-						<FieldValue :label="$t('field.Album.firstEditionDate')">
+						<FieldValue
+							v-if="album.currentEditionDate === album.firstEditionDate"
+							:label="$t('field.Album.currentEditionDate')"
+						>
 							{{ $d(new Date(album.firstEditionDate), 'long') }}
-							<template v-if="album.currentEditionDate === album.firstEditionDate">
-								{{ $t(album.markedAsFirstEdition ?
-									'field.Album.markedAsFirstEdition.view' : 'field.Album.isFirstEdition') }}
-							</template>
+							{{ $t(album.markedAsFirstEdition ? 'field.Album.markedAsFirstEdition.view' : 'field.Album.isFirstEdition') }}
+						</FieldValue>
+						<FieldValue v-else :label="$t('field.Album.firstEditionDate')">
+							{{ $d(new Date(album.firstEditionDate), 'long') }}
 						</FieldValue>
 					</v-col>
 					<v-col
