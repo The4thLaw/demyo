@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="3.0.0"
+version="3.1.0-SNAPSHOT"
 
 rm -f demyo-v*.tar.bz2 Demyo*.exe
 
@@ -14,10 +14,11 @@ cd -
 #
 echo "Packaging Linux version..."
 tempDir="$(mktemp -d)/demyo-v$version"
-mkdir -p $tempDir/lib $tempDir/war
+mkdir -p $tempDir/lib $tempDir/war $tempDir/legacy-h2-versions
 echo "Copying artifacts to $tempDir"
 cp ../source/demyo-app/target/dependencies/* ../source/demyo-app/target/demyo-app-$version.jar $tempDir/lib
 cp ../source/demyo-web/target/demyo-web-$version.war $tempDir/war
+cp ../source/demyo-app/target/legacy-h2-versions/* $tempDir/legacy-h2-versions
 cp linux/demyo.sh $tempDir
 cd $tempDir/..
 echo "Building package"

@@ -96,6 +96,9 @@ Section "Demyo" COMP_Demyo
 	SetOutPath "$INSTDIR\lib"
 	File "..\..\source\demyo-app\target\demyo-app*.jar"
 	File "..\..\source\demyo-app\target\dependencies\*.jar"
+
+	SetOutPath "$INSTDIR\legacy-h2-versions"
+	File "..\..\source\demyo-app\target\legacy-h2-versions\*.jar"
 	
 	SetOutPath "$INSTDIR"
 	File /oname=Demyo.ico Demyo.ico

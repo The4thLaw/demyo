@@ -1,5 +1,6 @@
 # Expect LF as 
 *	text=auto
+*.sh	text eol=lf
 *.nsi	text eol=crlf
 *.nsh	text eol=crlf
 *.png	binary
