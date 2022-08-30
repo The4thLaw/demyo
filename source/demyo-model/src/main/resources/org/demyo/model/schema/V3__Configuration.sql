@@ -1,7 +1,7 @@
 CREATE TABLE configuration (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	config_key VARCHAR(255) NOT NULL,
-	config_value VARCHAR(2048) NULL,
+	config_value VARCHAR(2048) NULL
 );
 CREATE INDEX ON configuration(config_key);
 

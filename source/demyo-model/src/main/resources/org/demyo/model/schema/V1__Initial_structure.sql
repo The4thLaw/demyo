@@ -1,48 +1,48 @@
 CREATE TABLE images (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	url VARCHAR(255) NOT NULL,
 	description VARCHAR(255) NULL
 );
 CREATE INDEX ON images(description);
 
 CREATE TABLE publishers (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	website VARCHAR(255) NULL,
 	feed VARCHAR(255) NULL,
 	history CLOB NULL,
-	logo_id INT UNSIGNED NULL,
+	logo_id INT NULL,
 	CONSTRAINT fk_publishers_images FOREIGN KEY (logo_id) REFERENCES images(id) ON DELETE SET NULL
 );
 CREATE INDEX ON publishers(name);
 
 CREATE TABLE collections (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	website VARCHAR(255) NULL,
 	feed VARCHAR(255) NULL,
 	history CLOB NULL,
-	logo_id INT UNSIGNED NULL,
-	publisher_id INT UNSIGNED NOT NULL,
+	logo_id INT NULL,
+	publisher_id INT NOT NULL,
 	CONSTRAINT fk_collections_images FOREIGN KEY (logo_id) REFERENCES images(id) ON DELETE SET NULL,
 	CONSTRAINT fk_collections_publishers FOREIGN KEY (publisher_id) REFERENCES publishers(id) ON DELETE RESTRICT
 );
 CREATE INDEX ON collections(name);
 
 CREATE TABLE authors (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(127) NOT NULL,
 	fname VARCHAR(127) NULL,
 	nickname VARCHAR(127) NULL,
 	biography CLOB NULL,
-	portrait_id INT UNSIGNED NULL,
+	portrait_id INT NULL,
 	website VARCHAR(255) NULL,
 	CONSTRAINT fk_authors_images FOREIGN KEY (portrait_id) REFERENCES images(id) ON DELETE SET NULL
 );
 CREATE INDEX ON authors(name);
 
 CREATE TABLE series (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	summary CLOB NULL,
 	completed BOOLEAN DEFAULT 'false',
@@ -52,8 +52,8 @@ CREATE TABLE series (
 CREATE INDEX ON series(name);
 
 CREATE TABLE series_relations (
-	main INT UNSIGNED,
-	sub INT UNSIGNED,
+	main INT,
+	sub INT,
 	PRIMARY KEY(main, sub),
 	CONSTRAINT fk_series_relations_main FOREIGN KEY (main) REFERENCES series(id) ON DELETE CASCADE,
 	CONSTRAINT fk_series_relations_sub FOREIGN KEY (sub) REFERENCES series(id) ON DELETE CASCADE
@@ -61,32 +61,32 @@ CREATE TABLE series_relations (
 CREATE INDEX ON series_relations(main);
 
 CREATE TABLE bindings (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE albums (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	series_id INT UNSIGNED NULL, /* One shots have no series */
-	cycle SMALLINT UNSIGNED NULL,
-	number FLOAT UNSIGNED NULL,
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	series_id INT NULL, /* One shots have no series */
+	cycle SMALLINT NULL,
+	number FLOAT NULL,
 	number_suffix VARCHAR(5) NULL,
 	title VARCHAR(255) NOT NULL, /* Since it is now possible to have one shots with no series, all albums must have a title */
-	publisher_id INT UNSIGNED NOT NULL,
-	collection_id INT UNSIGNED NULL,
+	publisher_id INT NOT NULL,
+	collection_id INT NULL,
 	first_edition DATE NULL,
 	this_edition DATE NULL,
 	isbn VARCHAR(63) NULL, /* ISBN-10 or ISBN-13 with potential revision number at the end */
 	acquisition_date DATE NULL,
 	purchase_price FLOAT NULL,
 	wishlist BOOLEAN DEFAULT 'false',
-	binding_id INT UNSIGNED NULL,
-	cover_id INT UNSIGNED NULL,
+	binding_id INT NULL,
+	cover_id INT NULL,
 	summary CLOB NULL,
 	comment CLOB NULL,
-	height FLOAT UNSIGNED NULL,
-	width FLOAT UNSIGNED NULL,
-	pages INT UNSIGNED NULL,
+	height FLOAT NULL,
+	width FLOAT NULL,
+	pages INT NULL,
 	CONSTRAINT fk_albums_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE RESTRICT,
 	CONSTRAINT fk_albums_publishers FOREIGN KEY (publisher_id) REFERENCES publishers(id) ON DELETE RESTRICT,
 	CONSTRAINT fk_albums_collections FOREIGN KEY (collection_id) REFERENCES collections(id) ON DELETE SET NULL,
@@ -96,59 +96,59 @@ CREATE TABLE albums (
 CREATE INDEX ON albums(title);
 
 CREATE TABLE albums_prices (
-	album_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
 	date DATE NOT NULL,
-	price FLOAT UNSIGNED NOT NULL,
+	price FLOAT NOT NULL,
 	PRIMARY KEY(album_id, date),
 	CONSTRAINT fk_album_prices FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE
 );
 
 CREATE TABLE albums_images (
-	album_id INT UNSIGNED NOT NULL,
-	image_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	image_id INT NOT NULL,
 	PRIMARY KEY(album_id, image_id),
 	CONSTRAINT fk_albums_images_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_images_image FOREIGN KEY (image_id) REFERENCES images(id) ON DELETE CASCADE
 );
 
 CREATE TABLE albums_artists (
-	album_id INT UNSIGNED NOT NULL,
-	artist_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	artist_id INT NOT NULL,
 	PRIMARY KEY(album_id, artist_id),
 	CONSTRAINT fk_albums_artists_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_artists_author FOREIGN KEY (artist_id) REFERENCES authors(id) ON DELETE CASCADE
 );
 CREATE TABLE albums_writers (
-	album_id INT UNSIGNED NOT NULL,
-	writer_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	writer_id INT NOT NULL,
 	PRIMARY KEY(album_id, writer_id),
 	CONSTRAINT fk_albums_writers_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_writers_author FOREIGN KEY (writer_id) REFERENCES authors(id) ON DELETE CASCADE
 );
 CREATE TABLE albums_colorists (
-	album_id INT UNSIGNED NOT NULL,
-	colorist_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	colorist_id INT NOT NULL,
 	PRIMARY KEY(album_id, colorist_id),
 	CONSTRAINT fk_albums_colorists_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_colorists_author FOREIGN KEY (colorist_id) REFERENCES authors(id) ON DELETE CASCADE
 );
 CREATE TABLE albums_inkers (
-	album_id INT UNSIGNED NOT NULL,
-	inker_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	inker_id INT NOT NULL,
 	PRIMARY KEY(album_id, inker_id),
 	CONSTRAINT fk_albums_inkers_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_inkers_author FOREIGN KEY (inker_id) REFERENCES authors(id) ON DELETE CASCADE
 );
 CREATE TABLE albums_translators (
-	album_id INT UNSIGNED NOT NULL,
-	translator_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	translator_id INT NOT NULL,
 	PRIMARY KEY(album_id, translator_id),
 	CONSTRAINT fk_albums_translators_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_translators_author FOREIGN KEY (translator_id) REFERENCES authors(id) ON DELETE CASCADE
 );
 
 CREATE TABLE tags (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(127) NOT NULL UNIQUE,
 	fgcolour CHAR(7) DEFAULT NULL,
 	bgcolour CHAR(7) DEFAULT NULL
@@ -156,15 +156,15 @@ CREATE TABLE tags (
 CREATE INDEX ON tags(name);
 
 CREATE TABLE albums_tags (
-	album_id INT UNSIGNED NOT NULL,
-	tag_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	tag_id INT NOT NULL,
 	PRIMARY KEY(album_id, tag_id),
 	CONSTRAINT fk_albums_tags_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
 	CONSTRAINT fk_albums_tags_tag FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
 );
 
 CREATE TABLE sources (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(127) NOT NULL,
 	owner VARCHAR(127) NULL,
 	email VARCHAR(255) NULL,
@@ -175,28 +175,28 @@ CREATE TABLE sources (
 );
 
 CREATE TABLE derivative_types (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(127) NOT NULL
 );
 
 CREATE TABLE derivatives (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	series_id INT UNSIGNED NULL, /* Since Albums may not have a Series, Derivatives could as well */ 
-	album_id INT UNSIGNED NULL,
-	artist_id INT UNSIGNED NULL,
-	derivative_type_id INT UNSIGNED NOT NULL,
-	colors SMALLINT UNSIGNED NULL,
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	series_id INT NULL, /* Since Albums may not have a Series, Derivatives could as well */
+	album_id INT NULL,
+	artist_id INT NULL,
+	derivative_type_id INT NOT NULL,
+	colors SMALLINT NULL,
 	/* Source could be an editor, a library, the author himself. */
-	source_id INT UNSIGNED NULL,
-	number SMALLINT UNSIGNED NULL,
-	total SMALLINT UNSIGNED NULL, 
+	source_id INT NULL,
+	number SMALLINT NULL,
+	total SMALLINT NULL,
 	signed BOOLEAN DEFAULT 'true',
 	authors_copy BOOLEAN DEFAULT 'false',
 	restricted_sale BOOLEAN DEFAULT 'false',
 	description CLOB NULL,
-	width float UNSIGNED NULL,
-	height float UNSIGNED NULL,
-	depth float UNSIGNED NULL,
+	width float NULL,
+	height float NULL,
+	depth float NULL,
 	acquisition_date DATE NULL,
 	purchase_price FLOAT NULL,
 	CONSTRAINT fk_derivatives_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE RESTRICT,
@@ -207,23 +207,23 @@ CREATE TABLE derivatives (
 );
 
 CREATE TABLE derivatives_prices (
-	derivative_id INT UNSIGNED NOT NULL,
+	derivative_id INT NOT NULL,
 	date DATE NOT NULL,
-	price FLOAT UNSIGNED NOT NULL,
+	price FLOAT NOT NULL,
 	PRIMARY KEY(derivative_id, date),
 	CONSTRAINT fk_derivative_prices FOREIGN KEY (derivative_id) REFERENCES derivatives(id) ON DELETE CASCADE
 );
 
 CREATE TABLE derivatives_images (
-	derivative_id INT UNSIGNED NOT NULL,
-	image_id INT UNSIGNED NOT NULL,
+	derivative_id INT NOT NULL,
+	image_id INT NOT NULL,
 	PRIMARY KEY(derivative_id, image_id),
 	CONSTRAINT fk_derivatives_images_derivative FOREIGN KEY (derivative_id) REFERENCES derivatives(id) ON DELETE CASCADE,
 	CONSTRAINT fk_derivatives_images_image FOREIGN KEY (image_id) REFERENCES images(id) ON DELETE CASCADE
 );
 
 CREATE TABLE borrowers (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(127) NOT NULL,
 	fname VARCHAR(127) NULL,
 	email VARCHAR(255) NULL,
@@ -231,8 +231,8 @@ CREATE TABLE borrowers (
 );
 
 CREATE TABLE albums_borrowers (
-	album_id INT UNSIGNED NOT NULL,
-	borrower_id INT UNSIGNED NOT NULL,
+	album_id INT NOT NULL,
+	borrower_id INT NOT NULL,
 	borrow_date DATE NOT NULL,
 	return_date DATE NULL,
 	PRIMARY KEY(album_id, borrower_id, borrow_date),
@@ -241,7 +241,7 @@ CREATE TABLE albums_borrowers (
 );
 
 CREATE TABLE searches (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	model VARCHAR(255) NOT NULL, /* The kind of item being searched. */
 	status VARCHAR(63) NOT NULL, /* The status. Either temporary or saved. */
 	name VARCHAR(255) NULL, /* User-specified name */
@@ -259,4 +259,4 @@ CREATE VIEW v_meta_series AS
 	UNION
 		(SELECT id as id, series_id, id AS album_id, title AS meta_name FROM albums WHERE series_id IS NULL)
 	ORDER BY meta_name;
-	
+

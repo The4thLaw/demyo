@@ -3,10 +3,10 @@
  * https://github.com/The4thLaw/demyo/issues/20
  */
 ALTER TABLE derivatives
-	MODIFY COLUMN number INT UNSIGNED NULL;
+	ALTER COLUMN number INT NULL;
 
 ALTER TABLE derivatives
-	MODIFY COLUMN total INT UNSIGNED NULL;
+	ALTER COLUMN total INT NULL;
 
 /**
  * Support readers
@@ -16,7 +16,7 @@ ALTER TABLE derivatives
 -- Create the table
 
 CREATE TABLE readers (
-	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(255) NOT NULL,
 	colour CHAR(7) DEFAULT NULL
 );
@@ -25,15 +25,15 @@ CREATE INDEX ON readers(name);
 -- Each reader has favourites series and albums
 
 CREATE TABLE readers_favourite_series (
-	reader_id INT UNSIGNED NOT NULL,
-	series_id INT UNSIGNED NOT NULL,
+	reader_id INT NOT NULL,
+	series_id INT NOT NULL,
 	PRIMARY KEY(reader_id, series_id),
 	CONSTRAINT fk_readers_favourite_series_reader FOREIGN KEY (reader_id) REFERENCES readers(id) ON DELETE CASCADE,
 	CONSTRAINT fk_readers_favourite_series_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE CASCADE
 );
 CREATE TABLE readers_favourite_albums (
-	reader_id INT UNSIGNED NOT NULL,
-	album_id INT UNSIGNED NOT NULL,
+	reader_id INT NOT NULL,
+	album_id INT NOT NULL,
 	PRIMARY KEY(reader_id, album_id),
 	CONSTRAINT fk_readers_favourite_albums_reader FOREIGN KEY (reader_id) REFERENCES readers(id) ON DELETE CASCADE,
 	CONSTRAINT fk_readers_favourite_albums_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE
@@ -42,8 +42,8 @@ CREATE TABLE readers_favourite_albums (
 -- Each reader has his reading list
 
 CREATE TABLE readers_reading_list (
-	reader_id INT UNSIGNED NOT NULL,
-	album_id INT UNSIGNED NOT NULL,
+	reader_id INT NOT NULL,
+	album_id INT NOT NULL,
 	PRIMARY KEY(reader_id, album_id),
 	CONSTRAINT fk_readers_reading_list_reader FOREIGN KEY (reader_id) REFERENCES readers(id) ON DELETE CASCADE,
 	CONSTRAINT fk_readers_reading_list_album FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE
@@ -66,6 +66,6 @@ ALTER TABLE albums
 
 DELETE FROM configuration;
 ALTER TABLE configuration
-	ADD COLUMN reader_id INT UNSIGNED NOT NULL;
+	ADD COLUMN reader_id INT NOT NULL;
 ALTER TABLE configuration
 	ADD CONSTRAINT fk_configuration_reader FOREIGN KEY (reader_id) REFERENCES readers(id) ON DELETE CASCADE;
