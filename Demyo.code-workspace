@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "source"
+		},
+		{
+			"path": "integration"
 		}
 	],
 	"settings": {
