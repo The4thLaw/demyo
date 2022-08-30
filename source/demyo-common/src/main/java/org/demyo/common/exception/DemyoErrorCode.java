@@ -25,6 +25,8 @@ public enum DemyoErrorCode {
 	SYS_STARTUP_ERROR(10006),
 	/** The Spring configuration is inconsistent. */
 	SYS_SPRING_CONFIG_INCONSISTENT(10007),
+	/** The H2 version that is needed for a migration is missing. */
+	SYS_MISSING_H2_FOR_MIGRATION(10008),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */

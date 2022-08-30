@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -48,7 +49,7 @@ public final class SystemConfiguration {
 	/** The version codename of Demyo. */
 	private final String codename;
 	/** The root directory for the Demyo installation. */
-	private final File applicationDirectory;
+	private final Path applicationDirectory;
 	/** Path to the WAR file containing the Demyo Web app. */
 	private final String warPath;
 	/** Context root for the deployment of the WAR file. */
@@ -60,9 +61,9 @@ public final class SystemConfiguration {
 	/** The port for the HTTP server. */
 	private final int httpPort;
 	/** The directory to store user data. */
-	private final File userDirectory;
+	private final Path userDirectory;
 	/** The file to store the database. */
-	private final File databaseFile;
+	private final Path databaseFile;
 	/** The directory to store user images. */
 	private final Path imagesDirectory;
 	/** The directory to store temporary files. */
@@ -91,7 +92,7 @@ public final class SystemConfiguration {
 					+ "defaulting to working directory", path);
 			path = System.getProperty("user.dir");
 		}
-		applicationDirectory = new File(path);
+		applicationDirectory = Path.of(path);
 
 		PropertiesConfiguration config = loadConfig();
 
@@ -106,12 +107,12 @@ public final class SystemConfiguration {
 		maxThumbnailThreads = StringUtils.isBlank(threads) ? null : Integer.parseInt(threads);
 		thumbnailQueueSize = config.getInt(CONFIG_KEY_THUMB_QUEUE_SIZE, DEFAULT_THUMBNAIL_QUEUE);
 		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
-		systemPluginDirectory = new File(applicationDirectory, PLUGIN_DIR_NAME);
+		systemPluginDirectory = new File(applicationDirectory.toFile(), PLUGIN_DIR_NAME);
 
 		// Prepare all paths
 		if (portable) {
-			userDirectory = new File(applicationDirectory, "data");
-			tempDirectory = new File(applicationDirectory, "temp").toPath();
+			userDirectory = applicationDirectory.resolve("data");
+			tempDirectory = applicationDirectory.resolve("temp");
 		} else {
 			if (SystemUtils.IS_OS_WINDOWS) {
 				// On Windows, try to send the settings to the Application Data folder
@@ -120,28 +121,27 @@ public final class SystemConfiguration {
 				if (StringUtils.isBlank(baseDirectory)) {
 					baseDirectory = SystemUtils.USER_HOME;
 				}
-				userDirectory = new File(baseDirectory, APP_NAME);
-				tempDirectory = new File(userDirectory, "temp").toPath();
+				userDirectory = Paths.get(baseDirectory, APP_NAME);
+				tempDirectory = userDirectory.resolve("temp");
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
 				// https://developer.apple.com/library/mac/#documentation/General/Conceptual/
 				// MOSXAppProgrammingGuide/AppRuntime/AppRuntime.html
-				userDirectory = new File(
-						SystemUtils.USER_HOME + File.separator + "Library" + File.separator + "Application Support",
-						APP_NAME);
-				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, APP_NAME).toPath();
+
+				userDirectory = Paths.get(SystemUtils.USER_HOME, "Library", "Application Support", APP_NAME);
+				tempDirectory = Paths.get(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
 			} else {
-				userDirectory = new File(SystemUtils.USER_HOME, ".demyo");
+				userDirectory = Paths.get(SystemUtils.USER_HOME, ".demyo");
 				// Unices may have special temporary directories residing in RAM or being cleaned automatically,
 				// so use them
 				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, APP_NAME).toPath();
 			}
 		}
 
-		userPluginDirectory = new File(userDirectory, PLUGIN_DIR_NAME);
-		imagesDirectory = userDirectory.toPath().resolve("images");
-		thumbnailDirectory = userDirectory.toPath().resolve("thumbnails");
-		databaseFile = new File(userDirectory, "demyo.h2.db");
+		userPluginDirectory = new File(userDirectory.toFile(), PLUGIN_DIR_NAME);
+		imagesDirectory = userDirectory.resolve("images");
+		thumbnailDirectory = userDirectory.resolve("thumbnails");
+		databaseFile = userDirectory.resolve("demyo.mv.db");
 		createDirectoryIfNeeded(userDirectory);
 		createDirectoryIfNeeded(imagesDirectory);
 		createDirectoryIfNeeded(tempDirectory);
@@ -165,7 +165,7 @@ public final class SystemConfiguration {
 		}
 
 		// Load the system configuration
-		File systemConfigurationFile = new File(applicationDirectory, SYSTEM_CONFIGURATION_FILENAME);
+		File systemConfigurationFile = new File(applicationDirectory.toFile(), SYSTEM_CONFIGURATION_FILENAME);
 		PropertiesConfiguration config;
 		try {
 			// Load defaults
@@ -322,7 +322,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the root directory for the Demyo installation
 	 */
-	public File getApplicationDirectory() {
+	public Path getApplicationDirectory() {
 		return applicationDirectory;
 	}
 
@@ -367,7 +367,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the directory to store user data
 	 */
-	public File getUserDirectory() {
+	public Path getUserDirectory() {
 		return userDirectory;
 	}
 
@@ -376,7 +376,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the file to store the database
 	 */
-	public File getDatabaseFile() {
+	public Path getDatabaseFile() {
 		return databaseFile;
 	}
 

@@ -62,7 +62,7 @@ public class ExportService implements IExportService {
 	private final Path exportDirectory;
 
 	public ExportService() throws IOException {
-		exportDirectory = SystemConfiguration.getInstance().getUserDirectory().toPath().resolve(EXPORT_DIRECTORY_NAME);
+		exportDirectory = SystemConfiguration.getInstance().getUserDirectory().resolve(EXPORT_DIRECTORY_NAME);
 		Files.createDirectories(exportDirectory);
 	}
 

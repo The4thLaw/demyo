@@ -3,10 +3,17 @@ package org.demyo.desktop;
 import java.awt.GraphicsEnvironment;
 import java.awt.SplashScreen;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
@@ -14,6 +21,7 @@ import javax.swing.JOptionPane;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.h2.engine.Constants;
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +37,9 @@ import org.demyo.common.exception.DemyoRuntimeException;
  */
 public final class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
+	private static final String DB_USER = "demyo";
+	private static final String DB_PASSWORD = "demyo";
+	private static final String DB_FILE_SUFFIX = Pattern.quote(Constants.SUFFIX_MV_FILE) + "$";
 
 	private Start() {
 	}
@@ -71,28 +82,22 @@ public final class Start {
 					new File(decodedPath).getParentFile().getParentFile().getAbsolutePath());
 		}
 
+		JdbcDataSource ds = startDatabase();
+		Server server = startHttpServer(ds);
+
 		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
-		File databaseFile = sysConfig.getDatabaseFile();
-		boolean isNewDatabase = !databaseFile.exists();
-		// To debug, use java -cp h2-*.jar org.h2.tools.Console
-		String databaseFilePath = databaseFile.getAbsolutePath().replaceAll("\\.h2\\.db$", "");
-
-		LOGGER.info("Starting database...");
-		JdbcDataSource ds = new JdbcDataSource();
-		String url = "jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE";
-		LOGGER.debug("Database URL is {}", url);
-		ds.setURL(url);
-		ds.setUser("demyo");
-		ds.setPassword("demyo");
-
-		if (isNewDatabase) {
-			LOGGER.info("Setting the database collation...");
-			// This is the collation for French, but it should do no harm to English
-			try (Statement stmt = ds.getConnection().createStatement()) {
-				stmt.execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
-			}
+		if (sysConfig.isAutoStartWebBrowser()) {
+			DesktopUtils.startBrowser();
 		}
 
+		LOGGER.info("Demyo is now ready");
+		closeSplashScreen();
+		server.join();
+	}
+
+	private static Server startHttpServer(JdbcDataSource ds)
+			throws NamingException, Exception {
+		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
 		String httpAddress = sysConfig.getHttpAddress();
 		int httpPort = sysConfig.getHttpPort();
 		String contextRoot = sysConfig.getContextRoot();
@@ -124,14 +129,63 @@ public final class Start {
 		server.setHandler(webapp);
 
 		server.start();
+		return server;
+	}
 
-		if (sysConfig.isAutoStartWebBrowser()) {
-			DesktopUtils.startBrowser();
+	private static JdbcDataSource startDatabase()
+			throws IOException, Exception, SQLException {
+		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
+		Path databaseFile = sysConfig.getDatabaseFile();
+		boolean isNewDatabase = !Files.exists(databaseFile);
+		// To debug, use java -cp h2-*.jar org.h2.tools.Console
+		String databaseFilePath = databaseFile.toAbsolutePath().toString().replaceAll(DB_FILE_SUFFIX, "");
+
+		String url = "jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE";
+		LOGGER.debug("Database URL is {}", url);
+
+		migrateH2IfNeeded(databaseFile, isNewDatabase, url);
+
+		LOGGER.info("Starting database...");
+		JdbcDataSource ds = new JdbcDataSource();
+		ds.setURL(url);
+		ds.setUser(DB_USER);
+		ds.setPassword(DB_PASSWORD);
+
+		if (isNewDatabase) {
+			LOGGER.info("Setting the database collation...");
+			// This is the collation for French, but it should do no harm to English
+			try (Statement stmt = ds.getConnection().createStatement()) {
+				stmt.execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
+			}
 		}
+		return ds;
+	}
 
-		LOGGER.info("Demyo is now ready");
-		closeSplashScreen();
-		server.join();
+	private static void migrateH2IfNeeded(Path databaseFile, boolean isNewDatabase, String url)
+			throws IOException, SQLException, ReflectiveOperationException {
+		Path databaseVersionFile = databaseFile.getParent().resolve("demyo-h2-version.txt");
+		if (!isNewDatabase) {
+			LOGGER.debug("Checking if the database's H2 version must be migrated");
+			int version;
+			if (!Files.exists(databaseVersionFile)) {
+				version = 196;
+			} else {
+				String versionStr = new String(Files.readAllBytes(databaseVersionFile), StandardCharsets.UTF_8);
+				version = Integer.parseInt(versionStr);
+			}
+
+			if (version != Constants.BUILD_ID) {
+				LOGGER.info("Migrating the H2 database from {} to {}", version, Constants.BUILD_ID);
+				Properties dbMigProps = new Properties();
+				dbMigProps.setProperty("user", DB_USER);
+				dbMigProps.setProperty("password", DB_PASSWORD);
+				H2LocalUpgrade.upgrade(url, dbMigProps, version);
+			} else {
+				LOGGER.debug("The H2 database is at version {}, same as what Demyo requires", version);
+			}
+		}
+		// Always write the current H2 version
+		Files.write(databaseVersionFile, String.valueOf(Constants.BUILD_ID).getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
