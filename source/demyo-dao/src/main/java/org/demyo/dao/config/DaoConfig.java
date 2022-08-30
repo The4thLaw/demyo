@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
+import org.demyo.dao.utils.FlywayUtils;
 
 /**
  * Configuration for the DAO layer.
@@ -62,7 +63,9 @@ public class DaoConfig {
 		conf.setDataSource(dataSource());
 		conf.setLocationsAsStrings("org/demyo/model/schema");
 
-		return new Flyway(conf);
+		Flyway flyway = new Flyway(conf);
+		FlywayUtils.repairIfNeeded(flyway);
+		return flyway;
 	}
 
 	// Spring data needs this bean to be named entityManagerFactory, even though it's a SessionFactory

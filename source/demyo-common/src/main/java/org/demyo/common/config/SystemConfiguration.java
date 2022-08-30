@@ -80,6 +80,8 @@ public final class SystemConfiguration {
 	private Integer maxThumbnailThreads;
 	/** The maximum number of thumbnails that can be queued while waiting for generation. */
 	private int thumbnailQueueSize;
+	/** The flag indicating that a flyway repair is required. */
+	private boolean flywayRepairRequired;
 
 	/**
 	 * Instantiates a new system configuration.
@@ -450,5 +452,23 @@ public final class SystemConfiguration {
 	 */
 	public int getThumbnailQueueSize() {
 		return thumbnailQueueSize;
+	}
+
+	/**
+	 * Checks if is flag indicating that a flyway repair is required.
+	 *
+	 * @return the flag indicating that a flyway repair is required
+	 */
+	public boolean isFlywayRepairRequired() {
+		return flywayRepairRequired;
+	}
+
+	/**
+	 * Sets the flag indicating that a flyway repair is required.
+	 *
+	 * @param requiresFlywayRepair the new flag indicating that a flyway repair is required
+	 */
+	public void setFlywayRepairRequired(boolean requiresFlywayRepair) {
+		this.flywayRepairRequired = requiresFlywayRepair;
 	}
 }

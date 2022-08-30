@@ -40,6 +40,7 @@ public final class Start {
 	private static final String DB_USER = "demyo";
 	private static final String DB_PASSWORD = "demyo";
 	private static final String DB_FILE_SUFFIX = Pattern.quote(Constants.SUFFIX_MV_FILE) + "$";
+	private static final int DEMYO_3_0_H2_VERSION = 196;
 
 	private Start() {
 	}
@@ -168,10 +169,21 @@ public final class Start {
 			LOGGER.debug("Checking if the database's H2 version must be migrated");
 			int version;
 			if (!Files.exists(databaseVersionFile)) {
-				version = 196;
+				version = DEMYO_3_0_H2_VERSION;
 			} else {
 				String versionStr = new String(Files.readAllBytes(databaseVersionFile), StandardCharsets.UTF_8);
 				version = Integer.parseInt(versionStr);
+			}
+
+			if (version == DEMYO_3_0_H2_VERSION) {
+				// H2 at the version of Demyo 3.0 supported stuff that it shouldn't have and on which migrations
+				// relied:
+				// - UNSIGNED INT as a datatype
+				// - Dangling commas at the end of a list of columns in a create statement
+				// - MODIFY COLUMN could be used rather than ALTER COLUMN
+				// So we need to repair
+				LOGGER.info("Migrating from H2 {} requires a Flyway repair", version);
+				SystemConfiguration.getInstance().setFlywayRepairRequired(true);
 			}
 
 			if (version != Constants.BUILD_ID) {
@@ -184,6 +196,7 @@ public final class Start {
 				LOGGER.debug("The H2 database is at version {}, same as what Demyo requires", version);
 			}
 		}
+
 		// Always write the current H2 version
 		Files.write(databaseVersionFile, String.valueOf(Constants.BUILD_ID).getBytes(StandardCharsets.UTF_8));
 	}
