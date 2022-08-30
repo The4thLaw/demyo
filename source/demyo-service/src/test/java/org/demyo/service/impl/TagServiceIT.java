@@ -31,11 +31,11 @@ class TagServiceIT extends AbstractServiceTest {
 		Tag tagToSave = new Tag();
 		tagToSave.setId(21L);
 		tagToSave.setName("one shot");
-		tagToSave.setBgColour("000000");
+		tagToSave.setBgColour("#000000");
 		tagService.save(tagToSave);
 
 		Tag savedTag = tagService.getByIdForView(21L);
 		assertThat(savedTag.getId()).isEqualTo(21L);
-		assertThat(savedTag.getBgColour()).isEqualTo("000000");
+		assertThat(savedTag.getBgColour()).isEqualTo("#000000");
 	}
 }
