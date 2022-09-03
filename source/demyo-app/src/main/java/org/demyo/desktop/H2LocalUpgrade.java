@@ -96,8 +96,8 @@ public class H2LocalUpgrade {
 		} finally {
 			Files.deleteIfExists(Paths.get(script));
 			// We delete the working copy but keep the backup just in case
-			Path workingMv = Path.of(workingCopyName + Constants.SUFFIX_MV_FILE);
-			Path workingLob = Path.of(workingCopyName + SUFFIX_LOB_FILE);
+			Path workingMv = Paths.get(workingCopyName + Constants.SUFFIX_MV_FILE);
+			Path workingLob = Paths.get(workingCopyName + SUFFIX_LOB_FILE);
 			try {
 				Files.deleteIfExists(workingMv);
 				Files.deleteIfExists(workingLob);
@@ -135,8 +135,8 @@ public class H2LocalUpgrade {
 	}
 
 	private static void copy(String source, String target, String suffix) throws IOException {
-		Path sourcePath = Path.of(source + suffix);
-		Path targetPath = Path.of(target + suffix);
+		Path sourcePath = Paths.get(source + suffix);
+		Path targetPath = Paths.get(target + suffix);
 		if (Files.exists(sourcePath)) {
 			Files.copy(sourcePath, targetPath, StandardCopyOption.COPY_ATTRIBUTES, StandardCopyOption.REPLACE_EXISTING);
 		}

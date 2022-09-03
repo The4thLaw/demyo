@@ -94,7 +94,7 @@ public final class SystemConfiguration {
 					+ "defaulting to working directory", path);
 			path = System.getProperty("user.dir");
 		}
-		applicationDirectory = Path.of(path);
+		applicationDirectory = Paths.get(path);
 
 		PropertiesConfiguration config = loadConfig();
 
