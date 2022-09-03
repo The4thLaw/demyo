@@ -192,8 +192,8 @@ public class Demyo2Exporter implements IExporter {
 
 		xsw.writeStartElement(listTag);
 
-		for (Map<String, Object> record : records) {
-			Number recordId = (Number) record.get("ID"); // By convention
+		for (Map<String, Object> rec : records) {
+			Number recordId = (Number) rec.get("ID"); // By convention
 			boolean hasRelations = hasRelations(relations, recordId);
 			if (hasRelations) {
 				xsw.writeStartElement(entityTag);
@@ -202,7 +202,7 @@ public class Demyo2Exporter implements IExporter {
 			}
 
 			// Write entity fields
-			for (Entry<String, Object> field : record.entrySet()) {
+			for (Entry<String, Object> field : rec.entrySet()) {
 				if (field.getValue() != null) {
 					xsw.writeAttribute(field.getKey().toLowerCase(), toString(field.getValue()));
 				}

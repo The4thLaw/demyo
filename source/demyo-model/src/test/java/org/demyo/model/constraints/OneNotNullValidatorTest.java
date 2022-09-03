@@ -28,26 +28,26 @@ class OneNotNullValidatorTest {
 		Derivative invalidDirectNull = new Derivative();
 		invalidDirectNull.setType(new DerivativeType());
 		violations = validator.validate(invalidDirectNull);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isEqualTo(2);
+		assertThat(violations).withFailMessage("Unexpected number of violations").hasSize(2);
 
 		Derivative invalidNestedNullBoth = new Derivative();
 		invalidNestedNullBoth.setType(new DerivativeType());
 		invalidNestedNullBoth.setAlbum(new Album());
 		invalidNestedNullBoth.setSeries(new Series());
 		violations = validator.validate(invalidNestedNullBoth);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isEqualTo(2);
+		assertThat(violations).withFailMessage("Unexpected number of violations").hasSize(2);
 
 		Derivative invalidNestedNullSeries = new Derivative();
 		invalidNestedNullSeries.setType(new DerivativeType());
 		invalidNestedNullSeries.setSeries(new Series());
 		violations = validator.validate(invalidNestedNullSeries);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isEqualTo(2);
+		assertThat(violations).withFailMessage("Unexpected number of violations").hasSize(2);
 
 		Derivative invalidNestedNullAlbum = new Derivative();
 		invalidNestedNullAlbum.setType(new DerivativeType());
 		invalidNestedNullAlbum.setAlbum(new Album());
 		violations = validator.validate(invalidNestedNullAlbum);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isEqualTo(2);
+		assertThat(violations).withFailMessage("Unexpected number of violations").hasSize(2);
 	}
 
 	@Test
@@ -65,18 +65,18 @@ class OneNotNullValidatorTest {
 		bothSet.setAlbum(album);
 		bothSet.setSeries(series);
 		violations = validator.validate(bothSet);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isZero();
+		assertThat(violations).withFailMessage("Unexpected number of violations").isEmpty();
 
 		Derivative seriesSet = new Derivative();
 		seriesSet.setType(new DerivativeType());
 		seriesSet.setSeries(series);
 		violations = validator.validate(seriesSet);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isZero();
+		assertThat(violations).withFailMessage("Unexpected number of violations").isEmpty();
 
 		Derivative albumSet = new Derivative();
 		albumSet.setType(new DerivativeType());
 		albumSet.setAlbum(album);
 		violations = validator.validate(albumSet);
-		assertThat(violations.size()).withFailMessage("Unexpected number of violations").isZero();
+		assertThat(violations).withFailMessage("Unexpected number of violations").isEmpty();
 	}
 }
