@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.UUID;
@@ -72,20 +73,21 @@ public class H2LocalUpgrade {
 		String cipher = copyProperty(ci, oldUrl, "CIPHER");
 		String scriptCommandSuffix = cipher == null ? "" : " CIPHER AES PASSWORD '" + UUID.randomUUID() + "' --hide--";
 		java.sql.Driver driver = loadH2(version);
-		try (Connection conn = driver.connect(oldUrl.toString(), oldInfo)) {
-			conn.createStatement().execute(StringUtils.quoteStringSQL(new StringBuilder("SCRIPT TO "), script)
+		try (Connection conn = driver.connect(oldUrl.toString(), oldInfo); Statement stmt = conn.createStatement()) {
+			stmt.execute(StringUtils.quoteStringSQL(new StringBuilder("SCRIPT TO "), script)
 					.append(scriptCommandSuffix).toString());
 		} finally {
 			unloadH2(driver);
 		}
 		rename(name, false);
-		try (JdbcConnection conn = new JdbcConnection(url, info, null, null, false)) {
+		try (JdbcConnection conn = new JdbcConnection(url, info, null, null, false);
+				Statement stmt = conn.createStatement()) {
 			StringBuilder builder = StringUtils.quoteStringSQL(new StringBuilder("RUNSCRIPT FROM "), script)
 					.append(scriptCommandSuffix);
 			if (version <= 200) {
 				builder.append(" FROM_1X");
 			}
-			conn.createStatement().execute(builder.toString());
+			stmt.execute(builder.toString());
 		} catch (Throwable t) {
 			rename(name, true);
 			throw t;
