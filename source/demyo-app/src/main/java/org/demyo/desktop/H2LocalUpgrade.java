@@ -29,6 +29,10 @@ import org.demyo.common.exception.DemyoRuntimeException;
 /**
  * Heavily inspired by {@link org.h2.tools.Upgrade}, but relying on a local repository of libraries instead, and solving
  * some file access lock issues.
+ * <p>
+ * The base Upgrade tool is Copyright 2004-2022 H2 Group. Multiple-Licensed under the MPL 2.0, and the EPL 1.0
+ * (https://h2database.com/html/license.html).
+ * </p>
  */
 public class H2LocalUpgrade {
 	/**
