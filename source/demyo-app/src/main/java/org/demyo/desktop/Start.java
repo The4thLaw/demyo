@@ -97,7 +97,7 @@ public final class Start {
 	}
 
 	private static Server startHttpServer(JdbcDataSource ds)
-			throws NamingException, Exception {
+			throws Exception {
 		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
 		String httpAddress = sysConfig.getHttpAddress();
 		int httpPort = sysConfig.getHttpPort();
@@ -134,7 +134,7 @@ public final class Start {
 	}
 
 	private static JdbcDataSource startDatabase()
-			throws IOException, Exception, SQLException {
+			throws IOException, SQLException, ReflectiveOperationException {
 		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
 		Path databaseFile = sysConfig.getDatabaseFile();
 		boolean isNewDatabase = !Files.exists(databaseFile);

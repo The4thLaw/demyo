@@ -36,6 +36,8 @@ import org.demyo.common.exception.DemyoRuntimeException;
  * </p>
  */
 public class H2LocalUpgrade {
+	private static final String SUFFIX_LOB_FILE = ".lobs.db";
+
 	/**
 	 * Performs database upgrade from an older version of H2.
 	 *
@@ -88,14 +90,14 @@ public class H2LocalUpgrade {
 				builder.append(" FROM_1X");
 			}
 			stmt.execute(builder.toString());
-		} catch (Throwable t) {
+		} catch (Exception e) {
 			rename(name, true);
-			throw t;
+			throw e;
 		} finally {
 			Files.deleteIfExists(Paths.get(script));
 			// We delete the working copy but keep the backup just in case
 			Path workingMv = Path.of(workingCopyName + Constants.SUFFIX_MV_FILE);
-			Path workingLob = Path.of(workingCopyName + ".lobs.db");
+			Path workingLob = Path.of(workingCopyName + SUFFIX_LOB_FILE);
 			try {
 				Files.deleteIfExists(workingMv);
 				Files.deleteIfExists(workingLob);
@@ -110,7 +112,7 @@ public class H2LocalUpgrade {
 
 	private static void rename(String name, boolean back) throws IOException {
 		rename(name, Constants.SUFFIX_MV_FILE, back);
-		rename(name, ".lobs.db", back);
+		rename(name, SUFFIX_LOB_FILE, back);
 	}
 
 	private static void rename(String name, String suffix, boolean back) throws IOException {
@@ -129,7 +131,7 @@ public class H2LocalUpgrade {
 
 	private static void copy(String source, String target) throws IOException {
 		copy(source, target, Constants.SUFFIX_MV_FILE);
-		copy(source, target, ".lobs.db");
+		copy(source, target, SUFFIX_LOB_FILE);
 	}
 
 	private static void copy(String source, String target, String suffix) throws IOException {

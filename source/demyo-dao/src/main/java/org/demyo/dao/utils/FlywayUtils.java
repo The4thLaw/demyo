@@ -19,6 +19,10 @@ import org.demyo.common.config.SystemConfiguration;
 public final class FlywayUtils {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlywayUtils.class);
 
+	private FlywayUtils() {
+		// Utility class
+	}
+
 	/**
 	 * Repairs the Flyway migrations if such a repair was requested in the {@link SystemConfiguration}.
 	 * 
