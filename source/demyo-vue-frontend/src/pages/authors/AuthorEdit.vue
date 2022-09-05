@@ -14,6 +14,12 @@
 							v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required
 						/>
 					</v-col>
+					<v-col cols="12" md="4">
+						<v-text-field v-model="author.birthDate" :label="$t('field.Author.birthDate')" type="date" />
+					</v-col>
+					<v-col cols="12" md="4">
+						<v-text-field v-model="author.deathDate" :label="$t('field.Author.deathDate')" type="date" />
+					</v-col>
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="author.portrait.id" :items="allImages" :loading="allImagesLoading"

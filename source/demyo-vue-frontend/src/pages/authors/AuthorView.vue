@@ -18,6 +18,14 @@
 			<FieldValue v-if="author.website" :label="$t('field.Author.website')">
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
+			<FieldValue v-if="author.birthDate" :label="$t('field.Author.birthDate')">
+				{{ $d(new Date(author.birthDate), 'long') }}
+				<span v-if="isAlive">({{ $t('field.Author.age.alive', { age }) }})</span>
+			</FieldValue>
+			<FieldValue v-if="author.deathDate" :label="$t('field.Author.deathDate')">
+				{{ $d(new Date(author.deathDate), 'long') }}
+				<span v-if="!isAlive">({{ $t('field.Author.age.dead', { age }) }})</span>
+			</FieldValue>
 			<FieldValue v-if="author.biography" :label="$t('field.Author.biography')">
 				<!-- eslint-disable-next-line vue/no-v-html -->
 				<div v-html="author.biography" />
@@ -58,6 +66,7 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 import AlbumTextList from '@/components/AlbumTextList'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
@@ -114,6 +123,18 @@ export default {
 				asInker: new Set(this.authorAlbums.asInker),
 				asTranslator: new Set(this.authorAlbums.asTranslator)
 			}
+		},
+
+		isAlive() {
+			return this.author.birthDate && !this.author.deathDate
+		},
+
+		age() {
+			if (!this.author.birthDate) {
+				return null
+			}
+			const endDate = this.author.deathDate ? dayjs(this.author.deathDate) : dayjs()
+			return endDate.diff(this.author.birthDate, 'year')
 		}
 	},
 

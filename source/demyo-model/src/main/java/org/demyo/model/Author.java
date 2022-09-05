@@ -1,5 +1,7 @@
 package org.demyo.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -54,6 +56,14 @@ public class Author extends AbstractModel {
 	@Column(name = "website")
 	@URL
 	private String website;
+
+	/** The birth date of the author. */
+	@Column(name = "birth")
+	private Date birthDate;
+
+	/** The death date of the author. */
+	@Column(name = "death")
+	private Date deathDate;
 
 	@Override
 	public String getIdentifyingName() {
@@ -183,5 +193,41 @@ public class Author extends AbstractModel {
 	 */
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+
+	/**
+	 * Gets the birth date of the author.
+	 *
+	 * @return the birth date of the author
+	 */
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	/**
+	 * Sets the birth date of the author.
+	 *
+	 * @param birthDate the new birth date of the author
+	 */
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	/**
+	 * Gets the death date of the author.
+	 *
+	 * @return the death date of the author
+	 */
+	public Date getDeathDate() {
+		return deathDate;
+	}
+
+	/**
+	 * Sets the death date of the author.
+	 *
+	 * @param deathDate the new death date of the author
+	 */
+	public void setDeathDate(Date deathDate) {
+		this.deathDate = deathDate;
 	}
 }
