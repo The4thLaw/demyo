@@ -92,6 +92,10 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JsonView(ModelView.Basic.class)
 	private String title;
 
+	/** The title in the Album's original language. */
+	@Column(name = "original_title")
+	private String originalTitle;
+
 	/** The owning {@link Publisher}. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publisher_id")
@@ -398,6 +402,24 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/**
+	 * Gets the title in the Album's original language.
+	 *
+	 * @return the title in the Album's original language
+	 */
+	public String getOriginalTitle() {
+		return originalTitle;
+	}
+
+	/**
+	 * Sets the title in the Album's original language.
+	 *
+	 * @param originalTitle the new title in the Album's original language
+	 */
+	public void setOriginalTitle(String originalTitle) {
+		this.originalTitle = originalTitle;
 	}
 
 	/**

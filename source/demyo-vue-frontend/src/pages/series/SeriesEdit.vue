@@ -9,6 +9,11 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
+						<v-text-field
+							v-model="series.originalName" :label="$t('field.Series.originalName')"
+						/>
+					</v-col>
+					<v-col cols="12">
 						<Autocomplete
 							v-model="series.relatedSeries" :items="allSeries" multiple
 							label-key="field.Series.relatedSeries"
