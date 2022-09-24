@@ -42,18 +42,7 @@
 			</FieldValue>
 
 			<FieldValue :label="$t('field.Series.completed.view')">
-				<template v-if="series.completed && (!minAlbumYear || !maxAlbumYear)">
-					{{ $t('field.Series.completed.value.trueNoDates') }}
-				</template>
-				<template v-if="series.completed && minAlbumYear && maxAlbumYear">
-					{{ $t('field.Series.completed.value.true', { min: minAlbumYear, max: maxAlbumYear }) }}
-				</template>
-				<template v-if="!series.completed && !minAlbumYear">
-					{{ $t('field.Series.completed.value.falseNoDates') }}
-				</template>
-				<template v-if="!series.completed && minAlbumYear">
-					{{ $t('field.Series.completed.value.false', { min: minAlbumYear }) }}
-				</template>
+				{{completionLabel}}
 			</FieldValue>
 
 			<FieldValue v-if="series.location" :label="$t('field.Series.location')">
@@ -295,6 +284,32 @@ export default {
 
 		allTags() {
 			return this.albumsLoaded ? mergeModels(this.albums, 'tags', 'identifyingName') : []
+		},
+
+		authorsAlive() {
+			const relevantAuthors = [...this.allWriters, ...this.allArtists]
+			return relevantAuthors.some(a => !a.deathDate)
+		},
+
+		completionLabel() {
+			if (this.series.completed) {
+				if (!this.minAlbumYear || !this.maxAlbumYear) {
+					return this.$t('field.Series.completed.value.trueNoDates')
+				}
+				return this.$t('field.Series.completed.value.true', { min: this.minAlbumYear, max: this.maxAlbumYear })
+			}
+
+			if (this.authorsAlive) {
+				if (!this.minAlbumYear) {
+					return this.$t('field.Series.completed.value.falseNoDates')
+				}
+				return this.$t('field.Series.completed.value.false', { min: this.minAlbumYear })
+			}
+
+			if (!this.minAlbumYear) {
+				return this.$t('page.Series.allAuthorsDeceased.withoutDate')
+			}
+			return this.$t('page.Series.allAuthorsDeceased.withDate', { min: this.minAlbumYear })
 		},
 
 		derivativeQuery() {
