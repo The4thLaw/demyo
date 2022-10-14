@@ -37,6 +37,9 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="series.identifyingName">
+			<div v-if="series.originalName" class="c-SeriesView__originalName">
+				({{ series.originalName }})
+			</div>
 			<FieldValue v-if="series.website" :label="$t('field.Series.website')">
 				<a :href="series.website">{{ series.website }}</a>
 			</FieldValue>
@@ -88,7 +91,7 @@
 
 				<!-- Albums -->
 				<v-tab-item class="dem-tab">
-					<div v-if="albumsLoaded" class="c-Series__albumAggregateData dem-columnized pb-4">
+					<div v-if="albumsLoaded" class="c-SeriesView__albumAggregateData dem-columnized pb-4">
 						<FieldValue :label="$t('field.Series.albumCount')">
 							<template v-if="albumCount === ownedAlbumCount">
 								{{ $t('field.Series.albumCount.count.full', [albumCount]) }}
@@ -434,7 +437,12 @@ export default {
 </script>
 
 <style lang="less">
-.c-Series__albumAggregateData {
+.c-SeriesView__originalName {
+	margin-top: -1em;
+	opacity: 0.87;
+}
+
+.c-SeriesView__albumAggregateData {
 	border-bottom: 1px solid var(--dem-base-border);
 	margin-bottom: 1.5em;
 }

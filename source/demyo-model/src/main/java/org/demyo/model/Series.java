@@ -33,6 +33,9 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries"))
 public class Series extends AbstractNamedModel {
+	/** The name in the Series' original language. */
+	@Column(name = "original_name")
+	private String originalName;
 	/** The summary. */
 	@Column(name = "summary")
 	private String summary;
@@ -66,6 +69,24 @@ public class Series extends AbstractNamedModel {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteSeries")
 	@SortComparator(IdentifyingNameComparator.class)
 	private SortedSet<Reader> readersFavourites;
+
+	/**
+	 * Gets the name in the Series' original language.
+	 *
+	 * @return the name in the Series' original language
+	 */
+	public String getOriginalName() {
+		return originalName;
+	}
+
+	/**
+	 * Sets the name in the Series' original language.
+	 *
+	 * @param originalName the new name in the Series' original language
+	 */
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
 
 	/**
 	 * Gets the summary.

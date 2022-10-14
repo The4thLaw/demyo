@@ -26,11 +26,14 @@
 					<v-col cols="12" md="4">
 						<v-text-field v-model="album.numberSuffix" :label="$t('field.Album.numberSuffix')" />
 					</v-col>
-					<v-col cols="12">
+					<v-col cols="12" md="6">
 						<v-text-field
 							v-model="album.title" :label="$t('field.Album.title')" required
 							:rules="rules.title"
 						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<v-text-field v-model="album.originalTitle" :label="$t('field.Album.originalTitle')" />
 					</v-col>
 					<v-col cols="12">
 						<Autocomplete

@@ -46,6 +46,9 @@
 
 		<SectionCard :loading="loading" :image="album.cover" :title="album.identifyingName">
 			<div class="dem-fieldset">
+				<div v-if="album.originalTitle" class="c-AlbumView__originalTitle">
+					({{ album.originalTitle }})
+				</div>
 				<v-row>
 					<v-col v-if="album.series.id" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.series')">
@@ -431,3 +434,11 @@ export default {
 	}
 }
 </script>
+
+<style lang="less">
+.c-AlbumView__originalTitle {
+	margin-top: -1em;
+	margin-bottom: 16px;
+	opacity: 0.87;
+}
+</style>
