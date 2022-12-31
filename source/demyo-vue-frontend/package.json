@@ -38,10 +38,10 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
-    "@vue/cli-plugin-babel": "~4.5.17",
-    "@vue/cli-plugin-eslint": "^4.5.17",
-    "@vue/cli-plugin-unit-jest": "~4.5.17",
-    "@vue/cli-service": "~4.5.17",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-plugin-unit-jest": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.1.4",
     "babel-eslint": "^10.1.0",
@@ -63,7 +63,7 @@
     "stylelint-config-standard": "^25.0.0",
     "sync-pom-version-to-package": "^1.6.1",
     "vue-cli-plugin-i18n": "^1.0.1",
-    "vue-cli-plugin-vuetify": "~2.3.1",
+    "vue-cli-plugin-vuetify": "~2.5.8",
     "vue-cli-plugin-webpack-bundle-analyzer": "^4.0.0",
     "vue-template-compiler": "^2.6.14",
     "vuetify-loader": "^1.7.3"
