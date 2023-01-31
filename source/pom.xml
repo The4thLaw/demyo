@@ -42,16 +42,18 @@
 	</developers>
 
 	<properties>
-		<org.slf4j.version>1.7.30</org.slf4j.version>
-		<org.springframework.version>5.3.22</org.springframework.version>
-		<org.springframework.security.version>5.4.5</org.springframework.security.version>
-		<org.hibernate.version>5.6.10.Final</org.hibernate.version> <!-- Spring 5.3 supports Hibernate 5.x -->
+		<org.slf4j.version>2.0.6</org.slf4j.version>
+		<org.springframework.version>5.3.25</org.springframework.version>
+		<org.springframework.security.version>5.8.1</org.springframework.security.version>
+		<org.hibernate.version>5.6.14.Final</org.hibernate.version> <!-- Spring 5.3 supports Hibernate 5.x -->
 		<com.querydsl.version>4.4.0</com.querydsl.version>
+		<com.fasterxml.jackson.version>2.14.2</com.fasterxml.jackson.version>
+		<org.junit.version>5.9.2</org.junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
-		<org.eclipse.jetty.version>9.4.48.v20220622</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
+		<org.eclipse.jetty.version>9.4.50.v20221201</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v16.17.0</js.node.version>
 		
@@ -201,7 +203,7 @@
 			<dependency>
 				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>6.2.0.Final</version>
+				<version>6.2.5.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.el</groupId>
@@ -348,17 +350,17 @@
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
-				<version>2.12.2</version>
+				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
-				<version>2.12.2</version>
+				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
 				<artifactId>jackson-datatype-hibernate5</artifactId>
-				<version>2.12.2</version>
+				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 			
 			<dependency>
@@ -408,32 +410,32 @@
 			<dependency>
 				<groupId>org.skyscreamer</groupId>
 				<artifactId>jsonassert</artifactId>
-				<version>1.5.0</version>
+				<version>1.5.1</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>com.jayway.jsonpath</groupId>
 				<artifactId>json-path</artifactId>
-				<version>2.5.0</version>
+				<version>2.7.0</version>
 				<scope>test</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-api</artifactId>
-				<version>5.7.1</version>
+				<version>${org.junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-engine</artifactId>
-				<version>5.7.1</version>
+				<version>${org.junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-params</artifactId>
-				<version>5.7.1</version>
+				<version>${org.junit.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -445,7 +447,8 @@
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
-				<version>3.8.0</version>
+				<!-- Mockito 5.x requires Java 11 -->
+				<version>4.11.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
