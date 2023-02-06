@@ -1,0 +1,26 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "java",
+			"name": "Launch Current File",
+			"request": "launch",
+			"mainClass": "${file}"
+		},
+		{
+			"type": "java",
+			"name": "Start Demyo Java server",
+			"request": "launch",
+			"mainClass": "org.demyo.desktop.Start",
+			"projectName": "demyo-app",
+			"vmArgs": [
+				"-Ddemyo.http.port=1607",
+				"-Ddemyo.war.contextRoot=/",
+				"-Ddemyo.h2.cacheDirectoryName=target/legacy-h2-versions",
+				//"-Dnope.demyo.thumbnails.maxThreads=1",
+				//"-Dnope.demyo.thumbnails.queueSize=2"
+			],
+			"cwd": "${workspaceFolder}/demyo-app"
+		}
+	]
+}

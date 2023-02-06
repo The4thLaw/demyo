@@ -49,27 +49,14 @@
 		"search.exclude": {
 			"**/target": true
 		},
-		"files.eol": "\n"
-	},
-	"launch": {
-		"version": "0.2.0",
-		"configurations": [
-			{
-				"type": "java",
-				"name": "Launch Current File",
-				"request": "launch",
-				"mainClass": "${file}"
-			},
-			{
-				"type": "java",
-				"name": "Start server",
-				"request": "launch",
-				"mainClass": "org.demyo.desktop.Start",
-				"projectName": "demyo-app",
-				"vmArgs": ["-Ddemyo.http.port=1607"],
-				"cwd": "${workspaceFolder}/demyo-app"
-			}
-		]
+		"files.eol": "\n",
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.cleanup.actionsOnSave": [
+			"addOverride",
+			"addDeprecated"
+		],
+		"java.completion.guessMethodArguments": true,
+		"java.saveActions.organizeImports": true
 	},
 	"tasks": {
 		"version": "2.0.0",
@@ -77,9 +64,33 @@
 			{
 				"label": "Maven install (dev, skip tests)",
 				"type": "shell",
-				"command": "mvn -B install -Pdev -DskipTests",
+				"command": "./mvnw -B install -Pdev -DskipTests",
 				"group": "build"
-			}
+			},
+			{
+				"label": "Maven install (dev, tests)",
+				"type": "shell",
+				"command": "./mvnw -B install -Pdev",
+				"group": "build"
+			},
+			{
+				"label": "Maven clean",
+				"type": "shell",
+				"command": "./mvnw -B clean",
+				"group": "build"
+			},
+			{
+				"label": "Maven clean install with coverage",
+				"type": "shell",
+				"command": "./mvnw -B clean install -DCI=true -Pcoverage,dev",
+				"group": "build"
+			},
+			{
+				"label": "Maven check dependencies",
+				"type": "shell",
+				"command": "./mvnw -B site dev,check-deps",
+				"group": "build"
+			},
 		]
 	}
 }
