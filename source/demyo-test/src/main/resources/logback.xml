@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+	xmlns="http://ch.qos.logback/xml/ns/logback"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd"
+	debug="false"
+	>
+
+	<appender name="console"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{dd.MM.yyyy HH:mm:ss} [%-5level] %logger{36}:%L - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="demyo"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>target/logs/demyo.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>target/logs/archives/demyo.%d.log.zip</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+			<compressionMode>ZIP</compressionMode>
+		</rollingPolicy>
+
+		<append>true</append>
+
+		<encoder>
+			<pattern>%d{dd.MM.yyyy HH:mm:ss} [%-5level] %logger{36}:%L - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="3rdParty"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>target/logs/3rd-party.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>target/logs/archives/3rd-party.%d.log.zip</fileNamePattern>
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+			<compressionMode>ZIP</compressionMode>
+		</rollingPolicy>
+
+		<append>true</append>
+
+		<encoder>
+			<pattern>%d{dd.MM.yyyy HH:mm:ss} [%-5level] %logger{36}:%L - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<if condition='isDefined("CI")'>
+		<then>
+			<logger name="org.demyo" level="DEBUG" additivity="false">
+				<appender-ref ref="console" />
+				<appender-ref ref="demyo" />
+			</logger>
+			<root level="WARN">
+				<appender-ref ref="console" />
+				<appender-ref ref="3rdParty" />
+			</root>
+		</then>
+		<else>
+			<logger name="org.demyo" level="DEBUG" additivity="false">
+				<appender-ref ref="demyo" />
+			</logger>
+			<root level="WARN">
+				<appender-ref ref="3rdParty" />
+			</root>
+		</else>
+	</if>
+
+</configuration>

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.demyo</groupId>
@@ -8,7 +9,7 @@
 	<name>Demyo</name>
 	<description>The root Demyo project</description>
 	<inceptionYear>2007</inceptionYear>
-	
+
 	<licenses>
 		<license>
 			<name>GNU Affero General Public License, version 3</name>
@@ -21,7 +22,7 @@
 		<url>https://github.com/The4thLaw/demyo/issues</url>
 		<system>GitHub Issues</system>
 	</issueManagement>
-	
+
 	<scm>
 		<url>https://github.com/The4thLaw/demyo</url>
 		<connection>scm:git:git://github.com/The4thLaw/demyo.git</connection>
@@ -53,10 +54,10 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
-		<org.eclipse.jetty.version>9.4.50.v20221201</org.eclipse.jetty.version><!--  Jetty 10+ requires Java 11+ -->
+		<org.eclipse.jetty.version>9.4.50.v20221201</org.eclipse.jetty.version><!-- Jetty 10+ requires Java 11+ -->
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v16.17.0</js.node.version>
-		
+
 		<sonar.organization>the4thlaw</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<!--
@@ -71,7 +72,7 @@
 		-->
 		<sonar.coverage.jacoco.xmlReportPaths>${project.rootdir}/*/target/site/jacoco*/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -113,7 +114,7 @@
 				<artifactId>demyo-vue-frontend</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
@@ -135,8 +136,7 @@
 				<artifactId>commons-configuration</artifactId>
 				<version>1.10</version>
 				<!--
-				We can't exclude commons-logging from here beacause we need it when loading the
-				system configuration, 
+				We can't exclude commons-logging from here because we need it when loading the system configuration
 				-->
 				<exclusions>
 					<exclusion>
@@ -160,7 +160,7 @@
 				<artifactId>commons-codec</artifactId>
 				<version>1.15</version>
 			</dependency>
-			
+
 			<!-- Logging -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -170,20 +170,19 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>1.2.3</version>
+				<version>1.3.5</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>log4j-over-slf4j</artifactId>
 				<version>${org.slf4j.version}</version>
 			</dependency>
-			<!-- Used for logback groovy configuration -->
 			<dependency>
-				<groupId>org.codehaus.groovy</groupId>
-				<artifactId>groovy</artifactId>
-				<version>3.0.7</version>
+				<groupId>org.codehaus.janino</groupId>
+				<artifactId>janino</artifactId>
+				<version>3.1.9</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
@@ -258,7 +257,7 @@
 				<artifactId>spring-jcl</artifactId>
 				<version>${org.springframework.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
@@ -276,15 +275,15 @@
 				<artifactId>javax.activation-api</artifactId>
 				<version>1.2.0</version>
 			</dependency>
-			
+
 			<!-- javax.servlet.jsp.jstl:jstl:1.2 only has sources on Maven Central -->
 			<dependency>
-	            <groupId>javax.servlet</groupId>
-	            <artifactId>jstl</artifactId>
-	            <version>1.2</version>
-	            <!-- Must not be "provided" -->
-	        </dependency>
-	        <dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+				<!-- Must not be "provided" -->
+			</dependency>
+			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-server</artifactId>
 				<version>${org.eclipse.jetty.version}</version>
@@ -300,7 +299,7 @@
 				<artifactId>jetty-plus</artifactId>
 				<version>${org.eclipse.jetty.version}</version>
 			</dependency>
-	        <dependency>
+			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>apache-jsp</artifactId>
 				<version>${org.eclipse.jetty.version}</version>
@@ -316,7 +315,7 @@
 				<artifactId>xml-apis</artifactId>
 				<version>1.4.01</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
@@ -345,7 +344,7 @@
 				<artifactId>imgscalr-lib</artifactId>
 				<version>4.2</version>
 			</dependency>
-			
+
 			<!-- Spring 5.3 supports Jackson 2.12 -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -362,19 +361,19 @@
 				<artifactId>jackson-datatype-hibernate5</artifactId>
 				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
 				<version>2.1.214</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>com.sun.activation</groupId>
 				<artifactId>javax.activation</artifactId>
 				<version>1.2.0</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>net.java.dev.stax-utils</groupId>
 				<artifactId>stax-utils</artifactId>
@@ -439,10 +438,10 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-			    <groupId>org.assertj</groupId>
-			    <artifactId>assertj-core</artifactId>
-			    <version>3.24.2</version>
-			    <scope>test</scope>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>3.24.2</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.mockito</groupId>
@@ -467,7 +466,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>com.github.ppodgorsek</groupId>
 				<artifactId>spring-test-dbunit-core</artifactId>
@@ -500,7 +499,7 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -525,31 +524,31 @@
 						<escapeString>\</escapeString>
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>3.1.2</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
 					<version>3.3.1</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>com.akathist.maven.plugins.launch4j</groupId>
 					<artifactId>launch4j-maven-plugin</artifactId>
 					<version>2.1.0</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>com.mysema.maven</groupId>
 					<artifactId>apt-maven-plugin</artifactId>
 					<version>1.1.3</version>
 				</plugin>
-				
+
 				<!--
 					The following plugins are used internally by Maven and versionned here for reproducibility.
 					There is no direct dependency to them in the child POMs and there is no explicit configuration.
@@ -559,49 +558,49 @@
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>3.0.0</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>3.3.0</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>3.1.0</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>2.8.2</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>2.5.2</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.5.3</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
 					<version>3.9.1</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>3.2.0</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -610,7 +609,7 @@
 						<argLine>-Djava.awt.headless=true</argLine>
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-project-info-reports-plugin</artifactId>
@@ -632,7 +631,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
-		
+
 		<profile>
 			<id>prod</id>
 			<properties>

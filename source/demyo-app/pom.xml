@@ -76,11 +76,6 @@ Includes the Web server, H2 server, and startup program.</description>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jcl</artifactId>
 		</dependency>
-		<!-- Used for logback groovy configuration -->
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy</artifactId>
-		</dependency>
 	</dependencies>
 	
 	<build>
@@ -89,14 +84,14 @@ Includes the Web server, H2 server, and startup program.</description>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>logback.groovy</include>
+					<include>logback.xml</include>
 				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>false</filtering>
 				<excludes>
-					<exclude>logback.groovy</exclude>
+					<exclude>logback.xml</exclude>
 				</excludes>
 			</resource>
 		</resources>
