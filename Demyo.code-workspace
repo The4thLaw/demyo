@@ -56,7 +56,19 @@
 			"addDeprecated"
 		],
 		"java.completion.guessMethodArguments": true,
-		"java.saveActions.organizeImports": true
+		"java.saveActions.organizeImports": true,
+		"java.completion.importOrder": [
+			"java",
+			"javax",
+			"org",
+			"com",
+			"org.demyo",
+			"#",
+			""
+		],
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": true
+		}
 	},
 	"tasks": {
 		"version": "2.0.0",
