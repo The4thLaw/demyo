@@ -1,0 +1,24 @@
+{
+	"recommendations": [
+		"EditorConfig.EditorConfig",
+		"ArturoDent.launch-config",
+
+		"formulahendry.auto-close-tag",
+		"formulahendry.auto-rename-tag",
+		"anteprimorac.html-end-tag-labels",
+
+		"stylelint.vscode-stylelint",
+		"dbaeumer.vscode-eslint",
+
+		"Vue.volar",
+		"lokalise.i18n-ally",
+
+		"Orta.vscode-jest",
+
+		"vscjava.vscode-java-pack",
+		"vmware.vscode-boot-dev-pack",
+
+		"redhat.vscode-xml",
+		"DotJoshJohnson.xml"
+	]
+}
