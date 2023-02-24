@@ -14,7 +14,11 @@ module.exports = {
 	transformIgnorePatterns: [
 		// Vuetify uses exports. Apparently only required for tiptap-vuetify. Maybe one day we
 		// should disable this and try to use Jest mocks for tiptap if it's indeed the only one
-		'<rootDir>/node_modules/(?!vuetify).*'
+
+		// Axios 1.x uses ES imports rather than CommonJS
+		// See https://stackoverflow.com/a/74079349/109813
+		// Might not be needed once we migrate to Jest 29+
+		'<rootDir>/node_modules/(?!(vuetify|axios)).*'
 	],
 
 	// Coverage
