@@ -3,8 +3,13 @@
 	xmlns="http://ch.qos.logback/xml/ns/logback"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd"
-	debug="false"
-	>
+	debug="false">
+
+
+	<define name="userDirectory"
+		class="org.demyo.common.config.SystemConfigurationPropertyDefiner">
+		<propertyName>userDirectory</propertyName>
+	</define>
 
 	<appender name="console"
 		class="ch.qos.logback.core.ConsoleAppender">
@@ -15,11 +20,11 @@
 
 	<appender name="demyo"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>target/logs/demyo.log</file>
+		<file>${userDirectory}/logs/demyo.log</file>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>target/logs/archives/demyo.%d.log.zip</fileNamePattern>
+			<fileNamePattern>${userDirectory}/logs/archives/demyo.%d.log.zip</fileNamePattern>
 			<!-- keep 30 days' worth of history -->
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
@@ -33,11 +38,11 @@
 
 	<appender name="3rdParty"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>target/logs/3rd-party.log</file>
+		<file>${userDirectory}/logs/3rd-party.log</file>
 
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>target/logs/archives/3rd-party.%d.log.zip</fileNamePattern>
+			<fileNamePattern>${userDirectory}/logs/archives/3rd-party.%d.log.zip</fileNamePattern>
 			<!-- keep 30 days' worth of history -->
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
@@ -50,25 +55,14 @@
 	</appender>
 
 
-	<if condition='isDefined("CI")'>
-		<then>
-			<logger name="org.demyo" level="DEBUG" additivity="false">
-				<appender-ref ref="console" />
-				<appender-ref ref="demyo" />
-			</logger>
-			<root level="WARN">
-				<appender-ref ref="console" />
-				<appender-ref ref="3rdParty" />
-			</root>
-		</then>
-		<else>
-			<logger name="org.demyo" level="DEBUG" additivity="false">
-				<appender-ref ref="demyo" />
-			</logger>
-			<root level="WARN">
-				<appender-ref ref="3rdParty" />
-			</root>
-		</else>
-	</if>
+	<logger name="org.demyo" level="${config.core.log.level}"
+		additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="demyo" />
+	</logger>
+	<root level="WARN">
+		<appender-ref ref="console" />
+		<appender-ref ref="3rdParty" />
+	</root>
 
 </configuration>
