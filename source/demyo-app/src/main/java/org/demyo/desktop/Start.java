@@ -10,6 +10,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -155,7 +156,7 @@ public final class Start {
 		if (isNewDatabase) {
 			LOGGER.info("Setting the database collation...");
 			// This is the collation for French, but it should do no harm to English
-			try (Statement stmt = ds.getConnection().createStatement()) {
+			try (Connection connec = ds.getConnection(); Statement stmt = connec.createStatement()) {
 				stmt.execute("SET DATABASE COLLATION French STRENGTH PRIMARY;");
 			}
 		}
