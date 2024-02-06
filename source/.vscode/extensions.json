@@ -19,6 +19,8 @@
 		"vmware.vscode-boot-dev-pack",
 
 		"redhat.vscode-xml",
-		"DotJoshJohnson.xml"
+		"DotJoshJohnson.xml",
+
+		"ms-azuretools.vscode-docker"
 	]
 }

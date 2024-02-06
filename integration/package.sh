@@ -6,7 +6,7 @@ rm -f demyo-v*.tar.bz2 Demyo*.exe
 
 echo "Building Demyo..."
 cd ../source
-mvn clean install -Pprod,vue
+mvn clean install -Pprod,prod-win,vue
 cd -
 
 #

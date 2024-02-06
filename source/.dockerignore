@@ -1,0 +1,7 @@
+*.log
+**/target
+demyo-vue-frontend/dist
+demyo-vue-frontend/mock-data
+demyo-vue-frontend/node
+demyo-vue-frontend/node_modules
+demyo-vue-frontend/README.md
