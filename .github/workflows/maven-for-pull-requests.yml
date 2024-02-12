@@ -24,6 +24,16 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
+    - name: maven-settings
+      uses: s4u/maven-settings-action@v3.0.0
+      with:
+        servers: |
+          [{
+              "id": "github-the4thlaw",
+              "username": "The4thLaw",
+              "password": "${{ secrets.GITHUB_TOKEN }}"
+          }]
+        githubServer: false
     - name: Build with Maven
       run: mvn -B clean verify -DCI=true
       working-directory: ./source
@@ -47,6 +57,16 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: maven-settings
+        uses: s4u/maven-settings-action@v3.0.0
+        with:
+          servers: |
+            [{
+                "id": "github-the4thlaw",
+                "username": "The4thLaw",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]
+          githubServer: false
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
