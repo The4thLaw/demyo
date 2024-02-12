@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.the4thlaw.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -48,7 +49,7 @@ public class FilePondService implements IFilePondService {
 
 	/**
 	 * Constructor allowing to set the upload directory.
-	 * 
+	 *
 	 * @param uploadDirectory The temporary directory for FilePond uploads.
 	 */
 	public FilePondService(Path uploadDirectory) {
@@ -84,7 +85,7 @@ public class FilePondService implements IFilePondService {
 	public String process(String originalFileName, InputStream input) throws IOException {
 		LOGGER.debug("Uploading a file through FilePond: {}", originalFileName);
 
-		String extension = DIOUtils.getFileExtension(originalFileName);
+		String extension = FilenameUtils.getFileExtension(originalFileName);
 		if (extension == null) {
 			extension = "jpg";
 		}

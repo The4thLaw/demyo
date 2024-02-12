@@ -46,7 +46,8 @@
 		<org.slf4j.version>2.0.6</org.slf4j.version>
 		<org.springframework.version>5.3.25</org.springframework.version>
 		<org.springframework.security.version>5.8.1</org.springframework.security.version>
-		<org.hibernate.version>5.6.14.Final</org.hibernate.version> <!-- Spring 5.3 supports Hibernate 5.x -->
+		<!-- Spring 5.3 supports Hibernate 5.x -->
+		<org.hibernate.version>5.6.14.Final</org.hibernate.version>
 		<com.querydsl.version>4.4.0</com.querydsl.version>
 		<com.fasterxml.jackson.version>2.14.2</com.fasterxml.jackson.version>
 		<org.junit.version>5.9.2</org.junit.version>
@@ -54,7 +55,8 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
-		<org.eclipse.jetty.version>9.4.50.v20221201</org.eclipse.jetty.version><!-- Jetty 10+ requires Java 11+ -->
+		<!-- Jetty 10+ requires Java 11+ -->
+		<org.eclipse.jetty.version>9.4.50.v20221201</org.eclipse.jetty.version>
 		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
 		<js.node.version>v16.17.0</js.node.version>
 
@@ -68,7 +70,8 @@
 		   https://github.com/jacoco/jacoco/pull/1007 could eventually change that
 		 - demyo-service is aggregate-covered by demyo-web
 		 - Sonar needs the coverage of service when parsing the service module
-		The solution is thus that, for each module, Sonar sees all regular and aggregate reports from all modules.
+		The solution is thus that, for each module, Sonar sees all regular and aggregate
+		reports from all modules.
 		-->
 		<sonar.coverage.jacoco.xmlReportPaths>${project.rootdir}/*/target/site/jacoco*/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
@@ -113,6 +116,12 @@
 				<groupId>org.demyo</groupId>
 				<artifactId>demyo-vue-frontend</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.the4thlaw</groupId>
+				<artifactId>common-utils</artifactId>
+				<version>1.0.0</version>
 			</dependency>
 
 			<dependency>
@@ -747,7 +756,7 @@
 				</plugins>
 			</reporting>
 		</profile>
-		
+
 		<profile>
 			<id>spotbugs</id>
 			<reporting>
@@ -758,7 +767,8 @@
 						<version>4.7.3.2</version>
 						<configuration>
 							<effort>max</effort>
-							<!-- Set to low to get issues with low confidence, medium to filter them out -->
+							<!-- Set to low to get issues with low confidence,
+								medium to filter them out -->
 							<threshold>medium</threshold>
 							<excludeFilterFile>${project.rootdir}/spotbugs-security-exclude.xml</excludeFilterFile>
 						</configuration>
@@ -767,4 +777,15 @@
 			</reporting>
 		</profile>
 	</profiles>
+
+	<repositories>
+		<repository>
+			<id>github-the4thlaw</id>
+			<name>GitHub The4thLaw Maven Packages</name>
+			<url>https://maven.pkg.github.com/The4thLaw/*</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 </project>

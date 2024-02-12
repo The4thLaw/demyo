@@ -1,7 +1,5 @@
 package org.demyo.utils.io;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.zip.ZipFile;
@@ -18,7 +16,7 @@ import org.mockito.Mockito;
 class DIOUtilsTest {
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(Closeable)}.
-	 * 
+	 *
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
@@ -31,7 +29,7 @@ class DIOUtilsTest {
 
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(Closeable)} when the closeable throws an Exception.
-	 * 
+	 *
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
@@ -44,7 +42,7 @@ class DIOUtilsTest {
 
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(ZipFile)}.
-	 * 
+	 *
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
@@ -57,7 +55,7 @@ class DIOUtilsTest {
 
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(ZipFile)} when the closeable throws an Exception.
-	 * 
+	 *
 	 * @throws IOException should never be thrown.
 	 */
 	@Test
@@ -70,7 +68,7 @@ class DIOUtilsTest {
 
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(XMLStreamWriter)}.
-	 * 
+	 *
 	 * @throws XMLStreamException should never be thrown.
 	 */
 	@Test
@@ -83,7 +81,7 @@ class DIOUtilsTest {
 
 	/**
 	 * Tests {@link DIOUtils#closeQuietly(XMLStreamWriter)} when the closeable throws an Exception.
-	 * 
+	 *
 	 * @throws XMLStreamException should never be thrown.
 	 */
 	@Test
@@ -92,18 +90,5 @@ class DIOUtilsTest {
 		Mockito.doThrow(XMLStreamException.class).when(closeable).close();
 		DIOUtils.closeQuietly(closeable);
 		Mockito.verify(closeable, Mockito.times(1)).close();
-	}
-
-	/**
-	 * Tests {@link DIOUtils#getFileExtension(String)}.
-	 */
-	@Test
-	void getFileExtension() {
-		assertThat(DIOUtils.getFileExtension(null)).isNull();
-		assertThat(DIOUtils.getFileExtension("foo")).isNull();
-		assertThat(DIOUtils.getFileExtension("foo.jpg")).isEqualTo("jpg");
-		assertThat(DIOUtils.getFileExtension("foo.JPG")).isEqualTo("jpg");
-		assertThat(DIOUtils.getFileExtension("foo.mp3")).isEqualTo("mp3");
-		assertThat(DIOUtils.getFileExtension("foo.mp3/")).isEqualTo("mp3");
 	}
 }

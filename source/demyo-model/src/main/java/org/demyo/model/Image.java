@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
+import org.the4thlaw.utils.io.FilenameUtils;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -20,7 +21,6 @@ import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
-import org.demyo.utils.io.DIOUtils;
 
 /**
  * Represents an image.
@@ -84,12 +84,12 @@ public class Image extends AbstractModel {
 
 	/**
 	 * Gets a file name that makes sense to the user, regardless of the name on disk.
-	 * 
+	 *
 	 * @return a file name.
 	 */
 	@JsonView(ModelView.Basic.class)
 	public String getUserFileName() {
-		String fileExtension = DIOUtils.getFileExtension(url);
+		String fileExtension = FilenameUtils.getFileExtension(url);
 		if (fileExtension == null) {
 			// Reasonable default, more useful to most people than a ".dat" or something
 			fileExtension = "jpg";
@@ -100,7 +100,7 @@ public class Image extends AbstractModel {
 
 	/**
 	 * Gets the URL to access the image.
-	 * 
+	 *
 	 * @return the URL to access the image
 	 */
 	public String getUrl() {
@@ -109,7 +109,7 @@ public class Image extends AbstractModel {
 
 	/**
 	 * Sets the URL to access the image.
-	 * 
+	 *
 	 * @param url the new URL to access the image
 	 */
 	public void setUrl(String url) {
@@ -118,7 +118,7 @@ public class Image extends AbstractModel {
 
 	/**
 	 * Gets the description of the image.
-	 * 
+	 *
 	 * @return the description of the image
 	 */
 	public String getDescription() {
@@ -127,7 +127,7 @@ public class Image extends AbstractModel {
 
 	/**
 	 * Sets the description of the image.
-	 * 
+	 *
 	 * @param description the new description of the image
 	 */
 	public void setDescription(String description) {

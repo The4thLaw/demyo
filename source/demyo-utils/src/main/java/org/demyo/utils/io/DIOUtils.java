@@ -41,7 +41,7 @@ public final class DIOUtils {
 	 * <p>
 	 * Similar to Apache Commons' method, but actually logs any error rather than discarding them.
 	 * </p>
-	 * 
+	 *
 	 * @param closeable The object to close, may be null or already closed
 	 */
 	public static void closeQuietly(Closeable closeable) {
@@ -64,7 +64,7 @@ public final class DIOUtils {
 	 * <p>
 	 * Similar to Apache Commons' method, but actually logs any error rather than discarding them.
 	 * </p>
-	 * 
+	 *
 	 * @param closeable The object to close, may be null or already closed
 	 */
 	public static void closeQuietly(ZipFile closeable) {
@@ -87,7 +87,7 @@ public final class DIOUtils {
 	 * <p>
 	 * Similar to Apache Commons' method, but actually logs any error rather than discarding them.
 	 * </p>
-	 * 
+	 *
 	 * @param closeable The object to close, may be null or already closed
 	 */
 	public static void closeQuietly(XMLStreamWriter closeable) {
@@ -107,7 +107,7 @@ public final class DIOUtils {
 	 * <p>
 	 * This method ignores the file if it is not a regular file.
 	 * </p>
-	 * 
+	 *
 	 * @param file The file to delete.
 	 */
 	public static void delete(File file) {
@@ -120,7 +120,7 @@ public final class DIOUtils {
 	 * <p>
 	 * This method ignores the file if it is not a regular file.
 	 * </p>
-	 * 
+	 *
 	 * @param file The file to delete.
 	 */
 	public static void delete(Path file) {
@@ -144,7 +144,7 @@ public final class DIOUtils {
 
 	/**
 	 * Deletes a directory recursively, and log if deletion failed but don't throw an exception.
-	 * 
+	 *
 	 * @param directory The directory to delete.
 	 */
 	public static void deleteDirectory(Path directory) {
@@ -156,7 +156,7 @@ public final class DIOUtils {
 
 	/**
 	 * Deletes a directory recursively, and log if deletion failed but don't throw an exception.
-	 * 
+	 *
 	 * @param directory The directory to delete.
 	 */
 	public static void deleteDirectory(File directory) {
@@ -173,7 +173,7 @@ public final class DIOUtils {
 
 	/**
 	 * Creates a temporary directory at the specified location.
-	 * 
+	 *
 	 * @param prefix The prefix string to be used in generating the file's name.
 	 * @param directory The directory in which the file is to be created, or <code>null</code> if the default
 	 *            temporary-file directory is to be used
@@ -185,30 +185,8 @@ public final class DIOUtils {
 	}
 
 	/**
-	 * Returns the extension of a file.
-	 * <p>
-	 * Special characters are stripped out to avoid potential injections
-	 * </p>
-	 * 
-	 * @param fileName The name of the file.
-	 * @return The extension, or <code>null</code> if there was no extension.
-	 */
-	public static String getFileExtension(String fileName) {
-		if (fileName == null) {
-			return null;
-		}
-		int lastDot = fileName.lastIndexOf('.');
-		if (lastDot <= 0) {
-			return null;
-		} else {
-			String baseExt = fileName.substring(lastDot + 1, fileName.length()).toLowerCase();
-			return FILE_EXT_EXCLUSIONS.matcher(baseExt).replaceAll("");
-		}
-	}
-
-	/**
 	 * Sniffs the first bytes of a file, and tries to match them to a specific pattern.
-	 * 
+	 *
 	 * @param file The file to sniff
 	 * @param byteCount The maximum number of bytes to sniff
 	 * @param charset The excepted character set of the file
@@ -234,7 +212,7 @@ public final class DIOUtils {
 
 	/**
 	 * Sniffs the first few bytes of a file, and tries to match them as UTF-8 to a specific pattern.
-	 * 
+	 *
 	 * @param file The file to sniff
 	 * @param pattern The pattern to match
 	 * @return <code>true</code> if sniffing was successful and the sniffed content matches the pattern.
@@ -246,7 +224,7 @@ public final class DIOUtils {
 
 	/**
 	 * Ensures that a child path is indeed child to the provided parent path.
-	 * 
+	 *
 	 * @param parent The parent path.
 	 * @param child The child path.
 	 * @throws SecurityException if the assertion fails.

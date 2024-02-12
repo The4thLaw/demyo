@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.the4thlaw.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -63,7 +64,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @throws DemyoException In case of issue while creating the upload directory.
 	 */
 	public ImageService() throws DemyoException {
@@ -153,7 +154,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		}
 
 		// Determine the target file name
-		String extension = DIOUtils.getFileExtension(originalFileName);
+		String extension = FilenameUtils.getFileExtension(originalFileName);
 		if (extension == null) {
 			extension = "jpg";
 		}
