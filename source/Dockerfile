@@ -18,6 +18,7 @@ RUN mvn install -DskipTests -Pprod
 
 FROM eclipse-temurin:11-jre-alpine
 WORKDIR /demyo
+# TODO: use a specific user to run demyo?
 COPY --from=mvn-build /mvn-app/demyo-app/target/dependencies/* lib/
 COPY --from=mvn-build  /mvn-app/demyo-app/target/demyo-app-*.jar lib/
 COPY --from=mvn-build /mvn-app/demyo-web/target/demyo-web-*.war war/
