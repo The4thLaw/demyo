@@ -9,7 +9,7 @@
 	<artifactId>demyo-utils</artifactId>
 	<name>Demyo: Utils</name>
 	<description>Utility classes</description>
-	
+
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
 	</properties>
@@ -19,7 +19,7 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
@@ -28,7 +28,11 @@
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-test</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.the4thlaw</groupId>
+			<artifactId>common-utils</artifactId>
+		</dependency>
+
 		<!-- Used to access the context -->
 		<dependency>
 			<groupId>org.springframework</groupId>

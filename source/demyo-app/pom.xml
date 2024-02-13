@@ -44,6 +44,10 @@ Includes the Web server, H2 server, and startup program.</description>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.the4thlaw</groupId>
+			<artifactId>h2-utils</artifactId>
+		</dependency>
 
 		<!-- Used to resize the tray icon -->
 		<dependency>

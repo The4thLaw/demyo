@@ -1,8 +1,5 @@
 package org.demyo.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,13 +13,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.the4thlaw.utils.io.FileUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IImageRepo;
 import org.demyo.model.Image;
 import org.demyo.service.IFilePondService;
-import org.demyo.utils.io.DIOUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit tests for {@link ImageService}.
@@ -41,7 +41,7 @@ class ImageServiceTest extends AbstractServiceTest {
 
 	private static void cleanDummyImage(Image image) {
 		Path f = SystemConfiguration.getInstance().getImagesDirectory().resolve(image.getUrl());
-		DIOUtils.delete(f);
+		FileUtils.deleteQuietly(f);
 	}
 
 	private static ImageService createImageServiceForRecovery() throws DemyoException {
@@ -59,7 +59,7 @@ class ImageServiceTest extends AbstractServiceTest {
 
 	/**
 	 * Tests that recovering a single image where no other image already exists works.
-	 * 
+	 *
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
@@ -76,7 +76,7 @@ class ImageServiceTest extends AbstractServiceTest {
 
 	/**
 	 * Tests that recovering a single image where an image already exists with that name works.
-	 * 
+	 *
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
@@ -100,7 +100,7 @@ class ImageServiceTest extends AbstractServiceTest {
 
 	/**
 	 * Tests that recovering multiple images where image already exist with that name works.
-	 * 
+	 *
 	 * @throws DemyoException In case of error.
 	 */
 	@Test
@@ -121,7 +121,7 @@ class ImageServiceTest extends AbstractServiceTest {
 
 	/**
 	 * Tests that recovering multiple images where image already exist with that name works.
-	 * 
+	 *
 	 * @throws DemyoException In case of error.
 	 */
 	@Test

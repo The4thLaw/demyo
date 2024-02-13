@@ -22,6 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.the4thlaw.utils.io.IOUtils;
+import org.the4thlaw.utils.io.Sniffer;
+import org.the4thlaw.utils.xml.XMLUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -34,9 +37,7 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IImageService;
 import org.demyo.service.IImportService;
-import org.demyo.utils.io.DIOUtils;
 import org.demyo.utils.io.ZipUtils;
-import org.demyo.utils.xml.XMLUtils;
 
 /**
  * Importer for Demyo 2.x files.
@@ -64,7 +65,7 @@ public class Demyo2Importer implements IImporter {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file, FORMAT_PATTERN);
+			return Sniffer.sniffFile(file, FORMAT_PATTERN);
 		}
 
 		return originalFilenameLc.endsWith(".dea");
@@ -72,7 +73,7 @@ public class Demyo2Importer implements IImporter {
 
 	/**
 	 * Extracts a ZIP file to a new temporary directory.
-	 * 
+	 *
 	 * @param file The file to extract.
 	 * @return The temporary directory where the file was extracted.
 	 * @throws IOException in case of error during extraction.
@@ -145,15 +146,15 @@ public class Demyo2Importer implements IImporter {
 			}
 			throw new DemyoException(DemyoErrorCode.IMPORT_PARSE_ERROR, saxe);
 		} finally {
-			DIOUtils.closeQuietly(xmlBis);
-			DIOUtils.closeQuietly(xmlFis);
-			DIOUtils.deleteDirectory(archiveDirectory);
+			IOUtils.closeQuietly(xmlBis);
+			IOUtils.closeQuietly(xmlFis);
+			org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(archiveDirectory);
 		}
 	}
 
 	/**
 	 * Restores the images from the imported archive in the local database.
-	 * 
+	 *
 	 * @param archiveDirectory The path to the archive directory.
 	 * @param imagesDirectoryName The name of the images directory in the archive.
 	 * @throws DemyoException If moving the images fails.
@@ -178,7 +179,7 @@ public class Demyo2Importer implements IImporter {
 		}
 
 		LOGGER.debug("Removing backup copy");
-		DIOUtils.deleteDirectory(backupCopyDestination);
+		org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(backupCopyDestination);
 
 		imageService.clearCachedThumbnails();
 	}

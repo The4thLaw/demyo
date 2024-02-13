@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.the4thlaw.utils.image.ImageUtils;
+import org.the4thlaw.utils.io.FileUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -34,8 +36,6 @@ import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IThumbnailService;
 import org.demyo.service.ImageRetrievalResponse;
 import org.demyo.service.ThumbnailGenerationOverload;
-import org.demyo.utils.io.DIOUtils;
-import org.demyo.utils.io.ImageUtils;
 
 /**
  * Implements the contract defined by {@link IThumbnailService}.
@@ -72,7 +72,7 @@ public class ThumbnailService implements IThumbnailService {
 
 	/**
 	 * Constructor allowing to set the thumbnail directory and queue size.
-	 * 
+	 *
 	 * @param thumbnailDirectory The directory where thumbnails are stored.
 	 * @param queueSize The size of the thumbnail generation queue.
 	 */
@@ -128,7 +128,12 @@ public class ThumbnailService implements IThumbnailService {
 
 		// No cache hit, check for leniency
 		Path image = imageFileLoader.getImage();
-		int originalWidth = ImageUtils.getImageWidth(image.toFile());
+		int originalWidth;
+		try {
+			originalWidth = ImageUtils.getImageWidth(image.toFile());
+		} catch (IOException e) {
+			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
+		}
 		if (maxWidth >= originalWidth || (lenient && maxWidth * LENIENCY_WIDTH_FACTOR >= originalWidth)) {
 			LOGGER.debug("Leniently returning the original image for {}, it's {}px wide instead of the requested {}",
 					id, originalWidth, maxWidth);
@@ -266,8 +271,8 @@ public class ThumbnailService implements IThumbnailService {
 			}
 		} catch (IOException e) {
 			// Ensure we don't store invalid contents
-			DIOUtils.delete(jpgThumb);
-			DIOUtils.delete(pngThumb);
+			FileUtils.deleteQuietly(jpgThumb);
+			FileUtils.deleteQuietly(pngThumb);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR, e);
 		} finally {
 			buffImage.flush();

@@ -22,13 +22,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.the4thlaw.utils.xml.XMLUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IExportService;
-import org.demyo.utils.io.DIOUtils;
 
 import javanet.staxutils.IndentingXMLStreamWriter;
 
@@ -141,7 +141,7 @@ public class Demyo2Exporter implements IExporter {
 			// We will most likely not need this anymore in the current request. Clear it to avoid leaks.
 			DATE_FORMAT.remove();
 
-			DIOUtils.closeQuietly(xsw);
+			XMLUtils.closeQuietly(xsw);
 		}
 
 		return out;

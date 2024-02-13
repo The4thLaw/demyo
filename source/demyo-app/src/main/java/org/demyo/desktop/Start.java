@@ -7,13 +7,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
@@ -26,6 +25,8 @@ import org.h2.engine.Constants;
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.the4thlaw.utils.h2.H2LocalUpgrader;
+import org.the4thlaw.utils.h2.H2VersionManager;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.desktop.DesktopCallbacks;
@@ -41,6 +42,7 @@ public final class Start {
 	private static final String DB_USER = "demyo";
 	private static final String DB_PASSWORD = "demyo";
 	private static final String DB_FILE_SUFFIX = Pattern.quote(Constants.SUFFIX_MV_FILE) + "$";
+	/** The version of H2 used before we started tracking the version numbers. */
 	private static final int DEMYO_3_0_H2_VERSION = 196;
 
 	private Start() {
@@ -48,7 +50,7 @@ public final class Start {
 
 	/**
 	 * Startup method.
-	 * 
+	 *
 	 * @param args The command line arguments.
 	 */
 	public static void main(String[] args) {
@@ -145,7 +147,8 @@ public final class Start {
 		String url = "jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE";
 		LOGGER.debug("Database URL is {}", url);
 
-		migrateH2IfNeeded(databaseFile, isNewDatabase, url);
+		// Potentially migrate the database
+		migrateH2IfNeeded(isNewDatabase, Paths.get(databaseFilePath), url);
 
 		LOGGER.info("Starting database...");
 		JdbcDataSource ds = new JdbcDataSource();
@@ -163,43 +166,24 @@ public final class Start {
 		return ds;
 	}
 
-	private static void migrateH2IfNeeded(Path databaseFile, boolean isNewDatabase, String url)
-			throws IOException, SQLException, ReflectiveOperationException {
-		Path databaseVersionFile = databaseFile.getParent().resolve("demyo-h2-version.txt");
-		if (!isNewDatabase) {
-			LOGGER.debug("Checking if the database's H2 version must be migrated");
-			int version;
-			if (!Files.exists(databaseVersionFile)) {
-				version = DEMYO_3_0_H2_VERSION;
-			} else {
-				String versionStr = new String(Files.readAllBytes(databaseVersionFile), StandardCharsets.UTF_8);
-				version = Integer.parseInt(versionStr);
-			}
+	private static void migrateH2IfNeeded(boolean isNewDatabase, Path databaseFilePath, String url) throws IOException {
+		Path h2CacheDirectory = SystemConfiguration.getInstance().getApplicationDirectory()
+				.resolve("legacy-h2-versions");
+		H2LocalUpgrader upgrader = new H2LocalUpgrader(h2CacheDirectory);
+		H2VersionManager vm = new H2VersionManager(DEMYO_3_0_H2_VERSION, databaseFilePath, upgrader);
+		vm.migrateH2IfNeeded(isNewDatabase, url, DB_USER, DB_PASSWORD);
 
-			if (version == DEMYO_3_0_H2_VERSION) {
-				// H2 at the version of Demyo 3.0 supported stuff that it shouldn't have and on which migrations
-				// relied:
-				// - UNSIGNED INT as a datatype
-				// - Dangling commas at the end of a list of columns in a create statement
-				// - MODIFY COLUMN could be used rather than ALTER COLUMN
-				// So we need to repair
-				LOGGER.info("Migrating from H2 {} requires a Flyway repair", version);
-				SystemConfiguration.getInstance().setFlywayRepairRequired(true);
-			}
-
-			if (version != Constants.BUILD_ID) {
-				LOGGER.info("Migrating the H2 database from {} to {}", version, Constants.BUILD_ID);
-				Properties dbMigProps = new Properties();
-				dbMigProps.setProperty("user", DB_USER);
-				dbMigProps.setProperty("password", DB_PASSWORD);
-				H2LocalUpgrade.upgrade(url, dbMigProps, version);
-			} else {
-				LOGGER.debug("The H2 database is at version {}, same as what Demyo requires", version);
-			}
+		int version = vm.getCurrentVersion();
+		if (version == DEMYO_3_0_H2_VERSION) {
+			// H2 at the version of Demyo 3.0 supported stuff that it shouldn't have and on which migrations
+			// relied:
+			// - UNSIGNED INT as a datatype
+			// - Dangling commas at the end of a list of columns in a create statement
+			// - MODIFY COLUMN could be used rather than ALTER COLUMN
+			// So we need to repair because the SQL files were changes accordingly and their hashes have changed
+			LOGGER.info("Migrating from H2 {} requires a Flyway repair", version);
+			SystemConfiguration.getInstance().setFlywayRepairRequired(true);
 		}
-
-		// Always write the current H2 version
-		Files.write(databaseVersionFile, String.valueOf(Constants.BUILD_ID).getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -210,7 +194,7 @@ public final class Start {
 	 * <p>
 	 * This method must be called before starting the server.
 	 * </p>
-	 * 
+	 *
 	 * @param server The Jetty server
 	 * @throws NamingException In case registering the JNDI attribute fails.
 	 */

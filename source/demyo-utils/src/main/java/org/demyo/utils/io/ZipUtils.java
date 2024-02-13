@@ -17,6 +17,8 @@ import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.the4thlaw.utils.io.FileSecurityUtils;
+import org.the4thlaw.utils.io.FileUtils;
 
 /**
  * Utilities to manage ZIP files.
@@ -30,7 +32,7 @@ public final class ZipUtils {
 
 	/**
 	 * Extracts a ZIP file to an arbitrary location.
-	 * 
+	 *
 	 * @param source The file to extract.
 	 * @param destination The destination directory.
 	 * @throws IOException In case of error during extraction.
@@ -49,7 +51,7 @@ public final class ZipUtils {
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();
 				Path entryDestination = destination.resolve(entry.getName());
-				DIOUtils.assertChildOf(destination, entryDestination);
+				FileSecurityUtils.assertChildOf(destination, entryDestination);
 				if (entry.isDirectory()) {
 					Files.createDirectories(entryDestination);
 				} else {
@@ -63,13 +65,13 @@ public final class ZipUtils {
 			}
 		} catch (Exception e) {
 			LOGGER.warn("Failed to extract the ZIP file; clearing the destination...", e);
-			DIOUtils.deleteDirectory(destination.toFile());
+			FileUtils.deleteDirectoryQuietly(destination.toFile());
 		}
 	}
 
 	/**
 	 * Adds a file or directory to a ZIP.
-	 * 
+	 *
 	 * @param source The entry to zip.
 	 * @param alias An alias to use instead of the name of the entry.
 	 * @param destination The ZIP file to populate.

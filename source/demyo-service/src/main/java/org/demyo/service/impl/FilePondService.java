@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.the4thlaw.utils.io.FileSecurityUtils;
 import org.the4thlaw.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -24,7 +25,6 @@ import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IFilePondService;
-import org.demyo.utils.io.DIOUtils;
 
 /**
  * Implements the contract defined by {@link IFilePondService}.
@@ -77,7 +77,7 @@ public class FilePondService implements IFilePondService {
 
 		for (File f : filesToDelete) {
 			LOGGER.debug("Auto-cleaning FilePond file: {}", f);
-			DIOUtils.delete(f);
+			org.the4thlaw.utils.io.FileUtils.deleteQuietly(f);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class FilePondService implements IFilePondService {
 			IOUtils.copy(input, fos);
 		} catch (IOException ioe) {
 			LOGGER.warn("Failed to store FilePond data to {}", destinationFile, ioe);
-			DIOUtils.delete(destinationFile);
+			org.the4thlaw.utils.io.FileUtils.deleteQuietly(destinationFile);
 		}
 		// Request to delete on exit, just in case
 		destinationFile.toFile().deleteOnExit();
@@ -112,15 +112,15 @@ public class FilePondService implements IFilePondService {
 	@Override
 	public void revert(String id) {
 		Path file = uploadDirectory.resolve(id);
-		DIOUtils.assertChildOf(uploadDirectory, file);
-		DIOUtils.delete(file);
+		FileSecurityUtils.assertChildOf(uploadDirectory, file);
+		org.the4thlaw.utils.io.FileUtils.deleteQuietly(file);
 	}
 
 	@Override
 	public File getFileForId(String id) throws DemyoException {
 		Path file = uploadDirectory.resolve(id);
 
-		DIOUtils.assertChildOf(uploadDirectory, file);
+		FileSecurityUtils.assertChildOf(uploadDirectory, file);
 
 		if (!(Files.exists(file) && Files.isRegularFile(file))) {
 			LOGGER.warn("{} doesn't exist or isn't a regular file", file.toAbsolutePath());

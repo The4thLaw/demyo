@@ -1,7 +1,5 @@
 package org.demyo.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,18 +14,19 @@ import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.the4thlaw.utils.image.ImageUtils;
+import org.the4thlaw.utils.io.FileUtils;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IThumbnailService;
 import org.demyo.service.ImageRetrievalResponse;
-import org.demyo.utils.io.DIOUtils;
-import org.demyo.utils.io.ImageUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests from {@link ThumbnailService}.
@@ -50,7 +49,7 @@ class ThumbnailServiceTest {
 
 	/**
 	 * Sets up the service and various directories.
-	 * 
+	 *
 	 * @throws IOException If creating the directories fails.
 	 */
 	@BeforeEach
@@ -65,7 +64,7 @@ class ThumbnailServiceTest {
 	 */
 	@AfterEach
 	void tearDown() {
-		DIOUtils.deleteDirectory(testDir);
+		FileUtils.deleteDirectoryQuietly(testDir);
 	}
 
 	private Path copyImage(String name) throws IOException, URISyntaxException {
@@ -73,7 +72,7 @@ class ThumbnailServiceTest {
 		assertThat(url).withFailMessage(() -> name + " not found").isNotNull();
 		File source = Paths.get(url.toURI()).toFile();
 		Path destination = testDir.resolve(name);
-		FileUtils.copyFile(source, destination.toFile());
+		Files.copy(source.toPath(), destination);
 		return destination;
 	}
 
@@ -81,11 +80,11 @@ class ThumbnailServiceTest {
 	 * Tests
 	 * {@link ThumbnailService#getThumbnail(long, int, boolean, org.demyo.service.impl.ThumbnailService.ImageSupplier)}
 	 * .
-	 * 
+	 *
 	 * <p>
 	 * This is the case for a generated thumbnail.
 	 * </p>
-	 * 
+	 *
 	 * @param imageName The name of the image to use as source.
 	 * @throws DemyoException If generation fails.
 	 * @throws IOException If copying the source or asserting the destination fails.
@@ -110,11 +109,11 @@ class ThumbnailServiceTest {
 	 * Tests
 	 * {@link ThumbnailService#getThumbnail(long, int, boolean, org.demyo.service.impl.ThumbnailService.ImageSupplier)}
 	 * .
-	 * 
+	 *
 	 * <p>
 	 * This is the case for a an exact match to the original.
 	 * </p>
-	 * 
+	 *
 	 * @param imageName The name of the image to use as source.
 	 * @throws DemyoException If generation fails.
 	 * @throws IOException If copying the source or asserting the destination fails.
@@ -135,11 +134,11 @@ class ThumbnailServiceTest {
 	 * Tests
 	 * {@link ThumbnailService#getThumbnail(long, int, boolean, org.demyo.service.impl.ThumbnailService.ImageSupplier)}
 	 * .
-	 * 
+	 *
 	 * <p>
 	 * This is the case for a lenient match to the original.
 	 * </p>
-	 * 
+	 *
 	 * @param imageName The name of the image to use as source.
 	 * @throws DemyoException If generation fails.
 	 * @throws IOException If copying the source or asserting the destination fails.
@@ -160,11 +159,11 @@ class ThumbnailServiceTest {
 	 * Tests
 	 * {@link ThumbnailService#getThumbnail(long, int, boolean, org.demyo.service.impl.ThumbnailService.ImageSupplier)}
 	 * .
-	 * 
+	 *
 	 * <p>
 	 * This is the case for the need for a fallback thumbnail due to a generation issue.
 	 * </p>
-	 * 
+	 *
 	 * @param imageName The name of the image to use as source.
 	 * @throws DemyoException If generation fails.
 	 * @throws IOException If copying the source or asserting the destination fails.

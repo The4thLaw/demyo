@@ -1,7 +1,5 @@
 package org.demyo.service.importing;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,14 +22,18 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.the4thlaw.utils.io.FileUtils;
+import org.the4thlaw.utils.io.IOUtils;
+import org.the4thlaw.utils.io.Sniffer;
+import org.the4thlaw.utils.xml.XMLUtils;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
-import org.demyo.utils.io.DIOUtils;
-import org.demyo.utils.xml.XMLUtils;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Importer for Demyo 1.5 files.
@@ -53,7 +55,7 @@ public class Demyo1Importer extends Demyo2Importer {
 		String originalFilenameLc = originalFilename.toLowerCase();
 
 		if (originalFilenameLc.endsWith(".xml")) {
-			return DIOUtils.sniffFile(file, FORMAT_PATTERN);
+			return Sniffer.sniffFile(file, FORMAT_PATTERN);
 		}
 
 		return originalFilenameLc.endsWith(".zip");
@@ -130,10 +132,10 @@ public class Demyo1Importer extends Demyo2Importer {
 		} catch (SAXException | TransformerException | ParserConfigurationException e) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_PARSE_ERROR, e);
 		} finally {
-			DIOUtils.closeQuietly(xslSheet);
-			DIOUtils.closeQuietly(xmlBis);
-			DIOUtils.closeQuietly(xmlFis);
-			DIOUtils.deleteDirectory(archiveDirectory);
+			IOUtils.closeQuietly(xslSheet);
+			IOUtils.closeQuietly(xmlBis);
+			IOUtils.closeQuietly(xmlFis);
+			FileUtils.deleteDirectoryQuietly(archiveDirectory);
 		}
 	}
 
@@ -147,12 +149,12 @@ public class Demyo1Importer extends Demyo2Importer {
 	 * The regex seems restrictibe enough to avoid any security issues but we're still reading the file in memory so
 	 * there's room for a DOS here in theory.
 	 * </p>
-	 * 
+	 *
 	 * @param xmlFile The file to check
 	 */
 
 	private static void stripXslDoctype(Path xmlFile) throws IOException {
-		if (DIOUtils.sniffFile(xmlFile, XSL_DTD_PRESENCE_PATTERN)) {
+		if (Sniffer.sniffFile(xmlFile, XSL_DTD_PRESENCE_PATTERN)) {
 			LOGGER.debug("{} contains an old Demyo 1.x DTD, removing it", xmlFile);
 
 			byte[] content = Files.readAllBytes(xmlFile);

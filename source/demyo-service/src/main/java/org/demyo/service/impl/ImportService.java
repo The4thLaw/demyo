@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.the4thlaw.utils.io.FileUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -26,7 +27,6 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IImportService;
 import org.demyo.service.importing.IImporter;
-import org.demyo.utils.io.DIOUtils;
 
 /**
  * Implements the contract defined by {@link IImportService}.
@@ -62,7 +62,7 @@ public class ImportService implements IImportService {
 			fos = Files.newOutputStream(importFile);
 			bos = new BufferedOutputStream(fos);
 			IOUtils.copy(content, bos);
-			DIOUtils.closeQuietly(bos);
+			org.the4thlaw.utils.io.IOUtils.closeQuietly(bos);
 
 			// Detect importer to use
 			IImporter importer = null;
@@ -85,10 +85,10 @@ public class ImportService implements IImportService {
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
 		} finally {
-			DIOUtils.delete(importFile);
-			DIOUtils.closeQuietly(content);
-			DIOUtils.closeQuietly(bos);
-			DIOUtils.closeQuietly(fos);
+			FileUtils.deleteQuietly(importFile);
+			org.the4thlaw.utils.io.IOUtils.closeQuietly(content);
+			org.the4thlaw.utils.io.IOUtils.closeQuietly(bos);
+			org.the4thlaw.utils.io.IOUtils.closeQuietly(fos);
 		}
 	}
 }

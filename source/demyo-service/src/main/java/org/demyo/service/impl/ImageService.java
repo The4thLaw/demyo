@@ -42,7 +42,6 @@ import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
 import org.demyo.service.IThumbnailService;
 import org.demyo.service.ImageRetrievalResponse;
-import org.demyo.utils.io.DIOUtils;
 
 /**
  * Implements the contract defined by {@link IImageService}.
@@ -173,7 +172,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				return foundImage;
 			}
 			LOGGER.debug("Already existing image was not found in the database. Uploading it as a new one...");
-			DIOUtils.delete(targetFile);
+			org.the4thlaw.utils.io.FileUtils.deleteQuietly(targetFile);
 		}
 
 		// Either the file does not exist, or it was removed in the previous step
@@ -264,7 +263,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	public void clearCachedThumbnails() {
 		LOGGER.debug("Clearing thumbnail cache");
 		Path thumbnailDirectory = SystemConfiguration.getInstance().getThumbnailDirectory();
-		DIOUtils.deleteDirectory(thumbnailDirectory);
+		org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(thumbnailDirectory);
 		try {
 			Files.createDirectories(thumbnailDirectory);
 			LOGGER.debug("Recreated thumbnail directory at {}", thumbnailDirectory);

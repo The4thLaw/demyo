@@ -1,7 +1,5 @@
 package org.demyo.service.exporting;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +16,8 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.impl.AbstractServiceTest;
-import org.demyo.utils.io.DIOUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for {@link Demyo2Exporter}.
@@ -33,15 +32,16 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 	/**
 	 * Tests that the export does not miss anything.
-	 * 
+	 *
 	 * @throws DemyoException In case of export error.
 	 * @throws IOException In case of I/O error.
 	 */
 	@Test
 	void testExportCompleteness() throws DemyoException, IOException {
 		File expFile = exporter.export();
+
 		String expContent = FileUtils.readFileToString(expFile, StandardCharsets.UTF_8);
-		DIOUtils.delete(expFile);
+		org.the4thlaw.utils.io.FileUtils.deleteQuietly(expFile);
 		LOGGER.error(expContent);
 
 		assertThat(expContent)

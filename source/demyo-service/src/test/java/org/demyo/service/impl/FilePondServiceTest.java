@@ -1,8 +1,5 @@
 package org.demyo.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.demyo.common.exception.DemyoException;
-import org.demyo.utils.io.DIOUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests for {@link FilePondService}.
@@ -33,7 +32,7 @@ class FilePondServiceTest {
 
 	/**
 	 * Sets up the service and temp directory.
-	 * 
+	 *
 	 * @throws IOException If creating the temp directory failed.
 	 */
 	@BeforeEach
@@ -47,7 +46,7 @@ class FilePondServiceTest {
 	 */
 	@AfterEach
 	void tearDown() {
-		DIOUtils.deleteDirectory(uploadDir);
+		org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(uploadDir);;
 	}
 
 	private static void createSampleFile(File toDelete) throws IOException {
@@ -56,7 +55,7 @@ class FilePondServiceTest {
 
 	/**
 	 * Tests {@link FilePondService#cleanFilePondDirectory()}
-	 * 
+	 *
 	 * @throws IOException If creating the test data fails.
 	 */
 	@Test
@@ -78,7 +77,7 @@ class FilePondServiceTest {
 
 	/**
 	 * Tests {@link FilePondService#process(String, java.io.InputStream)}
-	 * 
+	 *
 	 * @throws IOException If the processing fails.
 	 */
 	@Test
@@ -94,7 +93,7 @@ class FilePondServiceTest {
 
 	/**
 	 * Tests {@link FilePondService#revert(String)}.
-	 * 
+	 *
 	 * @throws IOException If creating the test data fails.
 	 */
 	@Test
@@ -111,7 +110,7 @@ class FilePondServiceTest {
 
 	/**
 	 * Tests {@link FilePondService#getFileForId(String)}.
-	 * 
+	 *
 	 * @throws IOException If creating the test data fails.
 	 * @throws DemyoException If getting the valid file fails.
 	 */
