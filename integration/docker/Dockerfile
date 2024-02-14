@@ -7,6 +7,10 @@ RUN npm run build
 FROM maven:3.9-eclipse-temurin-11 AS mvn-build
 WORKDIR /mvn-app
 COPY . .
+# Generate m2 settings with a secret and access to the GitHub packages
+RUN mkdir ~/.m2
+ARG GITHUB_PKG_TOKEN
+RUN echo "<settings><servers><server><id>github-the4thlaw</id><username>The4thLaw</username><password>$GITHUB_PKG_TOKEN</password></server></servers></settings>" > ~/.m2/settings.xml
 # Clean to be sure
 RUN mvn clean -Pprod,prod-win,vue
 # Re-integrate the node build
