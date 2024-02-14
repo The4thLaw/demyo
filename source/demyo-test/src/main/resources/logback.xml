@@ -56,6 +56,10 @@
 				<appender-ref ref="console" />
 				<appender-ref ref="demyo" />
 			</logger>
+			<logger name="org.the4thlaw" level="DEBUG" additivity="false">
+				<appender-ref ref="console" />
+				<appender-ref ref="demyo" />
+			</logger>
 			<root level="WARN">
 				<appender-ref ref="console" />
 				<appender-ref ref="3rdParty" />
@@ -63,6 +67,9 @@
 		</then>
 		<else>
 			<logger name="org.demyo" level="DEBUG" additivity="false">
+				<appender-ref ref="demyo" />
+			</logger>
+			<logger name="org.the4thlaw" level="DEBUG" additivity="false">
 				<appender-ref ref="demyo" />
 			</logger>
 			<root level="WARN">

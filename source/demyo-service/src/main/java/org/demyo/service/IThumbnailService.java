@@ -1,7 +1,9 @@
 package org.demyo.service;
 
+import org.the4thlaw.commons.services.image.BaseThumbnailService.ImageSupplier;
+import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
+
 import org.demyo.common.exception.DemyoException;
-import org.demyo.service.impl.ThumbnailService.ImageSupplier;
 
 /**
  * Defines methods to work with thumbnails.
@@ -18,7 +20,7 @@ public interface IThumbnailService {
 
 	/**
 	 * Gets the thumbnail for an image. Results are cached.
-	 * 
+	 *
 	 * @param id The image ID
 	 * @param maxWidth The maximum desired width
 	 * @param lenient When lenient, we allow a minor difference in sizes, because it won't change a lot in terms of

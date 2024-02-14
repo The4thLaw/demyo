@@ -46,7 +46,7 @@ class FilePondServiceTest {
 	 */
 	@AfterEach
 	void tearDown() {
-		org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(uploadDir);;
+		org.the4thlaw.commons.utils.io.FileUtils.deleteDirectoryQuietly(uploadDir);;
 	}
 
 	private static void createSampleFile(File toDelete) throws IOException {

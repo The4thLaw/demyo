@@ -41,7 +41,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		File expFile = exporter.export();
 
 		String expContent = FileUtils.readFileToString(expFile, StandardCharsets.UTF_8);
-		org.the4thlaw.utils.io.FileUtils.deleteQuietly(expFile);
+		org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(expFile);
 		LOGGER.error(expContent);
 
 		assertThat(expContent)

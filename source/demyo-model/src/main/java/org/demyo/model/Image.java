@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
-import org.the4thlaw.utils.io.FilenameUtils;
+import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import com.fasterxml.jackson.annotation.JsonView;
 

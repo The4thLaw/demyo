@@ -22,9 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.the4thlaw.utils.io.IOUtils;
-import org.the4thlaw.utils.io.Sniffer;
-import org.the4thlaw.utils.xml.XMLUtils;
+import org.the4thlaw.commons.utils.io.IOUtils;
+import org.the4thlaw.commons.utils.io.Sniffer;
+import org.the4thlaw.commons.utils.xml.XMLUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -148,7 +148,7 @@ public class Demyo2Importer implements IImporter {
 		} finally {
 			IOUtils.closeQuietly(xmlBis);
 			IOUtils.closeQuietly(xmlFis);
-			org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(archiveDirectory);
+			org.the4thlaw.commons.utils.io.FileUtils.deleteDirectoryQuietly(archiveDirectory);
 		}
 	}
 
@@ -179,7 +179,7 @@ public class Demyo2Importer implements IImporter {
 		}
 
 		LOGGER.debug("Removing backup copy");
-		org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(backupCopyDestination);
+		org.the4thlaw.commons.utils.io.FileUtils.deleteDirectoryQuietly(backupCopyDestination);
 
 		imageService.clearCachedThumbnails();
 	}

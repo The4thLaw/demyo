@@ -121,12 +121,17 @@
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
 				<artifactId>common-utils</artifactId>
-				<version>1.1.0</version>
+				<version>1.2.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
 				<artifactId>h2-utils</artifactId>
-				<version>1.1.0</version>
+				<version>1.2.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.the4thlaw</groupId>
+				<artifactId>common-services</artifactId>
+				<version>1.2.0</version>
 			</dependency>
 
 			<dependency>

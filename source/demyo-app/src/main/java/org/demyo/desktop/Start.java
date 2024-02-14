@@ -25,8 +25,8 @@ import org.h2.engine.Constants;
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.the4thlaw.utils.h2.H2LocalUpgrader;
-import org.the4thlaw.utils.h2.H2VersionManager;
+import org.the4thlaw.commons.utils.h2.H2LocalUpgrader;
+import org.the4thlaw.commons.utils.h2.H2VersionManager;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.desktop.DesktopCallbacks;
@@ -148,7 +148,7 @@ public final class Start {
 		LOGGER.debug("Database URL is {}", url);
 
 		// Potentially migrate the database
-		migrateH2IfNeeded(isNewDatabase, Paths.get(databaseFilePath), url);
+		migrateH2IfNeeded(isNewDatabase, Paths.get(databaseFilePath).getParent(), url);
 
 		LOGGER.info("Starting database...");
 		JdbcDataSource ds = new JdbcDataSource();
@@ -167,8 +167,14 @@ public final class Start {
 	}
 
 	private static void migrateH2IfNeeded(boolean isNewDatabase, Path databaseFilePath, String url) throws IOException {
-		Path h2CacheDirectory = SystemConfiguration.getInstance().getApplicationDirectory()
-				.resolve("legacy-h2-versions");
+		Path h2CacheDirectory;
+		String h2CacheProperty = System.getProperty("demyo.h2.cacheDirectoryName");
+		if (h2CacheProperty != null) {
+			h2CacheDirectory = Paths.get(h2CacheProperty);
+		} else {
+			h2CacheDirectory = SystemConfiguration.getInstance().getApplicationDirectory()
+					.resolve("legacy-h2-versions");
+		}
 		H2LocalUpgrader upgrader = new H2LocalUpgrader(h2CacheDirectory);
 		H2VersionManager vm = new H2VersionManager(DEMYO_3_0_H2_VERSION, databaseFilePath, upgrader);
 		vm.migrateH2IfNeeded(isNewDatabase, url, DB_USER, DB_PASSWORD);

@@ -30,18 +30,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.the4thlaw.utils.io.FilenameUtils;
+import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
+import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IImageRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Image;
 import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
 import org.demyo.service.IThumbnailService;
-import org.demyo.service.ImageRetrievalResponse;
 
 /**
  * Implements the contract defined by {@link IImageService}.
@@ -103,12 +104,12 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	@Override
-	public Path getImageFile(@NotNull Image imageModel) throws DemyoException {
+	public Path getImageFile(@NotNull Image imageModel) {
 		String path = imageModel.getUrl();
 		Path image = SystemConfiguration.getInstance().getImagesDirectory().resolve(path);
 		validateImagePath(image);
 		if (!Files.isRegularFile(image)) {
-			throw new DemyoException(DemyoErrorCode.IMAGE_NOT_FOUND, path);
+			throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_NOT_FOUND, path);
 		}
 		return image;
 	}
@@ -124,15 +125,15 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		return thumbnailService.getThumbnail(id, maxWidthOpt.get(), lenient, () -> getImageFile(getByIdForEdition(id)));
 	}
 
-	private static void validateImagePath(Path image) throws DemyoException {
+	private static void validateImagePath(Path image)  {
 		try {
 			Path imagesDirectoryPath = SystemConfiguration.getInstance().getImagesDirectory().toRealPath();
 			Path imagePath = image.toRealPath();
 			if (!imagePath.startsWith(imagesDirectoryPath)) {
-				throw new DemyoException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath.toString());
+				throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath.toString());
 			}
 		} catch (IOException e) {
-			throw new DemyoException(DemyoErrorCode.SYS_IO_ERROR, e);
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
 	}
 
@@ -172,7 +173,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				return foundImage;
 			}
 			LOGGER.debug("Already existing image was not found in the database. Uploading it as a new one...");
-			org.the4thlaw.utils.io.FileUtils.deleteQuietly(targetFile);
+			org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(targetFile);
 		}
 
 		// Either the file does not exist, or it was removed in the previous step
@@ -263,7 +264,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	public void clearCachedThumbnails() {
 		LOGGER.debug("Clearing thumbnail cache");
 		Path thumbnailDirectory = SystemConfiguration.getInstance().getThumbnailDirectory();
-		org.the4thlaw.utils.io.FileUtils.deleteDirectoryQuietly(thumbnailDirectory);
+		org.the4thlaw.commons.utils.io.FileUtils.deleteDirectoryQuietly(thumbnailDirectory);
 		try {
 			Files.createDirectories(thumbnailDirectory);
 			LOGGER.debug("Recreated thumbnail directory at {}", thumbnailDirectory);
@@ -284,7 +285,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 					path);
 			try {
 				Files.delete(getImageFile(image));
-			} catch (IOException | DemyoException e) {
+			} catch (IOException | RuntimeException e) {
 				LOGGER.warn("Failed to delete the image at {}", path, e);
 			}
 		}

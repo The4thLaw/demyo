@@ -17,8 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.the4thlaw.utils.io.FileSecurityUtils;
-import org.the4thlaw.utils.io.FilenameUtils;
+import org.the4thlaw.commons.utils.io.FileSecurityUtils;
+import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -77,7 +77,7 @@ public class FilePondService implements IFilePondService {
 
 		for (File f : filesToDelete) {
 			LOGGER.debug("Auto-cleaning FilePond file: {}", f);
-			org.the4thlaw.utils.io.FileUtils.deleteQuietly(f);
+			org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(f);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class FilePondService implements IFilePondService {
 			IOUtils.copy(input, fos);
 		} catch (IOException ioe) {
 			LOGGER.warn("Failed to store FilePond data to {}", destinationFile, ioe);
-			org.the4thlaw.utils.io.FileUtils.deleteQuietly(destinationFile);
+			org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(destinationFile);
 		}
 		// Request to delete on exit, just in case
 		destinationFile.toFile().deleteOnExit();
@@ -113,7 +113,7 @@ public class FilePondService implements IFilePondService {
 	public void revert(String id) {
 		Path file = uploadDirectory.resolve(id);
 		FileSecurityUtils.assertChildOf(uploadDirectory, file);
-		org.the4thlaw.utils.io.FileUtils.deleteQuietly(file);
+		org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(file);
 	}
 
 	@Override

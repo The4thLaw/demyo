@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IImageService;
-import org.demyo.service.ImageRetrievalResponse;
 
 /**
  * Controller to access image files.

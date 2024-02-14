@@ -55,8 +55,11 @@
 	</appender>
 
 
-	<logger name="org.demyo" level="${config.core.log.level}"
-		additivity="false">
+	<logger name="org.demyo" level="${config.core.log.level}" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="demyo" />
+	</logger>
+	<logger name="org.the4thlaw" level="${config.core.log.level}" additivity="false">
 		<appender-ref ref="console" />
 		<appender-ref ref="demyo" />
 	</logger>
