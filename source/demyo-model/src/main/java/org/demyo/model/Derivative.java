@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 package org.demyo.model;
 
@@ -7,22 +7,22 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.SortedSet;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
@@ -169,7 +169,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Returns the base name that can be used for automatic image descriptions.
-	 * 
+	 *
 	 * @return The name.
 	 */
 	public String getBaseNameForImages() {
@@ -194,7 +194,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Returns the main image associated to a Derivative. The one that is supposed to represent it.
-	 * 
+	 *
 	 * @return An Image, or <code>null</code> if no image is associated to this Derivative.
 	 */
 	@Transient
@@ -210,7 +210,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the parent {@link Series}.
-	 * 
+	 *
 	 * @return the parent {@link Series}
 	 */
 	public Series getSeries() {
@@ -219,7 +219,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the parent {@link Series}.
-	 * 
+	 *
 	 * @param series the new parent {@link Series}
 	 */
 	public void setSeries(Series series) {
@@ -228,7 +228,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the parent {@link Album}.
-	 * 
+	 *
 	 * @return the parent {@link Album}
 	 */
 	public Album getAlbum() {
@@ -237,7 +237,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the parent {@link Album}.
-	 * 
+	 *
 	 * @param album the new parent {@link Album}
 	 */
 	public void setAlbum(Album album) {
@@ -246,7 +246,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the {@link Author} who worked on this Derivative.
-	 * 
+	 *
 	 * @return the {@link Author} who worked on this Derivative
 	 */
 	public Author getArtist() {
@@ -255,7 +255,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the {@link Author} who worked on this Derivative.
-	 * 
+	 *
 	 * @param artist the new {@link Author} who worked on this Derivative
 	 */
 	public void setArtist(Author artist) {
@@ -264,7 +264,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the {@link DerivativeType type} of this Derivative.
-	 * 
+	 *
 	 * @return the {@link DerivativeType type} of this Derivative
 	 */
 	public DerivativeType getType() {
@@ -273,7 +273,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the {@link DerivativeType type} of this Derivative.
-	 * 
+	 *
 	 * @param type the new {@link DerivativeType type} of this Derivative
 	 */
 	public void setType(DerivativeType type) {
@@ -282,7 +282,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the number of colours.
-	 * 
+	 *
 	 * @return the number of colours
 	 */
 	public Integer getColours() {
@@ -291,7 +291,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the number of colours.
-	 * 
+	 *
 	 * @param colours the new number of colours
 	 */
 	public void setColours(Integer colours) {
@@ -300,7 +300,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the {@link DerivativeSource source} of this Derivative.
-	 * 
+	 *
 	 * @return the {@link DerivativeSource source} of this Derivative
 	 */
 	public DerivativeSource getSource() {
@@ -309,7 +309,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the {@link DerivativeSource source} of this Derivative.
-	 * 
+	 *
 	 * @param source the new {@link DerivativeSource source} of this Derivative
 	 */
 	public void setSource(DerivativeSource source) {
@@ -318,7 +318,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the item number.
-	 * 
+	 *
 	 * @return the item number
 	 */
 	public Integer getNumber() {
@@ -327,7 +327,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the item number.
-	 * 
+	 *
 	 * @param number the new item number
 	 */
 	public void setNumber(Integer number) {
@@ -336,7 +336,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the total count of items.
-	 * 
+	 *
 	 * @return the total count of items
 	 */
 	public Integer getTotal() {
@@ -345,7 +345,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the total count of items.
-	 * 
+	 *
 	 * @param total the new total count of items
 	 */
 	public void setTotal(Integer total) {
@@ -354,7 +354,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Checks if is the flag indicating whether this Derivative is signed by its artist.
-	 * 
+	 *
 	 * @return the flag indicating whether this Derivative is signed by its artist
 	 */
 	public boolean isSigned() {
@@ -363,7 +363,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the flag indicating whether this Derivative is signed by its artist.
-	 * 
+	 *
 	 * @param signed the new flag indicating whether this Derivative is signed by its artist
 	 */
 	public void setSigned(boolean signed) {
@@ -372,7 +372,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Checks if is the flag indicating whether this Derivative is an artist's personal copy.
-	 * 
+	 *
 	 * @return the flag indicating whether this Derivative is an artist's personal copy
 	 */
 	public boolean isAuthorsCopy() {
@@ -381,7 +381,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the flag indicating whether this Derivative is an artist's personal copy.
-	 * 
+	 *
 	 * @param authorsCopy the new flag indicating whether this Derivative is an artist's personal copy
 	 */
 	public void setAuthorsCopy(boolean authorsCopy) {
@@ -390,7 +390,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Checks if is the flag indicating whether this Derivative is marked as restricted sale.
-	 * 
+	 *
 	 * @return the flag indicating whether this Derivative is marked as restricted sale
 	 */
 	public boolean isRestrictedSale() {
@@ -399,7 +399,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the flag indicating whether this Derivative is marked as restricted sale.
-	 * 
+	 *
 	 * @param restrictedSale the new flag indicating whether this Derivative is marked as restricted sale
 	 */
 	public void setRestrictedSale(boolean restrictedSale) {
@@ -408,7 +408,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the description.
-	 * 
+	 *
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -417,7 +417,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the description.
-	 * 
+	 *
 	 * @param description the new description
 	 */
 	public void setDescription(String description) {
@@ -426,7 +426,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the height of the Album.
-	 * 
+	 *
 	 * @return the height of the Album
 	 */
 	public BigDecimal getHeight() {
@@ -435,7 +435,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the height of the Album.
-	 * 
+	 *
 	 * @param height the new height of the Album
 	 */
 	public void setHeight(BigDecimal height) {
@@ -444,7 +444,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the width of the Album.
-	 * 
+	 *
 	 * @return the width of the Album
 	 */
 	public BigDecimal getWidth() {
@@ -453,7 +453,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the width of the Album.
-	 * 
+	 *
 	 * @param width the new width of the Album
 	 */
 	public void setWidth(BigDecimal width) {
@@ -462,7 +462,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the width of the Album.
-	 * 
+	 *
 	 * @return the width of the Album
 	 */
 	public BigDecimal getDepth() {
@@ -471,7 +471,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the width of the Album.
-	 * 
+	 *
 	 * @param depth the new width of the Album
 	 */
 	public void setDepth(BigDecimal depth) {
@@ -497,7 +497,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Gets the {@link Image}s related to this Derivative.
-	 * 
+	 *
 	 * @return the {@link Image}s related to this Derivative
 	 */
 	public SortedSet<Image> getImages() {
@@ -506,7 +506,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 
 	/**
 	 * Sets the {@link Image}s related to this Derivative.
-	 * 
+	 *
 	 * @param images the new {@link Image}s related to this Derivative
 	 */
 	public void setImages(SortedSet<Image> images) {

@@ -21,7 +21,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -29,7 +30,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 
 import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.dao.config.DaoConfig;
@@ -70,9 +71,9 @@ public class WebConfig implements WebMvcConfigurer {
 				ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter) converter).getObjectMapper();
 
 				// See https://stackoverflow.com/a/54412744
-				// Add Hibernate 5 module
-				Hibernate5Module module = new Hibernate5Module();
-				module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+				// Add Hibernate module
+				Hibernate6Module module = new Hibernate6Module();
+				module.disable(Hibernate6Module.Feature.USE_TRANSIENT_ANNOTATION);
 				mapper.registerModule(module);
 
 				// Filter out empty values when serializing
@@ -123,8 +124,8 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public CommonsMultipartResolver multipartResolver() {
-		return new CommonsMultipartResolver();
+	public MultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
 	}
 
 	@Bean

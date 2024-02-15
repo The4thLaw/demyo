@@ -21,7 +21,7 @@ public class BindingAPIController extends AbstractModelAPIController<Binding> {
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the entries.
 	 * @param albumService The service to manage the albums.
 	 */
@@ -33,12 +33,12 @@ public class BindingAPIController extends AbstractModelAPIController<Binding> {
 
 	/**
 	 * Counts how many Albums use the given {@link Binding}
-	 * 
+	 *
 	 * @param modelId The internal ID of the {@link Binding}
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
-	public long countAlbumsByBinding(@PathVariable long modelId) {
+	public long countAlbumsByBinding(@PathVariable("modelId") long modelId) {
 		return albumService.countAlbumsByFilter(AlbumFilter.forBinding(modelId));
 	}
 }

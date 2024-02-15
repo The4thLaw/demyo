@@ -18,9 +18,9 @@ import java.util.regex.Pattern;
 import javax.naming.NamingException;
 import javax.swing.JOptionPane;
 
+import org.eclipse.jetty.ee10.webapp.WebAppContext;
+import org.eclipse.jetty.plus.jndi.Resource;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.webapp.Configuration;
-import org.eclipse.jetty.webapp.WebAppContext;
 import org.h2.engine.Constants;
 import org.h2.jdbcx.JdbcDataSource;
 import org.slf4j.Logger;
@@ -109,13 +109,9 @@ public final class Start {
 
 		final Server server = new Server(new InetSocketAddress(httpAddress, httpPort));
 
-		Configuration.ClassList classlist = Configuration.ClassList.setServerDefault(server);
-		classlist.addBefore(
-				// Needed for proper JSP/JSTL support
-				"org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
-				"org.eclipse.jetty.annotations.AnnotationConfiguration");
-
 		WebAppContext webapp = new WebAppContext();
+		// Needed to help Jetty find the JAR from Glassfish containing the JSTL implementations
+		webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/[^/]*jstl.*\\.jar$");
 		webapp.setContextPath(contextRoot);
 		webapp.setWar(sysConfig.getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
@@ -128,7 +124,7 @@ public final class Start {
 		LOGGER.info("Setting extra classpath for Jetty: {}", extraClasspath);
 		webapp.setExtraClasspath(extraClasspath);
 
-		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.dataSource", ds);
+		new Resource("org.demyo.services.dataSource", ds);
 		setDesktopCallbacks(server);
 		server.setHandler(webapp);
 

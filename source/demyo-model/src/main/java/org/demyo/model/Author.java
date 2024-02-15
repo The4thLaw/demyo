@@ -2,15 +2,15 @@ package org.demyo.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.URL;
@@ -72,7 +72,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Returns the "full" author name, composed of his first name, last name and nickname.
-	 * 
+	 *
 	 * @return The full name.
 	 */
 	public String getFullName() {
@@ -89,7 +89,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Gets the last name of the Author.
-	 * 
+	 *
 	 * @return the last name of the Author
 	 */
 	public String getName() {
@@ -98,7 +98,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Sets the last name of the Author.
-	 * 
+	 *
 	 * @param name the new last name of the Author
 	 */
 	public void setName(String name) {
@@ -107,7 +107,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Gets the first name.
-	 * 
+	 *
 	 * @return the first name
 	 */
 	public String getFirstName() {
@@ -116,7 +116,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Sets the first name.
-	 * 
+	 *
 	 * @param firstName the new first name
 	 */
 	public void setFirstName(String firstName) {
@@ -125,7 +125,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Gets the nickname.
-	 * 
+	 *
 	 * @return the nickname
 	 */
 	public String getNickname() {
@@ -134,7 +134,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Sets the nickname.
-	 * 
+	 *
 	 * @param nickname the new nickname
 	 */
 	public void setNickname(String nickname) {
@@ -143,7 +143,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Gets the biography.
-	 * 
+	 *
 	 * @return the biography
 	 */
 	public String getBiography() {
@@ -152,7 +152,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Sets the biography.
-	 * 
+	 *
 	 * @param biography the new biography
 	 */
 	public void setBiography(String biography) {
@@ -161,7 +161,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Gets the portrait.
-	 * 
+	 *
 	 * @return the portrait
 	 */
 	public Image getPortrait() {
@@ -170,7 +170,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Sets the portrait.
-	 * 
+	 *
 	 * @param portrait the new portrait
 	 */
 	public void setPortrait(Image portrait) {
@@ -179,7 +179,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Gets the website.
-	 * 
+	 *
 	 * @return the website
 	 */
 	public String getWebsite() {
@@ -188,7 +188,7 @@ public class Author extends AbstractModel {
 
 	/**
 	 * Sets the website.
-	 * 
+	 *
 	 * @param website the new website
 	 */
 	public void setWebsite(String website) {

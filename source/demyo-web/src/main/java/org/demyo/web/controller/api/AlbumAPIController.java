@@ -36,7 +36,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the Albums.
 	 * @param derivativeService The service to manage the Derivatives.
 	 */
@@ -49,7 +49,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 	/**
 	 * Retrieves the full list of Albums.
-	 * 
+	 *
 	 * @param view The Jackson view to apply.
 	 * @return The list.
 	 */
@@ -63,7 +63,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 	/**
 	 * Retrieves the filtered list of Albums.
-	 * 
+	 *
 	 * @param view The Jackson view to apply.
 	 * @param filter The filter to apply.
 	 * @return The list.
@@ -77,14 +77,14 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 	/**
 	 * Saves / Commits the images uploaded through FilePond to the current Album.
-	 * 
+	 *
 	 * @param modelId The Album ID.
 	 * @param data The data from FilePond
 	 * @return The view name.
 	 * @throws DemyoException In case of error during recovery of the FilePond images.
 	 */
 	@PostMapping("/{modelId}/images")
-	public boolean saveFromFilePond(@PathVariable long modelId,
+	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
 			@RequestBody FilePondData data) throws DemyoException {
 		String mainImage = data.getMainImage();
 		String[] otherImages = data.getOtherImages();
@@ -101,12 +101,12 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 	/**
 	 * Counts how many Derivatives use the given Album.
-	 * 
+	 *
 	 * @param modelId The internal ID of the {@link Album}
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	public long countDerivativesByAlbums(@PathVariable long modelId) {
+	public long countDerivativesByAlbums(@PathVariable("modelId") long modelId) {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forAlbum(modelId));
 	}
 }

@@ -26,7 +26,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the entries.
 	 * @param derivativeService The service to manage Derivatives.
 	 */
@@ -39,7 +39,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 
 	/**
 	 * Gets the albums to which a specific author participated.
-	 * 
+	 *
 	 * @param id The Author internal identifier
 	 * @return The structured works
 	 */
@@ -51,12 +51,12 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 
 	/**
 	 * Counts how many Derivatives use the given artist.
-	 * 
+	 *
 	 * @param modelId The internal ID of the Author
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	public long countDerivativesByArtist(@PathVariable long modelId) {
+	public long countDerivativesByArtist(@PathVariable("modelId") long modelId) {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forArtist(modelId));
 	}
 }

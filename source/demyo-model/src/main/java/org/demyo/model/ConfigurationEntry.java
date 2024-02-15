@@ -1,12 +1,12 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -41,7 +41,7 @@ public class ConfigurationEntry extends AbstractModel {
 
 	/**
 	 * Gets the key for the configuration property.
-	 * 
+	 *
 	 * @return the key for the configuration property
 	 */
 	public String getKey() {
@@ -50,7 +50,7 @@ public class ConfigurationEntry extends AbstractModel {
 
 	/**
 	 * Sets the key for the configuration property.
-	 * 
+	 *
 	 * @param key the new key for the configuration property
 	 */
 	public void setKey(String key) {
@@ -59,7 +59,7 @@ public class ConfigurationEntry extends AbstractModel {
 
 	/**
 	 * Gets the value for the configuration property.
-	 * 
+	 *
 	 * @return the value for the configuration property
 	 */
 	public String getValue() {
@@ -68,7 +68,7 @@ public class ConfigurationEntry extends AbstractModel {
 
 	/**
 	 * Sets the value for the configuration property.
-	 * 
+	 *
 	 * @param value the new value for the configuration property
 	 */
 	public void setValue(String value) {

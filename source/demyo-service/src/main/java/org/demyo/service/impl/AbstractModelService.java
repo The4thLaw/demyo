@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ import org.demyo.service.IModelService;
 
 /**
  * Implementation of base operations on models.
- * 
+ *
  * @param <M> The model type.
  */
 public abstract class AbstractModelService<M extends IModel> implements IModelService<M> {
@@ -48,7 +48,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 
 	/**
 	 * Creates an abstract model service.
-	 * 
+	 *
 	 * @param modelClass The class of the model to work on.
 	 */
 	protected AbstractModelService(Class<M> modelClass) {
@@ -124,7 +124,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 
 	/**
 	 * Gets the DAO for this model.
-	 * 
+	 *
 	 * @return the DAO.
 	 */
 	protected abstract IModelRepo<M> getRepo();
@@ -171,7 +171,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 
 	/**
 	 * Saves the given model.
-	 * 
+	 *
 	 * @param model The model to save.
 	 * @return The saved entity.
 	 */
@@ -222,7 +222,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 * <p>
 	 * This method must be run in a transactional context.
 	 * </p>
-	 * 
+	 *
 	 * @param model The model that would be saved.
 	 * @return The model to save.
 	 */
@@ -239,7 +239,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 
 	/**
 	 * Gets the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Sort}.
-	 * 
+	 *
 	 * @return the default order specified by the {@link IModel}, as a Spring Data-compatible {@link Sort}
 	 */
 	protected Sort getDefaultSort() {
@@ -248,7 +248,7 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 
 	/**
 	 * Base implementation of a quick search query on an {@link IQuickSearchableRepo}.
-	 * 
+	 *
 	 * @param query The string to match
 	 * @param exact <code>true</code> if the search is for an exact match. <code>false</code> otherwise.
 	 * @param searchRepo The repository to search on.

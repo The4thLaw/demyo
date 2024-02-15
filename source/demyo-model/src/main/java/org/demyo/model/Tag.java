@@ -1,9 +1,9 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -34,7 +34,7 @@ public class Tag extends AbstractNamedModel {
 
 	/**
 	 * Gets the foreground colour.
-	 * 
+	 *
 	 * @return the foreground colour
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -44,7 +44,7 @@ public class Tag extends AbstractNamedModel {
 
 	/**
 	 * Sets the foreground colour.
-	 * 
+	 *
 	 * @param fgColour the new foreground colour
 	 */
 	public void setFgColour(String fgColour) {
@@ -53,7 +53,7 @@ public class Tag extends AbstractNamedModel {
 
 	/**
 	 * Gets the background colour.
-	 * 
+	 *
 	 * @return the background colour
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -63,7 +63,7 @@ public class Tag extends AbstractNamedModel {
 
 	/**
 	 * Sets the background colour.
-	 * 
+	 *
 	 * @param bgColour the new background colour
 	 */
 	public void setBgColour(String bgColour) {
@@ -90,7 +90,7 @@ public class Tag extends AbstractNamedModel {
 
 	/**
 	 * Gets the number of times this Tag has been used.
-	 * 
+	 *
 	 * @return the number of times this Tag has been used
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -100,7 +100,7 @@ public class Tag extends AbstractNamedModel {
 
 	/**
 	 * Sets the number of times this Tag has been used.
-	 * 
+	 *
 	 * @param usageCount the new number of times this Tag has been used
 	 */
 	public void setUsageCount(Integer usageCount) {

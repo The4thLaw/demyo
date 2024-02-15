@@ -3,8 +3,8 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

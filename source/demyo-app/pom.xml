@@ -26,18 +26,32 @@ Includes the Web server, H2 server, and startup program.</description>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
 		<!-- Needed for JNDI -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-plus</artifactId>
 		</dependency>
-		<!-- Needed for JSP -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>apache-jsp</artifactId>
+			<artifactId>jetty-jndi</artifactId>
+		</dependency>
+		<!-- Needed for JSP -->
+		<dependency>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-apache-jsp</artifactId>
+		</dependency>
+		<!-- Needed for the TLD cache -->
+		<dependency>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-annotations</artifactId>
+		</dependency>
+		<!-- Implementation for the JSTL libraries -->
+		<dependency>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-glassfish-jstl</artifactId>
 		</dependency>
 
 		<dependency>

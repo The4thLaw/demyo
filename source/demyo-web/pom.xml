@@ -10,7 +10,7 @@
 	<packaging>war</packaging>
 	<name>Demyo: Web Application</name>
 	<description>Spring controllers for the Web application.</description>
-	
+
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
 	</properties>
@@ -33,7 +33,7 @@
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-vue-frontend</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -42,10 +42,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
 		</dependency>
 
 		<dependency>
@@ -65,17 +61,17 @@
 			<groupId>javax.activation</groupId>
 			<artifactId>javax.activation-api</artifactId>
 		</dependency>
-	
+
 		<dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
+			<groupId>jakarta.servlet.jsp.jstl</groupId>
+			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+		</dependency>
         <dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>apache-jsp</artifactId>
+			<groupId>org.eclipse.jetty.ee10</groupId>
+			<artifactId>jetty-ee10-apache-jsp</artifactId>
 			<scope>provided</scope>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -87,13 +83,19 @@
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-hibernate5</artifactId>
+			<artifactId>jackson-datatype-hibernate6</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-test</artifactId>
 		</dependency>
+		<!--<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
+			<scope>test</scope>
+		</dependency>-->
 		<dependency>
 			<groupId>org.skyscreamer</groupId>
 			<artifactId>jsonassert</artifactId>
@@ -102,18 +104,18 @@
 			<groupId>com.jayway.jsonpath</groupId>
 			<artifactId>json-path</artifactId>
 		</dependency>
-		
+
 		<!-- Needed for JDK9+ compatibility -->
 		<dependency>
             <groupId>com.sun.activation</groupId>
             <artifactId>javax.activation</artifactId>
         </dependency>
-		
+
 		<!-- Some dependencies related to JEE, provided by the container.
 			We need to declare them for unit tests to work -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -122,7 +124,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>

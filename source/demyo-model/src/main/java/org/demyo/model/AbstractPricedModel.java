@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.hibernate.Hibernate;
@@ -23,7 +23,7 @@ import org.demyo.model.util.PreSave;
 
 /**
  * An {@link AbstractModel} for which detailed prices are tracked.
- * 
+ *
  * @param <P> The type of price
  * @param <M> The type of model
  */
@@ -50,7 +50,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Gets the date of acquisition.
-	 * 
+	 *
 	 * @return the date of acquisition
 	 */
 	public Date getAcquisitionDate() {
@@ -59,7 +59,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Sets the date of acquisition.
-	 * 
+	 *
 	 * @param acquisitionDate the new date of acquisition
 	 */
 	public void setAcquisitionDate(Date acquisitionDate) {
@@ -68,7 +68,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Gets the price the album was purchased for.
-	 * 
+	 *
 	 * @return the price the album was purchased for
 	 */
 	public BigDecimal getPurchasePrice() {
@@ -77,7 +77,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Sets the price the album was purchased for.
-	 * 
+	 *
 	 * @param purchasePrice the new price the album was purchased for
 	 */
 	public void setPurchasePrice(BigDecimal purchasePrice) {
@@ -86,7 +86,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Gets the prices applicable to the Model.
-	 * 
+	 *
 	 * @return the prices applicable to the Model
 	 */
 	public abstract SortedSet<P> getPrices();
@@ -94,21 +94,21 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 	/**
 	 * Sets the prices to the right variable directly. The implementing method should not try to pre-process the result,
 	 * as this is done by {@link #setPrices(SortedSet)}
-	 * 
+	 *
 	 * @param prices The prices to set
 	 */
 	protected abstract void setPricesRaw(SortedSet<P> prices);
 
 	/**
 	 * Returns <code>this</code>.
-	 * 
+	 *
 	 * @return The current object, typed as expected
 	 */
 	protected abstract M self();
 
 	/**
 	 * Sets the prices applicable to the Model.
-	 * 
+	 *
 	 * @param prices the new prices applicable to the Model
 	 */
 	public void setPrices(SortedSet<P> prices) {
@@ -131,7 +131,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Gets the prices as a list. Use this only for MVC binding.
-	 * 
+	 *
 	 * @see #setPricesFromList()
 	 * @return The same as {@link #getPrices()}, but as a List.
 	 */
@@ -154,7 +154,7 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 
 	/**
 	 * Sets the prices from the list modified by the MVC binder. Automatically called by the model services.
-	 * 
+	 *
 	 * @see #getPriceList()
 	 */
 	@PreSave

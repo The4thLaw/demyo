@@ -9,8 +9,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Vector;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

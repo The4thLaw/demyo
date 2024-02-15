@@ -32,7 +32,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the entries.
 	 */
 	@Autowired
@@ -43,7 +43,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 	/**
 	 * Retrieves the full list of Derivatives.
-	 * 
+	 *
 	 * @param view The Jackson view to apply.
 	 * @return The list.
 	 */
@@ -57,7 +57,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 	/**
 	 * Retrieves the filtered list of Derivatives.
-	 * 
+	 *
 	 * @param view The Jackson view to apply.
 	 * @param filter The filter to apply.
 	 * @return The list.
@@ -71,14 +71,14 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 	/**
 	 * Saves / Commits the images uploaded through FilePond to the current Derivative.
-	 * 
+	 *
 	 * @param modelId The Derivative ID.
 	 * @param data The data from FilePond
 	 * @return The view name.
 	 * @throws DemyoException In case of error during recovery of the FilePond images.
 	 */
 	@PostMapping("/{modelId}/images")
-	public boolean saveFromFilePond(@PathVariable long modelId,
+	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
 			@RequestBody FilePondData data) throws DemyoException {
 		String[] otherImages = data.getOtherImages();
 

@@ -3,7 +3,7 @@ package org.demyo.service.impl;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

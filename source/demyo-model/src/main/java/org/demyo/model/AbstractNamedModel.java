@@ -1,8 +1,8 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotBlank;
 
 import org.demyo.model.util.StartsWithField;
 
@@ -24,7 +24,7 @@ public abstract class AbstractNamedModel extends AbstractModel {
 
 	/**
 	 * Gets the name of this Model.
-	 * 
+	 *
 	 * @return the name
 	 */
 	public String getName() {
@@ -33,7 +33,7 @@ public abstract class AbstractNamedModel extends AbstractModel {
 
 	/**
 	 * Sets the name of this Model.
-	 * 
+	 *
 	 * @param name the new name
 	 */
 	public void setName(String name) {

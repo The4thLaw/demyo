@@ -34,7 +34,7 @@ public class PublisherAPIController extends AbstractModelAPIController<Publisher
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the entries.
 	 * @param collectionService The service to manage {@link Collections}.
 	 * @param albumService The service to manage Albums.
@@ -57,18 +57,18 @@ public class PublisherAPIController extends AbstractModelAPIController<Publisher
 
 	/**
 	 * Counts how many Albums use the given Binding.
-	 * 
+	 *
 	 * @param modelId The internal ID of the Binding
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
-	public long countAlbumsByPublisher(@PathVariable long modelId) {
+	public long countAlbumsByPublisher(@PathVariable("modelId") long modelId) {
 		return albumService.countAlbumsByFilter(AlbumFilter.forPublisher(modelId));
 	}
 
 	/**
 	 * Finds the Collections for a given Publisher.
-	 * 
+	 *
 	 * @param publisherId The Publisher ID
 	 * @return The Publisher's Collections
 	 */

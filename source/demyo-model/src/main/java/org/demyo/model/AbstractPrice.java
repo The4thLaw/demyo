@@ -3,11 +3,11 @@ package org.demyo.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -16,7 +16,7 @@ import org.demyo.model.util.AbstractModelComparator;
 
 /**
  * Base class for models which have historised prices.
- * 
+ *
  * @param <P> The price type
  * @param <M> The priced model type
  */
@@ -36,14 +36,14 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 
 	/**
 	 * Gets the model to which this price is linked.
-	 * 
+	 *
 	 * @return The model
 	 */
 	protected abstract M getModel();
 
 	/**
 	 * Sets the reference to the model in the price.
-	 * 
+	 *
 	 * @param model The model to set
 	 */
 	protected abstract void setModel(M model);
@@ -72,7 +72,7 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 
 	/**
 	 * Gets the date at which the price was applicable.
-	 * 
+	 *
 	 * @return the date at which the price was applicable
 	 */
 	public Date getDate() {
@@ -81,7 +81,7 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 
 	/**
 	 * Sets the date at which the price was applicable.
-	 * 
+	 *
 	 * @param date the new date at which the price was applicable
 	 */
 	public void setDate(Date date) {
@@ -90,7 +90,7 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 
 	/**
 	 * Gets the price the album was worth at the given date.
-	 * 
+	 *
 	 * @return the price the album was worth at the given date
 	 */
 	public BigDecimal getPrice() {
@@ -99,7 +99,7 @@ public abstract class AbstractPrice<P extends AbstractPrice<P, M>, M extends IMo
 
 	/**
 	 * Sets the price the album was worth at the given date.
-	 * 
+	 *
 	 * @param price the new price the album was worth at the given date
 	 */
 	public void setPrice(BigDecimal price) {

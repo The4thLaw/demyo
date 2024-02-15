@@ -1,10 +1,11 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 
 import org.hibernate.validator.constraints.URL;
 
@@ -25,7 +26,7 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 
 	/**
 	 * Gets the RSS feed.
-	 * 
+	 *
 	 * @return the RSS feed
 	 */
 	public String getFeed() {
@@ -34,7 +35,7 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 
 	/**
 	 * Sets the RSS feed.
-	 * 
+	 *
 	 * @param feed the new RSS feed
 	 */
 	public void setFeed(String feed) {
@@ -43,7 +44,7 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 
 	/**
 	 * Gets the logo (visual identity) of the Publisher.
-	 * 
+	 *
 	 * @return the logo (visual identity) of the Publisher
 	 */
 	public Image getLogo() {
@@ -52,7 +53,7 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 
 	/**
 	 * Sets the logo (visual identity) of the Publisher.
-	 * 
+	 *
 	 * @param logo the new logo (visual identity) of the Publisher
 	 */
 	public void setLogo(Image logo) {

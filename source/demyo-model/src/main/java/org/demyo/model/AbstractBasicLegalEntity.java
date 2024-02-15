@@ -1,7 +1,8 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 import org.hibernate.validator.constraints.URL;
 
@@ -21,7 +22,7 @@ public abstract class AbstractBasicLegalEntity extends AbstractNamedModel {
 
 	/**
 	 * Gets the entity website.
-	 * 
+	 *
 	 * @return the entity website
 	 */
 	public String getWebsite() {
@@ -30,7 +31,7 @@ public abstract class AbstractBasicLegalEntity extends AbstractNamedModel {
 
 	/**
 	 * Sets the entity website.
-	 * 
+	 *
 	 * @param website the new entity website
 	 */
 	public void setWebsite(String website) {
@@ -39,7 +40,7 @@ public abstract class AbstractBasicLegalEntity extends AbstractNamedModel {
 
 	/**
 	 * Gets the history of this entity.
-	 * 
+	 *
 	 * @return the history of this entity
 	 */
 	public String getHistory() {
@@ -48,7 +49,7 @@ public abstract class AbstractBasicLegalEntity extends AbstractNamedModel {
 
 	/**
 	 * Sets the history of this entity.
-	 * 
+	 *
 	 * @param history the new history of this entity
 	 */
 	public void setHistory(String history) {

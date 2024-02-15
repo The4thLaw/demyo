@@ -31,7 +31,7 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the entries.
 	 */
 	@Autowired
@@ -42,12 +42,12 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 
 	/**
 	 * Retrieves a batch of images, usually after confirmation of a batch upload.
-	 * 
+	 *
 	 * @param modelIds The identifiers of all images to view.
 	 * @return The images.
 	 */
 	@GetMapping("/batch/{modelIds}")
-	public List<Image> viewBatch(@PathVariable long[] modelIds) {
+	public List<Image> viewBatch(@PathVariable("modelIds") long[] modelIds) {
 		List<Image> images = new ArrayList<>(modelIds.length);
 		for (long modelId : modelIds) {
 			images.add(service.getByIdForView(modelId));
@@ -57,20 +57,20 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 
 	/**
 	 * Returns an Image and its dependent albums, authors, etc.
-	 * 
+	 *
 	 * @param modelId The image ID
 	 * @return The Image object, populated with its dependencies.
 	 * @see IImageService#getImageDependencies(long)
 	 */
 	@GetMapping("/{modelId}/dependencies")
 	@JsonView(ModelView.ImageDependencies.class)
-	public Image dependencies(@PathVariable long modelId) {
+	public Image dependencies(@PathVariable("modelId") long modelId) {
 		return service.getImageDependencies(modelId);
 	}
 
 	/**
 	 * Gets the list of images found on the disk but not yet present in the database.
-	 * 
+	 *
 	 * @return The paths to the images.
 	 */
 	@GetMapping("/detect")
@@ -80,7 +80,7 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 
 	/**
 	 * Saves a set of images found through {@link #detectDiskImages()}.
-	 * 
+	 *
 	 * @param paths The paths to the images to add.
 	 * @return The added image IDs. Can be used in {@link #viewBatch(long[])}.
 	 * @throws DemyoException In case of error while adding the images.

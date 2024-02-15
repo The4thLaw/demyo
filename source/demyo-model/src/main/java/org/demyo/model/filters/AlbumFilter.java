@@ -17,7 +17,7 @@ import org.demyo.model.Tag;
 public class AlbumFilter extends AbstractModelFilter {
 	/**
 	 * Factory method that creates a filter based on the {@link Publisher} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link Publisher}.
 	 * @return the filter instance
 	 */
@@ -29,7 +29,7 @@ public class AlbumFilter extends AbstractModelFilter {
 
 	/**
 	 * Factory method that creates a filter based on the {@link Collection} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link Collection}.
 	 * @return the filter instance
 	 */
@@ -41,7 +41,7 @@ public class AlbumFilter extends AbstractModelFilter {
 
 	/**
 	 * Factory method that creates a filter based on the {@link Binding} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link Binding}.
 	 * @return the filter instance
 	 */

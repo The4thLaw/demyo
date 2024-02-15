@@ -11,11 +11,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import jakarta.annotation.PostConstruct;
 
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;

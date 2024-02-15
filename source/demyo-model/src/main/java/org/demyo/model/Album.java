@@ -8,23 +8,23 @@ import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
@@ -270,7 +270,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Returns a formatted version of the combined cycle, number and suffix.
-	 * 
+	 *
 	 * @return A working StringBuilder. Never <code>null</code>.
 	 */
 	@QueryType(PropertyType.NONE)
@@ -297,7 +297,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Returns the base name that can be used for automatic image descriptions.
-	 * 
+	 *
 	 * @return The name.
 	 */
 	public String getBaseNameForImages() {
@@ -316,7 +316,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the parent {@link Series}.
-	 * 
+	 *
 	 * @return the parent {@link Series}
 	 */
 	public Series getSeries() {
@@ -325,7 +325,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the parent {@link Series}.
-	 * 
+	 *
 	 * @param series the new parent {@link Series}
 	 */
 	public void setSeries(Series series) {
@@ -334,7 +334,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the cycle.
-	 * 
+	 *
 	 * @return the cycle
 	 */
 	public Integer getCycle() {
@@ -343,7 +343,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the cycle.
-	 * 
+	 *
 	 * @param cycle the new cycle
 	 */
 	public void setCycle(Integer cycle) {
@@ -352,7 +352,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the number.
-	 * 
+	 *
 	 * @return the number
 	 */
 	public BigDecimal getNumber() {
@@ -361,7 +361,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the number.
-	 * 
+	 *
 	 * @param number the new number
 	 */
 	public void setNumber(BigDecimal number) {
@@ -370,7 +370,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the number suffix.
-	 * 
+	 *
 	 * @return the number suffix
 	 */
 	public String getNumberSuffix() {
@@ -379,7 +379,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the number suffix.
-	 * 
+	 *
 	 * @param numberSuffix the new number suffix
 	 */
 	public void setNumberSuffix(String numberSuffix) {
@@ -388,7 +388,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the title.
-	 * 
+	 *
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -397,7 +397,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the title.
-	 * 
+	 *
 	 * @param title the new title
 	 */
 	public void setTitle(String title) {
@@ -424,7 +424,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the owning {@link Publisher}.
-	 * 
+	 *
 	 * @return the owning {@link Publisher}
 	 */
 	public Publisher getPublisher() {
@@ -433,7 +433,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the owning {@link Publisher}.
-	 * 
+	 *
 	 * @param publisher the new owning {@link Publisher}
 	 */
 	public void setPublisher(Publisher publisher) {
@@ -442,7 +442,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the owning {@link Collection}.
-	 * 
+	 *
 	 * @return the owning {@link Collection}
 	 */
 	public Collection getCollection() {
@@ -451,7 +451,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the owning {@link Collection}.
-	 * 
+	 *
 	 * @param collection the new owning {@link Collection}
 	 */
 	public void setCollection(Collection collection) {
@@ -460,7 +460,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the date of first edition.
-	 * 
+	 *
 	 * @return the date of first edition
 	 */
 	public Date getFirstEditionDate() {
@@ -469,7 +469,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the date of first edition.
-	 * 
+	 *
 	 * @param firstEditionDate the new date of first edition
 	 */
 	public void setFirstEditionDate(Date firstEditionDate) {
@@ -478,7 +478,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the date of current edition.
-	 * 
+	 *
 	 * @return the date of current edition
 	 */
 	public Date getCurrentEditionDate() {
@@ -505,7 +505,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the date of current edition.
-	 * 
+	 *
 	 * @param currentEditionDate the new date of current edition
 	 */
 	public void setCurrentEditionDate(Date currentEditionDate) {
@@ -532,7 +532,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the ISBN.
-	 * 
+	 *
 	 * @return the ISBN
 	 */
 	public String getIsbn() {
@@ -541,7 +541,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the ISBN.
-	 * 
+	 *
 	 * @param isbn the new ISBN
 	 */
 	public void setIsbn(String isbn) {
@@ -567,7 +567,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Checks if is the flag indicating whether an item is part of the wishlist.
-	 * 
+	 *
 	 * @return the flag indicating whether an item is part of the wishlist
 	 */
 	public boolean isWishlist() {
@@ -576,7 +576,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the flag indicating whether an item is part of the wishlist.
-	 * 
+	 *
 	 * @param wishlist the new flag indicating whether an item is part of the wishlist
 	 */
 	public void setWishlist(boolean wishlist) {
@@ -585,7 +585,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the physical location of this Album.
-	 * 
+	 *
 	 * @return the physical location of this Album
 	 */
 	public String getLocation() {
@@ -594,7 +594,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the physical location of this Album, potentially guessing it from the Series.
-	 * 
+	 *
 	 * @return If the Album has a location, it is returned. Else, if the Album belongs to a Series and that Series has a
 	 *         location, it is returned. Else, <code>null</code> is returned.
 	 */
@@ -610,7 +610,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the physical location of this Album.
-	 * 
+	 *
 	 * @param location the new physical location of this Album
 	 */
 	public void setLocation(String location) {
@@ -619,7 +619,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Binding} for this Album.
-	 * 
+	 *
 	 * @return the {@link Binding} for this Album
 	 */
 	public Binding getBinding() {
@@ -628,7 +628,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Binding} for this Album.
-	 * 
+	 *
 	 * @param binding the new {@link Binding} for this Album
 	 */
 	public void setBinding(Binding binding) {
@@ -637,7 +637,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the height of the Album.
-	 * 
+	 *
 	 * @return the height of the Album
 	 */
 	public BigDecimal getHeight() {
@@ -646,7 +646,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the height of the Album.
-	 * 
+	 *
 	 * @param height the new height of the Album
 	 */
 	public void setHeight(BigDecimal height) {
@@ -655,7 +655,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the width of the Album.
-	 * 
+	 *
 	 * @return the width of the Album
 	 */
 	public BigDecimal getWidth() {
@@ -664,7 +664,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the width of the Album.
-	 * 
+	 *
 	 * @param width the new width of the Album
 	 */
 	public void setWidth(BigDecimal width) {
@@ -673,7 +673,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the number of pages.
-	 * 
+	 *
 	 * @return the number of pages
 	 */
 	public Integer getPages() {
@@ -682,7 +682,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the number of pages.
-	 * 
+	 *
 	 * @param pages the new number of pages
 	 */
 	public void setPages(Integer pages) {
@@ -691,7 +691,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the album cover.
-	 * 
+	 *
 	 * @return the album cover
 	 */
 	public Image getCover() {
@@ -700,7 +700,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the album cover.
-	 * 
+	 *
 	 * @param cover the new album cover
 	 */
 	public void setCover(Image cover) {
@@ -709,7 +709,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the summary of the album.
-	 * 
+	 *
 	 * @return the summary of the album
 	 */
 	public String getSummary() {
@@ -718,7 +718,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the summary of the album.
-	 * 
+	 *
 	 * @param summary the new summary of the album
 	 */
 	public void setSummary(String summary) {
@@ -727,7 +727,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the comments from the user.
-	 * 
+	 *
 	 * @return the comments from the user
 	 */
 	public String getComment() {
@@ -736,7 +736,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the comments from the user.
-	 * 
+	 *
 	 * @param comment the new comments from the user
 	 */
 	public void setComment(String comment) {
@@ -745,7 +745,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Tag}s labelling this Album.
-	 * 
+	 *
 	 * @return the {@link Tag}s labelling this Album
 	 */
 	public SortedSet<Tag> getTags() {
@@ -754,7 +754,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Tag}s labelling this Album.
-	 * 
+	 *
 	 * @param tags the new {@link Tag}s labelling this Album
 	 */
 	public void setTags(SortedSet<Tag> tags) {
@@ -763,7 +763,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Author}s who wrote this Album.
-	 * 
+	 *
 	 * @return the {@link Author}s who wrote this Album
 	 */
 	public SortedSet<Author> getWriters() {
@@ -772,7 +772,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Author}s who wrote this Album.
-	 * 
+	 *
 	 * @param writers the new {@link Author}s who wrote this Album
 	 */
 	public void setWriters(SortedSet<Author> writers) {
@@ -781,7 +781,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Author}s who drew this Album.
-	 * 
+	 *
 	 * @return the {@link Author}s who drew this Album
 	 */
 	public SortedSet<Author> getArtists() {
@@ -790,7 +790,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Author}s who drew this Album.
-	 * 
+	 *
 	 * @param artists the new {@link Author}s who drew this Album
 	 */
 	public void setArtists(SortedSet<Author> artists) {
@@ -799,7 +799,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Author}s who colored this Album.
-	 * 
+	 *
 	 * @return the {@link Author}s who colored this Album
 	 */
 	public SortedSet<Author> getColorists() {
@@ -808,7 +808,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Author}s who colored this Album.
-	 * 
+	 *
 	 * @param colorists the new {@link Author}s who colored this Album
 	 */
 	public void setColorists(SortedSet<Author> colorists) {
@@ -817,7 +817,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Author}s who inked this Album.
-	 * 
+	 *
 	 * @return the {@link Author}s who inked this Album
 	 */
 	public SortedSet<Author> getInkers() {
@@ -826,7 +826,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Author}s who inked this Album.
-	 * 
+	 *
 	 * @param inkers the new {@link Author}s who inked this Album
 	 */
 	public void setInkers(SortedSet<Author> inkers) {
@@ -835,7 +835,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Author}s who translated this Album.
-	 * 
+	 *
 	 * @return the {@link Author}s who translated this Album
 	 */
 	public SortedSet<Author> getTranslators() {
@@ -844,7 +844,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Author}s who translated this Album.
-	 * 
+	 *
 	 * @param translators the new {@link Author}s who translated this Album
 	 */
 	public void setTranslators(SortedSet<Author> translators) {
@@ -853,7 +853,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Gets the {@link Image}s related to this Album.
-	 * 
+	 *
 	 * @return the {@link Image}s related to this Album
 	 */
 	public SortedSet<Image> getImages() {
@@ -862,7 +862,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 	/**
 	 * Sets the {@link Image}s related to this Album.
-	 * 
+	 *
 	 * @param images the new {@link Image}s related to this Album
 	 */
 	public void setImages(SortedSet<Image> images) {
@@ -875,7 +875,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 * Done as an instance method rather than a ThreadLocal to avoid potential leaks. However, the number of times we
 	 * may call this method doesn't warrant the inception of a more convoluted ThreadLocal recycler.
 	 * </p>
-	 * 
+	 *
 	 * @return The number format.
 	 */
 	private static NumberFormat getNumberFormat() {

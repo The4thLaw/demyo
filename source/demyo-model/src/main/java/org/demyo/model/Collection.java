@@ -1,12 +1,12 @@
 package org.demyo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.Table;
 
 import org.demyo.model.util.DefaultOrder;
 
@@ -28,7 +28,7 @@ public class Collection extends AbstractLegalEntity {
 
 	/**
 	 * Gets the parent Publisher of the Collection.
-	 * 
+	 *
 	 * @return the parent Publisher of the Collection
 	 */
 	public Publisher getPublisher() {
@@ -37,7 +37,7 @@ public class Collection extends AbstractLegalEntity {
 
 	/**
 	 * Sets the parent Publisher of the Collection.
-	 * 
+	 *
 	 * @param publisher the new parent Publisher of the Collection
 	 */
 	public void setPublisher(Publisher publisher) {

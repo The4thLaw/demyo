@@ -3,8 +3,8 @@ package org.demyo.service.impl;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import javax.persistence.EntityNotFoundException;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;

@@ -83,9 +83,10 @@
 			<artifactId>spring-test-dbunit-core</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<!-- We need an implementation for the tests -->
 		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>javax.el</artifactId>
+			<groupId>org.mortbay.jasper</groupId>
+			<artifactId>apache-el</artifactId>
 			<scope>compile</scope>
 		</dependency>
 

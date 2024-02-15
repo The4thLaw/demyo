@@ -2,13 +2,6 @@ package org.demyo.model;
 
 import java.util.SortedSet;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
@@ -19,6 +12,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 /**
  * Represents a Publisher of comics.
@@ -44,7 +44,7 @@ public class Publisher extends AbstractLegalEntity {
 
 	/**
 	 * Gets the collections belonging to this publisher.
-	 * 
+	 *
 	 * @return the collections belonging to this publisher
 	 */
 	public SortedSet<Collection> getCollections() {

@@ -21,7 +21,7 @@ public class DerivativeTypeAPIController extends AbstractModelAPIController<Deri
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the entries.
 	 * @param derivativeService The service to manage Derivatives.
 	 */
@@ -33,12 +33,12 @@ public class DerivativeTypeAPIController extends AbstractModelAPIController<Deri
 
 	/**
 	 * Counts how many Derivatives use the given type.
-	 * 
+	 *
 	 * @param modelId The internal ID of the DerivativeType
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/derivatives/count")
-	public long countDerivativesByType(@PathVariable long modelId) {
+	public long countDerivativesByType(@PathVariable("modelId") long modelId) {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forType(modelId));
 	}
 }

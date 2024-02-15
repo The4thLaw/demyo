@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
@@ -90,7 +90,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Gets the summary.
-	 * 
+	 *
 	 * @return the summary
 	 */
 	public String getSummary() {
@@ -99,7 +99,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Sets the summary.
-	 * 
+	 *
 	 * @param summary the new summary
 	 */
 	public void setSummary(String summary) {
@@ -108,7 +108,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Gets the comment.
-	 * 
+	 *
 	 * @return the comment
 	 */
 	public String getComment() {
@@ -117,7 +117,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Sets the comment.
-	 * 
+	 *
 	 * @param comment the new comment
 	 */
 	public void setComment(String comment) {
@@ -126,7 +126,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Gets the website.
-	 * 
+	 *
 	 * @return the website
 	 */
 	public String getWebsite() {
@@ -135,7 +135,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Sets the website.
-	 * 
+	 *
 	 * @param website the new website
 	 */
 	public void setWebsite(String website) {
@@ -144,7 +144,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Gets the flag indicating whether the series is completed.
-	 * 
+	 *
 	 * @return the flag indicating whether the series is completed
 	 */
 	public Boolean getCompleted() {
@@ -153,7 +153,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Sets the flag indicating whether the series is completed.
-	 * 
+	 *
 	 * @param completed the new flag indicating whether the series is completed
 	 */
 	public void setCompleted(Boolean completed) {
@@ -162,7 +162,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Gets the physical location of this Series.
-	 * 
+	 *
 	 * @return the physical location of this Series
 	 */
 	public String getLocation() {
@@ -171,7 +171,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Sets the physical location of this Series.
-	 * 
+	 *
 	 * @param location the new physical location of this Series
 	 */
 	public void setLocation(String location) {
@@ -180,7 +180,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Gets the series related to this one.
-	 * 
+	 *
 	 * @return the series related to this one
 	 */
 	public Set<Series> getRelatedSeries() {
@@ -189,7 +189,7 @@ public class Series extends AbstractNamedModel {
 
 	/**
 	 * Sets the series related to this one.
-	 * 
+	 *
 	 * @param relatedSeries the new series related to this one
 	 */
 	public void setRelatedSeries(SortedSet<Series> relatedSeries) {

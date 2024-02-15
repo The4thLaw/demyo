@@ -3,7 +3,7 @@ package org.demyo.web.controller.api;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import org.demyo.service.IModelService;
 
 /**
  * Base controller for most API calls.
- * 
+ *
  * @param <M> The model class.
  */
 @ResponseBody
@@ -35,7 +35,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the model.
 	 */
 	protected AbstractModelAPIController(IModelService<M> service) {
@@ -44,7 +44,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 
 	/**
 	 * Retrieves the full list of the entities.
-	 * 
+	 *
 	 * @param view The Jackson view to apply.
 	 * @return The list.
 	 */
@@ -56,7 +56,7 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 
 	/**
 	 * Returns a constrained view of the models, for use in index pages.
-	 * 
+	 *
 	 * @param view The view logical name.
 	 * @param models The list of models to filter.
 	 * @return The entity to return in the mapping.
@@ -73,18 +73,18 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 
 	/**
 	 * Returns the requested model, with relevant links initialized.
-	 * 
+	 *
 	 * @param modelId The model ID.
 	 * @return The model.
 	 */
 	@GetMapping("/{modelId}")
-	public M view(@PathVariable long modelId) {
+	public M view(@PathVariable("modelId") long modelId) {
 		return service.getByIdForView(modelId);
 	}
 
 	/**
 	 * Saves changes to a new or updated entity.
-	 * 
+	 *
 	 * @param entity The entity to save.
 	 * @param result The result of the binding and validation.
 	 * @return The internal ID of the saved entity.
@@ -103,12 +103,12 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 
 	/**
 	 * Deletes an entity.
-	 * 
+	 *
 	 * @param modelId The ID of the entity to delete.
 	 * @return Always <code>true</code>.
 	 */
 	@DeleteMapping("/{modelId}")
-	public boolean delete(@PathVariable long modelId) {
+	public boolean delete(@PathVariable("modelId") long modelId) {
 		service.delete(modelId);
 		return true;
 	}

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,7 +108,7 @@ public class HomeController extends AbstractController {
 
 	/**
 	 * Displays the home page.
-	 * 
+	 *
 	 * @param model The view model
 	 * @return The view name
 	 */
@@ -170,7 +170,7 @@ public class HomeController extends AbstractController {
 
 	/**
 	 * Displays a Web Application Manifest.
-	 * 
+	 *
 	 * @return The manifest map.
 	 * @see https://developer.mozilla.org/en-US/docs/Web/Manifest
 	 */

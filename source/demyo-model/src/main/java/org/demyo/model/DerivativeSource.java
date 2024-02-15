@@ -1,9 +1,9 @@
 package org.demyo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 
 import org.demyo.model.util.DefaultOrder;
 
@@ -33,7 +33,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Gets the owner name.
-	 * 
+	 *
 	 * @return the owner name
 	 */
 	public String getOwner() {
@@ -42,7 +42,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Sets the owner name.
-	 * 
+	 *
 	 * @param owner the new owner name
 	 */
 	public void setOwner(String owner) {
@@ -51,7 +51,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Gets the contact email.
-	 * 
+	 *
 	 * @return the contact email
 	 */
 	public String getEmail() {
@@ -60,7 +60,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Sets the contact email.
-	 * 
+	 *
 	 * @param email the new contact email
 	 */
 	public void setEmail(String email) {
@@ -69,7 +69,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Gets the physical address.
-	 * 
+	 *
 	 * @return the physical address
 	 */
 	public String getAddress() {
@@ -78,7 +78,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Sets the physical address.
-	 * 
+	 *
 	 * @param address the new physical address
 	 */
 	public void setAddress(String address) {
@@ -87,7 +87,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Gets the phone number.
-	 * 
+	 *
 	 * @return the phone number
 	 */
 	public String getPhoneNumber() {
@@ -96,7 +96,7 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 
 	/**
 	 * Sets the phone number.
-	 * 
+	 *
 	 * @param phoneNumber the new phone number
 	 */
 	public void setPhoneNumber(String phoneNumber) {

@@ -26,7 +26,7 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 
 	/**
 	 * Creates the controller.
-	 * 
+	 *
 	 * @param service The service to manage the Tags.
 	 * @param albumService The service to manage the Albums.
 	 */
@@ -39,7 +39,7 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 
 	/**
 	 * Retrieves the full list of the tags with the counts.
-	 * 
+	 *
 	 * @param view The Jackson view to apply.
 	 * @return The list.
 	 */
@@ -53,12 +53,12 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 
 	/**
 	 * Counts how many Albums use the given Tag.
-	 * 
+	 *
 	 * @param modelId The internal ID of the Tag
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
-	public int countDerivativesByType(@PathVariable long modelId) {
+	public int countDerivativesByType(@PathVariable("modelId") long modelId) {
 		return albumService.countAlbumsByTag(modelId);
 	}
 }

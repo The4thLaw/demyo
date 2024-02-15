@@ -1,14 +1,14 @@
 package org.demyo.dao.impl;
 
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.sql.DataSource;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -82,7 +82,7 @@ public class RawSQLDao implements IRawSQLDao {
 	@Override
 	public long count(String tableName) {
 		Query query = entityManager.createNativeQuery("SELECT COUNT(*) FROM " + tableName);
-		return ((BigInteger) query.getSingleResult()).longValue();
+		return ((Number) query.getSingleResult()).longValue();
 	}
 
 	@Override
