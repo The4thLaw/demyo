@@ -20,16 +20,17 @@ public class PluginManager {
 
 	/**
 	 * Creates the manager.
-	 * 
+	 *
 	 * @param paths The paths to scan for plugins.
 	 */
 	public PluginManager(File... paths) {
-		this.paths = paths;
+		// Only keep existing paths: missing paths can confuse the servlet environment
+		this.paths = Arrays.stream(paths).filter(File::isDirectory).toArray(File[]::new);
 	}
 
 	/**
 	 * Gets all discovered plugins.
-	 * 
+	 *
 	 * @return The list of plugin files.
 	 */
 	public List<File> getPlugins() {
@@ -53,7 +54,7 @@ public class PluginManager {
 
 	/**
 	 * Returns the discovered plugins, as a comma-separated list of absolute paths.
-	 * 
+	 *
 	 * @return The CSV paths.
 	 */
 	public String getPluginPaths() {
