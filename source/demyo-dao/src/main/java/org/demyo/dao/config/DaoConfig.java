@@ -81,7 +81,7 @@ public class DaoConfig {
 		LOGGER.info("Hibernate debug is enabled: {}", hibernateDebug);
 		props.setProperty("hibernate.show_sql", hibernateDebug);
 		props.setProperty("hibernate.format_sql", hibernateDebug);
-		props.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+		// Dialect will be automatically detected
 		// If enabled, Hibernate will collect statistics useful for performance tuning
 		props.setProperty("generate_statistics", "false");
 		// If turned on, Hibernate will generate comments inside the SQL, for easier debugging
