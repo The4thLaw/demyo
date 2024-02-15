@@ -60,6 +60,7 @@
 		"java.completion.importOrder": [
 			"java",
 			"javax",
+			"jakarta",
 			"org",
 			"com",
 			"org.demyo",
