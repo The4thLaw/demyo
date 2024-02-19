@@ -880,8 +880,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	private static NumberFormat getNumberFormat() {
 		NumberFormat fmt = NumberFormat.getInstance();
-		if (fmt instanceof DecimalFormat) {
-			DecimalFormat df = (DecimalFormat) fmt;
+		if (fmt instanceof DecimalFormat df) {
 			DecimalFormatSymbols symbols = (DecimalFormatSymbols) df.getDecimalFormatSymbols().clone();
 			symbols.setDecimalSeparator('.'); // We always want a dot in this case
 			df.setDecimalFormatSymbols(symbols);

@@ -1,7 +1,5 @@
 package org.demyo.service.importing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +20,8 @@ import org.demyo.service.IReaderService;
 import org.demyo.service.ITagService;
 import org.demyo.service.impl.AbstractServiceTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for the {@link Demyo2Importer}.
  */
@@ -40,7 +40,7 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 
 	/**
 	 * Tests the completeness of a Demyo 2 import.
-	 * 
+	 *
 	 * @throws IOException In case of I/O error.
 	 * @throws DemyoException In case of import error.
 	 */
@@ -69,13 +69,13 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		Reader reader = readers.get(0);
 
 		ReaderLists lists = readerService.getLists(reader.getId());
-		assertThat(lists.getFavouriteAlbums()).hasSize(1);
-		assertThat(lists.getFavouriteAlbums()).contains(1);
+		assertThat(lists.favouriteAlbums()).hasSize(1);
+		assertThat(lists.favouriteAlbums()).contains(1);
 
-		assertThat(lists.getFavouriteSeries()).hasSize(1);
-		assertThat(lists.getFavouriteSeries()).contains(2);
+		assertThat(lists.favouriteSeries()).hasSize(1);
+		assertThat(lists.favouriteSeries()).contains(2);
 
-		assertThat(lists.getReadingList()).hasSize(1);
-		assertThat(lists.getReadingList()).contains(3);
+		assertThat(lists.readingList()).hasSize(1);
+		assertThat(lists.readingList()).contains(3);
 	}
 }

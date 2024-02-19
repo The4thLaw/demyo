@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,6 +42,8 @@ import org.demyo.model.Image;
 import org.demyo.service.IFilePondService;
 import org.demyo.service.IImageService;
 import org.demyo.service.IThumbnailService;
+
+import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
 
 /**
  * Implements the contract defined by {@link IImageService}.
@@ -234,7 +235,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 		// Find the files
 		Collection<File> foundFiles = FileUtils.listFiles(imagesDirectory,
-				new SuffixFileFilter(Arrays.asList(".jpg", ".jpeg", ".png", ".gif"), IOCase.INSENSITIVE),
+				new SuffixFileFilter(List.of(".jpg", ".jpeg", ".png", ".gif"), IOCase.INSENSITIVE),
 				TrueFileFilter.INSTANCE);
 
 		// Find the paths known in the database
@@ -277,7 +278,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public void delete(long id) {
-		Image image = getRepo().getOne(id);
+		Image image = getRepo().findById(id).orElseThrow(notFoundById(Image.class, id));
 		super.delete(id);
 		String path = image.getUrl();
 		if (path.startsWith(UPLOAD_DIRECTORY_NAME)) {

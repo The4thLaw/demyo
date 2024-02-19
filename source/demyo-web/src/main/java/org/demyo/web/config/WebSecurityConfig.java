@@ -23,24 +23,31 @@ public class WebSecurityConfig {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		LOGGER.debug("Configuring Spring Security");
 
-		LOGGER.debug("Configuring headers");
-		http.headers()
-				// Don't use the defaults
-				.defaultsDisabled()
-				// Add our custom CSP
-				.addHeaderWriter(new NoncedCSPHeaderWriter())
-				// Don't use their cache control directives. We don't have really sensitive control yet
-				.contentTypeOptions()
-				// Don't care for HSTS: It's not supported by Demyo yet anyway
-				// Don't use the Spring Security CSP: it doesn't support nonces
-				.and().frameOptions().sameOrigin().xssProtection().headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK);
+		return http
+				// Headers
+				.headers(headers -> headers
+						// Don't use the defaults
+						.defaultsDisabled()
+						// Add our custom CSP instead of using .contentSecurityPolicy: it's easier to work with nonces
+						.addHeaderWriter(new NoncedCSPHeaderWriter())
+						// Keep the content-type options
+						// Don't use their cache control directives. We don't have really sensitive control yet
+						.cacheControl(cc -> cc.disable())
+						// .contentTypeOptions().and()
+						.frameOptions(fo -> fo
+								.sameOrigin()
+								.xssProtection(xss -> xss
+										.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)))
+						// Don't care for HSTS: It's not supported by Demyo yet anyway
+						.httpStrictTransportSecurity(hsts -> hsts.disable()))
 
-		// Disable CSRF protection for now
-		http.csrf().disable();
+				// Disable CSRF protection for now
+				.csrf(csrf -> csrf.disable())
 
-		LOGGER.debug("Configuring authorization");
-		http.authorizeHttpRequests().anyRequest().permitAll();
+				// Allow all requests
+				.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
 
-		return http.build();
+				// Done
+				.build();
 	}
 }

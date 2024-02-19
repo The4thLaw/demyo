@@ -29,6 +29,8 @@ import org.demyo.service.IReaderService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITranslationService;
 
+import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
+
 /**
  * Implements the contract defined by {@link ISeriesService}.
  */
@@ -161,12 +163,13 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long save(@NotNull Reader model) {
-		boolean isNew = model.getId() == null;
+		Long id = model.getId();
+		boolean isNew = id == null;
 
 		if (!isNew) {
 			// Preserve the favourites and reading list. Not particularly efficient, but I can't think of a better
 			// way while preserving the mapping on the Album side, which is used for QueryDSL queries
-			Reader old = repo.getOne(model.getId());
+			Reader old = repo.findById(id).orElseThrow(notFoundById(Reader.class, id));
 			model.setReadingList(old.getReadingList());
 			model.setFavouriteSeries(old.getFavouriteSeries());
 			model.setFavouriteAlbums(old.getFavouriteAlbums());

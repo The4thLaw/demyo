@@ -141,9 +141,9 @@ public class Demyo2Importer implements IImporter {
 		} catch (IOException ioe) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, ioe);
 		} catch (SAXException | ParserConfigurationException saxe) {
-			if (saxe.getCause() instanceof DemyoException) {
+			if (saxe.getCause() instanceof DemyoException de) {
 				// Rethrow exceptions of the right type
-				throw (DemyoException) saxe.getCause();
+				throw de;
 			}
 			throw new DemyoException(DemyoErrorCode.IMPORT_PARSE_ERROR, saxe);
 		} finally {

@@ -1,6 +1,6 @@
 package org.demyo.web.controller.api;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -84,7 +84,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Saving from FilePond: other images = {}",
-					otherImages != null ? Arrays.asList(otherImages) : null);
+					otherImages != null ? List.of(otherImages) : null);
 		}
 
 		service.recoverFromFilePond(modelId, otherImages);

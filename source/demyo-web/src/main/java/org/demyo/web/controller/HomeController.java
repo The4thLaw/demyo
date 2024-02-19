@@ -1,9 +1,10 @@
 package org.demyo.web.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -163,7 +164,7 @@ public class HomeController extends AbstractController {
 			return null;
 		} else if (resources.length > 1) {
 			throw new IllegalArgumentException(
-					"Could not find a unique resource for " + name + ":" + Arrays.asList(resources));
+					"Could not find a unique resource for " + name + ":" + List.of(resources));
 		}
 		return resources[0].getFilename();
 	}
@@ -194,9 +195,7 @@ public class HomeController extends AbstractController {
 		manifest.put("orientation", "portrait-primary");
 		manifest.put("start_url", servletContextPath + "/");
 		manifest.put("icons",
-				Arrays.asList(getManifestIcon(16), getManifestIcon(32), getManifestIcon(48), getManifestIcon(64),
-						getManifestIcon(144), getManifestIcon(192), getManifestIcon(196), getManifestIcon(270),
-						getManifestIcon(558)));
+			IntStream.of(16, 32, 48, 64, 144, 192, 196, 270, 558).mapToObj(this::getManifestIcon).toList());
 		return manifest;
 	}
 

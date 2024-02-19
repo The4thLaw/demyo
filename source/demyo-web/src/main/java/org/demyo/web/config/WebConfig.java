@@ -1,7 +1,6 @@
 package org.demyo.web.config;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -67,8 +66,8 @@ public class WebConfig implements WebMvcConfigurer {
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 		LOGGER.debug("Configuring Jackson...");
 		for (HttpMessageConverter<?> converter : converters) {
-			if (converter instanceof AbstractJackson2HttpMessageConverter) {
-				ObjectMapper mapper = ((AbstractJackson2HttpMessageConverter) converter).getObjectMapper();
+			if (converter instanceof AbstractJackson2HttpMessageConverter jackConverter) {
+				ObjectMapper mapper = jackConverter.getObjectMapper();
 
 				// See https://stackoverflow.com/a/54412744
 				// Add Hibernate module
@@ -100,7 +99,7 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public CacheManager cacheManager() {
 		SimpleCacheManager manager = new SimpleCacheManager();
-		manager.setCaches(Arrays.asList(
+		manager.setCaches(List.of(
 				// This cache is used to store lists of model (e.g. results of findAll).
 				// It can be very useful in constrained environments like a Raspberry Pi
 				new ConcurrentMapCache("ModelLists"),

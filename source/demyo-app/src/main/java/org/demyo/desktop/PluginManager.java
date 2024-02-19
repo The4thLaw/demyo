@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -58,8 +59,7 @@ public class PluginManager {
 	 * @return The CSV paths.
 	 */
 	public String getPluginPaths() {
-		String joined = Arrays.asList(paths)
-				.stream()
+		String joined = Stream.of(paths)
 				.map(File::getAbsolutePath)
 				.collect(Collectors.joining(","));
 		LOGGER.trace("Plugin paths (as string): {}", joined);

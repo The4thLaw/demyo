@@ -1,6 +1,6 @@
 package org.demyo.common.exception;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Demyo standard exception.
@@ -12,7 +12,7 @@ public class DemyoException extends Exception implements IDemyoException {
 
 	/**
 	 * Creates a new exception.
-	 * 
+	 *
 	 * @param code The code of the error.
 	 * @param details Any details that could assist debugging.
 	 */
@@ -23,7 +23,7 @@ public class DemyoException extends Exception implements IDemyoException {
 
 	/**
 	 * Creates a new exception.
-	 * 
+	 *
 	 * @param code The code of the error.
 	 * @param cause The cause of the error.
 	 * @param details Any details that could assist debugging.
@@ -35,7 +35,7 @@ public class DemyoException extends Exception implements IDemyoException {
 
 	/**
 	 * Converts the error code and potential details to a single error message.
-	 * 
+	 *
 	 * @param code The code of the error.
 	 * @param details Any details that could assist debugging.
 	 * @return An error message.
@@ -47,7 +47,7 @@ public class DemyoException extends Exception implements IDemyoException {
 		if (details == null || details.length < 1) {
 			return code.toString();
 		}
-		return code.toString() + " " + Arrays.asList(details);
+		return code.toString() + " " + List.of(details);
 	}
 
 	@Override

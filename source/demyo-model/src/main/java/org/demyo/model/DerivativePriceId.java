@@ -21,7 +21,7 @@ public class DerivativePriceId implements Serializable {
 
 	/**
 	 * Creates an ID based on the provided fields.
-	 * 
+	 *
 	 * @param derivative The Derivative ID
 	 * @param date The date for the price
 	 */
@@ -32,11 +32,10 @@ public class DerivativePriceId implements Serializable {
 
 	@Override
 	public boolean equals(Object other) {
-		if (!(other instanceof DerivativePriceId)) {
-			return false;
+		if (other instanceof DerivativePriceId otherId) {
+			return derivative.equals(otherId.derivative) && date.equals(otherId.date);
 		}
-		DerivativePriceId otherId = (DerivativePriceId) other;
-		return derivative.equals(otherId.derivative) && date.equals(otherId.date);
+		return false;
 	}
 
 	@Override

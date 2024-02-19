@@ -235,8 +235,8 @@ public class Demyo2Exporter implements IExporter {
 		if (value == null) {
 			return "";
 		}
-		if (value instanceof Date) {
-			return DATE_FORMAT.get().format((Date) value);
+		if (value instanceof Date asDate) {
+			return DATE_FORMAT.get().format(asDate);
 		}
 		return value.toString();
 	}

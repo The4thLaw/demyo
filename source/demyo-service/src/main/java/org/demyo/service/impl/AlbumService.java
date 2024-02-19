@@ -30,12 +30,15 @@ import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
 import org.demyo.model.Image;
+import org.demyo.model.Series;
 import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IImageService;
 import org.demyo.service.ITranslationService;
+
+import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
 
 /**
  * Implements the contract defined by {@link IAlbumService}.
@@ -134,7 +137,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setWidth(last.getWidth());
 			template.setWriters(last.getWriters());
 		} else {
-			template.setSeries(seriesRepo.getOne(seriesId));
+			template.setSeries(seriesRepo.findById(seriesId).orElseThrow(notFoundById(Series.class, seriesId)));
 			// Force the proxy to initialize
 			template.getSeries().getName();
 		}
@@ -182,7 +185,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 		if (!isNewAlbum) {
 			// Check if the album is leaving the wishlist
-			Album oldAlbum = repo.getOne(newAlbum.getId());
+			Long newAlbumId = newAlbum.getId();
+			Album oldAlbum = repo.findById(newAlbumId).orElseThrow(notFoundById(Album.class, newAlbum.getId()));
 			isLeavingWishlist = oldAlbum.isWishlist() && !newAlbum.isWishlist();
 			if (isLeavingWishlist) {
 				LOGGER.debug("The saved album is leaving the wishlist");

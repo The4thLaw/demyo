@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -135,7 +134,7 @@ class ImageServiceTest extends AbstractServiceTest {
 		Image existing2 = new Image();
 		existing2.setDescription("Album Name 01 - Image 2");
 
-		when(repo.findByDescriptionLike(ArgumentMatchers.anyString())).thenReturn(Arrays.asList(existing1, existing2));
+		when(repo.findByDescriptionLike(ArgumentMatchers.anyString())).thenReturn(List.of(existing1, existing2));
 
 		List<Image> saved = service.recoverImagesFromFilePond("Album Name 01 - Image", true, "filePondFile1",
 				"filePondFile2");

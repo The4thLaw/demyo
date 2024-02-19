@@ -21,7 +21,7 @@ public class AlbumPriceId implements Serializable {
 
 	/**
 	 * Creates an ID based on the provided fields.
-	 * 
+	 *
 	 * @param album The Album ID
 	 * @param date The date for the price
 	 */
@@ -32,11 +32,10 @@ public class AlbumPriceId implements Serializable {
 
 	@Override
 	public boolean equals(Object other) {
-		if (!(other instanceof AlbumPriceId)) {
-			return false;
+		if (other instanceof AlbumPriceId otherId) {
+			return album.equals(otherId.album) && date.equals(otherId.date);
 		}
-		AlbumPriceId otherId = (AlbumPriceId) other;
-		return album.equals(otherId.album) && date.equals(otherId.date);
+		return false;
 	}
 
 	@Override
