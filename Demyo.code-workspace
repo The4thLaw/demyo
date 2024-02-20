@@ -50,7 +50,7 @@
 			"**/target": true
 		},
 		"files.eol": "\n",
-		"java.compile.nullAnalysis.mode": "automatic",
+		"java.compile.nullAnalysis.mode": "disabled",
 		"java.cleanup.actionsOnSave": [
 			"addOverride",
 			"addDeprecated"
@@ -101,7 +101,7 @@
 			{
 				"label": "Maven check dependencies",
 				"type": "shell",
-				"command": "./mvnw -B site dev,check-deps",
+				"command": "./mvnw -B site dev,check-deps -DskipTests",
 				"group": "build"
 			},
 		]
