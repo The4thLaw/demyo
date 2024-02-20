@@ -22,6 +22,11 @@ Includes the Web server, H2 server, and startup program.</description>
 		</dependency>
 
 		<dependency>
+			<groupId>org.the4thlaw</groupId>
+			<artifactId>common-utils</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
@@ -67,12 +72,6 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.imgscalr</groupId>
 			<artifactId>imgscalr-lib</artifactId>
-		</dependency>
-
-		<!-- Used for plugins -->
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
 		</dependency>
 
 		<!-- Logging (managed by the app package, provided by it at runtime) -->
@@ -141,7 +140,7 @@ Includes the Web server, H2 server, and startup program.</description>
 								<artifactItem>
 									<groupId>com.h2database</groupId>
 									<artifactId>h2</artifactId>
-									<version>2.1.214</version>
+									<version>2.2.224</version>
 								</artifactItem>
 							</artifactItems>
 							<outputDirectory>${project.build.directory}/legacy-h2-versions</outputDirectory>

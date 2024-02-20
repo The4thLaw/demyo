@@ -1,8 +1,9 @@
 package org.demyo.web.controller.api;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -32,7 +33,7 @@ public class ExportAPIController {
 
 	/**
 	 * Exports a file to a specified format.
-	 * 
+	 *
 	 * @param format The export format.
 	 * @param withResources Whether to include resources in the export.
 	 * @throws DemyoException In case of error during export.
@@ -43,15 +44,15 @@ public class ExportAPIController {
 	public HttpEntity<Resource> exportFile(@RequestParam String format, @RequestParam boolean withResources)
 			throws DemyoException, IOException {
 		Output exportedData = exportService.export(withResources);
-		File file = exportedData.getFile();
+		Path file = exportedData.getFile();
 
 		HttpHeaders headers = new HttpHeaders();
 
-		headers.setLastModified(file.lastModified());
-		headers.setContentLength(file.length());
+		headers.setLastModified(Files.getLastModifiedTime(file).toMillis());
+		headers.setContentLength(Files.size(file));
 
 		headers.setContentType(
-				MediaTypeFactory.getMediaType(file.getName()).orElse(MediaType.APPLICATION_OCTET_STREAM));
+				MediaTypeFactory.getMediaType(file.getFileName().toString()).orElse(MediaType.APPLICATION_OCTET_STREAM));
 
 		ContentDisposition contentDisp = ContentDisposition.builder("attachment")
 				.filename(exportedData.getFileName(), StandardCharsets.UTF_8)

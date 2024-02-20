@@ -1,24 +1,25 @@
 <ruleset comparisonMethod="maven"
-	xmlns="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0 http://mojo.codehaus.org/versions-maven-plugin/xsd/rule-2.0.0.xsd">
+         xmlns="https://www.mojohaus.org/VERSIONS/RULE/2.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://www.mojohaus.org/VERSIONS/RULE/2.1.0 https://www.mojohaus.org/versions/versions-model/xsd/rule-2.1.0.xsd">
 	<ignoreVersions>
 		<ignoreVersion type="regex">(?i).*alpha.*</ignoreVersion>
 		<ignoreVersion type="regex">(?i).*beta.*</ignoreVersion>
 		<ignoreVersion type="regex">.*CR\d*</ignoreVersion>
 		<ignoreVersion type="regex">(?i).*-rc-?\d*</ignoreVersion>
+		<!-- Used by Jakarta, Spring, Maven... -->
+		<ignoreVersion type="regex">.*-M\d+</ignoreVersion>
 	</ignoreVersions>
 	<rules>
 		<!-- Ignore betas for javax.el -->
-		<rule groupId="javax.el" artifactId="javax.el-api">
+		<rule groupId="javax.el" artifactId="javax.el-api" comparisonMethod="maven">
 			<ignoreVersions>
 				<ignoreVersion type="regex">(?i).*-b.*</ignoreVersion>
 			</ignoreVersions>
 		</rule>
 		<!-- Ignore v2.0, which is older than 1.3 and 1.4 -->
-		<rule groupId="xml-apis" artifactId="xml-apis">
+		<rule groupId="xml-apis" artifactId="xml-apis" comparisonMethod="maven">
 			<ignoreVersions>
-				<ignoreVersion type="regex">2\.0\./*</ignoreVersion>
+				<ignoreVersion type="regex">2\.0\..*</ignoreVersion>
 			</ignoreVersions>
 		</rule>
 	</rules>

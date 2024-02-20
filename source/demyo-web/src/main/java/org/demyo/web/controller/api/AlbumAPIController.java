@@ -1,6 +1,6 @@
 package org.demyo.web.controller.api;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -91,7 +91,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Saving from FilePond: main image = {}, other images = {}",
-					mainImage, otherImages != null ? Arrays.asList(otherImages) : null);
+					mainImage, otherImages != null ? List.of(otherImages) : null);
 		}
 
 		service.recoverFromFilePond(modelId, mainImage, otherImages);

@@ -1,11 +1,9 @@
 package org.demyo.common.config;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -71,9 +69,9 @@ public final class SystemConfiguration {
 	/** The directory to store image thumbnails. */
 	private final Path thumbnailDirectory;
 	/** The directory where system-wide plugins are located. */
-	private final File systemPluginDirectory;
+	private final Path systemPluginDirectory;
 	/** The directory where user-specific directories are located. */
-	private final File userPluginDirectory;
+	private final Path userPluginDirectory;
 	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
 	/** The maximum number of threads that should be used for thumbnails. If left empty, Demyo uses a heuristic. */
@@ -89,12 +87,12 @@ public final class SystemConfiguration {
 	private SystemConfiguration() {
 		// Find out where we reside
 		String path = System.getProperty("demyo.applicationDirectory");
-		if (path == null || !(new File(path, "lib").isDirectory())) {
+		if (path == null || !Files.isDirectory(Path.of(path, "lib"))) {
 			LOGGER.debug("Application directory is set to {} and does not contain a lib directory; "
 					+ "defaulting to working directory", path);
 			path = System.getProperty("user.dir");
 		}
-		applicationDirectory = Paths.get(path);
+		applicationDirectory = Path.of(path);
 
 		PropertiesConfiguration config = loadConfig();
 
@@ -109,7 +107,7 @@ public final class SystemConfiguration {
 		maxThumbnailThreads = StringUtils.isBlank(threads) ? null : Integer.parseInt(threads);
 		thumbnailQueueSize = config.getInt(CONFIG_KEY_THUMB_QUEUE_SIZE, DEFAULT_THUMBNAIL_QUEUE);
 		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
-		systemPluginDirectory = new File(applicationDirectory.toFile(), PLUGIN_DIR_NAME);
+		systemPluginDirectory = applicationDirectory.resolve(PLUGIN_DIR_NAME);
 
 		// Prepare all paths
 		if (portable) {
@@ -123,24 +121,24 @@ public final class SystemConfiguration {
 				if (StringUtils.isBlank(baseDirectory)) {
 					baseDirectory = SystemUtils.USER_HOME;
 				}
-				userDirectory = Paths.get(baseDirectory, APP_NAME);
+				userDirectory = Path.of(baseDirectory, APP_NAME);
 				tempDirectory = userDirectory.resolve("temp");
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
 				// https://developer.apple.com/library/mac/#documentation/General/Conceptual/
 				// MOSXAppProgrammingGuide/AppRuntime/AppRuntime.html
 
-				userDirectory = Paths.get(SystemUtils.USER_HOME, "Library", "Application Support", APP_NAME);
-				tempDirectory = Paths.get(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
+				userDirectory = Path.of(SystemUtils.USER_HOME, "Library", "Application Support", APP_NAME);
+				tempDirectory = Path.of(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
 			} else {
-				userDirectory = Paths.get(SystemUtils.USER_HOME, ".demyo");
+				userDirectory = Path.of(SystemUtils.USER_HOME, ".demyo");
 				// Unices may have special temporary directories residing in RAM or being cleaned automatically,
 				// so use them
-				tempDirectory = new File(SystemUtils.JAVA_IO_TMPDIR, APP_NAME).toPath();
+				tempDirectory = Path.of(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
 			}
 		}
 
-		userPluginDirectory = new File(userDirectory.toFile(), PLUGIN_DIR_NAME);
+		userPluginDirectory = userDirectory.resolve(PLUGIN_DIR_NAME);
 		imagesDirectory = userDirectory.resolve("images");
 		thumbnailDirectory = userDirectory.resolve("thumbnails");
 		databaseFile = userDirectory.resolve("demyo.mv.db");
@@ -167,15 +165,15 @@ public final class SystemConfiguration {
 		}
 
 		// Load the system configuration
-		File systemConfigurationFile = new File(applicationDirectory.toFile(), SYSTEM_CONFIGURATION_FILENAME);
+		Path systemConfigurationFile = applicationDirectory.resolve(SYSTEM_CONFIGURATION_FILENAME);
 		PropertiesConfiguration config;
 		try {
 			// Load defaults
 			config = new PropertiesConfiguration(defaultConfig);
-			if (systemConfigurationFile.exists()) {
+			if (Files.isReadable(systemConfigurationFile)) {
 				// Load overrides
 				LOGGER.debug("Loading configuration from {}", systemConfigurationFile);
-				PropertiesConfiguration overrides = new PropertiesConfiguration(systemConfigurationFile);
+				PropertiesConfiguration overrides = new PropertiesConfiguration(systemConfigurationFile.toFile());
 				config.copy(overrides);
 			} else {
 				LOGGER.debug("No system configuration found at {}, relying on defaults", systemConfigurationFile);
@@ -211,23 +209,16 @@ public final class SystemConfiguration {
 	 * @param dir The directory to create.
 	 */
 	private static void createDirectoryIfNeeded(Path dir) {
-		createDirectoryIfNeeded(dir.toFile());
-	}
-
-	/**
-	 * Creates the directory if it doesn't exist already.
-	 *
-	 * @param dir The directory to create.
-	 */
-	private static void createDirectoryIfNeeded(File dir) {
-		if (dir.isDirectory()) {
+		if (Files.isDirectory(dir)) {
 			return;
 		}
-		if (dir.exists()) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_DIR_PATH_ALREADY_TAKEN, dir.getAbsolutePath());
+		if (Files.exists(dir)) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_DIR_PATH_ALREADY_TAKEN, dir.toAbsolutePath().toString());
 		}
-		if (!dir.mkdirs()) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_DIR_CANNOT_CREATE, dir.getAbsolutePath());
+		try {
+			Files.createDirectories(dir);
+		} catch (IOException e) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_DIR_CANNOT_CREATE, e, dir.toAbsolutePath().toString());
 		}
 	}
 
@@ -237,7 +228,7 @@ public final class SystemConfiguration {
 	 * @param prefix The prefix string to be used in generating the file's name; must be at least three characters long
 	 * @return The created file.
 	 */
-	public File createTempFile(String prefix) {
+	public Path createTempFile(String prefix) {
 		return createTempFile(prefix, null, null);
 	}
 
@@ -249,7 +240,7 @@ public final class SystemConfiguration {
 	 *            the suffix <code>".tmp"</code> will be used
 	 * @return The created file.
 	 */
-	public File createTempFile(String prefix, String suffix) {
+	public Path createTempFile(String prefix, String suffix) {
 		return createTempFile(prefix, suffix, null);
 	}
 
@@ -263,18 +254,18 @@ public final class SystemConfiguration {
 	 *            temporary-file directory is to be used
 	 * @return The created file.
 	 */
-	public File createTempFile(String prefix, String suffix, Path directory) {
+	public Path createTempFile(String prefix, String suffix, Path directory) {
 		if (directory == null) {
 			directory = getTempDirectory();
 		}
 
-		File temp;
+		Path temp;
 		try {
-			temp = Files.createTempFile(directory, prefix, suffix).toFile();
+			temp = Files.createTempFile(directory, prefix, suffix);
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
 		}
-		temp.deleteOnExit();
+		temp.toFile().deleteOnExit();
 		return temp;
 	}
 
@@ -423,7 +414,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the directory where system-wide plugins are located
 	 */
-	public File getSystemPluginDirectory() {
+	public Path getSystemPluginDirectory() {
 		return systemPluginDirectory;
 	}
 
@@ -432,7 +423,7 @@ public final class SystemConfiguration {
 	 *
 	 * @return the directory where user-specific directories are located
 	 */
-	public File getUserPluginDirectory() {
+	public Path getUserPluginDirectory() {
 		return userPluginDirectory;
 	}
 

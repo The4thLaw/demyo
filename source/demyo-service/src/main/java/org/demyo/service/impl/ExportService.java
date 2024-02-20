@@ -1,9 +1,8 @@
 package org.demyo.service.impl;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -35,17 +34,17 @@ public class ExportService implements IExportService {
 	 * Defines the result of an export.
 	 */
 	public static final class Output {
-		/** The {@link File} containing the data. */
-		private final File file;
+		/** The {@link Path} containing the data. */
+		private final Path file;
 		/** The name of the file to provide to the user. */
 		private final String fileName;
 
-		Output(File file, String fileName) {
+		Output(Path file, String fileName) {
 			this.file = file;
 			this.fileName = fileName;
 		}
 
-		public File getFile() {
+		public Path getFile() {
 			return file;
 		}
 
@@ -81,7 +80,7 @@ public class ExportService implements IExportService {
 		IExporter exporter = exporters.get(0);
 		String baseExportFileName = "demyo_" + LocalDate.now().format(DATE_FORMAT) + ".";
 
-		File libraryExport = exporter.export();
+		Path libraryExport = exporter.export();
 		LOGGER.debug("Data export complete");
 
 		if (!withResources) {
@@ -90,16 +89,16 @@ public class ExportService implements IExportService {
 
 		LOGGER.debug("Adding resources to export");
 		// Build the ZIP file including all resources
-		File zipFile = SystemConfiguration.getInstance().createTempFile("demyo-export-archive-",
+		Path zipFile = SystemConfiguration.getInstance().createTempFile("demyo-export-archive-",
 				"." + exporter.getExtension(true), exportDirectory);
 
-		try (FileOutputStream fos = new FileOutputStream(zipFile);
+		try (OutputStream fos = Files.newOutputStream(zipFile);
 				BufferedOutputStream bos = new BufferedOutputStream(fos);
 				ZipOutputStream zos = new ZipOutputStream(bos)) {
 			// The file inside the archive must always have the same name to be imported back
 			ZipUtils.compress(libraryExport, "demyo." + exporter.getExtension(false), zos);
-			ZipUtils.compress(SystemConfiguration.getInstance().getImagesDirectory().toFile(), "images", zos);
-		} catch (IOException e) {
+			ZipUtils.compress(SystemConfiguration.getInstance().getImagesDirectory(), "images", zos);
+		} catch (IOException|RuntimeException e) {
 			LOGGER.warn("Failed to export", e);
 			throw new DemyoException(DemyoErrorCode.EXPORT_IO_ERROR);
 		}

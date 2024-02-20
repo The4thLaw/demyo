@@ -1,7 +1,7 @@
 package org.demyo.service.importing;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -51,13 +51,13 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		// a bit more tricky
 		rawSqlDao.pruneAllTables();
 
-		File sourceFile = new File("src/test/resources/demyo-2-export.xml");
-		importer.importFile(sourceFile.getName(), sourceFile.toPath());
+		Path sourceFile = Path.of("src/test/resources/demyo-2-export.xml");
+		importer.importFile(sourceFile.getFileName().toString(), sourceFile);
 
 		List<Album> albums = albumService.findAll();
 		assertThat(albums).hasSize(3);
 		Album album1 = albumService.getByIdForView(1);
-		assertThat(album1.getPrintingDate()).isEqualToIgnoringHours("1985-12-01");
+		assertThat(album1.getPrintingDate()).isCloseTo("1985-12-01", 3_600);
 
 		List<Tag> tags = tagService.findAll();
 		assertThat(tags).hasSize(3);

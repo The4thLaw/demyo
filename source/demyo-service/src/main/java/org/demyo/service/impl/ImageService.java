@@ -1,28 +1,24 @@
 package org.demyo.service.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOCase;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +26,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
+import org.the4thlaw.commons.utils.fluent.FluentUtils;
+import org.the4thlaw.commons.utils.io.FileUtils;
 import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -126,7 +124,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		return thumbnailService.getThumbnail(id, maxWidthOpt.get(), lenient, () -> getImageFile(getByIdForEdition(id)));
 	}
 
-	private static void validateImagePath(Path image)  {
+	private static void validateImagePath(Path image) {
 		try {
 			Path imagesDirectoryPath = SystemConfiguration.getInstance().getImagesDirectory().toRealPath();
 			Path imagePath = image.toRealPath();
@@ -141,14 +139,14 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Transactional(rollbackFor = Throwable.class)
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
-	public long uploadImage(@NotEmpty String originalFileName, @NotNull File imageFile) throws DemyoException {
+	public long uploadImage(@NotEmpty String originalFileName, @NotNull Path imageFile) throws DemyoException {
 		return uploadImage(originalFileName, null, imageFile).getId();
 	}
 
-	private Image uploadImage(String originalFileName, String description, File imageFile) throws DemyoException {
+	private Image uploadImage(String originalFileName, String description, Path imageFile) throws DemyoException {
 		// Determine the hash of the uploaded file
 		String hash;
-		try (FileInputStream data = new FileInputStream(imageFile)) {
+		try (InputStream data = Files.newInputStream(imageFile)) {
 			hash = DigestUtils.sha256Hex(data);
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.IMAGE_UPLOAD_ERROR, e);
@@ -174,13 +172,13 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				return foundImage;
 			}
 			LOGGER.debug("Already existing image was not found in the database. Uploading it as a new one...");
-			org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(targetFile);
+			FileUtils.deleteQuietly(targetFile);
 		}
 
 		// Either the file does not exist, or it was removed in the previous step
 		// Move the image to its final destination
 		try {
-			Files.move(imageFile.toPath(), targetFile);
+			Files.move(imageFile, targetFile);
 		} catch (IOException e) {
 			LOGGER.error("Failed to rename {} to {}", imageFile, targetFile, e);
 			throw new DemyoException(DemyoErrorCode.IMAGE_IO_ERROR);
@@ -218,7 +216,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 
 	private static String inferDescription(String originalFileName) {
 		// Strip any path attributes
-		String description = new File(originalFileName).getName();
+		String description = Path.of(originalFileName).getFileName().toString();
 		// Strip the extension
 		FILE_EXT_PATTERN.matcher(description).replaceAll("");
 		// Convert underscores into spaces
@@ -231,21 +229,24 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Transactional(readOnly = true)
 	public List<String> findUnknownDiskImages() {
 		List<String> unknownFiles = new ArrayList<>();
-		File imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory().toFile();
-
-		// Find the files
-		Collection<File> foundFiles = FileUtils.listFiles(imagesDirectory,
-				new SuffixFileFilter(List.of(".jpg", ".jpeg", ".png", ".gif"), IOCase.INSENSITIVE),
-				TrueFileFilter.INSTANCE);
+		Path imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
 
 		// Find the paths known in the database
 		Set<String> knownFiles = repo.findAllPaths();
+		LOGGER.trace("Known files: {}", knownFiles);
+
+		// Find the files
+		Stream<Path> foundFiles;
+		try {
+			foundFiles = Files.walk(imagesDirectory, Integer.MAX_VALUE)
+					.filter(FluentUtils.fileWithExtension(".jpg", ".jpeg", ".png", ".gif"));
+		} catch (IOException e) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e, "Failed to find the missing files");
+		}
 
 		// Filter out the known files
-		Path imagesDirectoryPath = imagesDirectory.toPath();
-		LOGGER.trace("Known files: {}", knownFiles);
-		for (File file : foundFiles) {
-			String relativePath = imagesDirectoryPath.relativize(file.toPath()).toString();
+		foundFiles.forEach(file -> {
+			String relativePath = imagesDirectory.relativize(file).toString();
 			// Normalize file separators so that collections imported and exported between OS's still work
 			relativePath = relativePath.replace(File.separatorChar, '/');
 			boolean known = knownFiles.contains(relativePath);
@@ -254,7 +255,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			if (!known) {
 				unknownFiles.add(relativePath);
 			}
-		}
+		});
 
 		Collections.sort(unknownFiles);
 
@@ -265,7 +266,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	public void clearCachedThumbnails() {
 		LOGGER.debug("Clearing thumbnail cache");
 		Path thumbnailDirectory = SystemConfiguration.getInstance().getThumbnailDirectory();
-		org.the4thlaw.commons.utils.io.FileUtils.deleteDirectoryQuietly(thumbnailDirectory);
+		FileUtils.deleteDirectoryQuietly(thumbnailDirectory);
 		try {
 			Files.createDirectories(thumbnailDirectory);
 			LOGGER.debug("Recreated thumbnail directory at {}", thumbnailDirectory);
@@ -334,8 +335,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				LOGGER.debug("{} already exists, searching further", currentDescription);
 			}
 			LOGGER.debug("Found a suitable image name: {}", currentDescription);
-			File fpFile = filePondService.getFileForId(id);
-			newImages.add(uploadImage(fpFile.getName(), currentDescription, fpFile));
+			Path fpFile = filePondService.getFileForId(id);
+			newImages.add(uploadImage(fpFile.getFileName().toString(), currentDescription, fpFile));
 		}
 
 		return newImages;

@@ -1,6 +1,5 @@
 package org.demyo.service;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,7 @@ public interface IImageService extends IModelService<Image> {
 	 * @return The created or recovered image identifier.
 	 * @throws DemyoException In case of error during file upload.
 	 */
-	long uploadImage(String originalFileName, File imageFile) throws DemyoException;
+	long uploadImage(String originalFileName, Path imageFile) throws DemyoException;
 
 	/**
 	 * Finds the list of all images that are currently on the disk, but not registered in Demyo.

@@ -1,15 +1,16 @@
 package org.demyo.service.exporting;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.the4thlaw.commons.utils.io.FileUtils;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -38,10 +39,10 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 	 */
 	@Test
 	void testExportCompleteness() throws DemyoException, IOException {
-		File expFile = exporter.export();
+		Path expFile = exporter.export();
 
-		String expContent = FileUtils.readFileToString(expFile, StandardCharsets.UTF_8);
-		org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(expFile);
+		String expContent = Files.readString(expFile, StandardCharsets.UTF_8);
+		FileUtils.deleteQuietly(expFile);
 		LOGGER.error(expContent);
 
 		assertThat(expContent)

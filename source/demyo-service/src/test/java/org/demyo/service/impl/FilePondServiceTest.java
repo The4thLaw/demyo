@@ -1,16 +1,16 @@
 package org.demyo.service.impl;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.FileTime;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.the4thlaw.commons.utils.io.FileUtils;
 
 import org.demyo.common.exception.DemyoException;
 
@@ -46,11 +46,11 @@ class FilePondServiceTest {
 	 */
 	@AfterEach
 	void tearDown() {
-		org.the4thlaw.commons.utils.io.FileUtils.deleteDirectoryQuietly(uploadDir);;
+		FileUtils.deleteDirectoryQuietly(uploadDir);;
 	}
 
-	private static void createSampleFile(File toDelete) throws IOException {
-		FileUtils.write(toDelete, SAMPLE_FILE_CONTENT, StandardCharsets.UTF_8);
+	private static void createSampleFile(Path toDelete) throws IOException {
+		Files.writeString(toDelete, SAMPLE_FILE_CONTENT, StandardCharsets.UTF_8);
 	}
 
 	/**
@@ -60,10 +60,10 @@ class FilePondServiceTest {
 	 */
 	@Test
 	void cleanFilePondDirectory() throws IOException {
-		File toDelete = uploadDir.resolve(FILENAME_TO_DELETE).toFile();
+		Path toDelete = uploadDir.resolve(FILENAME_TO_DELETE);
 		createSampleFile(toDelete);
-		toDelete.setLastModified(TSTAMP_2020);
-		File toKeep = uploadDir.resolve(FILENAME_TO_KEEP).toFile();
+		Files.setLastModifiedTime(toDelete, FileTime.fromMillis(TSTAMP_2020));
+		Path toKeep = uploadDir.resolve(FILENAME_TO_KEEP);
 		createSampleFile(toKeep);
 
 		assertThat(toDelete).exists();
@@ -98,7 +98,7 @@ class FilePondServiceTest {
 	 */
 	@Test
 	void revert() throws IOException {
-		File toDelete = uploadDir.resolve(FILENAME_TO_DELETE).toFile();
+		Path toDelete = uploadDir.resolve(FILENAME_TO_DELETE);
 		createSampleFile(toDelete);
 
 		assertThat(toDelete).exists();
@@ -116,7 +116,7 @@ class FilePondServiceTest {
 	 */
 	@Test
 	void getFileForId() throws IOException, DemyoException {
-		File toKeep = uploadDir.resolve(FILENAME_TO_KEEP).toFile();
+		Path toKeep = uploadDir.resolve(FILENAME_TO_KEEP);
 		createSampleFile(toKeep);
 		Files.createDirectories(uploadDir.resolve(FILENAME_SAMPLE_DIR));
 

@@ -1,15 +1,17 @@
 package org.demyo.desktop;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.the4thlaw.commons.utils.fluent.FluentUtils;
 
 /**
  * Manages the registration of plugins.
@@ -17,16 +19,16 @@ import org.slf4j.LoggerFactory;
 public class PluginManager {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
 
-	private final File[] paths;
+	private final Path[] paths;
 
 	/**
 	 * Creates the manager.
 	 *
 	 * @param paths The paths to scan for plugins.
 	 */
-	public PluginManager(File... paths) {
+	public PluginManager(Path... paths) {
 		// Only keep existing paths: missing paths can confuse the servlet environment
-		this.paths = Arrays.stream(paths).filter(File::isDirectory).toArray(File[]::new);
+		this.paths = Arrays.stream(paths).filter(Files::isDirectory).toArray(Path[]::new);
 	}
 
 	/**
@@ -34,19 +36,21 @@ public class PluginManager {
 	 *
 	 * @return The list of plugin files.
 	 */
-	public List<File> getPlugins() {
-		List<File> plugins = new ArrayList<>();
-		for (File path : paths) {
-			if (!path.isDirectory()) {
-				LOGGER.info("{} is not a directory, skipping it", path.getAbsolutePath());
-			} else {
-				plugins.addAll(FileUtils.listFiles(path, new String[] { "jar" }, true));
+	public List<Path> getPlugins() {
+		List<Path> plugins = new ArrayList<>();
+		for (Path path : paths) {
+			try {
+				Files.walk(path, Integer.MAX_VALUE)
+						.filter(FluentUtils.fileWithExtension("jar"))
+						.forEach(plugins::add);
+			} catch (IOException e) {
+				LOGGER.warn("Failed to list plugins", e);
 			}
 		}
 
 		if (LOGGER.isDebugEnabled()) {
-			for (File plugin : plugins) {
-				LOGGER.debug("Found plugin {}", plugin.getPath());
+			for (Path plugin : plugins) {
+				LOGGER.debug("Found plugin {}", plugin);
 			}
 		}
 
@@ -60,7 +64,8 @@ public class PluginManager {
 	 */
 	public String getPluginPaths() {
 		String joined = Stream.of(paths)
-				.map(File::getAbsolutePath)
+				.map(Path::toAbsolutePath)
+				.map(Path::toString)
 				.collect(Collectors.joining(","));
 		LOGGER.trace("Plugin paths (as string): {}", joined);
 		return joined;

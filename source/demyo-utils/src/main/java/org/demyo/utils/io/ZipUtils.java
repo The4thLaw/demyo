@@ -1,9 +1,6 @@
 package org.demyo.utils.io;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,7 +11,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.the4thlaw.commons.utils.io.FileSecurityUtils;
@@ -59,7 +55,7 @@ public final class ZipUtils {
 					try (InputStream in = zipFile.getInputStream(entry);
 							OutputStream fos = Files.newOutputStream(entryDestination);
 							BufferedOutputStream bos = new BufferedOutputStream(fos)) {
-						IOUtils.copy(in, fos);
+						in.transferTo(fos);
 					}
 				}
 			}
@@ -77,32 +73,39 @@ public final class ZipUtils {
 	 * @param destination The ZIP file to populate.
 	 * @throws IOException In case of error during compression.
 	 */
-	public static void compress(File source, String alias, ZipOutputStream destination) throws IOException {
+	public static void compress(Path source, String alias, ZipOutputStream destination) throws IOException {
 		compress(source, alias, destination, null);
 	}
 
-	private static void compress(File source, String alias, ZipOutputStream destination, String currentPath)
+	private static void compress(Path source, String alias, ZipOutputStream destination, String currentPath)
 			throws IOException {
 		String newPath;
 		if (alias != null) {
 			newPath = alias;
 		} else {
-			newPath = source.getName();
+			newPath = source.getFileName().toString();
 		}
+		String finalPath;
 		if (currentPath != null) {
-			newPath = currentPath + "/" + newPath;
+			finalPath = currentPath + "/" + newPath;
+		} else {
+			finalPath = newPath;
 		}
 
-		if (source.isDirectory()) {
-			for (File f : source.listFiles()) {
-				compress(f, null, destination, newPath);
-			}
+		if (Files.isDirectory(source)) {
+			Files.newDirectoryStream(source).forEach(p -> {
+				try {
+					compress(p,  null, destination, finalPath);
+				} catch (IOException e) {
+					throw new RuntimeException("Filed to compress " + p, e);
+				}
+			});
 		} else {
-			destination.putNextEntry(new ZipEntry(newPath));
-			try (InputStream is = new BufferedInputStream(new FileInputStream(source))) {
-				IOUtils.copy(is, destination);
+			destination.putNextEntry(new ZipEntry(finalPath));
+			try (InputStream is = Files.newInputStream(source)) {
+				is.transferTo(destination);
 			} catch (IOException e) {
-				LOGGER.warn("Failed to zip {}, rethrowing exception", newPath);
+				LOGGER.warn("Failed to zip {}, rethrowing exception", finalPath);
 				throw e;
 			}
 			destination.closeEntry();

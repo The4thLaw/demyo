@@ -1,8 +1,8 @@
 package org.demyo.service.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
@@ -27,11 +27,11 @@ import static org.mockito.Mockito.when;
  * Unit tests for {@link ImageService}.
  */
 class ImageServiceTest extends AbstractServiceTest {
-	private static File generateDummyImmage() {
+	private static Path generateDummyImmage() {
 		String fileName = "target/ImageServiceTest_" + UUID.randomUUID().toString() + ".jpg";
-		File file = new File(fileName);
-		try (FileOutputStream fos = new FileOutputStream(file)) {
-			fos.write(fileName.getBytes());
+		Path file = Path.of(fileName);
+		try (OutputStream os = Files.newOutputStream(file)) {
+			os.write(fileName.getBytes());
 		} catch (IOException e) {
 			throw new RuntimeException("generateDummyImage failed", e);
 		}

@@ -1,23 +1,18 @@
 package org.demyo.service.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.UUID;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.filefilter.AbstractFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.the4thlaw.commons.utils.io.FileSecurityUtils;
+import org.the4thlaw.commons.utils.io.FileUtils;
 import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -67,17 +62,17 @@ public class FilePondService implements IFilePondService {
 	@Scheduled(initialDelay = AUTOCLEAN_DELAY, fixedRate = AUTOCLEAN_PERIOD)
 	public void cleanFilePondDirectory() {
 		LOGGER.debug("Auto-cleaning FilePond directory...");
-		Collection<File> filesToDelete = FileUtils.listFiles(uploadDirectory.toFile(), new AbstractFileFilter() {
-			@Override
-			public boolean accept(File file) {
-				return System.currentTimeMillis() - file.lastModified() > AUTOCLEAN_MIN_AGE;
-			}
 
-		}, TrueFileFilter.INSTANCE);
-
-		for (File f : filesToDelete) {
-			LOGGER.debug("Auto-cleaning FilePond file: {}", f);
-			org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(f);
+		long curTime = System.currentTimeMillis();
+		try {
+			Files.find(uploadDirectory, Integer.MAX_VALUE,
+				(p, attrs) -> curTime - attrs.lastModifiedTime().toMillis() > AUTOCLEAN_MIN_AGE)
+				.forEach(f -> {
+					LOGGER.debug("Auto-cleaning FilePond file: {}", f);
+					FileUtils.deleteQuietly(f);
+				});
+		} catch (IOException e) {
+			LOGGER.warn("Failed to list the file in the FilePond directory", e);
 		}
 	}
 
@@ -96,10 +91,10 @@ public class FilePondService implements IFilePondService {
 		Path destinationFile = uploadDirectory.resolve(filename);
 
 		try (OutputStream fos = Files.newOutputStream(destinationFile)) {
-			IOUtils.copy(input, fos);
+			input.transferTo(fos);
 		} catch (IOException ioe) {
 			LOGGER.warn("Failed to store FilePond data to {}", destinationFile, ioe);
-			org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(destinationFile);
+			FileUtils.deleteQuietly(destinationFile);
 		}
 		// Request to delete on exit, just in case
 		destinationFile.toFile().deleteOnExit();
@@ -113,11 +108,11 @@ public class FilePondService implements IFilePondService {
 	public void revert(String id) {
 		Path file = uploadDirectory.resolve(id);
 		FileSecurityUtils.assertChildOf(uploadDirectory, file);
-		org.the4thlaw.commons.utils.io.FileUtils.deleteQuietly(file);
+		FileUtils.deleteQuietly(file);
 	}
 
 	@Override
-	public File getFileForId(String id) throws DemyoException {
+	public Path getFileForId(String id) throws DemyoException {
 		Path file = uploadDirectory.resolve(id);
 
 		FileSecurityUtils.assertChildOf(uploadDirectory, file);
@@ -127,7 +122,7 @@ public class FilePondService implements IFilePondService {
 			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_MISSING, id + " doesn't exist or isn't a file");
 		}
 
-		return file.toFile();
+		return file;
 	}
 
 }

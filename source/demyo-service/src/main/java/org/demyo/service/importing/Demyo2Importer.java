@@ -174,6 +174,8 @@ public class Demyo2Importer implements IImporter {
 
 		LOGGER.debug("Moving extracted directory from {} to {}", extractedDirectory, systemDirectory);
 		try {
+			// We need commons-io here because it can manage moving between file stores, which could happen
+			// for the extraction directory. It also requires us to work with java.io.File
 			FileUtils.moveDirectory(extractedDirectory, systemDirectory);
 		} catch (IOException e) {
 			throw new DemyoException(DemyoErrorCode.IMPORT_IMAGES_ERROR, e);

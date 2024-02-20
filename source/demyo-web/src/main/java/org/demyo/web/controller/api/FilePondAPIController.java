@@ -25,7 +25,7 @@ public class FilePondAPIController {
 
 	/**
 	 * Handler for FilePond's "process" method.
-	 * 
+	 *
 	 * @param mainFile The user-provided file.
 	 * @param otherFile The user-provided file (with another param name).
 	 * @return The temporary file identifier.
@@ -41,13 +41,13 @@ public class FilePondAPIController {
 			file = otherFile;
 		}
 		try (InputStream input = file.getInputStream()) {
-			return service.process(file.getOriginalFilename(), file.getInputStream());
+			return service.process(file.getOriginalFilename(), input);
 		}
 	}
 
 	/**
 	 * Handler for FilePond's "revert" method.
-	 * 
+	 *
 	 * @param fileId The file identifier to revert.
 	 */
 	@DeleteMapping("/revert")

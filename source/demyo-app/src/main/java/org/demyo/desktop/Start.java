@@ -2,14 +2,12 @@ package org.demyo.desktop;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.SplashScreen;
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -83,7 +81,7 @@ public final class Start {
 			}
 			// Go two directories above: from JAR to lib dir to app dir
 			System.setProperty("demyo.applicationDirectory",
-					new File(decodedPath).getParentFile().getParentFile().getAbsolutePath());
+					Path.of(decodedPath).getParent().getParent().toAbsolutePath().toString());
 		}
 
 		JdbcDataSource ds = startDatabase();
@@ -144,7 +142,7 @@ public final class Start {
 		LOGGER.debug("Database URL is {}", url);
 
 		// Potentially migrate the database
-		migrateH2IfNeeded(isNewDatabase, Paths.get(databaseFilePath).getParent(), url);
+		migrateH2IfNeeded(isNewDatabase, Path.of(databaseFilePath).getParent(), url);
 
 		LOGGER.info("Starting database...");
 		JdbcDataSource ds = new JdbcDataSource();
@@ -166,7 +164,7 @@ public final class Start {
 		Path h2CacheDirectory;
 		String h2CacheProperty = System.getProperty("demyo.h2.cacheDirectoryName");
 		if (h2CacheProperty != null) {
-			h2CacheDirectory = Paths.get(h2CacheProperty);
+			h2CacheDirectory = Path.of(h2CacheProperty);
 		} else {
 			h2CacheDirectory = SystemConfiguration.getInstance().getApplicationDirectory()
 					.resolve("legacy-h2-versions");

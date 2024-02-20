@@ -1,10 +1,10 @@
 package org.demyo.service.exporting;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -59,13 +59,13 @@ public class Demyo2Exporter implements IExporter {
 
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
-	public File export() throws DemyoException {
+	public Path export() throws DemyoException {
 		LOGGER.debug("Starting export in Demyo 2 format");
 
-		File out = SystemConfiguration.getInstance().createTempFile("demyo2-export-", ".xml");
+		Path out = SystemConfiguration.getInstance().createTempFile("demyo2-export-", ".xml");
 
 		XMLStreamWriter xsw = null;
-		try (OutputStream outputStream = new FileOutputStream(out)) {
+		try (OutputStream outputStream = Files.newOutputStream(out)) {
 
 			xsw = XMLOutputFactory.newInstance().createXMLStreamWriter(outputStream, StandardCharsets.UTF_8.toString());
 			xsw = new IndentingXMLStreamWriter(xsw);

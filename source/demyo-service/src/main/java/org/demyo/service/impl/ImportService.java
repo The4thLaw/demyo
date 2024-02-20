@@ -12,7 +12,6 @@ import java.util.Vector;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class ImportService implements IImportService {
 					".tmp");
 			fos = Files.newOutputStream(importFile);
 			bos = new BufferedOutputStream(fos);
-			IOUtils.copy(content, bos);
+			content.transferTo(bos);
 			org.the4thlaw.commons.utils.io.IOUtils.closeQuietly(bos);
 
 			// Detect importer to use

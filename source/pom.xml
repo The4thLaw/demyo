@@ -43,19 +43,19 @@
 	</developers>
 
 	<properties>
-		<org.slf4j.version>2.0.6</org.slf4j.version>
-		<org.springframework.version>6.1.3</org.springframework.version>
-		<org.springframework.security.version>6.2.1</org.springframework.security.version>
+		<org.slf4j.version>2.0.12</org.slf4j.version>
+		<org.springframework.version>6.1.4</org.springframework.version>
+		<org.springframework.security.version>6.2.2</org.springframework.security.version>
 		<org.hibernate.version>6.4.4.Final</org.hibernate.version>
 		<com.querydsl.version>5.1.0</com.querydsl.version>
 		<com.fasterxml.jackson.version>2.16.1</com.fasterxml.jackson.version>
-		<org.junit.version>5.9.2</org.junit.version>
+		<org.junit.version>5.10.2</org.junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
 		<org.eclipse.jetty.version>12.0.6</org.eclipse.jetty.version>
-		<js.frontend-maven-plugin.version>1.9.1</js.frontend-maven-plugin.version>
+		<js.frontend-maven-plugin.version>1.15.0</js.frontend-maven-plugin.version>
 		<js.node.version>v16.17.0</js.node.version>
 
 		<sonar.organization>the4thlaw</sonar.organization>
@@ -119,23 +119,23 @@
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
 				<artifactId>common-utils</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
 				<artifactId>h2-utils</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
 				<artifactId>common-services</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.12.0</version>
+				<version>3.14.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-beanutils </groupId>
@@ -165,12 +165,12 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.11.0</version>
+				<version>2.15.1</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.15</version>
+				<version>1.16.1</version>
 			</dependency>
 
 			<!-- Logging -->
@@ -182,7 +182,7 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>1.3.5</version>
+				<version>1.5.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -192,7 +192,7 @@
 			<dependency>
 				<groupId>org.codehaus.janino</groupId>
 				<artifactId>janino</artifactId>
-				<version>3.1.9</version>
+				<version>3.1.12</version>
 			</dependency>
 
 			<dependency>
@@ -203,7 +203,7 @@
 			<dependency>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-core</artifactId>
-				<version>9.14.0</version>
+				<version>10.8.1</version>
 			</dependency>
 
 			<dependency>
@@ -348,7 +348,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
-				<version>3.2.2</version>
+				<version>3.2.3</version>
 			</dependency>
 
 			<dependency>
@@ -389,7 +389,7 @@
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
-				<version>2.1.214</version>
+				<version>2.2.224</version>
 			</dependency>
 
 			<dependency>
@@ -439,7 +439,7 @@
 			<dependency>
 				<groupId>com.jayway.jsonpath</groupId>
 				<artifactId>json-path</artifactId>
-				<version>2.7.0</version>
+				<version>2.9.0</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -464,14 +464,13 @@
 			<dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
-				<version>3.24.2</version>
+				<version>3.25.3</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
-				<!-- Mockito 5.x requires Java 11 -->
-				<version>4.11.0</version>
+				<version>5.10.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
@@ -494,7 +493,7 @@
 			<dependency>
 				<groupId>com.github.ppodgorsek</groupId>
 				<artifactId>spring-test-dbunit-core</artifactId>
-				<version>5.2.0</version>
+				<version>6.0.0</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>
@@ -517,7 +516,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.12.1</version>
 				<configuration>
 					<source>17</source>
 					<target>17</target>
@@ -527,7 +526,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>3.2.5</version>
 				<executions>
 					<execution>
 						<goals>
@@ -552,19 +551,19 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.1.2</version>
+					<version>3.6.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.3.1</version>
+					<version>3.4.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>com.akathist.maven.plugins.launch4j</groupId>
 					<artifactId>launch4j-maven-plugin</artifactId>
-					<version>2.1.0</version>
+					<version>2.5.0</version>
 				</plugin>
 
 				<plugin>
@@ -580,55 +579,55 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>3.0.0</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<version>3.3.0</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clean-plugin</artifactId>
 					<version>3.1.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.6.0</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.3.2</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.8.2</version>
+					<version>3.1.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
-					<version>2.5.2</version>
+					<version>3.1.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5.3</version>
+					<version>3.0.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.9.1</version>
+					<version>3.12.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.2.0</version>
+					<version>3.3.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.22.2</version>
+					<version>3.2.5</version>
 					<configuration>
 						<argLine>-Djava.awt.headless=true</argLine>
 					</configuration>
@@ -637,7 +636,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.5.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -681,8 +680,7 @@
 						<plugin>
 							<groupId>org.jacoco</groupId>
 							<artifactId>jacoco-maven-plugin</artifactId>
-							<!-- Last version for Java 8 -->
-							<version>0.8.8</version>
+							<version>0.8.11</version>
 							<configuration>
 								<excludes>
 									<exclude>com.*</exclude>
@@ -755,7 +753,7 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>versions-maven-plugin</artifactId>
-						<version>2.8.1</version>
+						<version>2.16.2</version>
 						<configuration>
 							<rulesUri>file://${project.rootdir}/maven-version-rules.xml</rulesUri>
 						</configuration>

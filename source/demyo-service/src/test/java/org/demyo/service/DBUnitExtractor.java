@@ -1,10 +1,11 @@
 package org.demyo.service;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.sql.DataSource;
 
@@ -70,10 +71,10 @@ class DBUnitExtractor extends AbstractServiceTest {
 		}
 
 		// Write to src/test
-		File output = new File("../demyo-test/src/main/resources/org/demyo/test/demyo-dbunit-standard.xml");
+		Path output = Path.of("../demyo-test/src/main/resources/org/demyo/test/demyo-dbunit-standard.xml");
 		// Note that we can't have emojis in the test database. DBUnit uses the same code internally that caused issue
 		// https://github.com/The4thLaw/demyo/issues/76
-		try (FileWriter writer = new FileWriter(output)) {
+		try (BufferedWriter writer = Files.newBufferedWriter(output, StandardCharsets.UTF_8)) {
 			FlatXmlDataSet.write(fullDataSet, writer, StandardCharsets.UTF_8.name());
 		}
 	}
