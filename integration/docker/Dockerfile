@@ -4,7 +4,7 @@ COPY demyo-vue-frontend .
 RUN npm install
 RUN npm run build
 
-FROM maven:3.9-eclipse-temurin-11 AS mvn-build
+FROM maven:3.9-eclipse-temurin-17 AS mvn-build
 WORKDIR /mvn-app
 COPY . .
 # Generate m2 settings with a secret and access to the GitHub packages
@@ -20,7 +20,7 @@ COPY --from=node-build /node-app/dist/js demyo-vue-frontend/target/classes/publi
 # Run the build, including the pre-built node stuff
 RUN mvn install -DskipTests -Pprod
 
-FROM eclipse-temurin:11-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 WORKDIR /demyo
 # TODO: use a specific user to run demyo?
 COPY --from=mvn-build /mvn-app/demyo-app/target/dependencies/* lib/
