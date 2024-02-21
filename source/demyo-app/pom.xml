@@ -34,15 +34,6 @@ Includes the Web server, H2 server, and startup program.</description>
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
-		<!-- Needed for JNDI -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-plus</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jndi</artifactId>
-		</dependency>
 		<!-- Needed for JSP -->
 		<dependency>
 			<groupId>org.eclipse.jetty.ee10</groupId>
@@ -57,15 +48,6 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-glassfish-jstl</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.the4thlaw</groupId>
-			<artifactId>h2-utils</artifactId>
 		</dependency>
 
 		<!-- Used to resize the tray icon -->
@@ -137,6 +119,12 @@ Includes the Web server, H2 server, and startup program.</description>
 									<version>1.4.196</version>
 								</artifactItem>
 								<!--  Demyo 3.1 -->
+								<artifactItem>
+									<groupId>com.h2database</groupId>
+									<artifactId>h2</artifactId>
+									<!-- Used during development only, could eventually be removed from the build -->
+									<version>2.1.214</version>
+								</artifactItem>
 								<artifactItem>
 									<groupId>com.h2database</groupId>
 									<artifactId>h2</artifactId>
@@ -223,7 +211,7 @@ Includes the Web server, H2 server, and startup program.</description>
 										<fileVersion>${windows.version}</fileVersion>
 										<txtFileVersion>${project.version}</txtFileVersion>
 										<fileDescription>Demyo Comic Manager v${project.version}, Windows executable</fileDescription>
-										<copyright>2007-2021 Xavier Dalem</copyright>
+										<copyright>2007-2024 Xavier Dalem</copyright>
 										<productVersion>${windows.version}</productVersion>
 										<txtProductVersion>${project.version}</txtProductVersion>
 										<productName>Demyo</productName>
