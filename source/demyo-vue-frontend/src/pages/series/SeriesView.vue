@@ -175,10 +175,6 @@
 </template>
 
 <script>
-import { sortedIndexOf } from 'lodash'
-import asyncPool from 'tiny-async-pool'
-import Vue from 'vue'
-import { mapState } from 'vuex'
 import AlbumCard from '@/components/AlbumCard'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
@@ -195,6 +191,10 @@ import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import seriesService from '@/services/series-service'
+import { sortedIndexOf } from 'lodash'
+import asyncPool from 'tiny-async-pool'
+import Vue from 'vue'
+import { mapState } from 'vuex'
 
 export default {
 	name: 'SeriesView',
@@ -291,7 +291,7 @@ export default {
 
 		authorsAlive() {
 			const relevantAuthors = [...this.allWriters, ...this.allArtists]
-			return relevantAuthors.some(a => !a.deathDate)
+			return relevantAuthors.length === 0 || relevantAuthors.some(a => !a.deathDate)
 		},
 
 		completionLabel() {
