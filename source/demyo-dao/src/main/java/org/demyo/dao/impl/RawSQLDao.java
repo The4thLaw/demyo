@@ -10,6 +10,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,7 @@ import org.demyo.dao.IRawSQLDao;
  */
 @Repository
 public class RawSQLDao implements IRawSQLDao {
+	private static final Logger LOGGER =  LoggerFactory.getLogger(RawSQLDao.class);
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -46,8 +49,7 @@ public class RawSQLDao implements IRawSQLDao {
 
 	@Override
 	public void pruneAllTables() {
-		// To get the list of tables:
-		// grep "CREATE TABLE" create-tables.sql | sed 's/CREATE TABLE /"/' | sed 's/ (/",/' | tac
+		LOGGER.debug("Pruning all tables");
 		for (String table : new String[] { "searches", "albums_borrowers", "borrowers", "derivatives_images",
 				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
 				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
@@ -55,6 +57,15 @@ public class RawSQLDao implements IRawSQLDao {
 				"series_relations", "series", "authors", "collections", "publishers", "images", "readers",
 				"configuration" }) {
 			executeUpdate("DELETE FROM " + table);
+		}
+	}
+
+	@Override
+	public void fixAutoIncrements() {
+		LOGGER.debug("Fixing auto-increments");
+		for (String table : new String[] { "albums", "authors", "bindings", "borrowers", "collections", "configuration",
+				"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series", "sources", "tags" }) {
+			executeUpdate("ALTER TABLE "+table+" ALTER COLUMN ID RESTART WITH (SELECT MAX(id) + 1 FROM "+table+")");
 		}
 	}
 

@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides access to raw SQL operations, for cases when flexibility and reflection primes over clean Hibernate
- * beans.
+ * Provides access to raw SQL operations, for cases when flexibility and reflection primes over clean Hibernate beans.
  */
 public interface IRawSQLDao {
 	/**
@@ -14,8 +13,18 @@ public interface IRawSQLDao {
 	void pruneAllTables();
 
 	/**
+	 * Fix the values of the identity columns, for example after an import or migration.
+	 * <p>
+	 * Due to a change in H2 2.x, the behaviour of identity columns has changed (see
+	 * https://github.com/h2database/h2database/issues/3454). As such, we need to manually fix the values of the
+	 * identity columns when we assign values of our own.
+	 * </p>
+	 */
+	void fixAutoIncrements();
+
+	/**
 	 * Inserts arbitrary data into a table.
-	 * 
+	 *
 	 * @param tableName The table into which to insert the data.
 	 * @param values A map of column-to-value data to insert.
 	 */
@@ -23,7 +32,7 @@ public interface IRawSQLDao {
 
 	/**
 	 * Counts the number of entries in a table.
-	 * 
+	 *
 	 * @param tableName The table to retrieve the number of entries from.
 	 * @return The number of entries
 	 */
@@ -31,7 +40,7 @@ public interface IRawSQLDao {
 
 	/**
 	 * Gets the raw data from a table.
-	 * 
+	 *
 	 * @param tableName The table to query.
 	 * @return The data contained inside the table.
 	 */
@@ -39,7 +48,7 @@ public interface IRawSQLDao {
 
 	/**
 	 * Gets the version of the Demyo schema.
-	 * 
+	 *
 	 * @return The schema version.
 	 */
 	int getSchemaVersion();

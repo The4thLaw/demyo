@@ -130,6 +130,8 @@ public class Demyo2Importer implements IImporter {
 			stopWatch.split();
 			splitTime = stopWatch.getSplitTime() - splitTime;
 
+			rawSqlDao.fixAutoIncrements();
+
 			// Move extracted images to the right directory
 			if (isArchive) {
 				restoreImages(archiveDirectory, "images");
