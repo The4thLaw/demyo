@@ -11,7 +11,7 @@
 				icon="mdi-animation dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="albumsLoaded && albums.length <= 0 && derivativeCount <= 0"
+				v-if="albumsLoaded && albumCount <= 0 && derivativeCount <= 0"
 				:label="$t('quickTasks.delete.series')"
 				:confirm="$t('quickTasks.delete.series.confirm')"
 				icon="mdi-animation dem-overlay-delete"
