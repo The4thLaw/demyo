@@ -46,7 +46,7 @@ public class NoncedCSPHeaderWriter implements HeaderWriter {
 				// We allow only nonced scripts and self
 				// 'strict-dynamic' allows Filepond to use a blob: URL for an image. Seems like a quirk in Firefox
 				// as Chrome properly allows it
-				+ "script-src 'nonce-" + scriptNonce + "' 'strict-dynamic' 'self'; "
+				+ "script-src 'strict-dynamic' 'nonce-" + scriptNonce + "'; "
 				// Until https://github.com/vuejs/vue-style-loader/issues/33 is resolved, unsafe-inline will be needed
 				// Since a nonce overrides unsafe-inline, we will only be able to move to nonces once the whole stack
 				// supports it
