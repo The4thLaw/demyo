@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +74,16 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 		return entity;
 	}
 
+	private Reader createDefaultReader() {
+		Reader defaultReader = new Reader();
+		defaultReader.setName(translationService.translate("field.Reader.name.default"));
+		save(defaultReader); // Will create a default configuration
+
+		// Return the created reader rather than reloading it from the database: since the transaction is not
+		// yet committed, the configuration entries wouldn't be available
+		return defaultReader;
+	}
+
 	@Transactional(readOnly = true)
 	@Override
 	public Reader getUniqueReader() {
@@ -83,18 +94,25 @@ public class ReaderService extends AbstractModelService<Reader> implements IRead
 			// - It acts as a failsafe if the Reader somehow got missing
 			// - It deals with imports of Demyo 1.x and 2.0, which didn't have this data
 			// - It allows creating a default configuration which can evolve over time
-			Reader defaultReader = new Reader();
-			defaultReader.setName(translationService.translate("field.Reader.name.default"));
-			save(defaultReader); // Will create a default configuration
-
-			// Return the created reader rather than reloading it from the database: since the transaction is not
-			// yet committed, the configuration entries wouldn't be available
-			return defaultReader;
+			return createDefaultReader();
 		} else if (count != 1) {
 			return null;
 		}
 		long uniqueId = repo.findFirstByOrderById().getId();
 		return getByIdForView(uniqueId);
+	}
+
+	@Transactional(readOnly = false)
+	@Cacheable(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public List<Reader> findAll() {
+		var readers = super.findAll();
+		if (!readers.isEmpty()) {
+			return readers;
+		}
+		// Never allow an empty list of readers, it can for example lead to users not being able to select a reader if
+		// theirs was deleted.
+		return List.of(createDefaultReader());
 	}
 
 	@Transactional
