@@ -60,7 +60,9 @@ public final class SystemConfiguration {
 	private final int httpPort;
 	/** The directory to store user data. */
 	private final Path userDirectory;
-	/** The file to store the database. */
+	/** The path/URL for the database. Similar to the databaseFile but without file extensions. Feed this to H2. */
+	private final Path databaseUrlPath;
+	/** The file where the database is stored. */
 	private final Path databaseFile;
 	/** The directory to store user images. */
 	private final Path imagesDirectory;
@@ -141,7 +143,17 @@ public final class SystemConfiguration {
 		userPluginDirectory = userDirectory.resolve(PLUGIN_DIR_NAME);
 		imagesDirectory = userDirectory.resolve("images");
 		thumbnailDirectory = userDirectory.resolve("thumbnails");
-		databaseFile = userDirectory.resolve("demyo.mv.db");
+		databaseUrlPath = userDirectory.resolve("demyo");
+		Path mainDatabaseFile = userDirectory.resolve("demyo.mv.db");
+		// Old versions of H2 had a different naming convention, try it as well in case we need to migrate
+		Path legacyDatabaseFile = userDirectory.resolve("demyo.h2.db");
+
+		if (!Files.exists(mainDatabaseFile) && Files.exists(legacyDatabaseFile)) {
+			databaseFile = legacyDatabaseFile;
+		} else {
+			databaseFile = mainDatabaseFile;
+		}
+
 		createDirectoryIfNeeded(userDirectory);
 		createDirectoryIfNeeded(imagesDirectory);
 		createDirectoryIfNeeded(tempDirectory);
@@ -362,6 +374,16 @@ public final class SystemConfiguration {
 	 */
 	public Path getUserDirectory() {
 		return userDirectory;
+	}
+
+	/**
+	 * Gets the path/URL for the database.
+	 * Similar to the databaseFile but without file extensions. Feed this to H2.
+	 *
+	 * @return the path
+	 */
+	public Path getDatabaseUrlPath() {
+		return databaseUrlPath;
 	}
 
 	/**

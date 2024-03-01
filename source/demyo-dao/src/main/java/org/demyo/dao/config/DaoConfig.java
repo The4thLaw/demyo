@@ -7,13 +7,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
-import org.h2.engine.Constants;
 import org.h2.jdbcx.JdbcDataSource;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -56,7 +54,6 @@ public class DaoConfig {
 
 	private static final String DB_USER = "demyo";
 	private static final String DB_PASSWORD = "demyo";
-	private static final String DB_FILE_SUFFIX = Pattern.quote(Constants.SUFFIX_MV_FILE) + "$";
 	/** The version of H2 used before we started tracking the version numbers. */
 	private static final int DEMYO_3_0_H2_VERSION = 196;
 
@@ -69,12 +66,13 @@ public class DaoConfig {
 
 	@Bean(name = DS_BEAN_NAME)
 	public DataSource dataSource() throws IOException, SQLException {
+		// To debug, use java -cp h2-*.jar org.h2.tools.Console
+
 		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
 		Path databaseFile = sysConfig.getDatabaseFile();
 		boolean isNewDatabase = !Files.exists(databaseFile);
-		// To debug, use java -cp h2-*.jar org.h2.tools.Console
-		String databaseFilePath = databaseFile.toAbsolutePath().toString().replaceAll(DB_FILE_SUFFIX, "");
 
+		String databaseFilePath = sysConfig.getDatabaseUrlPath().toString();
 		String url = "jdbc:h2:" + databaseFilePath + ";DB_CLOSE_DELAY=120;IGNORECASE=TRUE";
 		LOGGER.debug("Database URL is {}", url);
 
@@ -96,6 +94,7 @@ public class DaoConfig {
 		}
 		return ds;
 	}
+
 	private static void migrateH2IfNeeded(boolean isNewDatabase, Path databaseFilePath, String url) throws IOException {
 		Path h2CacheDirectory;
 		String h2CacheProperty = System.getProperty("demyo.h2.cacheDirectoryName");
@@ -107,17 +106,18 @@ public class DaoConfig {
 		}
 		H2LocalUpgrader upgrader = new H2LocalUpgrader(h2CacheDirectory);
 		H2VersionManager vm = new H2VersionManager(DEMYO_3_0_H2_VERSION, databaseFilePath, upgrader);
+		// Get the version before the upgrade
+		int oldVersion = vm.getCurrentVersion();
 		vm.migrateH2IfNeeded(isNewDatabase, url, DB_USER, DB_PASSWORD);
 
-		int version = vm.getCurrentVersion();
-		if (version == DEMYO_3_0_H2_VERSION) {
+		if (!isNewDatabase && oldVersion == DEMYO_3_0_H2_VERSION) {
 			// H2 at the version of Demyo 3.0 supported stuff that it shouldn't have and on which migrations
 			// relied:
 			// - UNSIGNED INT as a datatype
 			// - Dangling commas at the end of a list of columns in a create statement
 			// - MODIFY COLUMN could be used rather than ALTER COLUMN
 			// So we need to repair because the SQL files were changes accordingly and their hashes have changed
-			LOGGER.info("Migrating from H2 {} requires a Flyway repair", version);
+			LOGGER.info("Migrating from H2 {} requires a Flyway repair", oldVersion);
 			SystemConfiguration.getInstance().setFlywayRepairRequired(true);
 		}
 	}
