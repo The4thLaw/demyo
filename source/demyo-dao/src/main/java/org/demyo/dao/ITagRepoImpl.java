@@ -1,6 +1,5 @@
 package org.demyo.dao;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +41,9 @@ import org.demyo.model.Tag;
 		Map<Long, Integer> occurrences = new HashMap<>();
 		for (Object result : results) {
 			Object[] row = (Object[]) result;
-			occurrences.put(Long.valueOf((int) row[0]), ((BigInteger) row[1]).intValue()); // Doubt we'll have > 2^32
-																							// albums
+			long id = ((Number) row[0]).longValue();
+			int count = ((Number) row[1]).intValue();
+			occurrences.put(id, count);
 		}
 
 		// Set all counts one by one
