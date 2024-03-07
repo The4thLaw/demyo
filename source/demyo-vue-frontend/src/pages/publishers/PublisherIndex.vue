@@ -21,6 +21,7 @@
 import CardTextIndex from '@/components/CardTextIndex'
 import PublisherCard from '@/components/PublisherCard'
 import publisherService from '@/services/publisher-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'PublisherIndex',
@@ -48,9 +49,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.publishers = await publisherService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

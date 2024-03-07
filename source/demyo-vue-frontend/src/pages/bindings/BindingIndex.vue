@@ -19,6 +19,7 @@
 <script>
 import TextIndex from '@/components/TextIndex'
 import bindingService from '@/services/binding-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'BindingIndex',
@@ -45,9 +46,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.bindings = await bindingService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

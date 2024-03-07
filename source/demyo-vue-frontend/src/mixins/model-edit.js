@@ -1,3 +1,5 @@
+import { useUiStore } from '@/stores/ui'
+
 export default {
 	metaInfo() {
 		return {
@@ -38,7 +40,7 @@ export default {
 			throw new Error('Missing save handler')
 		}
 
-		this.$store.dispatch('ui/disableSearch')
+		useUiStore().disableSearch()
 		this.fetchDataInternal()
 	},
 
@@ -56,7 +58,8 @@ export default {
 			}
 
 			this.initialized = false
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 
 			const loadPromises = []
 
@@ -79,18 +82,19 @@ export default {
 			await Promise.all(loadPromises)
 
 			this.initialized = true
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		},
 
 		async save() {
 			if (!this.$refs.form.validate()) {
 				return
 			}
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			const id = await this.saveHandler()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 			if (id <= 0) {
-				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
+				uiStore.showSnackbar(this.$t('core.exception.api.title'))
 			} else {
 				this.$router.push({ name: this.mixinConfig.modelEdit.saveRedirectViewName, params: { id: id } })
 			}

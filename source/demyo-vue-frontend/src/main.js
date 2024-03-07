@@ -1,15 +1,16 @@
-import './webpack-public-path'
+import '@mdi/font/css/materialdesignicons.css'
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
-import store from './store'
 import i18n from './i18n'
-import readerService from '@/services/reader-service'
 import './plugins/portal.js'
 import './plugins/vimg.js'
 import vuetify from './plugins/vuetify'
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
-import '@mdi/font/css/materialdesignicons.css'
+import router from './router'
+import readerService from './services/reader-service'
+import vuex from './store'
+import pinia from './stores'
+import './webpack-public-path'
 
 Vue.config.productionTip = false
 
@@ -25,7 +26,8 @@ Vue.mixin({
 
 new Vue({
 	router,
-	store,
+	store: vuex,
+	pinia,
 	i18n,
 	vuetify,
 	render: h => h(App)

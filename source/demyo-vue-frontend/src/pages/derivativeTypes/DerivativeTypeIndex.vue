@@ -19,6 +19,7 @@
 <script>
 import TextIndex from '@/components/TextIndex'
 import typeService from '@/services/derivative-type-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'DerivativeTypeIndex',
@@ -45,9 +46,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.types = await typeService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

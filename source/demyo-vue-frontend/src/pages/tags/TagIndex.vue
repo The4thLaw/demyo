@@ -18,6 +18,7 @@
 import SectionCard from '@/components/SectionCard'
 import TagLink from '@/components/TagLink'
 import tagService from '@/services/tag-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'TagIndex',
@@ -57,7 +58,8 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.tags = await tagService.findForIndex()
 
 			// Post-process tags: compute the relative weight in %
@@ -66,7 +68,7 @@ export default {
 				tag.relativeWeight = Math.round(100 * tag.usageCount / this.maxUsageCount + 100)
 			}
 
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

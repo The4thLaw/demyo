@@ -1,9 +1,10 @@
-import i18n, { switchLanguage } from '@/i18n'
-import AbstractModelService from './abstract-model-service'
-import { axiosGet, axiosPost, axiosDelete } from '@/helpers/axios'
+import { axiosDelete, axiosGet, axiosPost } from '@/helpers/axios'
 import { loadReaderFromLocalStorage, saveReaderToLocalStorage } from '@/helpers/reader'
+import i18n, { switchLanguage } from '@/i18n'
 import { defaultLanguage } from '@/myenv'
 import store from '@/store'
+import { useUiStore } from '@/stores/ui'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Readers.
@@ -34,7 +35,7 @@ class ReaderService extends AbstractModelService {
 			// Manually load the lists because we requested no reload because we just loaded one
 			this.loadLists(reader)
 			console.log('Reader is initialized to', reader)
-			store.dispatch('ui/showSnackbar', i18n.t('core.reader.welcome', { reader: reader.name }))
+			useUiStore().showSnackbar(i18n.t('core.reader.welcome', { reader: reader.name }))
 		} else {
 			console.log('Cannot select a reader automatically, prompting user...')
 			store.dispatch('reader/requireReaderSelection')
@@ -165,7 +166,7 @@ class ReaderService extends AbstractModelService {
 	async addSeriesToReadingList(item) {
 		const reader = store.state.reader.currentReader
 		const newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
-		store.dispatch('ui/showSnackbar', i18n.t('readers.confirm.readingList.add'))
+		useUiStore().showSnackbar(i18n.t('readers.confirm.readingList.add'))
 		return store.dispatch('reader/setReadingList', newList)
 	}
 
@@ -174,7 +175,7 @@ class ReaderService extends AbstractModelService {
 		const reader = store.state.reader.currentReader
 		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
-			store.dispatch('ui/showSnackbar', i18n.t(confirmLabel))
+			useUiStore().showSnackbar(i18n.t(confirmLabel))
 			return store.dispatch('reader/' + storeAction, id)
 		}
 		return Promise.resolve()

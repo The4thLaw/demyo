@@ -276,8 +276,6 @@
 </template>
 
 <script>
-import { sortedIndexOf } from 'lodash'
-import { mapState } from 'vuex'
 import AppTask from '@/components/AppTask'
 import AppTasks from '@/components/AppTasks'
 import DnDImage from '@/components/DnDImage'
@@ -294,6 +292,9 @@ import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
+import { useUiStore } from '@/stores/ui'
+import { sortedIndexOf } from 'lodash'
+import { mapState } from 'vuex'
 
 export default {
 	name: 'AlbumView',
@@ -321,6 +322,8 @@ export default {
 
 	data() {
 		return {
+			uiStore: useUiStore(),
+
 			appTasksMenu: false,
 			dndDialog: false,
 			album: {
@@ -396,10 +399,10 @@ export default {
 		async saveDndImages(data) {
 			const ok = await albumService.saveFilepondImages(this.album.id, data.mainImage, data.otherImages)
 			if (ok) {
-				this.$store.dispatch('ui/showSnackbar', this.$t('draganddrop.snack.confirm'))
+				this.uiStore.showSnackbar(this.$t('draganddrop.snack.confirm'))
 				this.fetchDataInternal()
 			} else {
-				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
+				this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
 			}
 		},
 
