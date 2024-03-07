@@ -15,4 +15,4 @@ See our [guidelines](.github/CONTRIBUTING.md).
 
 ## Copyright
 
-Demyo is Copyright © Xavier Dalem, 2007-2024, licensed under the [GNU Affero General Public License version 3](LICENSE.md)
+Demyo is Copyright © Xavier Dalem, 2007-present, licensed under the [GNU Affero General Public License version 3](LICENSE.md)
