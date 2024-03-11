@@ -13,9 +13,10 @@
 </template>
 
 <script>
-import { sortedIndexOf } from 'lodash'
-import { mapState } from 'vuex'
 import readerService from '@/services/reader-service'
+import { useReaderStore } from '@/stores/reader'
+import { sortedIndexOf } from 'lodash'
+import { mapState } from 'pinia'
 
 export default {
 	name: 'FavouriteButton',
@@ -40,12 +41,12 @@ export default {
 	},
 
 	computed: {
-		...mapState({
-			favourites: function (state) {
+		...mapState(useReaderStore, {
+			favourites: function (store) {
 				if (this.type === 'Album') {
-					return state.reader.favouriteAlbums
+					return store.favouriteAlbums
 				} else if (this.type === 'Series') {
-					return state.reader.favouriteSeries
+					return store.favouriteSeries
 				}
 				console.error('Invalid favourite type', this.type)
 				return []

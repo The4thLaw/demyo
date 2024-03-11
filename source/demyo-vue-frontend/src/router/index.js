@@ -1,16 +1,16 @@
+import { contextRoot } from '@/myenv'
+import Home from '@/pages/Home.vue'
+import { useUiStore } from '@/stores/ui'
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import VueRouter from 'vue-router'
-import { contextRoot } from '@/myenv'
-import Home from '@/pages/Home.vue'
-import store from '@/store/index'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
 import collectionRoutes from './collections'
-import derivativeRoutes from './derivatives'
 import derivativeSourceRoutes from './derivative-sources'
 import derivativeTypeRoutes from './derivative-types'
+import derivativeRoutes from './derivatives'
 import imageRoutes from './images'
 import managementRoutes from './manage'
 import publisherRoutes from './publishers'
@@ -71,7 +71,8 @@ const router = new VueRouter({
 // Reset the UI on page transitions:
 // - Enable the search bar
 router.beforeEach((to, from, next) => {
-	store.dispatch('ui/enableSearch')
+	const uiStore = useUiStore()
+	uiStore.enableSearch()
 	next()
 })
 

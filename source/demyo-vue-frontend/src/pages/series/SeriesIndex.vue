@@ -22,6 +22,7 @@
 <script>
 import TextIndex from '@/components/TextIndex'
 import seriesService from '@/services/series-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'SeriesIndex',
@@ -48,9 +49,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.series = await seriesService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

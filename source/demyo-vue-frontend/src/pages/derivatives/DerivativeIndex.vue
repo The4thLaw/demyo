@@ -31,6 +31,7 @@
 import GalleryIndex from '@/components/GalleryIndex'
 import { retrieveFilter } from '@/helpers/filter'
 import derivativeService from '@/services/derivative-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'DerivativeIndex',
@@ -57,10 +58,11 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			const filter = retrieveFilter(this.$route)
 			this.derivatives = await derivativeService.findForIndex(filter)
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

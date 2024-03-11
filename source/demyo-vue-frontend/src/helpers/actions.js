@@ -1,6 +1,6 @@
 import i18n from '@/i18n'
 import router from '@/router'
-import store from '@/store'
+import { useUiStore } from '@/stores/ui'
 
 /**
  * Stub for a save action in an edit component.
@@ -12,11 +12,12 @@ export async function saveStub(component, handler, routeName) {
 	if (!component.$refs.form.validate()) {
 		return
 	}
-	store.dispatch('ui/enableGlobalOverlay')
+	const uiStore = useUiStore()
+	uiStore.enableGlobalOverlay()
 	const id = await handler()
-	store.dispatch('ui/disableGlobalOverlay')
+	uiStore.disableGlobalOverlay()
 	if (id <= 0) {
-		store.dispatch('ui/showSnackbar', i18n.t('core.exception.api.title'))
+		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 	} else {
 		router.push({ name: routeName, params: { id: id } })
 	}
@@ -33,7 +34,8 @@ export async function deleteStub(component, handler, confirmationLabel, routeNam
 	component.appTasksMenu = false
 	const deleted = await handler()
 	if (deleted) {
-		store.dispatch('ui/showSnackbar', i18n.t(confirmationLabel))
+		const uiStore = useUiStore()
+		uiStore.showSnackbar(i18n.t(confirmationLabel))
 		router.push({ name: routeName })
 	}
 }

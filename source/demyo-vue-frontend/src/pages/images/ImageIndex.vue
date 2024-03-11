@@ -19,6 +19,7 @@
 <script>
 import GalleryIndex from '@/components/GalleryIndex'
 import imageService from '@/services/image-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'ImageIndex',
@@ -45,9 +46,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.images = await imageService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

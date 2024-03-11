@@ -16,6 +16,7 @@
 import FormActions from '@/components/FormActions'
 import SectionCard from '@/components/SectionCard'
 import service from '@/services/management-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'Import',
@@ -33,20 +34,24 @@ export default {
 
 	data() {
 		return {
+			uiStore: useUiStore(),
 			file: null
 		}
+	},
+
+	computed: {
 	},
 
 	methods: {
 		async doImport() {
 			if (this.file) {
-				this.$store.dispatch('ui/enableGlobalOverlay')
+				this.uiStore.enableGlobalOverlay()
 				const success = await service.doImport(this.file)
-				this.$store.dispatch('ui/disableGlobalOverlay')
+				this.uiStore.disableGlobalOverlay()
 				if (success) {
-					this.$store.dispatch('ui/showSnackbar', this.$t('page.Import.success'))
+					this.uiStore.showSnackbar(this.$t('page.Import.success'))
 				} else {
-					this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
+					this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
 				}
 				this.$router.push('/')
 			}

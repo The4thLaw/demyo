@@ -19,6 +19,7 @@
 <script>
 import TextIndex from '@/components/TextIndex'
 import sourceService from '@/services/derivative-source-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'DerivativeSourceIndex',
@@ -45,9 +46,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.sources = await sourceService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

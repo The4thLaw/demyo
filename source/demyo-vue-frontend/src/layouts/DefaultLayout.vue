@@ -164,13 +164,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import defaultMenu from './default-menu.json'
-import { demyoCodename } from '@/myenv'
 import AppSnackbar from '@/components/AppSnackbar'
 import LetterIcon from '@/components/LetterIcon'
 import ReaderSelection from '@/components/ReaderSelection'
 import quicksearch from '@/mixins/quicksearch'
+import { demyoCodename } from '@/myenv'
+import { useReaderStore } from '@/stores/reader'
+import { useUiStore } from '@/stores/ui'
+import { mapState, mapWritableState } from 'pinia'
+import defaultMenu from './default-menu.json'
 
 export default {
 	name: 'DefaultLayout',
@@ -195,6 +197,8 @@ export default {
 
 	data() {
 		return {
+			uiStore: useUiStore(),
+
 			pageTitle: 'Demyo',
 			demyoCodename: demyoCodename,
 
@@ -208,17 +212,12 @@ export default {
 	},
 
 	computed: {
-		...mapState({
-			readerLoaded: state => state.reader.readerLoaded,
-			requireReaderSelection: state => state.reader.requireReaderSelection,
-			currentReader: state => state.reader.currentReader,
-
-			suppressSearch: state => state.ui.suppressSearch,
-			globalOverlay: state => state.ui.globalOverlay,
-			displaySnackbar: state => state.ui.displaySnackbar,
-			snackbarMessage: state => state.ui.snackbarMessages[0],
-			displayDetailsPane: state => state.ui.displayDetailsPane
-		})
+		...mapState(useUiStore, ['suppressSearch', 'globalOverlay', 'displaySnackbar']),
+		...mapWritableState(useUiStore, ['displayDetailsPane']),
+		...mapState(useUiStore, {
+			snackbarMessage: store => store.snackbarMessages[0]
+		}),
+		...mapState(useReaderStore, ['readerLoaded', 'requireReaderSelection', 'currentReader'])
 	},
 
 	watch: {
@@ -242,7 +241,7 @@ export default {
 		},
 
 		closeSnackbar() {
-			this.$store.dispatch('ui/closeSnackbar')
+			this.uiStore.closeSnackbar()
 		},
 
 		focus() {

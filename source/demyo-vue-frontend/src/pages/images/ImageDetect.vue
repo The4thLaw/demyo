@@ -35,6 +35,7 @@ import FormActions from '@/components/FormActions'
 import GalleryIndex from '@/components/GalleryIndex'
 import SectionCard from '@/components/SectionCard'
 import imageService from '@/services/image-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'ImageDetect',
@@ -53,6 +54,8 @@ export default {
 
 	data() {
 		return {
+			uiStore: useUiStore(),
+
 			detecting: true,
 			detectedImages: [],
 			// Iterating directly over this caused issues, possibly due to the special characters
@@ -68,17 +71,17 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			this.uiStore.enableGlobalOverlay()
 			this.detectedImages = await imageService.detectDiskImages()
 			this.imageSelections = {}
 			this.detectedImages.forEach((v, i) => {
 				this.imageSelections[v] = false
 			})
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			this.uiStore.disableGlobalOverlay()
 		},
 
 		async save() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			this.uiStore.enableGlobalOverlay()
 
 			this.addedImages = []
 
@@ -89,7 +92,7 @@ export default {
 				}
 			}
 			if (selectedImages.length <= 0) {
-				this.$store.dispatch('ui/disableGlobalOverlay')
+				this.uiStore.enableGlobalOvdisableGlobalOverlayerlay()
 				return
 			}
 

@@ -19,6 +19,7 @@
 <script>
 import TextIndex from '@/components/TextIndex'
 import readerService from '@/services/reader-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'ReaderIndex',
@@ -45,9 +46,10 @@ export default {
 
 	methods: {
 		async fetchData() {
-			this.$store.dispatch('ui/enableGlobalOverlay')
+			const uiStore = useUiStore()
+			uiStore.enableGlobalOverlay()
 			this.readers = await readerService.findForIndex()
-			this.$store.dispatch('ui/disableGlobalOverlay')
+			uiStore.disableGlobalOverlay()
 		}
 	}
 }

@@ -180,6 +180,7 @@ import { deleteStub } from '@/helpers/actions'
 import i18nMixin from '@/mixins/i18n'
 import modelViewMixin from '@/mixins/model-view'
 import derivativeService from '@/services/derivative-service'
+import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'DerivativeView',
@@ -205,6 +206,8 @@ export default {
 
 	data() {
 		return {
+			uiStore: useUiStore(),
+
 			appTasksMenu: false,
 			dndDialog: false,
 			derivative: {
@@ -246,10 +249,10 @@ export default {
 		async saveDndImages(data) {
 			const ok = await derivativeService.saveFilepondImages(this.derivative.id, data.otherImages)
 			if (ok) {
-				this.$store.dispatch('ui/showSnackbar', this.$t('draganddrop.snack.confirm'))
+				this.uiStore.showSnackbar(this.$t('draganddrop.snack.confirm'))
 				this.fetchDataInternal()
 			} else {
-				this.$store.dispatch('ui/showSnackbar', this.$t('core.exception.api.title'))
+				this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
 			}
 		},
 

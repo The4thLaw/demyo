@@ -21,6 +21,8 @@
 import SectionCard from '@/components/SectionCard'
 import quicksearch from '@/mixins/quicksearch'
 
+//const uiStore = useUiStore()
+
 export default {
 	name: 'Home',
 
@@ -37,8 +39,8 @@ export default {
 	},
 
 	created() {
-		this.$store.dispatch('ui/disableSearch')
-		this.$store.dispatch('ui/disableGlobalOverlay')
+		/*uiStore.disableSearch()
+		uiStore.disableGlobalOverlay()*/
 	}
 }
 </script>
