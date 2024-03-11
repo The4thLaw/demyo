@@ -130,14 +130,15 @@
 </template>
 
 <script>
-import { sortedIndexOf } from 'lodash'
-import { mapState } from 'vuex'
 import FavouriteButton from '@/components/FavouriteButton'
 import FieldValue from '@/components/FieldValue'
 import ModelLink from '@/components/ModelLink'
 import TagLink from '@/components/TagLink'
 import { getBaseImageUrl } from '@/helpers/images'
 import readerService from '@/services/reader-service'
+import { useReaderStore } from '@/stores/reader'
+import { sortedIndexOf } from 'lodash'
+import { mapState } from 'pinia'
 
 export default {
 	name: 'AlbumCard',
@@ -187,8 +188,8 @@ export default {
 			return !(navigator.connection && navigator.connection.saveData)
 		},
 
-		...mapState({
-			readingList: state => state.reader.readingList
+		...mapState(useReaderStore, {
+			readingList: store => store.readingList
 		}),
 
 		isInReadingList() {

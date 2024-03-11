@@ -169,9 +169,9 @@ import LetterIcon from '@/components/LetterIcon'
 import ReaderSelection from '@/components/ReaderSelection'
 import quicksearch from '@/mixins/quicksearch'
 import { demyoCodename } from '@/myenv'
+import { useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
 import { mapState, mapWritableState } from 'pinia'
-import { mapState as mapStateVuex } from 'vuex'
 import defaultMenu from './default-menu.json'
 
 export default {
@@ -217,12 +217,7 @@ export default {
 		...mapState(useUiStore, {
 			snackbarMessage: store => store.snackbarMessages[0]
 		}),
-
-		...mapStateVuex({
-			readerLoaded: state => state.reader.readerLoaded,
-			requireReaderSelection: state => state.reader.requireReaderSelection,
-			currentReader: state => state.reader.currentReader
-		})
+		...mapState(useReaderStore, ['readerLoaded', 'requireReaderSelection', 'currentReader'])
 	},
 
 	watch: {

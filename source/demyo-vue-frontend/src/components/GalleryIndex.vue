@@ -40,10 +40,13 @@
 </template>
 
 <script>
-import { get } from 'lodash'
-import { mapState } from 'vuex'
+// Easier for a dynamic access to the properties
+// eslint-disable-next-line you-dont-need-lodash-underscore/get
 import { focusElement } from '@/helpers/dom'
 import { getBaseImageUrl } from '@/helpers/images'
+import { useReaderStore } from '@/stores/reader'
+import { get } from 'lodash'
+import { mapState } from 'pinia'
 
 export default {
 	name: 'GalleryIndex',
@@ -78,8 +81,8 @@ export default {
 	},
 
 	computed: {
-		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForImages
+		...mapState(useReaderStore, {
+			itemsPerPage: store => store.currentReader.configuration.pageSizeForImages
 		}),
 
 		hasDefaultSlot() {

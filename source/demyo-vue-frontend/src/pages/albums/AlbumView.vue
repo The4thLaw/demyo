@@ -292,9 +292,10 @@ import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
+import { useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
 import { sortedIndexOf } from 'lodash'
-import { mapState } from 'vuex'
+import { mapState } from 'pinia'
 
 export default {
 	name: 'AlbumView',
@@ -377,9 +378,9 @@ export default {
 			return query
 		},
 
-		...mapState({
-			isInReadingList: function (state) {
-				return sortedIndexOf(state.reader.readingList, this.album.id) > -1
+		...mapState(useReaderStore, {
+			isInReadingList: function (store) {
+				return sortedIndexOf(store.readingList, this.album.id) > -1
 			}
 		})
 	},

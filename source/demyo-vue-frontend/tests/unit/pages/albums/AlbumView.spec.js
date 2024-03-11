@@ -1,7 +1,8 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-import VueRouter from 'vue-router'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 import PortalVue from 'portal-vue'
-import Vuex from 'vuex'
+import VueRouter from 'vue-router'
+
 jest.mock('@/i18n', () => ({
 	loadLocaleMessages: () => ({})
 }))
@@ -23,28 +24,18 @@ import AlbumView from '@/pages/albums/AlbumView'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
-localVue.use(Vuex)
 localVue.use(PortalVue)
 const router = new VueRouter()
 
 describe('FormActions.vue', () => {
-	let store, shallowWrapper, baseAlbum
+	let shallowWrapper, baseAlbum
 
 	beforeEach(() => {
-		store = new Vuex.Store({
-			modules: {
-				reader: {
-					state: {
-						readingList: []
-					}
-				}
-			}
-		})
+		setActivePinia(createPinia())
 
 		shallowWrapper = shallowMount(AlbumView, {
 			localVue,
 			router,
-			store,
 			mocks: {
 				$tc: s => s
 			}

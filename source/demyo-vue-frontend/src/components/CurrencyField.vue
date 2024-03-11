@@ -7,8 +7,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { isCurrencyPrefix, getCurrencySymbol } from '@/helpers/i18n'
+import { getCurrencySymbol, isCurrencyPrefix } from '@/helpers/i18n'
+import { useReaderStore } from '@/stores/reader'
+import { mapState } from 'pinia'
 
 export default {
 	name: 'CurrencyField',
@@ -41,9 +42,9 @@ export default {
 			return isCurrencyPrefix() ? null : getCurrencySymbol(this.currency)
 		},
 
-		...mapState({
-			currency: function (state) {
-				return state.reader.currentReader?.configuration?.currency
+		...mapState(useReaderStore, {
+			currency: function (store) {
+				return store.currentReader?.configuration?.currency
 			}
 		})
 	},

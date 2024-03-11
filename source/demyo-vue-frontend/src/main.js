@@ -8,7 +8,6 @@ import './plugins/vimg.js'
 import vuetify from './plugins/vuetify'
 import router from './router'
 import readerService from './services/reader-service'
-import vuex from './store'
 import pinia from './stores'
 import './webpack-public-path'
 
@@ -26,7 +25,6 @@ Vue.mixin({
 
 new Vue({
 	router,
-	store: vuex,
 	pinia,
 	i18n,
 	vuetify,

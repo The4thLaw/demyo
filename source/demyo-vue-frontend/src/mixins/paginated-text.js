@@ -1,5 +1,6 @@
-import { groupBy, deburr } from 'lodash'
-import { mapState } from 'vuex'
+import { useReaderStore } from '@/stores/reader'
+import { deburr, groupBy } from 'lodash'
+import { mapState } from 'pinia'
 
 /**
  * This mixin abstracts common features needed for splittable text pagination.
@@ -28,8 +29,8 @@ export default {
 	},
 
 	computed: {
-		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForText
+		...mapState(useReaderStore, {
+			itemsPerPage: store => store.currentReader.configuration.pageSizeForText
 		}),
 
 		// Allows overriding the list of items

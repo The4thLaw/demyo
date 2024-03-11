@@ -45,7 +45,7 @@
 			</FieldValue>
 
 			<FieldValue :label="$t('field.Series.completed.view')">
-				{{completionLabel}}
+				{{ completionLabel }}
 			</FieldValue>
 
 			<FieldValue v-if="series.location" :label="$t('field.Series.location')">
@@ -191,10 +191,11 @@ import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import seriesService from '@/services/series-service'
+import { useReaderStore } from '@/stores/reader'
 import { sortedIndexOf } from 'lodash'
+import { mapState } from 'pinia'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
-import { mapState } from 'vuex'
 
 export default {
 	name: 'SeriesView',
@@ -366,8 +367,8 @@ export default {
 			return maxDate.getFullYear()
 		},
 
-		...mapState({
-			readingList: state => state.reader.readingList
+		...mapState(useReaderStore, {
+			readingList: store => store.readingList
 		})
 	},
 

@@ -2,7 +2,7 @@ import { axiosDelete, axiosGet, axiosPost } from '@/helpers/axios'
 import { loadReaderFromLocalStorage, saveReaderToLocalStorage } from '@/helpers/reader'
 import i18n, { switchLanguage } from '@/i18n'
 import { defaultLanguage } from '@/myenv'
-import store from '@/store'
+import { useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
 import AbstractModelService from './abstract-model-service'
 
@@ -38,7 +38,7 @@ class ReaderService extends AbstractModelService {
 			useUiStore().showSnackbar(i18n.t('core.reader.welcome', { reader: reader.name }))
 		} else {
 			console.log('Cannot select a reader automatically, prompting user...')
-			store.dispatch('reader/requireReaderSelection')
+			useReaderStore().requireReaderSelection()
 		}
 	}
 
@@ -57,7 +57,7 @@ class ReaderService extends AbstractModelService {
 		const superReturn = await super.save(model)
 
 		// If we just saved the current reader, we should reload it from the server to have a fresh copy
-		if (model.id === store.state.reader.currentReader.id) {
+		if (model.id === useReaderStore().currentReader.id) {
 			console.log('The current reader was just edited, reloading it from the server')
 			this.setCurrentReader(model)
 		}
@@ -102,27 +102,26 @@ class ReaderService extends AbstractModelService {
 		}
 
 		console.log('Setting reader in store', reader)
-		const storeProm = store.dispatch('reader/setCurrentReader', reader)
+		useReaderStore().setCurrentReader(reader)
 		saveReaderToLocalStorage(reader)
 		if (reader.configuration.language) {
 			switchLanguage(reader.configuration.language)
 		}
 
-		await storeProm
 		if (listLoadProm) {
 			await listLoadProm
 		}
 	}
 
 	loadCurrentReaderLists() {
-		const reader = store.state.reader.currentReader
+		const reader = useReaderStore().currentReader
 		return this.loadLists(reader)
 	}
 
 	async loadLists(reader) {
 		const lists = await axiosGet(`${this.basePath}${reader.id}/lists`)
 		console.log('Loaded reader lists', lists)
-		store.dispatch('reader/setReaderLists', lists)
+		useReaderStore().setReaderLists(lists)
 	}
 
 	findFavouriteAlbums(readerId) {
@@ -164,21 +163,22 @@ class ReaderService extends AbstractModelService {
 	}
 
 	async addSeriesToReadingList(item) {
-		const reader = store.state.reader.currentReader
+		const readerStore = useReaderStore()
+		const reader = readerStore.currentReader
 		const newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
 		useUiStore().showSnackbar(i18n.t('readers.confirm.readingList.add'))
-		return store.dispatch('reader/setReadingList', newList)
+		readerStore.setReadingList(newList)
 	}
 
 	/** @private */
 	async addOrRemoveListItem(storeAction, handler, listType, itemType, id, confirmLabel) {
-		const reader = store.state.reader.currentReader
+		const readerStore = useReaderStore()
+		const reader = readerStore.currentReader
 		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
 			useUiStore().showSnackbar(i18n.t(confirmLabel))
-			return store.dispatch('reader/' + storeAction, id)
+			readerStore[storeAction](id)
 		}
-		return Promise.resolve()
 	}
 }
 

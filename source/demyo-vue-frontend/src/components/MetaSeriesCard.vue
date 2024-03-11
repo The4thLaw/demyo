@@ -55,9 +55,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import ItemCardPagination from '@/components/ItemCardPagination'
 import paginatedTextMixin from '@/mixins/paginated-text'
+import { useReaderStore } from '@/stores/reader'
+import { mapState } from 'pinia'
 
 export default {
 	name: 'MetaSeriesCard',
@@ -81,8 +82,8 @@ export default {
 			return this.meta.albums || []
 		},
 
-		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.subItemsInCardIndex
+		...mapState(useReaderStore, {
+			itemsPerPage: store => store.currentReader.configuration.subItemsInCardIndex
 		}),
 
 		cardLink() {

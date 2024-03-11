@@ -39,9 +39,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import { focusElement } from '@/helpers/dom'
 import paginatedTextMixin from '@/mixins/paginated-text'
+import { useReaderStore } from '@/stores/reader'
+import { mapState } from 'pinia'
 
 /**
  * This component is a text-based index that allows the caller to provide cards for the items.
@@ -63,8 +64,8 @@ export default {
 	},
 
 	computed: {
-		...mapState({
-			itemsPerPage: state => state.reader.currentReader.configuration.pageSizeForCards
+		...mapState(useReaderStore, {
+			itemsPerPage: store => store.currentReader.configuration.pageSizeForCards
 		})
 	},
 

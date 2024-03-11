@@ -1,5 +1,6 @@
-import { mapState } from 'vuex'
 import { formatCurrency } from '@/helpers/i18n'
+import { useReaderStore } from '@/stores/reader'
+import { mapState } from 'pinia'
 
 export default {
 	filters: {
@@ -9,9 +10,9 @@ export default {
 	},
 
 	computed: {
-		...mapState({
-			currency: function (state) {
-				return state.reader.currentReader?.configuration?.currency
+		...mapState(useReaderStore, {
+			currency: function (store) {
+				return store.currentReader?.configuration?.currency
 			}
 		})
 	}
