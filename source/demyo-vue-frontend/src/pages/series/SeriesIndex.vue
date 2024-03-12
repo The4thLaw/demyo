@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import TextIndex from '@/components/TextIndex'
+import TextIndex from '@/components/TextIndex.vue'
 import seriesService from '@/services/series-service'
 import { useUiStore } from '@/stores/ui'
 

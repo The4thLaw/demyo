@@ -40,12 +40,12 @@
 </template>
 
 <script>
-// Easier for a dynamic access to the properties
-// eslint-disable-next-line you-dont-need-lodash-underscore/get
 import { focusElement } from '@/helpers/dom'
 import { getBaseImageUrl } from '@/helpers/images'
 import { useReaderStore } from '@/stores/reader'
-import { get } from 'lodash'
+// Easier for a dynamic access to the properties
+// eslint-disable-next-line you-dont-need-lodash-underscore/get
+import get from 'lodash/get'
 import { mapState } from 'pinia'
 
 export default {

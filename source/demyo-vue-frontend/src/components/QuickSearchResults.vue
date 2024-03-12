@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import SectionCard from '@/components/SectionCard'
+import SectionCard from '@/components/SectionCard.vue'
 
 export default {
 	name: 'QuickSearchResults',

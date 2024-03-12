@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions'
-import SectionCard from '@/components/SectionCard'
+import FormActions from '@/components/FormActions.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import service from '@/services/management-service'
 import { useUiStore } from '@/stores/ui'
 

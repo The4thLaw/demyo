@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import CardTextIndex from '@/components/CardTextIndex'
-import MetaSeriesCard from '@/components/MetaSeriesCard'
+import CardTextIndex from '@/components/CardTextIndex.vue'
+import MetaSeriesCard from '@/components/MetaSeriesCard.vue'
 
 export default {
 	name: 'MetaSeriesIndex',

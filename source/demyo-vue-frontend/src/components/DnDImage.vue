@@ -97,7 +97,7 @@ export default {
 	name: 'DnDImage',
 
 	components: {
-		FilePond: () => import(/* webpackChunkName: "vendor-filepond" */'@/helpers/filepond')
+		FilePond: () => import('@/helpers/filepond')
 	},
 
 	props: {

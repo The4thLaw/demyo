@@ -1,4 +1,5 @@
-import { sortedIndex, sortedIndexOf } from 'lodash'
+import sortedIndex from 'lodash/sortedIndex'
+import sortedIndexOf from 'lodash/sortedIndexOf'
 import { defineStore } from 'pinia'
 
 /**
@@ -48,18 +49,18 @@ export const useReaderStore = defineStore('reader', {
 		favouriteAlbums: [],
 		readingList: [],
 		readerLoaded: false,
-		requireReaderSelection: false
+		readerSelectionRequired: false
 	}),
 
 	actions: {
 		setCurrentReader(reader) {
 			this.currentReader = reader
-			this.requireReaderSelection = false
+			this.readerSelectionRequired = false
 			this.readerLoaded = true
 		},
 
 		requireReaderSelection() {
-			this.requireReaderSelection = true
+			this.readerSelectionRequired = true
 			this.readerLoaded = false
 		},
 

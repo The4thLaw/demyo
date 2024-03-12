@@ -2,12 +2,12 @@ export default [
 	{
 		path: '/manage/export',
 		name: 'Export',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/manage/Export')
+		component: () => import('@/pages/manage/Export.vue')
 	},
 
 	{
 		path: '/manage/import',
 		name: 'Import',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/manage/Import')
+		component: () => import('@/pages/manage/Import.vue')
 	}
 ]

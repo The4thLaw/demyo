@@ -1,14 +1,16 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import { Touch } from 'vuetify/lib/directives'
-import colors from 'vuetify/lib/util/colors'
+import { cspStyleNonce } from '@/myenv'
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 import 'tiptap-vuetify/dist/main.css'
-import { cspStyleNonce } from '@/myenv'
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
+import { Ripple, Touch } from 'vuetify/lib/directives'
+import colors from 'vuetify/lib/util/colors'
 
 Vue.use(Vuetify, {
 	directives: {
-		Touch
+		Touch,
+		// TODO: Workaround for https://github.com/vuetifyjs/vuetify/issues/12224, to be removed in Vue+Vuetify 3
+		Ripple
 	},
 	theme: {
 		options: {

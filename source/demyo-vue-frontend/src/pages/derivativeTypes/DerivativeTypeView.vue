@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask'
-import AppTasks from '@/components/AppTasks'
-import SectionCard from '@/components/SectionCard'
+import AppTask from '@/components/AppTask.vue'
+import AppTasks from '@/components/AppTasks.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import typeService from '@/services/derivative-type-service'

@@ -46,11 +46,11 @@ const routes = [
 		// route level code-splitting
 		// this generates a separate chunk (manage.[hash].js) for this route
 		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/About')
+		component: () => import('@/pages/About.vue')
 	}
 ]
 
-const processBase = process.env.BASE_URL || ''
+const processBase = import.meta.env.BASE_URL || ''
 let baseUrl = `/${processBase}${contextRoot}`
 // Ensure this does not lead to duplicate slashes, which (1) is not correct and (2) confuses the router
 baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')

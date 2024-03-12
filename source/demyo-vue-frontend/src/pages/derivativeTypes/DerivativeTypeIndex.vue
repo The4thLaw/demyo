@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import TextIndex from '@/components/TextIndex'
+import TextIndex from '@/components/TextIndex.vue'
 import typeService from '@/services/derivative-type-service'
 import { useUiStore } from '@/stores/ui'
 

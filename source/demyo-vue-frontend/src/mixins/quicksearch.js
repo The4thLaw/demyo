@@ -1,6 +1,6 @@
-import { debounce } from 'lodash'
-import QuickSearchResults from '@/components/QuickSearchResults'
+import QuickSearchResults from '@/components/QuickSearchResults.vue'
 import searchService from '@/services/search-service'
+import debounce from 'lodash/debounce'
 
 export default {
 	components: {

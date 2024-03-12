@@ -1,7 +1,7 @@
-import ReaderFavourites from '@/pages/readers/ReaderFavourites'
-import ReaderIndex from '@/pages/readers/ReaderIndex'
-import ReadingList from '@/pages/readers/ReadingList'
-import ReaderView from '@/pages/readers/ReaderView'
+import ReaderFavourites from '@/pages/readers/ReaderFavourites.vue'
+import ReaderIndex from '@/pages/readers/ReaderIndex.vue'
+import ReaderView from '@/pages/readers/ReaderView.vue'
+import ReadingList from '@/pages/readers/ReadingList.vue'
 
 export default [
 	{
@@ -18,12 +18,12 @@ export default [
 	{
 		path: '/readers/:id/edit',
 		name: 'ReaderEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/readers/ReaderEdit')
+		component: () => import('@/pages/readers/ReaderEdit.vue')
 	},
 	{
 		path: '/readers/new',
 		name: 'ReaderAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/readers/ReaderEdit')
+		component: () => import('@/pages/readers/ReaderEdit.vue')
 	},
 	{
 		path: '/readers/:id/favourites',
@@ -38,6 +38,6 @@ export default [
 	{
 		path: '/readers/:id/configuration',
 		name: 'ReaderConfig',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/readers/ReaderConfig')
+		component: () => import('@/pages/readers/ReaderConfig.vue')
 	}
 ]

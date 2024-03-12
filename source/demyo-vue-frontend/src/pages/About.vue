@@ -160,8 +160,8 @@
 
 <script>
 import libs from '@/assets/about-libs.json'
+import SectionCard from '@/components/SectionCard.vue'
 import { demyoCodename, demyoVersion } from '@/myenv'
-import SectionCard from '@/components/SectionCard'
 import aboutService from '@/services/about-service'
 
 export default {

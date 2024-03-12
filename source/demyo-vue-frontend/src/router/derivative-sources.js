@@ -1,5 +1,5 @@
-import DerivativeSourceIndex from '@/pages/derivativeSources/DerivativeSourceIndex'
-import DerivativeSourceView from '@/pages/derivativeSources/DerivativeSourceView'
+import DerivativeSourceIndex from '@/pages/derivativeSources/DerivativeSourceIndex.vue'
+import DerivativeSourceView from '@/pages/derivativeSources/DerivativeSourceView.vue'
 
 export default [
 	{
@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/derivativeSources/:id/edit',
 		name: 'DerivativeSourceEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivativeSources/DerivativeSourceEdit')
+		component: () => import('@/pages/derivativeSources/DerivativeSourceEdit.vue')
 	},
 	{
 		path: '/derivativeSources/new',
 		name: 'DerivativeSourceAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivativeSources/DerivativeSourceEdit')
+		component: () => import('@/pages/derivativeSources/DerivativeSourceEdit.vue')
 	}
 ]

@@ -1,5 +1,5 @@
-import SeriesIndex from '@/pages/series/SeriesIndex'
-import SeriesView from '@/pages/series/SeriesView'
+import SeriesIndex from '@/pages/series/SeriesIndex.vue'
+import SeriesView from '@/pages/series/SeriesView.vue'
 
 export default [
 	{
@@ -18,11 +18,11 @@ export default [
 	{
 		path: '/series/:id/edit',
 		name: 'SeriesEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/series/SeriesEdit')
+		component: () => import('@/pages/series/SeriesEdit.vue')
 	},
 	{
 		path: '/series/new',
 		name: 'SeriesAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/series/SeriesEdit')
+		component: () => import('@/pages/series/SeriesEdit.vue')
 	}
 ]

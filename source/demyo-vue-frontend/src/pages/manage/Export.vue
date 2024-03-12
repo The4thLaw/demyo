@@ -18,9 +18,9 @@
 </template>
 
 <script>
+import FormActions from '@/components/FormActions.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { apiRoot } from '@/myenv'
-import FormActions from '@/components/FormActions'
-import SectionCard from '@/components/SectionCard'
 
 export default {
 	name: 'Export',

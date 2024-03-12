@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import TextIndex from '@/components/TextIndex'
+import TextIndex from '@/components/TextIndex.vue'
 import bindingService from '@/services/binding-service'
 import { useUiStore } from '@/stores/ui'
 

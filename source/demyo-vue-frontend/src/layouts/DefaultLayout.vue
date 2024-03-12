@@ -137,7 +137,7 @@
 			</v-dialog>
 			<v-container id="l-DefaultLayout__mainContainer" fluid>
 				<ReaderSelection
-					v-if="requireReaderSelection || promptReaderSelection" :require-selection="requireReaderSelection"
+					v-if="readerSelectionRequired || promptReaderSelection" :require-selection="readerSelectionRequired"
 					@cancel="promptReaderSelection = false" @select="promptReaderSelection = false"
 				/>
 				<v-overlay absolute z-index="4" :value="globalOverlay" class="l-DefaultLayout__overlay">
@@ -164,9 +164,9 @@
 </template>
 
 <script>
-import AppSnackbar from '@/components/AppSnackbar'
-import LetterIcon from '@/components/LetterIcon'
-import ReaderSelection from '@/components/ReaderSelection'
+import AppSnackbar from '@/components/AppSnackbar.vue'
+import LetterIcon from '@/components/LetterIcon.vue'
+import ReaderSelection from '@/components/ReaderSelection.vue'
 import quicksearch from '@/mixins/quicksearch'
 import { demyoCodename } from '@/myenv'
 import { useReaderStore } from '@/stores/reader'
@@ -217,7 +217,7 @@ export default {
 		...mapState(useUiStore, {
 			snackbarMessage: store => store.snackbarMessages[0]
 		}),
-		...mapState(useReaderStore, ['readerLoaded', 'requireReaderSelection', 'currentReader'])
+		...mapState(useReaderStore, ['readerLoaded', 'readerSelectionRequired', 'currentReader'])
 	},
 
 	watch: {

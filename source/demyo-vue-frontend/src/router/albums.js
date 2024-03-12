@@ -1,5 +1,5 @@
-import AlbumIndex from '@/pages/albums/AlbumIndex'
-import AlbumView from '@/pages/albums/AlbumView'
+import AlbumIndex from '@/pages/albums/AlbumIndex.vue'
+import AlbumView from '@/pages/albums/AlbumView.vue'
 
 export default [
 	{
@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/albums/:id/edit',
 		name: 'AlbumEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/albums/AlbumEdit')
+		component: () => import('@/pages/albums/AlbumEdit.vue')
 	},
 	{
 		path: '/albums/new',
 		name: 'AlbumAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/albums/AlbumEdit')
+		component: () => import('@/pages/albums/AlbumEdit.vue')
 	}
 ]

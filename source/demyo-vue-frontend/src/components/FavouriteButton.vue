@@ -15,7 +15,7 @@
 <script>
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
-import { sortedIndexOf } from 'lodash'
+import sortedIndexOf from 'lodash/sortedIndexOf'
 import { mapState } from 'pinia'
 
 export default {

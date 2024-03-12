@@ -1,4 +1,4 @@
-import CollectionView from '@/pages/collections/CollectionView'
+import CollectionView from '@/pages/collections/CollectionView.vue'
 
 export default [
 	{
@@ -10,11 +10,11 @@ export default [
 	{
 		path: '/collections/:id/edit',
 		name: 'CollectionEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/collections/CollectionEdit')
+		component: () => import('@/pages/collections/CollectionEdit.vue')
 	},
 	{
 		path: '/collections/new',
 		name: 'CollectionAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/collections/CollectionEdit')
+		component: () => import('@/pages/collections/CollectionEdit.vue')
 	}
 ]

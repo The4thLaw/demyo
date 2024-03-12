@@ -1,5 +1,5 @@
-import PublisherIndex from '@/pages/publishers/PublisherIndex'
-import PublisherView from '@/pages/publishers/PublisherView'
+import PublisherIndex from '@/pages/publishers/PublisherIndex.vue'
+import PublisherView from '@/pages/publishers/PublisherView.vue'
 
 export default [
 	{
@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/publishers/:id/edit',
 		name: 'PublisherEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/publishers/PublisherEdit')
+		component: () => import('@/pages/publishers/PublisherEdit.vue')
 	},
 	{
 		path: '/publishers/new',
 		name: 'PublisherAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/publishers/PublisherEdit')
+		component: () => import('@/pages/publishers/PublisherEdit.vue')
 	}
 ]

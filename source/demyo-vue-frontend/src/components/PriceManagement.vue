@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import CurrencyField from '@/components/CurrencyField'
+import CurrencyField from '@/components/CurrencyField.vue'
 import { mandatory, number } from '@/helpers/rules'
 
 export default {

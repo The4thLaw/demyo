@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import LetterIcon from '@/components/LetterIcon'
+import LetterIcon from '@/components/LetterIcon.vue'
 import readerService from '@/services/reader-service'
 
 export default {

@@ -4,7 +4,7 @@ function getDataWithDefault(key, defaultValue) {
 }
 
 // Configure the context root
-let bodyContextRoot = getDataWithDefault('contextroot', process.env.VUE_APP_CONTEXT_ROOT_FALLBACK)
+let bodyContextRoot = getDataWithDefault('contextroot', import.meta.env.VITE_CONTEXT_ROOT_FALLBACK)
 if (!bodyContextRoot.endsWith('/')) {
 	bodyContextRoot += '/'
 }
@@ -15,7 +15,7 @@ console.log('Context root is', bodyContextRoot)
 export const contextRoot = bodyContextRoot
 
 // Configure the API root
-const bodyApiRoot = getDataWithDefault('apiroot', process.env.VUE_APP_API_FALLBACK_ENDPOINT)
+const bodyApiRoot = getDataWithDefault('apiroot', import.meta.env.VITE_API_FALLBACK_ENDPOINT)
 console.log('API root is', bodyApiRoot)
 export const apiRoot = bodyApiRoot
 

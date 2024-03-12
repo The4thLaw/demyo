@@ -20,7 +20,7 @@ jest.mock('@/services/album-service', () => ({
 	}
 }))
 // eslint-disable-next-line import/first
-import AlbumView from '@/pages/albums/AlbumView'
+import AlbumView from '@/pages/albums/AlbumView.vue'
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)

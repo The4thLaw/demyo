@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import FieldValue from '@/components/FieldValue'
-import i18nMixin from '@/mixins/i18n'
+import FieldValue from '@/components/FieldValue.vue';
+import i18nMixin from '@/mixins/i18n';
 
 export default {
 	name: 'PriceTable',

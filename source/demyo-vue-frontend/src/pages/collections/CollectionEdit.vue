@@ -51,16 +51,16 @@
 </template>
 
 <script>
-import { TiptapVuetify } from 'tiptap-vuetify'
-import Autocomplete from '@/components/Autocomplete'
-import FormActions from '@/components/FormActions'
-import SectionCard from '@/components/SectionCard'
+import Autocomplete from '@/components/Autocomplete.vue'
+import FormActions from '@/components/FormActions.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory, url } from '@/helpers/rules'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
 import modelEditMixin from '@/mixins/model-edit'
+import imgRefreshMixin from '@/mixins/refresh-image-list'
 import publisherRefreshMixin from '@/mixins/refresh-publisher-list'
 import collectionService from '@/services/collection-service'
+import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'CollectionEdit',

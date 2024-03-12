@@ -56,14 +56,14 @@
 </template>
 
 <script>
-import { TiptapVuetify } from 'tiptap-vuetify'
-import Autocomplete from '@/components/Autocomplete'
-import FormActions from '@/components/FormActions'
-import SectionCard from '@/components/SectionCard'
+import Autocomplete from '@/components/Autocomplete.vue'
+import FormActions from '@/components/FormActions.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import seriesService from '@/services/series-service'
+import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'SeriesEdit',

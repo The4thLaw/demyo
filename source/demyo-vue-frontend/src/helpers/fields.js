@@ -1,7 +1,19 @@
-import { sortBy, uniqBy } from 'lodash'
+import sortBy from 'lodash/sortBy'
+import uniqBy from 'lodash/uniqBy'
 import {
-	Heading, Bold, Italic, Strike, Underline, BulletList,
-	OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History, Image
+	Blockquote,
+	Bold,
+	BulletList,
+	HardBreak,
+	Heading,
+	History,
+	HorizontalRule,
+	Image,
+	Italic,
+	Link,
+	ListItem,
+	OrderedList,
+	Strike, Underline
 } from 'tiptap-vuetify'
 
 export const tipTapExtensions = [

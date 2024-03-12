@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import MetaSeriesIndex from '@/components/MetaSeriesIndex'
+import MetaSeriesIndex from '@/components/MetaSeriesIndex.vue'
 import { retrieveFilter } from '@/helpers/filter'
 import albumService from '@/services/album-service'
 import { useUiStore } from '@/stores/ui'

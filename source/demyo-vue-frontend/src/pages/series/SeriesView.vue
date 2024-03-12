@@ -175,15 +175,15 @@
 </template>
 
 <script>
-import AlbumCard from '@/components/AlbumCard'
-import AppTask from '@/components/AppTask'
-import AppTasks from '@/components/AppTasks'
-import FavouriteButton from '@/components/FavouriteButton'
-import FieldValue from '@/components/FieldValue'
-import GalleryIndex from '@/components/GalleryIndex'
-import ModelLink from '@/components/ModelLink'
-import SectionCard from '@/components/SectionCard'
-import TagLink from '@/components/TagLink'
+import AlbumCard from '@/components/AlbumCard.vue'
+import AppTask from '@/components/AppTask.vue'
+import AppTasks from '@/components/AppTasks.vue'
+import FavouriteButton from '@/components/FavouriteButton.vue'
+import FieldValue from '@/components/FieldValue.vue'
+import GalleryIndex from '@/components/GalleryIndex.vue'
+import ModelLink from '@/components/ModelLink.vue'
+import SectionCard from '@/components/SectionCard.vue'
+import TagLink from '@/components/TagLink.vue'
 import { deleteStub } from '@/helpers/actions'
 import { mergeModels } from '@/helpers/fields'
 import modelViewMixin from '@/mixins/model-view'
@@ -192,7 +192,7 @@ import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import seriesService from '@/services/series-service'
 import { useReaderStore } from '@/stores/reader'
-import { sortedIndexOf } from 'lodash'
+import sortedIndexOf from 'lodash/sortedIndexOf'
 import { mapState } from 'pinia'
 import asyncPool from 'tiny-async-pool'
 import Vue from 'vue'
@@ -404,7 +404,9 @@ export default {
 
 		async loadAlbums() {
 			if (this.series.albumIds) {
-				await asyncPool(2, this.series.albumIds, this.albumLoader)
+				for await (const value of asyncPool(2, this.series.albumIds, this.albumLoader)) {
+  					// Nothing to do
+				}
 			}
 			this.albumsLoaded = true
 		},

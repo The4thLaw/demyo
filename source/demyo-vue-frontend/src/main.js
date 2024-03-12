@@ -9,7 +9,6 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import readerService from './services/reader-service'
 import pinia from './stores'
-import './webpack-public-path'
 
 Vue.config.productionTip = false
 

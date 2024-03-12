@@ -1,5 +1,5 @@
-import AuthorIndex from '@/pages/authors/AuthorIndex'
-import AuthorView from '@/pages/authors/AuthorView'
+import AuthorIndex from '@/pages/authors/AuthorIndex.vue'
+import AuthorView from '@/pages/authors/AuthorView.vue'
 
 export default [
 	{
@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/authors/:id/edit',
 		name: 'AuthorEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/authors/AuthorEdit')
+		component: () => import('@/pages/authors/AuthorEdit.vue')
 	},
 	{
 		path: '/authors/new',
 		name: 'AuthorAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/authors/AuthorEdit')
+		component: () => import('@/pages/authors/AuthorEdit.vue')
 	}
 ]

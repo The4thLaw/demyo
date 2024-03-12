@@ -1,7 +1,7 @@
-import MinimalLayout from '@/layouts/MinimalLayout'
-import DerivativeIndex from '@/pages/derivatives/DerivativeIndex'
-import DerivativeStickers from '@/pages/derivatives/DerivativeStickers'
-import DerivativeView from '@/pages/derivatives/DerivativeView'
+import MinimalLayout from '@/layouts/MinimalLayout.vue'
+import DerivativeIndex from '@/pages/derivatives/DerivativeIndex.vue'
+import DerivativeStickers from '@/pages/derivatives/DerivativeStickers.vue'
+import DerivativeView from '@/pages/derivatives/DerivativeView.vue'
 
 export default [
 	{
@@ -26,11 +26,11 @@ export default [
 	{
 		path: '/derivatives/:id/edit',
 		name: 'DerivativeEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivatives/DerivativeEdit')
+		component: () => import('@/pages/derivatives/DerivativeEdit.vue')
 	},
 	{
 		path: '/derivatives/new',
 		name: 'DerivativeAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivatives/DerivativeEdit')
+		component: () => import('@/pages/derivatives/DerivativeEdit.vue')
 	}
 ]

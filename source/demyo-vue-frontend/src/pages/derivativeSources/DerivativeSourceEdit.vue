@@ -56,13 +56,13 @@
 </template>
 
 <script>
-import { TiptapVuetify } from 'tiptap-vuetify'
-import FormActions from '@/components/FormActions'
-import SectionCard from '@/components/SectionCard'
+import FormActions from '@/components/FormActions.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
 import { email, mandatory, phone, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import sourceService from '@/services/derivative-source-service'
+import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'DerivativeSourceEdit',

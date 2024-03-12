@@ -1,5 +1,5 @@
-import DerivativeTypeIndex from '@/pages/derivativeTypes/DerivativeTypeIndex'
-import DerivativeTypeView from '@/pages/derivativeTypes/DerivativeTypeView'
+import DerivativeTypeIndex from '@/pages/derivativeTypes/DerivativeTypeIndex.vue'
+import DerivativeTypeView from '@/pages/derivativeTypes/DerivativeTypeView.vue'
 
 export default [
 	{
@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/derivativeTypes/:id/edit',
 		name: 'DerivativeTypeEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivativeTypes/DerivativeTypeEdit')
+		component: () => import('@/pages/derivativeTypes/DerivativeTypeEdit.vue')
 	},
 	{
 		path: '/derivativeTypes/new',
 		name: 'DerivativeTypeAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/derivativeTypes/DerivativeTypeEdit')
+		component: () => import('@/pages/derivativeTypes/DerivativeTypeEdit.vue')
 	}
 ]

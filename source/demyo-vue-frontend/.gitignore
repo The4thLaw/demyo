@@ -1,5 +1,8 @@
 /dist
 
+# Rollup visualizer
+stats.html
+
 # Node installation from frontend-maven-plugin
 /node
 

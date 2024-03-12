@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask'
-import AppTasks from '@/components/AppTasks'
-import FieldValue from '@/components/FieldValue'
-import ModelLink from '@/components/ModelLink'
-import SectionCard from '@/components/SectionCard'
+import AppTask from '@/components/AppTask.vue'
+import AppTasks from '@/components/AppTasks.vue'
+import FieldValue from '@/components/FieldValue.vue'
+import ModelLink from '@/components/ModelLink.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import collectionService from '@/services/collection-service'

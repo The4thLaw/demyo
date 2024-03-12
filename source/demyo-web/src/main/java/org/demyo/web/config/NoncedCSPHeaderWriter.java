@@ -36,7 +36,7 @@ public class NoncedCSPHeaderWriter implements HeaderWriter {
 		rand.nextBytes(nonceArray);
 		String styleNonce = Base64.getEncoder().encodeToString(nonceArray);
 
-		// Note: this CSP may yield an unsafe-eval from Webpack (in global.js) and FilePond, but it's perfectly fine
+		// Note: this CSP may yield an unsafe-eval from FilePond, but it's perfectly fine
 		// because there's a fallback
 		String csp = "default-src 'none'; connect-src 'self'; font-src 'self'; manifest-src 'self'; "
 				// Allow the Google Maps iframe

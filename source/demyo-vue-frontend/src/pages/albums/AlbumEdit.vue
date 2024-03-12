@@ -233,23 +233,23 @@
 </template>
 
 <script>
-import { TiptapVuetify } from 'tiptap-vuetify'
-import Autocomplete from '@/components/Autocomplete'
-import CurrencyField from '@/components/CurrencyField'
-import FormActions from '@/components/FormActions'
-import PriceManagement from '@/components/PriceManagement'
-import SectionCard from '@/components/SectionCard'
+import Autocomplete from '@/components/Autocomplete.vue'
+import CurrencyField from '@/components/CurrencyField.vue'
+import FormActions from '@/components/FormActions.vue'
+import PriceManagement from '@/components/PriceManagement.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
+import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import authorRefreshMixin from '@/mixins/refresh-author-list'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
 import publisherRefreshMixin from '@/mixins/refresh-publisher-list'
 import tagRefreshMixin from '@/mixins/refresh-tag-list'
-import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import albumService from '@/services/album-service'
 import bindingService from '@/services/binding-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
+import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'AlbumEdit',

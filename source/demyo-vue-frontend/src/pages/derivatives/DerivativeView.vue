@@ -168,14 +168,14 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask'
-import AppTasks from '@/components/AppTasks'
-import DnDImage from '@/components/DnDImage'
-import FieldValue from '@/components/FieldValue'
-import GalleryIndex from '@/components/GalleryIndex'
-import ModelLink from '@/components/ModelLink'
-import PriceTable from '@/components/PriceTable'
-import SectionCard from '@/components/SectionCard'
+import AppTask from '@/components/AppTask.vue'
+import AppTasks from '@/components/AppTasks.vue'
+import DnDImage from '@/components/DnDImage.vue'
+import FieldValue from '@/components/FieldValue.vue'
+import GalleryIndex from '@/components/GalleryIndex.vue'
+import ModelLink from '@/components/ModelLink.vue'
+import PriceTable from '@/components/PriceTable.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import i18nMixin from '@/mixins/i18n'
 import modelViewMixin from '@/mixins/model-view'

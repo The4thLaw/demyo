@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import ModelLink from '@/components/ModelLink'
+import ModelLink from '@/components/ModelLink.vue'
 
 export default {
 	name: 'TagLink',

@@ -1,5 +1,5 @@
-import TagIndex from '@/pages/tags/TagIndex'
-import TagView from '@/pages/tags/TagView'
+import TagIndex from '@/pages/tags/TagIndex.vue'
+import TagView from '@/pages/tags/TagView.vue'
 
 export default [
 	{
@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/tags/:id/edit',
 		name: 'TagEdit',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/tags/TagEdit')
+		component: () => import('@/pages/tags/TagEdit.vue')
 	},
 	{
 		path: '/tags/new',
 		name: 'TagAdd',
-		component: () => import(/* webpackChunkName: "manage" */ '@/pages/tags/TagEdit')
+		component: () => import('@/pages/tags/TagEdit.vue')
 	}
 ]

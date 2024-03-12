@@ -1,4 +1,4 @@
-import { delay } from 'lodash'
+import delay from 'lodash/delay'
 import { defineStore } from 'pinia'
 
 export const useUiStore = defineStore('ui', {

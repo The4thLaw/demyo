@@ -1,6 +1,6 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import FormActions from '@/components/FormActions.vue'
+import { createLocalVue, mount } from '@vue/test-utils'
 import Vuetify from 'vuetify'
-import FormActions from '@/components/FormActions'
 
 const localVue = createLocalVue()
 

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import MetaSeriesIndex from '@/components/MetaSeriesIndex'
+import MetaSeriesIndex from '@/components/MetaSeriesIndex.vue'
 import modelViewMixin from '@/mixins/model-view'
 import readerService from '@/services/reader-service'
 

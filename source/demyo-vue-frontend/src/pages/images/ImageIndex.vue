@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import GalleryIndex from '@/components/GalleryIndex'
+import GalleryIndex from '@/components/GalleryIndex.vue'
 import imageService from '@/services/image-service'
 import { useUiStore } from '@/stores/ui'
 

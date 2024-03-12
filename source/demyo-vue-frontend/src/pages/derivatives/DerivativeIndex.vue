@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import GalleryIndex from '@/components/GalleryIndex'
+import GalleryIndex from '@/components/GalleryIndex.vue'
 import { retrieveFilter } from '@/helpers/filter'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'

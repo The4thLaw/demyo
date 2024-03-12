@@ -1,9 +1,11 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-import axios from 'axios'
-import { apiRoot, defaultLanguage } from '@/myenv'
 import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 import dateTimeFormats from '@/locales/dateTimeFormats.json'
+import localeEn from '@/locales/en.json'
+import localeFr from '@/locales/fr.json'
+import { apiRoot, defaultLanguage } from '@/myenv'
+import axios from 'axios'
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)
 
@@ -19,16 +21,10 @@ dateTimeFormats['fr-BE'] = dateTimeFormats.fr
 // By default, we start with partial messages covering all above-the-fold content in all supported languages
 // (mainly titles, but also the search widget)
 function loadLocaleMessages() {
-	const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.json$/i)
-	const messages = {}
-	locales.keys().forEach(key => {
-		const matched = key.match(/([A-Za-z0-9-_]+)\./i)
-		if (matched && matched.length > 1) {
-			const locale = matched[1]
-			messages[locale] = locales(key)
-		}
-	})
-	return messages
+	return {
+		en: localeEn,
+		fr: localeFr
+	}
 }
 
 /* The base language is

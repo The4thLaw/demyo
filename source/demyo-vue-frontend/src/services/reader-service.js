@@ -72,10 +72,10 @@ class ReaderService extends AbstractModelService {
 	setDefaultConfiguration(reader) {
 		reader.configuration = Object.assign({
 			language: defaultLanguage,
-			pageSizeForText: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORTEXT, 10),
-			pageSizeForCards: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORCARDS, 10),
-			subItemsInCardIndex: parseInt(process.env.VUE_APP_DEF_CFG_RDR_SUBITEMSINCARDINDEX, 10),
-			pageSizeForImages: parseInt(process.env.VUE_APP_DEF_CFG_RDR_PAGESIZEFORIMAGES, 10)
+			pageSizeForText: parseInt(import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORTEXT, 10),
+			pageSizeForCards: parseInt(import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORCARDS, 10),
+			subItemsInCardIndex: parseInt(import.meta.env.VITE_DEF_CFG_RDR_SUBITEMSINCARDINDEX, 10),
+			pageSizeForImages: parseInt(import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORIMAGES, 10)
 		}, reader.configuration)
 	}
 

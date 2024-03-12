@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions'
-import GalleryIndex from '@/components/GalleryIndex'
-import SectionCard from '@/components/SectionCard'
+import FormActions from '@/components/FormActions.vue'
+import GalleryIndex from '@/components/GalleryIndex.vue'
+import SectionCard from '@/components/SectionCard.vue'
 import imageService from '@/services/image-service'
 import { useUiStore } from '@/stores/ui'
 

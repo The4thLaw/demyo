@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import SectionCard from '@/components/SectionCard'
-import TagLink from '@/components/TagLink'
+import SectionCard from '@/components/SectionCard.vue'
+import TagLink from '@/components/TagLink.vue'
 import tagService from '@/services/tag-service'
 import { useUiStore } from '@/stores/ui'
 

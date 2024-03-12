@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import CardTextIndex from '@/components/CardTextIndex'
-import PublisherCard from '@/components/PublisherCard'
+import CardTextIndex from '@/components/CardTextIndex.vue'
+import PublisherCard from '@/components/PublisherCard.vue'
 import publisherService from '@/services/publisher-service'
 import { useUiStore } from '@/stores/ui'
 

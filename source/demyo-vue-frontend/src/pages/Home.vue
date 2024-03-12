@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import SectionCard from '@/components/SectionCard'
-import quicksearch from '@/mixins/quicksearch'
+import SectionCard from '@/components/SectionCard.vue';
+import quicksearch from '@/mixins/quicksearch';
 
 //const uiStore = useUiStore()
 

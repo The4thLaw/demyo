@@ -130,14 +130,14 @@
 </template>
 
 <script>
-import FavouriteButton from '@/components/FavouriteButton'
-import FieldValue from '@/components/FieldValue'
-import ModelLink from '@/components/ModelLink'
-import TagLink from '@/components/TagLink'
+import FavouriteButton from '@/components/FavouriteButton.vue'
+import FieldValue from '@/components/FieldValue.vue'
+import ModelLink from '@/components/ModelLink.vue'
+import TagLink from '@/components/TagLink.vue'
 import { getBaseImageUrl } from '@/helpers/images'
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
-import { sortedIndexOf } from 'lodash'
+import sortedIndexOf from 'lodash/sortedIndexOf'
 import { mapState } from 'pinia'
 
 export default {

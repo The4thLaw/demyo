@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { contextRoot } from '@/myenv'
-import DefaultLayout from '@/layouts/DefaultLayout'
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import { contextRoot } from '@/myenv';
 
 export default {
 	name: 'DemyoApp',
