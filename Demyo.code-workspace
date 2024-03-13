@@ -69,7 +69,14 @@
 		],
 		"editor.codeActionsOnSave": {
 			"source.organizeImports": "explicit"
-		}
+		},
+		"testing.openTesting": "neverOpen",
+		"jest.outputConfig": {
+			"revealOn": "run",
+			"revealWithFocus": "none",
+			"clearOnRun": "none"
+		},
+		"eslint.experimental.useFlatConfig": true
 	},
 	"tasks": {
 		"version": "2.0.0",
