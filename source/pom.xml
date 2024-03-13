@@ -56,7 +56,7 @@
 		<project.versionCodename>Okko</project.versionCodename>
 		<org.eclipse.jetty.version>12.0.6</org.eclipse.jetty.version>
 		<js.frontend-maven-plugin.version>1.15.0</js.frontend-maven-plugin.version>
-		<js.node.version>v16.17.0</js.node.version>
+		<js.node.version>v20.11.1</js.node.version>
 		<org.the4thlaw.commons.version>1.4.0</org.the4thlaw.commons.version>
 
 		<sonar.organization>the4thlaw</sonar.organization>
