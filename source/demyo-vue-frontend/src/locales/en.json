@@ -3,6 +3,7 @@
 
 	"core.loading": "Loading...",
 	"core.reader.welcome": "Welcome back, {reader}",
+	"core.snack.dismiss": "Dismiss",
 
 	"widget.search.description": "Enter some terms to search your collection:",
 	"widget.search.label": "e.g. Stan Lee",

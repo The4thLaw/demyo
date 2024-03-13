@@ -1,7 +1,5 @@
 import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 import dateTimeFormats from '@/locales/dateTimeFormats.json'
-import localeEn from '@/locales/en.json'
-import localeFr from '@/locales/fr.json'
 import { apiRoot, defaultLanguage } from '@/myenv'
 import axios from 'axios'
 import Vue from 'vue'
@@ -19,12 +17,19 @@ const loadedLanguages = []
 dateTimeFormats['fr-BE'] = dateTimeFormats.fr
 
 // By default, we start with partial messages covering all above-the-fold content in all supported languages
-// (mainly titles, but also the search widget)
+// (mainly titles, but also the search widget, snack bar)
 function loadLocaleMessages() {
-	return {
-		en: localeEn,
-		fr: localeFr
+	const locales = import.meta.glob('@/locales/*.json', { eager: true })
+
+	const messages = {}
+	for (const path in locales) {
+		if (/\/[a-z]{2}(-[A-Z]{2})?.json$/.test(path)) {
+			const localeName = path.replace(/(^.*\/)|(.json$)/g, '')
+			messages[localeName] = locales[path].default
+		}
 	}
+
+	return messages
 }
 
 /* The base language is
