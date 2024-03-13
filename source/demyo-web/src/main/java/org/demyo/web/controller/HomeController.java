@@ -1,5 +1,7 @@
 package org.demyo.web.controller;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -40,45 +42,14 @@ public class HomeController extends AbstractController {
 	@Value("#{servletContext.contextPath}")
 	private String servletContextPath;
 
-	@Value("classpath*:public/js/app.*.js")
-	private Resource[] appJs;
-	private String appJsFilename;
+	@Value("classpath*:public/assets/*.js")
+	private Resource[] allJsResources;
+	private String indexJsFilename;
+	private List<String> otherJsFilenames;
 
-	@Value("classpath*:public/css/app.*.css")
-	private Resource[] appCss;
-	private String appCssFilename;
-
-	@Value("classpath*:public/js/manage.*.js")
-	private Resource[] manageJs;
-	private String manageJsFilename;
-
-	@Value("classpath*:public/css/manage.*.css")
-	private Resource[] manageCss;
-	private String manageCssFilename;
-
-	@Value("classpath*:public/js/chunk-vendors.*.js")
-	private Resource[] vendorJs;
-	private String vendorJsFilename;
-
-	@Value("classpath*:public/css/chunk-vendors.*.css")
-	private Resource[] vendorCss;
-	private String vendorCssFilename;
-
-	@Value("classpath*:public/js/vendor-filepond.*.js")
-	private Resource[] vendorFilepondJs;
-	private String vendorFilepondJsFilename;
-
-	@Value("classpath*:public/css/vendor-filepond.*.css")
-	private Resource[] vendorFilepondCss;
-	private String vendorFilepondCssFilename;
-
-	@Value("classpath*:public/js/app-legacy.*.js")
-	private Resource[] appLegacyJs;
-	private String appLegacyJsFilename;
-
-	@Value("classpath*:public/js/chunk-vendors-legacy.*.js")
-	private Resource[] vendorLegacyJs;
-	private String vendorLegacyJsFilename;
+	@Value("classpath*:public/assets/*.css")
+	private Resource[] allCssResources;
+	private List<String> cssFilenames;
 
 	private final String appVersion;
 	private final String appCodename;
@@ -90,21 +61,30 @@ public class HomeController extends AbstractController {
 
 	@PostConstruct
 	private void init() {
-		// Demyo
-		appJsFilename = getFrontendResource(appJs, "app.*.js");
-		appCssFilename = getFrontendResource(appCss, "app.*.css");
-		manageJsFilename = getFrontendResource(manageJs, "manage.*.js");
-		manageCssFilename = getFrontendResource(manageCss, "manage.*.css");
+		Comparator<Resource> indexFirstComp = (r1, r2) -> {
+			String name1 = r1.getFilename();
+			String name2 = r2.getFilename();
+			if (name1.startsWith("index")) {
+				return -1;
+			}
+			if (name2.startsWith("index")) {
+				return 1;
+			}
+			return name1.compareTo(name2);
+		};
 
-		// Vendors
-		vendorJsFilename = getFrontendResource(vendorJs, "chunk-vendors.*.js");
-		vendorCssFilename = getFrontendResource(vendorCss, "chunk-vendors.*.css");
-		vendorFilepondJsFilename = getFrontendResource(vendorFilepondJs, "vendor-filepond.*.js");
-		vendorFilepondCssFilename = getFrontendResource(vendorFilepondCss, "vendor-filepond.*.css");
+		List<Resource> allJs = new ArrayList<>(List.of(allJsResources));
+		allJs.sort(indexFirstComp);
+		indexJsFilename = allJs.get(0).getFilename();
+		otherJsFilenames = allJs.subList(1, allJs.size()).stream().map(Resource::getFilename).toList();
 
-		// Legacy
-		appLegacyJsFilename = getFrontendResource(appLegacyJs, "app-legacy.*.js");
-		vendorLegacyJsFilename = getFrontendResource(vendorLegacyJs, "chunk-vendors-legacy.*.js");
+		List<Resource> allCss = new ArrayList<>(List.of(allCssResources));
+		allCss.sort(indexFirstComp);
+		cssFilenames = allCss.stream().map(Resource::getFilename).toList();
+
+		LOGGER.trace("Index JS resource: {}", indexJsFilename);
+		LOGGER.trace("Sorted non-index JS resources: {}", otherJsFilenames);
+		LOGGER.trace("Sorted CSS resources: {}", cssFilenames);
 	}
 
 	/**
@@ -135,18 +115,9 @@ public class HomeController extends AbstractController {
 		model.addAttribute(MODEL_KEY_VERSION, appVersion);
 		model.addAttribute(MODEL_KEY_CODENAME, appCodename);
 
-		model.addAttribute("appJsFilename", appJsFilename);
-		model.addAttribute("appCssFilename", appCssFilename);
-		model.addAttribute("manageJsFilename", manageJsFilename);
-		model.addAttribute("manageCssFilename", manageCssFilename);
-
-		model.addAttribute("vendorJsFilename", vendorJsFilename);
-		model.addAttribute("vendorCssFilename", vendorCssFilename);
-		model.addAttribute("vendorFilepondJsFilename", vendorFilepondJsFilename);
-		model.addAttribute("vendorFilepondCssFilename", vendorFilepondCssFilename);
-
-		model.addAttribute("appLegacyJsFilename", appLegacyJsFilename);
-		model.addAttribute("vendorLegacyJsFilename", vendorLegacyJsFilename);
+		model.addAttribute("indexJsFilename", indexJsFilename);
+		model.addAttribute("otherJsFilenames", otherJsFilenames);
+		model.addAttribute("cssFilenames", cssFilenames);
 
 		// The fact that this is a JSP request means that the headers and
 		// attributes are altered. So the standard header writer attributes
