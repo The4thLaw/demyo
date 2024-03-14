@@ -58,7 +58,6 @@ import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
 import authorService from '@/services/author-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'AuthorEdit',
@@ -66,8 +65,7 @@ export default {
 	components: {
 		Autocomplete,
 		FormActions,
-		SectionCard,
-		TiptapVuetify
+		SectionCard
 	},
 
 	mixins: [modelEditMixin, imgRefreshMixin],

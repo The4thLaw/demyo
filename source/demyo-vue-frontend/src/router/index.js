@@ -1,9 +1,7 @@
 import { contextRoot } from '@/myenv'
 import Home from '@/pages/Home.vue'
 import { useUiStore } from '@/stores/ui'
-import Vue from 'vue'
-import VueMeta from 'vue-meta'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
@@ -18,8 +16,7 @@ import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
 
-Vue.use(VueRouter)
-Vue.use(VueMeta)
+// TODO: Vue3: restore equivalent to vue-meta
 
 const routes = [
 	{
@@ -55,16 +52,16 @@ let baseUrl = `/${processBase}${contextRoot}`
 // Ensure this does not lead to duplicate slashes, which (1) is not correct and (2) confuses the router
 baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')
 console.log('Initializing Vue router with base:', baseUrl)
-const router = new VueRouter({
-	mode: 'history',
+const router = createRouter({
+	history: createWebHistory(),
 	base: baseUrl,
 	routes,
-	scrollBehavior(to, from, savedPosition) {
+	scrollBehavior(_to, _from, savedPosition) {
 		// May not work due to https://github.com/vuejs/vue-router/issues/1187
 		if (savedPosition) {
 			return savedPosition
 		}
-		return { x: 0, y: 0 }
+		return { left: 0, top: 0 }
 	}
 })
 

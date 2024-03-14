@@ -10,7 +10,7 @@
 						<v-list-item v-for="item in results[key]" :key="item.id">
 							<v-list-item-content>
 								<div>
-									<router-link :to="`/${key}/${item.id}/view`" @click.native="$emit('click')">
+									<router-link :to="`/${key}/${item.id}/view`" @click="$emit('click')">
 										<template v-if="key !== 'albums'">
 											{{ item.identifyingName }}
 										</template>

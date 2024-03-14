@@ -61,15 +61,13 @@ import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import tagService from '@/services/tag-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'TagEdit',
 
 	components: {
 		FormActions,
-		SectionCard,
-		TiptapVuetify
+		SectionCard
 	},
 
 	mixins: [modelEditMixin],

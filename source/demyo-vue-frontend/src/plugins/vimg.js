@@ -1,4 +1,3 @@
-import Vue from 'vue'
-import VueImg from 'v-img'
+//import VueImg from 'v-img'
 
-Vue.use(VueImg)
+//Vue.use(VueImg)

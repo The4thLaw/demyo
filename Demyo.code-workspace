@@ -47,7 +47,9 @@
 			"**/target/**": true
 		},
 		"search.exclude": {
-			"**/target": true
+			"**/node_modules": true,
+			"**/target": true,
+			"**/dist": true
 		},
 		"files.eol": "\n",
 		"java.compile.nullAnalysis.mode": "disabled",

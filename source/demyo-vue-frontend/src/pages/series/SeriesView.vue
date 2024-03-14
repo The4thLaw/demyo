@@ -195,7 +195,6 @@ import { useReaderStore } from '@/stores/reader'
 import sortedIndexOf from 'lodash/sortedIndexOf'
 import { mapState } from 'pinia'
 import asyncPool from 'tiny-async-pool'
-import Vue from 'vue'
 
 export default {
 	name: 'SeriesView',
@@ -386,7 +385,8 @@ export default {
 
 			if (this.series.albumIds) {
 				this.series.albumIds.forEach(id => {
-					Vue.set(this.albums, id, { loading: true })
+					// TODO: Vue 3
+					//Vue.set(this.albums, id, { loading: true })
 				})
 			}
 

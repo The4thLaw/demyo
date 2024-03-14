@@ -1,7 +1,13 @@
 <template>
 	<v-app id="demyo">
-		<v-navigation-drawer
+		<!-- TODO: Vue 3: use composables for the breakpoint-->
+		<!--<v-navigation-drawer
 			v-if="!$vuetify.breakpoint.smAndDown"
+			v-model="displayDetailsPane" right app clipped
+			width="33vw" mobile-breakpoint="sm"
+			:disable-resize-watcher="true"
+		>-->
+		<v-navigation-drawer
 			v-model="displayDetailsPane" right app clipped
 			width="33vw" mobile-breakpoint="sm"
 			:disable-resize-watcher="true"
@@ -130,7 +136,9 @@
 
 		<v-main id="l-DefaultLayout__mainContent">
 			<!-- First part of the details pane management -->
-			<v-dialog v-if="$vuetify.breakpoint.smAndDown" v-model="displayDetailsPane">
+			<!-- TODO: Vue 3: use composables for the breakpoint-->
+			<!--<v-dialog v-if="$vuetify.breakpoint.smAndDown" v-model="displayDetailsPane">-->
+			<v-dialog v-if="false" v-model="displayDetailsPane">
 				<v-card>
 					<portal-target name="appSidePane" />
 				</v-card>

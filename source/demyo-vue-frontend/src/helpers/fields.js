@@ -1,6 +1,8 @@
 import sortBy from 'lodash/sortBy'
 import uniqBy from 'lodash/uniqBy'
-import {
+
+// TODO: Vue 3
+/*import {
 	Blockquote,
 	Bold,
 	BulletList,
@@ -35,7 +37,9 @@ export const tipTapExtensions = [
 	Bold,
 	HorizontalRule,
 	HardBreak
-]
+]*/
+export const tipTapExtensions = []
+
 
 /**
  * Extracts arrays of sub-models from a collection of models, merges them,

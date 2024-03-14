@@ -1,12 +1,11 @@
-import { cspStyleNonce } from '@/myenv'
-import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
-import 'tiptap-vuetify/dist/main.css'
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import { Ripple, Touch } from 'vuetify/lib/directives'
-import colors from 'vuetify/lib/util/colors'
+//import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
+//import 'tiptap-vuetify/dist/main.css'
+import { createVuetify } from 'vuetify'
+import 'vuetify/styles'
+// TODO: Vue 3: maybe we can remove the separate mdi import then?
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
-Vue.use(Vuetify, {
+/*Vue.use(Vuetify, {
 	directives: {
 		Touch,
 		// TODO: Workaround for https://github.com/vuetifyjs/vuetify/issues/12224, to be removed in Vue+Vuetify 3
@@ -17,13 +16,18 @@ Vue.use(Vuetify, {
 			cspNonce: cspStyleNonce
 		}
 	}
-})
+})*/
 
-const vuetify = new Vuetify({
+const vuetify = createVuetify({
 	icons: {
-		iconfont: 'mdi'
-	},
-	theme: {
+		defaultSet: 'mdi',
+		aliases,
+		sets: {
+			mdi
+		}
+	}
+	// TODO: Vue 3
+	/*theme: {
 		options: {
 			customProperties: true
 		},
@@ -35,17 +39,14 @@ const vuetify = new Vuetify({
 				accent: colors.pink
 			}
 		}
-	}
+	}*/
 })
 
-// Note that due to tiptap's tight integration with Vue, it doesn't seem to be possible to
-// lazy-load it in a distinct chunk.
-// Else we could use the following techniques to load the tipTapExtensions and the component :
-// - https://forum.vuejs.org/t/lazy-load-3rd-party-library-like-leaflet/7122/2
-// - https://vueschool.io/articles/vuejs-tutorials/lazy-loading-individual-vue-components-and-prefetching/
-Vue.use(TiptapVuetifyPlugin, {
+//Vue.use(vuetify)
+
+/*Vue.use(TiptapVuetifyPlugin, {
 	vuetify,
 	iconsGroup: 'mdi'
-})
+})*/
 
 export default vuetify

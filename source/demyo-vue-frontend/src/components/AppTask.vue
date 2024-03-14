@@ -1,6 +1,6 @@
 <template>
 	<!-- Force it to always look like a link -->
-	<v-list-item class="v-list-item--link" :to="to" @click.native.stop="handleClick">
+	<v-list-item class="v-list-item--link" :to="to" @click.stop="handleClick">
 		<v-list-item-icon>
 			<v-icon v-text="icon" />
 		</v-list-item-icon>

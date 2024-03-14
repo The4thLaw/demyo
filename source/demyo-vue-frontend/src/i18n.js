@@ -2,10 +2,7 @@ import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 import dateTimeFormats from '@/locales/dateTimeFormats.json'
 import { apiRoot, defaultLanguage } from '@/myenv'
 import axios from 'axios'
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-
-Vue.use(VueI18n)
+import { createI18n } from 'vue-i18n'
 
 function setHtmlLang(lang) {
 	document.documentElement.setAttribute('lang', lang.replace(/_/g, ' '))
@@ -44,7 +41,7 @@ if (localStorageLanguage) {
 const selectedLocale = localStorageLanguage || defaultLanguage
 // English would have no fallback but we're sure French will remain a first-class citizen
 const fallbackLanguage = selectedLocale.replace(/[-_].*/, '') === 'en' ? 'fr' : 'en'
-const i18n = new VueI18n({
+const i18n = createI18n({
 	locale: selectedLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: loadLocaleMessages(),
@@ -64,7 +61,7 @@ async function loadLanguageFromServer(lang) {
 		return
 	}
 	const response = await axios.get(`${apiRoot}translations/${lang}`)
-	i18n.setLocaleMessage(lang, response.data)
+	i18n.global.setLocaleMessage(lang, response.data)
 	console.log(`Loaded ${Object.keys(response.data).length} translations from the server in ${lang}`)
 	loadedLanguages.push(lang)
 }

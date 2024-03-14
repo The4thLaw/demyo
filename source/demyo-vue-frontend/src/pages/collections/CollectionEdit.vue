@@ -60,7 +60,6 @@ import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
 import publisherRefreshMixin from '@/mixins/refresh-publisher-list'
 import collectionService from '@/services/collection-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'CollectionEdit',
@@ -68,8 +67,7 @@ export default {
 	components: {
 		Autocomplete,
 		FormActions,
-		SectionCard,
-		TiptapVuetify
+		SectionCard
 	},
 
 	mixins: [imgRefreshMixin, modelEditMixin, publisherRefreshMixin],

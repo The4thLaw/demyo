@@ -144,7 +144,6 @@ import derivativeService from '@/services/derivative-service'
 import sourceService from '@/services/derivative-source-service'
 import typeService from '@/services/derivative-type-service'
 import seriesService from '@/services/series-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'DerivativeEdit',
@@ -154,8 +153,7 @@ export default {
 		CurrencyField,
 		FormActions,
 		PriceManagement,
-		SectionCard,
-		TiptapVuetify
+		SectionCard
 	},
 
 	mixins: [modelEditMixin, authorRefreshMixin, imgRefreshMixin],

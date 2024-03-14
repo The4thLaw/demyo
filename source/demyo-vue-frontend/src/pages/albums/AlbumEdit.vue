@@ -249,7 +249,6 @@ import albumService from '@/services/album-service'
 import bindingService from '@/services/binding-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'AlbumEdit',
@@ -259,8 +258,7 @@ export default {
 		CurrencyField,
 		FormActions,
 		PriceManagement,
-		SectionCard,
-		TiptapVuetify
+		SectionCard
 	},
 
 	mixins: [modelEditMixin, authorRefreshMixin, imgRefreshMixin, publisherRefreshMixin, tagRefreshMixin],

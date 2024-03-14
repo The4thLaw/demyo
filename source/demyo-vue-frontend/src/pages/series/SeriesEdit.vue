@@ -63,7 +63,6 @@ import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import seriesService from '@/services/series-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
 export default {
 	name: 'SeriesEdit',
@@ -71,8 +70,7 @@ export default {
 	components: {
 		Autocomplete,
 		FormActions,
-		SectionCard,
-		TiptapVuetify
+		SectionCard
 	},
 
 	mixins: [modelEditMixin],

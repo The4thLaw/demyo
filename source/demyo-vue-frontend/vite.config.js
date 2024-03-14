@@ -1,10 +1,9 @@
-import vue from "@vitejs/plugin-vue2"
+import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import * as path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
-import { VuetifyResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
+import vuetify from 'vite-plugin-vuetify'
 
 export default ({ mode }) => {
 	return defineConfig({
@@ -56,18 +55,22 @@ export default ({ mode }) => {
 		resolve: {
 			alias: {
 				'@': path.resolve(__dirname, './src'),
-				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js'
+				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js',
+				//vue: '@vue/compat'
 			}
 		},
 
 		plugins: [
-			vue(),
-			// Vuetify + Vue 2
-			Components({
-				resolvers: [
-					VuetifyResolver()
-				]
-			}),
+			vue(/*{
+				template: {
+					compilerOptions: {
+						compatConfig: {
+							MODE: 3
+						}
+					}
+				}
+			}*/),
+			vuetify(),
 			visualizer()
 		],
 
