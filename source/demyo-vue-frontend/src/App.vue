@@ -30,9 +30,7 @@ export default {
 			// Inspired by:
 			// https://itnext.io/b379baa91a05
 			// https://markus.oberlehner.net/blog/dynamic-vue-layout-components/
-			// TODO: Vue 3
-			//return this.$route.meta.layout || DefaultLayout
-			return DefaultLayout
+			return this.$route.meta.layout || DefaultLayout
 		}
 	},
 
