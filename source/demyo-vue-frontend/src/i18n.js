@@ -39,10 +39,12 @@ if (localStorageLanguage) {
 	console.log('Restoring language from local storage to', localStorageLanguage)
 }
 const selectedLocale = localStorageLanguage || defaultLanguage
+const simpleLocale = selectedLocale.replace(/[-_].*/, '')
 // English would have no fallback but we're sure French will remain a first-class citizen
-const fallbackLanguage = selectedLocale.replace(/[-_].*/, '') === 'en' ? 'fr' : 'en'
+const fallbackLanguage = simpleLocale === 'en' ? 'fr' : 'en'
 const i18n = createI18n({
-	locale: selectedLocale,
+	// Use the simple locale for the JSON files, which aren't as lenient as the backend
+	locale: simpleLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: loadLocaleMessages(),
 	dateTimeFormats
@@ -84,5 +86,7 @@ export async function switchLanguage(lang) {
 	i18n.locale = lang
 	setHtmlLang(lang)
 }
+
+export const $t = i18n.global.t
 
 export default i18n
