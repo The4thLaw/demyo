@@ -1,6 +1,7 @@
 <template>
 	<!-- Inspired from vue-letter-avatar but with a customizable color -->
 	<svg
+		class="c-LetterIcon"
 		:style="'width: 24px; height: 24px; border-radius: 100%; background: '
 			+ actualColor + ' none repeat scroll 0% 0%;'"
 	>
@@ -42,3 +43,10 @@ export default {
 
 }
 </script>
+
+<style type="css">
+.v-list-item__prepend > .c-LetterIcon ~ .v-list-item__spacer {
+	/* Same as other Vuetify rules */
+	width: 32px;
+}
+</style>
