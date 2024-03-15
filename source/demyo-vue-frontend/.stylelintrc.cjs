@@ -1,6 +1,6 @@
 const commonRules = {
-	indentation: 'tab',
-	'block-opening-brace-space-before': 'always',
+	'@stylistic/indentation': 'tab',
+	'@stylistic/block-opening-brace-space-before': 'always',
 	// Disable some rules compared to the recommendations
 	'declaration-empty-line-before': null,
 	'selector-id-pattern': null,
@@ -8,6 +8,10 @@ const commonRules = {
 }
 
 module.exports = {
+	plugins: [
+		'@stylistic/stylelint-plugin'
+	],
+
 	// For the "extends" to work, the stylelint configuration
 	// must be in the same directory as the package.json loading the associated package
 	extends: [

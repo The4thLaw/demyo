@@ -25,6 +25,7 @@ export default [
 	// See https://github.com/vuejs/eslint-plugin-vue/issues/1291
 	...compat.extends('plugin:vue/essential'),
 	...compat.extends('plugin:vue/recommended'),
+	...compat.extends('plugin:vuetify/base'),
 	// https://github.com/cypress-io/eslint-plugin-cypress/issues/146
 	...compat.extends('plugin:cypress/recommended'),
 	// No issue to support flat configs for these two
