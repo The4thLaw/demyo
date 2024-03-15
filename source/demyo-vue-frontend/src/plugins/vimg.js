@@ -1,3 +1,4 @@
-//import VueImg from 'v-img'
+// TODO: Vue 3: Replace this
+// import VueImg from 'v-img'
 
-//Vue.use(VueImg)
+// Vue.use(VueImg)
