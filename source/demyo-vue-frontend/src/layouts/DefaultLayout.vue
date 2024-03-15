@@ -1,48 +1,34 @@
 <template>
 	<v-app id="demyo">
-		<!-- TODO: Vue 3: use composables for the breakpoint-->
-		<!--<v-navigation-drawer
-			v-if="!$vuetify.breakpoint.smAndDown"
-			v-model="displayDetailsPane" right app clipped
-			width="33vw" mobile-breakpoint="sm"
-			:disable-resize-watcher="true"
-		>-->
 		<v-navigation-drawer
-			v-model="displayDetailsPane" right app clipped
+			v-if="!$vuetify.display.smAndDown"
+			v-model="displayDetailsPane" location="right"
 			width="33vw" mobile-breakpoint="sm"
 			:disable-resize-watcher="true"
 		>
 			<portal-target name="appSidePane" />
 		</v-navigation-drawer>
 
-		<v-navigation-drawer v-model="mainMenu" app temporary width="20em">
+		<!-- Once https://github.com/vuetifyjs/vuetify/issues/16150 is resolved, switch back to 20em -->
+		<v-navigation-drawer v-model="mainMenu" width="320">
 			<v-list class="l-DefaultLayout__menuList">
-				<v-list-group v-if="readerLoaded">
-					<template #activator>
-						<v-list-item-icon>
-							<LetterIcon :letter="currentReader.identifyingName[0]" :color="currentReader.colour" />
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title>{{ currentReader.identifyingName }}</v-list-item-title>
-						</v-list-item-content>
+				<v-list-group v-if="readerLoaded" value="Reader">
+					<template #activator="{ props }">
+						<v-list-item v-bind="props" :title="currentReader.identifyingName">
+							<template #prepend>
+								<LetterIcon :letter="currentReader.identifyingName[0]" :color="currentReader.colour" />
+							</template>
+						</v-list-item>
 					</template>
 
-					<v-list-item :to="`/readers/${currentReader.id}/favourites`">
-						<v-list-item-icon>
-							<v-icon>mdi-heart</v-icon>
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title>{{ $t('menu.reader.faves') }}</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
-					<v-list-item :to="`/readers/${currentReader.id}/readingList`">
-						<v-list-item-icon>
-							<v-icon>mdi-library</v-icon>
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title>{{ $t('menu.reader.readingList') }}</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
+					<v-list-item
+						:to="`/readers/${currentReader.id}/favourites`"
+						prepend-icon="mdi-heart" :title="$t('menu.reader.faves')"
+					/>
+					<v-list-item
+						:to="`/readers/${currentReader.id}/readingList`"
+						prepend-icon="mdi-library" :title="$t('menu.reader.readingList')"
+					/>
 					<v-list-item :to="`/readers/${currentReader.id}/configuration`">
 						<v-list-item-icon>
 							<v-icon>mdi-cog</v-icon>
@@ -83,13 +69,13 @@
 					</v-list-item-content>
 				</v-list-item>
 
-				<v-list-item to="/">
-					<v-list-item-icon>
+				<v-list-item to="/" prepend-icon="mdi-home" :title="$t('menu.main.home')">
+					<!--<v-list-item-icon>
 						<v-icon>mdi-home</v-icon>
 					</v-list-item-icon>
 					<v-list-item-content>
 						<v-list-item-title>{{ $t('menu.main.home') }}</v-list-item-title>
-					</v-list-item-content>
+					</v-list-item-content>-->
 				</v-list-item>
 
 				<v-list-group v-for="section in menuItems" :key="section.title" v-model="section.active">
@@ -136,9 +122,7 @@
 
 		<v-main id="l-DefaultLayout__mainContent">
 			<!-- First part of the details pane management -->
-			<!-- TODO: Vue 3: use composables for the breakpoint-->
-			<!--<v-dialog v-if="$vuetify.breakpoint.smAndDown" v-model="displayDetailsPane">-->
-			<v-dialog v-if="false" v-model="displayDetailsPane">
+			<v-dialog v-if="$vuetify.display.smAndDown" v-model="displayDetailsPane">
 				<v-card>
 					<portal-target name="appSidePane" />
 				</v-card>
@@ -289,6 +273,11 @@ html[lang],
 
 #l-DefaultLayout__toolbarSearchField {
 	max-width: 20em;
+}
+
+// Reduce padding in item groups in the menu
+#demyo .v-navigation-drawer .v-list-group {
+	--prepend-width: 15px;
 }
 
 @media screen and (max-width: 600px) { // Vuetify "xs" breakpoint
