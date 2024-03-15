@@ -10,10 +10,11 @@ import router from './router'
 import readerService from './services/reader-service'
 import pinia from './stores'
 
-// Do this as soon as possible. It's asynchronous and will work during bootstrap
-readerService.init()
-
 const app = createApp(App)
+
+app.use(pinia)
+// Do this as soon as possible but after pinia is set up. It's asynchronous and will work during bootstrap
+readerService.init()
 
 // Global mixin to allow components to scroll to the top of the page
 app.mixin({
@@ -24,7 +25,6 @@ app.mixin({
 
 app.use(router)
 app.use(i18n)
-app.use(pinia)
 app.use(portalVue)
 app.use(vuetify)
 
