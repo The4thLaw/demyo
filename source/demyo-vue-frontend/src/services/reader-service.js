@@ -1,6 +1,6 @@
 import { axiosDelete, axiosGet, axiosPost } from '@/helpers/axios'
 import { loadReaderFromLocalStorage, saveReaderToLocalStorage } from '@/helpers/reader'
-import i18n, { switchLanguage } from '@/i18n'
+import { $t, switchLanguage } from '@/i18n'
 import { defaultLanguage } from '@/myenv'
 import { useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
@@ -35,7 +35,7 @@ class ReaderService extends AbstractModelService {
 			// Manually load the lists because we requested no reload because we just loaded one
 			this.loadLists(reader)
 			console.log('Reader is initialized to', reader)
-			useUiStore().showSnackbar(i18n.t('core.reader.welcome', { reader: reader.name }))
+			useUiStore().showSnackbar($t('core.reader.welcome', { reader: reader.name }))
 		} else {
 			console.log('Cannot select a reader automatically, prompting user...')
 			useReaderStore().requireReaderSelection()
@@ -166,7 +166,7 @@ class ReaderService extends AbstractModelService {
 		const readerStore = useReaderStore()
 		const reader = readerStore.currentReader
 		const newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
-		useUiStore().showSnackbar(i18n.t('readers.confirm.readingList.add'))
+		useUiStore().showSnackbar($t('readers.confirm.readingList.add'))
 		readerStore.setReadingList(newList)
 	}
 
@@ -176,7 +176,7 @@ class ReaderService extends AbstractModelService {
 		const reader = readerStore.currentReader
 		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
-			useUiStore().showSnackbar(i18n.t(confirmLabel))
+			useUiStore().showSnackbar($t(confirmLabel))
 			readerStore[storeAction](id)
 		}
 	}
