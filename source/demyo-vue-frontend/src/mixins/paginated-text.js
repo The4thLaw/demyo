@@ -1,5 +1,5 @@
 import { useReaderStore } from '@/stores/reader'
-import deburr from "lodash/deburr"
+import deburr from 'lodash/deburr'
 import groupBy from 'lodash/groupBy'
 import { mapState } from 'pinia'
 

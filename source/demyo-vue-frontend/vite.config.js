@@ -55,7 +55,7 @@ export default ({ mode }) => {
 		resolve: {
 			alias: {
 				'@': path.resolve(__dirname, './src'),
-				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js',
+				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js'
 				// TODO: Vue 3: remove this
 				// vue: '@vue/compat'
 			}
