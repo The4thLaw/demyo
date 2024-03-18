@@ -17,7 +17,7 @@
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, letter) in groupedItems" :key="letter">
-				<h2 class="c-CardTextIndex__firstLetter text-h4 mx-2 my-4 accent--text">
+				<h2 class="c-CardTextIndex__firstLetter text-h4 mx-2 my-4 text-secondary">
 					{{ letter }}
 				</h2>
 				<div class="c-CardTextIndex__panel">
@@ -31,9 +31,7 @@
 			v-if="pageCount > 1"
 			v-model="currentPage"
 			:length="pageCount"
-			total-visible="10"
-			class="my-2"
-			@input="$emit('page-change')"
+			@update:model-value="$emit('page-change')"
 		/>
 	</div>
 </template>

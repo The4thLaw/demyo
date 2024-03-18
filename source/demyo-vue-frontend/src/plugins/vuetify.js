@@ -2,11 +2,22 @@ import { cspStyleNonce } from '@/myenv'
 // import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 // import 'tiptap-vuetify/dist/main.css'
 import { createVuetify } from 'vuetify'
-import 'vuetify/styles'
-// TODO: Vue 3: maybe we can remove the separate mdi import then?
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import 'vuetify/styles'
+import colors from 'vuetify/util/colors'
+
+const demyoTheme = {
+	dark: false,
+	colors: {
+		primary: colors.blue.base,
+		secondary: colors.pink.base,
+		// Custom colors
+		footer: colors.grey.darken3
+	}
+}
 
 const vuetify = createVuetify({
+	// Use the MDI icons which we still must include manually as a dependency (so we control the version)
 	icons: {
 		defaultSet: 'mdi',
 		aliases,
@@ -14,26 +25,27 @@ const vuetify = createVuetify({
 			mdi
 		}
 	},
+	// Set the color and CSP nonce
 	theme: {
-		cspNonce: cspStyleNonce
-	}
-
-	// TODO: Vue 3
-	/*
-	theme: {
-		options: {
-			customProperties: true
-		},
-
+		cspNonce: cspStyleNonce,
+		defaultTheme: 'demyoTheme',
 		themes: {
-			light: {
-				primary: colors.blue,
-				anchor: colors.pink.base,
-				accent: colors.pink
-			}
+			demyoTheme
+		}
+	},
+	// Set some defaults for components to keep the Demyo 2 style that we like
+	defaults: {
+		VPagination: {
+			variant: 'flat',
+			activeColor: 'primary',
+			rounded: 'circle',
+			totalVisible: 8,
+			class: 'my-4'
+		},
+		VTextField: {
+			variant: 'underlined'
 		}
 	}
-	*/
 })
 
 export default vuetify
