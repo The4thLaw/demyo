@@ -44,7 +44,7 @@
 
 	<properties>
 		<org.slf4j.version>2.0.12</org.slf4j.version>
-		<org.springframework.version>6.1.4</org.springframework.version>
+		<org.springframework.version>6.1.5</org.springframework.version>
 		<org.springframework.security.version>6.2.2</org.springframework.security.version>
 		<org.hibernate.version>6.4.4.Final</org.hibernate.version>
 		<com.querydsl.version>5.1.0</com.querydsl.version>
