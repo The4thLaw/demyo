@@ -18,13 +18,12 @@
 </template>
 
 <script>
-import SectionCard from '@/components/SectionCard.vue';
-import quicksearch from '@/mixins/quicksearch';
-
-//const uiStore = useUiStore()
+import SectionCard from '@/components/SectionCard.vue'
+import quicksearch from '@/mixins/quicksearch'
+import { useUiStore } from '@/stores/ui'
 
 export default {
-	name: 'Home',
+	name: 'HomePage',
 
 	components: {
 		SectionCard
@@ -38,9 +37,15 @@ export default {
 		}
 	},
 
+	data() {
+		return {
+			uiStore: useUiStore()
+		}
+	},
+
 	created() {
-		/*uiStore.disableSearch()
-		uiStore.disableGlobalOverlay()*/
+		this.uiStore.disableSearch()
+		this.uiStore.disableGlobalOverlay()
 	}
 }
 </script>
