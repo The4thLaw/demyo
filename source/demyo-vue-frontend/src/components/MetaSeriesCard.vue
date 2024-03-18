@@ -7,14 +7,10 @@
 			>
 				{{ meta.album.title }}
 			</router-link>
-			<v-list dense>
-				<v-list-item :to="cardLink" class="c-MetaSeriesCard__one-shot">
-					<v-list-item-content>
-						<v-list-item-title>
-							{{ $t('field.Album.oneShot.view') }}
-						</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
+			<v-list density="compact">
+				<v-list-item
+					:to="cardLink" class="c-MetaSeriesCard__one-shot" :title="$t('field.Album.oneShot.view')"
+				/>
 			</v-list>
 		</template>
 		<template v-if="meta.series">
@@ -24,15 +20,14 @@
 			>
 				{{ meta.series.identifyingName }}
 			</router-link>
-			<v-list dense>
-				<v-list-item v-for="album in paginatedItems" :key="album.id" :to="`/albums/${album.id}/view`">
-					<v-list-item-content>
-						<v-list-item-title :title="album.title">
-							{{ album.title }}
-						</v-list-item-title>
-					</v-list-item-content>
+			<v-list density="compact">
+				<v-list-item
+					v-for="album in paginatedItems" :key="album.id"
+					:to="`/albums/${album.id}/view`" :title="album.title"
+				>
+					<!-- TODO: Vue 3: Test this -->
 					<v-list-item-action v-if="album.wishlist">
-						<v-icon color="grey lighten-1" small>
+						<v-icon color="grey-lighten-1" size="small">
 							mdi-gift
 						</v-icon>
 					</v-list-item-action>
@@ -100,7 +95,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../styles/detached-rulesets.less";
+@import url("../styles/detached-rulesets.less");
 
 .v-application .c-MetaSeriesCard .v-list-item--link:hover {
 	text-decoration: none;
