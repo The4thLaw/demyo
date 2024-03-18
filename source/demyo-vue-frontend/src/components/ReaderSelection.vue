@@ -12,13 +12,13 @@
 					{{ $t('page.Reader.select.explanation.base') }}
 				</p>
 				<v-list>
-					<v-list-item v-for="reader in readers" :key="reader.id" @click="select(reader)">
-						<v-list-item-icon>
+					<v-list-item
+						v-for="reader in readers" :key="reader.id"
+						:title="reader.identifyingName" @click="select(reader)"
+					>
+						<template #prepend>
 							<LetterIcon :letter="reader.identifyingName.charAt(0)" :color="reader.colour" />
-						</v-list-item-icon>
-						<v-list-item-content>
-							{{ reader.identifyingName }}
-						</v-list-item-content>
+						</template>
 					</v-list-item>
 				</v-list>
 			</v-card-text>
@@ -26,7 +26,7 @@
 			<v-card-actions v-if="!requireSelection">
 				<v-spacer />
 
-				<v-btn color="primary" text @click="dialog = false; $emit('cancel')">
+				<v-btn color="primary" variant="text" @click="dialog = false; $emit('cancel')">
 					{{ $t('quickTasks.confirm.cancel.label') }}
 				</v-btn>
 			</v-card-actions>
