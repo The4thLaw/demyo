@@ -5,16 +5,12 @@
 				<TagLink :model="tags" />
 			</SectionCard>
 		</v-container>
-		<v-btn
-			fab to="/tags/new" color="accent" fixed
-			bottom right
-		>
-			<v-icon>mdi-plus</v-icon>
-		</v-btn>
+		<Fab to="/tags/new" icon="mdi-plus" />
 	</div>
 </template>
 
 <script>
+import Fab from '@/components/Fab.vue'
 import SectionCard from '@/components/SectionCard.vue'
 import TagLink from '@/components/TagLink.vue'
 import tagService from '@/services/tag-service'
@@ -24,6 +20,7 @@ export default {
 	name: 'TagIndex',
 
 	components: {
+		Fab,
 		SectionCard,
 		TagLink
 	},
