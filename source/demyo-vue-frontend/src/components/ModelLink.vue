@@ -28,46 +28,36 @@
 	</span>
 </template>
 
-<script>
-export default {
-	name: 'ModelLink',
+<script setup>
+import { computed, useSlots } from 'vue';
 
-	props: {
-		model: {
-			type: null,
-			required: true
-		},
-
-		view: {
-			type: String,
-			required: true
-		},
-
-		commaSeparated: {
-			type: Boolean,
-			default: true
-		},
-
-		cssClass: {
-			type: String,
-			default: ''
-		}
+const props = defineProps({
+	model: {
+		type: null,
+		required: true
 	},
 
-	computed: {
-		isArray() {
-			return Array.isArray(this.model)
-		},
+	view: {
+		type: String,
+		required: true
+	},
 
-		hasDefaultSlot() {
-			return !!this.$scopedSlots.default
-		},
+	commaSeparated: {
+		type: Boolean,
+		default: true
+	},
 
-		length() {
-			return this.isArray ? this.model.length : 1
-		}
+	cssClass: {
+		type: String,
+		default: ''
 	}
-}
+})
+
+const isArray = computed(() => Array.isArray(props.model))
+const length = computed(() => isArray.value ? props.model.length : 1)
+
+const slots = useSlots()
+const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <style lang="less">
