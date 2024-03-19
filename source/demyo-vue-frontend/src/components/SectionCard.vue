@@ -4,7 +4,7 @@
 			<h1 v-if="title && !loading" class="text-h4">
 				{{ title }}
 			</h1>
-			<h2 v-if="subtitle && !loading" class="text-subtitle-1 primary--text mb-4">
+			<h2 v-if="subtitle && !loading" class="text-subtitle-1 text-primary mb-4">
 				{{ subtitle }}
 			</h2>
 			<slot />
@@ -19,8 +19,8 @@
 						(so that the height is reduced as well)
 					- Be nice on HiDPI and LoDPI screens
 				-->
+				<!-- TODO: Vue 3: Equivalent for v-img="{src: baseImageUrl}" -->
 				<img
-					v-img="{src: baseImageUrl}"
 					:src="`${baseImageUrl}?w=200`"
 					:srcset="`
 						${baseImageUrl}?w=200 200w,
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { getBaseImageUrl } from '@/helpers/images'
+import { getBaseImageUrl } from '@/helpers/images';
 
 /**
  * A card used to section content.
