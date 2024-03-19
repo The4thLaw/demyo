@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .d-Tag {
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
@@ -67,6 +67,7 @@ export default {
 	h1 &,
 	h2 &,
 	h3 & {
+		// TODO: Vue 3: Is this still used?
 		// Avoid overflows in titles
 		white-space: initial;
 		line-height: 100%;

@@ -37,14 +37,14 @@
 							{{ $t('field.Tag.fgColour') }}
 						</label>
 						<v-checkbox v-model="noFgColour" :label="$t('special.form.noColour')" />
-						<v-color-picker v-if="!noFgColour" v-model="tag.fgColour" flat @input="updateFg" />
+						<v-color-picker v-if="!noFgColour" v-model="tag.fgColour" @update:modelValue="updateFg" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">
 							{{ $t('field.Tag.bgColour') }}
 						</label>
 						<v-checkbox v-model="noBgColour" :label="$t('special.form.noColour')" />
-						<v-color-picker v-if="!noBgColour" v-model="tag.bgColour" flat @input="updateBg" />
+						<v-color-picker v-if="!noBgColour" v-model="tag.bgColour" @update:modelValue="updateBg" />
 					</v-col>
 				</v-row>
 			</SectionCard>

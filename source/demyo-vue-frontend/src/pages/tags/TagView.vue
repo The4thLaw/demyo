@@ -29,13 +29,13 @@
 			<v-btn
 				v-if="count > 0"
 				:to="{ name: 'AlbumIndex', query: { withTag: tag.id } }"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
 				{{ $tc('page.Tag.viewAlbums', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"
-				border="left" type="info" text class="my-4"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Tag.noAlbums') }}
 			</v-alert>
