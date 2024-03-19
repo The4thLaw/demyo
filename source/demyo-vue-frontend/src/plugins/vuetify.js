@@ -9,6 +9,7 @@ import colors from 'vuetify/util/colors'
 const demyoTheme = {
 	dark: false,
 	colors: {
+		background: '#eee',
 		primary: colors.blue.base,
 		secondary: colors.pink.base,
 		// Custom colors
@@ -35,6 +36,9 @@ const vuetify = createVuetify({
 	},
 	// Set some defaults for components to keep the Demyo 2 style that we like
 	defaults: {
+		VCheckbox: {
+			color: 'primary'
+		},
 		VPagination: {
 			variant: 'flat',
 			activeColor: 'primary',
@@ -43,6 +47,7 @@ const vuetify = createVuetify({
 			class: 'my-4'
 		},
 		VTextField: {
+			color: 'primary',
 			variant: 'underlined'
 		}
 	}
