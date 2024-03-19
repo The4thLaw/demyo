@@ -1,10 +1,8 @@
 <template>
 	<portal to="appTasks">
-		<v-menu v-model="inputVal" offset-y>
-			<template #activator="{ on }">
-				<v-btn text icon v-on="on">
-					<v-icon>mdi-dots-vertical</v-icon>
-				</v-btn>
+		<v-menu v-model="inputVal">
+			<template #activator="{ props }">
+				<v-btn variant="text" icon="mdi-dots-vertical" v-bind="props" />
 			</template>
 			<v-list class="c-AppTasks__list">
 				<slot />
