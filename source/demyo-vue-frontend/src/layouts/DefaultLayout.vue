@@ -1,5 +1,5 @@
 <template>
-	<v-app id="demyo">
+	<v-app :class="$vuetify.theme['current'].dark?'dem-theme--dark':'dem-theme--light'">
 		<v-navigation-drawer
 			v-if="!$vuetify.display.smAndDown"
 			v-model="displayDetailsPane" location="right"
@@ -10,9 +10,9 @@
 		</v-navigation-drawer>
 
 		<!-- Once https://github.com/vuetifyjs/vuetify/issues/16150 is resolved, switch back to 20em -->
-		<v-navigation-drawer v-model="mainMenu" width="320">
+		<v-navigation-drawer v-model="mainMenu" width="320" temporary>
 			<v-list class="l-DefaultLayout__menuList">
-				<v-list-group v-if="readerLoaded" value="Reader">
+				<v-list-group v-if="readerLoaded">
 					<template #activator="{ props }">
 						<v-list-item v-bind="props" :title="currentReader.identifyingName">
 							<template #prepend>
@@ -29,74 +29,49 @@
 						:to="`/readers/${currentReader.id}/readingList`"
 						prepend-icon="mdi-library" :title="$t('menu.reader.readingList')"
 					/>
-					<v-list-item :to="`/readers/${currentReader.id}/configuration`">
-						<v-list-item-icon>
-							<v-icon>mdi-cog</v-icon>
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title>{{ $t('menu.reader.configuration') }}</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
-					<v-list-item @click="promptReaderSelection = true">
-						<v-list-item-icon>
-							<v-icon>mdi-account-convert</v-icon>
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title>{{ $t('menu.reader.switch') }}</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
-					<v-list-item :to="`/readers/`">
-						<v-list-item-icon>
-							<v-icon>mdi-account-multiple</v-icon>
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title>{{ $t('menu.reader.manage') }}</v-list-item-title>
-						</v-list-item-content>
-					</v-list-item>
+					<v-list-item
+						:to="`/readers/${currentReader.id}/configuration`"
+						prepend-icon="mdi-cog" :title="$t('menu.reader.configuration')"
+					/>
+					<v-list-item
+						prepend-icon="mdi-account-convert" :title=" $t('menu.reader.switch')"
+						@click="promptReaderSelection = true"
+					/>
+					<v-list-item
+						:to="`/readers/`"
+						prepend-icon="mdi-account-multiple" :title="$t('menu.reader.manage')"
+					/>
 				</v-list-group>
 
 				<v-divider />
 
 				<v-list-item id="l-DefaultLayout__menuSearch">
-					<v-list-item-content>
-						<v-text-field
-							ref="menuSearch"
-							v-model="quicksearchQuery" clearable hide-details
-							autocomplete="off"
-							prepend-icon="mdi-magnify" @keyup="performSearch"
-							@click:clear="clearSearch" @keydown.enter="enterSearch"
-						/>
-					</v-list-item-content>
+					<v-text-field
+						ref="menuSearch"
+						v-model="quicksearchQuery" clearable hide-details
+						autocomplete="off"
+						prepend-icon="mdi-magnify" @keyup="performSearch"
+						@click:clear="clearSearch" @keydown.enter="enterSearch"
+					/>
 				</v-list-item>
 
-				<v-list-item to="/" prepend-icon="mdi-home" :title="$t('menu.main.home')">
-					<!--<v-list-item-icon>
-						<v-icon>mdi-home</v-icon>
-					</v-list-item-icon>
-					<v-list-item-content>
-						<v-list-item-title>{{ $t('menu.main.home') }}</v-list-item-title>
-					</v-list-item-content>-->
-				</v-list-item>
+				<v-list-item to="/" prepend-icon="mdi-home" :title="$t('menu.main.home')" />
 
 				<v-list-group v-for="section in menuItems" :key="section.title" v-model="section.active">
-					<template #activator>
-						<v-list-item-content>
-							<v-list-item-title v-text="$t(section.title)" />
-						</v-list-item-content>
+					<template #activator="{ props }">
+						<v-list-item v-bind="props" :title="$t(section.title)" />
 					</template>
 
-					<v-list-item v-for="item in section.subItems" :key="item.title" :to="item.url" exact>
-						<v-list-item-icon>
-							<v-icon v-text="item.icon" />
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title v-text="$t(item.title)" />
-						</v-list-item-content>
-					</v-list-item>
+					<v-list-item
+						v-for="item in section.subItems" :key="item.title"
+						:to="item.url"
+						:prepend-icon="item.icon" :title="$t(item.title)"
+						exact
+					/>
 				</v-list-group>
 			</v-list>
 		</v-navigation-drawer>
-		<v-app-bar color="primary" dark app clipped-right>
+		<v-app-bar color="primary">
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
@@ -110,6 +85,7 @@
 							ref="toolbarSearch"
 							v-model="quicksearchQuery" clearable hide-details
 							autocomplete="off"
+							:color="$vuetify.theme['current'].colors['on-primary']"
 							@click:clear="showQuicksearch = false; clearSearch()"
 							@blur="blur" @keyup="performSearch" @keydown.enter="enterSearch"
 						/>
@@ -132,13 +108,13 @@
 					v-if="readerSelectionRequired || promptReaderSelection" :require-selection="readerSelectionRequired"
 					@cancel="promptReaderSelection = false" @select="promptReaderSelection = false"
 				/>
-				<v-overlay absolute z-index="4" :value="globalOverlay" class="l-DefaultLayout__overlay">
+				<v-overlay absolute z-index="4" :model-value="globalOverlay" class="align-center justify-center">
 					<v-progress-circular :indeterminate="true" color="primary" size="96" width="8" />
 					<span class="l-DefaultLayout__overlayText">{{ $t('core.loading') }}</span>
 				</v-overlay>
 				<QuickSearchResults
 					v-if="isRelevantSearchQuery" :results="quicksearchResults"
-					:loading="quicksearchLoading" @click="showQuicksearch = false; clearSearch()"
+					:loading="quicksearchLoading" @navigate="showQuicksearch = false; clearSearch()"
 				/>
 				<!-- Do it on show so that the element stays alive. v-show doesn't work on slot so use a div -->
 				<div v-show="!isRelevantSearchQuery" id="l-DefaultLayout__routerView">
@@ -147,7 +123,7 @@
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
 		</v-main>
-		<v-footer color="secondary" dark>
+		<v-footer color="footer">
 			<v-col>
 				Demyo "{{ demyoCodename }}"
 			</v-col>
@@ -250,6 +226,7 @@ export default {
 </script>
 
 <style lang="less">
+// TODO: Vue 3: extract some styles to component SCSS, some to global style, some to icon overlays, etc
 html[lang],
 #demyo {
 	font-family:
@@ -261,23 +238,27 @@ html[lang],
 		"Apple Color Emoji",
 		"Segoe UI Emoji",
 		"Segoe UI Symbol";
-	// TODO [dark]: handle the dark theme.
-	// Maybe use the overrides listed on https://github.com/vuetifyjs/vuetify/releases/tag/v2.2.6 ?
-	background: #eee;
 }
 
-#demyo .l-DefaultLayout__overlay .v-overlay__content {
-	position: absolute;
-	top: 3em;
+.l-DefaultLayout__overlayText {
+	font-size: 1.5rem;
+	padding-left: 1em;
+	color: rgb(var(--v-theme-on-primary));
 }
 
 #l-DefaultLayout__toolbarSearchField {
-	max-width: 20em;
+	width: 20em;
+
+	input, .v-field__clearable {
+		padding-top: 0;
+		min-height: 0;
+	}
 }
 
 // Reduce padding in item groups in the menu
 #demyo .v-navigation-drawer .v-list-group {
-	--prepend-width: 15px;
+	--prepend-width: 0px;
+	--indent-padding: -16px;
 }
 
 @media screen and (max-width: 600px) { // Vuetify "xs" breakpoint
@@ -303,12 +284,7 @@ html[lang],
 	}
 }
 
-.l-DefaultLayout__overlayText {
-	font-size: 1.5rem;
-	padding-left: 1em;
-}
-
-#demyo .v-list-item__title {
+#demyo .v-list-item-title {
 	font-size: 14px;
 }
 
@@ -345,6 +321,12 @@ html[lang],
 	}
 }
 
+#demyo .v-footer {
+	// "app" footer are always displayed on the screen even in case of overflow (which we don't want),
+	// but non-app grows, which we walso don't want. Keep the best of both worlds
+	flex: 0;
+}
+
 #demyo .v-input--is-readonly:not(.v-input--is-disabled) input,
 #demyo .v-input--checkbox.v-input--is-readonly:not(.v-input--is-disabled) label {
 	color: var(--dem-bg-contrast);
@@ -377,11 +359,11 @@ html[lang],
 	margin-bottom: 8px;
 	padding-top: 16px;
 
-	.theme--light & {
+	.dem-theme--light & {
 		border-top: 1px solid var(--dem-base-border);
 	}
 
-	.theme--dark & {
+	.dem-theme--dark & {
 		border-top: 1px solid rgba(255, 255, 255, 0.12);
 	}
 
@@ -394,18 +376,12 @@ html[lang],
 .dem-fieldlabel {
 	font-size: 12px;
 
-	.theme--light & {
+	.dem-theme--light & {
 		color: rgba(0, 0, 0, 0.54);
 	}
 }
 
 #demyo {
-	// TODO: when https://github.com/vuetifyjs/vuetify/issues/2541 is resolved, switch to it
-	.v-pagination button {
-		box-shadow: none;
-		border-radius: 50%;
-	}
-
 	/** Overlays for icons. */
 	.v-icon.dem-overlay-add::after {
 		content: "\F0415";

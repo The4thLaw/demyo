@@ -28,4 +28,7 @@ app.use(i18n)
 app.use(portalVue)
 app.use(vuetify)
 
+// Add the ID to the body element to ease style overrides
+document.getElementsByTagName('body')[0].id = 'demyo'
+
 app.mount('#app')
