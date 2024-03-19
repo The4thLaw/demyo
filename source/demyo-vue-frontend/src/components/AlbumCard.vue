@@ -223,7 +223,7 @@ export default {
 		color: var(--dem-primary-contrast);
 	}
 
-	&.theme--light.v-card > .v-card__text {
+	&.dem-theme--light.v-card > .v-card__text {
 		color: var(--dem-text);
 	}
 
@@ -232,8 +232,8 @@ export default {
 			text-decoration: none !important;
 		}
 
-		& .theme--light.v-image,
-		& .theme--dark.v-image {
+		& .dem-theme--light.v-image,
+		& .dem-theme--dark.v-image {
 			color: white;
 		}
 	}
