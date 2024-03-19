@@ -1,13 +1,13 @@
 <template>
 	<div class="c-FormActions">
 		<template v-if="!hasDefaultSlot">
-			<v-btn color="accent" type="submit" @click.prevent="$emit('save')">
+			<v-btn color="secondary" type="submit" @click.prevent="$emit('save')">
 				{{ $t('button.save') }}
 			</v-btn>
-			<v-btn v-if="showReset" text color="primary" @click="$emit('reset')">
+			<v-btn v-if="showReset" variant="text" color="primary" @click="$emit('reset')">
 				{{ $t('button.reset') }}
 			</v-btn>
-			<v-btn v-if="showBack" text color="primary" @click="$router.go(-1)">
+			<v-btn v-if="showBack" variant="text" color="primary" @click="$router.go(-1)">
 				{{ $t('button.back') }}
 			</v-btn>
 		</template>
