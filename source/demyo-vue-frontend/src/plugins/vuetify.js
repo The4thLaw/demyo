@@ -11,9 +11,7 @@ const demyoTheme = {
 	colors: {
 		background: '#eee',
 		primary: colors.blue.base,
-		secondary: colors.pink.base,
-		// Custom colors
-		footer: colors.grey.darken3
+		secondary: colors.pink.base
 	}
 }
 

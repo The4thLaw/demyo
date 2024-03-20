@@ -42,7 +42,7 @@ export default {
 }
 
 .c-FieldValue__label {
-	color: var(--v-primary-base);
+	color: rgb(var(--v-theme-primary));
 	font-size: 0.9em;
 }
 </style>

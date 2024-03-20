@@ -123,7 +123,7 @@
 				<AppSnackbar :shown="displaySnackbar" :message="snackbarMessage" @close="closeSnackbar" />
 			</v-container>
 		</v-main>
-		<v-footer color="footer">
+		<v-footer color="surface-variant">
 			<v-col>
 				Demyo "{{ demyoCodename }}"
 			</v-col>
@@ -132,9 +132,6 @@
 </template>
 
 <script>
-import AppSnackbar from '@/components/AppSnackbar.vue'
-import LetterIcon from '@/components/LetterIcon.vue'
-import ReaderSelection from '@/components/ReaderSelection.vue'
 import quicksearch from '@/mixins/quicksearch'
 import { demyoCodename } from '@/myenv'
 import { useReaderStore } from '@/stores/reader'
@@ -144,12 +141,6 @@ import defaultMenu from './default-menu.json'
 
 export default {
 	name: 'DefaultLayout',
-
-	components: {
-		AppSnackbar,
-		LetterIcon,
-		ReaderSelection
-	},
 
 	mixins: [quicksearch],
 
@@ -335,7 +326,9 @@ html[lang],
 .dem-columnized {
 	column-gap: 2em;
 	column-count: 1;
-	column-rule: 1px solid var(--dem-base-border);
+	// Must rely on rgba to use Vuetify variables
+	/* stylelint-disable-next-line color-function-notation */
+	column-rule: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 
 	@media (min-width: 1264px) { // Vuetify "lg" breakpoint
 		columns: 2;
@@ -360,7 +353,9 @@ html[lang],
 	padding-top: 16px;
 
 	.dem-theme--light & {
-		border-top: 1px solid var(--dem-base-border);
+		// Must rely on rgba to use Vuetify variables
+		/* stylelint-disable-next-line color-function-notation */
+		border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 	}
 
 	.dem-theme--dark & {
@@ -382,6 +377,13 @@ html[lang],
 }
 
 #demyo {
+	// Tweaks to Vuetify components
+	.v-card--variant-outlined {
+		// Must rely on rgba to use Vuetify variables
+		/* stylelint-disable-next-line color-function-notation */
+		border-color: rgba(var(--v-border-color), var(--v-border-opacity));
+	}
+
 	/** Overlays for icons. */
 	.v-icon.dem-overlay-add::after {
 		content: "\F0415";

@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import { contextRoot } from '@/myenv';
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import { contextRoot } from '@/myenv'
 
 export default {
 	name: 'DemyoApp',
@@ -48,15 +48,15 @@ export default {
 
 <style lang="less">
 :root {
-	// TODO[dark]: alternate colors
+	// TODO: Vue 3: replace those with Vuetify variables
 	--dem-text: rgba(0, 0, 0, 0.87);
 	--dem-text-lighter: rgba(0, 0, 0, 0.54);
 	--dem-primary-contrast: #fff;
 	--dem-bg-contrast: #ddd;
-	--dem-base-border: #ccc;
 }
 
 @media print {
+
 	// Solution from https://stackoverflow.com/a/23778125/109813
 	@page {
 		margin: 0;
