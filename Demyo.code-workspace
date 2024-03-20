@@ -78,7 +78,10 @@
 			"revealWithFocus": "none",
 			"clearOnRun": "none"
 		},
-		"eslint.experimental.useFlatConfig": true
+		"eslint.experimental.useFlatConfig": true,
+
+		"javascript.format.semicolons": "remove",
+		"typescript.format.semicolons": "remove",
 	},
 	"tasks": {
 		"version": "2.0.0",
