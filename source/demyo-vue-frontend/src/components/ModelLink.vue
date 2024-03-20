@@ -29,8 +29,6 @@
 </template>
 
 <script setup>
-import { computed, useSlots } from 'vue';
-
 const props = defineProps({
 	model: {
 		type: null,

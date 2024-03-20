@@ -55,8 +55,6 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
@@ -64,11 +62,6 @@ import tagService from '@/services/tag-service'
 
 export default {
 	name: 'TagEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [modelEditMixin],
 

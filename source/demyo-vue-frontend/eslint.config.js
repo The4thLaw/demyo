@@ -42,7 +42,11 @@ export default [
 
 		languageOptions: {
 			globals: {
-				...globals.browser
+				...globals.browser,
+				// Vue + unplugin-auto-import
+				ref: false,
+				computed: false,
+				useSlots: false
 			}
 		},
 

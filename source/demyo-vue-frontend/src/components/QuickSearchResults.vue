@@ -37,14 +37,8 @@
 </template>
 
 <script>
-import SectionCard from '@/components/SectionCard.vue'
-
 export default {
 	name: 'QuickSearchResults',
-
-	components: {
-		SectionCard
-	},
 
 	props: {
 		results: {

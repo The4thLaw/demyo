@@ -18,16 +18,11 @@
 </template>
 
 <script>
-import SectionCard from '@/components/SectionCard.vue'
 import quicksearch from '@/mixins/quicksearch'
 import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'HomePage',
-
-	components: {
-		SectionCard
-	},
 
 	mixins: [quicksearch],
 

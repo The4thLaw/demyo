@@ -10,20 +10,11 @@
 </template>
 
 <script>
-import Fab from '@/components/Fab.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import TagLink from '@/components/TagLink.vue'
 import tagService from '@/services/tag-service'
 import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'TagIndex',
-
-	components: {
-		Fab,
-		SectionCard,
-		TagLink
-	},
 
 	metaInfo() {
 		return {
