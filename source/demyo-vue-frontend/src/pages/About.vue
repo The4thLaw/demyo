@@ -10,7 +10,7 @@
 
 		<SectionCard :subtitle="$t('page.About.aboutLibs')">
 			<p v-text="$t('page.About.aboutLibs.description')" />
-			<v-simple-table>
+			<v-table>
 				<template #default>
 					<thead>
 						<tr>
@@ -37,10 +37,10 @@
 					</tbody>
 					<!-- link to package.json on GitHub -->
 				</template>
-			</v-simple-table>
+			</v-table>
 
 			<p v-text="$t('page.About.aboutLibs.env')" />
-			<v-simple-table>
+			<v-table>
 				<template #default>
 					<thead>
 						<tr>
@@ -121,12 +121,12 @@
 						</tr>
 					</tbody>
 				</template>
-			</v-simple-table>
+			</v-table>
 		</SectionCard>
 
 		<SectionCard :subtitle="$t('page.About.aboutInstall')">
 			<p v-text="$t('page.About.aboutInstall.description')" />
-			<v-simple-table>
+			<v-table>
 				<template #default>
 					<thead>
 						<tr>
@@ -149,50 +149,27 @@
 						</tr>
 						<tr>
 							<td>{{ $t('page.About.aboutInstall.parameter.userAgent') }}</td>
-							<td>{{ userAgent }})</td>
+							<td>{{ userAgent }}</td>
 						</tr>
 					</tbody>
 				</template>
-			</v-simple-table>
+			</v-table>
 		</SectionCard>
 	</div>
 </template>
 
-<script>
+<script setup>
 import libs from '@/assets/about-libs.json'
-import SectionCard from '@/components/SectionCard.vue'
 import { demyoCodename, demyoVersion } from '@/myenv'
 import aboutService from '@/services/about-service'
 
-export default {
-	name: 'About',
+const userAgent = navigator.userAgent
 
-	components: {
-		SectionCard
-	},
+const env = ref({});
 
-	metaInfo() {
-		return {
-			title: this.$t('title.about')
-		}
-	},
-
-	data() {
-		return {
-			demyoCodename: demyoCodename,
-			demyoVersion: demyoVersion,
-
-			env: {},
-			userAgent: navigator.userAgent,
-
-			libs: libs
-		}
-	},
-
-	async created() {
-		this.env = await aboutService.getEnvironment()
-	}
-}
+(async () => {
+	env.value = await aboutService.getEnvironment()
+})()
 </script>
 
 <style lang="less">
