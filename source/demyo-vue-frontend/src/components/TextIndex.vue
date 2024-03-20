@@ -13,11 +13,9 @@
 		<div v-if="!splitByFirstLetter">
 			<v-card :flat="compact">
 				<v-card-text>
-					<v-list class="dem-columnized c-TextIndex__list" dense>
+					<v-list class="dem-columnized c-TextIndex__list" density="compact">
 						<v-list-item v-for="item in paginatedItems" :key="item.id">
-							<v-list-item-content>
-								<slot :item="item" />
-							</v-list-item-content>
+							<slot :item="item" />
 						</v-list-item>
 					</v-list>
 				</v-card-text>
@@ -26,16 +24,14 @@
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, letter) in groupedItems" :key="letter">
-				<h2 class="c-TextIndex__firstLetter text-h4 mx-2 my-4 accent--text">
+				<h2 class="c-TextIndex__firstLetter text-h4 mx-2 my-4 text-secondary">
 					{{ letter }}
 				</h2>
 				<v-card :flat="compact">
 					<v-card-text>
-						<v-list class="dem-columnized c-TextIndex__list" dense>
+						<v-list class="dem-columnized c-TextIndex__list" density="compact">
 							<v-list-item v-for="item in value" :key="item.id">
-								<v-list-item-content>
-									<slot :item="item" />
-								</v-list-item-content>
+								<slot :item="item" />
 							</v-list-item>
 						</v-list>
 					</v-card-text>
@@ -48,7 +44,7 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
-			@input="$emit('page-change')"
+			@update:modelValue="$emit('page-change')"
 		/>
 	</div>
 </template>

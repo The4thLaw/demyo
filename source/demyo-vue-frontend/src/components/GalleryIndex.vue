@@ -7,15 +7,14 @@
 			right: previousPage
 		}"
 		class="c-GalleryIndex"
-		:class="{ 'c-GalleryIndex--bordered': bordered }"
 		@keyup.arrow-left.exact="previousPageKeyboard()"
 		@keyup.arrow-right.exact="nextPageKeyboard()"
 	>
 		<div class="c-GalleryIndex__list">
-			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image">
+			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image" :border="bordered">
+				<!-- TODO: Vue 3: equivalent for v-img:group="{src: item.baseImageUrl, opened: vimgOpen, closed: vimgClosed}" -->
 				<img
 					v-if="item.baseImageUrl"
-					v-img:group="{src: item.baseImageUrl, opened: vimgOpen, closed: vimgClosed}"
 					:src="`${item.baseImageUrl}?w=250`"
 					:srcset="`
 						${item.baseImageUrl}?w=250 1x,
@@ -34,7 +33,7 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
-			@input="$emit('page-change')"
+			@update:modelValue="$emit('page-change')"
 		/>
 	</div>
 </template>
@@ -86,7 +85,7 @@ export default {
 		}),
 
 		hasDefaultSlot() {
-			return !!this.$scopedSlots.default
+			return !!this.$slots.default
 		},
 
 		paginatedItems() {
@@ -192,10 +191,6 @@ export default {
 	width: 266px;
 	padding: 8px;
 	margin: 16px;
-}
-
-.c-GalleryIndex--bordered .c-GalleryIndex__image {
-	border: 1px solid var(--dem-base-border);
 }
 
 .v-application .c-GalleryIndex__imageLegend {

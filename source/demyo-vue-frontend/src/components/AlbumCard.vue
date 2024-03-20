@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card v-if="loading" outlined class="c-AlbumCard--loading">
+		<v-card v-if="loading" variant="outlined" class="c-AlbumCard--loading">
 			<v-card-title />
 			<v-card-text>
 				<div class="c-AlbumCard__contentFaker" />
@@ -9,7 +9,7 @@
 				<div class="c-AlbumCard__contentFaker" />
 			</v-card-text>
 		</v-card>
-		<v-card v-else outlined class="c-AlbumCard">
+		<v-card v-else variant="outlined" class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
 				<v-img
 					v-if="loadCover && album.cover.id"
@@ -20,9 +20,10 @@
 					:eager="eagerCovers"
 					aspect-ratio="3"
 					gradient="to top, rgba(0, 0, 0, 0.8) 0%, transparent 72px"
+					cover
 				>
 					<v-row align="end" class="fill-height px-4">
-						<v-col class="text-h6">
+						<v-col class="text-h6 text-white">
 							{{ album.identifyingName }}
 						</v-col>
 					</v-row>
@@ -33,8 +34,8 @@
 			</router-link>
 			<v-card-text>
 				<v-alert
-					v-if="album.wishlist" color="primary" border="left"
-					icon="mdi-gift" text dense
+					v-if="album.wishlist" color="primary" border="start"
+					icon="mdi-gift" text density="compact"
 				>
 					{{ $t('field.Album.wishlist.value.true') }}
 				</v-alert>
@@ -108,10 +109,10 @@
 				</v-fade-transition>
 			</v-card-text>
 			<v-card-actions>
-				<v-btn v-if="!expanded" text color="accent" @click="expanded = true">
+				<v-btn v-if="!expanded" variant="text" color="secondary" @click="expanded = true">
 					{{ $t('page.Series.albums.viewMore') }}
 				</v-btn>
-				<v-btn v-if="expanded" text color="accent" @click="expanded = false">
+				<v-btn v-if="expanded" variant="text" color="secondary" @click="expanded = false">
 					{{ $t('page.Series.albums.viewLess') }}
 				</v-btn>
 				<v-spacer />

@@ -69,28 +69,31 @@
 					<div v-html="series.comment" />
 				</FieldValue>
 			</div>
+			{{ $vuetify.theme['current'] }}
 		</SectionCard>
 
 		<SectionCard
 			v-if="loading || series.albumIds || derivativeCount > 0"
 			ref="contentSection" class="c-SectionCard--tabbed"
 		>
-			<v-tabs v-model="currentTab" background-color="primary" dark grow>
-				<v-tab :disabled="albumsLoaded && albumCount <= 0">
-					<v-icon left>
+			<v-tabs v-model="currentTab" bg-color="primary" grow>
+				<v-tab value="albums" :disabled="albumsLoaded && albumCount <= 0">
+					<v-icon start>
 						mdi-book-open-variant
 					</v-icon>
 					{{ $t('field.Series.albums') }}
 				</v-tab>
-				<v-tab :disabled="derivativeCount <= 0" @change="loadDerivatives">
-					<v-icon left>
+				<v-tab value="derivatives" :disabled="derivativeCount <= 0" @group:selected="loadDerivatives">
+					<v-icon start>
 						mdi-image-frame
 					</v-icon>
 					{{ $tc('field.Series.derivatives', derivativeCount) }}
 				</v-tab>
+			</v-tabs>
 
-				<!-- Albums -->
-				<v-tab-item class="dem-tab">
+			<!-- Albums -->
+			<v-window v-model="currentTab">
+				<v-window-item value="albums" class="dem-tab">
 					<div v-if="albumsLoaded" class="c-SeriesView__albumAggregateData dem-columnized pb-4">
 						<FieldValue :label="$t('field.Series.albumCount')">
 							<template v-if="albumCount === ownedAlbumCount">
@@ -141,15 +144,16 @@
 							cols="12" md="6" lg="4"
 						>
 							<AlbumCard
+								v-if="albums[albumId]"
 								:album="albums[albumId]" :loading="albums[albumId].loading"
 								:load-cover="albumsLoaded"
 							/>
 						</v-col>
 					</v-row>
-				</v-tab-item>
+				</v-window-item>
 
 				<!-- Derivatives -->
-				<v-tab-item class="dem-tab">
+				<v-window-item value="derivatives" class="dem-tab">
 					<div v-if="derivatives.length <= 0" class="text-center">
 						<v-progress-circular indeterminate color="primary" size="64" />
 					</div>
@@ -168,22 +172,13 @@
 							</router-link>
 						</template>
 					</GalleryIndex>
-				</v-tab-item>
-			</v-tabs>
+				</v-window-item>
+			</v-window>
 		</SectionCard>
 	</v-container>
 </template>
 
 <script>
-import AlbumCard from '@/components/AlbumCard.vue'
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FavouriteButton from '@/components/FavouriteButton.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import GalleryIndex from '@/components/GalleryIndex.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import TagLink from '@/components/TagLink.vue'
 import { deleteStub } from '@/helpers/actions'
 import { mergeModels } from '@/helpers/fields'
 import modelViewMixin from '@/mixins/model-view'
@@ -198,18 +193,6 @@ import asyncPool from 'tiny-async-pool'
 
 export default {
 	name: 'SeriesView',
-
-	components: {
-		AlbumCard,
-		AppTask,
-		AppTasks,
-		FavouriteButton,
-		FieldValue,
-		GalleryIndex,
-		ModelLink,
-		SectionCard,
-		TagLink
-	},
 
 	mixins: [modelViewMixin],
 
@@ -385,8 +368,9 @@ export default {
 
 			if (this.series.albumIds) {
 				this.series.albumIds.forEach(id => {
-					// TODO: Vue 3
-					//Vue.set(this.albums, id, { loading: true })
+					this.albums[id] = {
+						loading: true
+					}
 				})
 			}
 
@@ -404,8 +388,10 @@ export default {
 
 		async loadAlbums() {
 			if (this.series.albumIds) {
-				for await (const value of asyncPool(2, this.series.albumIds, this.albumLoader)) {
-  					// Nothing to do
+				// We need the variable to iterate and, without iteration, this doesn't work
+				// eslint-disable-next-line no-unused-vars
+				for await (const _value of asyncPool(2, this.series.albumIds, this.albumLoader)) {
+					// Nothing to do
 				}
 			}
 			this.albumsLoaded = true
@@ -446,7 +432,9 @@ export default {
 }
 
 .c-SeriesView__albumAggregateData {
-	border-bottom: 1px solid var(--dem-base-border);
+	// Must rely on rgba to use Vuetify variables
+	/* stylelint-disable-next-line color-function-notation */
+	border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 	margin-bottom: 1.5em;
 }
 </style>
