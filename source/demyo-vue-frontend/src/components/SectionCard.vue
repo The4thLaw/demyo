@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { getBaseImageUrl } from '@/helpers/images';
+import { getBaseImageUrl } from '@/helpers/images'
 
 /**
  * A card used to section content.
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="less">
-.c-SectionCard {
+.c-SectionCard.v-card {
 	padding-bottom: 24px;
 
 	.text-h4 {
@@ -97,20 +97,31 @@ export default {
 	}
 }
 
-.c-SectionCard__container {
+#demyo .c-SectionCard__container {
 	padding: 24px;
 	padding-bottom: 0;
+
+	& :last-child {
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
 }
 
-.c-SectionCard--tabbed {
+#demyo .c-SectionCard--tabbed {
 	padding: 0;
 
 	> .c-SectionCard__container {
 		padding: 0;
-	}
 
-	.v-tabs-items {
-		padding: 24px;
+		> .v-tabs .v-tab:not(.v-tab--selected) {
+			// Need old rgba function for vuetify
+			/* stylelint-disable-next-line color-function-notation */
+			color: rgba(var(--v-theme-on-primary), 0.6);
+		}
+
+		> .v-window {
+			padding: 24px;
+		}
 	}
 }
 
