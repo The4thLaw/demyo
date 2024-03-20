@@ -1,5 +1,5 @@
 import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
-import dateTimeFormats from '@/locales/dateTimeFormats.json'
+import datetimeFormats from '@/locales/dateTimeFormats.json'
 import { apiRoot, defaultLanguage } from '@/myenv'
 import axios from 'axios'
 import { createI18n } from 'vue-i18n'
@@ -11,7 +11,7 @@ function setHtmlLang(lang) {
 const loadedLanguages = []
 
 // Define the variants we support
-dateTimeFormats['fr-BE'] = dateTimeFormats.fr
+datetimeFormats['fr-BE'] = datetimeFormats.fr
 
 // By default, we start with partial messages covering all above-the-fold content in all supported languages
 // (mainly titles, but also the search widget, snack bar)
@@ -47,7 +47,7 @@ const i18n = createI18n({
 	locale: simpleLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: loadLocaleMessages(),
-	dateTimeFormats
+	datetimeFormats
 })
 setHtmlLang(selectedLocale)
 console.log(`Initialized i18n with '${selectedLocale}' as default language and '${fallbackLanguage}' as fallback`)
