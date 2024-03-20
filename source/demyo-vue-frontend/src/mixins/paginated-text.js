@@ -78,7 +78,7 @@ export default {
 
 		extractFirstLetter(item) {
 			/** @type String */
-			const first = deburr(this.firstLetterExtractor(item))
+			const first = deburr(this.firstLetterExtractor(item)).toUpperCase()
 			if (first.match(/[A-Za-z]/)) {
 				return first
 			} else if (first.match(/[0-9]/)) {
