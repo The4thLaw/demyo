@@ -1,7 +1,7 @@
-import i18n from '@/i18n'
+import { $t } from '@/i18n'
 
 export function mandatory() {
-	return v => !!v || i18n.t('validation.mandatory')
+	return v => !!v || $t('validation.mandatory')
 }
 
 function regexMatch(regex, key) {
@@ -10,7 +10,7 @@ function regexMatch(regex, key) {
 			return true
 		}
 
-		return !!String(v).match(regex) || i18n.t(key)
+		return !!String(v).match(regex) || $t(key)
 	}
 }
 
