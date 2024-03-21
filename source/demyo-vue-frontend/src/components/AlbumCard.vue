@@ -209,8 +209,6 @@ export default {
 </script>
 
 <style lang="less">
-// TODO[dark] adapt load colors to dark theme
-
 .c-AlbumCard__contentFaker {
 	min-height: 1.75em;
 	margin-top: 1em;
@@ -219,13 +217,9 @@ export default {
 }
 
 .c-AlbumCard {
-	.v-card__title {
-		background-color: var(--v-primary-base);
-		color: var(--dem-primary-contrast);
-	}
-
-	&.dem-theme--light.v-card > .v-card__text {
-		color: var(--dem-text);
+	.v-card-title {
+		background-color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 
 	&__albumLink {
@@ -245,11 +239,11 @@ export default {
 }
 
 .c-AlbumCard--loading {
-	.v-card__title {
+	.v-card-title {
 		min-height: 2.5em;
 	}
 
-	.v-card__title,
+	.v-card-title,
 	.c-AlbumCard__contentFaker {
 		background-color: #bbb;
 		animation: 1.5s ease-in-out 0s infinite alternate pulsate;

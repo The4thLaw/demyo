@@ -101,7 +101,7 @@ export default {
 	padding: 24px;
 	padding-bottom: 0;
 
-	& :last-child {
+	> :last-child {
 		padding-bottom: 0;
 		margin-bottom: 0;
 	}

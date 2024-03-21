@@ -52,7 +52,7 @@ export default {
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
-	background-color: var(--dem-bg-contrast);
+	background-color: rgb(var(--v-theme-surface-light));
 	margin-right: 1em;
 	padding: 4px 12px;
 	white-space: nowrap;

@@ -105,7 +105,7 @@ export default {
 		text-decoration: none;
 
 		&:hover {
-			color: var(--v-anchor-base);
+			color: rgb(var(--v-theme-secondary));
 			text-decoration: underline;
 		}
 	}

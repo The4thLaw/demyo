@@ -12,7 +12,8 @@
 	>
 		<div class="c-GalleryIndex__list">
 			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image" :border="bordered">
-				<!-- TODO: Vue 3: equivalent for v-img:group="{src: item.baseImageUrl, opened: vimgOpen, closed: vimgClosed}" -->
+				<!-- TODO: Vue 3: equivalent for
+					v-img:group="{src: item.baseImageUrl, opened: vimgOpen, closed: vimgClosed}" -->
 				<img
 					v-if="item.baseImageUrl"
 					:src="`${item.baseImageUrl}?w=250`"
@@ -202,7 +203,7 @@ export default {
 		color: inherit;
 
 		&:hover {
-			color: var(--v-anchor-base);
+			color: rgb(var(--v-theme-secondary));
 		}
 	}
 }

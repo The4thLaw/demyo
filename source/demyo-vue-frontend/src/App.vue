@@ -48,11 +48,10 @@ export default {
 
 <style lang="less">
 :root {
-	// TODO: Vue 3: replace those with Vuetify variables
-	--dem-text: rgba(0, 0, 0, 0.87);
-	--dem-text-lighter: rgba(0, 0, 0, 0.54);
-	--dem-primary-contrast: #fff;
-	--dem-bg-contrast: #ddd;
+	/* stylelint-disable-next-line color-function-notation */
+	--dem-text: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+	/* stylelint-disable-next-line color-function-notation */
+	--dem-text-lighter: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 @media print {
