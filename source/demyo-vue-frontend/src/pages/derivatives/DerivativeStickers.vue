@@ -2,13 +2,13 @@
 	<div class="c-DerivativeStickers">
 		<div class="c-DerivativeStickers__Header no-print">
 			<v-btn to="/">
-				<v-icon left>
+				<v-icon start>
 					mdi-home
 				</v-icon>
 				{{ $t('menu.main.home') }}
 			</v-btn>
 			<v-btn @click="print">
-				<v-icon left>
+				<v-icon start>
 					mdi-printer
 				</v-icon>
 				{{ $t('page.Derivative.stickers.print') }}
@@ -102,6 +102,7 @@ export default {
 	border: 0.2mm dotted #ddd;
 	padding: 1mm;
 	margin: 2.5mm;
+	line-height: initial;
 
 	div {
 		min-width: 3cm;

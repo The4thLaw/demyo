@@ -1,10 +1,10 @@
 <template>
 	<v-container class="c-ImageDetect">
 		<SectionCard :subtitle="$t('title.add.image.detect')">
-			<v-alert v-if="detectedImages.length > 0" border="left" type="info" text>
+			<v-alert v-if="detectedImages.length > 0" border="start" type="info" text>
 				{{ $t('page.Image.detect.recommendation') }}
 			</v-alert>
-			<v-alert v-if="!detecting && detectedImages.length === 0" border="left" type="warning" text>
+			<v-alert v-if="!detecting && detectedImages.length === 0" border="start" type="warning" text>
 				{{ $t('page.Image.detect.noImages') }}
 			</v-alert>
 			<v-form class="dem-columnized">

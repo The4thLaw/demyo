@@ -20,13 +20,13 @@
 			<v-btn
 				v-if="count > 0"
 				:to="{ name: 'DerivativeIndex', query: { withType: type.id } }"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
 				{{ $tc('page.DerivativeType.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"
-				border="left" type="info" text class="my-4"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.DerivativeType.noDerivatives') }}
 			</v-alert>

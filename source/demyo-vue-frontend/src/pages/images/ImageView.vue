@@ -33,23 +33,18 @@
 						v-if="value.length > 0"
 						:key="modelType"
 						:value="true"
-						sub-group
 					>
-						<template #activator>
-							<v-list-item-content>
-								<v-list-item-title v-text="$t('page.Image.usedIn.' + modelType)" />
-							</v-list-item-content>
+						<template #activator="{ props }">
+							<v-list-item v-bind="props" :title="$t('page.Image.usedIn.' + modelType)" color="primary" />
 						</template>
 
 						<v-list-item v-for="item in value" :key="item.id" :to="`/${modelType}/${item.id}/view`">
-							<v-list-item-content class="pl-4">
-								<v-list-item-title>
-									<template v-if="modelType === 'albums' && item.series">
-										{{ item.series.name }} -
-									</template>
-									{{ item.identifyingName }}
-								</v-list-item-title>
-							</v-list-item-content>
+							<template #title>
+								<template v-if="modelType === 'albums' && item.series">
+									{{ item.series.name }} -
+								</template>
+								{{ item.identifyingName }}
+							</template>
 						</v-list-item>
 					</v-list-group>
 				</template>
@@ -100,12 +95,12 @@ export default {
 		},
 
 		hasDependencies() {
-			return this.dependencies.albumCovers ||
-				this.dependencies.albumOtherImages ||
-				this.dependencies.authors ||
-				this.dependencies.collections ||
-				this.dependencies.derivatives ||
-				this.dependencies.publishers
+			return this.dependencies.albumCovers
+				|| this.dependencies.albumOtherImages
+				|| this.dependencies.authors
+				|| this.dependencies.collections
+				|| this.dependencies.derivatives
+				|| this.dependencies.publishers
 		},
 
 		parsedDependencies() {
@@ -149,6 +144,10 @@ export default {
 
 	p {
 		margin-top: 32px;
+	}
+
+	img {
+		max-width: 100%;
 	}
 }
 </style>

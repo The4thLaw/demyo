@@ -20,13 +20,13 @@
 			<v-btn
 				v-if="count > 0"
 				:to="{ name: 'AlbumIndex', query: { withBinding: binding.id } }"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
 				{{ $tc('page.Binding.viewAlbums', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"
-				border="left" type="info" text class="my-4"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Binding.noAlbums') }}
 			</v-alert>
@@ -42,6 +42,7 @@ import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import bindingService from '@/services/binding-service'
 
+// TODO: Vue 3: Try to extract such simple views in a composable (after the appTasks are migrated to teleport)
 export default {
 	name: 'BindingView',
 

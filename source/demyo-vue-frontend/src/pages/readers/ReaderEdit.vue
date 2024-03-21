@@ -13,7 +13,7 @@
 							{{ $t('field.Reader.colour') }}
 						</label>
 						<v-checkbox v-model="noColour" :label="$t('special.form.noColour')" />
-						<v-color-picker v-if="!noColour" v-model="reader.colour" flat />
+						<v-color-picker v-if="!noColour" v-model="reader.colour" />
 					</v-col>
 				</v-row>
 			</SectionCard>

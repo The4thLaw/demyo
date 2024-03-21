@@ -21,17 +21,20 @@
 				{{ meta.series.identifyingName }}
 			</router-link>
 			<v-list density="compact">
+				<!-- eslint complains about a duplicate attribute but it's correct according to the Vuetify docs -->
+				<!-- eslint-disable vue/no-duplicate-attributes -->
 				<v-list-item
 					v-for="album in paginatedItems" :key="album.id"
-					:to="`/albums/${album.id}/view`" :title="album.title"
+					:to="`/albums/${album.id}/view`"
+					:title="album.title" :title.attr="album.title"
 				>
-					<!-- TODO: Vue 3: Test this -->
-					<v-list-item-action v-if="album.wishlist">
-						<v-icon color="grey-lighten-1" size="small">
+					<template v-if="album.wishlist" #append>
+						<v-icon size="small" :title="$t('field.Album.wishlist.value.true')">
 							mdi-gift
 						</v-icon>
-					</v-list-item-action>
+					</template>
 				</v-list-item>
+				<!-- eslint-enable vue/no-duplicate-attributes -->
 				<!--
 					Pad the last page to keep a constant height.
 					If we don't pad and the grid row doesn't have an element that is tall enough, the web page will jump

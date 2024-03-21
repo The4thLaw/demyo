@@ -18,13 +18,13 @@
 					v-model="price.price" :label-key="`field.${modelName}.prices.price`"
 					:rules="rules.prices.price" required @change="emitInput"
 				/>
-				<v-btn icon @click="removePrice(index)">
+				<v-btn icon size="small" variant="flat" @click="removePrice(index)">
 					<v-icon>mdi-minus</v-icon>
 				</v-btn>
 			</v-col>
 		</v-row>
 		<div class="c-PriceManagement__priceAdder">
-			<v-btn icon @click="addPrice">
+			<v-btn icon size="small" variant="flat" @click="addPrice">
 				<v-icon>mdi-plus</v-icon>
 			</v-btn>
 		</div>
@@ -43,7 +43,7 @@ export default {
 	},
 
 	props: {
-		value: {
+		modelValue: {
 			type: null,
 			required: true
 		},
@@ -56,7 +56,7 @@ export default {
 
 	data() {
 		return {
-			inputVal: this.value,
+			inputVal: this.modelValue,
 
 			rules: {
 				prices: {
@@ -68,7 +68,7 @@ export default {
 	},
 
 	watch: {
-		value(val) {
+		modelValue(val) {
 			this.inputVal = val
 		}
 	},
@@ -80,16 +80,16 @@ export default {
 				price: null
 			}
 			this.inputVal.prices.push(newPrice)
-			this.$emit('input', this.inputVal)
+			this.emitInput()
 		},
 
 		removePrice(index) {
 			this.inputVal.prices.splice(index, 1)
-			this.$emit('input', this.inputVal)
+			this.emitInput()
 		},
 
 		emitInput() {
-			this.$emit('input', this.inputVal)
+			this.$emit('update:modelValue', this.inputVal)
 		}
 	}
 }

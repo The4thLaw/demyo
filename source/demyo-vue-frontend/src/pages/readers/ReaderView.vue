@@ -28,13 +28,13 @@
 			</h1>
 			<v-btn
 				:to="`/readers/${reader.id}/favourites`"
-				color="accent" class="my-4 me-4" small outlined
+				color="secondary" class="my-4 me-4" size="small" variant="outlined"
 			>
 				{{ $t('page.Reader.actions.favourites') }}
 			</v-btn>
 			<v-btn
 				:to="`/readers/${reader.id}/readingList`"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
 				{{ $t('page.Reader.actions.readingList') }}
 			</v-btn>

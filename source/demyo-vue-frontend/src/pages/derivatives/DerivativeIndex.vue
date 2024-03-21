@@ -18,52 +18,27 @@
 				</router-link>
 			</template>
 		</GalleryIndex>
-		<v-btn
-			fab to="/derivatives/new" color="accent" fixed
-			bottom right
-		>
-			<v-icon>mdi-plus</v-icon>
-		</v-btn>
+		<Fab to="/derivatives/new" icon="mdi-plus" />
 	</div>
 </template>
 
-<script>
-import GalleryIndex from '@/components/GalleryIndex.vue'
+<script setup>
 import { retrieveFilter } from '@/helpers/filter'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'DerivativeIndex',
+const uiStore = useUiStore()
+const route = useRoute()
 
-	components: {
-		GalleryIndex
-	},
+const derivatives = ref([])
 
-	metaInfo() {
-		return {
-			title: this.$t('title.index.derivative')
-		}
-	},
-
-	data() {
-		return {
-			derivatives: []
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			const uiStore = useUiStore()
-			uiStore.enableGlobalOverlay()
-			const filter = retrieveFilter(this.$route)
-			this.derivatives = await derivativeService.findForIndex(filter)
-			uiStore.disableGlobalOverlay()
-		}
-	}
+async function fetchData() {
+	uiStore.enableGlobalOverlay()
+	const filter = retrieveFilter(route)
+	derivatives.value = await derivativeService.findForIndex(filter)
+	uiStore.disableGlobalOverlay()
 }
+
+fetchData()
 </script>

@@ -132,7 +132,8 @@
 							:label="$t('field.Album.currentEditionDate')"
 						>
 							{{ $d(new Date(album.firstEditionDate), 'long') }}
-							{{ $t(album.markedAsFirstEdition ? 'field.Album.markedAsFirstEdition.view' : 'field.Album.isFirstEdition') }}
+							{{ $t(album.markedAsFirstEdition ?
+								'field.Album.markedAsFirstEdition.view' : 'field.Album.isFirstEdition') }}
 						</FieldValue>
 						<FieldValue v-else :label="$t('field.Album.firstEditionDate')">
 							{{ $d(new Date(album.firstEditionDate), 'long') }}
@@ -266,12 +267,7 @@
 			</GalleryIndex>
 		</SectionCard>
 
-		<v-btn
-			v-if="isInReadingList" fab color="accent" fixed
-			bottom right @click="markAsRead"
-		>
-			<v-icon>mdi-library dem-overlay-check</v-icon>
-		</v-btn>
+		<Fab v-if="isInReadingList" icon="mdi-library dem-overlay-check" @click="markAsRead" />
 	</v-container>
 </template>
 
@@ -342,11 +338,11 @@ export default {
 
 	computed: {
 		hasAuthors() {
-			return this.album.writers?.length ||
-				this.album.artists?.length ||
-				this.album.colorists?.length ||
-				this.album.inkers?.length ||
-				this.album.translators?.length
+			return this.album.writers?.length
+				|| this.album.artists?.length
+				|| this.album.colorists?.length
+				|| this.album.inkers?.length
+				|| this.album.translators?.length
 		},
 
 		hasPrices() {

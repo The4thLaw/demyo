@@ -3,38 +3,34 @@
 		:class="{ 'c-PublisherCard__noCollections': !hasCollections }"
 		:flat="true" :hover="true" class="c-PublisherCard"
 	>
-		<template>
-			<router-link
-				v-ripple :to="`/publishers/${publisher.id}/view` "
-				class="c-PublisherCard__title" role="heading" arial-level="3"
-			>
-				{{ publisher.identifyingName }}
-			</router-link>
-			<v-list v-if="hasCollections" dense>
-				<v-list-item
-					v-for="collection in paginatedItems"
-					:key="collection.id" :to="`/collections/${collection.id}/view`"
-				>
-					<v-list-item-content>
-						<v-list-item-title :title="collection.identifyingName">
-							{{ collection.identifyingName }}
-						</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-				<!--
-					Pad the last page to keep a constant height.
-					If we don't pad and the grid row doesn't have an element that is tall enough, the web page will jump
-					when we reach the last item page (e.g. it's suddenly 1 item long and needs a lot less space).
-				-->
-				<template v-if="pageCount > 1 && !hasNextPage">
-					<v-list-item v-for="pad in (itemsPerPage - paginatedItems.length)" :key="pad" />
-				</template>
-				<ItemCardPagination
-					:page-count="pageCount" :has-previous-page="hasPreviousPage"
-					:has-next-page="hasNextPage" @prev-page="previousPage" @next-page="nextPage"
-				/>
-			</v-list>
-		</template>
+		<router-link
+			v-ripple :to="`/publishers/${publisher.id}/view` "
+			class="c-PublisherCard__title" role="heading" arial-level="3"
+		>
+			{{ publisher.identifyingName }}
+		</router-link>
+		<v-list v-if="hasCollections" density="compact">
+			<!-- eslint complains about a duplicate attribute but it's correct according to the Vuetify docs -->
+			<!-- eslint-disable vue/no-duplicate-attributes -->
+			<v-list-item
+				v-for="collection in paginatedItems"
+				:key="collection.id" :to="`/collections/${collection.id}/view`"
+				:title="collection.identifyingName" :title.attr="collection.identifyingName"
+			/>
+			<!-- eslint-enable vue/no-duplicate-attributes -->
+			<!--
+				Pad the last page to keep a constant height.
+				If we don't pad and the grid row doesn't have an element that is tall enough, the web page will jump
+				when we reach the last item page (e.g. it's suddenly 1 item long and needs a lot less space).
+			-->
+			<template v-if="pageCount > 1 && !hasNextPage">
+				<v-list-item v-for="pad in (itemsPerPage - paginatedItems.length)" :key="pad" />
+			</template>
+			<ItemCardPagination
+				:page-count="pageCount" :has-previous-page="hasPreviousPage"
+				:has-next-page="hasNextPage" @prev-page="previousPage" @next-page="nextPage"
+			/>
+		</v-list>
 	</v-card>
 </template>
 

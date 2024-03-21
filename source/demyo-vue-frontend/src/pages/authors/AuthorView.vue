@@ -32,20 +32,20 @@
 			</FieldValue>
 			<v-alert
 				v-if="!albumsLoading && albums.length == 0"
-				border="left" type="info" text class="my-4"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Author.noAlbums') }}
 			</v-alert>
 			<v-btn
 				v-if="count > 0"
 				:to="{ name: 'DerivativeIndex', query: { withArtist: author.id } }"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
 				{{ $tc('page.Author.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"
-				border="left" type="info" text class="my-4"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Author.noDerivatives') }}
 			</v-alert>
@@ -101,6 +101,7 @@ export default {
 			albumsLoading: true,
 			author: {},
 			authorAlbums: {},
+			foo: [],
 			count: -1,
 			appTasksMenu: false
 		}
@@ -145,7 +146,11 @@ export default {
 			this.author = await authorService.findById(this.parsedId)
 			this.mainLoading = false
 
-			this.authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
+			const authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
+			console.log('XXX', JSON.parse(JSON.stringify(authorAlbums)))
+			this.authorAlbums = ref(JSON.parse(JSON.stringify(authorAlbums)))
+			// For some reason in Vue 3 we need to precompute the album list
+			this.foo = ref(JSON.parse(JSON.stringify(authorAlbums.albums)))
 			this.albumsLoading = false
 
 			this.count = await countP

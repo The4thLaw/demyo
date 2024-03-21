@@ -115,17 +115,19 @@
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
-							:readonly="album.markedAsFirstEdition" @change="adjustEditionDates"
+							:readonly="album.markedAsFirstEdition" @update:modelValue="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-checkbox
 							v-model="album.markedAsFirstEdition" :label="$t('field.Album.markedAsFirstEdition.edit')"
-							@change="adjustEditionDates"
+							@update:modelValue="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date" />
+						<v-text-field
+							v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date"
+						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
@@ -194,17 +196,24 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Album.summary') }}</label>
+						<!--
+						TODO: Vue 3: restore this
 						<tiptap-vuetify
 							v-model="album.summary" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
 						/>
+						-->
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Album.comment') }}</label>
+						<!--
+						TODO: Vue 3: restore this
+
 						<tiptap-vuetify
 							v-model="album.comment" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
 						/>
+						-->
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -333,8 +342,8 @@ export default {
 			this.loadCollections()
 
 			// Check the edition dates
-			this.sameEditionDates = this.album.firstEditionDate &&
-				this.album.firstEditionDate === this.album.currentEditionDate
+			this.sameEditionDates = this.album.firstEditionDate
+				&& this.album.firstEditionDate === this.album.currentEditionDate
 
 			// Assign all reference data
 			this.allBindings = await pBindings
