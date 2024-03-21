@@ -69,7 +69,6 @@
 					<div v-html="series.comment" />
 				</FieldValue>
 			</div>
-			{{ $vuetify.theme['current'] }}
 		</SectionCard>
 
 		<SectionCard

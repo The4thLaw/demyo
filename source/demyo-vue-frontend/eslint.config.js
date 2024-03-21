@@ -107,7 +107,9 @@ export default [
 			'vue/max-attributes-per-line': ['error', {
 				singleline: 4,
 				multiline: 4
-			}]
+			}],
+			// Vuetify uses them
+			'vue/no-v-model-argument': 'off'
 		}
 	},
 

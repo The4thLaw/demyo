@@ -7,7 +7,7 @@
 	>
 		<text
 			x="50%" y="55%" text-anchor="middle" dominant-baseline="central"
-			style="fill: rgba(255, 255, 255, 0.7); font-family: sans-serif; font-size: 15px;"
+			style="fill: rgba(255 255 255 / 70%); font-family: sans-serif; font-size: 15px;"
 		>
 			{{ letter }}
 		</text>

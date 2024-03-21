@@ -19,7 +19,7 @@ import service from '@/services/management-service'
 import { useUiStore } from '@/stores/ui'
 
 export default {
-	name: 'Import',
+	name: 'ImportPage',
 
 	components: {
 		FormActions,
