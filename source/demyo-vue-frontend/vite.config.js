@@ -58,25 +58,11 @@ export default ({ mode }) => {
 			alias: {
 				'@': path.resolve(__dirname, './src'),
 				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js'
-				// TODO: Vue 3: remove this
-				// vue: '@vue/compat'
 			}
 		},
 
 		plugins: [
-			vue(
-				// TODO: Vue 3: remove this
-				/*
-				{
-				template: {
-					compilerOptions: {
-						compatConfig: {
-							MODE: 3
-						}
-					}
-				}
-			}
-			*/),
+			vue(),
 			vuetify(),
 			autoComponents(),
 			autoImport({
