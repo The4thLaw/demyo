@@ -12,6 +12,7 @@ const demyoTheme = {
 		background: '#eee',
 		primary: colors.blue.base,
 		secondary: colors.pink.base
+		// TODO: Vue 3: search for usages of the "accent" color
 	}
 }
 
@@ -33,7 +34,12 @@ const vuetify = createVuetify({
 		}
 	},
 	// Set some defaults for components to keep the Demyo 2 style that we like
+	// TODO: Vue 3: migrate to the prop for v-icon
 	defaults: {
+		VAutocomplete: {
+			color: 'primary',
+			variant: 'underlined'
+		},
 		VCheckbox: {
 			color: 'primary'
 		},

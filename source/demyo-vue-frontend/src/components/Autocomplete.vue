@@ -1,21 +1,20 @@
 <template>
 	<v-autocomplete
 		v-model="inputVal"
+		v-model:search="search"
 		v-bind="$attrs"
 		:label="$tc(labelKey, multiple ? 2 : 1)"
-		item-text="identifyingName"
+		item-title="identifyingName"
 		item-value="id"
-		menu-props="allowOverflow"
 		:multiple="multiple"
 		:chips="multiple"
-		:deletable-chips="multiple"
+		:closable-chips="multiple"
 		:loading="loading ? 'primary' : false"
 		:no-data-text="$t('core.components.Autocomplete.nodata')"
-		:search-input.sync="search"
-		@input="search = ''"
+		@update:modelValue="onUpdateSelection"
 	>
-		<template v-if="refreshable" #append-outer>
-			<v-btn icon small @click.stop="$emit('refresh')">
+		<template v-if="refreshable" #append>
+			<v-btn icon size="small" variant="flat" @click.stop="$emit('refresh')">
 				<v-icon>mdi-refresh</v-icon>
 			</v-btn>
 		</template>
@@ -58,18 +57,14 @@ export default {
 	data() {
 		return {
 			inputVal: this.value,
-			// See https://stackoverflow.com/a/55809183/109813
 			search: ''
 		}
 	},
 
-	watch: {
-		value(val) {
-			this.inputVal = val
-		},
-
-		inputVal(val) {
-			this.$emit('input', val)
+	methods: {
+		onUpdateSelection() {
+			this.$emit('update:modelValue', this.inputVal)
+			this.search = ''
 		}
 	}
 }
