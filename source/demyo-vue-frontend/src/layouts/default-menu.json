@@ -1,7 +1,6 @@
 [
 	{
 		"title": "menu.section.view",
-		"active": true,
 		"subItems": [
 			{
 				"title": "menu.albums.browse",

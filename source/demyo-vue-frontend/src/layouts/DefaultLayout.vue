@@ -11,8 +11,8 @@
 
 		<!-- Once https://github.com/vuetifyjs/vuetify/issues/16150 is resolved, switch back to 20em -->
 		<v-navigation-drawer v-model="mainMenu" width="320" temporary>
-			<v-list class="l-DefaultLayout__menuList">
-				<v-list-group v-if="readerLoaded">
+			<v-list :opened="['menu.section.view']" class="l-DefaultLayout__menuList">
+				<v-list-group v-if="readerLoaded" value="Reader" color="primary">
 					<template #activator="{ props }">
 						<v-list-item v-bind="props" :title="currentReader.identifyingName">
 							<template #prepend>
@@ -57,7 +57,9 @@
 
 				<v-list-item to="/" prepend-icon="mdi-home" :title="$t('menu.main.home')" />
 
-				<v-list-group v-for="section in menuItems" :key="section.title" v-model="section.active">
+				<v-list-group
+					v-for="section in menuItems" :key="section.title" :value="section.title" color="primary"
+				>
 					<template #activator="{ props }">
 						<v-list-item v-bind="props" :title="$t(section.title)" />
 					</template>
@@ -184,11 +186,6 @@ export default {
 			// Route changed, clear the quick search and collapse the field
 			this.clearSearch()
 			this.blur()
-			// Restore the menu
-			this.menuItems[0].active = true
-			for (let i = 1; i < this.menuItems.length; i++) {
-				this.menuItems[i].active = false
-			}
 		}
 	},
 
@@ -287,6 +284,10 @@ html[lang],
 	text-decoration: none;
 	text-decoration-skip-ink: all;
 
+	&:hover {
+		color: rgb(var(--v-theme-secondary));
+	}
+
 	&:not(.v-btn):hover {
 		text-decoration: underline;
 	}
@@ -318,9 +319,9 @@ html[lang],
 	flex: 0;
 }
 
-#demyo .v-input--is-readonly:not(.v-input--is-disabled) input,
-#demyo .v-input--checkbox.v-input--is-readonly:not(.v-input--is-disabled) label {
-	color: var(--dem-bg-contrast);
+#demyo .v-input--readonly:not(.v-input--disabled) input,
+#demyo .v-input--checkbox.v-input--readonly:not(.v-input--disabled) label {
+	color: rgba(var(--v-theme-on-background), var(--v-disabled-opacity));
 }
 
 .dem-columnized {
@@ -459,12 +460,12 @@ html[lang],
 		}
 	}
 
-	.v-btn.accent {
+	.v-btn.bg-secondary {
 		.v-icon.dem-overlay-add::after,
 		.v-icon.dem-overlay-edit::after,
 		.v-icon.dem-overlay-delete::after,
 		.v-icon.dem-overlay-check::after {
-			--icon-outline-color: var(--v-accent-base);
+			--icon-outline-color: rgb(var(--v-theme-secondary));
 		}
 	}
 }
