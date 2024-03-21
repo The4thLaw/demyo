@@ -78,11 +78,11 @@
 			<v-card-actions>
 				<v-spacer />
 
-				<v-btn color="accent" @click="save">
+				<v-btn color="secondary" variant="elevated" @click="save">
 					{{ $t('draganddrop.button.confirm') }}
 				</v-btn>
 
-				<v-btn color="primary" text @click="cancel">
+				<v-btn color="primary" variant="text" @click="cancel">
 					{{ $t('draganddrop.button.cancel') }}
 				</v-btn>
 			</v-card-actions>
@@ -91,17 +91,18 @@
 </template>
 
 <script>
+import FilePond from '@/helpers/filepond'
 import { apiRoot } from '@/myenv'
 
 export default {
 	name: 'DnDImage',
 
 	components: {
-		FilePond: () => import('@/helpers/filepond')
+		FilePond
 	},
 
 	props: {
-		value: {
+		modelValue: {
 			type: Boolean,
 			default: false
 		},
@@ -117,7 +118,7 @@ export default {
 
 	data() {
 		return {
-			inputVal: this.value,
+			inputVal: this.modelValue,
 			serverConfig: {
 				process: apiRoot + 'filepond/process',
 				revert: apiRoot + 'filepond/revert'
@@ -132,12 +133,12 @@ export default {
 		component re-renders.
 		Instead, use a data or computed property based on the prop's value. Prop being mutated: "value"
 		*/
-		value(val) {
+		modelValue(val) {
 			this.inputVal = val
 		},
 
 		inputVal(val) {
-			this.$emit('input', val)
+			this.$emit('update:modelValue', val)
 		}
 	},
 
