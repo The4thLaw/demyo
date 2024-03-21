@@ -16,7 +16,7 @@ export default {
 	name: 'AppTasks',
 
 	props: {
-		value: {
+		modelValue: {
 			type: Boolean,
 			default: false
 		}
@@ -24,17 +24,17 @@ export default {
 
 	data() {
 		return {
-			inputVal: this.value
+			inputVal: this.modelValue
 		}
 	},
 
 	watch: {
-		value(val) {
+		modelValue(val) {
 			this.inputVal = val
 		},
 
 		inputVal(val) {
-			this.$emit('input', val)
+			this.$emit('update:modelValue', val)
 		}
 	}
 }
