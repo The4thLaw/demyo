@@ -19,8 +19,12 @@
 						(so that the height is reduced as well)
 					- Be nice on HiDPI and LoDPI screens
 				-->
-				<!-- TODO: Vue 3: Equivalent for v-img="{src: baseImageUrl}" -->
 				<img
+					v-fullscreen-image="{
+						imageUrl: baseImageUrl,
+						withDownload: false,
+						maxHeight: '100vh'
+					}"
 					:src="`${baseImageUrl}?w=200`"
 					:srcset="`
 						${baseImageUrl}?w=200 200w,
@@ -77,6 +81,7 @@ export default {
 	},
 
 	computed: {
+
 		hasImage() {
 			return this.image && this.image.id
 		},

@@ -30,6 +30,7 @@
     "roboto-fontface": "^0.10.0",
     "tiny-async-pool": "^2.1.0",
     "vue": "^3.4.21",
+    "vue-3-fullscreen-image-directive-plugin": "^1.0.4",
     "vue-filepond": "^7.0.4",
     "vue-i18n": "^9.10.1",
     "vue-router": "^4.3.0",

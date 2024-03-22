@@ -12,10 +12,13 @@
 	>
 		<div class="c-GalleryIndex__list">
 			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image" :border="bordered">
-				<!-- TODO: Vue 3: equivalent for
-					v-img:group="{src: item.baseImageUrl, opened: vimgOpen, closed: vimgClosed}" -->
 				<img
 					v-if="item.baseImageUrl"
+					v-fullscreen-image="{
+						imageUrl: item.baseImageUrl,
+						withDownload: false,
+						maxHeight: '100vh'
+					}"
 					:src="`${item.baseImageUrl}?w=250`"
 					:srcset="`
 						${item.baseImageUrl}?w=250 1x,
@@ -75,7 +78,8 @@ export default {
 
 	data() {
 		return {
-			vimg: false,
+			lightboxOpened: false,
+			observer: null,
 			currentPage: 1
 		}
 	},
@@ -117,15 +121,46 @@ export default {
 			// page but causes issues once it's further down, like in the AlbumView
 			focusElement(this.$refs.keyTarget)
 		}
+
+		// Monitor the lightbox plugin DOM since we
+		const targetNode = document.getElementById('demyo')
+		const callback = (mutationList, observer) => {
+			for (const mutation of mutationList) {
+				if (mutation.type === 'childList') {
+					if ([...mutation.addedNodes].some(n => n.classList?.contains('fullscreen-image'))) {
+						this.onLightboxOpen()
+					}
+					if ([...mutation.removedNodes].some(n => n?.classList?.contains('fullscreen-image'))) {
+						this.onLightboxClose()
+					}
+				} else if (mutation.type === 'attributes') {
+					// Sometimes we don't catch the removal
+					if (mutation.target.matches('.fullscreen-image.fade-leave-active')) {
+						this.onLightboxClose()
+					}
+				}
+			}
+		}
+		this.observer = new MutationObserver(callback)
+		this.observer.observe(targetNode, { attributes: true, childList: true, subtree: true })
+	},
+
+	unmounted() {
+		this.observer.disconnect()
+		this.observer = null
 	},
 
 	methods: {
-		vimgOpen() {
-			this.vimg = true
+		onLightboxOpen() {
+			this.lightboxOpened = true
 		},
 
-		vimgClosed() {
-			this.vimg = false
+		onLightboxClose() {
+			if (!this.lightboxOpened) {
+				// Don't trigger twice
+				return
+			}
+			this.lightboxOpened = false
 			// Refocus to allow keyboard navigation again
 			focusElement(this.$refs.keyTarget)
 		},
@@ -157,7 +192,6 @@ export default {
 				// v-img is active, don't do anything
 				return
 			}
-			console.log('do')
 			if (this.currentPage < this.pageCount) {
 				this.currentPage++
 			}

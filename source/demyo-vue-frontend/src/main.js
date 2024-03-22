@@ -2,9 +2,11 @@ import '@mdi/font/css/materialdesignicons.css'
 import portalVue from 'portal-vue'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import { createApp } from 'vue'
+// From https://gitlab.com/totol.toolsuite/vue-3-fullscreen-image
+import { fullscreenImagePlugin } from 'vue-3-fullscreen-image-directive-plugin'
+import 'vue-3-fullscreen-image-directive-plugin/style.css'
 import App from './App.vue'
 import i18n from './i18n'
-import './plugins/vimg.js'
 import vuetify from './plugins/vuetify'
 import router from './router'
 import readerService from './services/reader-service'
@@ -25,8 +27,10 @@ app.mixin({
 
 app.use(router)
 app.use(i18n)
+// TODO: Vue 3: migrate to teleport (?)
 app.use(portalVue)
 app.use(vuetify)
+app.use(fullscreenImagePlugin)
 
 // Add the ID to the body element to ease style overrides
 document.getElementsByTagName('body')[0].id = 'demyo'
