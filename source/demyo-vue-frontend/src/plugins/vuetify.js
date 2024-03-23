@@ -12,7 +12,6 @@ const demyoTheme = {
 		background: '#eee',
 		primary: colors.blue.base,
 		secondary: colors.pink.base
-		// TODO: Vue 3: search for usages of the "accent" color
 	}
 }
 
@@ -43,12 +42,20 @@ const vuetify = createVuetify({
 		VCheckbox: {
 			color: 'primary'
 		},
+		VFileInput: {
+			color: 'primary',
+			variant: 'underlined'
+		},
 		VPagination: {
 			variant: 'flat',
 			activeColor: 'primary',
 			rounded: 'circle',
 			totalVisible: 8,
 			class: 'my-4'
+		},
+		VSelect: {
+			color: 'primary',
+			variant: 'underlined'
 		},
 		VTextField: {
 			color: 'primary',
