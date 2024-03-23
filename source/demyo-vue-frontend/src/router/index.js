@@ -16,7 +16,7 @@ import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
 
-// TODO: Vue3: restore equivalent to vue-meta
+// TODO: Vue 3: restore equivalent to vue-meta
 
 const routes = [
 	{
@@ -40,9 +40,6 @@ const routes = [
 	{
 		path: '/about',
 		name: 'about',
-		// route level code-splitting
-		// this generates a separate chunk (manage.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
 		component: () => import('@/pages/About.vue')
 	}
 ]

@@ -7,6 +7,8 @@ import autoComponents from 'unplugin-vue-components/vite'
 import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 
+// TODO: Vue 3: add support for TypeScript
+
 export default ({ mode }) => {
 	return defineConfig({
 		server: {
