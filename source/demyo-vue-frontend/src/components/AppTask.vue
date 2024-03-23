@@ -17,7 +17,7 @@
 				<v-card-actions>
 					<v-spacer />
 
-					<v-btn color="secondary" variant="elevated" @click="confirmationDialog = false; $emit('confirm')">
+					<v-btn color="secondary" class="c-AppTask__confirm" variant="elevated" @click="confirmationDialog = false; $emit('confirm')">
 						{{ $t('quickTasks.confirm.ok.label') }}
 					</v-btn>
 

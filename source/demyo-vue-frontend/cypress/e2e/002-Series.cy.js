@@ -16,7 +16,7 @@ describe('Series', () => {
 		cy.visit('/series/2/view')
 		cy.openQuickTasks()
 		cy.contains('Delete this series').click()
-		cy.get('.v-dialog .v-btn.accent').click()
+		cy.get('.c-AppTask__confirm').click()
 		cy.url().should('match', /series$/)
 		cy.contains('Empty series').should('not.exist')
 	})
