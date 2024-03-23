@@ -5,7 +5,7 @@
 		</SectionCard>
 
 		<FormActions>
-			<v-btn color="accent" @click="doImport">
+			<v-btn color="secondary" @click="doImport">
 				{{ $t('button.import') }}
 			</v-btn>
 		</FormActions>

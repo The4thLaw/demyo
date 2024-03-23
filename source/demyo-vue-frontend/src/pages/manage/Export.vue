@@ -5,7 +5,7 @@
 			<v-checkbox v-model="withResources" :label="$t('field.manage.export.withResources.edit')" />
 		</SectionCard>
 		<FormActions>
-			<v-btn color="accent" @click="doExport">
+			<v-btn color="secondary" @click="doExport">
 				{{ $t('button.export') }}
 			</v-btn>
 		</FormActions>
@@ -41,7 +41,7 @@ export default {
 			format: 'XML',
 			formats: [
 				{
-					text: 'Demyo 2',
+					title: 'Demyo 2',
 					value: 'XML'
 				}
 			],
