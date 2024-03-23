@@ -95,7 +95,7 @@ export default {
 			this.languages = languageCodes.map(c => {
 				return {
 					value: c,
-					text: this.$t(`core.language.${c}`)
+					title: this.$t(`core.language.${c}`)
 				}
 			})
 		},

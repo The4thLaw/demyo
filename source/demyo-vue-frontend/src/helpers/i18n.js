@@ -1,6 +1,6 @@
+import i18n from '@/i18n'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import rawCurrencyMap from 'currency-symbol-map/map'
-import i18n from '@/i18n'
 
 // Process the currency map to show displayable values
 const processedCurrencyList = []
@@ -12,7 +12,7 @@ for (const key in rawCurrencyMap) {
 
 	processedCurrencyList.push({
 		value: key,
-		text: val
+		title: val
 	})
 }
 export const currencyList = processedCurrencyList
