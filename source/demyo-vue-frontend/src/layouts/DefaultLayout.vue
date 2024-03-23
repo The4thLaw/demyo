@@ -73,7 +73,7 @@
 				</v-list-group>
 			</v-list>
 		</v-navigation-drawer>
-		<v-app-bar color="primary">
+		<v-app-bar color="primary" class="pe-4">
 			<v-app-bar-nav-icon @click.stop="mainMenu = !mainMenu" />
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
