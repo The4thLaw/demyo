@@ -6,7 +6,7 @@ export const useUiStore = defineStore('ui', {
 		suppressSearch: false,
 		globalOverlay: false,
 		displaySnackbar: false,
-		snackbarMessages: [],
+		snackbarMessages: [] as string[],
 		displayDetailsPane: false
 	}),
 
@@ -27,7 +27,7 @@ export const useUiStore = defineStore('ui', {
 			this.globalOverlay = false
 		},
 
-		showSnackbar(message) {
+		showSnackbar(message: string) {
 			this.snackbarMessages.push(message)
 			if (!this.displaySnackbar) {
 				this.displaySnackbar = true
