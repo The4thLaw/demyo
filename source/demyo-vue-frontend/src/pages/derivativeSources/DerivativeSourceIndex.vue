@@ -14,7 +14,6 @@
 </template>
 
 <script setup>
-import TextIndex from '@/components/TextIndex.vue'
 import { useSimpleIndex } from '@/composables/model-index'
 import sourceService from '@/services/derivative-source-service'
 
