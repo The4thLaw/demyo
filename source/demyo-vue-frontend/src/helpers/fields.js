@@ -1,7 +1,7 @@
 import sortBy from 'lodash/sortBy'
 import uniqBy from 'lodash/uniqBy'
 
-// TODO: Vue 3
+// TODO: Vue 3: rich text
 /*
 import {
 	Blockquote,

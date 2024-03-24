@@ -36,7 +36,7 @@
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Series.summary') }}</label>
 						<!--
-						TODO: Vue 3: restore this
+						TODO: Vue 3: restore RTE
 						<tiptap-vuetify
 							v-model="series.summary" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
@@ -46,7 +46,7 @@
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Series.comment') }}</label>
 						<!--
-						TODO: Vue 3: restore this
+						TODO: Vue 3: restore RTE
 						<tiptap-vuetify
 							v-model="series.comment" :extensions="tipTapExtensions"
 							:card-props="{ outlined: true }"
