@@ -61,8 +61,7 @@ export default {
 	h1 &,
 	h2 &,
 	h3 & {
-		// TODO: Vue 3: Is this still used?
-		// Avoid overflows in titles
+		// Avoid overflows in titles containing tags
 		white-space: initial;
 		line-height: 100%;
 	}
