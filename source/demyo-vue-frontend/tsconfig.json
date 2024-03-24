@@ -17,6 +17,7 @@
 
     /* Linting */
     "strict": true,
+    /* See https://github.com/vuejs/language-tools/issues/47 */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
