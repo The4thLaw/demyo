@@ -4,12 +4,10 @@ import * as path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import autoImport from 'unplugin-auto-import/vite'
 import autoComponents from 'unplugin-vue-components/vite'
-import { defineConfig } from 'vite'
+import { ConfigEnv, defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 
-// TODO: Vue 3: add support for TypeScript
-
-export default ({ mode }) => {
+export default ({ mode }: ConfigEnv) => {
 	return defineConfig({
 		server: {
 			proxy: {

@@ -36,8 +36,15 @@ export default [
 		files: [
 			'**/*.js',
 			'**/*.cjs',
+			'**/*.ts',
 			'**/*.mjs',
 			'**/*.vue'
+		],
+
+		ignores: [
+			// Generated files
+			'auto-imports.d.ts',
+			'components.d.ts'
 		],
 
 		languageOptions: {
