@@ -4,7 +4,7 @@ import { axiosGet } from '@/helpers/axios'
  * Service to manage parameters for the "about" page.
  */
 class AboutService {
-	getEnvironment(id) {
+	getEnvironment() {
 		return axiosGet('about/environment', {})
 	}
 }

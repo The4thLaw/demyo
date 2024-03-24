@@ -4,7 +4,10 @@
 			<v-btn color="secondary" class="c-FormActions__submit" type="submit" @click.prevent="$emit('save')">
 				{{ $t('button.save') }}
 			</v-btn>
-			<v-btn v-if="showReset" class="c-FormActions__reset" variant="text" color="primary" @click="$emit('reset')">
+			<v-btn
+				v-if="showReset" class="c-FormActions__reset" variant="text" color="primary"
+				@click="$emit('reset')"
+			>
 				{{ $t('button.reset') }}
 			</v-btn>
 			<v-btn v-if="showBack" variant="text" color="primary" @click="$router.go(-1)">

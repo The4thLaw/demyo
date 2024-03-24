@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 // This file follows the guide from
 // https://vue-test-utils.vuejs.org/installation/#using-vue-test-utils-with-jest-recommended
 module.exports = {
