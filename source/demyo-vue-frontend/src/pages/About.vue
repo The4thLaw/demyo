@@ -164,7 +164,7 @@ import libs from '@/assets/about-libs.json'
 import { demyoCodename, demyoVersion } from '@/myenv'
 import aboutService from '@/services/about-service'
 
-const userAgent = navigator.userAgent
+const { userAgent } = navigator
 
 const env = ref({});
 

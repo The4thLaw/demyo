@@ -186,7 +186,7 @@ export default {
 		},
 
 		eagerCovers() {
-			return !(navigator.connection && navigator.connection.saveData)
+			return !(navigator.connection?.saveData)
 		},
 
 		...mapState(useReaderStore, {

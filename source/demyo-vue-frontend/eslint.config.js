@@ -74,8 +74,22 @@ const commonRules = {
 		multiline: 4
 	}],
 	// Vuetify uses them
-	'vue/no-v-model-argument': 'off'
+	'vue/no-v-model-argument': 'off',
+
+	// TypeScript tweaks
+	'@typescript-eslint/prefer-destructuring': ['error', { array: false }],
+	// TypeScript warnings we don't really care about
+	'@typescript-eslint/no-confusing-void-expression': 'off',
+	'@typescript-eslint/no-magic-numbers': 'off',
+	'@typescript-eslint/prefer-readonly-parameter-types': 'off',
+	'@typescript-eslint/init-declarations': 'off'
 }
+
+const allTsRules = tseslint.configs.all
+	.flatMap(c => Object.keys(c.rules || {}))
+	.filter(r => r.startsWith('@typescript-eslint'))
+const tsRulesOff = {}
+allTsRules.forEach(r => { tsRulesOff[r] = 'off' })
 
 export default [
 	{
@@ -90,7 +104,7 @@ export default [
 	},
 
 	js.configs.recommended,
-	...tseslint.configs.recommended,
+	...tseslint.configs.all,
 	// See https://github.com/vuejs/eslint-plugin-vue/issues/1291
 	...compat.extends('plugin:vue/essential'),
 	...compat.extends('plugin:vue/recommended'),
@@ -102,11 +116,11 @@ export default [
 	...compat.extends('@vue/standard'),
 	...compat.extends('plugin:you-dont-need-lodash-underscore/all'),
 
+	// The following features a super convoluted way of tailoring the TypeScript rules to specific cases
 	{
 		files: [
 			'**/*.js',
 			'**/*.cjs',
-			'**/*.ts',
 			'**/*.mjs'
 		],
 
@@ -115,8 +129,45 @@ export default [
 				...globals.browser,
 				// Vue + unplugin-auto-import
 				ref: false
+			}
+		},
+
+		rules: {
+			...commonRules,
+			...tsRulesOff
+		}
+	},
+
+	{
+		files: [
+			'**/*.ts'
+		],
+
+		languageOptions: {
+			globals: {
+				...globals.browser,
+				// Vue + unplugin-auto-import
+				ref: false
 			},
-			parser: tsParser
+			parser: tsParser,
+			parserOptions: {
+				project: './tsconfig.json'
+			}
+		},
+
+		rules: commonRules
+	},
+
+	{
+		files: [
+			'*.ts'
+		],
+
+		languageOptions: {
+			parser: tsParser,
+			parserOptions: {
+				project: './tsconfig.node.json'
+			}
 		},
 
 		rules: commonRules
@@ -135,11 +186,12 @@ export default [
 				computed: false,
 				useSlots: false
 			},
-			//
 			parser: vueParser,
 			parserOptions: {
 				// See https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
-				parser: tsParser
+				parser: tsParser,
+				project: './tsconfig.json',
+				extraFileExtensions: ['.vue']
 			}
 		},
 
@@ -149,7 +201,21 @@ export default [
 			'no-unused-vars': 'off',
 			'@typescript-eslint/no-unused-vars': 'off',
 			// Broken in conjunction with tsParser
-			'vue/valid-v-for': 'off'
+			'vue/valid-v-for': 'off',
+			// These are irrelevant for Vue SFC's, not working properly, or very cumbersome
+			'@typescript-eslint/naming-convention': 'off',
+			'@typescript-eslint/unbound-method': 'off',
+			'@typescript-eslint/no-unnecessary-condition': 'off',
+			// TODO: enable some of these little by little
+			'@typescript-eslint/no-unsafe-assignment': 'off',
+			'@typescript-eslint/explicit-function-return-type': 'off',
+			'@typescript-eslint/no-unsafe-member-access': 'off',
+			// For this one, maybe allow some cases, like nullable strings?
+			'@typescript-eslint/strict-boolean-expressions': 'off',
+			'@typescript-eslint/explicit-module-boundary-types': 'off',
+			'@typescript-eslint/no-unsafe-call': 'off',
+			'@typescript-eslint/no-unsafe-return': 'off',
+			'@typescript-eslint/no-unsafe-argument': 'off'
 		}
 	},
 

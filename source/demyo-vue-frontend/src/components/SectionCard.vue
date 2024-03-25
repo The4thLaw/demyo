@@ -83,7 +83,7 @@ export default {
 	computed: {
 
 		hasImage() {
-			return this.image && this.image.id
+			return this.image?.id
 		},
 
 		baseImageUrl() {

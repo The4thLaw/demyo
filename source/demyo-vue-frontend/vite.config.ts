@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import * as path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import autoImport from 'unplugin-auto-import/vite'
 import autoComponents from 'unplugin-vue-components/vite'
-import { ConfigEnv, defineConfig } from 'vite'
+import type { ConfigEnv } from 'vite'
+import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 
 export default ({ mode }: ConfigEnv) => {

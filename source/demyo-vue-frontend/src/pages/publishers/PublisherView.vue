@@ -108,7 +108,7 @@ export default {
 
 	computed: {
 		collectionCount() {
-			if (!this.publisher || !this.publisher.collections) {
+			if (!this.publisher?.collections) {
 				return 0
 			}
 
