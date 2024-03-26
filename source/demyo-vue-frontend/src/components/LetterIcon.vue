@@ -35,9 +35,7 @@ export default {
 			if (this.color) {
 				return this.color
 			}
-			return this.$vuetify.theme.isDark
-				? this.$vuetify.theme.themes.dark.primary.base
-				: this.$vuetify.theme.themes.light.primary.base
+			return this.$vuetify.theme.current.colors.primary
 		}
 	}
 

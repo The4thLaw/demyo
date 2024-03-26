@@ -1,6 +1,7 @@
 <template>
 	<v-btn
 		v-if="initialized" icon :loading="loading"
+		variant="flat" color="primary"
 		v-bind="$attrs" @click="toggle"
 	>
 		<v-icon v-if="isFavourite">
