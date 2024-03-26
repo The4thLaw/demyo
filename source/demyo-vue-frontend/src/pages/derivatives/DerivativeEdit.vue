@@ -4,26 +4,26 @@
 			<SectionCard :subtitle="$t('fieldset.Derivative.origin')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
 							clearable :rules="rules.albumOrSeries" @input="loadAlbums(); $refs.form.validate()"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
 							label-key="field.Derivative.album" refreshable clearable
 							:rules="rules.albumOrSeries" @input="$refs.form.validate()" @refresh="loadAlbums"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.artist.id" :items="allAuthors" :loading="allAuthorsLoading"
 							label-key="field.Derivative.artist" refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.source.id" :items="allSources" label-key="field.Derivative.source"
 						/>
 					</v-col>
@@ -33,7 +33,7 @@
 			<SectionCard :subtitle="$t('fieldset.Derivative.format')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.type.id" :items="allTypes"
 							label-key="field.Derivative.type" :rules="rules.type"
 						/>
@@ -102,7 +102,7 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.images" :items="allImages" :loading="allImagesLoading"
 							multiple clearable
 							label-key="field.Derivative.images" refreshable @refresh="refreshImages"
@@ -130,7 +130,6 @@
 </template>
 
 <script>
-import Autocomplete from '@/components/Autocomplete.vue'
 import CurrencyField from '@/components/CurrencyField.vue'
 import FormActions from '@/components/FormActions.vue'
 import PriceManagement from '@/components/PriceManagement.vue'
@@ -149,7 +148,6 @@ export default {
 	name: 'DerivativeEdit',
 
 	components: {
-		Autocomplete,
 		CurrencyField,
 		FormActions,
 		PriceManagement,

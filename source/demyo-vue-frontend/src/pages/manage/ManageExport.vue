@@ -23,7 +23,7 @@ import SectionCard from '@/components/SectionCard.vue'
 import { apiRoot } from '@/myenv'
 
 export default {
-	name: 'ExportPage',
+	name: 'ManageExport',
 
 	components: {
 		FormActions,

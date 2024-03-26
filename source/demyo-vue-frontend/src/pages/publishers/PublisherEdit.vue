@@ -9,7 +9,7 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="publisher.logo.id" :items="allImages" :loading="allImagesLoading"
 							label-key="field.Publisher.logo" refreshable @refresh="refreshImages"
 						/>
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import Autocomplete from '@/components/Autocomplete.vue'
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
@@ -57,7 +56,6 @@ export default {
 	name: 'PublisherEdit',
 
 	components: {
-		Autocomplete,
 		FormActions,
 		SectionCard
 	},

@@ -23,7 +23,7 @@
 
 <script>
 export default {
-	name: 'Autocomplete',
+	name: 'AutoComplete',
 
 	props: {
 		// Using v-bind="$attrs" means we can avoid re-declaring everything we want to pass as-is to v-autocomplete

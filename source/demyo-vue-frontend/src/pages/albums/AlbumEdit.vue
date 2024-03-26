@@ -4,7 +4,7 @@
 			<SectionCard :subtitle="$t('fieldset.Album.identification')">
 				<v-row>
 					<v-col cols="12">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.series.id" :items="allSeries" label-key="field.Album.series"
 							clearable
 						/>
@@ -36,7 +36,7 @@
 						<v-text-field v-model="album.originalTitle" :label="$t('field.Album.originalTitle')" />
 					</v-col>
 					<v-col cols="12">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.tags" :items="allTags" :loading="allTagsLoading"
 							multiple clearable
 							label-key="field.Album.tags" refreshable @refresh="refreshTags"
@@ -48,14 +48,14 @@
 			<SectionCard :subtitle="$t('fieldset.Album.publishing')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.publisher.id" :items="allPublishers"
 							label-key="field.Album.publisher" required :rules="rules.publisher"
 							refreshable @refresh="refreshPublishers" @input="loadCollections"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.collection.id" :items="relatedCollections"
 							label-key="field.Album.collection" clearable
 							refreshable @refresh="loadCollections"
@@ -67,31 +67,31 @@
 			<SectionCard :subtitle="$t('fieldset.Album.authoring')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.writers" :items="allAuthors" label-key="field.Album.writers"
 							multiple refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.artists" :items="allAuthors" label-key="field.Album.artists"
 							multiple refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.colorists" :items="allAuthors" label-key="field.Album.colorists"
 							multiple refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.inkers" :items="allAuthors" label-key="field.Album.inkers"
 							multiple refreshable @refresh="refreshAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.translators" :items="allAuthors" label-key="field.Album.translators"
 							multiple refreshable @refresh="refreshAuthors"
 						/>
@@ -140,7 +140,7 @@
 			<SectionCard :subtitle="$t('fieldset.Album.format')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.binding.id" :items="allBindings"
 							label-key="field.Album.binding" clearable
 						/>
@@ -221,13 +221,13 @@
 			<SectionCard :subtitle="$t('fieldset.Album.images')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.cover.id" :items="allImages" :loading="allImagesLoading"
 							label-key="field.Album.cover" refreshable @refresh="refreshImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="album.images" :items="allImages" :loading="allImagesLoading"
 							:multiple="true"
 							label-key="field.Album.images" refreshable @refresh="refreshImages"
@@ -242,7 +242,6 @@
 </template>
 
 <script>
-import Autocomplete from '@/components/Autocomplete.vue'
 import CurrencyField from '@/components/CurrencyField.vue'
 import FormActions from '@/components/FormActions.vue'
 import PriceManagement from '@/components/PriceManagement.vue'
@@ -263,7 +262,6 @@ export default {
 	name: 'AlbumEdit',
 
 	components: {
-		Autocomplete,
 		CurrencyField,
 		FormActions,
 		PriceManagement,

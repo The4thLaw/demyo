@@ -12,7 +12,7 @@ declare module 'vue' {
     AppSnackbar: typeof import('./src/components/AppSnackbar.vue')['default']
     AppTask: typeof import('./src/components/AppTask.vue')['default']
     AppTasks: typeof import('./src/components/AppTasks.vue')['default']
-    Autocomplete: typeof import('./src/components/Autocomplete.vue')['default']
+    AutoComplete: typeof import('./src/components/AutoComplete.vue')['default']
     CardTextIndex: typeof import('./src/components/CardTextIndex.vue')['default']
     CurrencyField: typeof import('./src/components/CurrencyField.vue')['default']
     DnDImage: typeof import('./src/components/DnDImage.vue')['default']

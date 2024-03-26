@@ -40,7 +40,7 @@ const routes = [
 	{
 		path: '/about',
 		name: 'about',
-		component: () => import('@/pages/About.vue')
+		component: () => import('@/pages/AboutDemyo.vue')
 	}
 ]
 

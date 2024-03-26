@@ -44,7 +44,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 						}
 
 						if (id.includes('Edit.vue') || id.includes('ImageDetect.vue')
-							|| id.includes('Import.vue') || id.includes('Export.vue')) {
+							|| id.includes('ManageImport.vue') || id.includes('ManageExport.vue')) {
 							return '@demyo-manage'
 						}
 

@@ -9,14 +9,14 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<Autocomplete
+						<AutoComplete
 							v-model="collection.publisher.id" :items="allPublishers" :loading="allPublishersLoading"
 							:rules="rules.publisher" label-key="field.Collection.publisher"
 							refreshable @refresh="refreshPublishers"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<Autocomplete
+						<AutoComplete
 							v-model="collection.logo.id" :items="allImages" :loading="allImagesLoading"
 							label-key="field.Collection.logo" refreshable @refresh="refreshImages"
 						/>
@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import Autocomplete from '@/components/Autocomplete.vue'
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
@@ -65,7 +64,6 @@ export default {
 	name: 'CollectionEdit',
 
 	components: {
-		Autocomplete,
 		FormActions,
 		SectionCard
 	},

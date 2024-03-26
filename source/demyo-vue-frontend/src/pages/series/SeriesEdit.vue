@@ -14,7 +14,7 @@
 						/>
 					</v-col>
 					<v-col cols="12">
-						<Autocomplete
+						<AutoComplete
 							v-model="series.relatedSeries" :items="allSeries" multiple
 							label-key="field.Series.relatedSeries"
 						/>
@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import Autocomplete from '@/components/Autocomplete.vue'
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
 import { tipTapExtensions } from '@/helpers/fields'
@@ -74,7 +73,6 @@ export default {
 	name: 'SeriesEdit',
 
 	components: {
-		Autocomplete,
 		FormActions,
 		SectionCard
 	},
