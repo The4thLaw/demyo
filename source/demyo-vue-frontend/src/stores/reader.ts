@@ -17,7 +17,7 @@ interface ReaderLists {
  * @param list The array to modify
  * @param item The item to insert
  */
-function insert(list: number[], item: number) {
+function insert(list: number[], item: number): void {
 	if (sortedIndexOf(list, item) >= 0) {
 		// Don't add twice
 		return
@@ -32,7 +32,7 @@ function insert(list: number[], item: number) {
  * @param list The array to modify
  * @param item The item to remove
  */
-function remove(list: number[], item: number) {
+function remove(list: number[], item: number): void {
 	const index = sortedIndexOf(list, item)
 	if (index >= 0) {
 		list.splice(index, 1)
@@ -44,15 +44,15 @@ function remove(list: number[], item: number) {
  * @param list The list to modify
  * @return The modified list
  */
-function preprocess(list: number[]): number[] {
-	list = list || []
+function preprocess(list: number[] | null): number[] {
+	list = list ?? []
 	return list.sort((a, b) => a - b)
 }
 
 export const useReaderStore = defineStore('reader', {
 
 	state: () => ({
-		currentReader: {},
+		currentReader: {} as Reader,
 		// Sets would be nice, but Vue won't support reactive sets until sometime in v3
 		favouriteSeries: [] as number[],
 		favouriteAlbums: [] as number[],
@@ -62,8 +62,7 @@ export const useReaderStore = defineStore('reader', {
 	}),
 
 	actions: {
-		// TODO: TypeScript: define a type for the reader
-		setCurrentReader(reader: any) {
+		setCurrentReader(reader: Reader) {
 			this.currentReader = reader
 			this.readerSelectionRequired = false
 			this.readerLoaded = true
