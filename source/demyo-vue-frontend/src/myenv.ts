@@ -1,6 +1,6 @@
-function getDataWithDefault(key, defaultValue) {
+function getDataWithDefault(key: string, defaultValue: string): string {
 	const dataValue = document.body.dataset[key]
-	return dataValue === undefined ? defaultValue : dataValue
+	return dataValue ?? defaultValue
 }
 
 // Configure the context root
