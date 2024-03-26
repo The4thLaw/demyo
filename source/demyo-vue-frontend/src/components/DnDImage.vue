@@ -194,7 +194,7 @@ export default {
 				return null
 			}
 			const objects = filepond.getFiles()
-			if (!objects || !objects.length) {
+			if (!objects?.length) {
 				return null
 			}
 			return objects.map(e => e.serverId)

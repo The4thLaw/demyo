@@ -98,7 +98,7 @@ export default {
 
 			const added = await imageService.saveDiskImages(selectedImages)
 			this.addedImages = await imageService.findMultipleById(added)
-			this.fetchData() // Will take care of hiding the overlay
+			void this.fetchData() // Will take care of hiding the overlay
 		}
 	}
 }

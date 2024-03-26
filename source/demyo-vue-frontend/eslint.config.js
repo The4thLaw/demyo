@@ -51,6 +51,8 @@ const commonRules = {
 	radix: 'warn',
 	'require-await': 'error',
 	'wrap-iife': 'error',
+	// Used to explicitely mark promises as not awaited
+	'no-void': ['error', { allowAsStatement: true }],
 
 	// Style
 	'block-spacing': 'error',
@@ -155,7 +157,11 @@ export default [
 			}
 		},
 
-		rules: commonRules
+		rules: {
+			...commonRules,
+			// Managed by TypeScript
+			'no-undef': 'off'
+		}
 	},
 
 	{

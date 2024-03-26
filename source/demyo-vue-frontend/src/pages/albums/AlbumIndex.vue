@@ -23,5 +23,5 @@ async function fetchData() {
 	uiStore.disableGlobalOverlay()
 }
 
-fetchData()
+void fetchData()
 </script>

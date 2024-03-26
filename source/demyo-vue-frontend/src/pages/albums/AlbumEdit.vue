@@ -339,7 +339,7 @@ export default {
 			const pBindings = bindingService.findForList()
 
 			// Load collections with the currently available data
-			this.loadCollections()
+			void this.loadCollections()
 
 			// Check the edition dates
 			this.sameEditionDates = this.album.firstEditionDate

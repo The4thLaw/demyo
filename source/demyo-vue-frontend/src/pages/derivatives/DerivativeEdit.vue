@@ -224,7 +224,7 @@ export default {
 			const pTypes = typeService.findForList()
 
 			// Load albums with the currently available data
-			this.loadAlbums()
+			void this.loadAlbums()
 
 			// Assign all reference data
 			this.allSeries = await pSeries

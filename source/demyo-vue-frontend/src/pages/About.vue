@@ -158,7 +158,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // TODO: Vue 3: Give a two-word component name
 import libs from '@/assets/about-libs.json'
 import { demyoCodename, demyoVersion } from '@/myenv'
@@ -166,9 +166,9 @@ import aboutService from '@/services/about-service'
 
 const { userAgent } = navigator
 
-const env = ref({});
+const env = ref({})
 
-(async () => {
+void (async () => {
 	env.value = await aboutService.getEnvironment()
 })()
 </script>
