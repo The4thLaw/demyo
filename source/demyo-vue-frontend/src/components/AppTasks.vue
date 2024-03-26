@@ -1,5 +1,5 @@
 <template>
-	<portal to="appTasks">
+	<Teleport to="#teleport-appTasks">
 		<v-menu v-model="inputVal">
 			<template #activator="{ props }">
 				<v-btn variant="text" icon="mdi-dots-vertical" v-bind="props" />
@@ -8,7 +8,7 @@
 				<slot />
 			</v-list>
 		</v-menu>
-	</portal>
+	</Teleport>
 </template>
 
 <script>

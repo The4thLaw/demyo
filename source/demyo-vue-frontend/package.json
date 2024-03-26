@@ -26,7 +26,6 @@
     "filepond-plugin-image-preview": "^4.6.11",
     "lodash": "^4.17.20",
     "pinia": "^2.1.7",
-    "portal-vue": "^3.0.0",
     "roboto-fontface": "^0.10.0",
     "tiny-async-pool": "^2.1.0",
     "vue": "^3.4.21",

@@ -1,8 +1,8 @@
 <template>
 	<v-container fluid>
-		<portal v-if="!loading" to="appBarAddons">
+		<Teleport v-if="!loading" to="#teleport-appBarAddons">
 			<FavouriteButton :model-id="album.id" type="Album" />
-		</portal>
+		</Teleport>
 
 		<AppTasks v-if="!loading" v-model="appTasksMenu">
 			<AppTask

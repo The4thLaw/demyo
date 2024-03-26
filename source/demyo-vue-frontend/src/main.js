@@ -1,5 +1,4 @@
 import '@mdi/font/css/materialdesignicons.css'
-import portalVue from 'portal-vue'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import { createApp } from 'vue'
 // From https://gitlab.com/totol.toolsuite/vue-3-fullscreen-image
@@ -27,8 +26,6 @@ app.mixin({
 
 app.use(router)
 app.use(i18n)
-// TODO: Vue 3: migrate to teleport (?)
-app.use(portalVue)
 app.use(vuetify)
 app.use(fullscreenImagePlugin)
 

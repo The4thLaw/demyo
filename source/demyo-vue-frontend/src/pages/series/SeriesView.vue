@@ -1,8 +1,8 @@
 <template>
 	<v-container fluid>
-		<portal v-if="!loading" to="appBarAddons">
+		<Teleport v-if="!loading" to="#teleport-appBarAddons">
 			<FavouriteButton :model-id="series.id" type="Series" />
-		</portal>
+		</Teleport>
 
 		<AppTasks v-if="!loading" v-model="appTasksMenu">
 			<AppTask
@@ -373,15 +373,14 @@ export default {
 				})
 			}
 
-			// This is intentionnally async
-			this.loadAlbums()
+			void this.loadAlbums()
 
 			this.derivativeCount = await dcPromise
 
 			if (this.albumCount === 0 && this.derivativeCount > 0) {
 				// If there are no albums but there are derivatives, load the derivatives
 				this.currentTab = 1
-				this.loadDerivatives()
+				void this.loadDerivatives()
 			}
 		},
 

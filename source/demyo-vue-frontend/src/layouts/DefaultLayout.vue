@@ -6,7 +6,7 @@
 			width="33vw" mobile-breakpoint="sm"
 			:disable-resize-watcher="true"
 		>
-			<portal-target name="appSidePane" />
+			<div id="teleport-appSidePane" />
 		</v-navigation-drawer>
 
 		<!-- Once https://github.com/vuetifyjs/vuetify/issues/16150 is resolved, switch back to 20em -->
@@ -94,15 +94,15 @@
 					</div>
 				</v-expand-x-transition>
 			</template>
-			<portal-target name="appBarAddons" />
-			<portal-target name="appTasks" />
+			<div id="teleport-appBarAddons" />
+			<div id="teleport-appTasks" />
 		</v-app-bar>
 
 		<v-main id="l-DefaultLayout__mainContent">
 			<!-- First part of the details pane management -->
 			<v-dialog v-if="$vuetify.display.smAndDown" v-model="displayDetailsPane">
 				<v-card>
-					<portal-target name="appSidePane" />
+					<div id="teleport-appSidePane" />
 				</v-card>
 			</v-dialog>
 			<v-container id="l-DefaultLayout__mainContainer" fluid>

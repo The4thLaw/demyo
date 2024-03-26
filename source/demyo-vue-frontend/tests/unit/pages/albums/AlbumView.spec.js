@@ -1,6 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import PortalVue from 'portal-vue'
 import VueRouter from 'vue-router'
 
 jest.mock('@/i18n', () => ({
@@ -22,9 +21,9 @@ jest.mock('@/services/album-service', () => ({
 // eslint-disable-next-line import/first
 import AlbumView from '@/pages/albums/AlbumView.vue'
 
+// TODO: Vue 3: fix unit tests. See https://vitest.dev/guide/migration.html#migrating-from-jest maybe
 const localVue = createLocalVue()
 localVue.use(VueRouter)
-localVue.use(PortalVue)
 const router = new VueRouter()
 
 describe('FormActions.vue', () => {
