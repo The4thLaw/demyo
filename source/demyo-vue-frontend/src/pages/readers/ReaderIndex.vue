@@ -15,5 +15,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import readerService from '@/services/reader-service'
 
-const { modelList } = useSimpleIndex(readerService)
+const { modelList } = useSimpleIndex(readerService, 'title.index.reader')
 </script>
