@@ -16,6 +16,8 @@ const compat = new FlatCompat({
 })
 
 const commonRules = {
+	// Note: require-await is off because TypeScript offers a better alternative
+
 	// Possible errors
 	// Logging to the console is OK in some cases
 	'no-console': 'off',
@@ -49,7 +51,6 @@ const commonRules = {
 	'no-useless-return': 'error',
 	'operator-linebreak': ['error', 'before'],
 	radix: 'warn',
-	'require-await': 'error',
 	'wrap-iife': 'error',
 	// Used to explicitely mark promises as not awaited
 	'no-void': ['error', { allowAsStatement: true }],
