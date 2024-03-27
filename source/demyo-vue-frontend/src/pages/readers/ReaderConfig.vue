@@ -85,6 +85,11 @@ export default {
 			}
 		}
 	},
+
+	head() {
+		return { title: this.pageTitle }
+	},
+
 	methods: {
 		async fetchData() {
 			this.reader = await readerService.findById(this.parsedId)

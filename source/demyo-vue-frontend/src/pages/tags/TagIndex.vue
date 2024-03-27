@@ -16,15 +16,15 @@ import { useUiStore } from '@/stores/ui'
 export default {
 	name: 'TagIndex',
 
-	metaInfo() {
-		return {
-			title: this.$t('title.index.tag')
-		}
-	},
-
 	data() {
 		return {
 			tags: []
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.index.tag')
 		}
 	},
 

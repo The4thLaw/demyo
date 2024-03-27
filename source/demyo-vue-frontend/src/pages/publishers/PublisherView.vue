@@ -92,17 +92,17 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.publisher.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			publisher: {},
 			albumCount: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.publisher.identifyingName
 		}
 	},
 

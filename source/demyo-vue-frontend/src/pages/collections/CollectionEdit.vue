@@ -23,10 +23,13 @@
 					</v-col>
 				</v-row>
 				<label class="dem-fieldlabel">{{ $t('field.Collection.history') }}</label>
+				<!--
+				TODO: Vue 3: restore RTE
 				<tiptap-vuetify
 					v-model="collection.history" :extensions="tipTapExtensions"
 					:card-props="{ outlined: true }"
 				/>
+				-->
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Collection.internet')">
@@ -105,8 +108,13 @@ export default {
 		}
 	},
 
+	head() {
+		return { title: this.pageTitle }
+	},
+
 	methods: {
 		async fetchData() {
+			console.log('XXX', this.head2)
 			if (this.parsedId) {
 				this.collection = await collectionService.findById(this.parsedId)
 			}

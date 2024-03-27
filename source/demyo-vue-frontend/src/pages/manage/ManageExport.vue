@@ -30,12 +30,6 @@ export default {
 		SectionCard
 	},
 
-	metaInfo() {
-		return {
-			title: this.$t('title.manage.export.select')
-		}
-	},
-
 	data() {
 		return {
 			format: 'XML',
@@ -46,6 +40,12 @@ export default {
 				}
 			],
 			withResources: true
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.manage.export.select')
 		}
 	},
 

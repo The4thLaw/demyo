@@ -1,20 +1,20 @@
 import { useUiStore } from '@/stores/ui'
 
 export default {
-	metaInfo() {
-		return {
-			title: this.initialized
-				? (this.parsedId
-					? this.$t(this.mixinConfig.modelEdit.titleKeys.edit)
-					: this.$t(this.mixinConfig.modelEdit.titleKeys.add))
-				: ''
-		}
-	},
-
 	data() {
 		return {
 			initialized: false,
 			parsedId: undefined
+		}
+	},
+
+	computed: {
+		pageTitle() {
+			return this.initialized
+				? (this.parsedId
+					? this.$t(this.mixinConfig.modelEdit.titleKeys.edit)
+					: this.$t(this.mixinConfig.modelEdit.titleKeys.add))
+				: null
 		}
 	},
 
@@ -106,6 +106,5 @@ export default {
 				this.fetchDataInternal()
 			}
 		}
-
 	}
 }

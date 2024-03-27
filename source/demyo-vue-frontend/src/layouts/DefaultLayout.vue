@@ -146,21 +146,12 @@ export default {
 
 	mixins: [quicksearch],
 
-	metaInfo() {
-		const self = this
-
-		return {
-			changed(newInfo, addedTags, removedTags) {
-				self.pageTitle = newInfo.titleChunk
-			}
-		}
-	},
-
 	data() {
 		return {
 			uiStore: useUiStore(),
 
 			pageTitle: 'Demyo',
+			pageTitleObserver: null,
 			demyoCodename: demyoCodename,
 
 			mainMenu: false,
@@ -187,6 +178,23 @@ export default {
 			this.clearSearch()
 			this.blur()
 		}
+	},
+
+	mounted() {
+		// Monitor the page title for changes. unhead doesn't seem to have an event for this
+		this.pageTitleObserver = new MutationObserver((mutations) => {
+			const pageTitle = mutations[0].target.text.replace(/ – Demyo$/, '')
+			this.pageTitle = pageTitle
+		})
+		this.pageTitleObserver.observe(
+			document.querySelector('title'),
+			{ subtree: true, characterData: true, childList: true }
+		)
+	},
+
+	unmounted() {
+		this.pageTitleObserver.disconnect()
+		this.pageTitleObserver = null
 	},
 
 	methods: {

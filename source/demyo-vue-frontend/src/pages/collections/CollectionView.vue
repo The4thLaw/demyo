@@ -76,17 +76,18 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.collection.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			collection: {},
 			count: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.collection
+				? `${this.collection.identifyingName} – ${this.collection.publisher?.identifyingName}` : null
 		}
 	},
 
@@ -98,8 +99,8 @@ export default {
 		},
 
 		deleteCollection() {
-			deleteStub(this,
-				() => collectionService.deleteModel(this.collection.id),
+			void deleteStub(this,
+				async () => collectionService.deleteModel(this.collection.id),
 				'quickTasks.delete.collection.confirm.done',
 				'PublisherIndex')
 		}

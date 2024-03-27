@@ -105,6 +105,10 @@ export default {
 		}
 	},
 
+	head() {
+		return { title: this.pageTitle }
+	},
+
 	methods: {
 		async fetchData() {
 			if (this.parsedId) {

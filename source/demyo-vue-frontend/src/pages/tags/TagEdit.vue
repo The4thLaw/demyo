@@ -97,6 +97,10 @@ export default {
 		}
 	},
 
+	head() {
+		return { title: this.pageTitle }
+	},
+
 	computed: {
 		style() {
 			const style = {}

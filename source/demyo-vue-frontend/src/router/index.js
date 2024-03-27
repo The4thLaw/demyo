@@ -16,8 +16,6 @@ import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
 
-// TODO: Vue 3: restore equivalent to vue-meta
-
 const routes = [
 	{
 		path: '/',

@@ -19,15 +19,15 @@ export default {
 	// We can reuse the 'view' mixin even though it's not really a view : it is generic enough
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.$t('title.reader.readingList')
-		}
-	},
-
 	data() {
 		return {
 			albums: []
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.reader.readingList')
 		}
 	},
 

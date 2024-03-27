@@ -191,6 +191,10 @@ export default {
 		}
 	},
 
+	head() {
+		return { title: this.pageTitle }
+	},
+
 	methods: {
 		oneNotNull() {
 			// In addition to this rule, an @input handler forces full form validation when one of the relevant

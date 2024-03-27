@@ -195,12 +195,6 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.series.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			series: {},
@@ -211,6 +205,12 @@ export default {
 			showWishlist: true,
 			appTasksMenu: false,
 			currentTab: 0
+		}
+	},
+
+	head() {
+		return {
+			title: this.series.identifyingName
 		}
 	},
 

@@ -18,5 +18,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import seriesService from '@/services/series-service'
 
-const { modelList } = useSimpleIndex(seriesService)
+const { modelList } = useSimpleIndex(seriesService, 'title.index.series')
 </script>

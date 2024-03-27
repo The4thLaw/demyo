@@ -46,12 +46,6 @@ export default {
 		SectionCard
 	},
 
-	metaInfo() {
-		return {
-			title: this.$t('title.add.image')
-		}
-	},
-
 	data() {
 		return {
 			uiStore: useUiStore(),
@@ -62,6 +56,12 @@ export default {
 			// For example, the v-for wouldn't work (no iteration)
 			imageSelections: {},
 			addedImages: []
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.add.image')
 		}
 	},
 

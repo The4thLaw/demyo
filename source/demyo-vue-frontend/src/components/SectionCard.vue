@@ -107,7 +107,6 @@ export default {
 	padding-bottom: 0;
 
 	> :last-child {
-		padding-bottom: 0;
 		margin-bottom: 0;
 	}
 }

@@ -15,5 +15,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import typeService from '@/services/derivative-type-service'
 
-const { modelList } = useSimpleIndex(typeService)
+const { modelList } = useSimpleIndex(typeService, 'title.index.derivativeType')
 </script>

@@ -198,12 +198,6 @@ export default {
 
 	mixins: [i18nMixin, modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.derivative.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			uiStore: useUiStore(),
@@ -216,6 +210,12 @@ export default {
 				artist: {},
 				source: {}
 			}
+		}
+	},
+
+	head() {
+		return {
+			title: this.derivative.identifyingName
 		}
 	},
 

@@ -96,17 +96,17 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.source.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			source: {},
 			count: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.source.identifyingName
 		}
 	},
 

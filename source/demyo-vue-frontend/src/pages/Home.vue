@@ -26,15 +26,15 @@ export default {
 
 	mixins: [quicksearch],
 
-	metaInfo() {
-		return {
-			title: this.$t('title.home')
-		}
-	},
-
 	data() {
 		return {
 			uiStore: useUiStore()
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.home')
 		}
 	},
 

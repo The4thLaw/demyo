@@ -26,16 +26,16 @@ export default {
 		SectionCard
 	},
 
-	metaInfo() {
-		return {
-			title: this.$t('title.manage.import.select')
-		}
-	},
-
 	data() {
 		return {
 			uiStore: useUiStore(),
 			file: null
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.manage.import.select')
 		}
 	},
 

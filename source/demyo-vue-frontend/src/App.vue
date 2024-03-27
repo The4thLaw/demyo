@@ -11,15 +11,13 @@ import { contextRoot } from '@/myenv'
 export default {
 	name: 'DemyoApp',
 
-	metaInfo() {
-		const self = this
+	head() {
 		return {
-			title: null,
-			titleTemplate: '%s — Demyo',
+			titleTemplate: (title) => !title ? 'Demyo' : `${title} – Demyo`,
 			link: [
 				{
 					rel: 'manifest',
-					href: `${contextRoot}manifest.json?lang=${self.$i18n.locale.replace(/-/, '_')}`
+					href: `${contextRoot}manifest.json?lang=${this.$i18n.locale.replace(/-/, '_')}`
 				}
 			]
 		}

@@ -42,7 +42,7 @@ import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import bindingService from '@/services/binding-service'
 
-// TODO: Vue 3: Try to extract such simple views in a composable (after the appTasks are migrated to teleport)
+// TODO: Vue 3: Try to extract such simple views in a composable
 export default {
 	name: 'BindingView',
 
@@ -54,17 +54,17 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.binding.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			binding: {},
 			count: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.binding.identifyingName
 		}
 	},
 

@@ -63,17 +63,17 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.reader.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			reader: {},
 			mayDelete: false,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.reader.identifyingName
 		}
 	},
 

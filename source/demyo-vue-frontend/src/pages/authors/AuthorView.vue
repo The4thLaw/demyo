@@ -89,12 +89,6 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.author.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			mainLoading: true,
@@ -104,6 +98,12 @@ export default {
 			foo: [],
 			count: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.author.identifyingName
 		}
 	},
 

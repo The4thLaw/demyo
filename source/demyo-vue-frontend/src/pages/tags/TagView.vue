@@ -64,17 +64,17 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.tag.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			tag: {},
 			count: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.tag.identifyingName
 		}
 	},
 

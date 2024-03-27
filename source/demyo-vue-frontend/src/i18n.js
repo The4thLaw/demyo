@@ -47,7 +47,8 @@ const i18n = createI18n({
 	locale: simpleLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: loadLocaleMessages(),
-	datetimeFormats
+	datetimeFormats,
+	legacy: false
 })
 setHtmlLang(selectedLocale)
 console.log(`Initialized i18n with '${selectedLocale}' as default language and '${fallbackLanguage}' as fallback`)

@@ -53,17 +53,17 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.type.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			type: {},
 			count: -1,
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.type.identifyingName
 		}
 	},
 

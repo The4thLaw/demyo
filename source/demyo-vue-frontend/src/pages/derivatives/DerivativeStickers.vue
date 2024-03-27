@@ -47,16 +47,16 @@ import derivativeService from '@/services/derivative-service'
 export default {
 	name: 'DerivativeStickers',
 
-	metaInfo() {
-		return {
-			title: this.$t('title.index.derivative.stickers')
-		}
-	},
-
 	data() {
 		return {
 			initialized: false,
 			derivatives: []
+		}
+	},
+
+	head() {
+		return {
+			title: this.$t('title.index.derivative.stickers')
 		}
 	},
 

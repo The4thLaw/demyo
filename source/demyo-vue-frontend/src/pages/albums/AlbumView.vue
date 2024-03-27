@@ -311,12 +311,6 @@ export default {
 
 	mixins: [i18nMixin, modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.album.title
-		}
-	},
-
 	data() {
 		return {
 			uiStore: useUiStore(),
@@ -333,6 +327,12 @@ export default {
 			inhibitObserver: true,
 			derivativesLoading: false,
 			derivatives: []
+		}
+	},
+
+	head() {
+		return {
+			title: this.album.title
 		}
 	},
 

@@ -56,6 +56,10 @@ export default {
 		}
 	},
 
+	head() {
+		return { title: this.pageTitle }
+	},
+
 	methods: {
 		async fetchData() {
 			this.image = await imageService.findById(this.parsedId)

@@ -9,7 +9,13 @@
 import { retrieveFilter } from '@/helpers/filter'
 import albumService from '@/services/album-service'
 import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+
+useHead({
+	title: useI18n().t('title.index.album')
+})
 
 const uiStore = useUiStore()
 const route = useRoute()

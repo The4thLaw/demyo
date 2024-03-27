@@ -15,5 +15,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import authorService from '@/services/author-service'
 
-const { modelList } = useSimpleIndex(authorService)
+const { modelList } = useSimpleIndex(authorService, 'title.index.author')
 </script>

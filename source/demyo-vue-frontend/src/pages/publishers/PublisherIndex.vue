@@ -18,5 +18,5 @@ import PublisherCard from '@/components/PublisherCard.vue'
 import { useSimpleIndex } from '@/composables/model-index'
 import publisherService from '@/services/publisher-service'
 
-const { modelList } = useSimpleIndex(publisherService)
+const { modelList } = useSimpleIndex(publisherService, 'title.index.publisher')
 </script>

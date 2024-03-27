@@ -159,10 +159,15 @@
 </template>
 
 <script setup lang="ts">
-// TODO: Vue 3: Give a two-word component name
 import libs from '@/assets/about-libs.json'
 import { demyoCodename, demyoVersion } from '@/myenv'
 import aboutService from '@/services/about-service'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
+
+useHead({
+	title: useI18n().t('title.about')
+})
 
 const { userAgent } = navigator
 

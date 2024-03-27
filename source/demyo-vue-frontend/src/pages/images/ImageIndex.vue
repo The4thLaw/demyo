@@ -15,5 +15,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import imageService from '@/services/image-service'
 
-const { modelList } = useSimpleIndex(imageService)
+const { modelList } = useSimpleIndex(imageService, 'title.index.image')
 </script>

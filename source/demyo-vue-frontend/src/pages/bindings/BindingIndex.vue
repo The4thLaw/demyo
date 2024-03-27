@@ -15,5 +15,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import bindingService from '@/services/binding-service'
 
-const { modelList } = useSimpleIndex(bindingService)
+const { modelList } = useSimpleIndex(bindingService, 'title.index.binding')
 </script>

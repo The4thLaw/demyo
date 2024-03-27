@@ -73,12 +73,6 @@ export default {
 
 	mixins: [modelViewMixin],
 
-	metaInfo() {
-		return {
-			title: this.image.identifyingName
-		}
-	},
-
 	data() {
 		return {
 			mainLoading: true,
@@ -86,6 +80,12 @@ export default {
 			image: {},
 			dependencies: {},
 			appTasksMenu: false
+		}
+	},
+
+	head() {
+		return {
+			title: this.image.identifyingName
 		}
 	},
 
