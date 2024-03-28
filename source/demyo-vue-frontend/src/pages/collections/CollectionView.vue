@@ -41,7 +41,7 @@
 				:to="{ name: 'AlbumIndex', query: { withCollection: collection.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.Collection.viewAlbums', count) }}
+				{{ $t('page.Collection.viewAlbums', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"

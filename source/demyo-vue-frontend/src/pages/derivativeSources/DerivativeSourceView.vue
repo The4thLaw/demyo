@@ -50,7 +50,7 @@
 				:to="{ name: 'DerivativeIndex', query: { withSource: source.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.DerivativeSource.viewDerivatives', count) }}
+				{{ $t('page.DerivativeSource.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"

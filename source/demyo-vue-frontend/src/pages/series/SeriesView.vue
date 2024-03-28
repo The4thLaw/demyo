@@ -86,7 +86,7 @@
 					<v-icon start>
 						mdi-image-frame
 					</v-icon>
-					{{ $tc('field.Series.derivatives', derivativeCount) }}
+					{{ $t('field.Series.derivatives', derivativeCount) }}
 				</v-tab>
 			</v-tabs>
 
@@ -104,32 +104,32 @@
 						</FieldValue>
 
 						<FieldValue
-							v-if="allPublishers.length" :label="$tc('field.Album.publisher', allPublishers.length)"
+							v-if="allPublishers.length" :label="$t('field.Album.publisher', allPublishers.length)"
 						>
 							<ModelLink :model="allPublishers" view="PublisherView" />
 						</FieldValue>
 
-						<FieldValue v-if="allWriters.length" :label="$tc('field.Album.writers', allWriters.length)">
+						<FieldValue v-if="allWriters.length" :label="$t('field.Album.writers', allWriters.length)">
 							<ModelLink :model="allWriters" view="AuthorView" />
 						</FieldValue>
-						<FieldValue v-if="allArtists.length" :label="$tc('field.Album.artists', allArtists.length)">
+						<FieldValue v-if="allArtists.length" :label="$t('field.Album.artists', allArtists.length)">
 							<ModelLink :model="allArtists" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
-							v-if="allColorists.length" :label="$tc('field.Album.colorists', allColorists.length)"
+							v-if="allColorists.length" :label="$t('field.Album.colorists', allColorists.length)"
 						>
 							<ModelLink :model="allColorists" view="AuthorView" />
 						</FieldValue>
-						<FieldValue v-if="allInkers.length" :label="$tc('field.Album.inkers', allInkers.length)">
+						<FieldValue v-if="allInkers.length" :label="$t('field.Album.inkers', allInkers.length)">
 							<ModelLink :model="allInkers" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
-							v-if="allTranslators.length" :label="$tc('field.Album.translators', allTranslators.length)"
+							v-if="allTranslators.length" :label="$t('field.Album.translators', allTranslators.length)"
 						>
 							<ModelLink :model="allTranslators" view="AuthorView" />
 						</FieldValue>
 
-						<FieldValue v-if="allTags.length" :label="$tc('field.Album.tags', allTags.length)">
+						<FieldValue v-if="allTags.length" :label="$t('field.Album.tags', allTags.length)">
 							<TagLink :model="allTags" />
 						</FieldValue>
 					</div>

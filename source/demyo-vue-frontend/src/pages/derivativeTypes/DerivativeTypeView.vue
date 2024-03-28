@@ -22,7 +22,7 @@
 				:to="{ name: 'DerivativeIndex', query: { withType: type.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.DerivativeType.viewDerivatives', count) }}
+				{{ $t('page.DerivativeType.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"

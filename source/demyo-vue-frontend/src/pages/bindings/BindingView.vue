@@ -22,7 +22,7 @@
 				:to="{ name: 'AlbumIndex', query: { withBinding: binding.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.Binding.viewAlbums', count) }}
+				{{ $t('page.Binding.viewAlbums', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"

@@ -56,7 +56,7 @@
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.tags && album.tags.length > 0" cols="12">
-						<FieldValue :label="$tc('field.Album.tags', album.tags.length)">
+						<FieldValue :label="$t('field.Album.tags', album.tags.length)">
 							<TagLink :model="album.tags" />
 						</FieldValue>
 					</v-col>
@@ -66,7 +66,7 @@
 			<div class="dem-fieldset">
 				<v-row>
 					<v-col v-if="album.publisher.id" cols="12" md="6">
-						<FieldValue :label="$tc('field.Album.publisher', 1)">
+						<FieldValue :label="$t('field.Album.publisher', 1)">
 							<ModelLink :model="album.publisher" view="PublisherView" />
 						</FieldValue>
 					</v-col>
@@ -81,27 +81,27 @@
 			<div v-if="hasAuthors" class="dem-fieldset">
 				<v-row>
 					<v-col v-if="album.writers && album.writers.length" cols="12" md="6">
-						<FieldValue :label="$tc('field.Album.writers', album.writers.length)">
+						<FieldValue :label="$t('field.Album.writers', album.writers.length)">
 							<ModelLink :model="album.writers" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.artists && album.artists.length" cols="12" md="6">
-						<FieldValue :label="$tc('field.Album.artists', album.artists.length)">
+						<FieldValue :label="$t('field.Album.artists', album.artists.length)">
 							<ModelLink :model="album.artists" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.colorists && album.colorists.length" cols="12" md="6">
-						<FieldValue :label="$tc('field.Album.colorists', album.colorists.length)">
+						<FieldValue :label="$t('field.Album.colorists', album.colorists.length)">
 							<ModelLink :model="album.colorists" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.inkers && album.inkers.length" cols="12" md="6">
-						<FieldValue :label="$tc('field.Album.inkers', album.inkers.length)">
+						<FieldValue :label="$t('field.Album.inkers', album.inkers.length)">
 							<ModelLink :model="album.inkers" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.translators && album.translators.length" cols="12" md="6">
-						<FieldValue :label="$tc('field.Album.translators', album.writers.length)">
+						<FieldValue :label="$t('field.Album.translators', album.writers.length)">
 							<ModelLink :model="album.translators" view="AuthorView" />
 						</FieldValue>
 					</v-col>

@@ -3,7 +3,7 @@
 		v-model="inputVal"
 		v-model:search="search"
 		v-bind="$attrs"
-		:label="$tc(labelKey, multiple ? 2 : 1)"
+		:label="$t(labelKey, multiple ? 2 : 1)"
 		item-title="identifyingName"
 		item-value="id"
 		:multiple="multiple"

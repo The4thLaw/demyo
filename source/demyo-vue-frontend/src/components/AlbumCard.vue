@@ -60,13 +60,13 @@
 				</template>
 				<FieldValue
 					v-if="album.writers && album.writers.length"
-					:label="$tc('field.Album.writers', album.writers ? album.writers.length : 0)"
+					:label="$t('field.Album.writers', album.writers ? album.writers.length : 0)"
 				>
 					<ModelLink :model="album.writers" view="AuthorView" />
 				</FieldValue>
 				<FieldValue
 					v-if="album.artists && album.artists.length"
-					:label="$tc('field.Album.artists', album.artists ? album.artists.length : 0)"
+					:label="$t('field.Album.artists', album.artists ? album.artists.length : 0)"
 				>
 					<ModelLink :model="album.artists" view="AuthorView" />
 				</FieldValue>
@@ -74,23 +74,23 @@
 					<div v-if="expanded">
 						<FieldValue
 							v-if="album.colorists && album.colorists.length"
-							:label="$tc('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
+							:label="$t('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
 						>
 							<ModelLink :model="album.colorists" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.inkers && album.inkers.length"
-							:label="$tc('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
+							:label="$t('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
 						>
 							<ModelLink :model="album.inkers" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.translators && album.translators.length"
-							:label="$tc('field.Album.translators', album.translators ? album.translators.length : 0)"
+							:label="$t('field.Album.translators', album.translators ? album.translators.length : 0)"
 						>
 							<ModelLink :model="album.translators" view="AuthorView" />
 						</FieldValue>
-						<FieldValue v-if="album.publisher.id" :label="$tc('field.Album.publisher', 1)">
+						<FieldValue v-if="album.publisher.id" :label="$t('field.Album.publisher', 1)">
 							<ModelLink :model="album.publisher" view="PublisherView" />
 						</FieldValue>
 						<FieldValue v-if="album.collection.id" :label="$t('field.Album.collection')">
@@ -119,7 +119,7 @@
 				<v-btn v-if="isInReadingList" :loading="readingListLoading" icon @click="markAsRead">
 					<v-icon>mdi-library</v-icon>
 				</v-btn>
-				<FavouriteButton :model-id="album.id" type="Album" />
+				<FavouriteButton :variant="'text'" :color="null" :model-id="album.id" type="Album" />
 				<!-- Eventually, replace the following button with an overflow menu to edit, change reading list,
 				change wishlist, delete if the album can be deleted (no derivatives)... -->
 				<v-btn :to="`/albums/${album.id}/edit`" icon>

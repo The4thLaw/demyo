@@ -41,7 +41,7 @@
 				:to="{ name: 'DerivativeIndex', query: { withArtist: author.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.Author.viewDerivatives', count) }}
+				{{ $t('page.Author.viewDerivatives', count) }}
 			</v-btn>
 			<v-alert
 				v-if="count === 0"
@@ -54,7 +54,7 @@
 		<SectionCard
 			v-if="albumsLoading || albums.length > 0"
 			:loading="albumsLoading"
-			:title="$tc('page.Author.works', albumCount)"
+			:title="$t('page.Author.works', albumCount)"
 		>
 			<AlbumTextList :albums="albums">
 				<template #default="slotProps">

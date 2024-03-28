@@ -44,7 +44,7 @@
 				:to="{ name: 'AlbumIndex', query: { withPublisher: publisher.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.Publisher.viewAlbums', albumCount) }}
+				{{ $t('page.Publisher.viewAlbums', albumCount) }}
 			</v-btn>
 			<v-alert
 				v-if="albumCount === 0"
