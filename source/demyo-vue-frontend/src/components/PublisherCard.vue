@@ -78,13 +78,8 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import "../styles/detached-rulesets.less";
-
-// Override default style since the card cannot be clicked
-.c-PublisherCard.v-card--hover {
-	@dem-dr-model-card--hover();
-}
+<style lang="scss">
+@import '@/styles/mixins';
 
 // The following allows taking the full height if the publisher has no collections
 .c-PublisherCard__noCollections a.c-PublisherCard__title {
@@ -92,6 +87,6 @@ export default {
 }
 
 .v-application a.c-PublisherCard__title {
-	@dem-dr-model-card-title();
+	@include dem-model-card-title;
 }
 </style>

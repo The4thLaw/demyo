@@ -70,7 +70,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 #demyo .c-QuickSearchResults .v-list-item__title {
 	font-size: inherit;
 	font-weight: normal;

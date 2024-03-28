@@ -4,7 +4,11 @@ const commonRules = {
 	// Disable some rules compared to the recommendations
 	'declaration-empty-line-before': null,
 	'selector-id-pattern': null,
-	'selector-class-pattern': null
+	'selector-class-pattern': null,
+	// Conflicts with SASS
+	'import-notation': null,
+	// SCSS has a similar one
+	'at-rule-no-unknown': null
 }
 
 module.exports = {
@@ -17,29 +21,21 @@ module.exports = {
 	// must be in the same directory as the package.json loading the associated package
 	extends: [
 		'stylelint-config-standard',
-		'stylelint-config-recommended-vue'
+		'stylelint-config-recommended-vue',
+		'stylelint-config-standard-scss'
 	],
 
 	overrides: [
 		{
 			files: ['*.vue', '**/*.vue'],
-			// TODO: Vue 3: migrate from LESS to SCSS then enable this
-			// extends: 'stylelint-config-standard-scss',
+			customSyntax: 'postcss-html',
 			rules: {
-				...commonRules,
-				'import-notation': null
+				...commonRules
 			}
 		},
 
 		{
-			files: ['**/*.less'],
-			customSyntax: 'postcss-less',
-			rules: commonRules
-		},
-
-		{
 			files: ['**/*.scss'],
-			extends: 'stylelint-config-standard-scss',
 			rules: commonRules
 		}
 	]

@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-FieldValue {
 	margin-top: 16px;
 	margin-bottom: 16px;

@@ -142,7 +142,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .v-DerivativeSourceView__map {
 	position: relative;
 	text-align: right;

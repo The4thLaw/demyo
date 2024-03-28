@@ -73,7 +73,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-CardTextIndex {
 	// No outline on this artifically focused element
 	outline: 0;

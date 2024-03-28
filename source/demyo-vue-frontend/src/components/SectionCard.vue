@@ -93,7 +93,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-SectionCard.v-card {
 	padding-bottom: 24px;
 

@@ -435,7 +435,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-AlbumView__originalTitle {
 	margin-top: -1em;
 	margin-bottom: 16px;

@@ -178,7 +178,7 @@ void (async () => {
 })()
 </script>
 
-<style lang="less">
+<style lang="scss">
 .v-About .v-data-table {
 	margin-bottom: 2em;
 }

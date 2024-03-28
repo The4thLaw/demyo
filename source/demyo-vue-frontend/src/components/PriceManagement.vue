@@ -95,7 +95,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-PriceManagement__priceRow {
 	> :last-child {
 		display: flex;

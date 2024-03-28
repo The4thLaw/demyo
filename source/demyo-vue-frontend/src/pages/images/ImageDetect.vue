@@ -104,7 +104,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-ImageDetect {
 	.v-messages {
 		display: none;

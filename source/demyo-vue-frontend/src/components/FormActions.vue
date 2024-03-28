@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-FormActions {
 	text-align: center;
 

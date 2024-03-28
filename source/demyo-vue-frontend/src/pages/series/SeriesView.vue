@@ -423,7 +423,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-SeriesView__originalName {
 	margin-top: -1em;
 	opacity: 0.87;

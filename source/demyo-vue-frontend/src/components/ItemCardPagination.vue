@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 // Align the pagination buttons: have the pagination take the full width,
 // its content as well, and the buttons spaced evenly
 .c-ItemCardPagination {

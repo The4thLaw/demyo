@@ -58,7 +58,7 @@ const slots = useSlots()
 const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
-<style lang="less">
+<style lang="scss">
 a.c-ModelLink:not(:hover) {
 	color: inherit;
 }

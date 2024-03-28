@@ -92,20 +92,15 @@ export default {
 }
 </script>
 
-<style lang="less">
-@import url("../styles/detached-rulesets.less");
+<style lang="scss">
+@import '@/styles/mixins';
 
 .v-application .c-MetaSeriesCard .v-list-item--link:hover {
 	text-decoration: none;
 }
 
-// Override default style since the card cannot be clicked
-.c-MetaSeriesCard.v-card--hover {
-	@dem-dr-model-card--hover();
-}
-
 .v-application a.c-MetaSeriesCard__title {
-	@dem-dr-model-card-title();
+	@include dem-model-card-title;
 }
 
 .c-MetaSeriesCard__one-shot {

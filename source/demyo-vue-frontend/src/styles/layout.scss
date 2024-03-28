@@ -41,8 +41,10 @@
 }
 
 .dem-fieldlabel {
-	font-size: 12px;
+	// Must rely on rgba to use Vuetify variables
+	/* stylelint-disable-next-line color-function-notation */
 	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: 12px;
 }
 
 .dem-multiline-value {

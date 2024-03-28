@@ -62,7 +62,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .v-TagIndex__list {
 	line-height: 275%;
 	text-align: center;

@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-TextIndex {
 	// No outline on this artifically focused element
 	outline: 0;

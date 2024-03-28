@@ -77,7 +77,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-DerivativeStickers {
 	background-color: white;
 	color: black;
@@ -107,7 +107,7 @@ export default {
 	div {
 		min-width: 3cm;
 		border: 0.2mm solid black;
-		padding: 1mm 3mm 1mm 3mm;
+		padding: 1mm 3mm;
 		text-align: center;
 	}
 

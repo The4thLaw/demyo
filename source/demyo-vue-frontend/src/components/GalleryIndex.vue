@@ -200,7 +200,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-GalleryIndex {
 	// No outline on this artifically focused element
 	outline: 0;
@@ -215,6 +215,7 @@ export default {
 	img {
 		// Crop overly large images
 		width: 250px;
+
 		// Note: max-height would put a greater emphasis on the size diversity of derivatives,
 		// but would look less like a grid
 		height: 400px;

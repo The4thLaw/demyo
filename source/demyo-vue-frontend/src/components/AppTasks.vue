@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-AppTasks__list {
 	a,
 	a:hover {

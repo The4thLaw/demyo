@@ -208,7 +208,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-AlbumCard__contentFaker {
 	min-height: 1.75em;
 	margin-top: 1em;
