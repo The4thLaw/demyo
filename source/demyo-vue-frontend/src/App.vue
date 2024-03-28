@@ -44,32 +44,6 @@ export default {
 }
 </script>
 
-<style lang="less">
-:root {
-	/* stylelint-disable-next-line color-function-notation */
-	--dem-text: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
-	/* stylelint-disable-next-line color-function-notation */
-	--dem-text-lighter: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
-}
-
-@media print {
-
-	// Solution from https://stackoverflow.com/a/23778125/109813
-	@page {
-		margin: 0;
-	}
-
-	html {
-		background-color: #fff;
-		margin: 0;
-	}
-
-	body {
-		margin: 10mm 15mm;
-	}
-
-	.no-print {
-		display: none !important;
-	}
-}
+<style lang="scss">
+@import '@/styles/main';
 </style>

@@ -9,7 +9,8 @@ const commonRules = {
 
 module.exports = {
 	plugins: [
-		'@stylistic/stylelint-plugin'
+		'@stylistic/stylelint-plugin',
+		'stylelint-scss'
 	],
 
 	// For the "extends" to work, the stylelint configuration
@@ -22,12 +23,23 @@ module.exports = {
 	overrides: [
 		{
 			files: ['*.vue', '**/*.vue'],
-			rules: commonRules
+			// TODO: Vue 3: migrate from LESS to SCSS then enable this
+			// extends: 'stylelint-config-standard-scss',
+			rules: {
+				...commonRules,
+				'import-notation': null
+			}
 		},
 
 		{
 			files: ['**/*.less'],
 			customSyntax: 'postcss-less',
+			rules: commonRules
+		},
+
+		{
+			files: ['**/*.scss'],
+			extends: 'stylelint-config-standard-scss',
 			rules: commonRules
 		}
 	]
