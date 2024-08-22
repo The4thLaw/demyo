@@ -51,5 +51,7 @@
 	"menu.series.add": "Add a series",
 	"menu.series.browse": "Browse series",
 	"menu.tags.add": "Add a tag",
-	"menu.tags.browse": "Browse tags"
+	"menu.tags.browse": "Browse tags",
+
+	"tinymce.language": "en"
 }

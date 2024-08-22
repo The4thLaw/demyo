@@ -1,0 +1,164 @@
+:root {
+  --dpr-meta-control-disabled-text: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+  --dpr-background-color: rgb(var(--v-theme-surface));
+  --dpr-color-black: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+  --dpr-color-tint: rgb(var(--v-theme-primary));
+  --dpr-color-white: #fff;
+  --dpr-color-error: rgb(var(--v-theme-error));
+  --dpr-color-error: rgb(var(--v-theme-success));
+  --dpr-border-color: rgba(var(--v-border-color), var(--v-border-opacity));
+  --dpr-text-color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+  --dpr-text-color-muted: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+  --dpr-separator-color: gray;
+  --dpr-accessibility-issue-info-heading-text-color: rgb(var(--v-theme-info));
+  --dpr-accessibility-issue-info-body-text-color: rgb(var(--v-theme-info));
+  --dpr-accessibility-issue-info-background-color: rgba(var(--v-theme-info), var(--v-activated-opacity));
+  --dpr-accessibility-issue-warn-heading-text-color: rgb(var(--v-theme-warning));
+  --dpr-accessibility-issue-warn-body-text-color: rgb(var(--v-theme-warning));
+  --dpr-accessibility-issue-warn-background-color: rgba(var(--v-theme-warning), var(--v-activated-opacity));
+  --dpr-accessibility-issue-error-heading-text-color: rgb(var(--v-theme-error));
+  --dpr-accessibility-issue-error-body-text-color: rgb(var(--v-theme-error));
+  --dpr-accessibility-issue-error-background-color: rgba(var(--v-theme-error), var(--v-activated-opacity));
+  --dpr-accessibility-issue-success-heading-text-color: rgb(var(--v-theme-success));
+  --dpr-accessibility-issue-success-body-text-color: rgb(var(--v-theme-success));
+  --dpr-accessibility-issue-success-background-color: rgba(var(--v-theme-success), var(--v-activated-opacity));
+  --dpr-button-background-color: rgb(var(--v-theme-primary));
+  --dpr-button-text-color: rgb(var(--v-theme-on-primary));
+  --dpr-button-active-background-color: rgba(var(--v-theme-primary), calc(1 - var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-button-enabled-active-background-color: rgba(var(--v-theme-primary), calc(1 - var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-button-enabled-background-color: rgba(var(--v-theme-primary), calc(1 - var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-button-enabled-hover-background-color: rgba(var(--v-theme-primary), calc(1 - var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-button-hover-background-color: rgba(var(--v-theme-primary), calc(1 - var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-button-disabled-text-color: rgba(var(--v-theme-on-primary), var(--v-medium-emphasis-opacity));
+  --dpr-button-naked-active-background-color: rgba(var(--v-theme-primary), var(--v-activated-opacity));
+  --dpr-button-naked-disabled-icon-color: var(--dpr-meta-control-disabled-text);
+  --dpr-button-naked-hover-background-color: rgba(var(--v-theme-primary), var(--v-selected-opacity));
+  --dpr-button-naked-disabled-background-color: transparent;
+  --dpr-button-secondary-text-color: rgb(var(--v-theme-primary));
+  --dpr-button-secondary-background-color: transparent;
+  --dpr-button-secondary-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-button-secondary-enabled-background-color: transparent;
+  --dpr-button-secondary-enabled-active-background-color: rgba(var(--v-theme-primary), var(--v-idle-opacity));
+  --dpr-button-secondary-enabled-hover-background-color: rgba(var(--v-theme-primary), var(--v-idle-opacity));
+  --dpr-button-secondary-active-background-color: rgba(var(--v-theme-primary), var(--v-idle-opacity));
+  --dpr-button-secondary-hover-background-color: rgba(var(--v-theme-primary), var(--v-idle-opacity));
+  --dpr-button-secondary-border-color: rgb(var(--v-theme-primary));
+  --dpr-button-secondary-hover-border-color: var(--dpr-button-secondary-border-color);
+  --dpr-checkbox-unselected-color: rgba(var(--v-border-color), 0.38);
+  --dpr-checkbox-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-collection-item-label-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-collection-item-caret-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-collection-list-item-active-background-color: rgba(var(--v-theme-on-surface), calc(var(--v-high-emphasis-opacity) * var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-collection-list-item-label-active-text-color: var(--dpr-text-color);
+  --dpr-collection-list-item-label-enabled-text-color: var(--dpr-text-color);
+  --dpr-collection-toolbar-item-label-active-text-color: var(--dpr-text-color);
+  --dpr-collection-toolbar-item-label-active-hover-text-color: var(--dpr-text-color);
+  --dpr-collection-toolbar-item-label-enabled-text-color: var(--dpr-text-color);
+  --dpr-collection-grid-item-label-active-text-color: var(--dpr-text-color);
+  --dpr-collection-grid-item-label-enabled-text-color: var(--dpr-text-color);
+  --dpr-collection-group-label-background-color: rgb(var(--v-theme-surface-light));
+  --dpr-collection-group-label-text-color: rgb(var(--v-theme-on-surface-light));
+  --dpr-comment-background-color: rgb(var(--v-theme-surface-light));
+  --dpr-comment-background-color-transparent: rgba(var(--v-theme-surface-light), 0);
+  --dpr-comment-box-shadow-color: rgba(0 0, 0, 0.1);
+  --dpr-dialog-background-color: rgb(var(--v-theme-surface));
+  --dpr-dialog-backdrop-background-color: rgba(var(--v-theme-on-surface), var(--v-overlay-opacity, 0.32));
+  --dpr-dialog-body-link-active-color: rgb(var(--v-theme-secondary));
+  --dpr-dialog-body-link-hover-color: rgb(var(--v-theme-secondary));
+  --dpr-dialog-nav-focus-background-color: rgb(var(--v-theme-surface));
+  --dpr-dialog-table-border-color: var(--dpr-border-color);
+  --dpr-dialog-box-shadow-color: rgba(0, 0, 0, 0.15);
+  --dpr-editor-header-sticky-background-color: transparent;
+  --dpr-editor-header-box-shadow-color-1: rgba(0, 0, 0, 0.1);
+  --dpr-editor-header-box-shadow-color-2: rgba(0, 0, 0, 0.07);
+  --dpr-editor-header-sticky-box-shadow-color-1: rgba(0, 0, 0, 0.2);
+  --dpr-editor-header-sticky-box-shadow-color-2: rgba(0, 0, 0, 0.15);
+  --dpr-color-input-swatch-checker-color: rgb(var(--v-theme-surface-variant));
+  --dpr-color-input-border-color: rgba(var(--v-border-color), 0.38);
+  --dpr-listbox-disabled-background-color: rgb(var(--v-theme-surface-light));
+  --dpr-listbox-disabled-text-color: rgb(var(--v-theme-on-surface-light));
+  --dpr-listbox-button-chevron-color: var(--dpr-text-color);
+  --dpr-selectbox-disabled-background-color: rgb(var(--v-theme-surface-light));
+  --dpr-selectbox-disabled-text-color: rgb(var(--v-theme-on-surface-light));
+  --dpr-textfield-background-color: rgb(var(--v-theme-surface));
+  --dpr-textfield-disabled-background-color: var(--dpr-textfield-background-color);
+  --dpr-textfield-border-color: rgba(var(--v-border-color), 0.38);
+  --dpr-textfield-focus-border-color: rgba(var(--v-border-color), 1);
+  --dpr-insert-table-picker-selected-background-color: rgba(var(--v-theme-primary), var(--v-high-emphasis-opacity));
+  --dpr-insert-table-picker-label-color: var(--dpr-text-color-muted);
+  --dpr-menu-background-color: rgb(var(--v-theme-surface));
+  --dpr-menu-box-shadow-color-1: rgba(0, 0, 0, 0.2);
+  --dpr-menu-box-shadow-color-2: rgba(0, 0, 0, 0.14);
+  --dpr-menubar-background-color: transparent;
+  --dpr-menubar-select-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-notification-success-background-color: var(--dpr-accessibility-issue-success-background-color);
+  --dpr-notification-success-border-color: var(--dpr-notification-success-background-color);
+  --dpr-notification-success-text-color: var(--dpr-accessibility-issue-success-body-text-color);
+  --dpr-notification-success-link-color: var(--dpr-notification-success-link-color);
+  --dpr-notification-warn-background-color: var(--dpr-accessibility-issue-warn-background-color);
+  --dpr-notification-warn-border-color: var(--dpr-notification-warn-background-color);
+  --dpr-notification-warn-text-color: var(--dpr-accessibility-issue-success-body-text-color);
+  --dpr-notification-warn-link-color: var(--dpr-notification-warn-text-color);
+  --dpr-notification-error-background-color: var(--dpr-accessibility-issue-error-background-color);
+  --dpr-notification-error-border-color: var(--dpr-notification-error-background-color);
+  --dpr-notification-error-text-color: var(--dpr-accessibility-issue-error-body-text-color);
+  --dpr-notification-error-link-color: var(--dpr-notification-error-text-color);
+  --dpr-notification-info-background-color: var(--dpr-accessibility-issue-info-background-color);
+  --dpr-notification-info-border-color: var(--dpr-notification-info-background-color);
+  --dpr-notification-info-text-color: var(--dpr-accessibility-issue-info-body-text-color);
+  --dpr-notification-info-link-color: var(--dpr-notification-info-text-color);
+  --dpr-pop-box-shadow-color-1: rgba(0, 0, 0, 0.2);
+  --dpr-pop-box-shadow-color-2: rgba(0, 0, 0, 0.15);
+  --dpr-revisionhistory-background-color: rgb(var(--v-theme-surface));
+  --dpr-revisionhistory-card-active-background-color: rgb(var(--v-theme-surface-light));
+  --dpr-slider-handle-border: var(--dpr-border-color);
+  --dpr-statusbar-text-color: var(--dpr-text-color-muted);
+  --dpr-statusbar-logo-color: var(--dpr-text-color-muted);
+  --dpr-statusbar-resize-handle-color: var(--dpr-text-color-muted);
+  --dpr-throbber-busy-background-color: rgba(var(--v-theme-surface), var(--v-medium-emphasis-opacity));
+  --dpr-toolbar-background-color: transparent;
+  --dpr-toolbar-button-background-color: transparent;
+  --dpr-toolbar-button-icon-color: var(--dpr-text-color);
+  --dpr-toolbar-button-text-color: var(--dpr-text-color);
+  --dpr-toolbar-button-enabled-background-color: rgba(var(--v-theme-primary), calc(var(--v-activated-opacity) * var(--v-theme-primary-overlay-multiplier)));
+  --dpr-toolbar-button-hover-background-color: rgba(var(--v-theme-on-surface), calc(var(--v-high-emphasis-opacity) * var(--v-hover-opacity) * var(--v-theme-overlay-multiplier)));
+  --dpr-toolbar-button-chevron-color: var(--dpr-text-color);
+  --dpr-toolbar-button-disabled-icon-color: var(--dpr-meta-control-disabled-text);
+  --dpr-toolbar-button-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-toolbar-button-bespoke-background-color: transparent;
+  --dpr-tooltip-background-color: rgb(var(--v-theme-surface-variant));
+  --dpr-tooltip-text-color: rgb(var(--v-theme-on-surface-variant));
+  --dpr-tree-button-enabled-background-color: rgba(var(--v-theme-primary), var(--v-selected-opacity));
+  --dpr-tree-button-icon-color: var(--dpr-text-color);
+  --dpr-tree-button-chevron-color: var(--dpr-text-color);
+  --dpr-tree-button-menu-icon-color: var(--dpr-text-color);
+  --dpr-tree-button-text-color: var(--dpr-text-color);
+  --dpr-tree-button-disabled-icon-color: var(--dpr-meta-control-disabled-text);
+  --dpr-tree-button-disabled-text-color: var(--dpr-meta-control-disabled-text);
+  --dpr-mergetag-hover-background-color: rgb(var(--v-theme-surface-variant));
+}
+.tox,
+.tox.tox-tinymce {
+  /* stylelint-disable no-descending-specificity */
+  /* stylelint-enable no-descending-specificity */
+}
+.tox .tox-toolbar-overlord,
+.tox.tox-tinymce .tox-toolbar-overlord {
+  background: rgba(var(--v-theme-primary), var(--v-idle-opacity));
+  border-radius: 1.5em;
+  margin-inline: 0.5em;
+}
+.tox .tox-tbtn--active svg,
+.tox.tox-tinymce .tox-tbtn--active svg,
+.tox .tox-tbtn--enabled svg,
+.tox.tox-tinymce .tox-tbtn--enabled svg,
+.tox .tox-tbtn--enabled:hover svg,
+.tox.tox-tinymce .tox-tbtn--enabled:hover svg,
+.tox .tox-tbtn--enabled:focus svg,
+.tox.tox-tinymce .tox-tbtn--enabled:focus svg {
+  fill: rgb(var(--v-theme-primary-darken-1));
+}
+.tox .tox-color-input span::before,
+.tox.tox-tinymce .tox-color-input span::before {
+  background-repeat: repeat;
+}
