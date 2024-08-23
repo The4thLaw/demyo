@@ -116,6 +116,15 @@
 				"command": "./mvnw -B site dev,check-deps -DskipTests",
 				"group": "build"
 			},
+			{
+				"label": "Run frontend (hot reload)",
+				"type": "shell",
+				"command": "npm run dev",
+				"options": {
+					"cwd": "demyo-vue-frontend"
+				},
+				"group": "test"
+			}
 		]
 	}
 }
