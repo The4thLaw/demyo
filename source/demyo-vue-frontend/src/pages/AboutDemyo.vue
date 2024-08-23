@@ -141,6 +141,7 @@
 					<tbody>
 						<tr>
 							<td>{{ $t('page.About.aboutInstall.parameter.os') }}</td>
+							<!-- TODO: Vue 3: sort out typing -->
 							<td>{{ env.osName }} {{ env.osVersion }} ({{ env.osArch }})</td>
 						</tr>
 						<tr>

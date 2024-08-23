@@ -9,6 +9,8 @@ import type { ConfigEnv, UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 
+// TODO: Vue 3: Since we now have auto-import of components, remove them everywhere we can
+
 export default ({ mode }: ConfigEnv): UserConfig => {
 	return defineConfig({
 		server: {
@@ -31,10 +33,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
 						if (id.includes('prosemirror')) {
 							return '@vendor-prosemirror'
-						}
-
-						if (id.includes('tiptap')) {
-							return '@vendor-tiptap'
 						}
 
 						// Note: for some reason, code-splitting other vendors fails due to undefined

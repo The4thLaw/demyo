@@ -9,6 +9,7 @@
   --dpr-border-color: rgba(var(--v-border-color), var(--v-border-opacity));
   --dpr-text-color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
   --dpr-text-color-muted: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+  --dpr-keyboard-focus-outline-color: var(--dpr-color-tint);
   --dpr-separator-color: gray;
   --dpr-accessibility-issue-info-heading-text-color: rgb(var(--v-theme-info));
   --dpr-accessibility-issue-info-body-text-color: rgb(var(--v-theme-info));
@@ -161,4 +162,7 @@
 .tox .tox-color-input span::before,
 .tox.tox-tinymce .tox-color-input span::before {
   background-repeat: repeat;
+}
+.tox.tox-tinymce {
+  border-radius: 4px;
 }

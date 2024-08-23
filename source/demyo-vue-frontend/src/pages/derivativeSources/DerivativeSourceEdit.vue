@@ -44,10 +44,7 @@
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('field.DerivativeSource.history')">
-				<tiptap-vuetify
-					v-model="source.history" :extensions="tipTapExtensions"
-					:card-props="{ outlined: true }"
-				/>
+				<RichTextEditor v-model="source.history" />
 			</SectionCard>
 
 			<FormActions v-if="initialized" @save="save" @reset="reset" />
@@ -58,7 +55,6 @@
 <script>
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { email, mandatory, phone, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import sourceService from '@/services/derivative-source-service'
@@ -86,7 +82,6 @@ export default {
 			},
 
 			source: {},
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [

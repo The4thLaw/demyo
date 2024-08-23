@@ -31,6 +31,7 @@ declare module 'vue' {
     PublisherCard: typeof import('./src/components/PublisherCard.vue')['default']
     QuickSearchResults: typeof import('./src/components/QuickSearchResults.vue')['default']
     ReaderSelection: typeof import('./src/components/ReaderSelection.vue')['default']
+    RichTextEditor: typeof import('./src/components/RichTextEditor.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SectionCard: typeof import('./src/components/SectionCard.vue')['default']

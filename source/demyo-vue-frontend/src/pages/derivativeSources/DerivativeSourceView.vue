@@ -133,6 +133,7 @@ export default {
 		},
 
 		deleteSource() {
+			// TODO: Vue 3: sort out such warnings about promises
 			deleteStub(this,
 				() => sourceService.deleteModel(this.source.id),
 				'quickTasks.delete.derivativeSource.confirm.done',

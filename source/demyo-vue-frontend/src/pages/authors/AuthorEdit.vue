@@ -33,10 +33,7 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Author.biography') }}</label>
-						<tiptap-vuetify
-							v-model="author.biography" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="author.biography" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<v-text-field v-model="author.website" :label="$t('field.Author.website')" />
@@ -52,7 +49,6 @@
 <script>
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
@@ -81,7 +77,6 @@ export default {
 			},
 
 			author: { portrait: {} },
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [

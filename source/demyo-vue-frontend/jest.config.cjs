@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+// TODO: Vue 3: probably not relevant anymore
+
 // This file follows the guide from
 // https://vue-test-utils.vuejs.org/installation/#using-vue-test-utils-with-jest-recommended
 module.exports = {

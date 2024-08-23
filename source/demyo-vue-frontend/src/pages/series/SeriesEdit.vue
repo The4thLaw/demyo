@@ -35,23 +35,11 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Series.summary') }}</label>
-						<!--
-						TODO: Vue 3: restore RTE
-						<tiptap-vuetify
-							v-model="series.summary" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-						-->
+						<RichTextEditor v-model="series.summary" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Series.comment') }}</label>
-						<!--
-						TODO: Vue 3: restore RTE
-						<tiptap-vuetify
-							v-model="series.comment" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-						-->
+						<RichTextEditor v-model="series.comment" />
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -64,7 +52,6 @@
 <script>
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import seriesService from '@/services/series-service'
@@ -93,7 +80,6 @@ export default {
 
 			series: { relatedSeries: [] },
 			allSeries: [],
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [

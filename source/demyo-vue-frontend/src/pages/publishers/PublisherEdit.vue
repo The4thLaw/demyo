@@ -16,10 +16,7 @@
 					</v-col>
 				</v-row>
 				<label class="dem-fieldlabel">{{ $t('field.Publisher.history') }}</label>
-				<tiptap-vuetify
-					v-model="publisher.history" :extensions="tipTapExtensions"
-					:card-props="{ outlined: true }"
-				/>
+				<RichTextEditor v-model="publisher.history" />
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Publisher.internet')">
@@ -46,7 +43,6 @@
 <script>
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
@@ -75,7 +71,6 @@ export default {
 			},
 
 			publisher: { logo: {} },
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [

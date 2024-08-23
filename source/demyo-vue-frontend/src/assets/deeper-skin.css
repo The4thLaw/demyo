@@ -728,7 +728,7 @@ button::-moz-focus-inner {
 .tox .tox-collection--toolbar .tox-collection__item--active:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -748,7 +748,7 @@ button::-moz-focus-inner {
 .tox .tox-collection--grid .tox-collection__item--active:not(.tox-collection__item--state-disabled):focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) 'inset';
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) 'inset';
   content: '';
   left: 0;
   position: absolute;
@@ -1771,7 +1771,7 @@ body.tox-dialog__disable-scroll {
   position: relative;
 }
 .tox .tox-edit-area::before {
-  border: 2px solid var(--dpr-color-tint);
+  border: 2px solid var(--dpr-keyboard-focus-outline-color);
   border-radius: 4px;
   content: '';
   inset: 0;
@@ -2504,7 +2504,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-mbtn:focus:not(:disabled)::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -2998,7 +2998,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-statusbar__wordcount:focus-visible::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3047,7 +3047,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-statusbar__resize-handle:focus-visible::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3119,7 +3119,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-tbtn:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3196,7 +3196,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-tbtn--enabled:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3252,7 +3252,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-number-input:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3272,7 +3272,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-number-input .tox-input-wrapper:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3282,7 +3282,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-number-input .tox-input-wrapper:has(input:focus)::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3332,7 +3332,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-number-input button:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3440,7 +3440,7 @@ body.tox-dialog__disable-scroll {
   pointer-events: none;
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3911,7 +3911,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-revisionhistory__sidebar .tox-revisionhistory__revisions:focus::after {
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -3948,7 +3948,7 @@ body.tox-dialog__disable-scroll {
   border-radius: 6px !important;
   border-radius: 3px;
   bottom: 0;
-  box-shadow: 0 0 0 2px var(--dpr-color-tint) ;
+  box-shadow: 0 0 0 2px var(--dpr-keyboard-focus-outline-color) ;
   content: '';
   left: 0;
   position: absolute;
@@ -4099,6 +4099,7 @@ body.tox-dialog__disable-scroll {
   --dpr-border-color: rgba(var(--v-border-color), var(--v-border-opacity));
   --dpr-text-color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
   --dpr-text-color-muted: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+  --dpr-keyboard-focus-outline-color: rgba(var(--v-border-color), var(--v-high-emphasis-opacity));
   --dpr-separator-color: gray;
   --dpr-accessibility-issue-info-heading-text-color: rgb(var(--v-theme-info));
   --dpr-accessibility-issue-info-body-text-color: rgb(var(--v-theme-info));
@@ -4251,4 +4252,7 @@ body.tox-dialog__disable-scroll {
 .tox .tox-color-input span::before,
 .tox.tox-tinymce .tox-color-input span::before {
   background-repeat: repeat;
+}
+.tox.tox-tinymce {
+  border-radius: 4px;
 }

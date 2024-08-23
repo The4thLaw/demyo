@@ -1,4 +1,4 @@
-import { mergeModels, tipTapExtensions } from '@/helpers/fields'
+import { mergeModels } from '@/helpers/fields'
 
 describe('fields.js', () => {
 	it('Merges arrays of models', () => {
@@ -34,9 +34,5 @@ describe('fields.js', () => {
 		expect(merged[0].id).toBe(22)
 		expect(merged[1].id).toBe(10)
 		expect(merged[2].id).toBe(11)
-	})
-
-	it('Defines tipTapExtensions', () => {
-		expect(tipTapExtensions.length).toBeGreaterThan(0)
 	})
 })

@@ -23,13 +23,7 @@
 					</v-col>
 				</v-row>
 				<label class="dem-fieldlabel">{{ $t('field.Collection.history') }}</label>
-				<!--
-				TODO: Vue 3: restore RTE
-				<tiptap-vuetify
-					v-model="collection.history" :extensions="tipTapExtensions"
-					:card-props="{ outlined: true }"
-				/>
-				-->
+				<RichTextEditor v-model="collection.history" />
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Collection.internet')">
@@ -56,7 +50,6 @@
 <script>
 import FormActions from '@/components/FormActions.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
@@ -89,7 +82,6 @@ export default {
 				logo: {},
 				publisher: {}
 			},
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [
@@ -114,7 +106,6 @@ export default {
 
 	methods: {
 		async fetchData() {
-			console.log('XXX', this.head2)
 			if (this.parsedId) {
 				this.collection = await collectionService.findById(this.parsedId)
 			}

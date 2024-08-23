@@ -147,7 +147,6 @@ export default {
 			this.mainLoading = false
 
 			const authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
-			console.log('XXX', JSON.parse(JSON.stringify(authorAlbums)))
 			this.authorAlbums = ref(JSON.parse(JSON.stringify(authorAlbums)))
 			// For some reason in Vue 3 we need to precompute the album list
 			this.foo = ref(JSON.parse(JSON.stringify(authorAlbums.albums)))

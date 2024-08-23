@@ -96,10 +96,7 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Derivative.description') }}</label>
-						<tiptap-vuetify
-							v-model="derivative.description" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="derivative.description" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<AutoComplete
@@ -134,7 +131,6 @@ import CurrencyField from '@/components/CurrencyField.vue'
 import FormActions from '@/components/FormActions.vue'
 import PriceManagement from '@/components/PriceManagement.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { integer, mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import authorRefreshMixin from '@/mixins/refresh-author-list'
@@ -181,7 +177,6 @@ export default {
 				type: {},
 				prices: []
 			},
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				type: [mandatory()],

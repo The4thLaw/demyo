@@ -1,4 +1,4 @@
-import { axiosGet, axiosPost, axiosPut, axiosDelete } from '@/helpers/axios'
+import { axiosDelete, axiosGet, axiosPost, axiosPut } from '@/helpers/axios'
 
 /**
  * Base class for Model API services.
@@ -117,13 +117,13 @@ class AbstractModelService {
 	}
 
 	/**
-	 * Sanitizes the HTML properties of a Model, clearing empty paragraphs left behind by TipTap.
+	 * Sanitizes the HTML properties of a Model, clearing empty paragraphs left behind by the RTE.
 	 * @param {*} model The Model.
 	 * @private
 	 */
 	sanitizeHtml(model) {
 		if (this.config.sanitizeHtml) {
-			// TipTap may leave empty <p></p> markup if the user deletes the text
+			// Rich text could leave empty <p></p> markup if the user deletes the text
 			this.config.sanitizeHtml.forEach(prop => {
 				if (model[prop] === '<p></p>') {
 					model[prop] = null

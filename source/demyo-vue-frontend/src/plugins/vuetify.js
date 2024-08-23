@@ -1,6 +1,4 @@
 import { cspStyleNonce } from '@/myenv'
-// import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
-// import 'tiptap-vuetify/dist/main.css'
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import 'vuetify/styles'
@@ -33,7 +31,7 @@ const vuetify = createVuetify({
 		}
 	},
 	// Set some defaults for components to keep the Demyo 2 style that we like
-	// TODO: Vue 3: migrate to the prop for v-icon
+	// TODO: Vue 3: migrate to the prop for v-icon (rather than the element content)
 	defaults: {
 		VAutocomplete: {
 			color: 'primary',

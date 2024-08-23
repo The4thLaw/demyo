@@ -196,24 +196,11 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Album.summary') }}</label>
-						<!--
-						TODO: Vue 3: restore RTE
-						<tiptap-vuetify
-							v-model="album.summary" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-						-->
+						<RichTextEditor v-model="album.summary" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Album.comment') }}</label>
-						<!--
-						TODO: Vue 3: restore RTE
-
-						<tiptap-vuetify
-							v-model="album.comment" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
-						-->
+						<RichTextEditor v-model="album.comment" />
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -246,7 +233,6 @@ import CurrencyField from '@/components/CurrencyField.vue'
 import FormActions from '@/components/FormActions.vue'
 import PriceManagement from '@/components/PriceManagement.vue'
 import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
 import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import authorRefreshMixin from '@/mixins/refresh-author-list'
@@ -300,8 +286,6 @@ export default {
 				cover: {}
 			},
 			sameEditionDates: false,
-
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				cycle: [integer()],

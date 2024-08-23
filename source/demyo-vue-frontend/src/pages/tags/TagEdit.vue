@@ -22,10 +22,7 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Tag.description') }}</label>
-						<tiptap-vuetify
-							v-model="tag.description" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="tag.description" />
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -55,7 +52,6 @@
 </template>
 
 <script>
-import { tipTapExtensions } from '@/helpers/fields'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import tagService from '@/services/tag-service'
@@ -86,8 +82,6 @@ export default {
 			// with the value
 			fgColour: '',
 			bgColour: '',
-
-			tipTapExtensions: tipTapExtensions,
 
 			rules: {
 				name: [
