@@ -212,7 +212,7 @@
 				<v-row>
 					<v-col v-if="album.purchasePrice" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.purchasePrice')">
-							{{ album.purchasePrice | price(currency) }}
+							{{ qualifiedPurchasePrice }}
 						</FieldValue>
 					</v-col>
 					<v-col v-if="hasPrices" cols="12" md="6">
@@ -282,8 +282,8 @@ import ModelLink from '@/components/ModelLink.vue'
 import PriceTable from '@/components/PriceTable.vue'
 import SectionCard from '@/components/SectionCard.vue'
 import TagLink from '@/components/TagLink.vue'
+import { useCurrency } from '@/composables/currency'
 import { deleteStub } from '@/helpers/actions'
-import i18nMixin from '@/mixins/i18n'
 import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
@@ -309,7 +309,7 @@ export default {
 		TagLink
 	},
 
-	mixins: [i18nMixin, modelViewMixin],
+	mixins: [modelViewMixin],
 
 	data() {
 		return {
@@ -372,6 +372,10 @@ export default {
 				query.toArtist = this.album.artists[0].id
 			}
 			return query
+		},
+
+		qualifiedPurchasePrice() {
+			return useCurrency(this.album.purchasePrice).qualifiedPrice.value
 		},
 
 		...mapState(useReaderStore, {

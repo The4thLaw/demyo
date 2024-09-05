@@ -16,8 +16,7 @@
 					<!-- Note: keyed by index, which is not ideal, because the price doesn't have a technical ID -->
 					<tr v-for="(price, index) in prices" :key="index">
 						<td>{{ $d(new Date(price.date), 'long') }}</td>
-						<!-- TODO: Vue 3: add currency -->
-						<td>{{ price.price }}</td>
+						<td>{{ qualifiedPrices[index] }}</td>
 					</tr>
 				</tbody>
 			</template>
@@ -27,7 +26,7 @@
 
 <script>
 import FieldValue from '@/components/FieldValue.vue'
-import i18nMixin from '@/mixins/i18n'
+import { useCurrencies } from '@/composables/currency'
 
 export default {
 	name: 'PriceTable',
@@ -35,8 +34,6 @@ export default {
 	components: {
 		FieldValue
 	},
-
-	mixins: [i18nMixin],
 
 	props: {
 		prices: {
@@ -47,6 +44,12 @@ export default {
 		modelName: {
 			type: String,
 			required: true
+		}
+	},
+
+	computed: {
+		qualifiedPrices() {
+			return useCurrencies(this.prices.map(p => p.price)).qualifiedPrices.value
 		}
 	}
 }

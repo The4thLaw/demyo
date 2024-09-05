@@ -1,3 +1,4 @@
+// TODO: Vue 3: convert to a composable
 import { useUiStore } from '@/stores/ui'
 
 export default {

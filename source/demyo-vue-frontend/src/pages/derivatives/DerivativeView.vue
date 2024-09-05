@@ -145,7 +145,7 @@
 					</v-col>
 					<v-col v-if="derivative.purchasePrice" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.purchasePrice')">
-							{{ derivative.purchasePrice | price(currency) }}
+							{{ qualifiedPurchasePrice }}
 						</FieldValue>
 					</v-col>
 					<v-col v-if="hasPrices" cols="12" md="6">
@@ -176,8 +176,8 @@ import GalleryIndex from '@/components/GalleryIndex.vue'
 import ModelLink from '@/components/ModelLink.vue'
 import PriceTable from '@/components/PriceTable.vue'
 import SectionCard from '@/components/SectionCard.vue'
+import { useCurrency } from '@/composables/currency'
 import { deleteStub } from '@/helpers/actions'
-import i18nMixin from '@/mixins/i18n'
 import modelViewMixin from '@/mixins/model-view'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'
@@ -196,7 +196,7 @@ export default {
 		SectionCard
 	},
 
-	mixins: [i18nMixin, modelViewMixin],
+	mixins: [modelViewMixin],
 
 	data() {
 		return {
@@ -238,6 +238,10 @@ export default {
 			}
 
 			return null
+		},
+
+		qualifiedPurchasePrice() {
+			return useCurrency(this.derivative.purchasePrice).qualifiedPrice.value
 		}
 	},
 
