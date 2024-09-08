@@ -141,7 +141,6 @@
 					<tbody>
 						<tr>
 							<td>{{ $t('page.About.aboutInstall.parameter.os') }}</td>
-							<!-- TODO: Vue 3: sort out typing -->
 							<td>{{ env.osName }} {{ env.osVersion }} ({{ env.osArch }})</td>
 						</tr>
 						<tr>
@@ -172,7 +171,7 @@ useHead({
 
 const { userAgent } = navigator
 
-const env = ref({})
+const env = ref({} as Record<string, string>)
 
 void (async () => {
 	env.value = await aboutService.getEnvironment()

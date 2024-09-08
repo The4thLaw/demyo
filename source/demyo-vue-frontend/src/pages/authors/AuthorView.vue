@@ -95,7 +95,6 @@ export default {
 			albumsLoading: true,
 			author: {},
 			authorAlbums: {},
-			foo: [],
 			count: -1,
 			appTasksMenu: false
 		}
@@ -148,8 +147,6 @@ export default {
 
 			const authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
 			this.authorAlbums = ref(JSON.parse(JSON.stringify(authorAlbums)))
-			// For some reason in Vue 3 we need to precompute the album list
-			this.foo = ref(JSON.parse(JSON.stringify(authorAlbums.albums)))
 			this.albumsLoading = false
 
 			this.count = await countP

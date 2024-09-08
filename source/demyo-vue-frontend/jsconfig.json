@@ -11,10 +11,5 @@
 	"include": [
 		"./src/**/*",
 		"./test/**/*"
-	],
-
-	// See https://github.com/jest-community/vscode-jest/issues/440
-	"typeAcquisition": {
-		"include": ["jest"]
-	}
+	]
 }

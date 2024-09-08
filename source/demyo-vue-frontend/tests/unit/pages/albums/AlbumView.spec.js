@@ -1,114 +1,147 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import VueRouter from 'vue-router'
+import AlbumView from '@/pages/albums/AlbumView.vue'
+import { createTestingPinia } from '@pinia/testing'
+import { RouterLinkStub, shallowMount } from '@vue/test-utils'
+import { describe, vi } from 'vitest'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
-jest.mock('@/i18n', () => ({
+vi.mock('@/i18n', () => ({
 	loadLocaleMessages: () => ({})
 }))
-// We will use setData to make the checks
-jest.mock('@/services/album-service', () => ({
-	countDerivatives: () => 0,
-	findById: () => {
-		return {
-			id: NaN,
-			series: {},
-			binding: {},
-			publisher: {},
-			collection: {}
+
+const vuetify = createVuetify({
+	components,
+	directives
+})
+
+// Prevent HTTP calls to the API, we'll mock what we have to using the data directly
+vi.mock('@/services/album-service', () => ({
+	default: {
+		countDerivatives: () => 0,
+		findById: () => {
+			return {
+				id: NaN,
+				series: {},
+				binding: {},
+				publisher: {},
+				collection: {}
+			}
 		}
 	}
 }))
-// eslint-disable-next-line import/first
-import AlbumView from '@/pages/albums/AlbumView.vue'
 
-// TODO: Vue 3: fix unit tests. See https://vitest.dev/guide/migration.html#migrating-from-jest maybe
-const localVue = createLocalVue()
-localVue.use(VueRouter)
-const router = new VueRouter()
+global.ResizeObserver = require('resize-observer-polyfill')
 
-describe('FormActions.vue', () => {
-	let shallowWrapper, baseAlbum
-
-	beforeEach(() => {
-		setActivePinia(createPinia())
-
-		shallowWrapper = shallowMount(AlbumView, {
-			localVue,
-			router,
+function createWrapper() {
+	return shallowMount(AlbumView, {
+		global: {
+			plugins: [vuetify,
+				createTestingPinia({
+					stubActions: false
+				})
+			],
 			mocks: {
-				$tc: s => s
+				$route: {
+					params: {
+						id: 42
+					}
+				},
+				$t: s => s
+			},
+			stubs: {
+				RouterLink: RouterLinkStub
 			}
-		})
-
-		baseAlbum = {
-			id: 42,
-			series: {},
-			publisher: {},
-			binding: {},
-			collection: {}
 		}
 	})
+}
 
-	it('Properly checks if there are authors', () => {
+function createAlbum(fields = {}) {
+	return {
+		id: 42,
+		series: {},
+		publisher: {},
+		binding: {},
+		collection: {},
+		...fields
+	}
+}
+
+describe('AlbumView.vue', () => {
+	it('Check if there are authors', () => {
+		const wrapper = createWrapper()
 		for (const prop of ['writers', 'artists', 'colorists', 'inkers', 'translators']) {
 			// No authors by default
-			expect(shallowWrapper.vm.hasAuthors).toBeFalsy()
-			// Set one author and check the condition
-			baseAlbum[prop] = [{ id: 42, name: 'Foo' }]
-			shallowWrapper.setData({ album: baseAlbum })
-			expect(shallowWrapper.vm.hasAuthors).toBeTruthy()
-			// Reset for next loop (and check)
-			baseAlbum[prop] = []
-			shallowWrapper.setData({ album: baseAlbum })
-			expect(shallowWrapper.vm.hasAuthors).toBeFalsy()
+			expect(wrapper.vm.hasAuthors).toBeFalsy()
+
+			// Set one type of author and check the condition
+			const album = createAlbum()
+			album[prop] = [{ id: 42, name: 'Foo' }]
+			wrapper.setData({ album })
+			expect(wrapper.vm.hasAuthors).toBeTruthy()
+
+			// Empty and check again
+			album[prop] = []
+			wrapper.setData({ album })
+			expect(wrapper.vm.hasAuthors).toBeFalsy()
 		}
 	})
 
-	it('Properly checks if there are prices', () => {
-		expect(shallowWrapper.vm.hasPrices).toBeFalsy()
-		baseAlbum.prices = [{}]
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.hasPrices).toBeTruthy()
+	it('Check if there are prices', () => {
+		const wrapper = createWrapper()
+		expect(wrapper.vm.hasPrices).toBeFalsy()
+
+		const album = createAlbum({ prices: [{}] })
+		wrapper.setData({ album })
+		expect(wrapper.vm.hasPrices).toBeTruthy()
 	})
 
-	it('Properly checks if there are images', () => {
-		expect(shallowWrapper.vm.hasImages).toBeFalsy()
-		baseAlbum.images = [{}]
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.hasImages).toBeTruthy()
+	it('Check if there are images', () => {
+		const wrapper = createWrapper()
+		expect(wrapper.vm.hasImages).toBeFalsy()
+
+		const album = createAlbum({ images: [{}] })
+		wrapper.setData({ album })
+		expect(wrapper.vm.hasImages).toBeTruthy()
 	})
 
-	it('Computes the size specifications', () => {
-		expect(shallowWrapper.vm.sizeSpec).toBeFalsy()
-		baseAlbum.width = 240
-		baseAlbum.height = 320
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.sizeSpec).toBe('240 x 320')
+	it('Compute the size specifications', () => {
+		const wrapper = createWrapper()
+		expect(wrapper.vm.sizeSpec).toBeFalsy()
+
+		const album = createAlbum({
+			width: 240,
+			height: 320
+		})
+		wrapper.setData({ album })
+		expect(wrapper.vm.sizeSpec).toBe('240 x 320')
 	})
 
-	it('Builds a query to add a derivative', () => {
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.derivativeQuery).toEqual({
+	it('Build a query to add a derivative', () => {
+		const wrapper = createWrapper()
+		const album = createAlbum()
+		wrapper.setData({ album })
+		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42
 		})
-		baseAlbum.series = { id: 1337 }
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.derivativeQuery).toEqual({
+		album.series = { id: 1337 }
+		wrapper.setData({ album })
+		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42,
 			toSeries: 1337
 		})
-		baseAlbum.artists = [
+		album.artists = [
 			{ id: 1002 },
 			{ id: 1001 }
 		]
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.derivativeQuery).toEqual({
+		wrapper.setData({ album })
+		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42,
 			toSeries: 1337
 		})
-		baseAlbum.artists = [{ id: 1003 }]
-		shallowWrapper.setData({ album: baseAlbum })
-		expect(shallowWrapper.vm.derivativeQuery).toEqual({
+		album.artists = [{ id: 1003 }]
+		wrapper.setData({ album })
+		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42,
 			toSeries: 1337,
 			toArtist: 1003

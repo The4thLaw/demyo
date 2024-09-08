@@ -1,4 +1,5 @@
 /dist
+/coverage
 
 # Rollup visualizer
 stats.html
