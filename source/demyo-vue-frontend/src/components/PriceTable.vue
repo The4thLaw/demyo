@@ -25,15 +25,10 @@
 </template>
 
 <script>
-import FieldValue from '@/components/FieldValue.vue'
 import { useCurrencies } from '@/composables/currency'
 
 export default {
 	name: 'PriceTable',
-
-	components: {
-		FieldValue
-	},
 
 	props: {
 		prices: {

@@ -35,9 +35,6 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import bindingService from '@/services/binding-service'
@@ -45,12 +42,6 @@ import bindingService from '@/services/binding-service'
 // TODO: Vue 3: Try to extract such simple views in a composable
 export default {
 	name: 'BindingView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 

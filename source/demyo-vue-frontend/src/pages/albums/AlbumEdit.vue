@@ -229,10 +229,6 @@
 </template>
 
 <script>
-import CurrencyField from '@/components/CurrencyField.vue'
-import FormActions from '@/components/FormActions.vue'
-import PriceManagement from '@/components/PriceManagement.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import authorRefreshMixin from '@/mixins/refresh-author-list'
@@ -246,13 +242,6 @@ import seriesService from '@/services/series-service'
 
 export default {
 	name: 'AlbumEdit',
-
-	components: {
-		CurrencyField,
-		FormActions,
-		PriceManagement,
-		SectionCard
-	},
 
 	mixins: [modelEditMixin, authorRefreshMixin, imgRefreshMixin, publisherRefreshMixin, tagRefreshMixin],
 

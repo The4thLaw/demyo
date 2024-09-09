@@ -17,19 +17,12 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import typeService from '@/services/derivative-type-service'
 
 export default {
 	name: 'DerivativeTypeEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [modelEditMixin],
 

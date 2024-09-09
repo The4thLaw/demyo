@@ -53,19 +53,12 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { email, mandatory, phone, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import sourceService from '@/services/derivative-source-service'
 
 export default {
 	name: 'DerivativeSourceEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [modelEditMixin],
 

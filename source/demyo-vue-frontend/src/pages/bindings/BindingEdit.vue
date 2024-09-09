@@ -17,19 +17,12 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import bindingService from '@/services/binding-service'
 
 export default {
 	name: 'BindingEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [modelEditMixin],
 

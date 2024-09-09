@@ -35,17 +35,12 @@
 </template>
 
 <script>
-import ItemCardPagination from '@/components/ItemCardPagination.vue'
 import paginatedTextMixin from '@/mixins/paginated-text'
 import { useReaderStore } from '@/stores/reader'
 import { mapState } from 'pinia'
 
 export default {
 	name: 'PublisherCard',
-
-	components: {
-		ItemCardPagination
-	},
 
 	mixins: [paginatedTextMixin],
 

@@ -168,14 +168,6 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import DnDImage from '@/components/DnDImage.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import GalleryIndex from '@/components/GalleryIndex.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import PriceTable from '@/components/PriceTable.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { useCurrency } from '@/composables/currency'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
@@ -184,17 +176,6 @@ import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'DerivativeView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		DnDImage,
-		FieldValue,
-		GalleryIndex,
-		ModelLink,
-		PriceTable,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 

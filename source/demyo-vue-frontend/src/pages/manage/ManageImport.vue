@@ -13,18 +13,11 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import service from '@/services/management-service'
 import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'ManageImport',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	data() {
 		return {

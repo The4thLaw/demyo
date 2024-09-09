@@ -272,16 +272,6 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import DnDImage from '@/components/DnDImage.vue'
-import FavouriteButton from '@/components/FavouriteButton.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import GalleryIndex from '@/components/GalleryIndex.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import PriceTable from '@/components/PriceTable.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import TagLink from '@/components/TagLink.vue'
 import { useCurrency } from '@/composables/currency'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
@@ -295,19 +285,6 @@ import { mapState } from 'pinia'
 
 export default {
 	name: 'AlbumView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		DnDImage,
-		FavouriteButton,
-		FieldValue,
-		GalleryIndex,
-		ModelLink,
-		PriceTable,
-		SectionCard,
-		TagLink
-	},
 
 	mixins: [modelViewMixin],
 

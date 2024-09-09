@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { mandatory, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
@@ -50,11 +48,6 @@ import publisherService from '@/services/publisher-service'
 
 export default {
 	name: 'PublisherEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [imgRefreshMixin, modelEditMixin],
 

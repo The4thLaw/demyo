@@ -54,25 +54,12 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import collectionService from '@/services/collection-service'
 
 export default {
 	name: 'CollectionView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		FieldValue,
-		ModelLink,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 

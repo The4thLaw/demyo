@@ -50,19 +50,12 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { mandatory } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import seriesService from '@/services/series-service'
 
 export default {
 	name: 'SeriesEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [modelEditMixin],
 

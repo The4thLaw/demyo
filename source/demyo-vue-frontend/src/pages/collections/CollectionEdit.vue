@@ -48,8 +48,6 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { mandatory, url } from '@/helpers/rules'
 import modelEditMixin from '@/mixins/model-edit'
 import imgRefreshMixin from '@/mixins/refresh-image-list'
@@ -58,11 +56,6 @@ import collectionService from '@/services/collection-service'
 
 export default {
 	name: 'CollectionEdit',
-
-	components: {
-		FormActions,
-		SectionCard
-	},
 
 	mixins: [imgRefreshMixin, modelEditMixin, publisherRefreshMixin],
 

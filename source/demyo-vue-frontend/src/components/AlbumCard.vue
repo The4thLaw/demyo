@@ -131,10 +131,6 @@
 </template>
 
 <script>
-import FavouriteButton from '@/components/FavouriteButton.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import TagLink from '@/components/TagLink.vue'
 import { getBaseImageUrl } from '@/helpers/images'
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
@@ -143,13 +139,6 @@ import { mapState } from 'pinia'
 
 export default {
 	name: 'AlbumCard',
-
-	components: {
-		FavouriteButton,
-		FieldValue,
-		ModelLink,
-		TagLink
-	},
 
 	props: {
 		album: {

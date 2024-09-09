@@ -31,7 +31,6 @@ const vuetify = createVuetify({
 		}
 	},
 	// Set some defaults for components to keep the Demyo 2 style that we like
-	// TODO: Vue 3: migrate to the prop for v-icon (rather than the element content)
 	defaults: {
 		VAutocomplete: {
 			color: 'primary',

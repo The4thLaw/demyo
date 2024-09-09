@@ -31,20 +31,11 @@
 </template>
 
 <script>
-import FormActions from '@/components/FormActions.vue'
-import GalleryIndex from '@/components/GalleryIndex.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import imageService from '@/services/image-service'
 import { useUiStore } from '@/stores/ui'
 
 export default {
 	name: 'ImageDetect',
-
-	components: {
-		FormActions,
-		GalleryIndex,
-		SectionCard
-	},
 
 	data() {
 		return {

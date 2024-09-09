@@ -43,23 +43,12 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import LetterIcon from '@/components/LetterIcon.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import readerService from '@/services/reader-service'
 
 export default {
 	name: 'ReaderView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		LetterIcon,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 

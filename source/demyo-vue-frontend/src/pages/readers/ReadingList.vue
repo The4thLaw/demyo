@@ -5,16 +5,11 @@
 </template>
 
 <script>
-import MetaSeriesIndex from '@/components/MetaSeriesIndex.vue'
 import modelViewMixin from '@/mixins/model-view'
 import readerService from '@/services/reader-service'
 
 export default {
 	name: 'ReadingList',
-
-	components: {
-		MetaSeriesIndex
-	},
 
 	// We can reuse the 'view' mixin even though it's not really a view : it is generic enough
 	mixins: [modelViewMixin],

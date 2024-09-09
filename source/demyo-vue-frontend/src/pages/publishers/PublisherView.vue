@@ -70,25 +70,12 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import TextIndex from '@/components/TextIndex.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import publisherService from '@/services/publisher-service'
 
 export default {
 	name: 'PublisherView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		FieldValue,
-		SectionCard,
-		TextIndex
-	},
 
 	mixins: [modelViewMixin],
 

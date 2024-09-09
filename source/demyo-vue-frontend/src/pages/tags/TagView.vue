@@ -44,23 +44,12 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import tagService from '@/services/tag-service'
 
 export default {
 	name: 'TagView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		FieldValue,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 

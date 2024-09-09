@@ -66,11 +66,6 @@
 </template>
 
 <script>
-import AlbumTextList from '@/components/AlbumTextList.vue'
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import authorService from '@/services/author-service'
@@ -78,14 +73,6 @@ import dayjs from 'dayjs'
 
 export default {
 	name: 'AuthorView',
-
-	components: {
-		AlbumTextList,
-		AppTask,
-		AppTasks,
-		FieldValue,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 

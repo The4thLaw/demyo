@@ -76,23 +76,12 @@
 </template>
 
 <script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import SectionCard from '@/components/SectionCard.vue'
 import { deleteStub } from '@/helpers/actions'
 import modelViewMixin from '@/mixins/model-view'
 import sourceService from '@/services/derivative-source-service'
 
 export default {
 	name: 'DerivativeSourceView',
-
-	components: {
-		AppTask,
-		AppTasks,
-		FieldValue,
-		SectionCard
-	},
 
 	mixins: [modelViewMixin],
 
