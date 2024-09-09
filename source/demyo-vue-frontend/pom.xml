@@ -106,13 +106,13 @@
 
 							<!-- Skippable unit tests -->
 							<execution>
-								<id>npm run test:unit</id>
+								<id>npm run test:ci</id>
 								<goals>
 									<goal>npm</goal>
 								</goals>
 								<phase>test</phase>
 								<configuration>
-									<arguments>run test:unit</arguments>
+									<arguments>run test:ci</arguments>
 								</configuration>
 							</execution>
 						</executions>
