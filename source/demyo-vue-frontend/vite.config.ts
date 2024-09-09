@@ -9,8 +9,6 @@ import type { ConfigEnv, UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 
-// TODO: Vue 3: Since we now have auto-import of components, remove them everywhere we can
-
 export default ({ mode }: ConfigEnv): UserConfig => {
 	return defineConfig({
 		server: {
@@ -64,7 +62,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 		plugins: [
 			vue(),
 			vuetify(),
-			autoComponents(),
+			autoComponents({
+				dirs: ['src/components', 'src/pages']
+			}),
 			autoImport({
 				imports: [
 					// Presets
