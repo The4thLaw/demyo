@@ -2,12 +2,32 @@ type HexColor = `#${string}`
 
 interface AbstractModel {
 	id?: number
-	getIdentifyingName: string
+	identifyingName: string
 }
 
 interface AbstractNamedModel extends AbstractModel {
 	name: string
 }
+
+interface AbstractBasicLegalEntity extends AbstractNamedModel {
+	website: string
+	history: string
+}
+
+interface AbstractLegalEntity extends AbstractBasicLegalEntity {
+	feed: string
+	logo: Image
+}
+
+interface Binding extends AbstractNamedModel {}
+
+interface Collection extends AbstractLegalEntity {
+	publisher: Publisher
+}
+
+interface Image extends AbstractModel {}
+
+interface Publisher extends AbstractLegalEntity {}
 
 interface ApplicationConfiguration {
 	currency: string

@@ -1,6 +1,6 @@
 <template>
 	<div
-		ref="keyTarget"
+		ref="key-target"
 		v-touch="{
 			left: nextPage,
 			right: previousPage
@@ -31,46 +31,38 @@
 			v-if="pageCount > 1"
 			v-model="currentPage"
 			:length="pageCount"
-			@update:model-value="$emit('page-change')"
+			@update:model-value="emit('page-change')"
 		/>
 	</div>
 </template>
 
-<script>
-import { focusElement } from '@/helpers/dom'
-import paginatedTextMixin from '@/mixins/paginated-text'
-import { useReaderStore } from '@/stores/reader'
-import { mapState } from 'pinia'
-
+<script setup lang="ts">
 /**
  * This component is a text-based index that allows the caller to provide cards for the items.
  */
-export default {
-	name: 'CardTextIndex',
 
-	mixins: [paginatedTextMixin],
+import { emitTypes, usePagination } from '@/composables/pagination'
+import { focusElement } from '@/helpers/dom'
+import { onMounted, useTemplateRef } from 'vue'
 
-	props: {
-		splitByFirstLetter: {
-			type: Boolean,
-			default: true
-		},
-		firstLetterExtractor: {
-			type: Function,
-			default: () => '#'
-		}
-	},
-
-	computed: {
-		...mapState(useReaderStore, {
-			itemsPerPage: store => store.currentReader.configuration.pageSizeForCards
-		})
-	},
-
-	mounted() {
-		focusElement(this.$refs.keyTarget)
-	}
+interface Props {
+	items?: AbstractModel[]
+	splitByFirstLetter?: boolean
+	firstLetterExtractor: (item: AbstractModel) => string
 }
+const props = withDefaults(defineProps<Props>(), {
+	items: () => [],
+	splitByFirstLetter: true,
+	firstLetterExtractor: () => '#'
+})
+
+const keyTarget = useTemplateRef('key-target')
+onMounted(() => focusElement(keyTarget.value))
+
+const emit = defineEmits(emitTypes)
+
+const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
+	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, null)
 </script>
 
 <style lang="scss">

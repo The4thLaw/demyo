@@ -7,12 +7,12 @@
 				icon="mdi-folder-multiple dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="count === 0"
+				v-if="albumCount === 0"
 				:label="$t('quickTasks.delete.collection')"
 				:confirm="$t('quickTasks.delete.collection.confirm')"
 				icon="mdi-folder-multiple dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteCollection"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
@@ -37,14 +37,14 @@
 				<div v-html="collection.history" />
 			</FieldValue>
 			<v-btn
-				v-if="count > 0"
+				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withCollection: collection.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $t('page.Collection.viewAlbums', count) }}
+				{{ $t('page.Collection.viewAlbums', albumCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count === 0"
+				v-if="albumCount === 0"
 				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Collection.noAlbums') }}
@@ -53,44 +53,19 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import collectionService from '@/services/collection-service'
 
-export default {
-	name: 'CollectionView',
+const albumCount = ref(0)
 
-	mixins: [modelViewMixin],
-
-	data() {
-		return {
-			collection: {},
-			count: -1,
-			appTasksMenu: false
-		}
-	},
-
-	head() {
-		return {
-			title: this.collection
-				? `${this.collection.identifyingName} – ${this.collection.publisher?.identifyingName}` : null
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const collectionP = collectionService.findById(this.parsedId)
-			this.count = await collectionService.countAlbums(this.parsedId)
-			this.collection = await collectionP // Resolve calls in parallel
-		},
-
-		deleteCollection() {
-			void deleteStub(this,
-				async () => collectionService.deleteModel(this.collection.id),
-				'quickTasks.delete.collection.confirm.done',
-				'PublisherIndex')
-		}
-	}
+async function fetchData(id: number): Promise<Collection> {
+	const collectionP = collectionService.findById(id)
+	albumCount.value = await collectionService.countAlbums(id)
+	return collectionP // Resolve calls in parallel
 }
+
+const {model: collection, loading, appTasksMenu, deleteModel}
+	= useSimpleView(fetchData, collectionService, 'quickTasks.delete.collection.confirm.done', 'PublisherIndex',
+		c => c ? `${c.identifyingName} – ${c.publisher?.identifyingName}` : '')
 </script>

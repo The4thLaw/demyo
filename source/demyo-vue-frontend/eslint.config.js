@@ -81,6 +81,7 @@ const commonRules = {
 
 	// TypeScript tweaks
 	'@typescript-eslint/prefer-destructuring': ['error', { array: false }],
+	'@typescript-eslint/max-params': ['error', 5],
 	// TypeScript warnings we don't really care about
 	'@typescript-eslint/no-confusing-void-expression': 'off',
 	'@typescript-eslint/no-magic-numbers': 'off',
@@ -204,6 +205,8 @@ export default [
 
 		rules: {
 			...commonRules,
+			// Managed by TypeScript
+			'no-undef': 'off',
 			// See https://github.com/vuejs/language-tools/issues/47
 			'no-unused-vars': 'off',
 			'@typescript-eslint/no-unused-vars': 'off',
