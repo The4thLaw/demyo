@@ -19,7 +19,7 @@ function extractFirstLetter<T extends AbstractModel>(item: T, firstLetterExtract
 
 export const emitTypes = ['page-change']
 
-interface PaginationState {
+interface PaginationState<T> {
 	/** The current page number. */
 	currentPage: Ref<number>
 	/** The total page count. */
@@ -29,9 +29,9 @@ interface PaginationState {
 	/** Whether a next page is available. */
 	hasNextPage: Ref<boolean>
 	/** The items, paginated. */
-	paginatedItems: Ref<AbstractModel[]>
+	paginatedItems: Ref<T[]>
 	/** The items, paginated and grouped by first letter if relevant. */
-	groupedItems: Ref<Dictionary<AbstractModel[]>>
+	groupedItems: Ref<Dictionary<T[]>>
 	/** Navigate to the previous page if possible. */
 	previousPage: () => void
 	/** Navigate to the next page if possible. */
@@ -39,7 +39,7 @@ interface PaginationState {
 }
 
 export function usePagination<T extends AbstractModel>(items: Ref<T[]>, firstLetterExtractor: (item: T) => string,
-	emit: (evt: string) => void, itemsPerPage: Ref<number> | null): PaginationState {
+	emit: (evt: string) => void, itemsPerPage: Ref<number> | null): PaginationState<T> {
 	const currentPage = ref(1)
 
 	const readerStore = useReaderStore()

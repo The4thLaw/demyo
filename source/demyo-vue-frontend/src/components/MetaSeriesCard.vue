@@ -52,44 +52,24 @@
 	</v-card>
 </template>
 
-<script>
-import paginatedTextMixin from '@/mixins/paginated-text'
+<script setup lang="ts">
+import { emitTypes, usePagination } from '@/composables/pagination'
 import { useReaderStore } from '@/stores/reader'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'MetaSeriesCard',
-
-	mixins: [paginatedTextMixin],
-
-	props: {
-		meta: {
-			type: null,
-			required: true
-		}
-	},
-
-	computed: {
-		// Having these allows us to reuse the logic from paginated-text
-		itemsToPaginate() {
-			return this.meta.albums || []
-		},
-
-		...mapState(useReaderStore, {
-			itemsPerPage: store => store.currentReader.configuration.subItemsInCardIndex
-		}),
-
-		cardLink() {
-			return this.meta.series
-				? `/series/${this.meta.series.id}/view` : `/albums/${this.meta.album.id}/view`
-		}
-	},
-
-	methods: {
-		// Having this allows us to reuse the logic from paginated-text
-		firstLetterExtractor: () => '#'
-	}
+interface Props {
+	meta: MetaSeries
 }
+const props = defineProps<Props>()
+const albums = computed(() => props.meta.albums || [])
+const cardLink = computed(() =>
+	props.meta.series ? `/series/${props.meta.series.id}/view` : `/albums/${props.meta.album.id}/view`)
+
+const emit = defineEmits(emitTypes)
+const readerStore = useReaderStore()
+const itemsPerPage = computed(() => readerStore.currentReader.configuration.subItemsInCardIndex)
+
+const { pageCount, paginatedItems, previousPage, nextPage, hasPreviousPage, hasNextPage }
+	= usePagination(albums, () => '#', emit, itemsPerPage)
 </script>
 
 <style lang="scss">

@@ -1,9 +1,12 @@
+// TODO: generate part of this
 type HexColor = `#${string}`
 
 interface AbstractModel {
 	id?: number
 	identifyingName: string
 }
+
+interface AbstractPricedModel extends AbstractModel {}
 
 interface AbstractNamedModel extends AbstractModel {
 	name: string
@@ -19,6 +22,11 @@ interface AbstractLegalEntity extends AbstractBasicLegalEntity {
 	logo: Image
 }
 
+interface Album extends AbstractPricedModel {
+	title: string
+	wishlist: boolean
+}
+
 interface Binding extends AbstractNamedModel {}
 
 interface Collection extends AbstractLegalEntity {
@@ -27,7 +35,15 @@ interface Collection extends AbstractLegalEntity {
 
 interface Image extends AbstractModel {}
 
+interface MetaSeries {
+	album: Album
+	series: Series
+	albums: Album[]
+}
+
 interface Publisher extends AbstractLegalEntity {}
+
+interface Series extends AbstractNamedModel {}
 
 interface ApplicationConfiguration {
 	currency: string
