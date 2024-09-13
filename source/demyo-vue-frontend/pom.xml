@@ -55,6 +55,48 @@
 			<build>
 				<plugins>
 					<plugin>
+						<groupId>cz.habarta.typescript-generator</groupId>
+						<artifactId>typescript-generator-maven-plugin</artifactId>
+						<version>3.2.1263</version>
+						<executions>
+							<execution>
+								<id>generate-typescript-models</id>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+								<phase>generate-sources</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<jsonLibrary>jackson2</jsonLibrary>
+							<!-- Can't get the patterns to work so use the classes, the plugin will load the dependencies -->
+							<classes>
+								<class>org.demyo.model.beans.AuthorAlbums</class>
+								<class>org.demyo.model.beans.MetaSeries</class>
+								<class>org.demyo.model.beans.ReaderLists</class>
+							</classes>
+							<customTypeMappings>
+								<mapping>java.util.Locale:string</mapping>
+							</customTypeMappings>
+							<excludeClasses>
+								<class>java.lang.Comparable</class>
+								<class>java.io.Serializable</class>
+							</excludeClasses>
+							<!-- Note that Javadoc isn't working due to https://github.com/vojtechhabarta/typescript-generator/issues/1049 -->
+							<outputKind>global</outputKind>
+							<outputFileType>declarationFile</outputFileType>
+							<outputFile>src/types/java-models.d.ts</outputFile>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.demyo</groupId>
+								<artifactId>demyo-model</artifactId>
+								<version>${project.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+
+					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
 						<version>${js.frontend-maven-plugin.version}</version>
