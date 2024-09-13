@@ -3,7 +3,7 @@
  */
 
 import { useReaderStore } from '@/stores/reader'
-import { Dictionary } from 'lodash'
+import type { Dictionary } from 'lodash'
 import deburr from 'lodash/deburr'
 import groupBy from 'lodash/groupBy'
 
@@ -19,7 +19,7 @@ function extractFirstLetter<T extends AbstractModel>(item: T, firstLetterExtract
 
 export const emitTypes = ['page-change']
 
-interface PaginationState<T> {
+interface PaginationState<T extends AbstractModel> {
 	/** The current page number. */
 	currentPage: Ref<number>
 	/** The total page count. */
