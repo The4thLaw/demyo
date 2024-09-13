@@ -1,6 +1,9 @@
 import { loadReaderLanguageFromLocalStorage } from '@/helpers/reader'
 import datetimeFormats from '@/locales/dateTimeFormats.json'
 import { apiRoot, defaultLanguage } from '@/myenv'
+// By default, we start with partial messages covering all above-the-fold content in all supported languages
+// (mainly titles, but also the search widget, snack bar)
+import mergedMessages from '@intlify/unplugin-vue-i18n/messages'
 import axios from 'axios'
 import { createI18n } from 'vue-i18n'
 
@@ -12,22 +15,6 @@ const loadedLanguages = []
 
 // Define the variants we support
 datetimeFormats['fr-BE'] = datetimeFormats.fr
-
-// By default, we start with partial messages covering all above-the-fold content in all supported languages
-// (mainly titles, but also the search widget, snack bar)
-function loadLocaleMessages() {
-	const locales = import.meta.glob('@/locales/*.json', { eager: true })
-
-	const messages = {}
-	for (const path in locales) {
-		if (/\/[a-z]{2}(-[A-Z]{2})?.json$/.test(path)) {
-			const localeName = path.replace(/(^.*\/)|(.json$)/g, '')
-			messages[localeName] = locales[path].default
-		}
-	}
-
-	return messages
-}
 
 /* The base language is
  * - Loaded from the local storage if possible
@@ -46,7 +33,7 @@ const i18n = createI18n({
 	// Use the simple locale for the JSON files, which aren't as lenient as the backend
 	locale: simpleLocale,
 	fallbackLocale: fallbackLanguage,
-	messages: loadLocaleMessages(),
+	messages: mergedMessages,
 	datetimeFormats,
 	legacy: false
 })

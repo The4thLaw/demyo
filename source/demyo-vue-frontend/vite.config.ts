@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import * as path from 'path'
@@ -59,6 +60,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 			}
 		},
 
+		define: {
+			// See https://vue-i18n.intlify.dev/guide/advanced/optimization#jit-compilation
+			// Avoids CSP issues with unsafe-eval
+			__INTLIFY_JIT_COMPILATION__: true
+		},
+
 		plugins: [
 			vue(),
 			vuetify(),
@@ -70,6 +77,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 					// Presets
 					'vue'
 				]
+			}),
+			VueI18nPlugin({
+				include: [path.resolve(__dirname, './src/locales/**')]
 			}),
 			visualizer()
 		],
