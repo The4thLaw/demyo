@@ -2,7 +2,7 @@ import { formatCurrency } from '@/helpers/i18n'
 import { useReaderStore } from '@/stores/reader'
 import { computed } from 'vue'
 
-export function useCurrency(rawPrice) {
+export function useCurrency(rawPrice: number) {
 	const currencies = useCurrencies([rawPrice])
 	return {
 		currency: currencies.currency,
@@ -10,7 +10,7 @@ export function useCurrency(rawPrice) {
 	}
 }
 
-export function useCurrencies(rawPrices) {
+export function useCurrencies(rawPrices: number[]) {
 	const readerStore = useReaderStore()
 
 	const currency = computed(() => readerStore.currentReader?.configuration?.currency)
