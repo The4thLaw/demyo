@@ -17,30 +17,21 @@
 	</v-container>
 </template>
 
-<script>
-import quicksearch from '@/mixins/quicksearch'
+<script setup lang="ts">
+import { useQuicksearch } from '@/composables/quicksearch'
 import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'HomePage',
+const uiStore = useUiStore()
+uiStore.disableSearch()
+uiStore.disableGlobalOverlay()
 
-	mixins: [quicksearch],
+useHead({
+	title: useI18n().t('title.home')
+})
 
-	data() {
-		return {
-			uiStore: useUiStore()
-		}
-	},
-
-	head() {
-		return {
-			title: this.$t('title.home')
-		}
-	},
-
-	created() {
-		this.uiStore.disableSearch()
-		this.uiStore.disableGlobalOverlay()
-	}
-}
+const { currentQuery: quicksearchQuery, performSearch, clearSearch, isRelevantSearchQuery, loading: quicksearchLoading,
+	results: quicksearchResults }
+	= useQuicksearch()
 </script>
