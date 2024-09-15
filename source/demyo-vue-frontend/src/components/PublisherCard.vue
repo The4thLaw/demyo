@@ -34,43 +34,22 @@
 	</v-card>
 </template>
 
-<script>
-import paginatedTextMixin from '@/mixins/paginated-text'
+<script setup lang="ts">
+import { useBasicPagination } from '@/composables/pagination'
 import { useReaderStore } from '@/stores/reader'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'PublisherCard',
+const props = defineProps<{
+	publisher: Publisher
+}>()
 
-	mixins: [paginatedTextMixin],
+const collections = computed(() => props.publisher.collections)
+const hasCollections = computed(() => collections.value && collections.value.length)
 
-	props: {
-		publisher: {
-			type: null,
-			required: true
-		}
-	},
+const readerStore = useReaderStore()
+const itemsPerPage = computed(() => readerStore.currentReader.configuration.subItemsInCardIndex)
 
-	computed: {
-		// Having these allows us to reuse the logic from paginated-text
-		itemsToPaginate() {
-			return this.publisher.collections || []
-		},
-
-		...mapState(useReaderStore, {
-			itemsPerPage: store => store.currentReader.configuration.subItemsInCardIndex
-		}),
-
-		hasCollections() {
-			return this.publisher.collections && this.publisher.collections.length > 0
-		}
-	},
-
-	methods: {
-		// Having this allows us to reuse the logic from paginated-text
-		firstLetterExtractor: () => '#'
-	}
-}
+const { paginatedItems, pageCount, hasNextPage, hasPreviousPage, nextPage, previousPage }
+	= useBasicPagination(collections, itemsPerPage)
 </script>
 
 <style lang="scss">

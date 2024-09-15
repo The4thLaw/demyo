@@ -53,23 +53,21 @@
 </template>
 
 <script setup lang="ts">
-import { emitTypes, usePagination } from '@/composables/pagination'
+import { useBasicPagination } from '@/composables/pagination'
 import { useReaderStore } from '@/stores/reader'
 
-interface Props {
+const props = defineProps<{
 	meta: MetaSeries
-}
-const props = defineProps<Props>()
+}>()
 const albums = computed(() => props.meta.albums || [])
 const cardLink = computed(() =>
 	props.meta.series ? `/series/${props.meta.series.id}/view` : `/albums/${props.meta.album.id}/view`)
 
-const emit = defineEmits(emitTypes)
 const readerStore = useReaderStore()
 const itemsPerPage = computed(() => readerStore.currentReader.configuration.subItemsInCardIndex)
 
 const { pageCount, paginatedItems, previousPage, nextPage, hasPreviousPage, hasNextPage }
-	= usePagination(albums, () => '#', emit, itemsPerPage)
+	= useBasicPagination(albums, itemsPerPage)
 </script>
 
 <style lang="scss">

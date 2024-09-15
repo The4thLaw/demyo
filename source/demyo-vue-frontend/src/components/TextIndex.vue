@@ -1,6 +1,6 @@
 <template>
 	<div
-		ref="keyTarget"
+		ref="key-target"
 		v-touch="{
 			left: nextPage,
 			right: previousPage
@@ -44,39 +44,36 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
-			@update:modelValue="$emit('page-change')"
+			@update:modelValue="emit('page-change')"
 		/>
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { emitTypes, usePagination } from '@/composables/pagination'
 import { focusElement } from '@/helpers/dom'
-import paginatedTextMixin from '@/mixins/paginated-text'
+import { useTemplateRef } from 'vue'
 
-export default {
-	name: 'TextIndex',
-
-	mixins: [paginatedTextMixin],
-
-	props: {
-		splitByFirstLetter: {
-			type: Boolean,
-			default: true
-		},
-		firstLetterExtractor: {
-			type: Function,
-			default: () => '#'
-		},
-		compact: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	mounted() {
-		focusElement(this.$refs.keyTarget)
-	}
+interface Props {
+	items?: AbstractModel[]
+	splitByFirstLetter?: boolean,
+	firstLetterExtractor: (item: AbstractModel) => string,
+	compact?: boolean
 }
+const props = withDefaults(defineProps<Props>(), {
+	items: () => [],
+	splitByFirstLetter: true,
+	firstLetterExtractor: () => '#',
+	compact: false
+})
+
+const keyTarget = useTemplateRef('key-target')
+onMounted(() => focusElement(keyTarget.value))
+
+const emit = defineEmits(emitTypes)
+
+const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
+	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, null)
 </script>
 
 <style lang="scss">
