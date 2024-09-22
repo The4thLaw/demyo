@@ -47,7 +47,7 @@
 
 				<v-list-item id="l-DefaultLayout__menuSearch">
 					<v-text-field
-						ref="menuSearch"
+						ref="menu-search"
 						v-model="quicksearchQuery" clearable hide-details
 						autocomplete="off"
 						prepend-icon="mdi-magnify" @keyup="performSearch"
@@ -78,18 +78,18 @@
 			<v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
 			<v-spacer />
 			<template v-if="!suppressSearch">
-				<v-btn id="l-DefaultLayout__toolbarSearchButton" icon @click="showQuicksearch = true; focus()">
+				<v-btn id="l-DefaultLayout__toolbarSearchButton" icon @click="showQuicksearch = true; focusSearch()">
 					<v-icon>mdi-magnify</v-icon>
 				</v-btn>
 				<v-expand-x-transition>
 					<div v-show="showQuicksearch" id="l-DefaultLayout__toolbarSearchField">
 						<v-text-field
-							ref="toolbarSearch"
+							ref="toolbar-search"
 							v-model="quicksearchQuery" clearable hide-details
 							autocomplete="off"
 							:color="$vuetify.theme['current'].colors['on-primary']"
 							@click:clear="showQuicksearch = false; clearSearch()"
-							@blur="blur" @keyup="performSearch" @keydown.enter="enterSearch"
+							@blur="blurSearch" @keyup="performSearch" @keydown.enter="enterSearch"
 						/>
 					</div>
 				</v-expand-x-transition>
@@ -133,92 +133,80 @@
 	</v-app>
 </template>
 
-<script>
-import quicksearch from '@/mixins/quicksearch'
+<script setup lang="ts">
+import { useQuicksearch } from '@/composables/quicksearch'
 import { demyoCodename } from '@/myenv'
 import { useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
-import { mapState, mapWritableState } from 'pinia'
+import { storeToRefs } from 'pinia'
+import { useTemplateRef } from 'vue'
+import { useRoute } from 'vue-router'
 import defaultMenu from './default-menu.json'
 
-export default {
-	name: 'DefaultLayout',
+const pageTitle = ref('Demyo')
+const mainMenu = ref(false)
+const showQuicksearch = ref(false)
+const promptReaderSelection = ref(false)
+const menuItems = ref(defaultMenu)
 
-	mixins: [quicksearch],
-
-	data() {
-		return {
-			uiStore: useUiStore(),
-
-			pageTitle: 'Demyo',
-			pageTitleObserver: null,
-			demyoCodename: demyoCodename,
-
-			mainMenu: false,
-			showQuicksearch: false,
-
-			promptReaderSelection: false,
-
-			menuItems: defaultMenu
+let pageTitleObserver: MutationObserver | null;
+onMounted(() => {
+	// Monitor the page title for changes
+	pageTitleObserver = new MutationObserver((mutations) => {
+		const elem = mutations[0].target
+		if (elem instanceof HTMLTitleElement) {
+			const newTitle = elem.text.replace(/ – Demyo$/, '')
+			pageTitle.value = newTitle
 		}
-	},
-
-	computed: {
-		...mapState(useUiStore, ['suppressSearch', 'globalOverlay', 'displaySnackbar']),
-		...mapWritableState(useUiStore, ['displayDetailsPane']),
-		...mapState(useUiStore, {
-			snackbarMessage: store => store.snackbarMessages[0]
-		}),
-		...mapState(useReaderStore, ['readerLoaded', 'readerSelectionRequired', 'currentReader'])
-	},
-
-	watch: {
-		$route() {
-			// Route changed, clear the quick search and collapse the field
-			this.clearSearch()
-			this.blur()
-		}
-	},
-
-	mounted() {
-		// Monitor the page title for changes. unhead doesn't seem to have an event for this
-		this.pageTitleObserver = new MutationObserver((mutations) => {
-			const pageTitle = mutations[0].target.text.replace(/ – Demyo$/, '')
-			this.pageTitle = pageTitle
-		})
-		this.pageTitleObserver.observe(
-			document.querySelector('title'),
-			{ subtree: true, characterData: true, childList: true }
-		)
-	},
-
-	unmounted() {
-		this.pageTitleObserver.disconnect()
-		this.pageTitleObserver = null
-	},
-
-	methods: {
-		enterSearch() {
-			this.$refs.menuSearch.blur()
-			this.$refs.toolbarSearch.blur()
-			this.performSearch()
-		},
-
-		closeSnackbar() {
-			this.uiStore.closeSnackbar()
-		},
-
-		focus() {
-			this.$refs.toolbarSearch.focus()
-			// Vuetify doesn't forward the Vue transition events so we delay a refocus
-			window.setTimeout(() => this.$refs.toolbarSearch.focus(), 300)
-		},
-
-		blur() {
-			this.showQuicksearch = !!this.quicksearchQuery
-		}
+	})
+	const titleNode = document.querySelector('title')
+	if (titleNode != null) {
+		pageTitleObserver.observe(titleNode,
+			{ subtree: true, characterData: true, childList: true })
 	}
+})
+onUnmounted(() => {
+	pageTitleObserver?.disconnect()
+	pageTitleObserver = null
+})
+
+const uiStore = useUiStore()
+const closeSnackbar = uiStore.closeSnackbar
+const { suppressSearch, globalOverlay, displaySnackbar, displayDetailsPane } = storeToRefs(uiStore)
+const snackbarMessage = computed(() => uiStore.snackbarMessages[0])
+
+const readerStore = useReaderStore()
+const { readerLoaded, readerSelectionRequired, currentReader } = storeToRefs(readerStore)
+
+const { currentQuery: quicksearchQuery, clearSearch, performSearch,
+	isRelevantSearchQuery, loading: quicksearchLoading, results: quicksearchResults } = useQuicksearch()
+const menuSearch = useTemplateRef<HTMLInputElement>('menu-search')
+const toolbarSearch = useTemplateRef<HTMLInputElement>('toolbar-search')
+
+function enterSearch() {
+	mainMenu.value = false
+	menuSearch.value?.blur()
+	toolbarSearch.value?.blur()
+	performSearch()
 }
+
+function focusSearch() {
+	toolbarSearch.value?.focus()
+	// Vuetify doesn't forward the Vue transition events so we delay a refocus
+	window.setTimeout(() => toolbarSearch.value?.focus(), 300)
+}
+
+function blurSearch() {
+	showQuicksearch.value = !!quicksearchQuery.value
+}
+
+const route = useRoute()
+watch(route, () => {
+	// Route changed, clear the quick search and collapse the field
+	clearSearch()
+	blur()
+})
+
 </script>
 
 <style lang="scss">
