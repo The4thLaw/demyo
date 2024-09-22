@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -28,10 +29,12 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "IMAGES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "description"))
-@NamedEntityGraph(name = "Image.forDependencies", attributeNodes =
-{ @NamedAttributeNode("albumCovers"),
-		@NamedAttributeNode("albumOtherImages"), @NamedAttributeNode("authors"), @NamedAttributeNode("collections"),
-		@NamedAttributeNode("derivatives"), @NamedAttributeNode("publishers") })
+@NamedEntityGraph(name = "Image.forDependencies",
+	attributeNodes = { @NamedAttributeNode(value = "albumCovers", subgraph = "Image.subgraph.Album"),
+		@NamedAttributeNode(value = "albumOtherImages", subgraph = "Image.subgraph.Album"),
+		@NamedAttributeNode("authors"), @NamedAttributeNode("collections"),
+		@NamedAttributeNode("derivatives"), @NamedAttributeNode("publishers") },
+	subgraphs = @NamedSubgraph(name = "Image.subgraph.Album", attributeNodes = @NamedAttributeNode("series")))
 public class Image extends AbstractModel {
 	/** The URL to access the image. */
 	@Column(name = "url")
