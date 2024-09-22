@@ -79,7 +79,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 				]
 			}),
 			VueI18nPlugin({
-				include: [path.resolve(__dirname, './src/locales/**')]
+				include: [path.resolve(__dirname, './src/locales/strings/**')]
 			}),
 			visualizer()
 		],
