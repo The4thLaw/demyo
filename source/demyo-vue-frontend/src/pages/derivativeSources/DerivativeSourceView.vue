@@ -7,12 +7,12 @@
 				icon="mdi-tooltip-account dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="count === 0"
+				v-if="derivCount === 0"
 				:label="$t('quickTasks.delete.derivativeSource')"
 				:confirm="$t('quickTasks.delete.derivativeSource.confirm')"
 				icon="mdi-tooltip-account dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteSource"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
@@ -46,14 +46,14 @@
 				<div v-html="source.history" />
 			</FieldValue>
 			<v-btn
-				v-if="count > 0"
+				v-if="derivCount > 0"
 				:to="{ name: 'DerivativeIndex', query: { withSource: source.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $t('page.DerivativeSource.viewDerivatives', count) }}
+				{{ $t('page.DerivativeSource.viewDerivatives', derivCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count === 0"
+				v-if="derivCount === 0"
 				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.DerivativeSource.noDerivatives') }}
@@ -75,61 +75,34 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import sourceService from '@/services/derivative-source-service'
 
-export default {
-	name: 'DerivativeSourceView',
+const derivCount = ref(0)
 
-	mixins: [modelViewMixin],
-
-	data() {
-		return {
-			source: {},
-			count: -1,
-			appTasksMenu: false
-		}
-	},
-
-	head() {
-		return {
-			title: this.source.identifyingName
-		}
-	},
-
-	computed: {
-		phoneLink() {
-			if (!this.source.phoneNumber) {
-				return ''
-			}
-
-			return 'tel:' + this.source.phoneNumber.replaceAll(/[ /-]/g, '')
-		},
-
-		mapUrl() {
-			const encoded = encodeURI(`${this.source.name}, ${this.source.address}`)
-			return 'https://maps.google.com/maps?t=&z=15&ie=UTF8&iwloc=&output=embed&q=' + encoded
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const sourceP = sourceService.findById(this.parsedId)
-			this.count = await sourceService.countDerivatives(this.parsedId)
-			this.source = await sourceP // Resolve calls in parallel
-		},
-
-		deleteSource() {
-			// TODO: Vue 3: sort out such warnings about promises
-			deleteStub(this,
-				() => sourceService.deleteModel(this.source.id),
-				'quickTasks.delete.derivativeSource.confirm.done',
-				'DerivativeSourceIndex')
-		}
-	}
+async function fetchData(id: number): Promise<DerivativeSource> {
+	const sourceP = sourceService.findById(id)
+	derivCount.value = await sourceService.countDerivatives(id)
+	return sourceP // Resolve calls in parallel
 }
+
+const {model: source, loading, appTasksMenu, deleteModel}
+	= useSimpleView(fetchData, sourceService,
+		'quickTasks.delete.derivativeSource.confirm.done','DerivativeSourceIndex')
+
+const phoneLink = computed(() => {
+	if (!source.value.phoneNumber) {
+		return ''
+	}
+
+	return 'tel:' + source.value.phoneNumber.replaceAll(/[ /-]/g, '')
+})
+
+const mapUrl = computed(() => {
+	const encoded = encodeURI(`${source.value.name}, ${source.value.address}`)
+	return 'https://maps.google.com/maps?t=&z=15&ie=UTF8&iwloc=&output=embed&q=' + encoded
+})
 </script>
 
 <style lang="scss">

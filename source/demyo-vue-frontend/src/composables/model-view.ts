@@ -8,6 +8,7 @@ interface ViewData<T extends AbstractModel> {
 	model: Ref<T>
 	appTasksMenu: Ref<boolean>
 	loading: Ref<boolean>
+	loadData: () => void
 	deleteModel: () => void
 }
 
@@ -61,6 +62,7 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 		model,
 		appTasksMenu,
 		loading,
-		deleteModel
+		deleteModel,
+		loadData
 	}
 }

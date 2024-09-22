@@ -10,12 +10,13 @@
 				:confirm="$t('quickTasks.delete.image.confirm')"
 				icon="mdi-camera dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteImage"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" class="c-ImageView__image">
 			<img
+				v-if="imageUrl"
 				:src="imageUrl"
 				:alt="image.description"
 			>
@@ -40,8 +41,8 @@
 
 						<v-list-item v-for="item in value" :key="item.id" :to="`/${modelType}/${item.id}/view`">
 							<template #title>
-								<template v-if="modelType === 'albums' && item.series">
-									{{ item.series.name }} -
+								<template v-if="modelType === 'albums' && hasSeries(item)">
+									{{ (item as Album).series.identifyingName }} -
 								</template>
 								{{ item.identifyingName }}
 							</template>
@@ -53,81 +54,60 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import { getBaseImageUrl } from '@/helpers/images'
-import modelViewMixin from '@/mixins/model-view'
 import imageService from '@/services/image-service'
 
-export default {
-	name: 'ImageView',
+const mainLoading = ref(true)
+const dependenciesLoading = ref(true)
+const dependencies = ref<Image | null>(null)
 
-	mixins: [modelViewMixin],
+async function fetchData(id: number): Promise<Image> {
+	mainLoading.value = true
+	const imageP = imageService.findById(id)
+	mainLoading.value = false
 
-	data() {
-		return {
-			mainLoading: true,
-			dependenciesLoading: true,
-			image: {},
-			dependencies: {},
-			appTasksMenu: false
-		}
-	},
+	dependenciesLoading.value = true
+	dependencies.value = await imageService.getImageDependencies(id)
+	dependenciesLoading.value = false
 
-	head() {
-		return {
-			title: this.image.identifyingName
-		}
-	},
-
-	computed: {
-		imageUrl() {
-			return getBaseImageUrl(this.image)
-		},
-
-		hasDependencies() {
-			return this.dependencies.albumCovers
-				|| this.dependencies.albumOtherImages
-				|| this.dependencies.authors
-				|| this.dependencies.collections
-				|| this.dependencies.derivatives
-				|| this.dependencies.publishers
-		},
-
-		parsedDependencies() {
-			const covs = this.dependencies.albumCovers || []
-			const other = this.dependencies.albumOtherImages || []
-			// This won't work if an image is used twice in an Album, although that hardly makes any sense
-			return {
-				albums: [...covs, ...other],
-				authors: this.dependencies.authors || [],
-				collections: this.dependencies.collections || [],
-				derivatives: this.dependencies.derivatives || [],
-				publishers: this.dependencies.publishers || []
-			}
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			this.mainLoading = true
-
-			this.image = await imageService.findById(this.parsedId)
-			this.mainLoading = false
-
-			this.dependencies = await imageService.getImageDependencies(this.parsedId)
-			this.dependenciesLoading = false
-		},
-
-		deleteImage() {
-			deleteStub(this,
-				() => imageService.deleteModel(this.image.id),
-				'quickTasks.delete.image.confirm.done',
-				'ImageIndex')
-		}
-	}
+	return imageP
 }
+
+const {model: image, loading, appTasksMenu, deleteModel}
+	= useSimpleView(fetchData, imageService,
+		'quickTasks.delete.image.confirm.done', 'ImageIndex')
+
+const imageUrl = computed(() => getBaseImageUrl(image.value))
+
+const hasDependencies= computed(() =>
+	dependencies.value?.albumCovers
+		|| dependencies.value?.albumOtherImages
+		|| dependencies.value?.authors
+		|| dependencies.value?.collections
+		|| dependencies.value?.derivatives
+		|| dependencies.value?.publishers
+)
+
+function hasSeries(item: IModel) {
+	return (item as Album).series
+}
+
+const parsedDependencies = computed(() => {
+	const covs: Album[] = dependencies.value?.albumCovers || []
+	const other: Album[] = dependencies.value?.albumOtherImages || []
+	// This won't work if an image is used twice in an Album, although that hardly makes any sense
+	return {
+		albums: [...covs, ...other],
+		authors: dependencies.value?.authors || [] as Author[],
+		collections: dependencies.value?.collections || [] as Collection[],
+		derivatives: dependencies.value?.derivatives || [] as Derivative[],
+		publishers: dependencies.value?.publishers || [] as Publisher[]
+	}
+})
 </script>
+
 
 <style lang="scss">
 .c-ImageView__image {

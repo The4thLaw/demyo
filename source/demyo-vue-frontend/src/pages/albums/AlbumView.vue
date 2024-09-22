@@ -20,7 +20,7 @@
 				:confirm="$t('quickTasks.delete.album.confirm')"
 				icon="mdi-book-open-variant dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteAlbum"
+				@confirm="deleteModel"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.images.to.album')"
@@ -191,8 +191,8 @@
 							</FieldValue>
 						</v-col>
 						<v-col cols="12" md="4">
-							<FieldValue v-if="album.depth" :label="$t('field.Album.depth')">
-								{{ album.depth }}
+							<FieldValue v-if="album.width" :label="$t('field.Album.width')">
+								{{ album.width }}
 							</FieldValue>
 						</v-col>
 					</template>
@@ -244,7 +244,7 @@
 		</SectionCard>
 
 		<SectionCard
-			v-if="derivativeCount > 0" ref="derivativeSection" v-intersect="loadDerivatives"
+			v-if="derivativeCount > 0" ref="derivative-section" v-intersect="loadDerivatives"
 			:title="$t('field.Album.derivatives')"
 		>
 			<div v-if="derivativesLoading" class="text-center">
@@ -252,7 +252,7 @@
 			</div>
 			<GalleryIndex
 				:items="derivatives" image-path="mainImage" bordered
-				@page-change="$refs.derivativeSection.$el.scrollIntoView()"
+				@page-change="derivativeSection?.$el.scrollIntoView()"
 			>
 				<template #default="slotProps">
 					<router-link :to="`/derivatives/${slotProps.item.id}/view`">
@@ -271,148 +271,113 @@
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import { useCurrency } from '@/composables/currency'
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+import { useSimpleView } from '@/composables/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
 import sortedIndexOf from 'lodash/sortedIndexOf'
-import { mapState } from 'pinia'
+import { useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'AlbumView',
+const dndDialog = ref(false)
+const derivativeCount = ref(0)
+const inhibitObserver = ref(true)
+const derivativesLoading = ref(false)
+const derivatives = ref([] as Derivative[])
+const derivativeSection = useTemplateRef('derivative-section')
 
-	mixins: [modelViewMixin],
+async function fetchData(id: number): Promise<Album> {
+	const dcPromise = albumService.countDerivatives(id)
+	const albumP = albumService.findById(id)
+	derivativeCount.value = await dcPromise
 
-	data() {
-		return {
-			uiStore: useUiStore(),
+	// If we enable the v-intersect observer immediately, it will be triggered on page load as well
+	// Probably because the page fills too slowly
+	setTimeout(() => {
+		inhibitObserver.value = false
+	}, 500)
 
-			appTasksMenu: false,
-			dndDialog: false,
-			album: {
-				series: {},
-				publisher: {},
-				collection: {},
-				binding: {}
-			},
-			derivativeCount: 0,
-			inhibitObserver: true,
-			derivativesLoading: false,
-			derivatives: []
-		}
-	},
+	return albumP
+}
 
-	head() {
-		return {
-			title: this.album.title
-		}
-	},
+const {model: album, loading, appTasksMenu, deleteModel, loadData}
+	= useSimpleView(fetchData, albumService,
+		'quickTasks.delete.album.confirm.done', 'AlbumIndex',
+		a => a.title)
 
-	computed: {
-		hasAuthors() {
-			return this.album.writers?.length
-				|| this.album.artists?.length
-				|| this.album.colorists?.length
-				|| this.album.inkers?.length
-				|| this.album.translators?.length
-		},
+const hasAuthors = computed(() =>
+	album.value.writers?.length
+	|| album.value.artists?.length
+	|| album.value.colorists?.length
+	|| album.value.inkers?.length
+	|| album.value.translators?.length)
 
-		hasPrices() {
-			return this.album.prices?.length
-		},
+const hasPrices = computed(() => album.value.prices?.length)
+const hasImages = computed(() => album.value.images?.length)
 
-		hasImages() {
-			return this.album.images?.length
-		},
-
-		sizeSpec() {
-			if (this.album.width && this.album.height) {
-				return `${this.album.width} x ${this.album.height}`
-			}
-
-			return null
-		},
-
-		derivativeQuery() {
-			const query = {
-				toAlbum: this.album.id
-			}
-			if (this.album.series) {
-				query.toSeries = this.album.series.id
-			}
-			if (this.album.artists?.length === 1) {
-				query.toArtist = this.album.artists[0].id
-			}
-			return query
-		},
-
-		qualifiedPurchasePrice() {
-			return useCurrency(this.album.purchasePrice).qualifiedPrice.value
-		},
-
-		...mapState(useReaderStore, {
-			isInReadingList: function (store) {
-				return sortedIndexOf(store.readingList, this.album.id) > -1
-			}
-		})
-	},
-
-	methods: {
-		async fetchData() {
-			const dcPromise = albumService.countDerivatives(this.parsedId)
-			this.album = await albumService.findById(this.parsedId)
-			this.derivativeCount = await dcPromise
-			// If we enable the v-intersect observer immediately, it will be triggered on page load as well
-			// Probably because the page fills too slowly
-			setTimeout(() => {
-				this.inhibitObserver = false
-			}, 500)
-		},
-
-		async saveDndImages(data) {
-			const ok = await albumService.saveFilepondImages(this.album.id, data.mainImage, data.otherImages)
-			if (ok) {
-				this.uiStore.showSnackbar(this.$t('draganddrop.snack.confirm'))
-				this.fetchDataInternal()
-			} else {
-				this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
-			}
-		},
-
-		deleteAlbum() {
-			deleteStub(this,
-				() => albumService.deleteModel(this.album.id),
-				'quickTasks.delete.album.confirm.done',
-				'AlbumIndex')
-		},
-
-		async loadDerivatives() {
-			if (this.inhibitObserver || this.derivativeCount <= 0) {
-				// The page isn't loaded yet. Don't do anything
-				return
-			}
-			if (this.derivativesLoading || this.derivatives.length > 0) {
-				// The page is loading or has loaded. Don't do anything
-				return
-			}
-			this.derivativesLoading = true
-			this.derivatives = await derivativeService.findForIndex({ album: this.album.id })
-			this.derivativesLoading = false
-		},
-
-		addToReadingList() {
-			readerService.addToReadingList(this.album.id)
-		},
-
-		markAsRead() {
-			readerService.removeFromReadingList(this.album.id)
-		}
+const sizeSpec = computed(() => {
+	if (album.value.width && album.value.height) {
+		return `${album.value.width} x ${album.value.height}`
 	}
+
+	return null
+})
+
+const derivativeQuery = computed(() => {
+	const query: DerivativeQuery = {
+		toAlbum: album.value.id
+	}
+	if (album.value.series) {
+		query.toSeries = album.value.series.id
+	}
+	if (album.value.artists?.length === 1) {
+		query.toArtist = album.value.artists[0].id
+	}
+	return query
+})
+
+const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(album.value.purchasePrice)
+
+const readerStore = useReaderStore()
+const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)
+
+const uiStore = useUiStore()
+const i18n = useI18n()
+async function saveDndImages(data: FilePondData) {
+	const ok = await albumService.saveFilepondImages(album.value.id, data.mainImage, data.otherImages)
+	if (ok) {
+		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
+		// Refresh
+		loadData()
+	} else {
+		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
+	}
+}
+
+async function loadDerivatives() {
+	if (inhibitObserver.value || derivativeCount.value <= 0) {
+		// The page isn't loaded yet. Don't do anything
+		return
+	}
+	if (derivativesLoading.value || derivatives.value.length > 0) {
+		// The page is loading or has loaded. Don't do anything
+		return
+	}
+	derivativesLoading.value = true
+	derivatives.value = await derivativeService.findForIndex({ album: album.value.id })
+	derivativesLoading.value = false
+}
+
+function addToReadingList() {
+	readerService.addToReadingList(album.value.id)
+}
+
+function markAsRead() {
+	readerService.removeFromReadingList(album.value.id)
 }
 </script>
 

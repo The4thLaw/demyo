@@ -6,3 +6,14 @@ interface ProcessedTag extends Tag {
 	/** The relative weight of this tag compared to other tags, based on its usage count. */
 	relativeWeight: number
 }
+
+interface DerivativeQuery {
+	toAlbum?: number
+	toSeries?: number
+	toArtist?: number
+}
+
+interface FilePondData {
+	mainImage: string
+	otherImages: string[]
+}
