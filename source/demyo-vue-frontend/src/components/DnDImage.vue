@@ -142,12 +142,12 @@ export default {
 		}
 	},
 
-	created() {
+	mounted() {
 		console.debug('Adding image drag-and-drop event handler')
 		document.body.addEventListener('dragenter', this.showDialog)
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		console.debug('Removing image drag-and-drop event handler')
 		document.body.removeEventListener('dragenter', this.showDialog)
 	},
