@@ -61,7 +61,7 @@ import imageService from '@/services/image-service'
 
 const mainLoading = ref(true)
 const dependenciesLoading = ref(true)
-const dependencies = ref<Image | null>(null)
+const dependencies = ref<Image | undefined>(undefined)
 
 async function fetchData(id: number): Promise<Image> {
 	mainLoading.value = true

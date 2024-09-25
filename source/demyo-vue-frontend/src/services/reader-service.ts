@@ -2,14 +2,14 @@ import { axiosDelete, axiosGet, axiosPost } from '@/helpers/axios'
 import { loadReaderFromLocalStorage, saveReaderToLocalStorage } from '@/helpers/reader'
 import { $t, switchLanguage } from '@/i18n'
 import { defaultLanguage } from '@/myenv'
-import { useReaderStore } from '@/stores/reader'
+import { ReaderStoreFunction, useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
 import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Readers.
  */
-class ReaderService extends AbstractModelService {
+class ReaderService extends AbstractModelService<Reader> {
 	constructor() {
 		super('readers/')
 	}
@@ -44,16 +44,16 @@ class ReaderService extends AbstractModelService {
 
 	/**
 	 * Finds a Model by its ID.
-	 * @param {Number} id The Model ID
-	 * @return {Promise<any>} The Model
+	 * @param id The Model ID
+	 * @return The Model
 	 */
-	async findById(id) {
+	async findById(id: number): Promise<Reader> {
 		const model = await super.findById(id)
 		this.setDefaultConfiguration(model)
 		return model
 	}
 
-	async save(model) {
+	async save(model: Reader) {
 		const superReturn = await super.save(model)
 
 		// If we just saved the current reader, we should reload it from the server to have a fresh copy
@@ -69,27 +69,27 @@ class ReaderService extends AbstractModelService {
 	 * Sets a default configuration to the provided Reader. Only missing configuration values are set.
 	 * @param {any} reader The Reader to configure
 	 */
-	setDefaultConfiguration(reader) {
+	setDefaultConfiguration(reader: Reader) {
 		reader.configuration = Object.assign({
 			language: defaultLanguage,
-			pageSizeForText: parseInt(import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORTEXT, 10),
-			pageSizeForCards: parseInt(import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORCARDS, 10),
-			subItemsInCardIndex: parseInt(import.meta.env.VITE_DEF_CFG_RDR_SUBITEMSINCARDINDEX, 10),
-			pageSizeForImages: parseInt(import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORIMAGES, 10)
+			pageSizeForText: import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORTEXT,
+			pageSizeForCards: import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORCARDS,
+			subItemsInCardIndex: import.meta.env.VITE_DEF_CFG_RDR_SUBITEMSINCARDINDEX,
+			pageSizeForImages: import.meta.env.VITE_DEF_CFG_RDR_PAGESIZEFORIMAGES,
 		}, reader.configuration)
 	}
 
-	mayDeleteReader() {
+	mayDeleteReader(): Promise<boolean> {
 		return axiosGet(`${this.basePath}mayDelete`, false)
 	}
 
 	/**
 	 * Sets the current reader in the store and local storage.
 	 *
-	 * @param {any} reader The reader to set
-	 * @param {Boolean} reload Whether to reload fresh data from the server
+	 * @param reader The reader to set
+	 * @param reload Whether to reload fresh data from the server
 	 */
-	async setCurrentReader(reader, reload = true) {
+	async setCurrentReader(reader: Reader, reload = true) {
 		let listLoadProm
 
 		if (reload) {
@@ -118,66 +118,68 @@ class ReaderService extends AbstractModelService {
 		return this.loadLists(reader)
 	}
 
-	async loadLists(reader) {
-		const lists = await axiosGet(`${this.basePath}${reader.id}/lists`)
+	async loadLists(reader: Reader) {
+		const lists = await axiosGet<ReaderLists>(`${this.basePath}${reader.id}/lists`)
 		console.log('Loaded reader lists', lists)
 		useReaderStore().setReaderLists(lists)
 	}
 
-	findFavouriteAlbums(readerId) {
-		return axiosGet(`${this.basePath}${readerId}/favourites/albums`, [])
+	findFavouriteAlbums(readerId: number) {
+		return axiosGet<Album[]>(`${this.basePath}${readerId}/favourites/albums`, [])
 	}
 
-	findReadingList(readerId) {
-		return axiosGet(`${this.basePath}${readerId}/readingList/albums`, [])
+	findReadingList(readerId: number) {
+		return axiosGet<Album[]>(`${this.basePath}${readerId}/readingList/albums`, [])
 	}
 
-	addFavouriteSeries(item) {
+	addFavouriteSeries(item: number) {
 		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', 'series', item,
 			'readers.confirm.favourite.add')
 	}
 
-	removeFavouriteSeries(item) {
+	removeFavouriteSeries(item: number) {
 		return this.addOrRemoveListItem('removeFavouriteSeries', axiosDelete, 'favourites', 'series', item,
 			'readers.confirm.favourite.remove')
 	}
 
-	addFavouriteAlbum(item) {
+	addFavouriteAlbum(item: number) {
 		return this.addOrRemoveListItem('addFavouriteAlbum', axiosPost, 'favourites', 'albums', item,
 			'readers.confirm.favourite.add')
 	}
 
-	removeFavouriteAlbum(item) {
+	removeFavouriteAlbum(item: number) {
 		return this.addOrRemoveListItem('removeFavouriteAlbum', axiosDelete, 'favourites', 'albums', item,
 			'readers.confirm.favourite.remove')
 	}
 
-	addToReadingList(item) {
+	addToReadingList(item: number) {
 		return this.addOrRemoveListItem('addToReadingList', axiosPost, 'readingList', 'albums', item,
 			'readers.confirm.readingList.add')
 	}
 
-	removeFromReadingList(item) {
+	removeFromReadingList(item: number) {
 		return this.addOrRemoveListItem('removeFromReadingList', axiosDelete, 'readingList', 'albums', item,
 			'readers.confirm.readingList.remove')
 	}
 
-	async addSeriesToReadingList(item) {
+	async addSeriesToReadingList(item: number) {
 		const readerStore = useReaderStore()
 		const reader = readerStore.currentReader
-		const newList = await axiosPost(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
+		const newList = await axiosPost<number[]>(`${this.basePath}${reader.id}/readingList/series/${item}`, [])
 		useUiStore().showSnackbar($t('readers.confirm.readingList.add'))
 		readerStore.setReadingList(newList)
 	}
 
 	/** @private */
-	async addOrRemoveListItem(storeAction, handler, listType, itemType, id, confirmLabel) {
+	async addOrRemoveListItem(storeAction: ReaderStoreFunction, handler: (path: string, defaultValue: boolean) => Promise<boolean>,
+			listType: string, itemType: string, id: number, confirmLabel: string) {
 		const readerStore = useReaderStore()
 		const reader = readerStore.currentReader
 		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)
 		if (success) {
 			useUiStore().showSnackbar($t(confirmLabel))
-			readerStore[storeAction](id)
+			const action = readerStore[storeAction] as (id: number) => void
+			action(id)
 		}
 	}
 }

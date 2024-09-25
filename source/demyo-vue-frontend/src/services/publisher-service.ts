@@ -1,10 +1,10 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Publishers.
  */
-class PublisherService extends AbstractModelService {
+class PublisherService extends AbstractModelService<Publisher> {
 	constructor() {
 		super('publishers/', {
 			fillMissingObjects: ['logo'],
@@ -14,20 +14,20 @@ class PublisherService extends AbstractModelService {
 
 	/**
 	 * Finds the Collections belonging to a Publisher.
-	 * @param {Number} publisherId The Publisher ID
+	 * @param publisherId The Publisher ID
 	 */
-	findCollectionsForList(publisherId) {
+	findCollectionsForList(publisherId: number): Promise<Collection[]> {
 		if (!publisherId) {
-			return []
+			return Promise.resolve([])
 		}
 		return axiosGet(`${this.basePath}${publisherId}/collections`, [])
 	}
 
 	/**
 	 * Finds how many Albums use the given Publisher.
-	 * @param {Number} id The Publisher ID
+	 * @param id The Publisher ID
 	 */
-	countAlbums(id) {
+	countAlbums(id: number): Promise<number> {
 		return axiosGet(`publishers/${id}/albums/count`, 0)
 	}
 }

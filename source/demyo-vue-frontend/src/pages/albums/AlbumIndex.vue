@@ -14,7 +14,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 function fetchData() {
-	const filter = retrieveFilter(route)
+	const filter = retrieveFilter(route) as AlbumFilter
 	return albumService.findForIndex(filter)
 }
 

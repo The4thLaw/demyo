@@ -38,12 +38,12 @@ interface PaginationState<T extends AbstractModel> {
 	nextPage: () => void
 }
 
-export function useBasicPagination<T extends AbstractModel>(items: Ref<T[]>, itemsPerPage: Ref<number> | null = null): PaginationState<T> {
+export function useBasicPagination<T extends AbstractModel>(items: Ref<T[]>, itemsPerPage?: Ref<number>): PaginationState<T> {
 	return usePagination(items, () => '#', () => {}, itemsPerPage)
 }
 
 export function usePagination<T extends AbstractModel>(items: Ref<T[]>, firstLetterExtractor: (item: T) => string,
-	emit: (evt: string) => void, itemsPerPage: Ref<number> | null): PaginationState<T> {
+	emit: (evt: string) => void, itemsPerPage?: Ref<number>): PaginationState<T> {
 	const currentPage = ref(1)
 
 	const readerStore = useReaderStore()

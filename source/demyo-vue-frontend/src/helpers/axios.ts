@@ -1,14 +1,17 @@
-import axios from 'axios'
 import { apiRoot } from '@/myenv'
+import axios from 'axios'
 
-function baselineUrl(url) {
+function baselineUrl(url: string) {
 	return apiRoot + url
 }
 
-export async function axiosGet(url, data, defaultValue) {
+export async function axiosGet<T>(url: string, data: T|any|undefined = undefined, defaultValue: T|undefined = undefined): Promise<T> {
+	let def: T
 	if (defaultValue === undefined) {
-		defaultValue = data
+		def = data
 		data = {}
+	} else {
+		def = defaultValue
 	}
 
 	let response
@@ -16,15 +19,18 @@ export async function axiosGet(url, data, defaultValue) {
 		response = await axios.get(baselineUrl(url), { params: data })
 	} catch (e) {
 		console.warn(`Failed to get the resource at ${url}`, e)
-		return defaultValue
+		return def
 	}
 	return response.data
 }
 
-export async function axiosPost(url, data, defaultValue) {
+export async function axiosPost<T>(url: string, data: T|any, defaultValue: T|undefined = undefined): Promise<T> {
+	let def: T
 	if (defaultValue === undefined) {
-		defaultValue = data
+		def = data
 		data = {}
+	} else {
+		def = defaultValue
 	}
 
 	let response
@@ -32,12 +38,12 @@ export async function axiosPost(url, data, defaultValue) {
 		response = await axios.post(baselineUrl(url), data)
 	} catch (e) {
 		console.warn(`Failed to post the data at ${url}`, data, e)
-		return defaultValue
+		return def
 	}
 	return response.data
 }
 
-export async function axiosPut(url, data, defaultValue) {
+export async function axiosPut<T>(url: string, data: any, defaultValue: T): Promise<T> {
 	let response
 	try {
 		response = await axios.put(baselineUrl(url), data)
@@ -48,13 +54,13 @@ export async function axiosPut(url, data, defaultValue) {
 	return response.data
 }
 
-export async function axiosDelete(url, defaultValue) {
+export async function axiosDelete<T>(url: string, defaultValue: T): Promise<T> {
 	let response
 	try {
 		response = await axios.delete(baselineUrl(url))
 	} catch (e) {
 		console.warn(`Failed to delete the resource at ${url}`, e)
-		return defaultValue
+		return Promise.resolve(defaultValue)
 	}
 	return response.data
 }

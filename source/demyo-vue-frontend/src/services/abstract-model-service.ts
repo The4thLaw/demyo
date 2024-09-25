@@ -1,60 +1,73 @@
 import { axiosDelete, axiosGet, axiosPost, axiosPut } from '@/helpers/axios'
 
+// I couldn't figure out how to map the keys to specific types so some "as any" casts are needed below
+interface ServiceConfig<M extends IModel> {
+	sanitizeHtml?: (keyof M)[]
+	fillMissingObjects?: (keyof M)[]
+	sanitizeObjects?: (keyof M)[]
+	fillMissingArrays?: (keyof M)[]
+	sanitizeArrays?: (keyof M)[]
+
+}
+
 /**
  * Base class for Model API services.
  */
-class AbstractModelService {
+class AbstractModelService<M extends IModel> {
+	protected basePath: string
+	private config: ServiceConfig<M>
+
 	/**
 	 * Constructor
-	 * @param {String} basePath The base path for API URLs, relative to the API root
-	 * @param {*} config An optional configuration object
+	 * @param basePath The base path for API URLs, relative to the API root
+	 * @param config An optional configuration object
 	 */
-	constructor(basePath, config) {
+	constructor(basePath: string, config?: ServiceConfig<M>) {
 		this.basePath = basePath
 		this.config = config || {}
 	}
 
-	findForIndex() {
+	findForIndex(): Promise<M[]> {
 		return axiosGet(this.basePath, [])
 	}
 
-	findForList() {
+	findForList(): Promise<M[]> {
 		return axiosGet(this.basePath, { view: 'minimal' }, [])
 	}
 
 	/**
 	 * Finds a Model by its ID.
-	 * @param {Number} id The Model ID
-	 * @return {Promise<any>} The Model
+	 * @param id The Model ID
+	 * @return The Model
 	 */
-	async findById(id) {
-		const model = await axiosGet(this.basePath + id, {})
+	async findById(id: number): Promise<M> {
+		const model: M = await axiosGet(this.basePath + id, {})
 		return this.fillMissingData(model)
 	}
 
 	/**
 	 * Fills any data that is required by the frontend but missing from server-side data.
-	 * @param {*} model The model to fill
+	 * @param model The model to fill
 	 */
-	fillMissingData(model) {
+	fillMissingData(model: M) {
 		if (model instanceof Promise) {
 			console.error('You need to resolve the Promises before calling fillMissingData')
 		}
 
-		if (this.config.fillMissingObjects) {
+		if (this.config?.fillMissingObjects) {
 			this.config.fillMissingObjects.forEach(prop => {
 				if (!model[prop]) {
 					model[prop] = {
 						id: undefined
-					}
+					}  as any
 				}
 			})
 		}
 
-		if (this.config.fillMissingArrays) {
+		if (this.config?.fillMissingArrays) {
 			this.config.fillMissingArrays.forEach(prop => {
 				if (!model[prop]) {
-					model[prop] = []
+					model[prop] = [] as any
 				}
 			})
 		}
@@ -64,15 +77,15 @@ class AbstractModelService {
 
 	/**
 	 * Finds a set of Models by their IDs.
-	 * @param {Number[]} ids The Model IDs
-	 * @return {Promise<any[]>} The Models
+	 * @param ids The Model IDs
+	 * @return The Models
 	 */
-	findMultipleById(ids) {
+	findMultipleById(ids: number[]): Promise<M[]> {
 		const idString = ids.join(',')
 		return axiosGet(`${this.basePath}/batch/${idString}`, {})
 	}
 
-	save(model) {
+	save(model: M) {
 		this.sanitizeArrays(model)
 		this.sanitizeObjects(model)
 		this.sanitizeHtml(model)
@@ -86,14 +99,13 @@ class AbstractModelService {
 	/**
 	 * Sanitizes the sub-properties of a Model that link to multiple other Models.
 	 * Transforms arrays of integers in arrays of objects.
-	 * @param {*} model The Model.
-	 * @private
+	 * @param model The Model.
 	 */
-	 sanitizeArrays(model) {
-		if (this.config.sanitizeArrays) {
+	private sanitizeArrays(model: M) {
+		if (this.config?.sanitizeArrays) {
 			this.config.sanitizeArrays.forEach(prop => {
 				if (Array.isArray(model[prop])) {
-					model[prop] = model[prop].map(v => Number.isInteger(v) ? { id: v } : v)
+					model[prop] = model[prop].map(v => Number.isInteger(v) ? { id: v } : v) as any
 				}
 			})
 		}
@@ -101,15 +113,15 @@ class AbstractModelService {
 
 	/**
 	 * Sanitizes the sub-properties of a Model that link to a single other Model.
-	 * @param {*} model The Model.
-	 * @private
+	 * @param model The Model.
 	 */
-	sanitizeObjects(model) {
-		if (this.config.sanitizeObjects) {
+	private sanitizeObjects(model: M) {
+		if (this.config?.sanitizeObjects) {
 			// In the case of clearable model link fields, the id can be set to false
 			// In such cases, we should clear the object completely
 			this.config.sanitizeObjects.forEach(prop => {
-				if (!model[prop].id) {
+				const subModel = model[prop] as IModel
+				if (!subModel.id) {
 					delete model[prop]
 				}
 			})
@@ -118,15 +130,15 @@ class AbstractModelService {
 
 	/**
 	 * Sanitizes the HTML properties of a Model, clearing empty paragraphs left behind by the RTE.
-	 * @param {*} model The Model.
+	 * @param model The Model.
 	 * @private
 	 */
-	sanitizeHtml(model) {
-		if (this.config.sanitizeHtml) {
+	sanitizeHtml(model: M) {
+		if (this.config?.sanitizeHtml) {
 			// Rich text could leave empty <p></p> markup if the user deletes the text
 			this.config.sanitizeHtml.forEach(prop => {
 				if (model[prop] === '<p></p>') {
-					model[prop] = null
+					model[prop] = null as any
 				}
 			})
 		}
@@ -134,9 +146,9 @@ class AbstractModelService {
 
 	/**
 	 * Deletes a Model.
-	 * @param {Number} id The Model ID
+	 * @param id The Model ID
 	 */
-	deleteModel(id) {
+	deleteModel(id: number) {
 		return axiosDelete(this.basePath + id, false)
 	}
 }

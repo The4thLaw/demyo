@@ -1,19 +1,19 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Derivative Types.
  */
-class DerivativeTypeService extends AbstractModelService {
+class DerivativeTypeService extends AbstractModelService<DerivativeType> {
 	constructor() {
 		super('derivativeTypes/')
 	}
 
 	/**
 	 * Finds how many Derivatives use the given type.
-	 * @param {Number} id The Derivative Type ID
+	 * @param id The Derivative Type ID
 	 */
-	countDerivatives(id) {
+	countDerivatives(id: number): Promise<number> {
 		return axiosGet(`derivativeTypes/${id}/derivatives/count`, 0)
 	}
 }

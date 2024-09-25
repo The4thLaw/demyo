@@ -5,7 +5,7 @@ import albumService from './album-service'
 /**
  * API service for Series.
  */
-class SeriesService extends AbstractModelService {
+class SeriesService extends AbstractModelService<Series> {
 	constructor() {
 		super('series/', {
 			fillMissingArrays: ['relatedSeries'],
@@ -14,7 +14,7 @@ class SeriesService extends AbstractModelService {
 		})
 	}
 
-	findAlbumsForList(seriesId) {
+	findAlbumsForList(seriesId: number|'none') {
 		if (!seriesId) {
 			seriesId = 'none'
 		}
@@ -23,18 +23,18 @@ class SeriesService extends AbstractModelService {
 
 	/**
 	 * Gets the template for a new Album in a Series.
-	 * @param {Number} seriesId The Series ID
+	 * @param seriesId The Series ID
 	 */
-	async getAlbumTemplate(seriesId) {
+	async getAlbumTemplate(seriesId: number) {
 		const template = await axiosGet(`${this.basePath}${seriesId}/albums/template`, {})
 		return albumService.fillMissingData(template)
 	}
 
 	/**
 	 * Finds how many Derivatives use the given series.
-	 * @param {Number} id The Series ID
+	 * @param id The Series ID
 	 */
-	countDerivatives(id) {
+	countDerivatives(id: number): Promise<number> {
 		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
 	}
 }

@@ -9,8 +9,8 @@ import { useI18n } from 'vue-i18n'
  * @param serviceInstance The service to use to fetch the data.
  * @param titleKey the page title key
  */
-export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelService, titleKey: string,
-	fetchData: (() => Promise<T[]>) | null = null) {
+export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelService<T>, titleKey: string,
+	fetchData?: (() => Promise<T[]>)) {
 	//
 	let safeFetchData: () => Promise<T[]>
 	safeFetchData = fetchData || (() => serviceInstance.findForIndex())

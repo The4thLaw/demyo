@@ -149,7 +149,7 @@ const showQuicksearch = ref(false)
 const promptReaderSelection = ref(false)
 const menuItems = ref(defaultMenu)
 
-let pageTitleObserver: MutationObserver | null;
+let pageTitleObserver: MutationObserver | undefined;
 onMounted(() => {
 	// Monitor the page title for changes
 	pageTitleObserver = new MutationObserver((mutations) => {
@@ -167,7 +167,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
 	pageTitleObserver?.disconnect()
-	pageTitleObserver = null
+	pageTitleObserver = undefined
 })
 
 const uiStore = useUiStore()

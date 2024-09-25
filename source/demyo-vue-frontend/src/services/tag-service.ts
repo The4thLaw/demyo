@@ -1,19 +1,19 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Albums.
  */
-class TagService extends AbstractModelService {
+class TagService extends AbstractModelService<Tag> {
 	constructor() {
 		super('tags/')
 	}
 
 	/**
 	 * Finds how many Albums use the given Tag.
-	 * @param {Number} id The Tag ID
+	 * @param id The Tag ID
 	 */
-	countAlbums(id) {
+	countAlbums(id: number): Promise<number> {
 		return axiosGet(`tags/${id}/albums/count`, 0)
 	}
 }

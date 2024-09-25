@@ -10,11 +10,11 @@
 				:confirm="$t('quickTasks.delete.author.confirm')"
 				icon="mdi-account dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteAuthor"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
-		<SectionCard :loading="mainLoading" :image="author.portrait" :title="author.identifyingName">
+		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue v-if="author.website" :label="$t('field.Author.website')">
 				<a :href="author.website">{{ author.website }}</a>
 			</FieldValue>
@@ -37,14 +37,14 @@
 				{{ $t('page.Author.noAlbums') }}
 			</v-alert>
 			<v-btn
-				v-if="count > 0"
+				v-if="derivativeCount > 0"
 				:to="{ name: 'DerivativeIndex', query: { withArtist: author.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $t('page.Author.viewDerivatives', count) }}
+				{{ $t('page.Author.viewDerivatives', derivativeCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count === 0"
+				v-if="derivativeCount === 0"
 				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Author.noDerivatives') }}
@@ -65,106 +65,73 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import authorService from '@/services/author-service'
 import dayjs from 'dayjs'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'AuthorView',
+const authorLoading = ref(true)
+const albumsLoading = ref(true)
+const authorAlbums = ref({} as AuthorAlbums)
+const derivativeCount = ref(-1)
 
-	mixins: [modelViewMixin],
+async function fetchData(id: number): Promise<Author> {
+	authorLoading.value = true
+	albumsLoading.value = true
 
-	data() {
-		return {
-			mainLoading: true,
-			albumsLoading: true,
-			author: {},
-			authorAlbums: {},
-			count: -1,
-			appTasksMenu: false
-		}
-	},
+	const derivCountP = authorService.countDerivatives(id)
+	const authorP = await authorService.findById(id)
+	authorLoading.value = false
 
-	head() {
-		return {
-			title: this.author.identifyingName
-		}
-	},
+	const loadedAuthorAlbums = await authorService.getAuthorAlbums(id)
+	authorAlbums.value = JSON.parse(JSON.stringify(loadedAuthorAlbums))
+	albumsLoading.value = false
 
-	computed: {
-		albums() {
-			return this.authorAlbums.albums || []
-		},
+	derivativeCount.value = await derivCountP
 
-		albumCount() {
-			return this.albums.length
-		},
+	return authorP
+}
 
-		works() {
-			return {
-				asArtist: new Set(this.authorAlbums.asArtist),
-				asWriter: new Set(this.authorAlbums.asWriter),
-				asColorist: new Set(this.authorAlbums.asColorist),
-				asInker: new Set(this.authorAlbums.asInker),
-				asTranslator: new Set(this.authorAlbums.asTranslator)
-			}
-		},
+const {model: author, loading, appTasksMenu, deleteModel} = useSimpleView(fetchData, authorService,
+	'quickTasks.delete.author.confirm.done', 'AuthorIndex')
 
-		isAlive() {
-			return this.author.birthDate && !this.author.deathDate
-		},
-
-		age() {
-			if (!this.author.birthDate) {
-				return null
-			}
-			const endDate = this.author.deathDate ? dayjs(this.author.deathDate) : dayjs()
-			return endDate.diff(this.author.birthDate, 'year')
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			this.mainLoading = true
-			const countP = authorService.countDerivatives(this.parsedId)
-			this.author = await authorService.findById(this.parsedId)
-			this.mainLoading = false
-
-			const authorAlbums = await authorService.getAuthorAlbums(this.parsedId)
-			this.authorAlbums = ref(JSON.parse(JSON.stringify(authorAlbums)))
-			this.albumsLoading = false
-
-			this.count = await countP
-		},
-
-		describeAuthor(albumId) {
-			const qualifiers = []
-			if (this.works.asArtist.has(albumId)) {
-				qualifiers.push(this.$t('page.Author.works.role.artist'))
-			}
-			if (this.works.asWriter.has(albumId)) {
-				qualifiers.push(this.$t('page.Author.works.role.writer'))
-			}
-			if (this.works.asColorist.has(albumId)) {
-				qualifiers.push(this.$t('page.Author.works.role.colorist'))
-			}
-			if (this.works.asInker.has(albumId)) {
-				qualifiers.push(this.$t('page.Author.works.role.inker'))
-			}
-			if (this.works.asTranslator.has(albumId)) {
-				qualifiers.push(this.$t('page.Author.works.role.translator'))
-			}
-			return qualifiers.join(', ')
-		},
-
-		deleteAuthor() {
-			deleteStub(this,
-				() => authorService.deleteModel(this.author.id),
-				'quickTasks.delete.author.confirm.done',
-				'AuthorIndex')
-		}
+const albums = computed(() => authorAlbums.value.albums || [])
+const albumCount = computed(() => albums.value.length)
+const works = computed(() => ({
+	asArtist: new Set(authorAlbums.value.asArtist),
+	asWriter: new Set(authorAlbums.value.asWriter),
+	asColorist: new Set(authorAlbums.value.asColorist),
+	asInker: new Set(authorAlbums.value.asInker),
+	asTranslator: new Set(authorAlbums.value.asTranslator)
+}))
+const isAlive = computed(() => author.value.birthDate && !author.value.deathDate)
+const age = computed(() => {
+	if (!author.value.birthDate) {
+		return null
 	}
+	const endDate = author.value.deathDate ? dayjs(author.value.deathDate) : dayjs()
+	return endDate.diff(author.value.birthDate, 'year')
+})
+
+const i18n = useI18n()
+function describeAuthor(albumId: number): string {
+	const qualifiers = []
+	if (works.value.asArtist.has(albumId)) {
+		qualifiers.push(i18n.t('page.Author.works.role.artist'))
+	}
+	if (works.value.asWriter.has(albumId)) {
+		qualifiers.push(i18n.t('page.Author.works.role.writer'))
+	}
+	if (works.value.asColorist.has(albumId)) {
+		qualifiers.push(i18n.t('page.Author.works.role.colorist'))
+	}
+	if (works.value.asInker.has(albumId)) {
+		qualifiers.push(i18n.t('page.Author.works.role.inker'))
+	}
+	if (works.value.asTranslator.has(albumId)) {
+		qualifiers.push(i18n.t('page.Author.works.role.translator'))
+	}
+	return qualifiers.join(', ')
 }
 </script>

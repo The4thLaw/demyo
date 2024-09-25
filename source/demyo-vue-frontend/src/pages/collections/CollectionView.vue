@@ -57,7 +57,7 @@
 import { useSimpleView } from '@/composables/model-view'
 import collectionService from '@/services/collection-service'
 
-const albumCount = ref(0)
+const albumCount = ref(-1)
 
 async function fetchData(id: number): Promise<Collection> {
 	const collectionP = collectionService.findById(id)

@@ -1,36 +1,36 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet, axiosPost } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Images.
  */
-class ImageService extends AbstractModelService {
+class ImageService extends AbstractModelService<Image> {
 	constructor() {
 		super('images/')
 	}
 
 	/**
 	 * Finds the Models which depend on this image.
-	 * @param {Number} id The Image ID
+	 * @param id The Image ID
 	 */
-	getImageDependencies(id) {
+	getImageDependencies(id: number): Promise<Image> {
 		return axiosGet(`images/${id}/dependencies`, {})
 	}
 
 	/**
 	 * Detects non-registered images currently on the disk.
-	 * @return {Promise<String[]>} The image paths.
+	 * @return The image paths.
 	 */
-	detectDiskImages() {
-		return axiosGet('images/detect')
+	detectDiskImages(): Promise<String[]> {
+		return axiosGet('images/detect', [])
 	}
 
 	/**
 	 * Saves a set of detected images.
-	 * @param {String[]} images The paths of the images to add.
-	 * @return {Promise<Number[]>} The added image IDs.
+	 * @param images The paths of the images to add.
+	 * @return The added image IDs.
 	 */
-	saveDiskImages(images) {
+	saveDiskImages(images: string[]): Promise<number[]> {
 		return axiosPost('images/detect', images, [])
 	}
 }

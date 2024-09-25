@@ -13,7 +13,7 @@ interface ViewData<T extends AbstractModel> {
 }
 
 export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) => Promise<T>,
-	service: AbstractModelService, confirmDeleteLabel: string, indexRouteName: string,
+	service: AbstractModelService<T>, confirmDeleteLabel: string, indexRouteName: string,
 	titleProvider = (model: T) => model.identifyingName): ViewData<T> {
 	//
 	const route = useRoute()
@@ -21,7 +21,7 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 	const router = useRouter()
 	const uiStore = useUiStore()
 
-	const parsedId = ref(null) as Ref<number | null>
+	const parsedId = ref(undefined) as Ref<number | undefined>
 	const loading = ref(false)
 	const model = ref({}) as Ref<T>
 	const appTasksMenu = ref(false)

@@ -55,9 +55,9 @@ import { focusElement } from '@/helpers/dom'
 import { useTemplateRef } from 'vue'
 
 interface Props {
-	items?: AbstractModel[]
+	items?: IModel[]
 	splitByFirstLetter?: boolean,
-	firstLetterExtractor: (item: AbstractModel) => string,
+	firstLetterExtractor?: (item: AbstractModel) => string,
 	compact?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {

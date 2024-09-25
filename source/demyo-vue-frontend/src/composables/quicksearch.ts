@@ -5,14 +5,14 @@ export function useQuicksearch() {
 	const currentQuery = ref('')
 	const lastQuery = ref('')
 	const loading = ref(false)
-	const results = ref<IModel[] | null>(null)
+	const results = ref<IModel[] | undefined>(undefined)
 
 	const isRelevantSearchQuery = computed(() => currentQuery.value && currentQuery.value.length)
 
 	function clearSearch() {
 		currentQuery.value = ''
 		lastQuery.value = ''
-		results.value = null
+		results.value = undefined
 	}
 
 	function performSearch() {
@@ -21,7 +21,7 @@ export function useQuicksearch() {
 			return
 		}
 		lastQuery.value = currentQuery.value
-		results.value = null
+		results.value = undefined
 		debouncedSearch()
 	}
 

@@ -44,7 +44,7 @@ function remove(list: number[], item: number): void {
  * @param list The list to modify
  * @return The modified list
  */
-function preprocess(list: number[] | null): number[] {
+function preprocess(list?: number[]): number[] {
 	list = list ?? []
 	return list.sort((a, b) => a - b)
 }
@@ -108,3 +108,6 @@ export const useReaderStore = defineStore('reader', {
 		}
 	}
 })
+
+type ReaderStoreType = ReturnType<typeof useReaderStore>
+export type ReaderStoreFunction = keyof ReaderStoreType

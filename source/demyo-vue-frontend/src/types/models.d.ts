@@ -17,3 +17,28 @@ interface FilePondData {
 	mainImage: string
 	otherImages: string[]
 }
+
+enum CombinationMode {
+	AND = 'AND',
+	OR = 'OR'
+}
+
+interface IModelFilter{}
+interface AbstractModelFilter extends IModelFilter {
+	mode: CombinationMode
+}
+
+interface AlbumFilter extends AbstractModelFilter {
+	/** The internal ID of the {@link Publisher}. */
+	publisher: number
+	/** The internal ID of the {@link Collection}. */
+	collection: number
+	/** The internal ID of the {@link Binding}. */
+	binding: number
+	/** The internal ID of the {@link Tag}. */
+	tag: number
+	/** The internal ID of the {@link Reader} that has this {@link Album} as favourite. */
+	readerIdFavourite: number
+	/** The internal ID of the {@link Reader} that has this {@link Album} in their reading list. */
+	readerIdReadingList: number
+}

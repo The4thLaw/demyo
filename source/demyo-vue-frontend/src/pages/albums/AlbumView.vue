@@ -284,7 +284,7 @@ import { useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const dndDialog = ref(false)
-const derivativeCount = ref(0)
+const derivativeCount = ref(-1)
 const inhibitObserver = ref(true)
 const derivativesLoading = ref(false)
 const derivatives = ref([] as Derivative[])

@@ -12,7 +12,7 @@
 				:confirm="$t('quickTasks.delete.publisher.confirm')"
 				icon="mdi-brush dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deletePublisher"
+				@confirm="deleteModel"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.collection.to.publisher')"
@@ -69,53 +69,20 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import publisherService from '@/services/publisher-service'
 
-export default {
-	name: 'PublisherView',
+const albumCount = ref(-1)
 
-	mixins: [modelViewMixin],
-
-	data() {
-		return {
-			publisher: {},
-			albumCount: -1,
-			appTasksMenu: false
-		}
-	},
-
-	head() {
-		return {
-			title: this.publisher.identifyingName
-		}
-	},
-
-	computed: {
-		collectionCount() {
-			if (!this.publisher?.collections) {
-				return 0
-			}
-
-			return this.publisher.collections.length
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const publisherP = publisherService.findById(this.parsedId)
-			this.albumCount = await publisherService.countAlbums(this.parsedId)
-			this.publisher = await publisherP // Resolve calls in parallel
-		},
-
-		deletePublisher() {
-			deleteStub(this,
-				() => publisherService.deleteModel(this.publisher.id),
-				'quickTasks.delete.publisher.confirm.done',
-				'PublisherIndex')
-		}
-	}
+async function fetchData(id: number): Promise<Publisher> {
+	const publisherP = publisherService.findById(id)
+	albumCount.value = await publisherService.countAlbums(id)
+	return publisherP
 }
+
+const {model: publisher, loading, appTasksMenu, deleteModel} = useSimpleView(fetchData,
+	publisherService, 'quickTasks.delete.publisher.confirm.done', 'PublisherIndex')
+
+const collectionCount = computed(() => publisher.value?.collections?.length || 0)
 </script>

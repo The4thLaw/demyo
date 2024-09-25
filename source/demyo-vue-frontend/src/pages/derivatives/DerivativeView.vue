@@ -15,7 +15,7 @@
 				:confirm="$t('quickTasks.delete.derivative.confirm')"
 				icon="mdi-image-frame dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteDerivative"
+				@confirm="deleteModel"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.images.to.derivative')"
@@ -167,86 +167,47 @@
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import { useCurrency } from '@/composables/currency'
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+import { useSimpleView } from '@/composables/model-view'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'DerivativeView',
+const dndDialog = ref(false)
 
-	mixins: [modelViewMixin],
+async function fetchData(id: number): Promise<Derivative> {
+	return derivativeService.findById(id)
+}
 
-	data() {
-		return {
-			uiStore: useUiStore(),
+const {model: derivative, appTasksMenu, deleteModel, loading, loadData} = useSimpleView(fetchData, derivativeService,
+	'quickTasks.delete.derivative.confirm.done', 'DerivariveIndex')
 
-			appTasksMenu: false,
-			dndDialog: false,
-			derivative: {
-				series: {},
-				album: {},
-				artist: {},
-				source: {}
-			}
-		}
-	},
+const hasPrices = computed(() => derivative.value.prices?.length > 0)
+const hasImages = computed(() => derivative.value.images?.length > 1)
+const sizeSpec = computed(() => {
+	if (derivative.value.width && derivative.value.height && derivative.value.depth) {
+		return `${derivative.value.width} x ${derivative.value.height} x ${derivative.value.depth}`
+	}
 
-	head() {
-		return {
-			title: this.derivative.identifyingName
-		}
-	},
+	if (derivative.value.width && derivative.value.height) {
+		return `${derivative.value.width} x ${derivative.value.height}`
+	}
 
-	computed: {
-		hasPrices() {
-			return this.derivative.prices && this.derivative.prices.length > 0
-		},
+	return null
+})
 
-		hasImages() {
-			return this.derivative.images && this.derivative.images.length > 1
-		},
+const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(derivative.value.purchasePrice)
 
-		sizeSpec() {
-			if (this.derivative.width && this.derivative.height && this.derivative.depth) {
-				return `${this.derivative.width} x ${this.derivative.height} x ${this.derivative.depth}`
-			}
-
-			if (this.derivative.width && this.derivative.height) {
-				return `${this.derivative.width} x ${this.derivative.height}`
-			}
-
-			return null
-		},
-
-		qualifiedPurchasePrice() {
-			return useCurrency(this.derivative.purchasePrice).qualifiedPrice.value
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			this.derivative = await derivativeService.findById(this.parsedId)
-		},
-
-		async saveDndImages(data) {
-			const ok = await derivativeService.saveFilepondImages(this.derivative.id, data.otherImages)
-			if (ok) {
-				this.uiStore.showSnackbar(this.$t('draganddrop.snack.confirm'))
-				this.fetchDataInternal()
-			} else {
-				this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
-			}
-		},
-
-		deleteDerivative() {
-			deleteStub(this,
-				() => derivativeService.deleteModel(this.derivative.id),
-				'quickTasks.delete.derivative.confirm.done',
-				'DerivariveIndex')
-		}
+const uiStore = useUiStore()
+const i18n = useI18n()
+async function saveDndImages(data: FilePondData) {
+	const ok = await derivativeService.saveFilepondImages(derivative.value.id, data.otherImages)
+	if (ok) {
+		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
+		loadData()
+	} else {
+		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 	}
 }
 </script>

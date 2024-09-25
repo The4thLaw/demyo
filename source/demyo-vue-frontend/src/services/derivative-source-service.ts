@@ -1,10 +1,10 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Derivative Sources.
  */
-class DerivativeSourceService extends AbstractModelService {
+class DerivativeSourceService extends AbstractModelService<DerivativeSource> {
 	constructor() {
 		super('derivativeSources/', {
 			sanitizeHtml: ['history']
@@ -13,9 +13,9 @@ class DerivativeSourceService extends AbstractModelService {
 
 	/**
 	 * Finds how many Derivatives use the given source.
-	 * @param {Number} id The Derivative Source ID
+	 * @param id The Derivative Source ID
 	 */
-	countDerivatives(id) {
+	countDerivatives(id: number): Promise<number> {
 		return axiosGet(`derivativeSources/${id}/derivatives/count`, 0)
 	}
 }

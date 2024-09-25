@@ -4,8 +4,8 @@ import { axiosGet } from '@/helpers/axios'
  * Service to manage parameters for the "about" page.
  */
 class AboutService {
-	/** @return {Promis<Object.<string, string>>} the environment settings */
-	getEnvironment() {
+	/** @return The environment settings */
+	getEnvironment(): Promise<Record<string, string>> {
 		return axiosGet('about/environment', {})
 	}
 }

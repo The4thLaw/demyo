@@ -7,25 +7,25 @@
 				icon="mdi-brush dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="count === 0"
+				v-if="derivativeCount === 0"
 				:label="$t('quickTasks.delete.derivativeType')"
 				:confirm="$t('quickTasks.delete.derivativeType.confirm')"
 				icon="mdi-brush dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteType"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="type.identifyingName">
 			<v-btn
-				v-if="count > 0"
+				v-if="derivativeCount > 0"
 				:to="{ name: 'DerivativeIndex', query: { withType: type.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $t('page.DerivativeType.viewDerivatives', count) }}
+				{{ $t('page.DerivativeType.viewDerivatives', derivativeCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count === 0"
+				v-if="derivativeCount === 0"
 				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.DerivativeType.noDerivatives') }}
@@ -34,43 +34,18 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import typeService from '@/services/derivative-type-service'
 
-export default {
-	name: 'DerivativeTypeView',
+const derivativeCount = ref(-1)
 
-	mixins: [modelViewMixin],
-
-	data() {
-		return {
-			type: {},
-			count: -1,
-			appTasksMenu: false
-		}
-	},
-
-	head() {
-		return {
-			title: this.type.identifyingName
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const typeP = typeService.findById(this.parsedId)
-			this.count = await typeService.countDerivatives(this.parsedId)
-			this.type = await typeP // Resolve calls in parallel
-		},
-
-		deleteType() {
-			deleteStub(this,
-				() => typeService.deleteModel(this.type.id),
-				'quickTasks.delete.derivativeType.confirm.done',
-				'DerivativeTypeIndex')
-		}
-	}
+async function fetchData(id: number): Promise<DerivativeType> {
+	const typeP = typeService.findById(id)
+	derivativeCount.value = await typeService.countDerivatives(id)
+	return typeP
 }
+
+const {model:type, deleteModel, appTasksMenu, loading} = useSimpleView(fetchData, typeService,
+	'quickTasks.delete.derivativeType.confirm.done', 'DerivativeTypeIndex')
 </script>

@@ -79,7 +79,7 @@
 import { useSimpleView } from '@/composables/model-view'
 import sourceService from '@/services/derivative-source-service'
 
-const derivCount = ref(0)
+const derivCount = ref(-1)
 
 async function fetchData(id: number): Promise<DerivativeSource> {
 	const sourceP = sourceService.findById(id)

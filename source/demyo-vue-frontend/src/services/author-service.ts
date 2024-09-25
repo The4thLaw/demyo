@@ -1,10 +1,10 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Authors.
  */
-class AuthorService extends AbstractModelService {
+class AuthorService extends AbstractModelService<Author> {
 	constructor() {
 		super('authors/', {
 			fillMissingObjects: ['portrait'],
@@ -14,9 +14,9 @@ class AuthorService extends AbstractModelService {
 
 	/**
 	 * Finds the Albums on which an Author has worked.
-	 * @param {Number} id The Author ID
+	 * @param id The Author ID
 	 */
-	getAuthorAlbums(id) {
+	getAuthorAlbums(id: number): Promise<AuthorAlbums> {
 		return axiosGet(`authors/${id}/albums`, {})
 	}
 
@@ -24,7 +24,7 @@ class AuthorService extends AbstractModelService {
 	 * Finds how many Derivatives use the given artist.
 	 * @param {Number} id The Author ID
 	 */
-	countDerivatives(id) {
+	countDerivatives(id: number): Promise<number> {
 		return axiosGet(`authors/${id}/derivatives/count`, 0)
 	}
 }

@@ -1,19 +1,19 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Bindings.
  */
-class BindingService extends AbstractModelService {
+class BindingService extends AbstractModelService<Binding> {
 	constructor() {
 		super('bindings/')
 	}
 
 	/**
 	 * Finds how many Albums use the given Binding.
-	 * @param {Number} id The Binding ID
+	 * @param id The Binding ID
 	 */
-	countAlbums(id) {
+	countAlbums(id: number): Promise<number> {
 		return axiosGet(`bindings/${id}/albums/count`, 0)
 	}
 }

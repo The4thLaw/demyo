@@ -38,7 +38,7 @@
 import { useSimpleView } from '@/composables/model-view'
 import bindingService from '@/services/binding-service'
 
-const albumCount = ref(0)
+const albumCount = ref(-1)
 
 async function fetchData(id: number): Promise<Binding> {
 	const bindingP = bindingService.findById(id)
