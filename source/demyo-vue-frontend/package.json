@@ -30,7 +30,7 @@
     "tiny-async-pool": "^2.1.0",
     "tiptap-vuetify": "^2.24.0",
     "v-img": "^0.2.0",
-    "vue": "^2.7.14",
+    "vue": "^3.0.0",
     "vue-filepond": "6.0.2",
     "vue-i18n": "^8.28.2",
     "vue-meta": "^2.4.0",
