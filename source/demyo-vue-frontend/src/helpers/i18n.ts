@@ -23,7 +23,7 @@ export const currencyList = processedCurrencyList
  */
 export function isCurrencyPrefix() {
 	// TODO: ideally, this NumberFormat should be created once, at the change of locale
-	const locale = i18n.locale.replace(/_/g, '-')
+	const locale = i18n.global.locale.replace(/_/g, '-')
 	return new Intl.NumberFormat(locale, { style: 'currency', currency: 'XTS' }).format(1).startsWith('XTS')
 }
 
@@ -33,13 +33,16 @@ export function isCurrencyPrefix() {
  * This function is not perfect because invalid currencies will use the number of decimals from US$.
  * But there's not much we can do if the provided currency is not a currency code.
  *
- * @param {Number} amount The amount to format
- * @param {String} currency The currency to use
+ * @param amount The amount to format
+ * @param currency The currency to use
  * @returns The formatted currency amount.
  */
-export function formatCurrency(amount, currency) {
+export function formatCurrency(amount: number, currency: string): string|undefined {
+	if (amount === undefined) {
+		return undefined
+	}
 	if (!currency) {
-		return i18n.n(amount)
+		return i18n.global.n(amount)
 	}
 
 	// The browser could already understand the code but the map is more complete, and gives
@@ -47,7 +50,7 @@ export function formatCurrency(amount, currency) {
 	currency = getCurrencySymbol(currency)
 
 	// Format with a default currency
-	const formatted = new Intl.NumberFormat(i18n.locale, { style: 'currency', currency: 'XTS' }).format(amount)
+	const formatted = new Intl.NumberFormat(i18n.global.locale, { style: 'currency', currency: 'XTS' }).format(amount)
 
 	// Pad the currency if needed. Worst case: it's padded twice and HTML strips the extra padding
 	if (currency.length !== 1 && formatted.startsWith('XTS')) {
@@ -61,10 +64,10 @@ export function formatCurrency(amount, currency) {
 
 /**
  * Finds the currency symbol based on its currency code
- * @param {String} currency The currency symbol or code
+ * @param currency The currency symbol or code
  * @returns The currency symbol
  */
-export function getCurrencySymbol(currency) {
+export function getCurrencySymbol(currency: string): string {
 	if (!currency || currency.length !== 3) {
 		return currency
 	}

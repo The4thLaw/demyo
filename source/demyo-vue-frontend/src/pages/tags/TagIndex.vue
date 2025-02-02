@@ -24,7 +24,7 @@ function getMaxUsageCount(tags: Tag[]) {
 }
 
 async function fetchData(): Promise<ProcessedTag[]> {
-	const loadedTags: ProcessedTag[] = await tagService.findForIndex()
+	const loadedTags = await tagService.findForIndex() as ProcessedTag[]
 
 	// Post-process tags: compute the relative weight in %
 	// (the base is 100% and the max is 200%, which is very convenient for the font-size)
