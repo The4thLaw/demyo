@@ -82,6 +82,7 @@
 
 		"javascript.format.semicolons": "remove",
 		"typescript.format.semicolons": "remove",
+		"testing.automaticallyOpenTestResults": "neverOpen",
 	},
 	"tasks": {
 		"version": "2.0.0",
