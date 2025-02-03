@@ -1,3 +1,4 @@
+import { getParsedId } from "@/helpers/route"
 import AbstractModelService from "@/services/abstract-model-service"
 import { useUiStore } from "@/stores/ui"
 import { useHead } from "@unhead/vue"
@@ -27,13 +28,7 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 	const appTasksMenu = ref(false)
 
 	async function loadData() {
-		let id
-		if (route.params.id instanceof Array) {
-			id = route.params.id[0]
-		} else {
-			id = route.params.id
-		}
-		parsedId.value = parseInt(id, 10)
+		parsedId.value = getParsedId(route)
 		loading.value = true
 		model.value = await fetchData(parsedId.value)
 		useHead({

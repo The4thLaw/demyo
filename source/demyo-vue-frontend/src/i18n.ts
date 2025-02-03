@@ -7,14 +7,15 @@ import mergedMessages from '@intlify/unplugin-vue-i18n/messages'
 import axios from 'axios'
 import { createI18n } from 'vue-i18n'
 
-function setHtmlLang(lang) {
+function setHtmlLang(lang: string) {
 	document.documentElement.setAttribute('lang', lang.replace(/_/g, ' '))
 }
 
-const loadedLanguages = []
+const loadedLanguages: string[] = []
 
 // Define the variants we support
-datetimeFormats['fr-BE'] = datetimeFormats.fr
+let typedDatetimeFormats = datetimeFormats as Record<string, unknown>
+typedDatetimeFormats['fr-BE'] = datetimeFormats.fr
 
 /* The base language is
  * - Loaded from the local storage if possible
@@ -34,7 +35,7 @@ const i18n = createI18n({
 	locale: simpleLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: mergedMessages,
-	datetimeFormats,
+	typedDatetimeFormats,
 	legacy: false
 })
 setHtmlLang(selectedLocale)
@@ -45,7 +46,7 @@ console.log(`Initialized i18n with '${selectedLocale}' as default language and '
  * @param {string} lang The language to get translations for
  * @return {Promise<void>} An Promise without value (void)
  */
-async function loadLanguageFromServer(lang) {
+async function loadLanguageFromServer(lang: string) {
 	if (loadedLanguages.includes(lang)) {
 		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
 		return
@@ -66,12 +67,12 @@ loadLanguageFromServer(defaultLanguage).then(
  * Switches to a different language, potentially loading translations if needed
  * @param {String} lang the new language
  */
-export async function switchLanguage(lang) {
+export async function switchLanguage(lang: string) {
 	// Java and browsers have a different way of formatting language variants
 	lang = lang.replace(/_/g, '-')
 	console.log(`Switching language to ${lang}`)
 	await loadLanguageFromServer(lang)
-	i18n.locale = lang
+	i18n.global.locale.value = lang
 	setHtmlLang(lang)
 }
 

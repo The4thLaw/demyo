@@ -17,7 +17,7 @@
 				:confirm="$t('quickTasks.delete.reader.confirm')"
 				icon="mdi-account dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteType"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
@@ -42,49 +42,20 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import readerService from '@/services/reader-service'
 
-export default {
-	name: 'ReaderView',
+const mayDelete = ref(false)
 
-	mixins: [modelViewMixin],
-
-	data() {
-		return {
-			reader: {},
-			mayDelete: false,
-			appTasksMenu: false
-		}
-	},
-
-	head() {
-		return {
-			title: this.reader.identifyingName
-		}
-	},
-
-	computed: {
-		letter() {
-			return this.reader.name?.charAt(0)
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const readerP = readerService.findById(this.parsedId)
-			this.mayDelete = await readerService.mayDeleteReader()
-			this.reader = await readerP // Resolve calls in parallel
-		},
-
-		deleteType() {
-			deleteStub(this,
-				() => readerService.deleteModel(this.reader.id),
-				'quickTasks.delete.reader.confirm.done',
-				'ReaderIndex')
-		}
-	}
+async function fetchData(id: number): Promise<Reader> {
+	const readerP = readerService.findById(id)
+	mayDelete.value = await readerService.mayDeleteReader()
+	return readerP
 }
+
+const { model: reader, appTasksMenu, loading, deleteModel } = useSimpleView(fetchData, readerService,
+	'quickTasks.delete.reader.confirm.done', 'ReaderIndex')
+
+const letter = computed(() => reader.value.name?.charAt(0))
 </script>

@@ -1,11 +1,11 @@
 import { $t } from '@/i18n'
 
 export function mandatory() {
-	return v => !!v || $t('validation.mandatory')
+	return (v: any) => !!v || $t('validation.mandatory')
 }
 
-function regexMatch(regex, key) {
-	return v => {
+function regexMatch(regex: RegExp, key: string) {
+	return (v: any) => {
 		if (!v) {
 			return true
 		}

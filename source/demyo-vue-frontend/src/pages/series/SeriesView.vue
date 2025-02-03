@@ -16,7 +16,7 @@
 				:confirm="$t('quickTasks.delete.series.confirm')"
 				icon="mdi-animation dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteSeries"
+				@confirm="deleteModel"
 			/>
 			<AppTask
 				v-if="hasAlbumsOutsideReadingList"
@@ -73,7 +73,7 @@
 
 		<SectionCard
 			v-if="loading || series.albumIds || derivativeCount > 0"
-			ref="contentSection" class="c-SectionCard--tabbed"
+			ref="content-section" class="c-SectionCard--tabbed"
 		>
 			<v-tabs v-model="currentTab" bg-color="primary" grow>
 				<v-tab value="albums" :disabled="albumsLoaded && albumCount <= 0">
@@ -158,7 +158,7 @@
 					</div>
 					<GalleryIndex
 						:items="derivatives" image-path="mainImage" bordered
-						@page-change="$refs.contentSection.$el.scrollIntoView()"
+						@page-change="contentSectionRef.$el.scrollIntoView()"
 					>
 						<template #default="slotProps">
 							<router-link :to="`/derivatives/${slotProps.item.id}/view`">
@@ -177,250 +177,200 @@
 	</v-container>
 </template>
 
-<script>
-import { deleteStub } from '@/helpers/actions'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import { mergeModels } from '@/helpers/fields'
-import modelViewMixin from '@/mixins/model-view'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import seriesService from '@/services/series-service'
 import { useReaderStore } from '@/stores/reader'
 import sortedIndexOf from 'lodash/sortedIndexOf'
-import { mapState } from 'pinia'
 import asyncPool from 'tiny-async-pool'
+import { useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'SeriesView',
+interface LoadableAlbum extends Partial<Album> {
+	loading?: boolean
+}
 
-	mixins: [modelViewMixin],
+const i18n = useI18n()
+const readerStore = useReaderStore()
 
-	data() {
-		return {
-			series: {},
-			albums: {},
-			albumsLoaded: false,
-			derivatives: [],
-			derivativeCount: -1,
-			showWishlist: true,
-			appTasksMenu: false,
-			currentTab: 0
+const albums = ref({} as Record<number, LoadableAlbum>)
+const albumsLoaded = ref(false)
+const derivatives = ref([] as Derivative[])
+const derivativeCount = ref(-1)
+const showWishlist = ref(true)
+const currentTab = ref(0)
+
+const ownedIds = computed(() => {
+	if (!series.value.albumIds) {
+		return []
+	}
+	return series.value.albumIds.filter(id => {
+		const album = albums.value[id]
+		if (!album) {
+			return false
 		}
-	},
+		return album.loading || !album.wishlist
+	})
+})
 
-	head() {
-		return {
-			title: this.series.identifyingName
+const filteredIds = computed(() => {
+	if (showWishlist.value) {
+		return series.value.albumIds
+	}
+	return ownedIds.value
+})
+
+const albumsArray = computed(() => albumsLoaded.value ? Object.values(albums.value) as Album[] : [])
+const albumCount = computed(() => series.value.albumIds ? series.value.albumIds.length : 0)
+const ownedAlbumCount = computed(() => ownedIds.value.length)
+const allPublishers = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'publisher', 'identifyingName') : [])
+const allWriters = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'writers', ['name', 'firstName']) : [])
+const allArtists = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'artists', ['name', 'firstName']) : [])
+const allColorists = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'colorists', ['name', 'firstName']) : [])
+const allInkers = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'inkers', ['name', 'firstName']) : [])
+const allTranslators = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
+const allTags = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'tags', 'identifyingName') : [])
+
+const authorsAlive = computed(() => {
+	const relevantAuthors = [...allWriters.value, ...allArtists.value]
+	return relevantAuthors.length === 0 || relevantAuthors.some(a => !a.deathDate)
+})
+
+const completionLabel = computed(() => {
+	if (series.value.completed) {
+		if (!minAlbumYear.value || !maxAlbumYear.value) {
+			return i18n.t('field.Series.completed.value.trueNoDates')
 		}
-	},
+		return i18n.t('field.Series.completed.value.true', { min: minAlbumYear.value, max: maxAlbumYear.value })
+	}
 
-	computed: {
-		ownedIds() {
-			if (!this.series.albumIds) {
-				return []
-			}
-			return this.series.albumIds.filter(id => {
-				const album = this.albums[id]
-				if (!album) {
-					return false
-				}
-				return album.loading || !album.wishlist
-			})
-		},
+	if (authorsAlive.value) {
+		if (!minAlbumYear.value) {
+			return i18n.t('field.Series.completed.value.falseNoDates')
+		}
+		return i18n.t('field.Series.completed.value.false', { min: minAlbumYear.value })
+	}
 
-		filteredIds() {
-			if (this.showWishlist) {
-				return this.series.albumIds
-			}
-			return this.ownedIds
-		},
+	if (!minAlbumYear.value) {
+		return i18n.t('page.Series.allAuthorsDeceased.withoutDate')
+	}
+	return i18n.t('page.Series.allAuthorsDeceased.withDate', { min: minAlbumYear.value })
+})
 
-		albumCount() {
-			return this.series.albumIds ? this.series.albumIds.length : 0
-		},
+const derivativeQuery = computed(() => {
+	const query = {
+		toSeries: series.value.id,
+		toArtist: null as number | null
+	}
+	if (allArtists.value.length === 1) {
+		query.toArtist = allArtists.value[0].id
+	}
+	// If not all albums are loaded, let impatient users add the Derivative just to the Series
+	return query
+})
 
-		ownedAlbumCount() {
-			return this.ownedIds.length
-		},
+const hasAlbumsOutsideReadingList = computed(() => {
+	if (!albumsLoaded.value) {
+		return false
+	}
 
-		allPublishers() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'publisher', 'identifyingName') : []
-		},
+	return albumsArray.value.some(a => sortedIndexOf(readerStore.readingList, a.id) <= -1)
+})
 
-		allWriters() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'writers', ['name', 'firstName']) : []
-		},
+const albumDates = computed(() => {
+	if (!albumsLoaded.value) {
+		return []
+	}
 
-		allArtists() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'artists', ['name', 'firstName']) : []
-		},
+	return albumsArray.value
+		.map(a => a.firstEditionDate || a.currentEditionDate || a.printingDate)
+		.filter(Boolean)
+		.map(d => new Date(d))
+})
 
-		allColorists() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'colorists', ['name', 'firstName']) : []
-		},
+const minAlbumYear = computed(() => {
+	if (!albumDates.value.length) {
+		return null
+	}
 
-		allInkers() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'inkers', ['name', 'firstName']) : []
-		},
+	const minDate = new Date(Math.min.apply(null, albumDates.value.map(d => d.getTime())))
+	return minDate.getFullYear()
+})
 
-		allTranslators() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'translators', ['name', 'firstName']) : []
-		},
+const maxAlbumYear = computed(() => {
+	if (!albumDates.value.length) {
+		return null
+	}
+	if (!series.value.completed) {
+		return null
+	}
 
-		allTags() {
-			return this.albumsLoaded ? mergeModels(this.albums, 'tags', 'identifyingName') : []
-		},
+	const maxDate = new Date(Math.max.apply(null, albumDates.value.map(d => d.getTime())))
+	return maxDate.getFullYear()
+})
 
-		authorsAlive() {
-			const relevantAuthors = [...this.allWriters, ...this.allArtists]
-			return relevantAuthors.length === 0 || relevantAuthors.some(a => !a.deathDate)
-		},
-
-		completionLabel() {
-			if (this.series.completed) {
-				if (!this.minAlbumYear || !this.maxAlbumYear) {
-					return this.$t('field.Series.completed.value.trueNoDates')
-				}
-				return this.$t('field.Series.completed.value.true', { min: this.minAlbumYear, max: this.maxAlbumYear })
-			}
-
-			if (this.authorsAlive) {
-				if (!this.minAlbumYear) {
-					return this.$t('field.Series.completed.value.falseNoDates')
-				}
-				return this.$t('field.Series.completed.value.false', { min: this.minAlbumYear })
-			}
-
-			if (!this.minAlbumYear) {
-				return this.$t('page.Series.allAuthorsDeceased.withoutDate')
-			}
-			return this.$t('page.Series.allAuthorsDeceased.withDate', { min: this.minAlbumYear })
-		},
-
-		derivativeQuery() {
-			const query = {
-				toSeries: this.series.id
-			}
-			if (this.allArtists.length === 1) {
-				query.toArtist = this.allArtists[0].id
-			}
-			// If not all albums are loaded, let impatient users add the Derivative just to the Series
-			return query
-		},
-
-		hasAlbumsOutsideReadingList() {
-			if (!this.albumsLoaded) {
-				return false
-			}
-
-			return Object.values(this.albums).some(a => sortedIndexOf(this.readingList, a.id) <= -1)
-		},
-
-		albumDates() {
-			if (!this.albumsLoaded) {
-				return []
-			}
-
-			return Object.values(this.albums)
-				.map(a => a.firstEditionDate || a.currentEditionDate || a.printingDate)
-				.filter(Boolean)
-				.map(d => new Date(d))
-		},
-
-		minAlbumYear() {
-			if (!this.albumDates.length) {
-				return null
-			}
-
-			const minDate = new Date(Math.min.apply(null, this.albumDates))
-			return minDate.getFullYear()
-		},
-
-		maxAlbumYear() {
-			if (!this.albumDates.length) {
-				return null
-			}
-			if (!this.series.completed) {
-				return null
-			}
-
-			const maxDate = new Date(Math.max.apply(null, this.albumDates))
-			return maxDate.getFullYear()
-		},
-
-		...mapState(useReaderStore, {
-			readingList: store => store.readingList
-		})
-	},
-
-	methods: {
-		async fetchData() {
-			this.series = {}
-			this.albums = {}
-			this.albumsLoaded = false
-			this.derivatives = []
-			this.derivativeCount = 0
-
-			const dcPromise = seriesService.countDerivatives(this.parsedId)
-
-			this.series = await seriesService.findById(this.parsedId)
-
-			if (this.series.albumIds) {
-				this.series.albumIds.forEach(id => {
-					this.albums[id] = {
-						loading: true
-					}
-				})
-			}
-
-			void this.loadAlbums()
-
-			this.derivativeCount = await dcPromise
-
-			if (this.albumCount === 0 && this.derivativeCount > 0) {
-				// If there are no albums but there are derivatives, load the derivatives
-				this.currentTab = 1
-				void this.loadDerivatives()
-			}
-		},
-
-		async loadAlbums() {
-			if (this.series.albumIds) {
-				// We need the variable to iterate and, without iteration, this doesn't work
-				// eslint-disable-next-line no-unused-vars
-				for await (const _value of asyncPool(2, this.series.albumIds, this.albumLoader)) {
-					// Nothing to do
-				}
-			}
-			this.albumsLoaded = true
-		},
-
-		async albumLoader(id) {
-			const album = await albumService.findById(id)
-			this.albums[id] = album
-			this.albums[id].loading = false
-		},
-
-		deleteSeries() {
-			deleteStub(this,
-				() => seriesService.deleteModel(this.series.id),
-				'quickTasks.delete.series.confirm.done',
-				'SeriesIndex')
-		},
-
-		addSeriesToReadingList() {
-			readerService.addSeriesToReadingList(this.parsedId)
-		},
-
-		async loadDerivatives() {
-			if (this.derivatives.length > 0) {
-				// Don't reload every time
-				return
-			}
-			this.derivatives = await derivativeService.findForIndex({ series: this.parsedId })
+async function loadAlbums(series: Series) {
+	if (series.albumIds) {
+		// We need the variable to iterate and, without iteration, this doesn't work
+		// eslint-disable-next-line no-unused-vars
+		for await (const _value of asyncPool(2, series.albumIds, albumLoader)) {
+			// Nothing to do
 		}
 	}
+	albumsLoaded.value = true
+
+	if (albumCount.value === 0 && derivativeCount.value > 0) {
+		// If there are no albums but there are derivatives, load the derivatives
+		currentTab.value = 1
+		void loadDerivatives()
+	}
 }
+
+async function albumLoader(id: number) {
+	const album = await albumService.findById(id)
+	albums.value[id] = album
+	albums.value[id].loading = false
+}
+
+function addSeriesToReadingList() {
+	readerService.addSeriesToReadingList(series.value.id)
+}
+
+async function loadDerivatives() {
+	if (derivatives.value.length > 0) {
+		// Don't reload every time
+		return
+	}
+	derivatives.value = await derivativeService.findForIndex({ series: series.value.id })
+}
+
+async function fetchData(id: number): Promise<Series> {
+	const dcPromise = seriesService.countDerivatives(id)
+
+	const series = await seriesService.findById(id)
+
+	if (series.albumIds) {
+		series.albumIds.forEach(id => {
+			albums.value[id] = {
+				loading: true
+			}
+		})
+	}
+
+	void loadAlbums(series)
+
+	derivativeCount.value = await dcPromise
+
+	return Promise.resolve(series)
+}
+
+const { model: series, appTasksMenu, loading, deleteModel } = useSimpleView(fetchData, seriesService, 'quickTasks.delete.series.confirm.done', 'SeriesIndex')
+
+const contentSectionRef = useTemplateRef('content-section')
 </script>
 
 <style lang="scss">
