@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
+import org.springframework.lang.Nullable;
 import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -42,42 +43,49 @@ public class Image extends AbstractModel {
 	private String url;
 	/** The description of the image. */
 	@Column(name = "description")
+	@Nullable
 	private String description;
 
 	/** The {@link Album}s which use this Image as cover. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cover")
 	@SortComparator(AlbumAndSeriesComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Album> albumCovers;
 
 	/** The {@link Album}s which use this Image as other image. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "images")
 	@SortComparator(AlbumAndSeriesComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Album> albumOtherImages;
 
 	/** The {@link Author}s who use this Image. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portrait")
 	@SortComparator(AuthorComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Author> authors;
 
 	/** The {@link Collection}s which use this Image. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "logo")
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Collection> collections;
 
 	/** The {@link Derivative}s which use this Image. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "images")
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Derivative> derivatives;
 
 	/** The {@link Publisher}s which use this Image. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "logo")
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Publisher> publishers;
 
 	@Override

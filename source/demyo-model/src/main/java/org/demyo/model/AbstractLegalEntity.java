@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.lang.Nullable;
 
 /**
  * Defines basic fields for a legal entity.
@@ -17,11 +18,13 @@ public abstract class AbstractLegalEntity extends AbstractBasicLegalEntity {
 	/** The RSS feed. */
 	@Column(name = "feed")
 	@URL
+	@Nullable
 	private String feed;
 
 	/** The logo (visual identity) of the entity. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "logo_id")
+	@Nullable
 	private Image logo;
 
 	/**

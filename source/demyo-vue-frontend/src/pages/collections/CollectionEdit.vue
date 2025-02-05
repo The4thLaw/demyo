@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Collection.identity')">
+			<SectionCard :subtitle="$t('fieldset.Collection.identity')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="4">
 						<v-text-field
@@ -26,7 +26,7 @@
 				<RichTextEditor v-model="collection.history" />
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Collection.internet')">
+			<SectionCard :subtitle="$t('fieldset.Collection.internet')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -42,75 +42,65 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { getParsedRouteParam } from '@/helpers/route'
 import { mandatory, url } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
-import publisherRefreshMixin from '@/mixins/refresh-publisher-list'
 import collectionService from '@/services/collection-service'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'CollectionEdit',
+const route = useRoute()
 
-	mixins: [imgRefreshMixin, modelEditMixin, publisherRefreshMixin],
+// TODO: mixins: [imgRefreshMixin, modelEditMixin, publisherRefreshMixin],
 
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.collection',
-						edit: 'title.edit.collection'
-					},
-					saveRedirectViewName: 'CollectionView'
-				}
-			},
+async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
+	if (id) {
+		return collectionService.findById(id)
+	}
 
-			collection: {
-				logo: {},
-				publisher: {}
-			},
-
-			rules: {
-				name: [
-					mandatory()
-				],
-				publisher: [
-					mandatory()
-				],
-				website: [
-					url()
-				],
-				feed: [
-					url()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.collection = await collectionService.findById(this.parsedId)
-			}
-
-			if (!this.parsedId && this.$route.query.toPublisher) {
-				this.collection.publisher.id = parseInt(this.$route.query.toPublisher, 10)
-			}
+	const collection: Partial<Collection> = {
+		publisher: {
+			id: 0,
+			identifyingName: '',
+			name: '',
+			collections: []
 		},
-
-		saveHandler() {
-			return collectionService.save(this.collection)
+		logo: {
+			id: 0,
+			identifyingName: '',
+			url: '',
+			userFileName: ''
 		}
 	}
+
+	if (route.query.toPublisher && collection.publisher) {
+		collection.publisher.id = getParsedRouteParam(route.query.toPublisher) ?? 0
+	}
+
+	return Promise.resolve(collection)
 }
+
+const {model: collection, loading, save, reset, loadData}
+	= useSimpleEdit(fetchData, collectionService, 'title.add.collection', 'title.edit.collection', 'CollectionView')
+
+const rules = ref({
+	name: [
+		mandatory()
+	],
+	publisher: [
+		mandatory()
+	],
+	website: [
+		url()
+	],
+	feed: [
+		url()
+	]
+})
 </script>
+

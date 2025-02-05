@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2024-09-12 13:34:41.
+// Generated using typescript-generator version 3.2.1263 on 2025-02-05 22:52:24.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -102,13 +102,13 @@ interface Binding extends AbstractNamedModel {
 
 interface Image extends AbstractModel {
     url: string;
-    description: string;
-    albumCovers: Album[];
-    albumOtherImages: Album[];
-    authors: Author[];
-    collections: Collection[];
-    derivatives: Derivative[];
-    publishers: Publisher[];
+    description?: string;
+    albumCovers?: Album[];
+    albumOtherImages?: Album[];
+    authors?: Author[];
+    collections?: Collection[];
+    derivatives?: Derivative[];
+    publishers?: Publisher[];
     userFileName: string;
 }
 
@@ -151,8 +151,8 @@ interface ApplicationConfiguration {
 }
 
 interface AbstractLegalEntity extends AbstractBasicLegalEntity {
-    feed: string;
-    logo: Image;
+    feed?: string;
+    logo?: Image;
 }
 
 interface Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
@@ -174,8 +174,8 @@ interface Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
     depth: number;
     prices: DerivativePrice[];
     images: Image[];
-    mainImage: Image;
     baseNameForImages: string;
+    mainImage: Image;
     pricesRaw: DerivativePrice[];
 }
 
@@ -195,8 +195,8 @@ interface AbstractPrice<P, M> {
 }
 
 interface AbstractBasicLegalEntity extends AbstractNamedModel {
-    website: string;
-    history: string;
+    website?: string;
+    history?: string;
 }
 
 interface DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> {

@@ -82,6 +82,10 @@
 								<class>java.lang.Comparable</class>
 								<class>java.io.Serializable</class>
 							</excludeClasses>
+							<optionalAnnotations>
+								<!--<annotation>jakarta.annotation.Nullable</annotation>-->
+								<annotation>org.springframework.lang.Nullable</annotation>
+							</optionalAnnotations>
 							<!-- Note that Javadoc isn't working due to https://github.com/vojtechhabarta/typescript-generator/issues/1049 -->
 							<outputKind>global</outputKind>
 							<outputFileType>declarationFile</outputFileType>
