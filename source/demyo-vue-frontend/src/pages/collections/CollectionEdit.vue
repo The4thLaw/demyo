@@ -10,15 +10,15 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<AutoComplete
-							v-model="collection.publisher.id" :items="allPublishers" :loading="allPublishersLoading"
+							v-model="collection.publisher.id" :items="publishers" :loading="publishersLoading"
 							:rules="rules.publisher" label-key="field.Collection.publisher"
-							refreshable @refresh="refreshPublishers"
+							refreshable @refresh="loadPublishers"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<AutoComplete
-							v-model="collection.logo.id" :items="allImages" :loading="allImagesLoading"
-							label-key="field.Collection.logo" refreshable @refresh="refreshImages"
+							v-model="collection.logo.id" :items="images" :loading="imagesLoading"
+							label-key="field.Collection.logo" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
@@ -49,14 +49,16 @@
 
 <script setup lang="ts">
 import { useSimpleEdit } from '@/composables/model-edit'
+import { useRefreshableImages, useRefreshablePublishers } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
 import { mandatory, url } from '@/helpers/rules'
+import { skeletonImage, skeletonPublisher } from '@/helpers/skeleton-models'
 import collectionService from '@/services/collection-service'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-
-// TODO: mixins: [imgRefreshMixin, modelEditMixin, publisherRefreshMixin],
+const {publishers, publishersLoading, loadPublishers} = useRefreshablePublishers()
+const {images, imagesLoading, loadImages} = useRefreshableImages()
 
 async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 	if (id) {
@@ -64,18 +66,8 @@ async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 	}
 
 	const collection: Partial<Collection> = {
-		publisher: {
-			id: 0,
-			identifyingName: '',
-			name: '',
-			collections: []
-		},
-		logo: {
-			id: 0,
-			identifyingName: '',
-			url: '',
-			userFileName: ''
-		}
+		publisher: skeletonPublisher(),
+		logo: skeletonImage()
 	}
 
 	if (route.query.toPublisher && collection.publisher) {
@@ -85,8 +77,8 @@ async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 	return Promise.resolve(collection)
 }
 
-const {model: collection, loading, save, reset, loadData}
-	= useSimpleEdit(fetchData, collectionService, 'title.add.collection', 'title.edit.collection', 'CollectionView')
+const {model: collection, loading, save, reset} = useSimpleEdit(fetchData, collectionService,
+	[loadImages, loadPublishers], 'title.add.collection', 'title.edit.collection', 'CollectionView')
 
 const rules = ref({
 	name: [
@@ -103,4 +95,3 @@ const rules = ref({
 	]
 })
 </script>
-

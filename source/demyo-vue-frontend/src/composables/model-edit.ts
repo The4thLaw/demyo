@@ -16,7 +16,8 @@ interface EditData<T extends AbstractModel> {
 
 
 export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|undefined) => Promise<Partial<T>>,
-	service: AbstractModelService<T>, addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
+	service: AbstractModelService<T>, additionalLoaders: (() => Promise<any>)[],
+	addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
 	saveHandler = (model: T) => service.save(model)): EditData<T> {
 	//
 	const route = useRoute()
@@ -43,7 +44,7 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 
 		uiStore.enableGlobalOverlay()
 		loading.value = true
-		const loadPromises = []
+		const loadPromises = [] as Promise<any>[]
 
 		if (route.params.id) {
 			parsedId.value = getParsedId(route)
@@ -55,25 +56,12 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 		// Set it as soon as it's resolved but without blocking other promises
 		modelP.then(m => model.value = m)
 
-		// TODO: Integration with other mixins
-		/*if (this.refreshAuthors) {
-			loadPromises.push(this.refreshAuthors())
-		}
-		if (this.refreshImages) {
-			loadPromises.push(this.refreshImages())
-		}
-		if (this.refreshPublishers) {
-			loadPromises.push(this.refreshPublishers())
-		}
-		if (this.refreshTags) {
-			loadPromises.push(this.refreshTags())
-		}*/
+		additionalLoaders.forEach(l => loadPromises.push(l()))
 
 		await Promise.all(loadPromises)
 
 		loading.value = false
 		uiStore.disableGlobalOverlay()
-		// TODO: separate model loading from sub promises from refreshes because they manage their own states
 	}
 
 	uiStore.disableSearch()
