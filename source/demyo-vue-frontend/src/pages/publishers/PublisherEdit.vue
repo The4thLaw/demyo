@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Publisher.identity')">
+			<SectionCard :subtitle="$t('fieldset.Publisher.identity')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -10,8 +10,8 @@
 					</v-col>
 					<v-col cols="12" md="6">
 						<AutoComplete
-							v-model="publisher.logo.id" :items="allImages" :loading="allImagesLoading"
-							label-key="field.Publisher.logo" refreshable @refresh="refreshImages"
+							v-model="publisher.logo.id" :items="images" :loading="imagesLoading"
+							label-key="field.Publisher.logo" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
@@ -19,7 +19,7 @@
 				<RichTextEditor v-model="publisher.history" />
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Publisher.internet')">
+			<SectionCard :subtitle="$t('fieldset.Publisher.internet')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -35,66 +35,48 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { useRefreshableImages } from '@/composables/refreshable-models'
 import { mandatory, url } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
 import publisherService from '@/services/publisher-service'
 
-export default {
-	name: 'PublisherEdit',
+const {images, imagesLoading, loadImages} = useRefreshableImages()
 
-	mixins: [imgRefreshMixin, modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.publisher',
-						edit: 'title.edit.publisher'
-					},
-					saveRedirectViewName: 'PublisherView'
-				}
-			},
-
-			publisher: { logo: {} },
-
-			rules: {
-				name: [
-					mandatory()
-				],
-				website: [
-					url()
-				],
-				feed: [
-					url()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.publisher = await publisherService.findById(this.parsedId)
-				// Clear the collections: we won't be editing those and don't want to save them
-				delete this.publisher.collections
-			}
-		},
-
-		saveHandler() {
-			return publisherService.save(this.publisher)
-		}
+async function fetchData(id: number|undefined): Promise<Partial<Publisher>> {
+	if (id) {
+		return publisherService.findById(id)
+			// Clear the collections: we won't be editing those and don't want to save them
+			.then(p => {
+				p.collections = null as unknown as Collection[]
+				return p
+			})
 	}
+
+	const publisher: Partial<Publisher> = {
+		logo: {} as Image
+	}
+
+	return Promise.resolve(publisher)
+}
+
+const {model: publisher, loading, save, reset} = useSimpleEdit(fetchData, publisherService,
+	[loadImages], 'title.add.publisher', 'title.edit.publisher', 'PublisherView')
+
+const rules = {
+	name: [
+		mandatory()
+	],
+	website: [
+		url()
+	],
+	feed: [
+		url()
+	]
 }
 </script>

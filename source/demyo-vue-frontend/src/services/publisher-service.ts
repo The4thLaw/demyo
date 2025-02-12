@@ -16,7 +16,7 @@ class PublisherService extends AbstractModelService<Publisher> {
 	 * Finds the Collections belonging to a Publisher.
 	 * @param publisherId The Publisher ID
 	 */
-	findCollectionsForList(publisherId: number): Promise<Collection[]> {
+	findCollectionsForList(publisherId: number | undefined): Promise<Collection[]> {
 		if (!publisherId) {
 			return Promise.resolve([])
 		}

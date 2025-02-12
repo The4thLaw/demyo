@@ -23,7 +23,7 @@ export const currencyList = processedCurrencyList
  */
 export function isCurrencyPrefix() {
 	// TODO: ideally, this NumberFormat should be created once, at the change of locale
-	const locale = i18n.global.locale.replace(/_/g, '-')
+	const locale = i18n.global.locale.value.replace(/_/g, '-')
 	return new Intl.NumberFormat(locale, { style: 'currency', currency: 'XTS' }).format(1).startsWith('XTS')
 }
 

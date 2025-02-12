@@ -52,13 +52,12 @@ import { useSimpleEdit } from '@/composables/model-edit'
 import { useRefreshableImages, useRefreshablePublishers } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
 import { mandatory, url } from '@/helpers/rules'
-import { skeletonImage, skeletonPublisher } from '@/helpers/skeleton-models'
 import collectionService from '@/services/collection-service'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const {publishers, publishersLoading, loadPublishers} = useRefreshablePublishers()
 const {images, imagesLoading, loadImages} = useRefreshableImages()
+const {publishers, publishersLoading, loadPublishers} = useRefreshablePublishers()
 
 async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 	if (id) {
@@ -66,8 +65,8 @@ async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 	}
 
 	const collection: Partial<Collection> = {
-		publisher: skeletonPublisher(),
-		logo: skeletonImage()
+		publisher: {} as Publisher,
+		logo: {} as Image
 	}
 
 	if (route.query.toPublisher && collection.publisher) {
