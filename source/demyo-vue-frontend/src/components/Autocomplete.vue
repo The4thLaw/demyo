@@ -1,6 +1,6 @@
 <template>
 	<v-autocomplete
-		v-model="inputVal"
+		v-model="model"
 		v-model:search="search"
 		v-bind="$attrs"
 		:label="$t(labelKey, multiple ? 2 : 1)"
@@ -14,58 +14,32 @@
 		@update:modelValue="onUpdateSelection"
 	>
 		<template v-if="refreshable" #append>
-			<v-btn icon size="small" variant="flat" @click.stop="$emit('refresh')">
+			<v-btn icon size="small" variant="flat" @click.stop="emit('refresh')">
 				<v-icon>mdi-refresh</v-icon>
 			</v-btn>
 		</template>
 	</v-autocomplete>
 </template>
 
-<script>
-export default {
-	name: 'AutoComplete',
+<script setup lang="ts">
+const model = defineModel()
 
-	props: {
-		// Using v-bind="$attrs" means we can avoid re-declaring everything we want to pass as-is to v-autocomplete
-		value: {
-			type: null,
-			default: false
-		},
+withDefaults(defineProps<{
+	labelKey: string
+	refreshable?: boolean
+	loading?: boolean
+	multiple?: boolean
+}>(), {
+	refreshable: false,
+	loading: false,
+	multiple: false
+})
 
-		labelKey: {
-			type: String,
-			required: true
-		},
+const search = ref('')
 
-		refreshable: {
-			type: Boolean,
-			default: false
-		},
+const emit = defineEmits(['refresh'])
 
-		loading: {
-			type: Boolean,
-			default: false
-		},
-
-		// Re-declared to always be able to set multiple input as chips
-		multiple: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	data() {
-		return {
-			inputVal: this.value,
-			search: ''
-		}
-	},
-
-	methods: {
-		onUpdateSelection() {
-			this.$emit('update:modelValue', this.inputVal)
-			this.search = ''
-		}
-	}
+function onUpdateSelection() {
+	search.value = ''
 }
 </script>

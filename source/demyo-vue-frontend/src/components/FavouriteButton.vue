@@ -13,73 +13,51 @@
 	</v-btn>
 </template>
 
-<script>
+<script setup lang="ts">
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
 import sortedIndexOf from 'lodash/sortedIndexOf'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'FavouriteButton',
+const readerStore = useReaderStore()
 
-	props: {
-		modelId: {
-			type: Number,
-			required: true
-		},
+const props = defineProps<{
+	modelId: number,
+	type: string
+}>()
 
-		type: {
-			type: String,
-			required: true
+const initialized = ref(true)
+const loading = ref(false)
+
+const favourites = computed(() => {
+	if (props.type === 'Album') {
+		return readerStore.favouriteAlbums
+	} else if (props.type === 'Series') {
+		return readerStore.favouriteSeries
+	}
+	console.error('Invalid favourite type', props.type)
+	return []
+})
+
+const isFavourite = computed(() => sortedIndexOf(favourites.value, props.modelId) > -1)
+
+async function toggle() {
+	loading.value = true
+	// Call the right service method depending on type and state
+	// The service should alter the store on its own and reactivity should propagate here
+	if (isFavourite.value) {
+		if (props.type === 'Album') {
+			await readerService.removeFavouriteAlbum(props.modelId)
+		} else if (props.type === 'Series') {
+			await readerService.removeFavouriteSeries(props.modelId)
 		}
-	},
-
-	data() {
-		return {
-			initialized: true,
-			loading: false
-		}
-	},
-
-	computed: {
-		...mapState(useReaderStore, {
-			favourites: function (store) {
-				if (this.type === 'Album') {
-					return store.favouriteAlbums
-				} else if (this.type === 'Series') {
-					return store.favouriteSeries
-				}
-				console.error('Invalid favourite type', this.type)
-				return []
-			}
-		}),
-
-		isFavourite() {
-			return sortedIndexOf(this.favourites, this.modelId) > -1
-		}
-	},
-
-	methods: {
-		async toggle() {
-			this.loading = true
-			// Call right service method depending on type and state
-			// Service should alter the store on its own and reactivity should propagate here
-			// await !
-			if (this.isFavourite) {
-				if (this.type === 'Album') {
-					await readerService.removeFavouriteAlbum(this.modelId)
-				} else if (this.type === 'Series') {
-					await readerService.removeFavouriteSeries(this.modelId)
-				}
-			} else {
-				if (this.type === 'Album') {
-					await readerService.addFavouriteAlbum(this.modelId)
-				} else if (this.type === 'Series') {
-					await readerService.addFavouriteSeries(this.modelId)
-				}
-			}
-			this.loading = false
+	} else {
+		if (props.type === 'Album') {
+			await readerService.addFavouriteAlbum(props.modelId)
+		} else if (props.type === 'Series') {
+			await readerService.addFavouriteSeries(props.modelId)
 		}
 	}
+	loading.value = false
 }
 </script>
+

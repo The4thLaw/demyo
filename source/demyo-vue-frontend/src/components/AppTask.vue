@@ -19,12 +19,12 @@
 
 					<v-btn
 						color="secondary" class="c-AppTask__confirm" variant="elevated"
-						@click="confirmationDialog = false; $emit('confirm')"
+						@click="confirmationDialog = false; emit('confirm')"
 					>
 						{{ $t('quickTasks.confirm.ok.label') }}
 					</v-btn>
 
-					<v-btn color="primary" @click="confirmationDialog = false; $emit('cancel')">
+					<v-btn color="primary" @click="confirmationDialog = false; emit('cancel')">
 						{{ $t('quickTasks.confirm.cancel.label') }}
 					</v-btn>
 				</v-card-actions>
@@ -33,45 +33,23 @@
 	</v-list-item>
 </template>
 
-<script>
-export default {
-	name: 'AppTask',
+<script setup lang="ts">
+const props = defineProps<{
+	label: string,
+	icon: string,
+	to?: any
+	confirm?: string
+}>()
 
-	props: {
-		label: {
-			type: String,
-			required: true
-		},
+const emit = defineEmits(['click', 'confirm', 'cancel'])
 
-		icon: {
-			type: String,
-			required: true
-		},
+const confirmationDialog = ref(false)
 
-		to: {
-			type: null,
-			default: undefined
-		},
-
-		confirm: {
-			type: String,
-			default: ''
-		}
-	},
-
-	data() {
-		return {
-			confirmationDialog: false
-		}
-	},
-
-	methods: {
-		handleClick(e) {
-			this.$emit('click', e)
-			if (this.confirm) {
-				this.confirmationDialog = true
-			}
-		}
+function handleClick(e: MouseEvent) {
+	emit('click', e)
+	if (props.confirm) {
+		confirmationDialog.value = true
 	}
 }
 </script>
+

@@ -9,21 +9,11 @@
 	</v-snackbar>
 </template>
 
-<script>
-export default {
-	name: 'AppSnackbar',
+<script setup lang="ts">
+defineProps<{
+	shown: boolean,
+	message?: string
+}>()
 
-	props: {
-		shown: {
-			type: Boolean,
-			required: true
-		},
-
-		message: {
-			type: String,
-			required: false,
-			default: ''
-		}
-	}
-}
+const emit = defineEmits(['close'])
 </script>

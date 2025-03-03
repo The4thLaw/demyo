@@ -1,6 +1,6 @@
 <template>
 	<Teleport to="#teleport-appTasks">
-		<v-menu v-model="inputVal">
+		<v-menu v-model="model">
 			<template #activator="{ props }">
 				<v-btn variant="text" icon="mdi-dots-vertical" v-bind="props" />
 			</template>
@@ -11,33 +11,8 @@
 	</Teleport>
 </template>
 
-<script>
-export default {
-	name: 'AppTasks',
-
-	props: {
-		modelValue: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	data() {
-		return {
-			inputVal: this.modelValue
-		}
-	},
-
-	watch: {
-		modelValue(val) {
-			this.inputVal = val
-		},
-
-		inputVal(val) {
-			this.$emit('update:modelValue', val)
-		}
-	}
-}
+<script setup lang="ts">
+const model = defineModel<boolean | undefined>()
 </script>
 
 <style lang="scss">
