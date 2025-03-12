@@ -54,71 +54,59 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'AlbumTextList',
+<script setup lang="ts">
+const ITEMS_PER_PAGE = 10
 
-	props: {
-		albums: {
-			type: Array,
-			required: true
+const props = defineProps<{
+	albums: Album[]
+}>()
+
+const currentPage = ref(1)
+
+const albumsBySeries = computed(() => {
+	const bySeries = {} as Record<number, any>
+	// Work on a copy of the albums, else we modify the data from the parent
+
+	props.albums.forEach(a => {
+		let id
+		if (a.series) {
+			id = a.series.id
+		} else {
+			id = -a.id // Negative for albums, positive for series
 		}
-	},
-
-	data() {
-		return {
-			itemsPerPage: 10,
-			currentPage: 1
+		if (bySeries[id]) {
+			bySeries[id].albums.push(a)
+		} else {
+			if (id > 0) {
+				bySeries[id] = a.series
+				bySeries[id].isSeries = true
+				bySeries[id].albums = [a]
+				bySeries[id].sortName = a.series.identifyingName
+			} else {
+				bySeries[id] = a
+				bySeries[id].isSeries = false
+				bySeries[id].sortName = a.title
+			}
 		}
-	},
+	})
 
-	computed: {
-		albumsBySeries() {
-			const bySeries = {}
-			// Work on a copy of the albums, else we modify the data from the parent
+	// Albums within a Series are already sorted, and Series are sorted, but one shots aren't
+	const ret = Object.values(bySeries)
+	ret.sort((a, b) => {
+		return a.sortName.localeCompare(b.sortName)
+	})
 
-			this.albums.forEach(a => {
-				let id
-				if (a.series) {
-					id = a.series.id
-				} else {
-					id = -a.id // Negative for albums, positive for series
-				}
-				if (bySeries[id]) {
-					bySeries[id].albums.push(a)
-				} else {
-					if (id > 0) {
-						bySeries[id] = a.series
-						bySeries[id].isSeries = true
-						bySeries[id].albums = [a]
-						bySeries[id].sortName = a.series.identifyingName
-					} else {
-						bySeries[id] = a
-						bySeries[id].isSeries = false
-						bySeries[id].sortName = a.title
-					}
-				}
-			})
+	return ret
+})
 
-			// Albums within a Series are already sorted, and Series are sorted, but one shots aren't
-			const ret = Object.values(bySeries)
-			ret.sort((a, b) => {
-				return a.sortName.localeCompare(b.sortName)
-			})
+const paginatedAlbumsBySeries = computed(() => {
+	return albumsBySeries.value.slice((currentPage.value - 1) * ITEMS_PER_PAGE,
+		currentPage.value * ITEMS_PER_PAGE)
+})
 
-			return ret
-		},
-
-		paginatedAlbumsBySeries() {
-			return this.albumsBySeries.slice((this.currentPage - 1) * this.itemsPerPage,
-				this.currentPage * this.itemsPerPage)
-		},
-
-		pageCount() {
-			return Math.ceil(this.albumsBySeries.length / this.itemsPerPage)
-		}
-	}
-}
+const pageCount = computed(() => {
+	return Math.ceil(albumsBySeries.value.length / ITEMS_PER_PAGE)
+})
 </script>
 
 <style lang="scss">

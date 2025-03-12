@@ -1,68 +1,25 @@
 <template>
 	<v-text-field
-		v-model="inputVal" :label="$t(labelKey)"
+		v-model="model" :label="$t(labelKey)"
 		:prefix="prefix" :suffix="suffix"
 		type="number" inputmode="decimal" step="any"
 	/>
 </template>
 
-<script>
+<script setup lang="ts">
 import { getCurrencySymbol, isCurrencyPrefix } from '@/helpers/i18n'
 import { useReaderStore } from '@/stores/reader'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'CurrencyField',
+const model = defineModel<number | undefined>()
 
-	props: {
-		// Using v-bind="$attrs" means we can avoid re-declaring everything we want to pass as-is to v-text-field
-		value: {
-			type: null,
-			default: null
-		},
+defineProps<{
+	labelKey: string
+}>()
+// Using v-bind="$attrs" means we can avoid re-declaring everything we want to pass as-is to v-text-field
 
-		labelKey: {
-			type: String,
-			required: true
-		}
-	},
+const readerStore = useReaderStore()
+const currency = computed(() => readerStore.currentReader?.configuration?.currency)
 
-	data() {
-		return {
-			inputVal: this.value
-		}
-	},
-
-	computed: {
-		prefix() {
-			return isCurrencyPrefix() ? getCurrencySymbol(this.currency) : null
-		},
-
-		suffix() {
-			return isCurrencyPrefix() ? null : getCurrencySymbol(this.currency)
-		},
-
-		...mapState(useReaderStore, {
-			currency: function (store) {
-				return store.currentReader?.configuration?.currency
-			}
-		})
-	},
-
-	watch: {
-		value(val) {
-			this.inputVal = val
-		},
-
-		inputVal(val) {
-			if (typeof val === 'string') {
-				val = parseFloat(val)
-			}
-			if (isNaN(val)) {
-				val = null
-			}
-			this.$emit('input', val)
-		}
-	}
-}
+const prefix = computed(() => isCurrencyPrefix() ? getCurrencySymbol(currency.value) : null)
+const suffix = computed(() => isCurrencyPrefix() ? null : getCurrencySymbol(currency.value))
 </script>

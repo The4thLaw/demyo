@@ -130,70 +130,39 @@
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
 import { getBaseImageUrl } from '@/helpers/images'
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
 import sortedIndexOf from 'lodash/sortedIndexOf'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'AlbumCard',
+const props = withDefaults(defineProps<{
+	album: Album
+	loading?: boolean
+	/**
+	 * Whether to load the cover image. On pages with a lot of asynchronous data, loading all covers
+	 * can compete with the AJAX calls and make the page feel slow, especially if the thumbnails
+	 * aren't generated yet.
+	 */
+	loadCover?: boolean
+}>(), {
+	loading: false,
+	loadCover: true
+})
 
-	props: {
-		album: {
-			type: null,
-			required: true
-		},
+const expanded = ref(false)
+const readingListLoading = ref(false)
 
-		loading: {
-			type: Boolean,
-			default: false
-		},
+const baseImageUrl = computed(() => getBaseImageUrl(props.album.cover))
+const eagerCovers = !(navigator.connection?.saveData)
 
-		/**
-		 * Whether to load the cover image. On pages with a lot of asynchronous data, loading all covers
-		 * can compete with the AJAX calls and make the page feel slow, especially if the thumbnails
-		 * aren't generated yet.
-		 */
-		loadCover: {
-			type: Boolean,
-			default: true
-		}
-	},
+const readerStore = useReaderStore()
+const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, props.album.id) > -1)
 
-	data() {
-		return {
-			expanded: false,
-			readingListLoading: false
-		}
-	},
-
-	computed: {
-		baseImageUrl() {
-			return getBaseImageUrl(this.album.cover)
-		},
-
-		eagerCovers() {
-			return !(navigator.connection?.saveData)
-		},
-
-		...mapState(useReaderStore, {
-			readingList: store => store.readingList
-		}),
-
-		isInReadingList() {
-			return sortedIndexOf(this.readingList, this.album.id) > -1
-		}
-	},
-
-	methods: {
-		async markAsRead() {
-			this.readingListLoading = true
-			await readerService.removeFromReadingList(this.album.id)
-			this.readingListLoading = false
-		}
-	}
+async function markAsRead() {
+	readingListLoading.value = true
+	await readerService.removeFromReadingList(props.album.id)
+	readingListLoading.value = false
 }
 </script>
 
