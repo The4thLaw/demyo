@@ -14,38 +14,30 @@
 	</ModelLink>
 </template>
 
-<script>
-export default {
-	name: 'TagLink',
+<script setup lang="ts">
+defineProps<{
+	model: IModel
+}>()
 
-	props: {
-		model: {
-			type: null,
-			required: true
-		}
-	},
-
-	methods: {
-		getStyle(tag) {
-			const style = {}
-			if (tag.fgColour) {
-				style.color = tag.fgColour
-			}
-			if (tag.bgColour) {
-				style['background-color'] = tag.bgColour
-			}
-			if (tag.relativeWeight) {
-				style['font-size'] = tag.relativeWeight + '%'
-			}
-			return style
-		},
-
-		hasCount(tag) {
-			return tag.usageCount === 0 || tag.usageCount
-		}
+function getStyle(tag: ProcessedTag) {
+	const style: Partial<CSSStyleDeclaration> = {}
+	if (tag.fgColour) {
+		style.color = tag.fgColour
 	}
+	if (tag.bgColour) {
+		style.backgroundColor = tag.bgColour
+	}
+	if (tag.relativeWeight) {
+		style.fontSize = tag.relativeWeight + '%'
+	}
+	return style
+}
+
+function hasCount(tag: ProcessedTag) {
+	return tag.usageCount === 0 || tag.usageCount
 }
 </script>
+
 
 <style lang="scss">
 .d-Tag {

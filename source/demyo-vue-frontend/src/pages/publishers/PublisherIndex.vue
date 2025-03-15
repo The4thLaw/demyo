@@ -12,7 +12,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
 import publisherService from '@/services/publisher-service'
 

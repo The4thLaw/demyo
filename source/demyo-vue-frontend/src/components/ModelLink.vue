@@ -28,31 +28,19 @@
 	</span>
 </template>
 
-<script setup>
-const props = defineProps({
-	model: {
-		type: null,
-		required: true
-	},
-
-	view: {
-		type: String,
-		required: true
-	},
-
-	commaSeparated: {
-		type: Boolean,
-		default: true
-	},
-
-	cssClass: {
-		type: String,
-		default: ''
-	}
+<script setup lang="ts">
+const props = withDefaults(defineProps<{
+	model: IModel | IModel[],
+	view: string,
+	commaSeparated?: boolean,
+	cssClass?: string
+}>(), {
+	commaSeparated: true,
+	cssClass: ''
 })
 
 const isArray = computed(() => Array.isArray(props.model))
-const length = computed(() => isArray.value ? props.model.length : 1)
+const length = computed(() => Array.isArray(props.model) ? props.model.length : 1)
 
 const slots = useSlots()
 const hasDefaultSlot = computed(() => !!slots.default)

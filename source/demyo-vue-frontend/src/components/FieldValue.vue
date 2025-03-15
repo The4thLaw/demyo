@@ -7,17 +7,10 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FieldValue',
-
-	props: {
-		label: {
-			type: String,
-			required: true
-		}
-	}
-}
+<script setup lang="ts">
+defineProps<{
+	label: string
+}>()
 </script>
 
 <style lang="scss">

@@ -10,48 +10,36 @@
 			</v-btn>
 		</FormActions>
 		<!-- This is the form that will be posted -->
-		<form ref="exportForm" method="get" :action="postUrl">
+		<form ref="export-form" method="get" :action="postUrl">
 			<input v-model="format" type="hidden" name="format">
 			<input v-model="withResources" type="hidden" name="withResources">
 		</form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import { apiRoot } from '@/myenv'
+import { useHead } from '@unhead/vue'
+import { useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'ManageExport',
-
-	data() {
-		return {
-			format: 'XML',
-			formats: [
-				{
-					title: 'Demyo 2',
-					value: 'XML'
-				}
-			],
-			withResources: true
-		}
-	},
-
-	head() {
-		return {
-			title: this.$t('title.manage.export.select')
-		}
-	},
-
-	computed: {
-		postUrl() {
-			return apiRoot + 'manage/export'
-		}
-	},
-
-	methods: {
-		doExport() {
-			this.$refs.exportForm.submit()
-		}
+const formats = [
+	{
+		title: 'Demyo 2',
+		value: 'XML'
 	}
+]
+const postUrl = `${apiRoot}manage/export`
+
+const format = ref('XML')
+const withResources = ref(true)
+const exportForm = useTemplateRef<HTMLFormElement>('export-form')
+
+useHead({
+	title: useI18n().t('title.manage.export.select')
+})
+
+function doExport() {
+	exportForm.value?.submit()
 }
 </script>

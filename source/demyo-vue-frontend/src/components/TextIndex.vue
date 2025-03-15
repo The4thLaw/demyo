@@ -73,7 +73,7 @@ onMounted(() => focusElement(keyTarget.value))
 const emit = defineEmits(emitTypes)
 
 const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
-	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, null)
+	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, undefined)
 </script>
 
 <style lang="scss">

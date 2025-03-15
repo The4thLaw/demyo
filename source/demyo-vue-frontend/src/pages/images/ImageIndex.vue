@@ -11,7 +11,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
 import imageService from '@/services/image-service'
 

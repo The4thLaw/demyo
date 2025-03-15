@@ -20,28 +20,18 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FormActions',
+<script setup lang="ts">
+const slots = useSlots()
 
-	props: {
-		showReset: {
-			type: Boolean,
-			default: true
-		},
+withDefaults(defineProps<{
+	showReset?: boolean,
+	showBack?: boolean
+}>(), {
+	showReset: true,
+	showBack: true
+})
 
-		showBack: {
-			type: Boolean,
-			default: true
-		}
-	},
-
-	computed: {
-		hasDefaultSlot() {
-			return !!this.$slots.default
-		}
-	}
-}
+const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <style lang="scss">

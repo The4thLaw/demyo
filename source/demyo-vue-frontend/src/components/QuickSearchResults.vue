@@ -36,38 +36,19 @@
 	</SectionCard>
 </template>
 
-<script>
-export default {
-	name: 'QuickSearchResults',
+<script setup lang="ts">
+const modelTypes = ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
 
-	props: {
-		results: {
-			type: null,
-			required: true
-		},
+const props = withDefaults(defineProps<{
+	results?: Record<string, IModel[]>,
+	loading?: boolean
+}>(), {
+	results: undefined,
+	loading: false
+})
 
-		loading: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	data() {
-		return {
-			modelTypes: ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
-		}
-	},
-
-	computed: {
-		hasLoadedResults() {
-			return this.results !== undefined
-		},
-
-		hasResults() {
-			return this.results && Object.keys(this.results).length > 0
-		}
-	}
-}
+const hasLoadedResults = computed(() => props.results !== undefined)
+const hasResults = computed(() => props.results && Object.keys(props.results).length > 0)
 </script>
 
 <style lang="scss">

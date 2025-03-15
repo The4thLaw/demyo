@@ -14,32 +14,19 @@
 	</svg>
 </template>
 
-<script>
-export default {
-	name: 'LetterIcon',
+<script setup lang="ts">
+import { useTheme } from 'vuetify'
 
-	props: {
-		letter: {
-			type: String,
-			required: true
-		},
-		color: {
-			type: String,
-			required: false,
-			default: null
-		}
-	},
+const props = withDefaults(defineProps<{
+	letter: string,
+	color?: string
+}>(), {
+	color: undefined
+})
 
-	computed: {
-		actualColor() {
-			if (this.color) {
-				return this.color
-			}
-			return this.$vuetify.theme.current.colors.primary
-		}
-	}
+const { current } = useTheme()
 
-}
+const actualColor = computed(() => props.color ?? current.value.colors.primary)
 </script>
 
 <style type="css">

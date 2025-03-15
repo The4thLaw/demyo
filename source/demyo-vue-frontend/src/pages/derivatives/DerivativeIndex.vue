@@ -22,7 +22,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { retrieveFilter } from '@/helpers/filter'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'
