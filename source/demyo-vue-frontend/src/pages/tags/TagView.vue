@@ -45,6 +45,7 @@
 
 <script setup lang="ts">
 import { useSimpleView } from '@/composables/model-view'
+import { useTagStyle } from '@/composables/tags'
 import tagService from '@/services/tag-service'
 
 const albumCount = ref(-1)
@@ -58,14 +59,5 @@ async function fetchData(id: number): Promise<Tag> {
 const { model: tag, appTasksMenu, loading, deleteModel } = useSimpleView(fetchData, tagService,
 	'quickTasks.delete.tag.confirm.done', 'TagIndex')
 
-const style = computed(() => {
-	const style = {} as Record<string, string>
-	if (tag.value.fgColour) {
-		style.color = tag.value.fgColour
-	}
-	if (tag.value.bgColour) {
-		style['background-color'] = tag.value.bgColour
-	}
-	return style
-})
+const style = useTagStyle(tag)
 </script>

@@ -10,27 +10,12 @@
 	</v-list-item>
 </template>
 
-<script>
-export default {
-	name: 'ItemCardPagination',
-
-	props: {
-		pageCount: {
-			type: Number,
-			required: true
-		},
-
-		hasPreviousPage: {
-			type: Boolean,
-			required: true
-		},
-
-		hasNextPage: {
-			type: Boolean,
-			required: true
-		}
-	}
-}
+<script setup lang="ts">
+defineProps<{
+	pageCount: number,
+	hasPreviousPage: boolean,
+	hasNextPage: boolean
+}>()
 </script>
 
 <style lang="scss">

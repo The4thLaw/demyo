@@ -15,23 +15,11 @@
 </template>
 
 <script setup lang="ts">
+import { getStyle } from '@/composables/tags'
+
 defineProps<{
 	model: IModel
 }>()
-
-function getStyle(tag: ProcessedTag) {
-	const style: Partial<CSSStyleDeclaration> = {}
-	if (tag.fgColour) {
-		style.color = tag.fgColour
-	}
-	if (tag.bgColour) {
-		style.backgroundColor = tag.bgColour
-	}
-	if (tag.relativeWeight) {
-		style.fontSize = tag.relativeWeight + '%'
-	}
-	return style
-}
 
 function hasCount(tag: ProcessedTag) {
 	return tag.usageCount === 0 || tag.usageCount

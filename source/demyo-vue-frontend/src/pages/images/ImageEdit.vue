@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard>
+			<SectionCard :loading="loading">
 				<v-row>
 					<v-col cols="12">
 						<v-text-field
@@ -12,55 +12,26 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
 import imageService from '@/services/image-service'
 
-export default {
-	name: 'ImageEdit',
-
-	mixins: [modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: '-',
-						edit: 'title.edit.image'
-					},
-					saveRedirectViewName: 'ImageView'
-				}
-			},
-
-			image: {},
-
-			rules: {
-				description: [
-					mandatory()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			this.image = await imageService.findById(this.parsedId)
-		},
-
-		saveHandler() {
-			return imageService.save(this.image)
-		}
+function fetchData(id: number|undefined): Promise<Image> {
+	if (!id) {
+		throw new Error("Can't add an image this way")
 	}
+	return imageService.findById(id)
+}
+
+const {model: image, loading, save, reset} = useSimpleEdit(fetchData, imageService, [], '-', 'title.edit.image', 'ImageView')
+
+const rules = {
+	description: [ mandatory() ]
 }
 </script>

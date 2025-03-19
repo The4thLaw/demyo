@@ -34,39 +34,28 @@
 	</v-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import readerService from '@/services/reader-service'
 
-export default {
-	name: 'ReaderSelection',
+withDefaults(defineProps<{
+	requireSelection?: boolean
+}>(), {
+	requireSelection: false
+})
 
-	props: {
-		requireSelection: {
-			type: Boolean,
-			default: false
-		}
-	},
+const emit = defineEmits(['select'])
 
-	data() {
-		return {
-			dialog: true,
-			readers: []
-		}
-	},
+const dialog = ref(true)
+const readers = ref([] as Reader[])
 
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			this.readers = await readerService.findForIndex()
-		},
-
-		async select(reader) {
-			await readerService.setCurrentReader(reader)
-			this.$emit('select')
-		}
-	}
+async function fetchData() {
+	readers.value = await readerService.findForIndex()
 }
+
+async function select(reader: Reader) {
+	await readerService.setCurrentReader(reader)
+	emit('select')
+}
+
+fetchData()
 </script>

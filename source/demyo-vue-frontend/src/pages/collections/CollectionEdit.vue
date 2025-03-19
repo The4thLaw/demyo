@@ -79,7 +79,7 @@ async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 const {model: collection, loading, save, reset} = useSimpleEdit(fetchData, collectionService,
 	[loadImages, loadPublishers], 'title.add.collection', 'title.edit.collection', 'CollectionView')
 
-const rules = ref({
+const rules = {
 	name: [
 		mandatory()
 	],
@@ -92,5 +92,5 @@ const rules = ref({
 	feed: [
 		url()
 	]
-})
+}
 </script>

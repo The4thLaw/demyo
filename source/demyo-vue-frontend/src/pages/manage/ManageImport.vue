@@ -12,43 +12,34 @@
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import service from '@/services/management-service'
 import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
-export default {
-	name: 'ManageImport',
+const router = useRouter()
+const uiStore = useUiStore()
+const i18n = useI18n()
 
-	data() {
-		return {
-			uiStore: useUiStore(),
-			file: null
+useHead({
+	title: i18n.t('title.manage.import.select')
+})
+
+const file: Ref<File | undefined> = ref(undefined)
+
+async function doImport() {
+	if (file.value) {
+		uiStore.enableGlobalOverlay()
+		const success = await service.doImport(file.value)
+		uiStore.disableGlobalOverlay()
+		if (success) {
+			uiStore.showSnackbar(i18n.t('page.Import.success'))
+		} else {
+			uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 		}
-	},
-
-	head() {
-		return {
-			title: this.$t('title.manage.import.select')
-		}
-	},
-
-	computed: {
-	},
-
-	methods: {
-		async doImport() {
-			if (this.file) {
-				this.uiStore.enableGlobalOverlay()
-				const success = await service.doImport(this.file)
-				this.uiStore.disableGlobalOverlay()
-				if (success) {
-					this.uiStore.showSnackbar(this.$t('page.Import.success'))
-				} else {
-					this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
-				}
-				this.$router.push('/')
-			}
-		}
+		router.push('/')
 	}
 }
 </script>
