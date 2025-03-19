@@ -18,10 +18,7 @@ interface FilePondData {
 	otherImages: string[]
 }
 
-enum CombinationMode {
-	AND = 'AND',
-	OR = 'OR'
-}
+type CombinationMode = 'AND' | 'OR'
 
 interface IModelFilter{}
 interface AbstractModelFilter extends IModelFilter {
@@ -41,4 +38,17 @@ interface AlbumFilter extends AbstractModelFilter {
 	readerIdFavourite: number
 	/** The internal ID of the {@link Reader} that has this {@link Album} in their reading list. */
 	readerIdReadingList: number
+}
+
+interface DerivativeFilter extends AbstractModelFilter {
+	/** The internal ID of the {@link Series}. */
+	series: number
+	/** The internal ID of the {@link Album}. */
+	album: number
+	/** The internal ID of the {@link org.demyo.model.Author artist}. */
+	artist: number
+	/** The internal ID of the {@link DerivativeType}. */
+	type: number
+	/** The internal ID of the {@link DerivativeSource}. */
+	source: number
 }

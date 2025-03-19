@@ -48,8 +48,7 @@ let baseUrl = `/${processBase}${contextRoot}`
 baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')
 console.log('Initializing Vue router with base:', baseUrl)
 const router = createRouter({
-	history: createWebHistory(),
-	base: baseUrl,
+	history: createWebHistory(baseUrl),
 	routes,
 	scrollBehavior(_to, _from, savedPosition) {
 		// May not work due to https://github.com/vuejs/vue-router/issues/1187
@@ -62,7 +61,7 @@ const router = createRouter({
 
 // Reset the UI on page transitions:
 // - Enable the search bar
-router.beforeEach((to, from, next) => {
+router.beforeEach((_to, _from, next) => {
 	const uiStore = useUiStore()
 	uiStore.enableSearch()
 	next()

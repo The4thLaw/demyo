@@ -1,12 +1,12 @@
-import axios from 'axios'
 import { apiRoot } from '@/myenv'
 import readerService from '@/services/reader-service'
+import axios from 'axios'
 
 /**
  * Service to handle search requests.
  */
 class ManagementService {
-	async doImport(file) {
+	async doImport(file: File) {
 		console.debug('Going to upload', file)
 
 		const data = new FormData()

@@ -1,10 +1,10 @@
-import AbstractModelService from './abstract-model-service'
 import { axiosGet, axiosPost } from '@/helpers/axios'
+import AbstractModelService from './abstract-model-service'
 
 /**
  * API service for Derivatives.
  */
-class DerivativeService extends AbstractModelService {
+class DerivativeService extends AbstractModelService<Derivative> {
 	constructor() {
 		super('derivatives/', {
 			fillMissingObjects: ['series', 'album', 'artist', 'source', 'type'],
@@ -15,18 +15,18 @@ class DerivativeService extends AbstractModelService {
 		})
 	}
 
-	findForIndex(filter, view) {
+	findForIndex(filter?: DerivativeFilter, view?: string): Promise<Derivative[]> {
 		if (filter) {
 			return axiosPost(this.basePath + 'index/filtered', filter, [])
 		}
-		const params = {}
+		const params: Record<string, string> = {}
 		if (view) {
 			params.view = view
 		}
 		return axiosGet(this.basePath, params, [])
 	}
 
-	saveFilepondImages(modelId, imageIds) {
+	saveFilepondImages(modelId: number, imageIds: number[]) {
 		return axiosPost(`${this.basePath}${modelId}/images`, { filePondOtherImages: imageIds }, false)
 	}
 }
