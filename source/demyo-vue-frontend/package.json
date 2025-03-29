@@ -33,7 +33,7 @@
     "pinia": "^2.1.7",
     "roboto-fontface": "^0.10.0",
     "tiny-async-pool": "^2.1.0",
-    "tinymce": "^7.0.0",
+    "tinymce": "^7.7.2",
     "tinymce-i18n": "^24.0.0",
     "vue": "^3.5.4",
     "vue-3-fullscreen-image-directive-plugin": "^1.0.4",
