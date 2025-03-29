@@ -14,7 +14,7 @@ function setHtmlLang(lang: string) {
 const loadedLanguages: string[] = []
 
 // Define the variants we support
-let typedDatetimeFormats = datetimeFormats as Record<string, unknown>
+let typedDatetimeFormats = datetimeFormats as Record<string, any>
 typedDatetimeFormats['fr-BE'] = datetimeFormats.fr
 
 /* The base language is
@@ -35,7 +35,7 @@ const i18n = createI18n({
 	locale: simpleLocale,
 	fallbackLocale: fallbackLanguage,
 	messages: mergedMessages,
-	typedDatetimeFormats,
+	datetimeFormats: typedDatetimeFormats,
 	legacy: false
 })
 setHtmlLang(selectedLocale)

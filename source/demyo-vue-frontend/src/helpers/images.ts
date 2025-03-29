@@ -7,9 +7,9 @@ export function getEncodedImageName(image: Image) {
 	return encodedName
 }
 
-export function getBaseImageUrl(image: Image) {
-	if (!image.id) {
-		return null
+export function getBaseImageUrl(image?: Image) {
+	if (!image?.id) {
+		return undefined
 	}
 	return `${contextRoot}images/${image.id}/file/${getEncodedImageName(image)}`
 }

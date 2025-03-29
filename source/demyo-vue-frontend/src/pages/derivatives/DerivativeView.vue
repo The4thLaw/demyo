@@ -197,7 +197,7 @@ const sizeSpec = computed(() => {
 	return null
 })
 
-const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(derivative.value.purchasePrice)
+const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => derivative.value.purchasePrice))
 
 const uiStore = useUiStore()
 const i18n = useI18n()

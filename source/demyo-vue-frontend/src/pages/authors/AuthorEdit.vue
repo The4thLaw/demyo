@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Author.identity')">
+			<SectionCard :subtitle="$t('fieldset.Author.identity')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="4">
 						<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
@@ -22,14 +22,14 @@
 					</v-col>
 					<v-col cols="12" md="6">
 						<AutoComplete
-							v-model="author.portrait.id" :items="allImages" :loading="allImagesLoading"
-							label-key="field.Author.portrait" refreshable @refresh="refreshImages"
+							v-model="author.portrait.id" :items="images" :loading="imagesLoading"
+							label-key="field.Author.portrait" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Author.biography')">
+			<SectionCard :subtitle="$t('fieldset.Author.biography')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Author.biography') }}</label>
@@ -41,58 +41,33 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { useRefreshableImages } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
 import authorService from '@/services/author-service'
 
-export default {
-	name: 'AuthorEdit',
+const {images, imagesLoading, loadImages} = useRefreshableImages()
 
-	mixins: [modelEditMixin, imgRefreshMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.author',
-						edit: 'title.edit.author'
-					},
-					saveRedirectViewName: 'AuthorView'
-				}
-			},
-
-			author: { portrait: {} },
-
-			rules: {
-				name: [
-					mandatory()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.author = await authorService.findById(this.parsedId)
-			}
-		},
-
-		saveHandler() {
-			return authorService.save(this.author)
-		}
+async function fetchData(id: number|undefined): Promise<Partial<Author>> {
+	if (id) {
+		return authorService.findById(id)
 	}
+	return Promise.resolve({
+		portrait: {} as Image
+	})
+}
+
+const {model: author, loading, save, reset} = useSimpleEdit(fetchData, authorService, [loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
+
+const rules = {
+	name: [
+		mandatory()
+	]
 }
 </script>

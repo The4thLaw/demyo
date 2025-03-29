@@ -4,19 +4,19 @@
 		<label class="dem-fieldlabel">{{ $t(`field.${modelName}.prices.history`) }}</label>
 		<!-- Note: keyed by index, which is not ideal, because the price doesn't have a technical ID -->
 		<v-row
-			v-for="(price, index) in inputVal.prices" :key="'price_' + index"
+			v-for="(price, index) in model.prices" :key="'price_' + index"
 			dense class="c-PriceManagement__priceRow"
 		>
 			<v-col cols="12" md="6">
 				<v-text-field
 					v-model="price.date" :label="$t(`field.${modelName}.prices.date`)"
-					type="date" :rules="rules.prices.date" required @change="emitInput"
+					type="date" :rules="rules.prices.date" required
 				/>
 			</v-col>
 			<v-col cols="12" md="6">
 				<CurrencyField
 					v-model="price.price" :label-key="`field.${modelName}.prices.price`"
-					:rules="rules.prices.price" required @change="emitInput"
+					:rules="rules.prices.price" required
 				/>
 				<v-btn icon size="small" variant="flat" @click="removePrice(index)">
 					<v-icon>mdi-minus</v-icon>
@@ -31,61 +31,30 @@
 	</v-col>
 </template>
 
-<script>
+<script setup lang="ts">
 import { mandatory, number } from '@/helpers/rules'
 
-export default {
-	name: 'PriceManagement',
+const model = defineModel<AbstractPricedModel<AbstractPrice<any, IModel>, IModel>>()
+defineProps<{
+	modelName: string
+}>()
 
-	props: {
-		modelValue: {
-			type: null,
-			required: true
-		},
+function addPrice() {
+	const newPrice: Partial<AbstractPrice<any, IModel>> = {
+		date: undefined,
+		price: undefined
+	}
+	model.value?.prices.push(newPrice as AbstractPrice<any, IModel>)
+}
 
-		modelName: {
-			type: String,
-			required: true
-		}
-	},
+function removePrice(index: number) {
+	model.value?.prices.splice(index, 1)
+}
 
-	data() {
-		return {
-			inputVal: this.modelValue,
-
-			rules: {
-				prices: {
-					date: [mandatory()],
-					price: [mandatory(), number()]
-				}
-			}
-		}
-	},
-
-	watch: {
-		modelValue(val) {
-			this.inputVal = val
-		}
-	},
-
-	methods: {
-		addPrice() {
-			const newPrice = {
-				date: null,
-				price: null
-			}
-			this.inputVal.prices.push(newPrice)
-			this.emitInput()
-		},
-
-		removePrice(index) {
-			this.inputVal.prices.splice(index, 1)
-			this.emitInput()
-		},
-
-		emitInput() {
-			this.$emit('update:modelValue', this.inputVal)
-		}
+const rules = {
+	prices: {
+		date: [mandatory()],
+		price: [mandatory(), number()]
 	}
 }
 </script>

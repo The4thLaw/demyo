@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :loading="!initialized" :title="$t('page.Configuration.reader', { reader: reader.name })">
+			<SectionCard :loading="loading" :title="$t('page.Configuration.reader', { reader: reader.name })">
 				<v-select
 					v-model="reader.configuration.language" :label="$t('field.config.reader.language')"
 					:items="languages"
@@ -28,7 +28,7 @@
 				/>
 			</SectionCard>
 
-			<SectionCard :loading="!initialized" :title="$t('page.Configuration.global')">
+			<SectionCard :loading="loading" :title="$t('page.Configuration.global')">
 				<p v-text="$t('page.Configuration.global.description')" />
 				<v-autocomplete
 					v-model="reader.configuration.currency" :label="$t('field.config.global.currency')"
@@ -36,71 +36,45 @@
 				/>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
-import { currencyList } from '@/helpers/i18n'
-import { mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { currencyList as currencies } from '@/helpers/i18n'
 import readerService from '@/services/reader-service'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'ReaderConfig',
+interface OptionValue {
+	title: string,
+	value: string
+}
 
-	mixins: [modelEditMixin],
+const i18n = useI18n()
 
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'menu.reader.configuration',
-						edit: 'menu.reader.configuration'
-					},
-					saveRedirectViewName: 'ReaderView'
-				}
-			},
+const languages = ref([] as OptionValue[])
 
-			reader: {
-				configuration: {}
-			},
-
-			languages: [],
-			currencies: currencyList,
-
-			rules: {
-				name: [
-					mandatory()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			this.reader = await readerService.findById(this.parsedId)
-
+function fetchData(id: number|undefined): Promise<Partial<Reader>> {
+	if (!id) {
+		throw new Error("Cannot load the configuration for an undefined reader")
+	}
+	return readerService.findById(id)
+		.then(reader => {
 			// Must load language name translations *after* the page is initialized
 			// Before, we would just should the label codes
 			const languageCodes = ['en', 'fr']
-			this.languages = languageCodes.map(c => {
+			languages.value = languageCodes.map(c => {
 				return {
 					value: c,
-					title: this.$t(`core.language.${c}`)
+					title: i18n.t(`core.language.${c}`)
 				}
 			})
-		},
-
-		saveHandler() {
-			return readerService.save(this.reader)
-		}
-	}
+			return reader
+		})
 }
+
+const {model: reader, loading, save, reset} = useSimpleEdit(fetchData, readerService, [],
+	'menu.reader.configuration', 'menu.reader.configuration', 'ReaderView')
 </script>

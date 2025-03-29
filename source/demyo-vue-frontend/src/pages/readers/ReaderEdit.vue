@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Reader.identification')">
+			<SectionCard :subtitle="$t('fieldset.Reader.identification')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -18,69 +18,43 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
 import readerService from '@/services/reader-service'
 
-export default {
-	name: 'ReaderEdit',
+const noColour = ref(true)
 
-	mixins: [modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.reader',
-						edit: 'title.edit.reader'
-					},
-					saveRedirectViewName: 'ReaderView'
-				}
-			},
-
-			reader: {},
-			noColour: true,
-
-			rules: {
-				name: [
-					mandatory()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.reader = await readerService.findById(this.parsedId)
-			}
-
-			this.noColour = !this.reader.colour
-			if (!this.reader.colour) {
-				this.reader.colour = ''
-			}
-		},
-
-		saveHandler() {
-			// Truncate RGBA color
-			if (this.noColour) {
-				this.reader.colour = null
-			} else if (this.reader.colour) {
-				this.reader.colour = this.reader.colour.substring(0, 7)
-			}
-			return readerService.save(this.reader)
-		}
+function fetchData(id: number|undefined): Promise<Partial<Reader>> {
+	if (!id) {
+		const reader: Partial<Reader> = {}
+		return Promise.resolve(reader)
 	}
+
+	return readerService.findById(id)
+		.then(reader => {
+			noColour.value = !reader.colour
+			return reader
+		})
+}
+
+const {model: reader, loading, save, reset} = useSimpleEdit(fetchData, readerService, [],
+	'title.add.reader', 'title.edit.reader', 'ReaderView')
+
+watch(noColour, async (newFlag) => {
+	if (newFlag) {
+		reader.value.colour = undefined
+	}
+})
+
+const rules = {
+	name: [
+		mandatory()
+	]
 }
 </script>

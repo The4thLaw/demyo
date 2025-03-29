@@ -44,53 +44,25 @@
 	</v-card>
 </template>
 
-<script>
-import { getBaseImageUrl } from '@/helpers/images'
-
+<script setup lang="ts">
 /**
  * A card used to section content.
  * Sports standard padding and loading style.
  */
-export default {
-	name: 'SectionCard',
 
-	props: {
-		loading: {
-			type: Boolean,
-			required: false,
-			default: false
-		},
+import { getBaseImageUrl } from '@/helpers/images'
 
-		title: {
-			type: String,
-			required: false,
-			default: undefined
-		},
+const props = withDefaults(defineProps<{
+	loading?: boolean,
+	title?: string,
+	subtitle?: string,
+	image?: Image
+}>(), {
+	loading: false
+})
 
-		subtitle: {
-			type: String,
-			required: false,
-			default: undefined
-		},
-
-		image: {
-			type: Object,
-			required: false,
-			default: null
-		}
-	},
-
-	computed: {
-
-		hasImage() {
-			return this.image?.id
-		},
-
-		baseImageUrl() {
-			return getBaseImageUrl(this.image)
-		}
-	}
-}
+const hasImage = computed(() => props.image?.id)
+const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 </script>
 
 <style lang="scss">

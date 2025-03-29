@@ -24,28 +24,13 @@
 	</FieldValue>
 </template>
 
-<script>
+<script setup lang="ts">
 import { useCurrencies } from '@/composables/currency'
 
-export default {
-	name: 'PriceTable',
+const props = defineProps<{
+	prices: AbstractPrice<any, IModel>[]
+	modelName: string
+}>()
 
-	props: {
-		prices: {
-			type: Array,
-			required: true
-		},
-
-		modelName: {
-			type: String,
-			required: true
-		}
-	},
-
-	computed: {
-		qualifiedPrices() {
-			return useCurrencies(this.prices.map(p => p.price)).qualifiedPrices.value
-		}
-	}
-}
+const { qualifiedPrices } = useCurrencies(computed(() => props.prices.map(p => p.price)))
 </script>

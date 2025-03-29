@@ -12,6 +12,7 @@ interface EditData<T extends AbstractModel> {
 	save: () => void
 	reset: () => void
 	loadData: () => void
+	formRef: Readonly<Ref<HTMLFormElement | null>>
 }
 
 
@@ -97,6 +98,7 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 		loading,
 		save,
 		reset,
-		loadData
+		loadData,
+		formRef
 	}
 }

@@ -21,7 +21,7 @@ class ImageService extends AbstractModelService<Image> {
 	 * Detects non-registered images currently on the disk.
 	 * @return The image paths.
 	 */
-	detectDiskImages(): Promise<String[]> {
+	detectDiskImages(): Promise<string[]> {
 		return axiosGet('images/detect', [])
 	}
 

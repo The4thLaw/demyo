@@ -20,15 +20,17 @@ export function getParsedId(route: RouteLocationNormalizedLoadedGeneric): number
  * @param param The route parameter to parse.
  * @returns The parsed ID.
  */
-export function getParsedRouteParam(param: string | LocationQueryValue[]): number | null {
+export function getParsedRouteParam(param: string | LocationQueryValue | LocationQueryValue[]): number | null {
 	let id
 	if (param instanceof Array) {
 		id = param[0]
-		if (id === null) {
-			return null
-		}
 	} else {
 		id = param
 	}
+
+	if (id === null) {
+		return null
+	}
+
 	return parseInt(id, 10)
 }

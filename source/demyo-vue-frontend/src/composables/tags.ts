@@ -1,9 +1,4 @@
-/**
- * Custom guard for processed tags
- */
-function isProcessed(object: any): object is ProcessedTag {
-    return 'relativeWeight' in object
-}
+import { isProcessed } from "@/types/type-guards"
 
 /**
  * Gets the CSS style to apply for a tag

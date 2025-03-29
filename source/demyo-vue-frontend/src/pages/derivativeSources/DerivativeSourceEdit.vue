@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-form ref="form">
-			<SectionCard>
+			<SectionCard :loading="loading">
 				<v-row>
 					<v-col cols="12">
 						<v-text-field
@@ -11,7 +11,7 @@
 					</v-col>
 				</v-row>
 			</SectionCard>
-			<SectionCard :subtitle="$t('fieldset.DerivativeSource.contact')">
+			<SectionCard :subtitle="$t('fieldset.DerivativeSource.contact')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field v-model="source.owner" :label="$t('field.DerivativeSource.owner')" />
@@ -43,70 +43,42 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('field.DerivativeSource.history')">
+			<SectionCard :subtitle="$t('field.DerivativeSource.history')" :loading="loading">
 				<RichTextEditor v-model="source.history" />
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
 import { email, mandatory, phone, url } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
 import sourceService from '@/services/derivative-source-service'
 
-export default {
-	name: 'DerivativeSourceEdit',
-
-	mixins: [modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.derivativeSource',
-						edit: 'title.edit.derivativeSource'
-					},
-					saveRedirectViewName: 'DerivativeSourceView'
-				}
-			},
-
-			source: {},
-
-			rules: {
-				name: [
-					mandatory()
-				],
-				email: [
-					email()
-				],
-				website: [
-					url()
-				],
-				phoneNumber: [
-					phone()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.source = await sourceService.findById(this.parsedId)
-			}
-		},
-
-		saveHandler() {
-			return sourceService.save(this.source)
-		}
+async function fetchData(id :number|undefined): Promise<Partial<DerivativeSource>> {
+	if (id) {
+		return sourceService.findById(id)
 	}
+	return Promise.resolve({})
+}
+
+const {model: source, loading, save, reset} = useSimpleEdit(fetchData, sourceService, [],
+	'title.add.derivativeSource', 'title.edit.derivativeSource', 'DerivativeSourceView')
+
+const rules = {
+	name: [
+		mandatory()
+	],
+	email: [
+		email()
+	],
+	website: [
+		url()
+	],
+	phoneNumber: [
+		phone()
+	]
 }
 </script>

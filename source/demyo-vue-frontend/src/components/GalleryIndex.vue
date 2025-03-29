@@ -1,7 +1,7 @@
 <template>
 	<div
 		v-if="items"
-		ref="keyTarget"
+		ref="key-target"
 		v-touch="{
 			left: nextPage,
 			right: previousPage
@@ -42,163 +42,152 @@
 	</div>
 </template>
 
-<script>
+<script setup lang="ts" generic="T extends IModel">
 import { focusElement } from '@/helpers/dom'
 import { getBaseImageUrl } from '@/helpers/images'
 import { useReaderStore } from '@/stores/reader'
-// Easier for a dynamic access to the properties
-// eslint-disable-next-line you-dont-need-lodash-underscore/get
-import get from 'lodash/get'
-import { mapState } from 'pinia'
+import { isImage } from '@/types/type-guards'
+import { useTemplateRef } from 'vue'
 
-export default {
-	name: 'GalleryIndex',
+interface BasedImage {
+	baseImageUrl?: string
+}
 
-	props: {
-		items: {
-			type: Array,
-			required: true
-		},
+const props = withDefaults(defineProps<{
+	items: T[]
+	imagePath?: keyof T
+	bordered?: boolean
+	keyboardNavigation?: boolean
+}>(), {
+	bordered: true,
+	keyboardNavigation: true
+})
 
-		imagePath: {
-			type: String,
-			default: undefined
-		},
+let lightboxOpened = ref(false)
+let observer: MutationObserver|null = null
+const currentPage = ref(1)
 
-		bordered: {
-			type: Boolean,
-			default: false
-		},
+const keyTarget = useTemplateRef('key-target')
 
-		keyboardNavigation: {
-			type: Boolean,
-			default: false
+const readerStore = useReaderStore()
+const itemsPerPage = computed(() => readerStore.currentReader.configuration.pageSizeForImages)
+
+const slots = useSlots()
+const hasDefaultSlot = computed(() => !!slots.default)
+
+const pageCount = computed(() => Math.ceil(props.items.length / itemsPerPage.value))
+
+const paginatedItems = computed(() => {
+	const slice = props.items.slice((currentPage.value - 1) * itemsPerPage.value,
+		currentPage.value * itemsPerPage.value)
+	const mapped = slice.map(item => {
+		let processedItem: BasedImage & T = item
+		let image: Image
+		if (props.imagePath) {
+			image = item[props.imagePath] as Image
+		} else if (isImage(item)) {
+			image = item as Image
+		} else {
+			throw new Error(`${JSON.stringify(item)} isn't an image and no imagePath was provided`)
 		}
-	},
-
-	data() {
-		return {
-			lightboxOpened: false,
-			observer: null,
-			currentPage: 1
+		if (image) { // Some entries may not have an image at all
+			processedItem.baseImageUrl = getBaseImageUrl(image)
 		}
-	},
+		return processedItem
+	})
+	return mapped
+})
 
-	computed: {
-		...mapState(useReaderStore, {
-			itemsPerPage: store => store.currentReader.configuration.pageSizeForImages
-		}),
+onMounted(() => {
+	if (props.keyboardNavigation) {
+		// Focus may cause the browser to scroll to the element. It's fine if the element is the main one on the
+		// page but causes issues once it's further down, like in the AlbumView
+		focusElement(keyTarget.value)
+	}
 
-		hasDefaultSlot() {
-			return !!this.$slots.default
-		},
-
-		paginatedItems() {
-			const slice = this.items.slice((this.currentPage - 1) * this.itemsPerPage,
-				this.currentPage * this.itemsPerPage)
-			slice.map(item => {
-				let image
-				if (this.imagePath) {
-					image = get(item, this.imagePath)
-				} else {
-					image = item
+	// Monitor the lightbox plugin DOM since we
+	const targetNode = document.getElementById('demyo')
+	if (!targetNode) {
+		console.log("Can't monitor the status of the lightbox, the target node is missing")
+		return
+	}
+	const callback: MutationCallback = (mutationList, _observer) => {
+		for (const mutation of mutationList) {
+			if (mutation.type === 'childList') {
+				if ([...mutation.addedNodes].some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
+					onLightboxOpen()
 				}
-				if (image) { // Some entries may not have an image at all
-					item.baseImageUrl = getBaseImageUrl(image)
+				if ([...mutation.removedNodes].some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
+					onLightboxClose()
 				}
-			})
-			return slice
-		},
-
-		pageCount() {
-			return Math.ceil(this.items.length / this.itemsPerPage)
-		}
-	},
-
-	mounted() {
-		if (this.keyboardNavigation) {
-			// Focus may cause the browser to scroll to the element. It's fine if the element is the main one on the
-			// page but causes issues once it's further down, like in the AlbumView
-			focusElement(this.$refs.keyTarget)
-		}
-
-		// Monitor the lightbox plugin DOM since we
-		const targetNode = document.getElementById('demyo')
-		const callback = (mutationList, observer) => {
-			for (const mutation of mutationList) {
-				if (mutation.type === 'childList') {
-					if ([...mutation.addedNodes].some(n => n.classList?.contains('fullscreen-image'))) {
-						this.onLightboxOpen()
-					}
-					if ([...mutation.removedNodes].some(n => n?.classList?.contains('fullscreen-image'))) {
-						this.onLightboxClose()
-					}
-				} else if (mutation.type === 'attributes') {
-					// Sometimes we don't catch the removal
-					if (mutation.target.matches('.fullscreen-image.fade-leave-active')) {
-						this.onLightboxClose()
-					}
+			} else if (mutation.type === 'attributes' && mutation.target instanceof HTMLElement) {
+				// Sometimes we don't catch the removal
+				if (mutation.target.matches('.fullscreen-image.fade-leave-active')) {
+					onLightboxClose()
 				}
-			}
-		}
-		this.observer = new MutationObserver(callback)
-		this.observer.observe(targetNode, { attributes: true, childList: true, subtree: true })
-	},
-
-	unmounted() {
-		this.observer.disconnect()
-		this.observer = null
-	},
-
-	methods: {
-		onLightboxOpen() {
-			this.lightboxOpened = true
-		},
-
-		onLightboxClose() {
-			if (!this.lightboxOpened) {
-				// Don't trigger twice
-				return
-			}
-			this.lightboxOpened = false
-			// Refocus to allow keyboard navigation again
-			focusElement(this.$refs.keyTarget)
-		},
-
-		previousPageKeyboard() {
-			if (this.keyboardNavigation) {
-				this.previousPage()
-			}
-		},
-
-		nextPageKeyboard() {
-			if (this.keyboardNavigation) {
-				this.nextPage()
-			}
-		},
-
-		previousPage() {
-			if (this.vimg) {
-				// v-img is active, don't do anything
-				return
-			}
-			if (this.currentPage > 1) {
-				this.currentPage--
-			}
-		},
-
-		nextPage() {
-			if (this.vimg) {
-				// v-img is active, don't do anything
-				return
-			}
-			if (this.currentPage < this.pageCount) {
-				this.currentPage++
 			}
 		}
 	}
+	observer = new MutationObserver(callback)
+	observer.observe(targetNode, { attributes: true, childList: true, subtree: true })
+})
+
+onUnmounted(() => {
+	if (observer) {
+		observer.disconnect()
+		observer = null
+	}
+})
+
+function onLightboxOpen() {
+	lightboxOpened.value = true
+	console.log('Lightbox opened')
+}
+
+function onLightboxClose() {
+	console.log('Lightbox closed')
+	if (!lightboxOpened.value) {
+		// Don't trigger twice
+		return
+	}
+	lightboxOpened.value = false
+	// Refocus to allow keyboard navigation again
+	focusElement(keyTarget.value)
+}
+
+function previousPageKeyboard() {
+	if (props.keyboardNavigation) {
+		previousPage()
+	}
+}
+
+function nextPageKeyboard() {
+	if (props.keyboardNavigation) {
+		nextPage
+	}
+}
+
+function previousPage() {
+	if (lightboxOpened.value) {
+		// lightbox is active, don't do anything
+		return
+	}
+	if (currentPage.value > 1) {
+		currentPage.value--
+	}
+}
+
+function nextPage() {
+	if (lightboxOpened.value) {
+		// lightbox is active, don't do anything
+		return
+	}
+	if (currentPage.value < pageCount.value) {
+		currentPage.value++
+	}
 }
 </script>
+
 
 <style lang="scss">
 .c-GalleryIndex {

@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="inputVal" max-width="800px">
+	<v-dialog v-model="model" max-width="800px">
 		<v-card>
 			<v-card-title>
 				{{ $t('draganddrop.dialog.title') }}
@@ -90,118 +90,95 @@
 	</v-dialog>
 </template>
 
-<script>
+<script setup lang="ts">
 import FilePond from '@/helpers/filepond'
 import { apiRoot } from '@/myenv'
+import { FilePond as FilePondType } from 'filepond'
+import { useTemplateRef } from 'vue'
 
-export default {
-	name: 'DnDImage',
+const model = defineModel()
 
-	components: {
-		FilePond
-	},
-
-	props: {
-		modelValue: {
-			type: Boolean,
-			default: false
-		},
-		mainImageLabel: {
-			type: String,
-			default: null
-		},
-		otherImagesLabel: {
-			type: String,
-			default: null
-		}
-	},
-
-	data() {
-		return {
-			inputVal: this.modelValue,
-			serverConfig: {
-				process: apiRoot + 'filepond/process',
-				revert: apiRoot + 'filepond/revert'
-			}
-		}
-	},
-
-	watch: {
-		/*
-		We need a data and a prop to avoid the following warning:
-		[Vue warn]: Avoid mutating a prop directly since the value will be overwritten whenever the parent
-		component re-renders.
-		Instead, use a data or computed property based on the prop's value. Prop being mutated: "value"
-		*/
-		modelValue(val) {
-			this.inputVal = val
-		},
-
-		inputVal(val) {
-			this.$emit('update:modelValue', val)
-		}
-	},
-
-	mounted() {
-		console.debug('Adding image drag-and-drop event handler')
-		document.body.addEventListener('dragenter', this.showDialog)
-	},
-
-	beforeUnmount() {
-		console.debug('Removing image drag-and-drop event handler')
-		document.body.removeEventListener('dragenter', this.showDialog)
-	},
-
-	methods: {
-		showDialog(e) {
-			e.preventDefault()
-			this.inputVal = true
-		},
-
-		cancel() {
-			if (this.$refs.mainPond) {
-				this.$refs.mainPond.removeFiles()
-			}
-			if (this.$refs.otherPond) {
-				this.$refs.otherPond.removeFiles()
-			}
-			this.inputVal = false
-		},
-
-		save() {
-			let mainId = this.getServerIds(this.$refs.mainPond)
-			if (mainId) {
-				mainId = mainId[0]
-			}
-			const otherIds = this.getServerIds(this.$refs.otherPond)
-			const saveData = {
-				mainImage: mainId,
-				otherImages: otherIds
-			}
-			// To ease processing in callee, only send the save event if there is data to save
-			if (mainId || otherIds) {
-				console.log('Data to save', saveData)
-				this.$emit('save', saveData)
-			} else {
-				console.debug('No data to save')
-			}
-
-			this.cancel()
-		},
-
-		getServerIds(filepond) {
-			if (!filepond) {
-				return null
-			}
-			const objects = filepond.getFiles()
-			if (!objects?.length) {
-				return null
-			}
-			return objects.map(e => e.serverId)
-		}
-	}
+interface SaveData {
+	mainImage?: string
+	otherImages?: string[]
 }
+const emit = defineEmits<{
+	save: [value: SaveData]
+}>()
+
+defineProps<{
+	mainImageLabel?: string,
+	otherImagesLabel?: string
+}>()
+
+const mainPond = useTemplateRef<FilePondType>('mainPond')
+const otherPond = useTemplateRef<FilePondType>('otherPond')
+
+const serverConfig = {
+	process: apiRoot + 'filepond/process',
+	revert: apiRoot + 'filepond/revert'
+}
+
+function showDialog(e: Event) {
+	e.preventDefault()
+	model.value = true
+}
+
+function cancel() {
+	if (mainPond.value) {
+		mainPond.value.removeFiles()
+	}
+	if (otherPond.value) {
+		otherPond.value.removeFiles()
+	}
+	model.value = false
+}
+
+function save() {
+	let mainIds = getServerIds(mainPond.value)
+	let mainId
+	if (mainIds) {
+		mainId = mainIds[0]
+	}
+	const otherIds = getServerIds(otherPond.value)
+	const saveData: SaveData = {
+		mainImage: mainId,
+		otherImages: otherIds
+	}
+	// To ease processing in callee, only send the save event if there is data to save
+	if (mainId || otherIds) {
+		console.log('Data to save', saveData)
+		emit('save', saveData)
+	} else {
+		console.debug('No data to save')
+	}
+
+	// Clear the dialog
+	cancel()
+}
+
+function getServerIds(filepond: FilePondType | null) {
+	if (!filepond) {
+		return undefined
+	}
+	const objects = filepond.getFiles()
+	if (!objects?.length) {
+		return undefined
+	}
+	return objects.map(e => e.serverId)
+}
+
+onMounted(() => {
+	console.debug('Adding image drag-and-drop event handler')
+	document.body.addEventListener('dragenter', showDialog)
+})
+
+onBeforeUnmount(() => {
+	console.debug('Removing image drag-and-drop event handler')
+	document.body.removeEventListener('dragenter', showDialog)
+})
 </script>
+
 
 <style lang="scss">
 .filepond--credits {

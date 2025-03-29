@@ -15,8 +15,8 @@
 			</v-btn>
 			<p v-text="$t('page.Derivative.stickers.explanation')" />
 		</div>
-		<div v-if="!initialized" v-text="$t('core.loading')" />
-		<div v-if="initialized" class="c-DerivativeStickers__List">
+		<div v-if="loading" v-text="$t('core.loading')" />
+		<div v-if="!loading" class="c-DerivativeStickers__List">
 			<div v-for="derivative in derivatives" :key="derivative.id" class="c-DerivativeStickers__Sticker">
 				<div>
 					<p v-if="derivative.series" class="series" v-text="derivative.series.identifyingName" />
@@ -41,40 +41,28 @@
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
 import derivativeService from '@/services/derivative-service'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'DerivativeStickers',
+useHead({
+	title: useI18n().t('title.index.derivative.stickers')
+})
 
-	data() {
-		return {
-			initialized: false,
-			derivatives: []
-		}
-	},
+const loading = ref(true)
+const derivatives = ref([] as Derivative[])
 
-	head() {
-		return {
-			title: this.$t('title.index.derivative.stickers')
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			this.derivatives = await derivativeService.findForIndex(null, 'full')
-			this.initialized = true
-		},
-
-		print() {
-			window.print()
-		}
-	}
+async function fetchData() {
+	derivatives.value = await derivativeService.findForIndex(undefined, 'full')
+	loading.value = false
 }
+
+function print() {
+	window.print()
+}
+
+fetchData()
 </script>
 
 <style lang="scss">

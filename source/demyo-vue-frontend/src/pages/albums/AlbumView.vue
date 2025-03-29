@@ -340,7 +340,7 @@ const derivativeQuery = computed(() => {
 	return query
 })
 
-const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(album.value.purchasePrice)
+const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => album.value.purchasePrice))
 
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)

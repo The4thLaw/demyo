@@ -30,69 +30,56 @@
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
 import imageService from '@/services/image-service'
 import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'ImageDetect',
+useHead({
+	title: useI18n().t('title.add.image')
+})
+const uiStore = useUiStore()
 
-	data() {
-		return {
-			uiStore: useUiStore(),
+const detecting = ref(true)
+const detectedImages = ref([] as string[])
+// Iterating directly over this caused issues, possibly due to the special characters
+// For example, the v-for wouldn't work (no iteration)
+const imageSelections = ref({} as Record<string, boolean>)
+const addedImages = ref([] as Image[])
 
-			detecting: true,
-			detectedImages: [],
-			// Iterating directly over this caused issues, possibly due to the special characters
-			// For example, the v-for wouldn't work (no iteration)
-			imageSelections: {},
-			addedImages: []
-		}
-	},
+async function fetchData() {
+	uiStore.enableGlobalOverlay()
+	detectedImages.value = await imageService.detectDiskImages()
+	imageSelections.value = {}
+	detectedImages.value.forEach((v) => {
+		imageSelections.value[v] = false
+	})
+	uiStore.disableGlobalOverlay()
+}
 
-	head() {
-		return {
-			title: this.$t('title.add.image')
-		}
-	},
+async function save() {
+	uiStore.enableGlobalOverlay()
 
-	created() {
-		this.fetchData()
-	},
+	addedImages.value = []
 
-	methods: {
-		async fetchData() {
-			this.uiStore.enableGlobalOverlay()
-			this.detectedImages = await imageService.detectDiskImages()
-			this.imageSelections = {}
-			this.detectedImages.forEach((v, i) => {
-				this.imageSelections[v] = false
-			})
-			this.uiStore.disableGlobalOverlay()
-		},
-
-		async save() {
-			this.uiStore.enableGlobalOverlay()
-
-			this.addedImages = []
-
-			const selectedImages = []
-			for (const k in this.imageSelections) {
-				if (this.imageSelections[k]) {
-					selectedImages.push(k)
-				}
-			}
-			if (selectedImages.length <= 0) {
-				this.uiStore.enableGlobalOvdisableGlobalOverlayerlay()
-				return
-			}
-
-			const added = await imageService.saveDiskImages(selectedImages)
-			this.addedImages = await imageService.findMultipleById(added)
-			void this.fetchData() // Will take care of hiding the overlay
+	const selectedImages: string[] = []
+	for (const k in imageSelections.value) {
+		if (imageSelections.value[k]) {
+			selectedImages.push(k)
 		}
 	}
+	if (selectedImages.length <= 0) {
+		uiStore.disableGlobalOverlay()
+		return
+	}
+
+	const added = await imageService.saveDiskImages(selectedImages)
+	addedImages.value = await imageService.findMultipleById(added)
+	fetchData() // Will take care of hiding the overlay
 }
+
+fetchData()
 </script>
 
 <style lang="scss">

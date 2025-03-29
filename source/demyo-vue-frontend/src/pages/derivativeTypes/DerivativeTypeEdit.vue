@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-form ref="form">
-			<SectionCard>
+			<SectionCard :loading="loading">
 				<v-row>
 					<v-col cols="12">
 						<v-text-field
@@ -11,57 +11,29 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
 import typeService from '@/services/derivative-type-service'
 
-export default {
-	name: 'DerivativeTypeEdit',
-
-	mixins: [modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.derivativeType',
-						edit: 'title.edit.derivativeType'
-					},
-					saveRedirectViewName: 'DerivativeTypeView'
-				}
-			},
-
-			type: {},
-
-			rules: {
-				name: [
-					mandatory()
-				]
-			}
-		}
-	},
-
-	head() {
-		return { title: this.pageTitle }
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.type = await typeService.findById(this.parsedId)
-			}
-		},
-
-		saveHandler() {
-			return typeService.save(this.type)
-		}
+async function fetchData(id :number|undefined): Promise<Partial<DerivativeType>> {
+	if (id) {
+		return typeService.findById(id)
 	}
+	return Promise.resolve({})
+}
+
+const {model: type, loading, save, reset} = useSimpleEdit(fetchData, typeService, [],
+	'title.add.derivativeType', 'title.edit.derivativeType', 'DerivativeTypeView')
+
+const rules = {
+	name: [
+		mandatory()
+	]
 }
 </script>

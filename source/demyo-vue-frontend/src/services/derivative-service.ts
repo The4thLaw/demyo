@@ -26,7 +26,7 @@ class DerivativeService extends AbstractModelService<Derivative> {
 		return axiosGet(this.basePath, params, [])
 	}
 
-	saveFilepondImages(modelId: number, imageIds: number[]) {
+	saveFilepondImages(modelId: number, imageIds: string[]) {
 		return axiosPost(`${this.basePath}${modelId}/images`, { filePondOtherImages: imageIds }, false)
 	}
 }

@@ -1,6 +1,8 @@
 import AbstractModelService from '@/services/abstract-model-service'
 import authorService from '@/services/author-service'
 import bindingService from '@/services/binding-service'
+import derivativeSourceService from '@/services/derivative-source-service'
+import derivativeTypeService from '@/services/derivative-type-service'
 import imageService from '@/services/image-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
@@ -38,6 +40,24 @@ export function useRefreshableBindings() {
 		bindings: refreshable.models,
 		bindingsLoading: refreshable.loading,
 		loadBindings: refreshable.load
+	}
+}
+
+export function useRefreshableDerivativeSources() {
+	const refreshable = useRefreshable(derivativeSourceService)
+	return {
+		sources: refreshable.models,
+		sourcesLoading: refreshable.loading,
+		loadSources: refreshable.load
+	}
+}
+
+export function useRefreshableDerivativeTypes() {
+	const refreshable = useRefreshable(derivativeTypeService)
+	return {
+		types: refreshable.models,
+		typesLoading: refreshable.loading,
+		loadTypes: refreshable.load
 	}
 }
 
