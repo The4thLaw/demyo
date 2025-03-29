@@ -44,8 +44,8 @@
 
 	<properties>
 		<org.slf4j.version>2.0.12</org.slf4j.version>
-		<org.springframework.version>6.1.4</org.springframework.version>
-		<org.springframework.security.version>6.2.2</org.springframework.security.version>
+		<org.springframework.version>6.1.14</org.springframework.version>
+		<org.springframework.security.version>6.2.7</org.springframework.security.version>
 		<org.hibernate.version>6.4.4.Final</org.hibernate.version>
 		<com.querydsl.version>5.1.0</com.querydsl.version>
 		<com.fasterxml.jackson.version>2.16.1</com.fasterxml.jackson.version>
@@ -54,7 +54,7 @@
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Okko</project.versionCodename>
-		<org.eclipse.jetty.version>12.0.6</org.eclipse.jetty.version>
+		<org.eclipse.jetty.version>12.0.9</org.eclipse.jetty.version>
 		<js.frontend-maven-plugin.version>1.15.0</js.frontend-maven-plugin.version>
 		<js.node.version>v20.11.1</js.node.version>
 		<org.the4thlaw.commons.version>1.4.0</org.the4thlaw.commons.version>
