@@ -2,21 +2,21 @@
 	<div class="c-DerivativeStickers">
 		<div class="c-DerivativeStickers__Header no-print">
 			<v-btn to="/">
-				<v-icon left>
+				<v-icon start>
 					mdi-home
 				</v-icon>
 				{{ $t('menu.main.home') }}
 			</v-btn>
 			<v-btn @click="print">
-				<v-icon left>
+				<v-icon start>
 					mdi-printer
 				</v-icon>
 				{{ $t('page.Derivative.stickers.print') }}
 			</v-btn>
 			<p v-text="$t('page.Derivative.stickers.explanation')" />
 		</div>
-		<div v-if="!initialized" v-text="$t('core.loading')" />
-		<div v-if="initialized" class="c-DerivativeStickers__List">
+		<div v-if="loading" v-text="$t('core.loading')" />
+		<div v-if="!loading" class="c-DerivativeStickers__List">
 			<div v-for="derivative in derivatives" :key="derivative.id" class="c-DerivativeStickers__Sticker">
 				<div>
 					<p v-if="derivative.series" class="series" v-text="derivative.series.identifyingName" />
@@ -41,43 +41,31 @@
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
 import derivativeService from '@/services/derivative-service'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'DerivativeStickers',
+useHead({
+	title: useI18n().t('title.index.derivative.stickers')
+})
 
-	metaInfo() {
-		return {
-			title: this.$t('title.index.derivative.stickers')
-		}
-	},
+const loading = ref(true)
+const derivatives = ref([] as Derivative[])
 
-	data() {
-		return {
-			initialized: false,
-			derivatives: []
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			this.derivatives = await derivativeService.findForIndex(null, 'full')
-			this.initialized = true
-		},
-
-		print() {
-			window.print()
-		}
-	}
+async function fetchData() {
+	derivatives.value = await derivativeService.findForIndex(undefined, 'full')
+	loading.value = false
 }
+
+function print() {
+	window.print()
+}
+
+fetchData()
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-DerivativeStickers {
 	background-color: white;
 	color: black;
@@ -102,11 +90,12 @@ export default {
 	border: 0.2mm dotted #ddd;
 	padding: 1mm;
 	margin: 2.5mm;
+	line-height: initial;
 
 	div {
 		min-width: 3cm;
 		border: 0.2mm solid black;
-		padding: 1mm 3mm 1mm 3mm;
+		padding: 1mm 3mm;
 		text-align: center;
 	}
 

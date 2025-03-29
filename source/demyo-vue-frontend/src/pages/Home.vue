@@ -17,30 +17,21 @@
 	</v-container>
 </template>
 
-<script>
-import SectionCard from '@/components/SectionCard.vue';
-import quicksearch from '@/mixins/quicksearch';
+<script setup lang="ts">
+import { useQuicksearch } from '@/composables/quicksearch'
+import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 
-//const uiStore = useUiStore()
+const uiStore = useUiStore()
+uiStore.disableSearch()
+uiStore.disableGlobalOverlay()
 
-export default {
-	name: 'Home',
+useHead({
+	title: useI18n().t('title.home')
+})
 
-	components: {
-		SectionCard
-	},
-
-	mixins: [quicksearch],
-
-	metaInfo() {
-		return {
-			title: this.$t('title.home')
-		}
-	},
-
-	created() {
-		/*uiStore.disableSearch()
-		uiStore.disableGlobalOverlay()*/
-	}
-}
+const { currentQuery: quicksearchQuery, performSearch, clearSearch, isRelevantSearchQuery, loading: quicksearchLoading,
+	results: quicksearchResults }
+	= useQuicksearch()
 </script>

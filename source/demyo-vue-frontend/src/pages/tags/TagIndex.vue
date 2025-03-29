@@ -5,76 +5,41 @@
 				<TagLink :model="tags" />
 			</SectionCard>
 		</v-container>
-		<v-btn
-			fab to="/tags/new" color="accent" fixed
-			bottom right
-		>
-			<v-icon>mdi-plus</v-icon>
-		</v-btn>
+		<Fab v-if="!loading" to="/tags/new" icon="mdi-plus" />
 	</div>
 </template>
 
-<script>
-import SectionCard from '@/components/SectionCard.vue'
-import TagLink from '@/components/TagLink.vue'
+<script setup lang="ts">
+import { useSimpleIndex } from '@/composables/model-index'
 import tagService from '@/services/tag-service'
-import { useUiStore } from '@/stores/ui'
 
-export default {
-	name: 'TagIndex',
-
-	components: {
-		SectionCard,
-		TagLink
-	},
-
-	metaInfo() {
-		return {
-			title: this.$t('title.index.tag')
-		}
-	},
-
-	data() {
-		return {
-			tags: []
-		}
-	},
-
-	computed: {
-		maxUsageCount() {
-			if (this.tags.length === 0) {
-				return 0
-			}
-
-			const max = Math.max.apply(Math, this.tags.map(t => t.usageCount))
-			// Have a reasonable minimum else it just looks silly if there are few tags and they are seldom used
-			return Math.max(max, 10)
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			const uiStore = useUiStore()
-			uiStore.enableGlobalOverlay()
-			this.tags = await tagService.findForIndex()
-
-			// Post-process tags: compute the relative weight in %
-			// (the base is 100% and the max is 200%, which is very convenient for the font-size)
-			for (const tag of this.tags) {
-				tag.relativeWeight = Math.round(100 * tag.usageCount / this.maxUsageCount + 100)
-			}
-
-			uiStore.disableGlobalOverlay()
-		}
+function getMaxUsageCount(tags: Tag[]) {
+	if (tags.length === 0) {
+		return 0
 	}
+
+	const max = Math.max.apply(Math, tags.map(t => t.usageCount))
+	// Have a reasonable minimum else it just looks silly if there are few tags and they are seldom used
+	return Math.max(max, 10)
 }
+
+async function fetchData(): Promise<ProcessedTag[]> {
+	const loadedTags = await tagService.findForIndex() as ProcessedTag[]
+
+	// Post-process tags: compute the relative weight in %
+	// (the base is 100% and the max is 200%, which is very convenient for the font-size)
+	const maxUsageCount = getMaxUsageCount(loadedTags)
+	for (const tag of loadedTags) {
+		tag.relativeWeight = Math.round(100 * tag.usageCount / maxUsageCount + 100)
+	}
+
+	return Promise.resolve(loadedTags)
+}
+
+const { loading, modelList: tags } = useSimpleIndex(tagService, 'title.index.tag', fetchData)
 </script>
 
-<style lang="less">
+<style lang="scss">
 .v-TagIndex__list {
 	line-height: 275%;
 	text-align: center;

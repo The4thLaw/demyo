@@ -47,7 +47,9 @@
 			"**/target/**": true
 		},
 		"search.exclude": {
-			"**/target": true
+			"**/node_modules": true,
+			"**/target": true,
+			"**/dist": true
 		},
 		"files.eol": "\n",
 		"java.compile.nullAnalysis.mode": "disabled",
@@ -76,7 +78,11 @@
 			"revealWithFocus": "none",
 			"clearOnRun": "none"
 		},
-		"eslint.experimental.useFlatConfig": true
+		"eslint.experimental.useFlatConfig": true,
+
+		"javascript.format.semicolons": "remove",
+		"typescript.format.semicolons": "remove",
+		"testing.automaticallyOpenTestResults": "neverOpen",
 	},
 	"tasks": {
 		"version": "2.0.0",
@@ -85,6 +91,12 @@
 				"label": "Maven install (dev, skip tests)",
 				"type": "shell",
 				"command": "./mvnw -B install -Pdev -DskipTests",
+				"group": "build"
+			},
+			{
+				"label": "Maven install (dev, vue, skip tests)",
+				"type": "shell",
+				"command": "./mvnw -B install '-Pdev,vue' -DskipTests",
 				"group": "build"
 			},
 			{
@@ -111,6 +123,15 @@
 				"command": "./mvnw -B site dev,check-deps -DskipTests",
 				"group": "build"
 			},
+			{
+				"label": "Run frontend (hot reload)",
+				"type": "shell",
+				"command": "npm run dev",
+				"options": {
+					"cwd": "demyo-vue-frontend"
+				},
+				"group": "test"
+			}
 		]
 	}
 }

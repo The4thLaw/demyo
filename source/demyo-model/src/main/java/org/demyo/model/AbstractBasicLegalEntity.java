@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 import org.hibernate.validator.constraints.URL;
+import org.springframework.lang.Nullable;
 
 /**
  * Defines basic fields for a legal entity.
@@ -14,10 +15,12 @@ public abstract class AbstractBasicLegalEntity extends AbstractNamedModel {
 	/** The entity website. */
 	@Column(name = "website")
 	@URL
+	@Nullable
 	private String website;
 
 	/** The history of this entity. */
 	@Column(name = "history")
+	@Nullable
 	private String history;
 
 	/**

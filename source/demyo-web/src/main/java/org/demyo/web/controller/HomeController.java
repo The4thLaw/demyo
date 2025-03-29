@@ -59,27 +59,43 @@ public class HomeController extends AbstractController {
 		this.appCodename = SystemConfiguration.getInstance().getCodename();
 	}
 
-	@PostConstruct
-	private void init() {
-		Comparator<Resource> indexFirstComp = (r1, r2) -> {
+	private static Comparator<Resource> indexPositionComparator(int position) {
+		return (r1, r2) -> {
 			String name1 = r1.getFilename();
 			String name2 = r2.getFilename();
 			if (name1.startsWith("index")) {
-				return -1;
+				return position;
 			}
 			if (name2.startsWith("index")) {
-				return 1;
+				return -position;
+			}
+			if (!name1.startsWith("@vendor") && name2.startsWith("@vendor")) {
+				return position;
+			}
+			if (name1.startsWith("@vendor") && !name2.startsWith("@vendor")) {
+				return -position;
 			}
 			return name1.compareTo(name2);
 		};
+	}
 
+	private static Comparator<Resource> indexFirst() {
+		return indexPositionComparator(-1);
+	}
+
+	private static Comparator<Resource> indexLast() {
+		return indexPositionComparator(1);
+	}
+
+	@PostConstruct
+	private void init() {
 		List<Resource> allJs = new ArrayList<>(List.of(allJsResources));
-		allJs.sort(indexFirstComp);
+		allJs.sort(indexFirst());
 		indexJsFilename = allJs.get(0).getFilename();
 		otherJsFilenames = allJs.subList(1, allJs.size()).stream().map(Resource::getFilename).toList();
 
 		List<Resource> allCss = new ArrayList<>(List.of(allCssResources));
-		allCss.sort(indexFirstComp);
+		allCss.sort(indexLast());
 		cssFilenames = allCss.stream().map(Resource::getFilename).toList();
 
 		LOGGER.trace("Index JS resource: {}", indexJsFilename);
@@ -93,22 +109,7 @@ public class HomeController extends AbstractController {
 	 * @param model The view model
 	 * @return The view name
 	 */
-	@GetMapping({
-			// Index
-			"/",
-			// Static pages
-			"/about",
-			// Management
-			"/manage/**",
-			// Model pages (except images, which have special rules)
-			"/albums", "/authors", "/bindings", "/collections", "/derivativeSources",
-			"/derivativeTypes", "/derivatives", "/publishers", "/readers", "/series", "/tags", //
-			"/albums/**", "/authors/**", "/bindings/**", "/collections/**", "/derivativeSources/**",
-			"/derivativeTypes/**", "/derivatives/**", "/publishers/**", "/readers/**", "/series/**", "/tags/**",
-			// Images
-			"/images", "/images/", "/images/*/view", "/images/view/**", "/images/*/edit", "/images/new"
-	})
-
+	@GetMapping({"/", "{_:^(?!api|favicon).*$}", "{_:^(?!api|assets|icons).*$}/**"})
 	public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.trace("Accessing the home page");
 
@@ -127,17 +128,6 @@ public class HomeController extends AbstractController {
 		new NoncedCSPHeaderWriter().writeHeaders(request, response);
 
 		return "index";
-	}
-
-	private static String getFrontendResource(Resource[] resources, String name) {
-		if (resources.length < 1) {
-			LOGGER.warn("Failed to find the resource named '{}'; this is only fine during development", name);
-			return null;
-		} else if (resources.length > 1) {
-			throw new IllegalArgumentException(
-					"Could not find a unique resource for " + name + ":" + List.of(resources));
-		}
-		return resources[0].getFilename();
 	}
 
 	/**

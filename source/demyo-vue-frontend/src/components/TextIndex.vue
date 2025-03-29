@@ -1,6 +1,6 @@
 <template>
 	<div
-		ref="keyTarget"
+		ref="key-target"
 		v-touch="{
 			left: nextPage,
 			right: previousPage
@@ -13,11 +13,9 @@
 		<div v-if="!splitByFirstLetter">
 			<v-card :flat="compact">
 				<v-card-text>
-					<v-list class="dem-columnized c-TextIndex__list" dense>
+					<v-list class="dem-columnized c-TextIndex__list" density="compact">
 						<v-list-item v-for="item in paginatedItems" :key="item.id">
-							<v-list-item-content>
-								<slot :item="item" />
-							</v-list-item-content>
+							<slot :item="item" />
 						</v-list-item>
 					</v-list>
 				</v-card-text>
@@ -26,16 +24,14 @@
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, letter) in groupedItems" :key="letter">
-				<h2 class="c-TextIndex__firstLetter text-h4 mx-2 my-4 accent--text">
+				<h2 class="c-TextIndex__firstLetter text-h4 mx-2 my-4 text-secondary">
 					{{ letter }}
 				</h2>
 				<v-card :flat="compact">
 					<v-card-text>
-						<v-list class="dem-columnized c-TextIndex__list" dense>
+						<v-list class="dem-columnized c-TextIndex__list" density="compact">
 							<v-list-item v-for="item in value" :key="item.id">
-								<v-list-item-content>
-									<slot :item="item" />
-								</v-list-item-content>
+								<slot :item="item" />
 							</v-list-item>
 						</v-list>
 					</v-card-text>
@@ -48,42 +44,39 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
-			@input="$emit('page-change')"
+			@update:modelValue="emit('page-change')"
 		/>
 	</div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { emitTypes, usePagination } from '@/composables/pagination'
 import { focusElement } from '@/helpers/dom'
-import paginatedTextMixin from '@/mixins/paginated-text'
+import { useTemplateRef } from 'vue'
 
-export default {
-	name: 'TextIndex',
-
-	mixins: [paginatedTextMixin],
-
-	props: {
-		splitByFirstLetter: {
-			type: Boolean,
-			default: true
-		},
-		firstLetterExtractor: {
-			type: Function,
-			default: () => '#'
-		},
-		compact: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	mounted() {
-		focusElement(this.$refs.keyTarget)
-	}
+interface Props {
+	items?: IModel[]
+	splitByFirstLetter?: boolean,
+	firstLetterExtractor?: (item: AbstractModel) => string,
+	compact?: boolean
 }
+const props = withDefaults(defineProps<Props>(), {
+	items: () => [],
+	splitByFirstLetter: true,
+	firstLetterExtractor: () => '#',
+	compact: false
+})
+
+const keyTarget = useTemplateRef('key-target')
+onMounted(() => focusElement(keyTarget.value))
+
+const emit = defineEmits(emitTypes)
+
+const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
+	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, undefined)
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-TextIndex {
 	// No outline on this artifically focused element
 	outline: 0;
@@ -109,7 +102,7 @@ export default {
 		text-decoration: none;
 
 		&:hover {
-			color: var(--v-anchor-base);
+			color: rgb(var(--v-theme-secondary));
 			text-decoration: underline;
 		}
 	}

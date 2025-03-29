@@ -3,82 +3,55 @@
 		<template v-if="hasResults">
 			<template v-for="key in modelTypes">
 				<template v-if="results[key]">
-					<h2 :key="`ti-${key}-title`" class="text-subtitle-1 primary--text">
+					<h2 :key="`ti-${key}-title`" class="text-subtitle-1 text-primary">
 						{{ $t('quicksearch.results.title.' + key) }}
 					</h2>
-					<v-list :key="`ti-${key}`" class="dem-columnized c-QuickSearchResults__list" dense>
+					<v-list :key="`ti-${key}`" class="dem-columnized c-QuickSearchResults__list" density="compact">
 						<v-list-item v-for="item in results[key]" :key="item.id">
-							<v-list-item-content>
-								<div>
-									<router-link :to="`/${key}/${item.id}/view`" @click.native="$emit('click')">
-										<template v-if="key !== 'albums'">
-											{{ item.identifyingName }}
-										</template>
-										<template v-else>
-											{{ item.title }}
-										</template>
-									</router-link>
-								</div>
-								<div v-if="key === 'albums' && item.series" class="c-QuickSearchResults__albumSeries">
-									<router-link :to="`/series/${item.series.id}/view`" @click="$emit('click')">
-										{{ item.series.identifyingName }}
-									</router-link>
-								</div>
-							</v-list-item-content>
+							<div>
+								<router-link :to="`/${key}/${item.id}/view`" @click="$emit('navigate')">
+									<template v-if="key !== 'albums'">
+										{{ item.identifyingName }}
+									</template>
+									<template v-else>
+										{{ item.title }}
+									</template>
+								</router-link>
+							</div>
+							<div v-if="key === 'albums' && item.series" class="c-QuickSearchResults__albumSeries">
+								<router-link :to="`/series/${item.series.id}/view`" @click="$emit('navigate')">
+									{{ item.series.identifyingName }}
+								</router-link>
+							</div>
 						</v-list-item>
 					</v-list>
 				</template>
 			</template>
 		</template>
 		<template v-else-if="hasLoadedResults">
-			<v-alert border="left" type="info" text class="my-4">
+			<v-alert border="start" type="info" text class="my-4">
 				{{ $t('quicksearch.noResults') }}
 			</v-alert>
 		</template>
 	</SectionCard>
 </template>
 
-<script>
-import SectionCard from '@/components/SectionCard.vue'
+<script setup lang="ts">
+const modelTypes = ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
 
-export default {
-	name: 'QuickSearchResults',
+const props = withDefaults(defineProps<{
+	results?: Record<string, IModel[]>,
+	loading?: boolean
+}>(), {
+	results: undefined,
+	loading: false
+})
 
-	components: {
-		SectionCard
-	},
-
-	props: {
-		results: {
-			type: null,
-			required: true
-		},
-
-		loading: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	data() {
-		return {
-			modelTypes: ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
-		}
-	},
-
-	computed: {
-		hasLoadedResults() {
-			return this.results !== undefined
-		},
-
-		hasResults() {
-			return this.results && Object.keys(this.results).length > 0
-		}
-	}
-}
+const hasLoadedResults = computed(() => props.results !== undefined)
+const hasResults = computed(() => props.results && Object.keys(props.results).length > 0)
 </script>
 
-<style lang="less">
+<style lang="scss">
 #demyo .c-QuickSearchResults .v-list-item__title {
 	font-size: inherit;
 	font-weight: normal;
@@ -100,7 +73,7 @@ export default {
 		text-decoration: none;
 
 		&:hover {
-			color: var(--v-anchor-base);
+			color: rgb(var(--v-theme-secondary));
 			text-decoration: underline;
 		}
 	}

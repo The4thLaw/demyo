@@ -7,20 +7,13 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FieldValue',
-
-	props: {
-		label: {
-			type: String,
-			required: true
-		}
-	}
-}
+<script setup lang="ts">
+defineProps<{
+	label: string
+}>()
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-FieldValue {
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -42,7 +35,7 @@ export default {
 }
 
 .c-FieldValue__label {
-	color: var(--v-primary-base);
+	color: rgb(var(--v-theme-primary));
 	font-size: 0.9em;
 }
 </style>

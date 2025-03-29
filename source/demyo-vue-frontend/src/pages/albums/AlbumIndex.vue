@@ -1,53 +1,22 @@
 <template>
 	<div class="c-AlbumIndex">
 		<MetaSeriesIndex :items="albums" @page-change="scrollToTop" />
-		<v-btn
-			fab to="/albums/new" color="accent" fixed
-			bottom right
-		>
-			<v-icon>mdi-plus</v-icon>
-		</v-btn>
+		<Fab v-if="!loading" to="/albums/new" icon="mdi-plus" />
 	</div>
 </template>
 
-<script>
-import MetaSeriesIndex from '@/components/MetaSeriesIndex.vue'
+<script setup lang="ts">
+import { useSimpleIndex } from '@/composables/model-index'
 import { retrieveFilter } from '@/helpers/filter'
 import albumService from '@/services/album-service'
-import { useUiStore } from '@/stores/ui'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'AlbumIndex',
+const route = useRoute()
 
-	components: {
-		MetaSeriesIndex
-	},
-
-	metaInfo() {
-		return {
-			title: this.$t('title.index.album')
-		}
-	},
-
-	data() {
-		return {
-			uiStore: useUiStore(),
-
-			albums: []
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			this.uiStore.enableGlobalOverlay()
-			const filter = retrieveFilter(this.$route)
-			this.albums = await albumService.findForIndex(filter)
-			this.uiStore.disableGlobalOverlay()
-		}
-	}
+function fetchData() {
+	const filter = retrieveFilter(route) as AlbumFilter
+	return albumService.findForIndex(filter)
 }
+
+const { loading, modelList: albums } = useSimpleIndex(albumService, 'title.index.album', fetchData)
 </script>

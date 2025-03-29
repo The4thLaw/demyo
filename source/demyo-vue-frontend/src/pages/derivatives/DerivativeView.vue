@@ -15,7 +15,7 @@
 				:confirm="$t('quickTasks.delete.derivative.confirm')"
 				icon="mdi-image-frame dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteDerivative"
+				@confirm="deleteModel"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.images.to.derivative')"
@@ -145,7 +145,7 @@
 					</v-col>
 					<v-col v-if="derivative.purchasePrice" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.purchasePrice')">
-							{{ derivative.purchasePrice | price(currency) }}
+							{{ qualifiedPurchasePrice }}
 						</FieldValue>
 					</v-col>
 					<v-col v-if="hasPrices" cols="12" md="6">
@@ -167,101 +167,47 @@
 	</v-container>
 </template>
 
-<script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import DnDImage from '@/components/DnDImage.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import GalleryIndex from '@/components/GalleryIndex.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import PriceTable from '@/components/PriceTable.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { deleteStub } from '@/helpers/actions'
-import i18nMixin from '@/mixins/i18n'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useCurrency } from '@/composables/currency'
+import { useSimpleView } from '@/composables/model-view'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'DerivativeView',
+const dndDialog = ref(false)
 
-	components: {
-		AppTask,
-		AppTasks,
-		DnDImage,
-		FieldValue,
-		GalleryIndex,
-		ModelLink,
-		PriceTable,
-		SectionCard
-	},
+async function fetchData(id: number): Promise<Derivative> {
+	return derivativeService.findById(id)
+}
 
-	mixins: [i18nMixin, modelViewMixin],
+const {model: derivative, appTasksMenu, deleteModel, loading, loadData} = useSimpleView(fetchData, derivativeService,
+	'quickTasks.delete.derivative.confirm.done', 'DerivariveIndex')
 
-	metaInfo() {
-		return {
-			title: this.derivative.identifyingName
-		}
-	},
+const hasPrices = computed(() => derivative.value.prices?.length > 0)
+const hasImages = computed(() => derivative.value.images?.length > 1)
+const sizeSpec = computed(() => {
+	if (derivative.value.width && derivative.value.height && derivative.value.depth) {
+		return `${derivative.value.width} x ${derivative.value.height} x ${derivative.value.depth}`
+	}
 
-	data() {
-		return {
-			uiStore: useUiStore(),
+	if (derivative.value.width && derivative.value.height) {
+		return `${derivative.value.width} x ${derivative.value.height}`
+	}
 
-			appTasksMenu: false,
-			dndDialog: false,
-			derivative: {
-				series: {},
-				album: {},
-				artist: {},
-				source: {}
-			}
-		}
-	},
+	return null
+})
 
-	computed: {
-		hasPrices() {
-			return this.derivative.prices && this.derivative.prices.length > 0
-		},
+const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => derivative.value.purchasePrice))
 
-		hasImages() {
-			return this.derivative.images && this.derivative.images.length > 1
-		},
-
-		sizeSpec() {
-			if (this.derivative.width && this.derivative.height && this.derivative.depth) {
-				return `${this.derivative.width} x ${this.derivative.height} x ${this.derivative.depth}`
-			}
-
-			if (this.derivative.width && this.derivative.height) {
-				return `${this.derivative.width} x ${this.derivative.height}`
-			}
-
-			return null
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			this.derivative = await derivativeService.findById(this.parsedId)
-		},
-
-		async saveDndImages(data) {
-			const ok = await derivativeService.saveFilepondImages(this.derivative.id, data.otherImages)
-			if (ok) {
-				this.uiStore.showSnackbar(this.$t('draganddrop.snack.confirm'))
-				this.fetchDataInternal()
-			} else {
-				this.uiStore.showSnackbar(this.$t('core.exception.api.title'))
-			}
-		},
-
-		deleteDerivative() {
-			deleteStub(this,
-				() => derivativeService.deleteModel(this.derivative.id),
-				'quickTasks.delete.derivative.confirm.done',
-				'DerivariveIndex')
-		}
+const uiStore = useUiStore()
+const i18n = useI18n()
+async function saveDndImages(data: FilePondData) {
+	const ok = await derivativeService.saveFilepondImages(derivative.value.id, data.otherImages)
+	if (ok) {
+		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
+		loadData()
+	} else {
+		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 	}
 }
 </script>

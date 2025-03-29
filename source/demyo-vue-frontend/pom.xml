@@ -18,9 +18,9 @@
 	<properties>
 		<project.rootdir>${project.basedir}/..</project.rootdir>
 		<!-- Override since this is not really a Maven / Java project -->
-		<sonar.sources>src</sonar.sources> 
-		<!-- Specify the path to the Jest coverage -->
-		<sonar.javascript.lcov.reportPaths>${project.build.directory}/jest-coverage/lcov.info</sonar.javascript.lcov.reportPaths>
+		<sonar.sources>src</sonar.sources>
+		<!-- Specify the path to the Vitest coverage -->
+		<sonar.javascript.lcov.reportPaths>coverage/lcov.info</sonar.javascript.lcov.reportPaths>
 	</properties>
 
 	<build>
@@ -40,7 +40,7 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<!--
@@ -51,14 +51,60 @@
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			
+
 			<build>
 				<plugins>
+					<plugin>
+						<groupId>cz.habarta.typescript-generator</groupId>
+						<artifactId>typescript-generator-maven-plugin</artifactId>
+						<version>3.2.1263</version>
+						<executions>
+							<execution>
+								<id>generate-typescript-models</id>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+								<phase>generate-sources</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<jsonLibrary>jackson2</jsonLibrary>
+							<!-- Can't get the patterns to work so use the classes, the plugin will load the dependencies -->
+							<classes>
+								<class>org.demyo.model.beans.AuthorAlbums</class>
+								<class>org.demyo.model.beans.MetaSeries</class>
+								<class>org.demyo.model.beans.ReaderLists</class>
+							</classes>
+							<customTypeMappings>
+								<mapping>java.util.Locale:string</mapping>
+							</customTypeMappings>
+							<excludeClasses>
+								<class>java.lang.Comparable</class>
+								<class>java.io.Serializable</class>
+							</excludeClasses>
+							<optionalAnnotations>
+								<!--<annotation>jakarta.annotation.Nullable</annotation>-->
+								<annotation>org.springframework.lang.Nullable</annotation>
+							</optionalAnnotations>
+							<!-- Note that Javadoc isn't working due to https://github.com/vojtechhabarta/typescript-generator/issues/1049 -->
+							<outputKind>global</outputKind>
+							<outputFileType>declarationFile</outputFileType>
+							<outputFile>src/types/java-models.d.ts</outputFile>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.demyo</groupId>
+								<artifactId>demyo-model</artifactId>
+								<version>${project.version}</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
 						<artifactId>frontend-maven-plugin</artifactId>
 						<version>${js.frontend-maven-plugin.version}</version>
-						
+
 						<executions>
 							<!-- Install our node and npm version to run npm/node scripts-->
 							<!-- This is a requirement for the plugin -->
@@ -71,7 +117,7 @@
 									<nodeVersion>${js.node.version}</nodeVersion>
 								</configuration>
 							</execution>
-		
+
 							<!-- Install all project dependencies -->
 							<execution>
 								<id>npm install</id>
@@ -82,7 +128,7 @@
 									<arguments>ci</arguments>
 								</configuration>
 							</execution>
-		
+
 							<!-- Sync the version from the POM to the package.json automatically -->
 							<execution>
 								<id>sync version to package.json</id>
@@ -93,7 +139,7 @@
 									<arguments>run sync-pom-version</arguments>
 								</configuration>
 							</execution>
-							
+
 							<execution>
 								<id>npm run build</id>
 								<goals>
@@ -106,18 +152,18 @@
 
 							<!-- Skippable unit tests -->
 							<execution>
-								<id>npm run test:unit</id>
+								<id>npm run test:ci</id>
 								<goals>
 									<goal>npm</goal>
 								</goals>
 								<phase>test</phase>
 								<configuration>
-									<arguments>run test:unit</arguments>
+									<arguments>run test:ci</arguments>
 								</configuration>
 							</execution>
 						</executions>
 					</plugin>
-					
+
 					<plugin>
 						<artifactId>maven-clean-plugin</artifactId>
 						<configuration>

@@ -12,13 +12,13 @@
 					{{ $t('page.Reader.select.explanation.base') }}
 				</p>
 				<v-list>
-					<v-list-item v-for="reader in readers" :key="reader.id" @click="select(reader)">
-						<v-list-item-icon>
+					<v-list-item
+						v-for="reader in readers" :key="reader.id"
+						:title="reader.identifyingName" @click="select(reader)"
+					>
+						<template #prepend>
 							<LetterIcon :letter="reader.identifyingName.charAt(0)" :color="reader.colour" />
-						</v-list-item-icon>
-						<v-list-item-content>
-							{{ reader.identifyingName }}
-						</v-list-item-content>
+						</template>
 					</v-list-item>
 				</v-list>
 			</v-card-text>
@@ -26,7 +26,7 @@
 			<v-card-actions v-if="!requireSelection">
 				<v-spacer />
 
-				<v-btn color="primary" text @click="dialog = false; $emit('cancel')">
+				<v-btn color="primary" variant="text" @click="dialog = false; $emit('cancel')">
 					{{ $t('quickTasks.confirm.cancel.label') }}
 				</v-btn>
 			</v-card-actions>
@@ -34,44 +34,28 @@
 	</v-dialog>
 </template>
 
-<script>
-import LetterIcon from '@/components/LetterIcon.vue'
+<script setup lang="ts">
 import readerService from '@/services/reader-service'
 
-export default {
-	name: 'ReaderSelection',
+withDefaults(defineProps<{
+	requireSelection?: boolean
+}>(), {
+	requireSelection: false
+})
 
-	components: {
-		LetterIcon
-	},
+const emit = defineEmits(['select'])
 
-	props: {
-		requireSelection: {
-			type: Boolean,
-			default: false
-		}
-	},
+const dialog = ref(true)
+const readers = ref([] as Reader[])
 
-	data() {
-		return {
-			dialog: true,
-			readers: []
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			this.readers = await readerService.findForIndex()
-		},
-
-		async select(reader) {
-			await readerService.setCurrentReader(reader)
-			this.$emit('select')
-		}
-	}
+async function fetchData() {
+	readers.value = await readerService.findForIndex()
 }
+
+async function select(reader: Reader) {
+	await readerService.setCurrentReader(reader)
+	emit('select')
+}
+
+fetchData()
 </script>

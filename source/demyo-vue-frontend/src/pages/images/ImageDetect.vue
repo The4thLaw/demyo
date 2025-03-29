@@ -1,10 +1,10 @@
 <template>
 	<v-container class="c-ImageDetect">
 		<SectionCard :subtitle="$t('title.add.image.detect')">
-			<v-alert v-if="detectedImages.length > 0" border="left" type="info" text>
+			<v-alert v-if="detectedImages.length > 0" border="start" type="info" text>
 				{{ $t('page.Image.detect.recommendation') }}
 			</v-alert>
-			<v-alert v-if="!detecting && detectedImages.length === 0" border="left" type="warning" text>
+			<v-alert v-if="!detecting && detectedImages.length === 0" border="start" type="warning" text>
 				{{ $t('page.Image.detect.noImages') }}
 			</v-alert>
 			<v-form class="dem-columnized">
@@ -30,81 +30,59 @@
 	</v-container>
 </template>
 
-<script>
-import FormActions from '@/components/FormActions.vue'
-import GalleryIndex from '@/components/GalleryIndex.vue'
-import SectionCard from '@/components/SectionCard.vue'
+<script setup lang="ts">
 import imageService from '@/services/image-service'
 import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 
-export default {
-	name: 'ImageDetect',
+useHead({
+	title: useI18n().t('title.add.image')
+})
+const uiStore = useUiStore()
 
-	components: {
-		FormActions,
-		GalleryIndex,
-		SectionCard
-	},
+const detecting = ref(true)
+const detectedImages = ref([] as string[])
+// Iterating directly over this caused issues, possibly due to the special characters
+// For example, the v-for wouldn't work (no iteration)
+const imageSelections = ref({} as Record<string, boolean>)
+const addedImages = ref([] as Image[])
 
-	metaInfo() {
-		return {
-			title: this.$t('title.add.image')
-		}
-	},
+async function fetchData() {
+	uiStore.enableGlobalOverlay()
+	detectedImages.value = await imageService.detectDiskImages()
+	imageSelections.value = {}
+	detectedImages.value.forEach((v) => {
+		imageSelections.value[v] = false
+	})
+	uiStore.disableGlobalOverlay()
+}
 
-	data() {
-		return {
-			uiStore: useUiStore(),
+async function save() {
+	uiStore.enableGlobalOverlay()
 
-			detecting: true,
-			detectedImages: [],
-			// Iterating directly over this caused issues, possibly due to the special characters
-			// For example, the v-for wouldn't work (no iteration)
-			imageSelections: {},
-			addedImages: []
-		}
-	},
+	addedImages.value = []
 
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			this.uiStore.enableGlobalOverlay()
-			this.detectedImages = await imageService.detectDiskImages()
-			this.imageSelections = {}
-			this.detectedImages.forEach((v, i) => {
-				this.imageSelections[v] = false
-			})
-			this.uiStore.disableGlobalOverlay()
-		},
-
-		async save() {
-			this.uiStore.enableGlobalOverlay()
-
-			this.addedImages = []
-
-			const selectedImages = []
-			for (const k in this.imageSelections) {
-				if (this.imageSelections[k]) {
-					selectedImages.push(k)
-				}
-			}
-			if (selectedImages.length <= 0) {
-				this.uiStore.enableGlobalOvdisableGlobalOverlayerlay()
-				return
-			}
-
-			const added = await imageService.saveDiskImages(selectedImages)
-			this.addedImages = await imageService.findMultipleById(added)
-			this.fetchData() // Will take care of hiding the overlay
+	const selectedImages: string[] = []
+	for (const k in imageSelections.value) {
+		if (imageSelections.value[k]) {
+			selectedImages.push(k)
 		}
 	}
+	if (selectedImages.length <= 0) {
+		uiStore.disableGlobalOverlay()
+		return
+	}
+
+	const added = await imageService.saveDiskImages(selectedImages)
+	addedImages.value = await imageService.findMultipleById(added)
+	fetchData() // Will take care of hiding the overlay
 }
+
+fetchData()
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-ImageDetect {
 	.v-messages {
 		display: none;

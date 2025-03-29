@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Series.identification')">
+			<SectionCard :subtitle="$t('fieldset.Series.identification')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -14,8 +14,8 @@
 						/>
 					</v-col>
 					<v-col cols="12">
-						<Autocomplete
-							v-model="series.relatedSeries" :items="allSeries" multiple
+						<AutoComplete
+							v-model="series.relatedSeries" :items="allSeries" :loading="seriesLoading" multiple
 							label-key="field.Series.relatedSeries"
 						/>
 					</v-col>
@@ -31,90 +31,47 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Series.freeText')">
+			<SectionCard :subtitle="$t('fieldset.Series.freeText')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Series.summary') }}</label>
-						<tiptap-vuetify
-							v-model="series.summary" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="series.summary" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Series.comment') }}</label>
-						<tiptap-vuetify
-							v-model="series.comment" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="series.comment" />
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
-import Autocomplete from '@/components/Autocomplete.vue'
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { useRefreshableSeries } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
 import seriesService from '@/services/series-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
-export default {
-	name: 'SeriesEdit',
+const {series: allSeries, seriesLoading, loadSeries} = useRefreshableSeries()
 
-	components: {
-		Autocomplete,
-		FormActions,
-		SectionCard,
-		TiptapVuetify
-	},
-
-	mixins: [modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.series',
-						edit: 'title.edit.series'
-					},
-					saveRedirectViewName: 'SeriesView'
-				}
-			},
-
-			series: { relatedSeries: [] },
-			allSeries: [],
-			tipTapExtensions: tipTapExtensions,
-
-			rules: {
-				name: [
-					mandatory()
-				]
-			}
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const allSeriesP = seriesService.findForList()
-
-			if (this.parsedId) {
-				this.series = await seriesService.findById(this.parsedId)
-			}
-
-			this.allSeries = await allSeriesP
-		},
-
-		saveHandler() {
-			return seriesService.save(this.series)
-		}
+async function fetchData(id :number|undefined): Promise<Partial<Series>> {
+	if (id) {
+		return seriesService.findById(id)
 	}
+	return Promise.resolve({
+		relatedSeries: []
+	})
+}
+
+const {model: series, loading, save, reset} = useSimpleEdit(fetchData, seriesService, [loadSeries],
+	'title.add.series', 'title.edit.series', 'SeriesView')
+
+const rules = {
+	name: [
+		mandatory()
+	]
 }
 </script>

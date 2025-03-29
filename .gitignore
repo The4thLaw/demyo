@@ -10,3 +10,4 @@ integration/*.tar.bz2
 source/.vscode/launch.test.json
 source/.mvn/wrapper/maven-wrapper.jar
 **/node_modules
+**/node_modules.*

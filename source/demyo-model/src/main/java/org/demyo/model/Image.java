@@ -8,11 +8,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.SortComparator;
+import org.springframework.lang.Nullable;
 import org.the4thlaw.commons.utils.io.FilenameUtils;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -28,10 +30,12 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "IMAGES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "description"))
-@NamedEntityGraph(name = "Image.forDependencies", attributeNodes =
-{ @NamedAttributeNode("albumCovers"),
-		@NamedAttributeNode("albumOtherImages"), @NamedAttributeNode("authors"), @NamedAttributeNode("collections"),
-		@NamedAttributeNode("derivatives"), @NamedAttributeNode("publishers") })
+@NamedEntityGraph(name = "Image.forDependencies",
+	attributeNodes = { @NamedAttributeNode(value = "albumCovers", subgraph = "Image.subgraph.Album"),
+		@NamedAttributeNode(value = "albumOtherImages", subgraph = "Image.subgraph.Album"),
+		@NamedAttributeNode("authors"), @NamedAttributeNode("collections"),
+		@NamedAttributeNode("derivatives"), @NamedAttributeNode("publishers") },
+	subgraphs = @NamedSubgraph(name = "Image.subgraph.Album", attributeNodes = @NamedAttributeNode("series")))
 public class Image extends AbstractModel {
 	/** The URL to access the image. */
 	@Column(name = "url")
@@ -39,42 +43,49 @@ public class Image extends AbstractModel {
 	private String url;
 	/** The description of the image. */
 	@Column(name = "description")
+	@Nullable
 	private String description;
 
 	/** The {@link Album}s which use this Image as cover. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cover")
 	@SortComparator(AlbumAndSeriesComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Album> albumCovers;
 
 	/** The {@link Album}s which use this Image as other image. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "images")
 	@SortComparator(AlbumAndSeriesComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Album> albumOtherImages;
 
 	/** The {@link Author}s who use this Image. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "portrait")
 	@SortComparator(AuthorComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Author> authors;
 
 	/** The {@link Collection}s which use this Image. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "logo")
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Collection> collections;
 
 	/** The {@link Derivative}s which use this Image. */
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "images")
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Derivative> derivatives;
 
 	/** The {@link Publisher}s which use this Image. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "logo")
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonView(ModelView.ImageDependencies.class)
+	@Nullable
 	private SortedSet<Publisher> publishers;
 
 	@Override

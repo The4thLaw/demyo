@@ -7,14 +7,10 @@
 			>
 				{{ meta.album.title }}
 			</router-link>
-			<v-list dense>
-				<v-list-item :to="cardLink" class="c-MetaSeriesCard__one-shot">
-					<v-list-item-content>
-						<v-list-item-title>
-							{{ $t('field.Album.oneShot.view') }}
-						</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
+			<v-list density="compact">
+				<v-list-item
+					:to="cardLink" class="c-MetaSeriesCard__one-shot" :title="$t('field.Album.oneShot.view')"
+				/>
 			</v-list>
 		</template>
 		<template v-if="meta.series">
@@ -24,19 +20,21 @@
 			>
 				{{ meta.series.identifyingName }}
 			</router-link>
-			<v-list dense>
-				<v-list-item v-for="album in paginatedItems" :key="album.id" :to="`/albums/${album.id}/view`">
-					<v-list-item-content>
-						<v-list-item-title :title="album.title">
-							{{ album.title }}
-						</v-list-item-title>
-					</v-list-item-content>
-					<v-list-item-action v-if="album.wishlist">
-						<v-icon color="grey lighten-1" small>
+			<v-list density="compact">
+				<!-- eslint complains about a duplicate attribute but it's correct according to the Vuetify docs -->
+				<!-- eslint-disable vue/no-duplicate-attributes -->
+				<v-list-item
+					v-for="album in paginatedItems" :key="album.id"
+					:to="`/albums/${album.id}/view`"
+					:title="album.title" :title.attr="album.title"
+				>
+					<template v-if="album.wishlist" #append>
+						<v-icon size="small" :title="$t('field.Album.wishlist.value.true')">
 							mdi-gift
 						</v-icon>
-					</v-list-item-action>
+					</template>
 				</v-list-item>
+				<!-- eslint-enable vue/no-duplicate-attributes -->
 				<!--
 					Pad the last page to keep a constant height.
 					If we don't pad and the grid row doesn't have an element that is tall enough, the web page will jump
@@ -54,65 +52,33 @@
 	</v-card>
 </template>
 
-<script>
-import ItemCardPagination from '@/components/ItemCardPagination.vue'
-import paginatedTextMixin from '@/mixins/paginated-text'
+<script setup lang="ts">
+import { useBasicPagination } from '@/composables/pagination'
 import { useReaderStore } from '@/stores/reader'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'MetaSeriesCard',
+const props = defineProps<{
+	meta: MetaSeries
+}>()
+const albums = computed(() => props.meta.albums || [])
+const cardLink = computed(() =>
+	props.meta.series ? `/series/${props.meta.series.id}/view` : `/albums/${props.meta.album.id}/view`)
 
-	components: {
-		ItemCardPagination
-	},
+const readerStore = useReaderStore()
+const itemsPerPage = computed(() => readerStore.currentReader.configuration.subItemsInCardIndex)
 
-	mixins: [paginatedTextMixin],
-
-	props: {
-		meta: {
-			type: null,
-			required: true
-		}
-	},
-
-	computed: {
-		// Having these allows us to reuse the logic from paginated-text
-		itemsToPaginate() {
-			return this.meta.albums || []
-		},
-
-		...mapState(useReaderStore, {
-			itemsPerPage: store => store.currentReader.configuration.subItemsInCardIndex
-		}),
-
-		cardLink() {
-			return this.meta.series
-				? `/series/${this.meta.series.id}/view` : `/albums/${this.meta.album.id}/view`
-		}
-	},
-
-	methods: {
-		// Having this allows us to reuse the logic from paginated-text
-		firstLetterExtractor: () => '#'
-	}
-}
+const { pageCount, paginatedItems, previousPage, nextPage, hasPreviousPage, hasNextPage }
+	= useBasicPagination(albums, itemsPerPage)
 </script>
 
-<style lang="less">
-@import "../styles/detached-rulesets.less";
+<style lang="scss">
+@import '@/styles/mixins';
 
 .v-application .c-MetaSeriesCard .v-list-item--link:hover {
 	text-decoration: none;
 }
 
-// Override default style since the card cannot be clicked
-.c-MetaSeriesCard.v-card--hover {
-	@dem-dr-model-card--hover();
-}
-
 .v-application a.c-MetaSeriesCard__title {
-	@dem-dr-model-card-title();
+	@include dem-model-card-title;
 }
 
 .c-MetaSeriesCard__one-shot {

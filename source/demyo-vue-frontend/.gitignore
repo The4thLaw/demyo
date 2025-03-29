@@ -1,4 +1,6 @@
 /dist
+/coverage
+/cypress/screenshots
 
 # Rollup visualizer
 stats.html

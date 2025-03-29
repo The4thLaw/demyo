@@ -4,75 +4,43 @@
 	</component>
 </template>
 
-<script>
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import { contextRoot } from '@/myenv';
+<script setup lang="ts">
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import { contextRoot } from '@/myenv'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'DemyoApp',
+const i18n = useI18n()
+const route = useRoute()
 
-	metaInfo() {
-		const self = this
-		return {
-			title: null,
-			titleTemplate: '%s — Demyo',
-			link: [
-				{
-					rel: 'manifest',
-					href: `${contextRoot}manifest.json?lang=${self.$i18n.locale.replace(/-/, '_')}`
-				}
-			]
+useHead({
+	titleTemplate: (title) => !title ? 'Demyo' : `${title} – Demyo`,
+	link: () => [
+		{
+			rel: 'manifest',
+			href: `${contextRoot}manifest.json?lang=${i18n.locale.value.replace(/-/, '_')}`
 		}
-	},
+	]
+})
 
-	computed: {
-		layout() {
-			// Inspired by:
-			// https://itnext.io/b379baa91a05
-			// https://markus.oberlehner.net/blog/dynamic-vue-layout-components/
-			return this.$route.meta.layout || DefaultLayout
-		}
-	},
+// Inspired by:
+// https://itnext.io/b379baa91a05
+// https://markus.oberlehner.net/blog/dynamic-vue-layout-components/
+const layout = computed(() => route.meta.layout || DefaultLayout)
 
-	created() {
-		// Force external links to leave Android/iOS app mode, and open them in new tabs for regular browsers
-		document.body.addEventListener('click', e => {
-			if (e.target.matches('a[href^="http://"], a[href^="https://"], a[href^="ftp://"]')) {
-				e.target.setAttribute('target', '_blank')
-				e.target.setAttribute('rel', 'noopener, noreferer, external')
-			}
-		})
+document.body.addEventListener('click', (e: MouseEvent) => {
+	if (!(e.target instanceof HTMLElement)) {
+		return
 	}
-}
+	// Force external links to leave Android/iOS app mode, and open them in new tabs for regular browsers
+	if (e.target.matches('a[href^="http://"], a[href^="https://"], a[href^="ftp://"]')) {
+		e.target.setAttribute('target', '_blank')
+		e.target.setAttribute('rel', 'noopener, noreferer, external')
+	}
+})
 </script>
 
-<style lang="less">
-:root {
-	// TODO[dark]: alternate colors
-	--dem-text: rgba(0, 0, 0, 0.87);
-	--dem-text-lighter: rgba(0, 0, 0, 0.54);
-	--dem-primary-contrast: #fff;
-	--dem-bg-contrast: #ddd;
-	--dem-base-border: #ccc;
-}
-
-@media print {
-	// Solution from https://stackoverflow.com/a/23778125/109813
-	@page {
-		margin: 0;
-	}
-
-	html {
-		background-color: #fff;
-		margin: 0;
-	}
-
-	body {
-		margin: 10mm 15mm;
-	}
-
-	.no-print {
-		display: none !important;
-	}
-}
+<style lang="scss">
+@import '@/styles/main';
 </style>

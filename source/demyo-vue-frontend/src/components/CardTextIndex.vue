@@ -1,6 +1,6 @@
 <template>
 	<div
-		ref="keyTarget"
+		ref="key-target"
 		v-touch="{
 			left: nextPage,
 			right: previousPage
@@ -17,7 +17,7 @@
 
 		<div v-if="splitByFirstLetter">
 			<div v-for="(value, letter) in groupedItems" :key="letter">
-				<h2 class="c-CardTextIndex__firstLetter text-h4 mx-2 my-4 accent--text">
+				<h2 class="c-CardTextIndex__firstLetter text-h4 mx-2 my-4 text-secondary">
 					{{ letter }}
 				</h2>
 				<div class="c-CardTextIndex__panel">
@@ -31,51 +31,41 @@
 			v-if="pageCount > 1"
 			v-model="currentPage"
 			:length="pageCount"
-			total-visible="10"
-			class="my-2"
-			@input="$emit('page-change')"
+			@update:model-value="emit('page-change')"
 		/>
 	</div>
 </template>
 
-<script>
-import { focusElement } from '@/helpers/dom'
-import paginatedTextMixin from '@/mixins/paginated-text'
-import { useReaderStore } from '@/stores/reader'
-import { mapState } from 'pinia'
-
+<script setup lang="ts">
 /**
  * This component is a text-based index that allows the caller to provide cards for the items.
  */
-export default {
-	name: 'CardTextIndex',
 
-	mixins: [paginatedTextMixin],
+import { emitTypes, usePagination } from '@/composables/pagination'
+import { focusElement } from '@/helpers/dom'
+import { onMounted, useTemplateRef } from 'vue'
 
-	props: {
-		splitByFirstLetter: {
-			type: Boolean,
-			default: true
-		},
-		firstLetterExtractor: {
-			type: Function,
-			default: () => '#'
-		}
-	},
-
-	computed: {
-		...mapState(useReaderStore, {
-			itemsPerPage: store => store.currentReader.configuration.pageSizeForCards
-		})
-	},
-
-	mounted() {
-		focusElement(this.$refs.keyTarget)
-	}
+interface Props {
+	items?: AbstractModel[]
+	splitByFirstLetter?: boolean
+	firstLetterExtractor: (item: AbstractModel) => string
 }
+const props = withDefaults(defineProps<Props>(), {
+	items: () => [],
+	splitByFirstLetter: true,
+	firstLetterExtractor: () => '#'
+})
+
+const keyTarget = useTemplateRef('key-target')
+onMounted(() => focusElement(keyTarget.value))
+
+const emit = defineEmits(emitTypes)
+
+const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
+	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, null)
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-CardTextIndex {
 	// No outline on this artifically focused element
 	outline: 0;
@@ -113,7 +103,7 @@ export default {
 		text-decoration: none;
 
 		&:hover {
-			color: var(--v-anchor-base);
+			color: rgb(var(--v-theme-secondary));
 			text-decoration: underline;
 		}
 	}

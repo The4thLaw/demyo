@@ -5,38 +5,41 @@
 				<v-list-group
 					v-if="value.isSeries"
 					:key="key"
-					:value="false"
-					no-action
-					sub-group
+					color="primary"
 				>
-					<template #activator>
-						<v-list-item-content>
-							<v-list-item-title v-text="value.identifyingName" />
-						</v-list-item-content>
-						<v-list-item-action>
-							<v-btn :to="`/series/${value.id}/view`" icon>
-								<v-icon>mdi-eye</v-icon>
-							</v-btn>
-						</v-list-item-action>
+					<template #activator="{ props }">
+						<v-list-item v-bind="props" :title="value.identifyingName">
+							<template #append="appendProps">
+								<v-icon v-if="appendProps.isActive">
+									mdi-chevron-up
+								</v-icon>
+								<v-icon v-else>
+									mdi-chevron-down
+								</v-icon>
+								<v-btn :to="`/series/${value.id}/view`" icon size="small" variant="flat">
+									<v-icon>mdi-eye</v-icon>
+								</v-btn>
+							</template>
+						</v-list-item>
 					</template>
 
-					<v-list-item v-for="album in value.albums" :key="album.id" :to="`/albums/${album.id}/view`">
-						<v-list-item-content class="pl-4">
-							<v-list-item-title v-text="album.title" />
-							<v-list-item-subtitle>
-								<slot :album="album" />
-							</v-list-item-subtitle>
-						</v-list-item-content>
+					<v-list-item
+						v-for="album in value.albums" :key="album.id" :to="`/albums/${album.id}/view`"
+						:title="album.title"
+					>
+						<template #subtitle>
+							<slot :album="album" />
+						</template>
 					</v-list-item>
 				</v-list-group>
 
-				<v-list-item v-if="!value.isSeries" :key="key" :to="`/albums/view/${value.id}`">
-					<v-list-item-content>
-						<v-list-item-title>{{ value.title }}</v-list-item-title>
-						<v-list-item-subtitle>
-							<slot :album="value" />
-						</v-list-item-subtitle>
-					</v-list-item-content>
+				<v-list-item
+					v-if="!value.isSeries" :key="key" :to="`/albums/view/${value.id}`"
+					:title="value.title"
+				>
+					<template #subtitle>
+						<slot :album="value" />
+					</template>
 				</v-list-item>
 			</template>
 		</v-list>
@@ -51,73 +54,62 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'AlbumTextList',
+<script setup lang="ts">
+const ITEMS_PER_PAGE = 10
 
-	props: {
-		albums: {
-			type: Array,
-			required: true
+const props = defineProps<{
+	albums: Album[]
+}>()
+
+const currentPage = ref(1)
+
+const albumsBySeries = computed(() => {
+	const bySeries = {} as Record<number, any>
+	// Work on a copy of the albums, else we modify the data from the parent
+
+	props.albums.forEach(a => {
+		let id
+		if (a.series) {
+			id = a.series.id
+		} else {
+			id = -a.id // Negative for albums, positive for series
 		}
-	},
-
-	data() {
-		return {
-			itemsPerPage: 10,
-			currentPage: 1
+		if (bySeries[id]) {
+			bySeries[id].albums.push(a)
+		} else {
+			if (id > 0) {
+				bySeries[id] = a.series
+				bySeries[id].isSeries = true
+				bySeries[id].albums = [a]
+				bySeries[id].sortName = a.series.identifyingName
+			} else {
+				bySeries[id] = a
+				bySeries[id].isSeries = false
+				bySeries[id].sortName = a.title
+			}
 		}
-	},
+	})
 
-	computed: {
-		albumsBySeries() {
-			const bySeries = {}
-			this.albums.forEach(a => {
-				let id
-				if (a.series) {
-					id = a.series.id
-				} else {
-					id = -a.id // Negative for albums, positive for series
-				}
-				if (bySeries[id]) {
-					bySeries[id].albums.push(a)
-				} else {
-					if (id > 0) {
-						bySeries[id] = a.series
-						bySeries[id].isSeries = true
-						bySeries[id].albums = [a]
-						bySeries[id].sortName = a.series.identifyingName
-					} else {
-						bySeries[id] = a
-						bySeries[id].isSeries = false
-						bySeries[id].sortName = a.title
-					}
-				}
-				a.series = undefined // Avoid cycle between series and albums
-			})
+	// Albums within a Series are already sorted, and Series are sorted, but one shots aren't
+	const ret = Object.values(bySeries)
+	ret.sort((a, b) => {
+		return a.sortName.localeCompare(b.sortName)
+	})
 
-			// Albums within a Series are already sorted, and Series are sorted, but one shots aren't
-			const ret = Object.values(bySeries)
-			ret.sort((a, b) => {
-				return a.sortName.localeCompare(b.sortName)
-			})
+	return ret
+})
 
-			return ret
-		},
+const paginatedAlbumsBySeries = computed(() => {
+	return albumsBySeries.value.slice((currentPage.value - 1) * ITEMS_PER_PAGE,
+		currentPage.value * ITEMS_PER_PAGE)
+})
 
-		paginatedAlbumsBySeries() {
-			return this.albumsBySeries.slice((this.currentPage - 1) * this.itemsPerPage,
-				this.currentPage * this.itemsPerPage)
-		},
-
-		pageCount() {
-			return Math.ceil(this.albumsBySeries.length / this.itemsPerPage)
-		}
-	}
-}
+const pageCount = computed(() => {
+	return Math.ceil(albumsBySeries.value.length / ITEMS_PER_PAGE)
+})
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-AlbumTextList {
 	.v-list-item {
 		/*
@@ -127,22 +119,15 @@ export default {
 		max-width: 100%;
 	}
 
-	// All selectors below: remove excessive padding in our particular case
-	.v-list-group--sub-group .v-list-group__header {
-		padding-right: 8px;
-		padding-left: 8px;
+	.v-btn {
+		// Use the same opacity as the regular icons
+		opacity: var(--v-medium-emphasis-opacity);
 	}
 
-	.v-application--is-ltr & {
-		.v-list-group--no-action.v-list-group--sub-group > .v-list-group__items > .v-list-item {
-			padding-left: 32px;
-		}
-	}
-
-	.v-application--is-rtl & {
-		.v-list-group--no-action.v-list-group--sub-group > .v-list-group__items > .v-list-item {
-			padding-right: 32px;
-		}
+	// Remove excessive padding in our particular case
+	.v-list-group__items .v-list-item {
+		// Must use important because Vuetify does
+		padding-inline-start: 32px !important;
 	}
 }
 </style>

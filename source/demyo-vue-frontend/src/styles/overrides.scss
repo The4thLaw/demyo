@@ -1,0 +1,28 @@
+// Overrides of Vuetify's default styling
+#demyo .v-footer {
+	// "app" footer are always displayed on the screen even in case of overflow (which we don't want),
+	// but non-app grows, which we walso don't want. Keep the best of both worlds
+	flex: 0;
+}
+
+#demyo .v-list-item-title {
+	font-size: 14px;
+}
+
+.v-toolbar .v-input {
+	caret-color: inherit !important;
+}
+
+.v-alert--density-compact {
+	// Super dense alerts
+	font-size: 90%;
+	padding-top: 4px;
+	padding-bottom: 4px;
+
+	.v-icon {
+		// !important is needed because styles are applied on the element by Vuetify
+		font-size: 22px !important;
+		height: 22px !important;
+		width: 22px !important;
+	}
+}

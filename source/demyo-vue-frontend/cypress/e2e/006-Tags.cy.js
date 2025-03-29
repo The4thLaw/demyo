@@ -4,6 +4,6 @@ describe('Tags', () => {
 		// Tags should be listed without error
 		cy.get('.d-Tag').should('have.length', 1)
 		// The SF tag should have one occurrence
-		cy.contains('science-fiction').find('.d-Tag__count').should('have.text', '1')
+		cy.contains('science-fiction').find('.d-Tag__count').should('have.text', '2')
 	})
 })

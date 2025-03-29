@@ -12,7 +12,7 @@
 				:confirm="$t('quickTasks.delete.tag.confirm')"
 				icon="mdi-tag dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteTag"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
@@ -27,15 +27,15 @@
 				<div v-html="tag.description" />
 			</FieldValue>
 			<v-btn
-				v-if="count > 0"
+				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withTag: tag.id } }"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.Tag.viewAlbums', count) }}
+				{{ $t('page.Tag.viewAlbums', albumCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count === 0"
-				border="left" type="info" text class="my-4"
+				v-if="albumCount === 0"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Tag.noAlbums') }}
 			</v-alert>
@@ -43,67 +43,21 @@
 	</v-container>
 </template>
 
-<script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
+import { useTagStyle } from '@/composables/tags'
 import tagService from '@/services/tag-service'
 
-export default {
-	name: 'TagView',
+const albumCount = ref(-1)
 
-	components: {
-		AppTask,
-		AppTasks,
-		FieldValue,
-		SectionCard
-	},
-
-	mixins: [modelViewMixin],
-
-	metaInfo() {
-		return {
-			title: this.tag.identifyingName
-		}
-	},
-
-	data() {
-		return {
-			tag: {},
-			count: -1,
-			appTasksMenu: false
-		}
-	},
-
-	computed: {
-		style() {
-			const style = {}
-			if (this.tag.fgColour) {
-				style.color = this.tag.fgColour
-			}
-			if (this.tag.bgColour) {
-				style['background-color'] = this.tag.bgColour
-			}
-			return style
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const tagP = tagService.findById(this.parsedId)
-			this.count = await tagService.countAlbums(this.parsedId)
-			this.tag = await tagP // Resolve calls in parallel
-		},
-
-		deleteTag() {
-			deleteStub(this,
-				() => tagService.deleteModel(this.tag.id),
-				'quickTasks.delete.tag.confirm.done',
-				'TagIndex')
-		}
-	}
+async function fetchData(id: number): Promise<Tag> {
+	const tagP = tagService.findById(id)
+	albumCount.value = await tagService.countAlbums(id)
+	return tagP
 }
+
+const { model: tag, appTasksMenu, loading, deleteModel } = useSimpleView(fetchData, tagService,
+	'quickTasks.delete.tag.confirm.done', 'TagIndex')
+
+const style = useTagStyle(tag)
 </script>

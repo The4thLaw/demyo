@@ -1,41 +1,44 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Derivative.origin')">
+			<SectionCard :subtitle="$t('fieldset.Derivative.origin')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
-							clearable :rules="rules.albumOrSeries" @input="loadAlbums(); $refs.form.validate()"
+							:loading="seriesLoading" refreshable clearable
+							:rules="rules.albumOrSeries" @update:modelValue="loadAlbums(); formRef.validate()" @refresh="loadSeries"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
+						<AutoComplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
 							label-key="field.Derivative.album" refreshable clearable
-							:rules="rules.albumOrSeries" @input="$refs.form.validate()" @refresh="loadAlbums"
+							:rules="rules.albumOrSeries" @update:modelValue="formRef.validate()" @refresh="loadAlbums"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="derivative.artist.id" :items="allAuthors" :loading="allAuthorsLoading"
-							label-key="field.Derivative.artist" refreshable @refresh="refreshAuthors"
+						<AutoComplete
+							v-model="derivative.artist.id" :items="authors" :loading="authorsLoading"
+							label-key="field.Derivative.artist" refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="derivative.source.id" :items="allSources" label-key="field.Derivative.source"
+						<AutoComplete
+							v-model="derivative.source.id" :items="sources" :loading="sourcesLoading"
+							label-key="field.Derivative.source" refreshable @refresh="loadSources"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Derivative.format')">
+			<SectionCard :subtitle="$t('fieldset.Derivative.format')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="derivative.type.id" :items="allTypes"
+						<AutoComplete
+							v-model="derivative.type.id" :items="types" :loading="typesLoading"
 							label-key="field.Derivative.type" :rules="rules.type"
+							refreshable @refresh="loadTypes"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -67,7 +70,7 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Derivative.description')">
+			<SectionCard :subtitle="$t('fieldset.Derivative.description')" :loading="loading">
 				<v-row>
 					<v-col cols="12" sm="6" lg="2">
 						<v-text-field
@@ -96,22 +99,19 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Derivative.description') }}</label>
-						<tiptap-vuetify
-							v-model="derivative.description" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="derivative.description" />
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="derivative.images" :items="allImages" :loading="allImagesLoading"
+						<AutoComplete
+							v-model="derivative.images" :items="images" :loading="imagesLoading"
 							multiple clearable
-							label-key="field.Derivative.images" refreshable @refresh="refreshImages"
+							label-key="field.Derivative.images" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Derivative.acquisition')">
+			<SectionCard :subtitle="$t('fieldset.Derivative.acquisition')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -124,131 +124,110 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
-import Autocomplete from '@/components/Autocomplete.vue'
-import CurrencyField from '@/components/CurrencyField.vue'
-import FormActions from '@/components/FormActions.vue'
-import PriceManagement from '@/components/PriceManagement.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import {
+	useRefreshableAuthors, useRefreshableDerivativeSources, useRefreshableDerivativeTypes,
+	useRefreshableImages, useRefreshableSeries
+} from '@/composables/refreshable-models'
+import { getParsedRouteParam } from '@/helpers/route'
 import { integer, mandatory } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
-import authorRefreshMixin from '@/mixins/refresh-author-list'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
 import derivativeService from '@/services/derivative-service'
-import sourceService from '@/services/derivative-source-service'
-import typeService from '@/services/derivative-type-service'
 import seriesService from '@/services/series-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'DerivativeEdit',
+const i18n = useI18n()
+const route = useRoute()
 
-	components: {
-		Autocomplete,
-		CurrencyField,
-		FormActions,
-		PriceManagement,
-		SectionCard,
-		TiptapVuetify
-	},
+const {authors, authorsLoading, loadAuthors} = useRefreshableAuthors()
+const {sources, sourcesLoading, loadSources} = useRefreshableDerivativeSources()
+const {types, typesLoading, loadTypes} = useRefreshableDerivativeTypes()
+const {images, imagesLoading, loadImages} = useRefreshableImages()
+const {series: allSeries, seriesLoading, loadSeries} = useRefreshableSeries()
 
-	mixins: [modelEditMixin, authorRefreshMixin, imgRefreshMixin],
+const relatedAlbums = ref([] as Album[])
+const relatedAlbumsLoading = ref(false)
 
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.derivative',
-						edit: 'title.edit.derivative'
-					},
-					saveRedirectViewName: 'DerivativeView'
-				}
-			},
-
-			allSeries: [],
-			relatedAlbums: [],
-			relatedAlbumsLoading: false,
-			allSources: [],
-			allTypes: [],
-			derivative: {
-				series: {},
-				album: {},
-				artist: {},
-				source: {},
-				type: {},
-				prices: []
-			},
-			tipTapExtensions: tipTapExtensions,
-
-			rules: {
-				type: [mandatory()],
-				colours: [integer()],
-				albumOrSeries: [this.oneNotNull]
-			}
-		}
-	},
-
-	methods: {
-		oneNotNull() {
-			// In addition to this rule, an @input handler forces full form validation when one of the relevant
-			// input changes. This guarantees that errors on other fields are cleared when only one changes
-			if (!this.derivative.series.id && !this.derivative.album.id) {
-				return this.$t('validation.Derivative.albumOrSeries')
-			}
-			return true
-		},
-
-		async fetchData() {
-			if (this.parsedId) {
-				this.derivative = await derivativeService.findById(this.parsedId)
-			}
-
-			if (!this.parsedId && this.$route.query.toSeries) {
-				this.derivative.series.id = parseInt(this.$route.query.toSeries, 10)
-			}
-			if (!this.parsedId && this.$route.query.toAlbum) {
-				this.derivative.album.id = parseInt(this.$route.query.toAlbum, 10)
-			}
-			if (!this.parsedId && this.$route.query.toArtist) {
-				this.derivative.artist.id = parseInt(this.$route.query.toArtist, 10)
-			}
-
-			// Find all reference data
-			const pSeries = seriesService.findForList()
-			const pSources = sourceService.findForList()
-			const pTypes = typeService.findForList()
-
-			// Load albums with the currently available data
-			this.loadAlbums()
-
-			// Assign all reference data
-			this.allSeries = await pSeries
-			this.allSources = await pSources
-			this.allTypes = await pTypes
-		},
-
-		async loadAlbums() {
-			this.relatedAlbumsLoading = true
-			this.relatedAlbums = await seriesService.findAlbumsForList(this.derivative.series.id)
-			if (this.derivative.album.id) {
-				// If the current album ID is not in the returned list, clear it
-				if (!this.relatedAlbums.find(val => val.id === this.derivative.album.id)) {
-					this.derivative.album.id = undefined
-				}
-			}
-			this.relatedAlbumsLoading = false
-		},
-
-		saveHandler() {
-			return derivativeService.save(this.derivative)
+async function loadAlbums(derivativeParam?: Partial<Derivative>) {
+	if (!derivativeParam) {
+		derivativeParam = derivative.value
+	}
+	relatedAlbumsLoading.value = true
+	relatedAlbums.value = await seriesService.findAlbumsForList(derivativeParam.series?.id)
+	if (derivativeParam.album?.id) {
+		// If the current album ID is not in the returned list, clear it
+		if (!relatedAlbums.value.find(val => val.id === derivativeParam.album?.id)) {
+			derivativeParam.album.id = undefined as unknown as number
 		}
 	}
+	relatedAlbumsLoading.value = false
+}
+
+async function fetchData(id: number|undefined): Promise<Partial<Derivative>> {
+	if (id) {
+		const derivative = await derivativeService.findById(id)
+		loadAlbums(derivative)
+		return Promise.resolve(derivative)
+	}
+
+	const derivative: Partial<Derivative> = {
+		series: {} as Series,
+		album: {} as Album,
+		artist: {} as Author,
+		source: {} as DerivativeSource,
+		type: {} as DerivativeType,
+		prices: []
+	}
+
+	const toSeries = getParsedRouteParam(route.query.toSeries)
+	if (toSeries && derivative.series) {
+		derivative.series.id = toSeries
+	}
+
+	const toAlbum = getParsedRouteParam(route.query.toAlbum)
+	if (toAlbum && derivative.album) {
+		derivative.album.id = toAlbum
+	}
+
+	const toArtist = getParsedRouteParam(route.query.toArtist)
+	if (toArtist && derivative.artist) {
+		derivative.artist.id = toArtist
+	}
+
+
+	loadAlbums(derivative)
+
+	return Promise.resolve(derivative)
+}
+
+const {model: derivative, loading, save, reset, formRef} = useSimpleEdit(fetchData, derivativeService,
+	[loadAuthors, loadImages, loadSources, loadTypes, loadSeries],
+	'title.add.derivative', 'title.edit.derivative', 'DerivativeView')
+
+function oneNotNull() {
+	// In addition to this rule, an @input handler forces full form validation when one of the relevant
+	// input changes. This guarantees that errors on other fields are cleared when only one changes
+	if (!derivative.value.series?.id && !derivative.value.album?.id) {
+		return i18n.t('validation.Derivative.albumOrSeries')
+	}
+	return true
+}
+
+const rules = {
+	type: [
+		mandatory()
+	],
+	colours: [
+		integer()
+	],
+	albumOrSeries: [
+		oneNotNull
+	]
 }
 </script>

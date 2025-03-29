@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card v-if="loading" outlined class="c-AlbumCard--loading">
+		<v-card v-if="loading" variant="outlined" class="c-AlbumCard--loading">
 			<v-card-title />
 			<v-card-text>
 				<div class="c-AlbumCard__contentFaker" />
@@ -9,7 +9,7 @@
 				<div class="c-AlbumCard__contentFaker" />
 			</v-card-text>
 		</v-card>
-		<v-card v-else outlined class="c-AlbumCard">
+		<v-card v-else variant="outlined" class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
 				<v-img
 					v-if="loadCover && album.cover.id"
@@ -20,9 +20,10 @@
 					:eager="eagerCovers"
 					aspect-ratio="3"
 					gradient="to top, rgba(0, 0, 0, 0.8) 0%, transparent 72px"
+					cover
 				>
 					<v-row align="end" class="fill-height px-4">
-						<v-col class="text-h6">
+						<v-col class="text-h6 text-white">
 							{{ album.identifyingName }}
 						</v-col>
 					</v-row>
@@ -33,8 +34,8 @@
 			</router-link>
 			<v-card-text>
 				<v-alert
-					v-if="album.wishlist" color="primary" border="left"
-					icon="mdi-gift" text dense
+					v-if="album.wishlist" color="primary" border="start"
+					icon="mdi-gift" text density="compact"
 				>
 					{{ $t('field.Album.wishlist.value.true') }}
 				</v-alert>
@@ -59,13 +60,13 @@
 				</template>
 				<FieldValue
 					v-if="album.writers && album.writers.length"
-					:label="$tc('field.Album.writers', album.writers ? album.writers.length : 0)"
+					:label="$t('field.Album.writers', album.writers ? album.writers.length : 0)"
 				>
 					<ModelLink :model="album.writers" view="AuthorView" />
 				</FieldValue>
 				<FieldValue
 					v-if="album.artists && album.artists.length"
-					:label="$tc('field.Album.artists', album.artists ? album.artists.length : 0)"
+					:label="$t('field.Album.artists', album.artists ? album.artists.length : 0)"
 				>
 					<ModelLink :model="album.artists" view="AuthorView" />
 				</FieldValue>
@@ -73,23 +74,23 @@
 					<div v-if="expanded">
 						<FieldValue
 							v-if="album.colorists && album.colorists.length"
-							:label="$tc('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
+							:label="$t('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
 						>
 							<ModelLink :model="album.colorists" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.inkers && album.inkers.length"
-							:label="$tc('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
+							:label="$t('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
 						>
 							<ModelLink :model="album.inkers" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.translators && album.translators.length"
-							:label="$tc('field.Album.translators', album.translators ? album.translators.length : 0)"
+							:label="$t('field.Album.translators', album.translators ? album.translators.length : 0)"
 						>
 							<ModelLink :model="album.translators" view="AuthorView" />
 						</FieldValue>
-						<FieldValue v-if="album.publisher.id" :label="$tc('field.Album.publisher', 1)">
+						<FieldValue v-if="album.publisher.id" :label="$t('field.Album.publisher', 1)">
 							<ModelLink :model="album.publisher" view="PublisherView" />
 						</FieldValue>
 						<FieldValue v-if="album.collection.id" :label="$t('field.Album.collection')">
@@ -108,17 +109,17 @@
 				</v-fade-transition>
 			</v-card-text>
 			<v-card-actions>
-				<v-btn v-if="!expanded" text color="accent" @click="expanded = true">
+				<v-btn v-if="!expanded" variant="text" color="secondary" @click="expanded = true">
 					{{ $t('page.Series.albums.viewMore') }}
 				</v-btn>
-				<v-btn v-if="expanded" text color="accent" @click="expanded = false">
+				<v-btn v-if="expanded" variant="text" color="secondary" @click="expanded = false">
 					{{ $t('page.Series.albums.viewLess') }}
 				</v-btn>
 				<v-spacer />
 				<v-btn v-if="isInReadingList" :loading="readingListLoading" icon @click="markAsRead">
 					<v-icon>mdi-library</v-icon>
 				</v-btn>
-				<FavouriteButton :model-id="album.id" type="Album" />
+				<FavouriteButton :variant="'text'" :color="null" :model-id="album.id" type="Album" />
 				<!-- Eventually, replace the following button with an overflow menu to edit, change reading list,
 				change wishlist, delete if the album can be deleted (no derivatives)... -->
 				<v-btn :to="`/albums/${album.id}/edit`" icon>
@@ -129,87 +130,43 @@
 	</div>
 </template>
 
-<script>
-import FavouriteButton from '@/components/FavouriteButton.vue'
-import FieldValue from '@/components/FieldValue.vue'
-import ModelLink from '@/components/ModelLink.vue'
-import TagLink from '@/components/TagLink.vue'
+<script setup lang="ts">
 import { getBaseImageUrl } from '@/helpers/images'
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
 import sortedIndexOf from 'lodash/sortedIndexOf'
-import { mapState } from 'pinia'
 
-export default {
-	name: 'AlbumCard',
+const props = withDefaults(defineProps<{
+	album: Album
+	loading?: boolean
+	/**
+	 * Whether to load the cover image. On pages with a lot of asynchronous data, loading all covers
+	 * can compete with the AJAX calls and make the page feel slow, especially if the thumbnails
+	 * aren't generated yet.
+	 */
+	loadCover?: boolean
+}>(), {
+	loading: false,
+	loadCover: true
+})
 
-	components: {
-		FavouriteButton,
-		FieldValue,
-		ModelLink,
-		TagLink
-	},
+const expanded = ref(false)
+const readingListLoading = ref(false)
 
-	props: {
-		album: {
-			type: null,
-			required: true
-		},
+const baseImageUrl = computed(() => getBaseImageUrl(props.album.cover))
+const eagerCovers = !(navigator.connection?.saveData)
 
-		loading: {
-			type: Boolean,
-			default: false
-		},
+const readerStore = useReaderStore()
+const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, props.album.id) > -1)
 
-		/**
-		 * Whether to load the cover image. On pages with a lot of asynchronous data, loading all covers
-		 * can compete with the AJAX calls and make the page feel slow, especially if the thumbnails
-		 * aren't generated yet.
-		 */
-		loadCover: {
-			type: Boolean,
-			default: true
-		}
-	},
-
-	data() {
-		return {
-			expanded: false,
-			readingListLoading: false
-		}
-	},
-
-	computed: {
-		baseImageUrl() {
-			return getBaseImageUrl(this.album.cover)
-		},
-
-		eagerCovers() {
-			return !(navigator.connection && navigator.connection.saveData)
-		},
-
-		...mapState(useReaderStore, {
-			readingList: store => store.readingList
-		}),
-
-		isInReadingList() {
-			return sortedIndexOf(this.readingList, this.album.id) > -1
-		}
-	},
-
-	methods: {
-		async markAsRead() {
-			this.readingListLoading = true
-			await readerService.removeFromReadingList(this.album.id)
-			this.readingListLoading = false
-		}
-	}
+async function markAsRead() {
+	readingListLoading.value = true
+	await readerService.removeFromReadingList(props.album.id)
+	readingListLoading.value = false
 }
 </script>
 
-<style lang="less">
-// TODO[dark] adapt load colors to dark theme
-
+<style lang="scss">
 .c-AlbumCard__contentFaker {
 	min-height: 1.75em;
 	margin-top: 1em;
@@ -218,13 +175,9 @@ export default {
 }
 
 .c-AlbumCard {
-	.v-card__title {
-		background-color: var(--v-primary-base);
-		color: var(--dem-primary-contrast);
-	}
-
-	&.theme--light.v-card > .v-card__text {
-		color: var(--dem-text);
+	.v-card-title {
+		background-color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 
 	&__albumLink {
@@ -232,8 +185,8 @@ export default {
 			text-decoration: none !important;
 		}
 
-		& .theme--light.v-image,
-		& .theme--dark.v-image {
+		& .dem-theme--light.v-image,
+		& .dem-theme--dark.v-image {
 			color: white;
 		}
 	}
@@ -244,11 +197,11 @@ export default {
 }
 
 .c-AlbumCard--loading {
-	.v-card__title {
+	.v-card-title {
 		min-height: 2.5em;
 	}
 
-	.v-card__title,
+	.v-card-title,
 	.c-AlbumCard__contentFaker {
 		background-color: #bbb;
 		animation: 1.5s ease-in-out 0s infinite alternate pulsate;

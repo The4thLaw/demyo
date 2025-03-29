@@ -1,48 +1,21 @@
 <template>
-	<portal to="appTasks">
-		<v-menu v-model="inputVal" offset-y>
-			<template #activator="{ on }">
-				<v-btn text icon v-on="on">
-					<v-icon>mdi-dots-vertical</v-icon>
-				</v-btn>
+	<Teleport to="#teleport-appTasks">
+		<v-menu v-model="model">
+			<template #activator="{ props }">
+				<v-btn variant="text" icon="mdi-dots-vertical" v-bind="props" />
 			</template>
 			<v-list class="c-AppTasks__list">
 				<slot />
 			</v-list>
 		</v-menu>
-	</portal>
+	</Teleport>
 </template>
 
-<script>
-export default {
-	name: 'AppTasks',
-
-	props: {
-		value: {
-			type: Boolean,
-			default: false
-		}
-	},
-
-	data() {
-		return {
-			inputVal: this.value
-		}
-	},
-
-	watch: {
-		value(val) {
-			this.inputVal = val
-		},
-
-		inputVal(val) {
-			this.$emit('input', val)
-		}
-	}
-}
+<script setup lang="ts">
+const model = defineModel<boolean | undefined>()
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-AppTasks__list {
 	a,
 	a:hover {

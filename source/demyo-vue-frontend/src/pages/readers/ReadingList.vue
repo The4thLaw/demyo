@@ -4,37 +4,20 @@
 	</div>
 </template>
 
-<script>
-import MetaSeriesIndex from '@/components/MetaSeriesIndex.vue'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleIndex } from '@/composables/model-index'
+import { getParsedId } from '@/helpers/route'
+import albumService from '@/services/album-service'
 import readerService from '@/services/reader-service'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'ReadingList',
+const route = useRoute()
 
-	components: {
-		MetaSeriesIndex
-	},
-
-	// We can reuse the 'view' mixin even though it's not really a view : it is generic enough
-	mixins: [modelViewMixin],
-
-	metaInfo() {
-		return {
-			title: this.$t('title.reader.readingList')
-		}
-	},
-
-	data() {
-		return {
-			albums: []
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			this.albums = await readerService.findReadingList(this.parsedId)
-		}
-	}
+async function fetchData(): Promise<Album[]> {
+	const id = getParsedId(route)
+	return readerService.findReadingList(id)
 }
+
+// It's not the index
+const {modelList: albums} = useSimpleIndex(albumService, 'title.reader.readingList', fetchData);
 </script>

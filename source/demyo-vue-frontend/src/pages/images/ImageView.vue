@@ -10,12 +10,13 @@
 				:confirm="$t('quickTasks.delete.image.confirm')"
 				icon="mdi-camera dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteImage"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
 		<SectionCard :loading="mainLoading" class="c-ImageView__image">
 			<img
+				v-if="imageUrl"
 				:src="imageUrl"
 				:alt="image.description"
 			>
@@ -33,23 +34,18 @@
 						v-if="value.length > 0"
 						:key="modelType"
 						:value="true"
-						sub-group
 					>
-						<template #activator>
-							<v-list-item-content>
-								<v-list-item-title v-text="$t('page.Image.usedIn.' + modelType)" />
-							</v-list-item-content>
+						<template #activator="{ props }">
+							<v-list-item v-bind="props" :title="$t('page.Image.usedIn.' + modelType)" color="primary" />
 						</template>
 
 						<v-list-item v-for="item in value" :key="item.id" :to="`/${modelType}/${item.id}/view`">
-							<v-list-item-content class="pl-4">
-								<v-list-item-title>
-									<template v-if="modelType === 'albums' && item.series">
-										{{ item.series.name }} -
-									</template>
-									{{ item.identifyingName }}
-								</v-list-item-title>
-							</v-list-item-content>
+							<template #title>
+								<template v-if="modelType === 'albums' && hasSeries(item)">
+									{{ (item as Album).series.identifyingName }} -
+								</template>
+								{{ item.identifyingName }}
+							</template>
 						</v-list-item>
 					</v-list-group>
 				</template>
@@ -58,97 +54,71 @@
 	</v-container>
 </template>
 
-<script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { deleteStub } from '@/helpers/actions'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import { getBaseImageUrl } from '@/helpers/images'
-import modelViewMixin from '@/mixins/model-view'
 import imageService from '@/services/image-service'
 
-export default {
-	name: 'ImageView',
+const mainLoading = ref(true)
+const dependenciesLoading = ref(true)
+const dependencies = ref<Image | undefined>(undefined)
 
-	components: {
-		AppTask,
-		AppTasks,
-		SectionCard
-	},
+async function fetchData(id: number): Promise<Image> {
+	mainLoading.value = true
+	const imageP = imageService.findById(id)
+	mainLoading.value = false
 
-	mixins: [modelViewMixin],
+	dependenciesLoading.value = true
+	dependencies.value = await imageService.getImageDependencies(id)
+	dependenciesLoading.value = false
 
-	metaInfo() {
-		return {
-			title: this.image.identifyingName
-		}
-	},
-
-	data() {
-		return {
-			mainLoading: true,
-			dependenciesLoading: true,
-			image: {},
-			dependencies: {},
-			appTasksMenu: false
-		}
-	},
-
-	computed: {
-		imageUrl() {
-			return getBaseImageUrl(this.image)
-		},
-
-		hasDependencies() {
-			return this.dependencies.albumCovers ||
-				this.dependencies.albumOtherImages ||
-				this.dependencies.authors ||
-				this.dependencies.collections ||
-				this.dependencies.derivatives ||
-				this.dependencies.publishers
-		},
-
-		parsedDependencies() {
-			const covs = this.dependencies.albumCovers || []
-			const other = this.dependencies.albumOtherImages || []
-			// This won't work if an image is used twice in an Album, although that hardly makes any sense
-			return {
-				albums: [...covs, ...other],
-				authors: this.dependencies.authors || [],
-				collections: this.dependencies.collections || [],
-				derivatives: this.dependencies.derivatives || [],
-				publishers: this.dependencies.publishers || []
-			}
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			this.mainLoading = true
-
-			this.image = await imageService.findById(this.parsedId)
-			this.mainLoading = false
-
-			this.dependencies = await imageService.getImageDependencies(this.parsedId)
-			this.dependenciesLoading = false
-		},
-
-		deleteImage() {
-			deleteStub(this,
-				() => imageService.deleteModel(this.image.id),
-				'quickTasks.delete.image.confirm.done',
-				'ImageIndex')
-		}
-	}
+	return imageP
 }
+
+const {model: image, loading, appTasksMenu, deleteModel}
+	= useSimpleView(fetchData, imageService,
+		'quickTasks.delete.image.confirm.done', 'ImageIndex')
+
+const imageUrl = computed(() => getBaseImageUrl(image.value))
+
+const hasDependencies= computed(() =>
+	dependencies.value?.albumCovers
+		|| dependencies.value?.albumOtherImages
+		|| dependencies.value?.authors
+		|| dependencies.value?.collections
+		|| dependencies.value?.derivatives
+		|| dependencies.value?.publishers
+)
+
+function hasSeries(item: IModel) {
+	return (item as Album).series
+}
+
+const parsedDependencies = computed(() => {
+	const covs: Album[] = dependencies.value?.albumCovers || []
+	const other: Album[] = dependencies.value?.albumOtherImages || []
+	// This won't work if an image is used twice in an Album, although that hardly makes any sense
+	return {
+		albums: [...covs, ...other],
+		authors: dependencies.value?.authors || [] as Author[],
+		collections: dependencies.value?.collections || [] as Collection[],
+		derivatives: dependencies.value?.derivatives || [] as Derivative[],
+		publishers: dependencies.value?.publishers || [] as Publisher[]
+	}
+})
 </script>
 
-<style lang="less">
+
+<style lang="scss">
 .c-ImageView__image {
 	text-align: center;
 
 	p {
 		margin-top: 32px;
+	}
+
+	img {
+		max-width: 100%;
 	}
 }
 </style>

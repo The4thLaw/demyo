@@ -20,7 +20,7 @@ describe('Albums', () => {
 	// See https://github.com/The4thLaw/demyo/issues/77
 	it('Show an error message when creating without a publisher', () => {
 		cy.visit('/albums/new')
-		cy.get('.v-btn.accent').click()
+		cy.get('.c-FormActions__submit').click()
 		cy.contains('Publisher').parents('.v-input').contains('This field cannot be empty')
 	})
 

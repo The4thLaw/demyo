@@ -1,56 +1,19 @@
 <template>
 	<div>
-		<TextIndex :items="types" :split-by-first-letter="false" @page-change="scrollToTop">
+		<TextIndex :items="modelList" :split-by-first-letter="false" @page-change="scrollToTop">
 			<template #default="slotProps">
 				<router-link :to="`/derivativeTypes/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}
 				</router-link>
 			</template>
 		</TextIndex>
-		<v-btn
-			fab to="/derivativeTypes/new" color="accent" fixed
-			bottom right
-		>
-			<v-icon>mdi-plus</v-icon>
-		</v-btn>
+		<Fab to="/derivativeTypes/new" icon="mdi-plus" />
 	</div>
 </template>
 
-<script>
-import TextIndex from '@/components/TextIndex.vue'
+<script setup lang="ts">
+import { useSimpleIndex } from '@/composables/model-index'
 import typeService from '@/services/derivative-type-service'
-import { useUiStore } from '@/stores/ui'
 
-export default {
-	name: 'DerivativeTypeIndex',
-
-	components: {
-		TextIndex
-	},
-
-	metaInfo() {
-		return {
-			title: this.$t('title.index.derivativeType')
-		}
-	},
-
-	data() {
-		return {
-			types: []
-		}
-	},
-
-	created() {
-		this.fetchData()
-	},
-
-	methods: {
-		async fetchData() {
-			const uiStore = useUiStore()
-			uiStore.enableGlobalOverlay()
-			this.types = await typeService.findForIndex()
-			uiStore.disableGlobalOverlay()
-		}
-	}
-}
+const { modelList } = useSimpleIndex(typeService, 'title.index.derivativeType')
 </script>

@@ -4,7 +4,7 @@
 			<h1 v-if="title && !loading" class="text-h4">
 				{{ title }}
 			</h1>
-			<h2 v-if="subtitle && !loading" class="text-subtitle-1 primary--text mb-4">
+			<h2 v-if="subtitle && !loading" class="text-subtitle-1 text-primary mb-4">
 				{{ subtitle }}
 			</h2>
 			<slot />
@@ -20,7 +20,11 @@
 					- Be nice on HiDPI and LoDPI screens
 				-->
 				<img
-					v-img="{src: baseImageUrl}"
+					v-fullscreen-image="{
+						imageUrl: baseImageUrl,
+						withDownload: false,
+						maxHeight: '100vh'
+					}"
 					:src="`${baseImageUrl}?w=200`"
 					:srcset="`
 						${baseImageUrl}?w=200 200w,
@@ -40,56 +44,29 @@
 	</v-card>
 </template>
 
-<script>
-import { getBaseImageUrl } from '@/helpers/images'
-
+<script setup lang="ts">
 /**
  * A card used to section content.
  * Sports standard padding and loading style.
  */
-export default {
-	name: 'SectionCard',
 
-	props: {
-		loading: {
-			type: Boolean,
-			required: false,
-			default: false
-		},
+import { getBaseImageUrl } from '@/helpers/images'
 
-		title: {
-			type: String,
-			required: false,
-			default: undefined
-		},
+const props = withDefaults(defineProps<{
+	loading?: boolean,
+	title?: string,
+	subtitle?: string,
+	image?: Image
+}>(), {
+	loading: false
+})
 
-		subtitle: {
-			type: String,
-			required: false,
-			default: undefined
-		},
-
-		image: {
-			type: Object,
-			required: false,
-			default: null
-		}
-	},
-
-	computed: {
-		hasImage() {
-			return this.image && this.image.id
-		},
-
-		baseImageUrl() {
-			return getBaseImageUrl(this.image)
-		}
-	}
-}
+const hasImage = computed(() => props.image?.id)
+const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 </script>
 
-<style lang="less">
-.c-SectionCard {
+<style lang="scss">
+.c-SectionCard.v-card {
 	padding-bottom: 24px;
 
 	.text-h4 {
@@ -97,20 +74,30 @@ export default {
 	}
 }
 
-.c-SectionCard__container {
+#demyo .c-SectionCard__container {
 	padding: 24px;
 	padding-bottom: 0;
+
+	> :last-child {
+		margin-bottom: 0;
+	}
 }
 
-.c-SectionCard--tabbed {
+#demyo .c-SectionCard--tabbed {
 	padding: 0;
 
 	> .c-SectionCard__container {
 		padding: 0;
-	}
 
-	.v-tabs-items {
-		padding: 24px;
+		> .v-tabs .v-tab:not(.v-tab--selected) {
+			// Need old rgba function for vuetify
+			/* stylelint-disable-next-line color-function-notation */
+			color: rgba(var(--v-theme-on-primary), 0.6);
+		}
+
+		> .v-window {
+			padding: 24px;
+		}
 	}
 }
 

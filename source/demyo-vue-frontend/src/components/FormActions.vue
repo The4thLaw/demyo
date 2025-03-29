@@ -1,13 +1,16 @@
 <template>
 	<div class="c-FormActions">
 		<template v-if="!hasDefaultSlot">
-			<v-btn color="accent" type="submit" @click.prevent="$emit('save')">
+			<v-btn color="secondary" class="c-FormActions__submit" type="submit" @click.prevent="$emit('save')">
 				{{ $t('button.save') }}
 			</v-btn>
-			<v-btn v-if="showReset" text color="primary" @click="$emit('reset')">
+			<v-btn
+				v-if="showReset" class="c-FormActions__reset" variant="text" color="primary"
+				@click="$emit('reset')"
+			>
 				{{ $t('button.reset') }}
 			</v-btn>
-			<v-btn v-if="showBack" text color="primary" @click="$router.go(-1)">
+			<v-btn v-if="showBack" variant="text" color="primary" @click="$router.go(-1)">
 				{{ $t('button.back') }}
 			</v-btn>
 		</template>
@@ -17,31 +20,21 @@
 	</div>
 </template>
 
-<script>
-export default {
-	name: 'FormActions',
+<script setup lang="ts">
+const slots = useSlots()
 
-	props: {
-		showReset: {
-			type: Boolean,
-			default: true
-		},
+withDefaults(defineProps<{
+	showReset?: boolean,
+	showBack?: boolean
+}>(), {
+	showReset: true,
+	showBack: true
+})
 
-		showBack: {
-			type: Boolean,
-			default: true
-		}
-	},
-
-	computed: {
-		hasDefaultSlot() {
-			return !!this.$slots.default
-		}
-	}
-}
+const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
-<style lang="less">
+<style lang="scss">
 .c-FormActions {
 	text-align: center;
 

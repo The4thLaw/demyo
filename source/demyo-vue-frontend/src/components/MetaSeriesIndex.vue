@@ -11,35 +11,18 @@
 	</div>
 </template>
 
-<script>
-import CardTextIndex from '@/components/CardTextIndex.vue'
-import MetaSeriesCard from '@/components/MetaSeriesCard.vue'
+<script setup lang="ts">
+defineProps<{
+	items: MetaSeries[]
+}>()
 
-export default {
-	name: 'MetaSeriesIndex',
-
-	components: {
-		CardTextIndex,
-		MetaSeriesCard
-	},
-
-	props: {
-		items: {
-			type: Array,
-			required: true
-		}
-	},
-
-	methods: {
-		firstLetterExtractor(meta) {
-			if (meta.series) {
-				return meta.series.identifyingName[0]
-			}
-			if (meta.album) {
-				return meta.album.title[0]
-			}
-			throw new Error('Item is neither a Series nor an Album: ' + JSON.stringify(meta))
-		}
+function firstLetterExtractor(meta: MetaSeries): string {
+	if (meta.series) {
+		return meta.series.identifyingName[0]
 	}
+	if (meta.album) {
+		return meta.album.title[0]
+	}
+	throw new Error('Item is neither a Series nor an Album: ' + JSON.stringify(meta))
 }
 </script>

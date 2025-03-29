@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Publisher.identity')">
+			<SectionCard :subtitle="$t('fieldset.Publisher.identity')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -9,20 +9,17 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="publisher.logo.id" :items="allImages" :loading="allImagesLoading"
-							label-key="field.Publisher.logo" refreshable @refresh="refreshImages"
+						<AutoComplete
+							v-model="publisher.logo.id" :items="images" :loading="imagesLoading"
+							label-key="field.Publisher.logo" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
 				<label class="dem-fieldlabel">{{ $t('field.Publisher.history') }}</label>
-				<tiptap-vuetify
-					v-model="publisher.history" :extensions="tipTapExtensions"
-					:card-props="{ outlined: true }"
-				/>
+				<RichTextEditor v-model="publisher.history" />
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Publisher.internet')">
+			<SectionCard :subtitle="$t('fieldset.Publisher.internet')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<v-text-field
@@ -38,75 +35,48 @@
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
-import Autocomplete from '@/components/Autocomplete.vue'
-import FormActions from '@/components/FormActions.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { useRefreshableImages } from '@/composables/refreshable-models'
 import { mandatory, url } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
 import publisherService from '@/services/publisher-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
 
-export default {
-	name: 'PublisherEdit',
+const {images, imagesLoading, loadImages} = useRefreshableImages()
 
-	components: {
-		Autocomplete,
-		FormActions,
-		SectionCard,
-		TiptapVuetify
-	},
-
-	mixins: [imgRefreshMixin, modelEditMixin],
-
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.publisher',
-						edit: 'title.edit.publisher'
-					},
-					saveRedirectViewName: 'PublisherView'
-				}
-			},
-
-			publisher: { logo: {} },
-			tipTapExtensions: tipTapExtensions,
-
-			rules: {
-				name: [
-					mandatory()
-				],
-				website: [
-					url()
-				],
-				feed: [
-					url()
-				]
-			}
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			if (this.parsedId) {
-				this.publisher = await publisherService.findById(this.parsedId)
-				// Clear the collections: we won't be editing those and don't want to save them
-				delete this.publisher.collections
-			}
-		},
-
-		saveHandler() {
-			return publisherService.save(this.publisher)
-		}
+async function fetchData(id: number|undefined): Promise<Partial<Publisher>> {
+	if (id) {
+		return publisherService.findById(id)
+			// Clear the collections: we won't be editing those and don't want to save them
+			.then(p => {
+				p.collections = null as unknown as Collection[]
+				return p
+			})
 	}
+
+	const publisher: Partial<Publisher> = {
+		logo: {} as Image
+	}
+
+	return Promise.resolve(publisher)
+}
+
+const {model: publisher, loading, save, reset} = useSimpleEdit(fetchData, publisherService,
+	[loadImages], 'title.add.publisher', 'title.edit.publisher', 'PublisherView')
+
+const rules = {
+	name: [
+		mandatory()
+	],
+	website: [
+		url()
+	],
+	feed: [
+		url()
+	]
 }
 </script>

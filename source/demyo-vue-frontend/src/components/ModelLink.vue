@@ -28,49 +28,25 @@
 	</span>
 </template>
 
-<script>
-export default {
-	name: 'ModelLink',
+<script setup lang="ts">
+const props = withDefaults(defineProps<{
+	model: IModel | IModel[],
+	view: string,
+	commaSeparated?: boolean,
+	cssClass?: string
+}>(), {
+	commaSeparated: true,
+	cssClass: ''
+})
 
-	props: {
-		model: {
-			type: null,
-			required: true
-		},
+const isArray = computed(() => Array.isArray(props.model))
+const length = computed(() => Array.isArray(props.model) ? props.model.length : 1)
 
-		view: {
-			type: String,
-			required: true
-		},
-
-		commaSeparated: {
-			type: Boolean,
-			default: true
-		},
-
-		cssClass: {
-			type: String,
-			default: ''
-		}
-	},
-
-	computed: {
-		isArray() {
-			return Array.isArray(this.model)
-		},
-
-		hasDefaultSlot() {
-			return !!this.$scopedSlots.default
-		},
-
-		length() {
-			return this.isArray ? this.model.length : 1
-		}
-	}
-}
+const slots = useSlots()
+const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
-<style lang="less">
+<style lang="scss">
 a.c-ModelLink:not(:hover) {
 	color: inherit;
 }

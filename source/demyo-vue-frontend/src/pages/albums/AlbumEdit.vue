@@ -1,12 +1,12 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<SectionCard :subtitle="$t('fieldset.Album.identification')">
+			<SectionCard :subtitle="$t('fieldset.Album.identification')" :loading="loading">
 				<v-row>
 					<v-col cols="12">
-						<Autocomplete
-							v-model="album.series.id" :items="allSeries" label-key="field.Album.series"
-							clearable
+						<AutoComplete
+							v-model="album.series.id" :items="series" :loading="seriesLoading"
+							label-key="field.Album.series" clearable refreshable @refresh="loadSeries"
 						/>
 					</v-col>
 				</v-row>
@@ -36,64 +36,64 @@
 						<v-text-field v-model="album.originalTitle" :label="$t('field.Album.originalTitle')" />
 					</v-col>
 					<v-col cols="12">
-						<Autocomplete
-							v-model="album.tags" :items="allTags" :loading="allTagsLoading"
+						<AutoComplete
+							v-model="album.tags" :items="tags" :loading="tagsLoading"
 							multiple clearable
-							label-key="field.Album.tags" refreshable @refresh="refreshTags"
+							label-key="field.Album.tags" refreshable @refresh="loadTags"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Album.publishing')">
+			<SectionCard :subtitle="$t('fieldset.Album.publishing')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.publisher.id" :items="allPublishers"
+						<AutoComplete
+							v-model="album.publisher.id" :items="publishers" :loading="publishersLoading"
 							label-key="field.Album.publisher" required :rules="rules.publisher"
-							refreshable @refresh="refreshPublishers" @input="loadCollections"
+							refreshable @refresh="loadPublishers" @input="loadCollections(album)"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.collection.id" :items="relatedCollections"
+						<AutoComplete
+							v-model="album.collection.id" :items="collections" :loading="collectionsLoading"
 							label-key="field.Album.collection" clearable
-							refreshable @refresh="loadCollections"
+							refreshable @refresh="loadCollections(album)"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Album.authoring')">
+			<SectionCard :subtitle="$t('fieldset.Album.authoring')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.writers" :items="allAuthors" label-key="field.Album.writers"
-							multiple refreshable @refresh="refreshAuthors"
+						<AutoComplete
+							v-model="album.writers" :items="authors" :loading="authorsLoading"
+							label-key="field.Album.writers" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.artists" :items="allAuthors" label-key="field.Album.artists"
-							multiple refreshable @refresh="refreshAuthors"
+						<AutoComplete
+							v-model="album.artists" :items="authors" :loading="authorsLoading"
+							label-key="field.Album.artists" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.colorists" :items="allAuthors" label-key="field.Album.colorists"
-							multiple refreshable @refresh="refreshAuthors"
+						<AutoComplete
+							v-model="album.colorists" :items="authors" :loading="authorsLoading"
+							label-key="field.Album.colorists" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.inkers" :items="allAuthors" label-key="field.Album.inkers"
-							multiple refreshable @refresh="refreshAuthors"
+						<AutoComplete
+							v-model="album.inkers" :items="authors" :loading="authorsLoading"
+							label-key="field.Album.inkers" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.translators" :items="allAuthors" label-key="field.Album.translators"
-							multiple refreshable @refresh="refreshAuthors"
+						<AutoComplete
+							v-model="album.translators" :items="authors" :loading="authorsLoading"
+							label-key="field.Album.translators" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 				</v-row>
@@ -115,17 +115,19 @@
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
-							:readonly="album.markedAsFirstEdition" @change="adjustEditionDates"
+							:readonly="album.markedAsFirstEdition" @update:modelValue="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-checkbox
 							v-model="album.markedAsFirstEdition" :label="$t('field.Album.markedAsFirstEdition.edit')"
-							@change="adjustEditionDates"
+							@update:modelValue="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<v-text-field v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date" />
+						<v-text-field
+							v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date"
+						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
@@ -135,12 +137,12 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Album.format')">
+			<SectionCard :subtitle="$t('fieldset.Album.format')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.binding.id" :items="allBindings"
-							label-key="field.Album.binding" clearable
+						<AutoComplete
+							v-model="album.binding.id" :items="bindings" :loading="bindingsLoading"
+							label-key="field.Album.binding" clearable refreshable @refresh="loadBindings"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -190,174 +192,128 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Album.freeText')">
+			<SectionCard :subtitle="$t('fieldset.Album.freeText')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Album.summary') }}</label>
-						<tiptap-vuetify
-							v-model="album.summary" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="album.summary" />
 					</v-col>
 					<v-col cols="12" md="6">
 						<label class="dem-fieldlabel">{{ $t('field.Album.comment') }}</label>
-						<tiptap-vuetify
-							v-model="album.comment" :extensions="tipTapExtensions"
-							:card-props="{ outlined: true }"
-						/>
+						<RichTextEditor v-model="album.comment" />
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<SectionCard :subtitle="$t('fieldset.Album.images')">
+			<SectionCard :subtitle="$t('fieldset.Album.images')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.cover.id" :items="allImages" :loading="allImagesLoading"
-							label-key="field.Album.cover" refreshable @refresh="refreshImages"
+						<AutoComplete
+							v-model="album.cover.id" :items="images" :loading="imagesLoading"
+							label-key="field.Album.cover" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<Autocomplete
-							v-model="album.images" :items="allImages" :loading="allImagesLoading"
+						<AutoComplete
+							v-model="album.images" :items="images" :loading="imagesLoading"
 							:multiple="true"
-							label-key="field.Album.images" refreshable @refresh="refreshImages"
+							label-key="field.Album.images" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
 			</SectionCard>
 
-			<FormActions v-if="initialized" @save="save" @reset="reset" />
+			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 	</v-container>
 </template>
 
-<script>
-import Autocomplete from '@/components/Autocomplete.vue'
-import CurrencyField from '@/components/CurrencyField.vue'
-import FormActions from '@/components/FormActions.vue'
-import PriceManagement from '@/components/PriceManagement.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { tipTapExtensions } from '@/helpers/fields'
+<script setup lang="ts">
+import { useSimpleEdit } from '@/composables/model-edit'
+import { useRefreshableAuthors, useRefreshableBindings, useRefreshableImages, useRefreshablePublishers, useRefreshableSeries, useRefreshableTags } from '@/composables/refreshable-models'
+import { getParsedRouteParam } from '@/helpers/route'
 import { integer, isbn, mandatory, number } from '@/helpers/rules'
-import modelEditMixin from '@/mixins/model-edit'
-import authorRefreshMixin from '@/mixins/refresh-author-list'
-import imgRefreshMixin from '@/mixins/refresh-image-list'
-import publisherRefreshMixin from '@/mixins/refresh-publisher-list'
-import tagRefreshMixin from '@/mixins/refresh-tag-list'
 import albumService from '@/services/album-service'
-import bindingService from '@/services/binding-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
-import { TiptapVuetify } from 'tiptap-vuetify'
+import { useRoute } from 'vue-router'
 
-export default {
-	name: 'AlbumEdit',
+const route = useRoute()
 
-	components: {
-		Autocomplete,
-		CurrencyField,
-		FormActions,
-		PriceManagement,
-		SectionCard,
-		TiptapVuetify
-	},
+const sameEditionDates = ref(false)
 
-	mixins: [modelEditMixin, authorRefreshMixin, imgRefreshMixin, publisherRefreshMixin, tagRefreshMixin],
+const {authors, authorsLoading, loadAuthors} = useRefreshableAuthors()
+const {bindings, bindingsLoading, loadBindings} = useRefreshableBindings()
+const {images, imagesLoading, loadImages} = useRefreshableImages()
+const {publishers, publishersLoading, loadPublishers} = useRefreshablePublishers()
+const {series, seriesLoading, loadSeries} = useRefreshableSeries()
+const {tags, tagsLoading, loadTags} = useRefreshableTags()
 
-	data() {
-		return {
-			mixinConfig: {
-				modelEdit: {
-					titleKeys: {
-						add: 'title.add.album',
-						edit: 'title.edit.album'
-					},
-					saveRedirectViewName: 'AlbumView'
-				}
-			},
+const collections = ref([] as Collection[])
+const collectionsLoading = ref(false)
+async function loadCollections(album: Partial<Album>) {
+	collectionsLoading.value = true
+	collections.value = await publisherService.findCollectionsForList(album.publisher?.id)
 
-			allSeries: [],
-			allBindings: [],
-			relatedCollectionsLoading: false,
-			relatedCollections: [],
-			album: {
-				series: {},
-				writers: [],
-				artists: [],
-				colorists: [],
-				inkers: [],
-				translators: [],
-				publisher: {},
-				collection: {},
-				binding: {},
-				prices: [],
-				cover: {}
-			},
-			sameEditionDates: false,
-
-			tipTapExtensions: tipTapExtensions,
-
-			rules: {
-				cycle: [integer()],
-				number: [number()],
-				title: [mandatory()],
-				publisher: [mandatory()],
-				isbn: [isbn()]
-			}
-		}
-	},
-
-	methods: {
-		adjustEditionDates() {
-			if (this.album.markedAsFirstEdition) {
-				this.sameEditionDates = true
-			}
-			if (this.sameEditionDates) {
-				this.album.currentEditionDate = this.album.firstEditionDate
-			}
-		},
-
-		async fetchData() {
-			if (this.parsedId) {
-				this.album = await albumService.findById(this.parsedId)
-			}
-
-			if (!this.parsedId && this.$route.query.toSeries) {
-				this.album = await seriesService.getAlbumTemplate(parseInt(this.$route.query.toSeries, 10))
-			}
-
-			// Find all reference data
-			const pSeries = seriesService.findForList()
-			const pBindings = bindingService.findForList()
-
-			// Load collections with the currently available data
-			this.loadCollections()
-
-			// Check the edition dates
-			this.sameEditionDates = this.album.firstEditionDate &&
-				this.album.firstEditionDate === this.album.currentEditionDate
-
-			// Assign all reference data
-			this.allBindings = await pBindings
-			this.allSeries = await pSeries
-		},
-
-		async loadCollections() {
-			this.relatedCollectionsLoading = true
-			this.relatedCollections = await publisherService.findCollectionsForList(this.album.publisher.id)
-			if (this.album.collection.id) {
-				// If the current album ID is not in the returned list, clear it
-				if (!this.relatedCollections.find(val => val.id === this.album.collection.id)) {
-					this.album.collection.id = undefined
-				}
-			}
-			this.relatedCollectionsLoading = false
-		},
-
-		saveHandler() {
-			return albumService.save(this.album)
+	if (album.collection?.id) {
+		// If the current album ID is not in the returned list, clear it
+		if (!collections.value.find(val => val.id === album.collection?.id)) {
+			album.collection.id = null as unknown as number
 		}
 	}
+	collectionsLoading.value = false
+}
+
+async function fetchData(id: number|undefined): Promise<Partial<Album>> {
+	let album: Partial<Album>
+	if (id) {
+		album = await albumService.findById(id)
+	} else if (route.query.toSeries) {
+		album = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
+	} else {
+		album = {
+			series: {} as Series,
+			writers: [],
+			artists: [],
+			colorists: [],
+			inkers: [],
+			translators: [],
+			publisher: {} as Publisher,
+			collection: {} as Collection,
+			binding: {} as Binding,
+			prices: [],
+			cover: {} as Image
+		}
+	}
+
+	// Load collections with the currently available data
+	loadCollections(album)
+
+	// Check the edition dates
+	sameEditionDates.value = (album.firstEditionDate
+		&& album.firstEditionDate === album.currentEditionDate) || false
+
+	return Promise.resolve(album)
+}
+
+const {model: album, loading, save, reset} = useSimpleEdit(fetchData, albumService,
+	[loadAuthors, loadBindings, loadImages, loadPublishers, loadSeries, loadTags],
+	'title.add.album', 'title.edit.album', 'AlbumView')
+
+function adjustEditionDates() {
+	if (album.value.markedAsFirstEdition) {
+		sameEditionDates.value = true
+	}
+	if (sameEditionDates.value) {
+		album.value.currentEditionDate = album.value.firstEditionDate
+	}
+}
+
+const rules =  {
+	cycle: [integer()],
+	number: [number()],
+	title: [mandatory()],
+	publisher: [mandatory()],
+	isbn: [isbn()]
 }
 </script>

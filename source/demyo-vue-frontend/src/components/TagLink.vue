@@ -14,51 +14,25 @@
 	</ModelLink>
 </template>
 
-<script>
-import ModelLink from '@/components/ModelLink.vue'
+<script setup lang="ts">
+import { getStyle } from '@/composables/tags'
 
-export default {
-	name: 'TagLink',
+defineProps<{
+	model: IModel
+}>()
 
-	components: {
-		ModelLink
-	},
-
-	props: {
-		model: {
-			type: null,
-			required: true
-		}
-	},
-
-	methods: {
-		getStyle(tag) {
-			const style = {}
-			if (tag.fgColour) {
-				style.color = tag.fgColour
-			}
-			if (tag.bgColour) {
-				style['background-color'] = tag.bgColour
-			}
-			if (tag.relativeWeight) {
-				style['font-size'] = tag.relativeWeight + '%'
-			}
-			return style
-		},
-
-		hasCount(tag) {
-			return tag.usageCount === 0 || tag.usageCount
-		}
-	}
+function hasCount(tag: ProcessedTag) {
+	return tag.usageCount === 0 || tag.usageCount
 }
 </script>
 
-<style lang="less">
+
+<style lang="scss">
 .d-Tag {
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
-	background-color: var(--dem-bg-contrast);
+	background-color: rgb(var(--v-theme-surface-light));
 	margin-right: 1em;
 	padding: 4px 12px;
 	white-space: nowrap;
@@ -67,7 +41,7 @@ export default {
 	h1 &,
 	h2 &,
 	h3 & {
-		// Avoid overflows in titles
+		// Avoid overflows in titles containing tags
 		white-space: initial;
 		line-height: 100%;
 	}

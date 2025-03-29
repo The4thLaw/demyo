@@ -1,12 +1,10 @@
 <template>
 	<!-- Force it to always look like a link -->
-	<v-list-item class="v-list-item--link" :to="to" @click.native.stop="handleClick">
-		<v-list-item-icon>
-			<v-icon v-text="icon" />
-		</v-list-item-icon>
-		<v-list-item-content>
-			<v-list-item-title>{{ label }}</v-list-item-title>
-		</v-list-item-content>
+	<v-list-item
+		class="v-list-item--link" :to="to"
+		:prepend-icon="icon" :title="label"
+		@click.stop="handleClick"
+	>
 		<v-dialog v-model="confirmationDialog" max-width="50%">
 			<v-card>
 				<v-card-title>
@@ -19,11 +17,14 @@
 				<v-card-actions>
 					<v-spacer />
 
-					<v-btn color="accent" @click="confirmationDialog = false; $emit('confirm')">
+					<v-btn
+						color="secondary" class="c-AppTask__confirm" variant="elevated"
+						@click="confirmationDialog = false; emit('confirm')"
+					>
 						{{ $t('quickTasks.confirm.ok.label') }}
 					</v-btn>
 
-					<v-btn color="primary" text @click="confirmationDialog = false; $emit('cancel')">
+					<v-btn color="primary" @click="confirmationDialog = false; emit('cancel')">
 						{{ $t('quickTasks.confirm.cancel.label') }}
 					</v-btn>
 				</v-card-actions>
@@ -32,45 +33,23 @@
 	</v-list-item>
 </template>
 
-<script>
-export default {
-	name: 'AppTask',
+<script setup lang="ts">
+const props = defineProps<{
+	label: string,
+	icon: string,
+	to?: any
+	confirm?: string
+}>()
 
-	props: {
-		label: {
-			type: String,
-			required: true
-		},
+const emit = defineEmits(['click', 'confirm', 'cancel'])
 
-		icon: {
-			type: String,
-			required: true
-		},
+const confirmationDialog = ref(false)
 
-		to: {
-			type: null,
-			default: undefined
-		},
-
-		confirm: {
-			type: String,
-			default: ''
-		}
-	},
-
-	data() {
-		return {
-			confirmationDialog: false
-		}
-	},
-
-	methods: {
-		handleClick(e) {
-			this.$emit('click', e)
-			if (this.confirm) {
-				this.confirmationDialog = true
-			}
-		}
+function handleClick(e: MouseEvent) {
+	emit('click', e)
+	if (props.confirm) {
+		confirmationDialog.value = true
 	}
 }
 </script>
+

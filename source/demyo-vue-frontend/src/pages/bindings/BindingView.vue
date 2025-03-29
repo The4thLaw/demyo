@@ -7,26 +7,26 @@
 				icon="mdi-brush dem-overlay-edit"
 			/>
 			<AppTask
-				v-if="count === 0"
+				v-if="albumCount === 0"
 				:label="$t('quickTasks.delete.binding')"
 				:confirm="$t('quickTasks.delete.binding.confirm')"
 				icon="mdi-brush dem-overlay-delete"
 				@cancel="appTasksMenu = false"
-				@confirm="deleteBinding"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="binding.identifyingName">
 			<v-btn
-				v-if="count > 0"
+				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withBinding: binding.id } }"
-				color="accent" class="my-4" small outlined
+				color="secondary" class="my-4" size="small" variant="outlined"
 			>
-				{{ $tc('page.Binding.viewAlbums', count) }}
+				{{ $t('page.Binding.viewAlbums', albumCount) }}
 			</v-btn>
 			<v-alert
-				v-if="count === 0"
-				border="left" type="info" text class="my-4"
+				v-if="albumCount === 0"
+				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Binding.noAlbums') }}
 			</v-alert>
@@ -34,52 +34,18 @@
 	</v-container>
 </template>
 
-<script>
-import AppTask from '@/components/AppTask.vue'
-import AppTasks from '@/components/AppTasks.vue'
-import SectionCard from '@/components/SectionCard.vue'
-import { deleteStub } from '@/helpers/actions'
-import modelViewMixin from '@/mixins/model-view'
+<script setup lang="ts">
+import { useSimpleView } from '@/composables/model-view'
 import bindingService from '@/services/binding-service'
 
-export default {
-	name: 'BindingView',
+const albumCount = ref(-1)
 
-	components: {
-		AppTask,
-		AppTasks,
-		SectionCard
-	},
-
-	mixins: [modelViewMixin],
-
-	metaInfo() {
-		return {
-			title: this.binding.identifyingName
-		}
-	},
-
-	data() {
-		return {
-			binding: {},
-			count: -1,
-			appTasksMenu: false
-		}
-	},
-
-	methods: {
-		async fetchData() {
-			const bindingP = bindingService.findById(this.parsedId)
-			this.count = await bindingService.countAlbums(this.parsedId)
-			this.binding = await bindingP // Resolve calls in parallel
-		},
-
-		deleteBinding() {
-			deleteStub(this,
-				() => bindingService.deleteModel(this.binding.id),
-				'quickTasks.delete.binding.confirm.done',
-				'BindingIndex')
-		}
-	}
+async function fetchData(id: number): Promise<Binding> {
+	const bindingP = bindingService.findById(id)
+	albumCount.value = await bindingService.countAlbums(id)
+	return bindingP // Resolve calls in parallel
 }
+
+const {model: binding, loading, appTasksMenu, deleteModel}
+	= useSimpleView(fetchData, bindingService, 'quickTasks.delete.binding.confirm.done', 'BindingIndex')
 </script>
