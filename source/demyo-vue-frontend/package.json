@@ -17,7 +17,7 @@
     "cypress:run": "cypress run"
   },
   "dependencies": {
-    "@intlify/unplugin-vue-i18n": "^5.0.0",
+    "@intlify/unplugin-vue-i18n": "^6.0.5",
     "@mdi/font": "^5.9.55",
     "@tinymce/tinymce-vue": "^5.1.1",
     "@unhead/vue": "^1.9.1",
@@ -38,7 +38,7 @@
     "vue": "^3.5.4",
     "vue-3-fullscreen-image-directive-plugin": "^1.0.4",
     "vue-filepond": "^7.0.4",
-    "vue-i18n": "^9.14.0",
+    "vue-i18n": "^9.14.3",
     "vue-router": "^4.4.3",
     "vuetify": "~3.5.9"
   },
