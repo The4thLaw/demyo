@@ -37,7 +37,6 @@ describe('TagLink.vue', () => {
 			relativeWeight: '120'
 		}
 		const style = wrapper.vm.getStyle(tagData)
-		console.log(style)
 		expect(style).toMatchObject({
 			color: tagData.fgColour,
 			backgroundColor: tagData.bgColour,
