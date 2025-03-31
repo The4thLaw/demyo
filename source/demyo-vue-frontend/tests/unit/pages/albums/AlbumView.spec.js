@@ -1,5 +1,4 @@
 // This test is disabled for now as I just can't understand how I'm supposed to test the composable
-import { useSimpleView } from '@/composables/model-view'
 import AlbumView from '@/pages/albums/AlbumView.vue'
 import { createTestingPinia } from '@pinia/testing'
 import { RouterLinkStub, shallowMount } from '@vue/test-utils'
@@ -9,11 +8,12 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+// Eventually, we could mock this in common setup files, see
+// https://stackoverflow.com/a/73424585/109813
 vi.mock('@/i18n', () => ({
 	loadLocaleMessages: () => ({})
 }))
 
-// TODO: is this the only way?
 vi.mock('vue-i18n', () => ({
 	useI18n: () => ({
 		t: (key) => key,
@@ -36,22 +36,6 @@ const vuetify = createVuetify({
 	components,
 	directives
 })
-
-// Prevent HTTP calls to the API, we'll mock what we have to using the data directly
-/*vi.mock('@/services/album-service', () => ({
-	default: {
-		countDerivatives: () => 0,
-		findById: () => {
-			return {
-				id: NaN,
-				series: {},
-				binding: {},
-				publisher: {},
-				collection: {}
-			}
-		}
-	}
-}))*/
 
 global.ResizeObserver = require('resize-observer-polyfill')
 
@@ -78,30 +62,31 @@ function createWrapper() {
 	})
 }
 
-function createAlbum(fields = {}) {
-	return {
-		id: 42,
-		series: {},
-		publisher: {},
-		binding: {},
-		collection: {},
-		...fields
-	}
-}
-
-function createAlbum2(fields = {}) {
-	return ref({
-		id: 42,
-		series: {},
-		publisher: {},
-		binding: {},
-		collection: {},
-		...fields
+vi.mock('@/composables/model-view', () => ({
+	useSimpleView: () => ({
+		model: ref({
+			id: undefined,
+			series: {},
+			publisher: {},
+			binding: {},
+			collection: {}
+		}),
+		appTaskMenu: ref(false),
+		loading: ref(false),
+		deleteModel: () => {},
+		loadData: () => {}
 	})
-}
+}))
 
 describe('AlbumView.vue', () => {
-	/*
+	/** @type VueWrapper */
+	let wrapper
+
+	beforeEach(() => {
+		vi.resetAllMocks()
+		wrapper = createWrapper()
+	})
+
 	it('Check if there are authors', () => {
 		const wrapper = createWrapper()
 		for (const prop of ['writers', 'artists', 'colorists', 'inkers', 'translators']) {
@@ -109,97 +94,59 @@ describe('AlbumView.vue', () => {
 			expect(wrapper.vm.hasAuthors).toBeFalsy()
 
 			// Set one type of author and check the condition
-			const album = createAlbum()
-			album[prop] = [{ id: 42, name: 'Foo' }]
-			// XXX wrapper.setData({ album })
+			wrapper.vm.album[prop] = [{ id: 42, name: 'Foo' }]
 			expect(wrapper.vm.hasAuthors).toBeTruthy()
 
 			// Empty and check again
-			album[prop] = []
-			wrapper.setData({ album })
-			// XXX expect(wrapper.vm.hasAuthors).toBeFalsy()
+			wrapper.vm.album[prop] = []
+			expect(wrapper.vm.hasAuthors).toBeFalsy()
 		}
 	})
 
-
 	it('Check if there are prices', () => {
-		const wrapper = createWrapper()
 		expect(wrapper.vm.hasPrices).toBeFalsy()
 
-		const album = createAlbum({ prices: [{}] })
-		// XXX wrapper.setData({ album })
+		wrapper.vm.album.prices = [{}]
 		expect(wrapper.vm.hasPrices).toBeTruthy()
 	})
 
 	it('Check if there are images', () => {
-		const wrapper = createWrapper()
 		expect(wrapper.vm.hasImages).toBeFalsy()
 
-		const album = createAlbum({ images: [{}] })
-		// XXX wrapper.setData({ album })
+		wrapper.vm.album.images = [{}]
 		expect(wrapper.vm.hasImages).toBeTruthy()
 	})
 
 	it('Compute the size specifications', () => {
-		const wrapper = createWrapper()
 		expect(wrapper.vm.sizeSpec).toBeFalsy()
 
-		const album = createAlbum({
-			width: 240,
-			height: 320
-		})
-		// XXX wrapper.setData({ album })
+		wrapper.vm.album.width = 240
+		wrapper.vm.album.height = 320
 		expect(wrapper.vm.sizeSpec).toBe('240 x 320')
 	})
-	*/
 
 	it('Build a query to add a derivative', () => {
-		const wrapper = createWrapper()
-		const album = createAlbum2()
-
-		/*vi.mock('@/composables/model-view', () => ({
-			useSimpleView: () => ({
-				model: ref({id: 42}),
-				appTaskMenu: ref(false),
-				loading: ref(false),
-				deleteModel: () => {},
-				loadData: () => {}
-			})
-		}))*/
-		vi.mock('@/composables/model-view', () => ({
-			useSimpleView: vi.fn()
-		}))
-		const usvMock = useSimpleView
-		console.log('YYY', usvMock)
-		usvMock.mockReturnValue({
-			model: ref({id: 42}),
-			appTaskMenu: ref(false),
-			loading: ref(false),
-			deleteModel: () => {},
-			loadData: () => {}
-		})
-
-		// XXX wrapper.setData({ album })
+		wrapper.vm.album.id = 42
 		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42
 		})
-		album.series = { id: 1337 }
-		// XXX wrapper.setData({ album })
+
+		wrapper.vm.album.series.id = 1337
 		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42,
 			toSeries: 1337
 		})
-		album.artists = [
+
+		wrapper.vm.album.artists = [
 			{ id: 1002 },
 			{ id: 1001 }
 		]
-		// XXX wrapper.setData({ album })
 		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42,
 			toSeries: 1337
 		})
-		album.artists = [{ id: 1003 }]
-		// XXX wrapper.setData({ album })
+
+		wrapper.vm.album.artists = [{ id: 1003 }]
 		expect(wrapper.vm.derivativeQuery).toEqual({
 			toAlbum: 42,
 			toSeries: 1337,
