@@ -71,14 +71,14 @@ const { pageCount, paginatedItems, previousPage, nextPage, hasPreviousPage, hasN
 </script>
 
 <style lang="scss">
-@import '@/styles/mixins';
+@use '@/styles/mixins';
 
 .v-application .c-MetaSeriesCard .v-list-item--link:hover {
 	text-decoration: none;
 }
 
 .v-application a.c-MetaSeriesCard__title {
-	@include dem-model-card-title;
+	@include mixins.dem-model-card-title;
 }
 
 .c-MetaSeriesCard__one-shot {

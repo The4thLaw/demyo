@@ -53,7 +53,7 @@ const { paginatedItems, pageCount, hasNextPage, hasPreviousPage, nextPage, previ
 </script>
 
 <style lang="scss">
-@import '@/styles/mixins';
+@use '@/styles/mixins';
 
 // The following allows taking the full height if the publisher has no collections
 .c-PublisherCard__noCollections a.c-PublisherCard__title {
@@ -61,6 +61,6 @@ const { paginatedItems, pageCount, hasNextPage, hasPreviousPage, nextPage, previ
 }
 
 .v-application a.c-PublisherCard__title {
-	@include dem-model-card-title;
+	@include mixins.dem-model-card-title;
 }
 </style>

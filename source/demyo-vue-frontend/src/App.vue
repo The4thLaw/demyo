@@ -42,5 +42,5 @@ document.body.addEventListener('click', (e: MouseEvent) => {
 </script>
 
 <style lang="scss">
-@import '@/styles/main';
+@use '@/styles/main';
 </style>
