@@ -14,10 +14,8 @@ class SeriesService extends AbstractModelService<Series> {
 		})
 	}
 
-	findAlbumsForList(seriesId?: number|'none'): Promise<Album[]> {
-		if (!seriesId) {
-			seriesId = 'none'
-		}
+	async findAlbumsForList(seriesId?: number | 'none'): Promise<Album[]> {
+		seriesId ??= 'none'
 		return axiosGet(`${this.basePath}${seriesId}/albums`, [])
 	}
 
@@ -25,7 +23,7 @@ class SeriesService extends AbstractModelService<Series> {
 	 * Gets the template for a new Album in a Series.
 	 * @param seriesId The Series ID
 	 */
-	async getAlbumTemplate(seriesId: number) {
+	async getAlbumTemplate(seriesId: number): Promise<Album> {
 		const template = await axiosGet(`${this.basePath}${seriesId}/albums/template`, {}) as Album
 		return albumService.fillMissingData(template)
 	}

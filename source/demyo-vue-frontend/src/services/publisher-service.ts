@@ -16,7 +16,7 @@ class PublisherService extends AbstractModelService<Publisher> {
 	 * Finds the Collections belonging to a Publisher.
 	 * @param publisherId The Publisher ID
 	 */
-	findCollectionsForList(publisherId: number | undefined): Promise<Collection[]> {
+	async findCollectionsForList(publisherId: number | undefined): Promise<Collection[]> {
 		if (!publisherId) {
 			return Promise.resolve([])
 		}
@@ -27,7 +27,7 @@ class PublisherService extends AbstractModelService<Publisher> {
 	 * Finds how many Albums use the given Publisher.
 	 * @param id The Publisher ID
 	 */
-	countAlbums(id: number): Promise<number> {
+	async countAlbums(id: number): Promise<number> {
 		return axiosGet(`publishers/${id}/albums/count`, 0)
 	}
 }

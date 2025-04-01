@@ -6,7 +6,7 @@ import axios from 'axios'
  * Service to handle search requests.
  */
 class ManagementService {
-	async doImport(file: File) {
+	async doImport(file: File): Promise<boolean> {
 		console.debug('Going to upload', file)
 
 		const data = new FormData()
@@ -15,6 +15,7 @@ class ManagementService {
 		try {
 			const response = await axios.post(`${apiRoot}manage/import`, data, {
 				headers: {
+					// eslint-disable-next-line @typescript-eslint/naming-convention
 					'Content-Type': 'multipart/form-data'
 				}
 			})

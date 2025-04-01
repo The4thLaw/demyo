@@ -13,7 +13,7 @@ class DerivativeTypeService extends AbstractModelService<DerivativeType> {
 	 * Finds how many Derivatives use the given type.
 	 * @param id The Derivative Type ID
 	 */
-	countDerivatives(id: number): Promise<number> {
+	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`derivativeTypes/${id}/derivatives/count`, 0)
 	}
 }

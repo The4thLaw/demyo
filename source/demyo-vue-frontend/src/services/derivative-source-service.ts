@@ -15,7 +15,7 @@ class DerivativeSourceService extends AbstractModelService<DerivativeSource> {
 	 * Finds how many Derivatives use the given source.
 	 * @param id The Derivative Source ID
 	 */
-	countDerivatives(id: number): Promise<number> {
+	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`derivativeSources/${id}/derivatives/count`, 0)
 	}
 }

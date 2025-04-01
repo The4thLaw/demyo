@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { mergeModels } from '@/helpers/fields'
 import { expect, test } from 'vitest'
 

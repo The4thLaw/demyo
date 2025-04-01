@@ -15,7 +15,7 @@ class DerivativeService extends AbstractModelService<Derivative> {
 		})
 	}
 
-	findForIndex(filter?: DerivativeFilter, view?: string): Promise<Derivative[]> {
+	async findForIndex(filter?: DerivativeFilter, view?: string): Promise<Derivative[]> {
 		if (filter) {
 			return axiosPost(this.basePath + 'index/filtered', filter, [])
 		}
@@ -26,7 +26,7 @@ class DerivativeService extends AbstractModelService<Derivative> {
 		return axiosGet(this.basePath, params, [])
 	}
 
-	saveFilepondImages(modelId: number, imageIds: string[]) {
+	async saveFilepondImages(modelId: number, imageIds: string[]): Promise<boolean> {
 		return axiosPost(`${this.basePath}${modelId}/images`, { filePondOtherImages: imageIds }, false)
 	}
 }

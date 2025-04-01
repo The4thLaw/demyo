@@ -20,8 +20,7 @@ interface FilePondData {
 
 type CombinationMode = 'AND' | 'OR'
 
-interface IModelFilter{}
-interface AbstractModelFilter extends IModelFilter {
+interface AbstractModelFilter {
 	mode: CombinationMode
 }
 

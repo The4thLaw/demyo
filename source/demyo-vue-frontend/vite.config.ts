@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'

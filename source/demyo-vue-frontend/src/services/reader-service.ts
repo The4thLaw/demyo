@@ -2,7 +2,7 @@ import { axiosDelete, axiosGet, axiosPost } from '@/helpers/axios'
 import { loadReaderFromLocalStorage, saveReaderToLocalStorage } from '@/helpers/reader'
 import { $t, switchLanguage } from '@/i18n'
 import { defaultLanguage } from '@/myenv'
-import { ReaderStoreFunction, useReaderStore } from '@/stores/reader'
+import { type ReaderStoreFunction, useReaderStore } from '@/stores/reader'
 import { useUiStore } from '@/stores/ui'
 import AbstractModelService from './abstract-model-service'
 

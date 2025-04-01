@@ -5,7 +5,7 @@ import { axiosGet } from '@/helpers/axios'
  */
 class AboutService {
 	/** @return The environment settings */
-	getEnvironment(): Promise<Record<string, string>> {
+	async getEnvironment(): Promise<Record<string, string>> {
 		return axiosGet('about/environment', {})
 	}
 }

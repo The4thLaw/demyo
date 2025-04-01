@@ -15,14 +15,14 @@ class AlbumService extends AbstractModelService<Album> {
 		})
 	}
 
-	findForIndex(filter?: AlbumFilter): Promise<Album[]> {
+	async findForIndex(filter?: AlbumFilter): Promise<Album[]> {
 		if (filter) {
 			return axiosPost(this.basePath + 'index/filtered', filter, [])
 		}
 		return axiosGet(this.basePath, [])
 	}
 
-	save(model: Album): Promise<number> {
+	async save(model: Album): Promise<number> {
 		const promise = super.save(model)
 
 		// Saving an album may impact the reading list, etc. We should reload them when the save is done
@@ -34,7 +34,7 @@ class AlbumService extends AbstractModelService<Album> {
 		return promise
 	}
 
-	saveFilepondImages(modelId: number, coverId: string, otherImageIds: string[]) {
+	async saveFilepondImages(modelId: number, coverId: string, otherImageIds: string[]): Promise<boolean> {
 		return axiosPost(`${this.basePath}${modelId}/images`,
 			{ filePondMainImage: coverId, filePondOtherImages: otherImageIds }, false)
 	}
@@ -43,7 +43,7 @@ class AlbumService extends AbstractModelService<Album> {
 	 * Finds how many Derivatives use the given Album.
 	 * @param {Number} id The Album ID
 	 */
-	countDerivatives(id: number): Promise<number> {
+	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
 	}
 }

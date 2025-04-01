@@ -14,8 +14,8 @@ interface ServiceConfig<M extends IModel> {
  * Base class for Model API services.
  */
 class AbstractModelService<M extends IModel> {
-	protected basePath: string
-	private config: ServiceConfig<M>
+	protected readonly basePath: string
+	private readonly config: ServiceConfig<M>
 
 	/**
 	 * Constructor
@@ -24,14 +24,14 @@ class AbstractModelService<M extends IModel> {
 	 */
 	constructor(basePath: string, config?: ServiceConfig<M>) {
 		this.basePath = basePath
-		this.config = config || {}
+		this.config = config ?? {}
 	}
 
-	findForIndex(): Promise<M[]> {
+	async findForIndex(): Promise<M[]> {
 		return axiosGet(this.basePath, [])
 	}
 
-	findForList(): Promise<M[]> {
+	async findForList(): Promise<M[]> {
 		return axiosGet(this.basePath, { view: 'minimal' }, [])
 	}
 

@@ -8,7 +8,6 @@ import vuetify from 'vite-plugin-vuetify'
 export default defineConfig({
 	resolve: {
 		alias: {
-			// eslint-disable-next-line @typescript-eslint/naming-convention
 			'@': path.resolve(__dirname, './src')
 			// 'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js'
 		}

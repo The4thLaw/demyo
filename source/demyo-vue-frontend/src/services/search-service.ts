@@ -4,7 +4,7 @@ import { axiosGet } from '@/helpers/axios'
  * Service to handle search requests.
  */
 class SearchService {
-	quicksearch(query: string) {
+	async quicksearch(query: string): Promise<IModel[]> {
 		console.debug('Searching for', query)
 		return axiosGet('search/quick', { q: query }, [])
 	}

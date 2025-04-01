@@ -24,11 +24,11 @@ vi.mock('vue-i18n', () => ({
 vi.mock('vue-router', () => ({
 	useRoute: () => ({
 		params: {
-		  id: 42
+			id: 42
 		}
-	  }),
+	}),
 	useRouter: vi.fn(() => ({
-	  push: () => {}
+		push: () => {}
 	}))
 }))
 

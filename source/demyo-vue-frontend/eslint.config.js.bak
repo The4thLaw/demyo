@@ -1,11 +1,6 @@
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
 import tsParser from '@typescript-eslint/parser'
-import vueStandardWithTs from '@vue/eslint-config-standard-with-typescript'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginCypress from 'eslint-plugin-cypress/flat'
-import pluginVue from 'eslint-plugin-vue'
-import vuetify from 'eslint-plugin-vuetify'
 import globals from 'globals'
 import path from 'path'
 import tseslint from 'typescript-eslint'
@@ -54,7 +49,7 @@ const commonRules = {
 	// 'no-useless-catch': 'error', // v5.11
 	'no-useless-concat': 'error',
 	'no-useless-return': 'error',
-	'@stylistic/operator-linebreak': ['error', 'before'],
+	'operator-linebreak': ['error', 'before'],
 	radix: 'warn',
 	'wrap-iife': 'error',
 	// Used to explicitely mark promises as not awaited
@@ -62,14 +57,14 @@ const commonRules = {
 
 	// Style
 	'block-spacing': 'error',
-	'@stylistic/indent': ['error', 'tab'],
+	indent: ['error', 'tab'],
 	'max-len': ['error', {
 		code: 120
 	}],
-	'@stylistic/no-tabs': 'off',
+	'no-tabs': 'off',
 	'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
-	'@stylistic/space-before-blocks': 'error',
-	'@stylistic/space-before-function-paren': ['error', {
+	'space-before-blocks': 'error',
+	'space-before-function-paren': ['error', {
 		anonymous: 'always',
 		named: 'never',
 		asyncArrow: 'always'
@@ -86,19 +81,12 @@ const commonRules = {
 
 	// TypeScript tweaks
 	'@typescript-eslint/prefer-destructuring': ['error', { array: false }],
-	'@typescript-eslint/max-params': ['error', {max: 5}],
+	'@typescript-eslint/max-params': ['error', 5],
 	// TypeScript warnings we don't really care about
 	'@typescript-eslint/no-confusing-void-expression': 'off',
 	'@typescript-eslint/no-magic-numbers': 'off',
 	'@typescript-eslint/prefer-readonly-parameter-types': 'off',
-	'@typescript-eslint/init-declarations': 'off',
-	'@typescript-eslint/explicit-member-accessibility': 'off',
-	// I like falsy usage tyvm
-	'@typescript-eslint/strict-boolean-expressions': 'off',
-	// We use this one all the time for empty models
-	'@typescript-eslint/no-unsafe-type-assertion': 'off',
-	// I don't really like to mix static and non-static
-	'@typescript-eslint/class-methods-use-this': 'off'
+	'@typescript-eslint/init-declarations': 'off'
 }
 
 const allTsRules = tseslint.configs.all
@@ -115,23 +103,22 @@ export default [
 			'target',
 			// Generated files
 			'auto-imports.d.ts',
-			'components.d.ts',
-			'src/types/java-mdels.d.ts'
+			'components.d.ts'
 		]
 	},
-	...defineConfigWithVueTs(
-		pluginVue.configs['flat/essential'],
-		pluginVue.configs['flat/recommended'],
-		vueTsConfigs.recommended,
-		vueTsConfigs.stylistic,
-		vueStandardWithTs
-	),
+
 	js.configs.recommended,
-	...tseslint.configs.all,
-	...vuetify.configs['flat/base'],
-	pluginCypress.configs.recommended,
-	// No issue to support flat configs for this one
-	...compat.extends('plugin:you-dont-need-lodash-underscore/all'),
+	//...tseslint.configs.all,
+	// See https://github.com/vuejs/eslint-plugin-vue/issues/1291
+	//...compat.extends('plugin:vue/essential'),
+	//...compat.extends('plugin:vue/recommended'),
+	// Note that the following fails with the TypeScript parser
+	// ...compat.extends('plugin:vuetify/base'),
+	// https://github.com/cypress-io/eslint-plugin-cypress/issues/146
+	//...compat.extends('plugin:cypress/recommended'),
+	// No issue to support flat configs for these two
+	//...compat.extends('@vue/standard'),
+	//...compat.extends('plugin:you-dont-need-lodash-underscore/all'),
 
 	// The following features a super convoluted way of tailoring the TypeScript rules to specific cases
 	{
