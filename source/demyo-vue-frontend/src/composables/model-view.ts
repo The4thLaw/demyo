@@ -1,9 +1,9 @@
-import { getParsedId } from "@/helpers/route"
-import AbstractModelService from "@/services/abstract-model-service"
-import { useUiStore } from "@/stores/ui"
-import { useHead } from "@unhead/vue"
-import { useI18n } from "vue-i18n"
-import { useRoute, useRouter } from "vue-router"
+import { getParsedId } from '@/helpers/route'
+import type AbstractModelService from '@/services/abstract-model-service'
+import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
 
 interface ViewData<T extends AbstractModel> {
 	model: Ref<T>

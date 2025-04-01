@@ -14,7 +14,7 @@ function setHtmlLang(lang: string) {
 const loadedLanguages: string[] = []
 
 // Define the variants we support
-let typedDatetimeFormats = datetimeFormats as Record<string, any>
+const typedDatetimeFormats = datetimeFormats as Record<string, any>
 typedDatetimeFormats['fr-BE'] = datetimeFormats.fr
 
 /* The base language is
@@ -61,7 +61,7 @@ async function loadLanguageFromServer(lang: string) {
 // Now, we should load the full translations in the default and fallback languages
 // Load the default language, and then the fallback (prioritise the default rather than relying on luck)
 loadLanguageFromServer(defaultLanguage).then(
-	() => loadLanguageFromServer(fallbackLanguage))
+	async () => loadLanguageFromServer(fallbackLanguage))
 
 /**
  * Switches to a different language, potentially loading translations if needed

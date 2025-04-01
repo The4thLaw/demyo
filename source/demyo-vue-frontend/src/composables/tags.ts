@@ -1,11 +1,11 @@
-import { isProcessed } from "@/types/type-guards"
+import { isProcessed } from '@/types/type-guards'
 
 /**
  * Gets the CSS style to apply for a tag
  * @param tag The tag to use for the style
  * @returns The CSS style
  */
-export function getStyle(tag: ProcessedTag|Tag|Partial<Tag>): Partial<CSSStyleDeclaration> {
+export function getStyle(tag: ProcessedTag | Tag | Partial<Tag>): Partial<CSSStyleDeclaration> {
 	const style: Partial<CSSStyleDeclaration> = {}
 	if (tag.fgColour) {
 		style.color = tag.fgColour

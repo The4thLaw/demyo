@@ -60,4 +60,3 @@ async function toggle() {
 	loading.value = false
 }
 </script>
-

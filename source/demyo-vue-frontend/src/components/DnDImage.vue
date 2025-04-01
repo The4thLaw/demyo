@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import FilePond from '@/helpers/filepond'
 import { apiRoot } from '@/myenv'
-import { FilePond as FilePondType } from 'filepond'
+import type { FilePond as FilePondType } from 'filepond'
 import { useTemplateRef } from 'vue'
 
 const model = defineModel()
@@ -135,7 +135,7 @@ function cancel() {
 }
 
 function save() {
-	let mainIds = getServerIds(mainPond.value)
+	const mainIds = getServerIds(mainPond.value)
 	let mainId
 	if (mainIds) {
 		mainId = mainIds[0]
@@ -178,7 +178,6 @@ onBeforeUnmount(() => {
 	document.body.removeEventListener('dragenter', showDialog)
 })
 </script>
-
 
 <style lang="scss">
 .filepond--credits {

@@ -1,4 +1,4 @@
-import AbstractModelService from '@/services/abstract-model-service'
+import type AbstractModelService from '@/services/abstract-model-service'
 import { useUiStore } from '@/stores/ui'
 import { useHead } from '@unhead/vue'
 import { computed } from 'vue'
@@ -13,7 +13,7 @@ export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelS
 	fetchData?: (() => Promise<T[]>)) {
 	//
 	let safeFetchData: () => Promise<T[]>
-	safeFetchData = fetchData || (() => serviceInstance.findForIndex())
+	safeFetchData = fetchData || (async () => serviceInstance.findForIndex())
 
 	useHead({
 		title: useI18n().t(titleKey)

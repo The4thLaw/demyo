@@ -26,7 +26,6 @@ function hasCount(tag: ProcessedTag) {
 }
 </script>
 
-
 <style lang="scss">
 .d-Tag {
 	border-top-left-radius: 6px;

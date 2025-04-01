@@ -16,9 +16,9 @@ export function loadReaderFromLocalStorage(): Reader | undefined {
  * Loads the last selected reader's language from the local storage, if possible.
  * @return The language, or null if it couldn't be loaded.
  */
-export function loadReaderLanguageFromLocalStorage(): string|undefined {
+export function loadReaderLanguageFromLocalStorage(): string | undefined {
 	const reader = loadReaderFromLocalStorage()
-	return reader?.configuration?.language
+	return reader?.configuration.language
 }
 
 /**

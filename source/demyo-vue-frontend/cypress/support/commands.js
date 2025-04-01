@@ -2,7 +2,7 @@ Cypress.Commands.add('initDatabase', () => {
 	return cy.fixture('demyo-cypress-data-set.dea', 'binary')
 		.then(binary => Cypress.Blob.binaryStringToBlob(binary))
 		.then(blob => {
-			var formdata = new FormData()
+			const formdata = new FormData()
 			formdata.append('importFile', blob, 'demyo-cypress.dea')
 
 			cy.request({

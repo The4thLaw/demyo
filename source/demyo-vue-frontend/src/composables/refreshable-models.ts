@@ -1,4 +1,4 @@
-import AbstractModelService from '@/services/abstract-model-service'
+import type AbstractModelService from '@/services/abstract-model-service'
 import authorService from '@/services/author-service'
 import bindingService from '@/services/binding-service'
 import derivativeSourceService from '@/services/derivative-source-service'

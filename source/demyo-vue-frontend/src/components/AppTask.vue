@@ -52,4 +52,3 @@ function handleClick(e: MouseEvent) {
 	}
 }
 </script>
-

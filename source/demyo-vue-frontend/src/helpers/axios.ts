@@ -5,7 +5,7 @@ function baselineUrl(url: string) {
 	return apiRoot + url
 }
 
-export async function axiosGet<T>(url: string, data: T|any|undefined = undefined, defaultValue: T|undefined = undefined): Promise<T> {
+export async function axiosGet<T>(url: string, data: T | any | undefined = undefined, defaultValue: T | undefined = undefined): Promise<T> {
 	let def: T
 	if (defaultValue === undefined) {
 		def = data
@@ -24,7 +24,7 @@ export async function axiosGet<T>(url: string, data: T|any|undefined = undefined
 	return response.data
 }
 
-export async function axiosPost<T>(url: string, data: T|any, defaultValue: T|undefined = undefined): Promise<T> {
+export async function axiosPost<T>(url: string, data: T | any, defaultValue: T | undefined = undefined): Promise<T> {
 	let def: T
 	if (defaultValue === undefined) {
 		def = data

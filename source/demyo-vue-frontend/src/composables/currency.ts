@@ -14,7 +14,7 @@ export function useCurrency(rawPrice: Ref<number>) {
 export function useCurrencies(rawPrices: Ref<number[]>) {
 	const readerStore = useReaderStore()
 
-	const currency = computed(() => readerStore.currentReader?.configuration?.currency)
+	const currency = computed(() => readerStore.currentReader.configuration.currency)
 	const qualifiedPrices = computed(() => rawPrices.value.map(p => formatCurrency(p, currency.value)))
 
 	return {

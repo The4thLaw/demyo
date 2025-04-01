@@ -1,4 +1,4 @@
-import type { LocationQueryValue, RouteLocationNormalizedLoadedGeneric } from "vue-router"
+import type { LocationQueryValue, RouteLocationNormalizedLoadedGeneric } from 'vue-router'
 
 /**
  * Gets the standard ID parameter from the current route, parsed to a number.

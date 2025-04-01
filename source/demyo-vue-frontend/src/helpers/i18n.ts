@@ -37,7 +37,7 @@ export function isCurrencyPrefix() {
  * @param currency The currency to use
  * @returns The formatted currency amount.
  */
-export function formatCurrency(amount: number, currency: string): string|undefined {
+export function formatCurrency(amount: number, currency: string): string | undefined {
 	if (amount === undefined) {
 		return undefined
 	}

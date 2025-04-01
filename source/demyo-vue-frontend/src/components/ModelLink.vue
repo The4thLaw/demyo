@@ -3,7 +3,7 @@
 		<template v-if="isArray">
 			<span v-for="(item, index) in model" :key="item.id">
 				<router-link
-					:to="{ name: view, params: { id: item.id }}" :class="`c-ModelLink ${cssClass}`"
+					:to="{ name: view, params: { id: item.id } }" :class="`c-ModelLink ${cssClass}`"
 				>
 					<template v-if="hasDefaultSlot">
 						<slot :item="item" /><!--
@@ -16,7 +16,7 @@
 			</span>
 		</template>
 		<template v-if="!isArray">
-			<router-link :to="{ name: view, params: { id: model.id }}" class="c-ModelLink">
+			<router-link :to="{ name: view, params: { id: model.id } }" class="c-ModelLink">
 				<template v-if="hasDefaultSlot">
 					<slot :item="model" />
 				</template>
