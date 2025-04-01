@@ -55,9 +55,9 @@ import { useRefreshableSeries } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
 import seriesService from '@/services/series-service'
 
-const {series: allSeries, seriesLoading, loadSeries} = useRefreshableSeries()
+const { series: allSeries, seriesLoading, loadSeries } = useRefreshableSeries()
 
-async function fetchData(id :number|undefined): Promise<Partial<Series>> {
+async function fetchData(id :number | undefined): Promise<Partial<Series>> {
 	if (id) {
 		return seriesService.findById(id)
 	}
@@ -66,7 +66,7 @@ async function fetchData(id :number|undefined): Promise<Partial<Series>> {
 	})
 }
 
-const {model: series, loading, save, reset} = useSimpleEdit(fetchData, seriesService, [loadSeries],
+const { model: series, loading, save, reset } = useSimpleEdit(fetchData, seriesService, [loadSeries],
 	'title.add.series', 'title.edit.series', 'SeriesView')
 
 const rules = {

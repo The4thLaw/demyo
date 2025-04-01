@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/tags/:id/edit',
 		name: 'TagEdit',
-		component: () => import('@/pages/tags/TagEdit.vue')
+		component: async () => import('@/pages/tags/TagEdit.vue')
 	},
 	{
 		path: '/tags/new',
 		name: 'TagAdd',
-		component: () => import('@/pages/tags/TagEdit.vue')
+		component: async () => import('@/pages/tags/TagEdit.vue')
 	}
 ]

@@ -18,11 +18,11 @@ export default [
 	{
 		path: '/series/:id/edit',
 		name: 'SeriesEdit',
-		component: () => import('@/pages/series/SeriesEdit.vue')
+		component: async () => import('@/pages/series/SeriesEdit.vue')
 	},
 	{
 		path: '/series/new',
 		name: 'SeriesAdd',
-		component: () => import('@/pages/series/SeriesEdit.vue')
+		component: async () => import('@/pages/series/SeriesEdit.vue')
 	}
 ]

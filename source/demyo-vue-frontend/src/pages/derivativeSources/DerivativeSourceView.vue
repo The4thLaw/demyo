@@ -87,9 +87,9 @@ async function fetchData(id: number): Promise<DerivativeSource> {
 	return sourceP // Resolve calls in parallel
 }
 
-const {model: source, loading, appTasksMenu, deleteModel}
+const { model: source, loading, appTasksMenu, deleteModel }
 	= useSimpleView(fetchData, sourceService,
-		'quickTasks.delete.derivativeSource.confirm.done','DerivativeSourceIndex')
+		'quickTasks.delete.derivativeSource.confirm.done', 'DerivativeSourceIndex')
 
 const phoneLink = computed(() => {
 	if (!source.value.phoneNumber) {

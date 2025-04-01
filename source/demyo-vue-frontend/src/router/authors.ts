@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/authors/:id/edit',
 		name: 'AuthorEdit',
-		component: () => import('@/pages/authors/AuthorEdit.vue')
+		component: async () => import('@/pages/authors/AuthorEdit.vue')
 	},
 	{
 		path: '/authors/new',
 		name: 'AuthorAdd',
-		component: () => import('@/pages/authors/AuthorEdit.vue')
+		component: async () => import('@/pages/authors/AuthorEdit.vue')
 	}
 ]

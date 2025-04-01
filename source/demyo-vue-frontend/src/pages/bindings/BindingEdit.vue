@@ -21,14 +21,14 @@ import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
 import bindingService from '@/services/binding-service'
 
-async function fetchData(id :number|undefined): Promise<Partial<Binding>> {
+async function fetchData(id :number | undefined): Promise<Partial<Binding>> {
 	if (id) {
 		return bindingService.findById(id)
 	}
 	return Promise.resolve({})
 }
 
-const {model: binding, loading, save, reset} = useSimpleEdit(fetchData, bindingService, [],
+const { model: binding, loading, save, reset } = useSimpleEdit(fetchData, bindingService, [],
 	'title.add.binding', 'title.edit.binding', 'BindingView')
 
 const rules = {

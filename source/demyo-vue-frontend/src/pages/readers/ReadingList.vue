@@ -19,5 +19,5 @@ async function fetchData(): Promise<Album[]> {
 }
 
 // It's not the index
-const {modelList: albums} = useSimpleIndex(albumService, 'title.reader.readingList', fetchData);
+const { modelList: albums } = useSimpleIndex(albumService, 'title.reader.readingList', fetchData)
 </script>

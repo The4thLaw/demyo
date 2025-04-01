@@ -26,11 +26,11 @@ export default [
 	{
 		path: '/derivatives/:id/edit',
 		name: 'DerivativeEdit',
-		component: () => import('@/pages/derivatives/DerivativeEdit.vue')
+		component: async () => import('@/pages/derivatives/DerivativeEdit.vue')
 	},
 	{
 		path: '/derivatives/new',
 		name: 'DerivativeAdd',
-		component: () => import('@/pages/derivatives/DerivativeEdit.vue')
+		component: async () => import('@/pages/derivatives/DerivativeEdit.vue')
 	}
 ]

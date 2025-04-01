@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/derivativeSources/:id/edit',
 		name: 'DerivativeSourceEdit',
-		component: () => import('@/pages/derivativeSources/DerivativeSourceEdit.vue')
+		component: async () => import('@/pages/derivativeSources/DerivativeSourceEdit.vue')
 	},
 	{
 		path: '/derivativeSources/new',
 		name: 'DerivativeSourceAdd',
-		component: () => import('@/pages/derivativeSources/DerivativeSourceEdit.vue')
+		component: async () => import('@/pages/derivativeSources/DerivativeSourceEdit.vue')
 	}
 ]

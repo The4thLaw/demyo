@@ -10,11 +10,11 @@ export default [
 	{
 		path: '/collections/:id/edit',
 		name: 'CollectionEdit',
-		component: () => import('@/pages/collections/CollectionEdit.vue')
+		component: async () => import('@/pages/collections/CollectionEdit.vue')
 	},
 	{
 		path: '/collections/new',
 		name: 'CollectionAdd',
-		component: () => import('@/pages/collections/CollectionEdit.vue')
+		component: async () => import('@/pages/collections/CollectionEdit.vue')
 	}
 ]

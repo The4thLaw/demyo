@@ -16,7 +16,7 @@
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.collection.to.publisher')"
-				:to="{ name: 'CollectionAdd', query: { toPublisher: publisher.id }}"
+				:to="{ name: 'CollectionAdd', query: { toPublisher: publisher.id } }"
 				icon="mdi-folder-multiple dem-overlay-add"
 			/>
 		</AppTasks>
@@ -81,7 +81,7 @@ async function fetchData(id: number): Promise<Publisher> {
 	return publisherP
 }
 
-const {model: publisher, loading, appTasksMenu, deleteModel} = useSimpleView(fetchData,
+const { model: publisher, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData,
 	publisherService, 'quickTasks.delete.publisher.confirm.done', 'PublisherIndex')
 
 const collectionCount = computed(() => publisher.value?.collections?.length || 0)

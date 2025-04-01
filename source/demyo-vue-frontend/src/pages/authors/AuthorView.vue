@@ -93,7 +93,7 @@ async function fetchData(id: number): Promise<Author> {
 	return authorP
 }
 
-const {model: author, loading, appTasksMenu, deleteModel} = useSimpleView(fetchData, authorService,
+const { model: author, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData, authorService,
 	'quickTasks.delete.author.confirm.done', 'AuthorIndex')
 
 const albums = computed(() => authorAlbums.value.albums || [])

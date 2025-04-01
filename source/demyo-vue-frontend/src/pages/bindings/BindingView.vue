@@ -46,6 +46,6 @@ async function fetchData(id: number): Promise<Binding> {
 	return bindingP // Resolve calls in parallel
 }
 
-const {model: binding, loading, appTasksMenu, deleteModel}
+const { model: binding, loading, appTasksMenu, deleteModel }
 	= useSimpleView(fetchData, bindingService, 'quickTasks.delete.binding.confirm.done', 'BindingIndex')
 </script>

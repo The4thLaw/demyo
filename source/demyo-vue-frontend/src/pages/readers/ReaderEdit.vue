@@ -30,7 +30,7 @@ import readerService from '@/services/reader-service'
 
 const noColour = ref(true)
 
-function fetchData(id: number|undefined): Promise<Partial<Reader>> {
+async function fetchData(id: number | undefined): Promise<Partial<Reader>> {
 	if (!id) {
 		const reader: Partial<Reader> = {}
 		return Promise.resolve(reader)
@@ -43,7 +43,7 @@ function fetchData(id: number|undefined): Promise<Partial<Reader>> {
 		})
 }
 
-const {model: reader, loading, save, reset} = useSimpleEdit(fetchData, readerService, [],
+const { model: reader, loading, save, reset } = useSimpleEdit(fetchData, readerService, [],
 	'title.add.reader', 'title.edit.reader', 'ReaderView')
 
 watch(noColour, async (newFlag) => {

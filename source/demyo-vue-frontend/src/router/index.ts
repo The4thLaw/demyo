@@ -38,7 +38,7 @@ const routes = [
 	{
 		path: '/about',
 		name: 'about',
-		component: () => import('@/pages/AboutDemyo.vue')
+		component: async () => import('@/pages/AboutDemyo.vue')
 	}
 ]
 

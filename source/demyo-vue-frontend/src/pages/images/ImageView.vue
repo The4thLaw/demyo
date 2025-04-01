@@ -75,13 +75,13 @@ async function fetchData(id: number): Promise<Image> {
 	return imageP
 }
 
-const {model: image, loading, appTasksMenu, deleteModel}
+const { model: image, loading, appTasksMenu, deleteModel }
 	= useSimpleView(fetchData, imageService,
 		'quickTasks.delete.image.confirm.done', 'ImageIndex')
 
 const imageUrl = computed(() => getBaseImageUrl(image.value))
 
-const hasDependencies= computed(() =>
+const hasDependencies = computed(() =>
 	dependencies.value?.albumCovers
 		|| dependencies.value?.albumOtherImages
 		|| dependencies.value?.authors
@@ -107,7 +107,6 @@ const parsedDependencies = computed(() => {
 	}
 })
 </script>
-
 
 <style lang="scss">
 .c-ImageView__image {

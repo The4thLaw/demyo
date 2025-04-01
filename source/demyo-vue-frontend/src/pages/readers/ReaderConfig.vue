@@ -56,9 +56,9 @@ const i18n = useI18n()
 
 const languages = ref([] as OptionValue[])
 
-function fetchData(id: number|undefined): Promise<Partial<Reader>> {
+async function fetchData(id: number | undefined): Promise<Partial<Reader>> {
 	if (!id) {
-		throw new Error("Cannot load the configuration for an undefined reader")
+		throw new Error('Cannot load the configuration for an undefined reader')
 	}
 	return readerService.findById(id)
 		.then(reader => {
@@ -75,6 +75,6 @@ function fetchData(id: number|undefined): Promise<Partial<Reader>> {
 		})
 }
 
-const {model: reader, loading, save, reset} = useSimpleEdit(fetchData, readerService, [],
+const { model: reader, loading, save, reset } = useSimpleEdit(fetchData, readerService, [],
 	'menu.reader.configuration', 'menu.reader.configuration', 'ReaderView')
 </script>

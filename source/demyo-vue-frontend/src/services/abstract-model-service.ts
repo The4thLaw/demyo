@@ -54,17 +54,17 @@ class AbstractModelService<M extends IModel> {
 			console.error('You need to resolve the Promises before calling fillMissingData')
 		}
 
-		if (this.config?.fillMissingObjects) {
+		if (this.config.fillMissingObjects) {
 			this.config.fillMissingObjects.forEach(prop => {
 				if (!model[prop]) {
 					model[prop] = {
 						id: undefined
-					}  as any
+					} as any
 				}
 			})
 		}
 
-		if (this.config?.fillMissingArrays) {
+		if (this.config.fillMissingArrays) {
 			this.config.fillMissingArrays.forEach(prop => {
 				if (!model[prop]) {
 					model[prop] = [] as any
@@ -80,12 +80,12 @@ class AbstractModelService<M extends IModel> {
 	 * @param ids The Model IDs
 	 * @return The Models
 	 */
-	findMultipleById(ids: number[]): Promise<M[]> {
+	async findMultipleById(ids: number[]): Promise<M[]> {
 		const idString = ids.join(',')
 		return axiosGet(`${this.basePath}/batch/${idString}`, {})
 	}
 
-	save(model: M) {
+	async save(model: M) {
 		this.sanitizeArrays(model)
 		this.sanitizeObjects(model)
 		this.sanitizeHtml(model)
@@ -102,7 +102,7 @@ class AbstractModelService<M extends IModel> {
 	 * @param model The Model.
 	 */
 	private sanitizeArrays(model: M) {
-		if (this.config?.sanitizeArrays) {
+		if (this.config.sanitizeArrays) {
 			this.config.sanitizeArrays.forEach(prop => {
 				if (Array.isArray(model[prop])) {
 					model[prop] = model[prop].map(v => Number.isInteger(v) ? { id: v } : v) as any
@@ -116,7 +116,7 @@ class AbstractModelService<M extends IModel> {
 	 * @param model The Model.
 	 */
 	private sanitizeObjects(model: M) {
-		if (this.config?.sanitizeObjects) {
+		if (this.config.sanitizeObjects) {
 			// In the case of clearable model link fields, the id can be set to false
 			// In such cases, we should clear the object completely
 			this.config.sanitizeObjects.forEach(prop => {
@@ -134,7 +134,7 @@ class AbstractModelService<M extends IModel> {
 	 * @private
 	 */
 	sanitizeHtml(model: M) {
-		if (this.config?.sanitizeHtml) {
+		if (this.config.sanitizeHtml) {
 			// Rich text could leave empty <p></p> markup if the user deletes the text
 			this.config.sanitizeHtml.forEach(prop => {
 				if (model[prop] === '<p></p>') {
@@ -148,7 +148,7 @@ class AbstractModelService<M extends IModel> {
 	 * Deletes a Model.
 	 * @param id The Model ID
 	 */
-	deleteModel(id: number) {
+	async deleteModel(id: number) {
 		return axiosDelete(this.basePath + id, false)
 	}
 }

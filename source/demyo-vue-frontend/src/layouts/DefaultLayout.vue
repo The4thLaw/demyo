@@ -1,5 +1,5 @@
 <template>
-	<v-app :class="$vuetify.theme['current'].dark?'dem-theme--dark':'dem-theme--light'">
+	<v-app :class="$vuetify.theme.current.dark ? 'dem-theme--dark' : 'dem-theme--light'">
 		<v-navigation-drawer
 			v-if="!$vuetify.display.smAndDown"
 			v-model="displayDetailsPane" location="right"
@@ -87,7 +87,7 @@
 							ref="toolbar-search"
 							v-model="quicksearchQuery" clearable hide-details
 							autocomplete="off"
-							:color="$vuetify.theme['current'].colors['on-primary']"
+							:color="$vuetify.theme.current.colors['on-primary']"
 							@click:clear="showQuicksearch = false; clearSearch()"
 							@blur="blurSearch" @keyup="performSearch" @keydown.enter="enterSearch"
 						/>
@@ -149,7 +149,7 @@ const showQuicksearch = ref(false)
 const promptReaderSelection = ref(false)
 const menuItems = ref(defaultMenu)
 
-let pageTitleObserver: MutationObserver | undefined;
+let pageTitleObserver: MutationObserver | undefined
 onMounted(() => {
 	// Monitor the page title for changes
 	pageTitleObserver = new MutationObserver((mutations) => {
@@ -178,8 +178,10 @@ const snackbarMessage = computed(() => uiStore.snackbarMessages[0])
 const readerStore = useReaderStore()
 const { readerLoaded, readerSelectionRequired, currentReader } = storeToRefs(readerStore)
 
-const { currentQuery: quicksearchQuery, clearSearch, performSearch,
-	isRelevantSearchQuery, loading: quicksearchLoading, results: quicksearchResults } = useQuicksearch()
+const {
+	currentQuery: quicksearchQuery, clearSearch, performSearch,
+	isRelevantSearchQuery, loading: quicksearchLoading, results: quicksearchResults
+} = useQuicksearch()
 const menuSearch = useTemplateRef<HTMLInputElement>('menu-search')
 const toolbarSearch = useTemplateRef<HTMLInputElement>('toolbar-search')
 

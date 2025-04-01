@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/albums/:id/edit',
 		name: 'AlbumEdit',
-		component: () => import('@/pages/albums/AlbumEdit.vue')
+		component: async () => import('@/pages/albums/AlbumEdit.vue')
 	},
 	{
 		path: '/albums/new',
 		name: 'AlbumAdd',
-		component: () => import('@/pages/albums/AlbumEdit.vue')
+		component: async () => import('@/pages/albums/AlbumEdit.vue')
 	}
 ]

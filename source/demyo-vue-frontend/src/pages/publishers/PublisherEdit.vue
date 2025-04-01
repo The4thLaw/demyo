@@ -46,9 +46,9 @@ import { useRefreshableImages } from '@/composables/refreshable-models'
 import { mandatory, url } from '@/helpers/rules'
 import publisherService from '@/services/publisher-service'
 
-const {images, imagesLoading, loadImages} = useRefreshableImages()
+const { images, imagesLoading, loadImages } = useRefreshableImages()
 
-async function fetchData(id: number|undefined): Promise<Partial<Publisher>> {
+async function fetchData(id: number | undefined): Promise<Partial<Publisher>> {
 	if (id) {
 		return publisherService.findById(id)
 			// Clear the collections: we won't be editing those and don't want to save them
@@ -65,7 +65,7 @@ async function fetchData(id: number|undefined): Promise<Partial<Publisher>> {
 	return Promise.resolve(publisher)
 }
 
-const {model: publisher, loading, save, reset} = useSimpleEdit(fetchData, publisherService,
+const { model: publisher, loading, save, reset } = useSimpleEdit(fetchData, publisherService,
 	[loadImages], 'title.add.publisher', 'title.edit.publisher', 'PublisherView')
 
 const rules = {

@@ -57,14 +57,14 @@ import { useSimpleEdit } from '@/composables/model-edit'
 import { email, mandatory, phone, url } from '@/helpers/rules'
 import sourceService from '@/services/derivative-source-service'
 
-async function fetchData(id :number|undefined): Promise<Partial<DerivativeSource>> {
+async function fetchData(id :number | undefined): Promise<Partial<DerivativeSource>> {
 	if (id) {
 		return sourceService.findById(id)
 	}
 	return Promise.resolve({})
 }
 
-const {model: source, loading, save, reset} = useSimpleEdit(fetchData, sourceService, [],
+const { model: source, loading, save, reset } = useSimpleEdit(fetchData, sourceService, [],
 	'title.add.derivativeSource', 'title.edit.derivativeSource', 'DerivativeSourceView')
 
 const rules = {

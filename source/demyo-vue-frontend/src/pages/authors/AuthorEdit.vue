@@ -52,9 +52,9 @@ import { useRefreshableImages } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
 import authorService from '@/services/author-service'
 
-const {images, imagesLoading, loadImages} = useRefreshableImages()
+const { images, imagesLoading, loadImages } = useRefreshableImages()
 
-async function fetchData(id: number|undefined): Promise<Partial<Author>> {
+async function fetchData(id: number | undefined): Promise<Partial<Author>> {
 	if (id) {
 		return authorService.findById(id)
 	}
@@ -63,7 +63,7 @@ async function fetchData(id: number|undefined): Promise<Partial<Author>> {
 	})
 }
 
-const {model: author, loading, save, reset} = useSimpleEdit(fetchData, authorService, [loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
+const { model: author, loading, save, reset } = useSimpleEdit(fetchData, authorService, [loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
 
 const rules = {
 	name: [

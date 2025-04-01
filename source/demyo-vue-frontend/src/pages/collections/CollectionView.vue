@@ -65,7 +65,7 @@ async function fetchData(id: number): Promise<Collection> {
 	return collectionP // Resolve calls in parallel
 }
 
-const {model: collection, loading, appTasksMenu, deleteModel}
+const { model: collection, loading, appTasksMenu, deleteModel }
 	= useSimpleView(fetchData, collectionService, 'quickTasks.delete.collection.confirm.done', 'PublisherIndex',
 		c => c ? `${c.identifyingName} – ${c.publisher?.identifyingName}` : '')
 </script>

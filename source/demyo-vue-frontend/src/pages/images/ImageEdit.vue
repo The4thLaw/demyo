@@ -22,16 +22,16 @@ import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
 import imageService from '@/services/image-service'
 
-function fetchData(id: number|undefined): Promise<Image> {
+async function fetchData(id: number | undefined): Promise<Image> {
 	if (!id) {
 		throw new Error("Can't add an image this way")
 	}
 	return imageService.findById(id)
 }
 
-const {model: image, loading, save, reset} = useSimpleEdit(fetchData, imageService, [], '-', 'title.edit.image', 'ImageView')
+const { model: image, loading, save, reset } = useSimpleEdit(fetchData, imageService, [], '-', 'title.edit.image', 'ImageView')
 
 const rules = {
-	description: [ mandatory() ]
+	description: [mandatory()]
 }
 </script>

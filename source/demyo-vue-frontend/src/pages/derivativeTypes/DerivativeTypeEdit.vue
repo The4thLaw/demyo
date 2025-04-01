@@ -21,14 +21,14 @@ import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
 import typeService from '@/services/derivative-type-service'
 
-async function fetchData(id :number|undefined): Promise<Partial<DerivativeType>> {
+async function fetchData(id :number | undefined): Promise<Partial<DerivativeType>> {
 	if (id) {
 		return typeService.findById(id)
 	}
 	return Promise.resolve({})
 }
 
-const {model: type, loading, save, reset} = useSimpleEdit(fetchData, typeService, [],
+const { model: type, loading, save, reset } = useSimpleEdit(fetchData, typeService, [],
 	'title.add.derivativeType', 'title.edit.derivativeType', 'DerivativeTypeView')
 
 const rules = {

@@ -26,12 +26,12 @@
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.album.to.series')"
-				:to="{ name: 'AlbumAdd', query: { toSeries: series.id }}"
+				:to="{ name: 'AlbumAdd', query: { toSeries: series.id } }"
 				icon="mdi-book-open-variant dem-overlay-add"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.derivative.to.series')"
-				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
+				:to="{ name: 'DerivativeAdd', query: derivativeQuery }"
 				icon="mdi-image-frame dem-overlay-add"
 			/>
 		</AppTasks>
@@ -316,7 +316,7 @@ const maxAlbumYear = computed(() => {
 async function loadAlbums(series: Series) {
 	if (series.albumIds) {
 		// We need the variable to iterate and, without iteration, this doesn't work
-		// eslint-disable-next-line no-unused-vars
+
 		for await (const _value of asyncPool(2, series.albumIds, albumLoader)) {
 			// Nothing to do
 		}

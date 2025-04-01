@@ -13,7 +13,7 @@ class BindingService extends AbstractModelService<Binding> {
 	 * Finds how many Albums use the given Binding.
 	 * @param id The Binding ID
 	 */
-	countAlbums(id: number): Promise<number> {
+	async countAlbums(id: number): Promise<number> {
 		return axiosGet(`bindings/${id}/albums/count`, 0)
 	}
 }

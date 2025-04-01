@@ -46,6 +46,6 @@ async function fetchData(id: number): Promise<DerivativeType> {
 	return typeP
 }
 
-const {model:type, deleteModel, appTasksMenu, loading} = useSimpleView(fetchData, typeService,
+const { model: type, deleteModel, appTasksMenu, loading } = useSimpleView(fetchData, typeService,
 	'quickTasks.delete.derivativeType.confirm.done', 'DerivativeTypeIndex')
 </script>

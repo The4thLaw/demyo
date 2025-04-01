@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/images/:id/edit',
 		name: 'ImageEdit',
-		component: () => import('@/pages/images/ImageEdit.vue')
+		component: async () => import('@/pages/images/ImageEdit.vue')
 	},
 	{
 		path: '/images/new',
 		name: 'ImageDetect',
-		component: () => import('@/pages/images/ImageDetect.vue')
+		component: async () => import('@/pages/images/ImageDetect.vue')
 	}
 ]

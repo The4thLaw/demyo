@@ -18,12 +18,12 @@ export default [
 	{
 		path: '/readers/:id/edit',
 		name: 'ReaderEdit',
-		component: () => import('@/pages/readers/ReaderEdit.vue')
+		component: async () => import('@/pages/readers/ReaderEdit.vue')
 	},
 	{
 		path: '/readers/new',
 		name: 'ReaderAdd',
-		component: () => import('@/pages/readers/ReaderEdit.vue')
+		component: async () => import('@/pages/readers/ReaderEdit.vue')
 	},
 	{
 		path: '/readers/:id/favourites',
@@ -38,6 +38,6 @@ export default [
 	{
 		path: '/readers/:id/configuration',
 		name: 'ReaderConfig',
-		component: () => import('@/pages/readers/ReaderConfig.vue')
+		component: async () => import('@/pages/readers/ReaderConfig.vue')
 	}
 ]

@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/bindings/:id/edit',
 		name: 'BindingEdit',
-		component: () => import('@/pages/bindings/BindingEdit.vue')
+		component: async () => import('@/pages/bindings/BindingEdit.vue')
 	},
 	{
 		path: '/bindings/new',
 		name: 'BindingAdd',
-		component: () => import('@/pages/bindings/BindingEdit.vue')
+		component: async () => import('@/pages/bindings/BindingEdit.vue')
 	}
 ]

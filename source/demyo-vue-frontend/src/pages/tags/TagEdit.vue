@@ -60,7 +60,7 @@ import tagService from '@/services/tag-service'
 const noFgColour = ref(true)
 const noBgColour = ref(true)
 
-function fetchData(id: number|undefined): Promise<Partial<Tag>> {
+async function fetchData(id: number | undefined): Promise<Partial<Tag>> {
 	if (!id) {
 		const tag: Partial<Tag> = {}
 		return Promise.resolve(tag)
@@ -74,7 +74,7 @@ function fetchData(id: number|undefined): Promise<Partial<Tag>> {
 		})
 }
 
-const {model: tag, loading, save, reset} = useSimpleEdit(fetchData, tagService,
+const { model: tag, loading, save, reset } = useSimpleEdit(fetchData, tagService,
 	[], 'title.add.tag', 'title.edit.tag', 'TagView')
 
 const style = useTagStyle(tag)

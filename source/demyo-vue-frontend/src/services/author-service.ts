@@ -16,7 +16,7 @@ class AuthorService extends AbstractModelService<Author> {
 	 * Finds the Albums on which an Author has worked.
 	 * @param id The Author ID
 	 */
-	getAuthorAlbums(id: number): Promise<AuthorAlbums> {
+	async getAuthorAlbums(id: number): Promise<AuthorAlbums> {
 		return axiosGet(`authors/${id}/albums`, {})
 	}
 
@@ -24,7 +24,7 @@ class AuthorService extends AbstractModelService<Author> {
 	 * Finds how many Derivatives use the given artist.
 	 * @param {Number} id The Author ID
 	 */
-	countDerivatives(id: number): Promise<number> {
+	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`authors/${id}/derivatives/count`, 0)
 	}
 }

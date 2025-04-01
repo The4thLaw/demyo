@@ -56,10 +56,10 @@ import collectionService from '@/services/collection-service'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const {images, imagesLoading, loadImages} = useRefreshableImages()
-const {publishers, publishersLoading, loadPublishers} = useRefreshablePublishers()
+const { images, imagesLoading, loadImages } = useRefreshableImages()
+const { publishers, publishersLoading, loadPublishers } = useRefreshablePublishers()
 
-async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
+async function fetchData(id: number | undefined): Promise<Partial<Collection>> {
 	if (id) {
 		return collectionService.findById(id)
 	}
@@ -76,7 +76,7 @@ async function fetchData(id: number|undefined): Promise<Partial<Collection>> {
 	return Promise.resolve(collection)
 }
 
-const {model: collection, loading, save, reset} = useSimpleEdit(fetchData, collectionService,
+const { model: collection, loading, save, reset } = useSimpleEdit(fetchData, collectionService,
 	[loadImages, loadPublishers], 'title.add.collection', 'title.edit.collection', 'CollectionView')
 
 const rules = {

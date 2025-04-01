@@ -13,7 +13,7 @@ class ImageService extends AbstractModelService<Image> {
 	 * Finds the Models which depend on this image.
 	 * @param id The Image ID
 	 */
-	getImageDependencies(id: number): Promise<Image> {
+	async getImageDependencies(id: number): Promise<Image> {
 		return axiosGet(`images/${id}/dependencies`, {})
 	}
 
@@ -21,7 +21,7 @@ class ImageService extends AbstractModelService<Image> {
 	 * Detects non-registered images currently on the disk.
 	 * @return The image paths.
 	 */
-	detectDiskImages(): Promise<string[]> {
+	async detectDiskImages(): Promise<string[]> {
 		return axiosGet('images/detect', [])
 	}
 
@@ -30,7 +30,7 @@ class ImageService extends AbstractModelService<Image> {
 	 * @param images The paths of the images to add.
 	 * @return The added image IDs.
 	 */
-	saveDiskImages(images: string[]): Promise<number[]> {
+	async saveDiskImages(images: string[]): Promise<number[]> {
 		return axiosPost('images/detect', images, [])
 	}
 }

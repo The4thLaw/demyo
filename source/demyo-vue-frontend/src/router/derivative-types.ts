@@ -16,11 +16,11 @@ export default [
 	{
 		path: '/derivativeTypes/:id/edit',
 		name: 'DerivativeTypeEdit',
-		component: () => import('@/pages/derivativeTypes/DerivativeTypeEdit.vue')
+		component: async () => import('@/pages/derivativeTypes/DerivativeTypeEdit.vue')
 	},
 	{
 		path: '/derivativeTypes/new',
 		name: 'DerivativeTypeAdd',
-		component: () => import('@/pages/derivativeTypes/DerivativeTypeEdit.vue')
+		component: async () => import('@/pages/derivativeTypes/DerivativeTypeEdit.vue')
 	}
 ]

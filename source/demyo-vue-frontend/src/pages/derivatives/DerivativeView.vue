@@ -180,7 +180,7 @@ async function fetchData(id: number): Promise<Derivative> {
 	return derivativeService.findById(id)
 }
 
-const {model: derivative, appTasksMenu, deleteModel, loading, loadData} = useSimpleView(fetchData, derivativeService,
+const { model: derivative, appTasksMenu, deleteModel, loading, loadData } = useSimpleView(fetchData, derivativeService,
 	'quickTasks.delete.derivative.confirm.done', 'DerivariveIndex')
 
 const hasPrices = computed(() => derivative.value.prices?.length > 0)

@@ -31,7 +31,9 @@ useHead({
 	title: useI18n().t('title.home')
 })
 
-const { currentQuery: quicksearchQuery, performSearch, clearSearch, isRelevantSearchQuery, loading: quicksearchLoading,
-	results: quicksearchResults }
+const {
+	currentQuery: quicksearchQuery, performSearch, clearSearch, isRelevantSearchQuery, loading: quicksearchLoading,
+	results: quicksearchResults
+}
 	= useQuicksearch()
 </script>
