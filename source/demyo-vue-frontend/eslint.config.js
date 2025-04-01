@@ -116,7 +116,7 @@ export default [
 			// Generated files
 			'auto-imports.d.ts',
 			'components.d.ts',
-			'src/types/java-mdels.d.ts'
+			'src/types/java-models.d.ts'
 		]
 	},
 	...defineConfigWithVueTs(

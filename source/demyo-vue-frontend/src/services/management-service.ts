@@ -19,12 +19,12 @@ class ManagementService {
 					'Content-Type': 'multipart/form-data'
 				}
 			})
-			return response.data
+			return response.data as boolean
 		} catch (e) {
 			console.warn('Failed to import:', e)
 		} finally {
 			// Always reload the reader
-			readerService.init()
+			void readerService.init()
 		}
 		return false
 	}

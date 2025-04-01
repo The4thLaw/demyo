@@ -39,10 +39,9 @@ public class PluginManager {
 	public List<Path> getPlugins() {
 		List<Path> plugins = new ArrayList<>();
 		for (Path path : paths) {
-			try {
-				Files.walk(path, Integer.MAX_VALUE)
-						.filter(FluentUtils.fileWithExtension("jar"))
-						.forEach(plugins::add);
+			try (Stream<Path> paths = Files.walk(path, Integer.MAX_VALUE)) {
+					plugins = paths.filter(FluentUtils.fileWithExtension("jar"))
+						.toList();
 			} catch (IOException e) {
 				LOGGER.warn("Failed to list plugins", e);
 			}

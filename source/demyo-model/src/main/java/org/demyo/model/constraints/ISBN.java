@@ -24,7 +24,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Documented
 @Constraint(validatedBy = {})
-@Pattern(regexp = "^[0-9-]{10,}X?( ?/ ?[0-9]+)?$", flags = Flag.CASE_INSENSITIVE)
+@Pattern(regexp = "^[0-9-]{10,}X?( ?/ ?\\d+)?$", flags = Flag.CASE_INSENSITIVE)
 public @interface ISBN {
 	/**
 	 * @return The error message template.

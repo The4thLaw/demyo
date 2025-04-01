@@ -24,7 +24,7 @@ class SeriesService extends AbstractModelService<Series> {
 	 * @param seriesId The Series ID
 	 */
 	async getAlbumTemplate(seriesId: number): Promise<Album> {
-		const template = await axiosGet(`${this.basePath}${seriesId}/albums/template`, {}) as Album
+		const template: Album = await axiosGet(`${this.basePath}${seriesId}/albums/template`, {})
 		return albumService.fillMissingData(template)
 	}
 
@@ -32,7 +32,7 @@ class SeriesService extends AbstractModelService<Series> {
 	 * Finds how many Derivatives use the given series.
 	 * @param id The Series ID
 	 */
-	countDerivatives(id: number): Promise<number> {
+	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
 	}
 }

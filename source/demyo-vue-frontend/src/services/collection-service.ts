@@ -16,7 +16,7 @@ class CollectionService extends AbstractModelService<Collection> {
 	 * Finds how many Albums use the given Collection.
 	 * @param id The Collection ID
 	 */
-	countAlbums(id: number): Promise<number> {
+	async countAlbums(id: number): Promise<number> {
 		return axiosGet(`collections/${id}/albums/count`, 0)
 	}
 }

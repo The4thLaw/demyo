@@ -95,7 +95,7 @@ public class DaoConfig {
 		return ds;
 	}
 
-	private static void migrateH2IfNeeded(boolean isNewDatabase, Path databaseFilePath, String url) throws IOException {
+	private static void migrateH2IfNeeded(boolean isNewDatabase, Path databaseFilePath, String url) {
 		Path h2CacheDirectory;
 		String h2CacheProperty = System.getProperty("demyo.h2.cacheDirectoryName");
 		if (h2CacheProperty != null) {

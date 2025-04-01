@@ -28,7 +28,7 @@ public class RawSQLDao implements IRawSQLDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	private JdbcTemplate jdbcTemplate;
+	private final JdbcTemplate jdbcTemplate;
 
 	/**
 	 * Default construtor.
