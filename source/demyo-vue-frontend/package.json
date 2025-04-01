@@ -21,7 +21,6 @@
     "@mdi/font": "^5.9.55",
     "@tinymce/tinymce-vue": "^5.1.1",
     "@unhead/vue": "^1.9.1",
-    "@vueuse/core": "^11.0.1",
     "autoprefixer": "^10.4.21",
     "axios": "^1.8.4",
     "currency-symbol-map": "^5.0.1",

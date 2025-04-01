@@ -29,7 +29,6 @@
 
 <script setup lang="ts">
 import Editor from '@tinymce/tinymce-vue'
-import { useVModel } from '@vueuse/core'
 
 /* We need the global tinymce */
 import 'tinymce/tinymce'
@@ -61,10 +60,5 @@ import 'tinymce-i18n/langs7/fr_FR'
 /* The default content CSS can be changed or replaced with appropriate CSS for the editor content. */
 import 'tinymce/skins/content/default/content.js'
 
-const props = defineProps<{
-  modelValue: string | undefined
-}>()
-const emit = defineEmits(['update:modelValue'])
-
-const model = useVModel(props, 'modelValue', emit)
+const model = defineModel<string | undefined>()
 </script>
