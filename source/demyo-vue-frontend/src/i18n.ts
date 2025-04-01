@@ -7,13 +7,14 @@ import mergedMessages from '@intlify/unplugin-vue-i18n/messages'
 import axios from 'axios'
 import { createI18n } from 'vue-i18n'
 
-function setHtmlLang(lang: string) {
+function setHtmlLang(lang: string): void {
 	document.documentElement.setAttribute('lang', lang.replace(/_/g, ' '))
 }
 
 const loadedLanguages: string[] = []
 
 // Define the variants we support
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const typedDatetimeFormats = datetimeFormats as Record<string, any>
 typedDatetimeFormats['fr-BE'] = datetimeFormats.fr
 
@@ -26,7 +27,7 @@ const localStorageLanguage = loadReaderLanguageFromLocalStorage()
 if (localStorageLanguage) {
 	console.log('Restoring language from local storage to', localStorageLanguage)
 }
-const selectedLocale = localStorageLanguage || defaultLanguage
+const selectedLocale = localStorageLanguage ?? defaultLanguage
 const simpleLocale = selectedLocale.replace(/[-_].*/, '')
 // English would have no fallback but we're sure French will remain a first-class citizen
 const fallbackLanguage = simpleLocale === 'en' ? 'fr' : 'en'
@@ -46,7 +47,7 @@ console.log(`Initialized i18n with '${selectedLocale}' as default language and '
  * @param {string} lang The language to get translations for
  * @return {Promise<void>} An Promise without value (void)
  */
-async function loadLanguageFromServer(lang: string) {
+async function loadLanguageFromServer(lang: string): Promise<void> {
 	if (loadedLanguages.includes(lang)) {
 		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
 		return

@@ -16,7 +16,7 @@ const app = createApp(App)
 
 app.use(pinia)
 // Do this as soon as possible but after pinia is set up. It's asynchronous and will work during bootstrap
-readerService.init()
+void readerService.init()
 
 // Global mixin to allow components to scroll to the top of the page
 app.mixin({
