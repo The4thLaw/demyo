@@ -92,7 +92,6 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 */
 	@RequestMapping(value = { "/", "/{modelId}" }, method = { RequestMethod.POST, RequestMethod.PUT })
 	public long save(@RequestBody @Valid M entity, BindingResult result) throws InvalidEntityException {
-		LOGGER.debug("Requested to save entity: {}", entity);
 		if (result.hasErrors()) {
 			LOGGER.warn("There were validation errors: {}", result);
 			throw new InvalidEntityException();

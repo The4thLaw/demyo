@@ -27,8 +27,10 @@ class AlbumService extends AbstractModelService<Album> {
 
 		// Saving an album may impact the reading list, etc. We should reload them when the save is done
 		promise.then((id) => {
-			readerService.loadCurrentReaderLists()
+			void readerService.loadCurrentReaderLists()
 			return id
+		}, (err: unknown) => {
+			console.log('Failed to reload the reading list', err)
 		})
 
 		return promise

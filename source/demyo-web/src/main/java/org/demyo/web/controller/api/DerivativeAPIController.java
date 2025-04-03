@@ -1,6 +1,5 @@
 package org.demyo.web.controller.api;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -19,6 +18,8 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Derivative;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IDerivativeService;
+
+import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
 
 /**
  * Controller handling the API calls for {@link Derivative}s.
@@ -83,8 +84,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 		String[] otherImages = data.getOtherImages();
 
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Saving from FilePond: other images = {}",
-					otherImages != null ? List.of(otherImages) : null);
+			LOGGER.debug("Saving from FilePond: other images = {}", sanitize(otherImages));
 		}
 
 		service.recoverFromFilePond(modelId, otherImages);

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-dynamic-delete */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { axiosDelete, axiosGet, axiosPost, axiosPut } from '@/helpers/axios'
 
 // I couldn't figure out how to map the keys to specific types so some "as any" casts are needed below
@@ -49,7 +53,7 @@ class AbstractModelService<M extends IModel> {
 	 * Fills any data that is required by the frontend but missing from server-side data.
 	 * @param model The model to fill
 	 */
-	fillMissingData(model: M) {
+	fillMissingData(model: M): M {
 		if (model instanceof Promise) {
 			console.error('You need to resolve the Promises before calling fillMissingData')
 		}
@@ -85,7 +89,7 @@ class AbstractModelService<M extends IModel> {
 		return axiosGet(`${this.basePath}/batch/${idString}`, {})
 	}
 
-	async save(model: M) {
+	async save(model: M): Promise<number> {
 		this.sanitizeArrays(model)
 		this.sanitizeObjects(model)
 		this.sanitizeHtml(model)
@@ -101,7 +105,7 @@ class AbstractModelService<M extends IModel> {
 	 * Transforms arrays of integers in arrays of objects.
 	 * @param model The Model.
 	 */
-	private sanitizeArrays(model: M) {
+	private sanitizeArrays(model: M): void {
 		if (this.config.sanitizeArrays) {
 			this.config.sanitizeArrays.forEach(prop => {
 				if (Array.isArray(model[prop])) {
@@ -115,7 +119,7 @@ class AbstractModelService<M extends IModel> {
 	 * Sanitizes the sub-properties of a Model that link to a single other Model.
 	 * @param model The Model.
 	 */
-	private sanitizeObjects(model: M) {
+	private sanitizeObjects(model: M): void {
 		if (this.config.sanitizeObjects) {
 			// In the case of clearable model link fields, the id can be set to false
 			// In such cases, we should clear the object completely
@@ -133,7 +137,7 @@ class AbstractModelService<M extends IModel> {
 	 * @param model The Model.
 	 * @private
 	 */
-	sanitizeHtml(model: M) {
+	sanitizeHtml(model: M): void {
 		if (this.config.sanitizeHtml) {
 			// Rich text could leave empty <p></p> markup if the user deletes the text
 			this.config.sanitizeHtml.forEach(prop => {
@@ -148,7 +152,7 @@ class AbstractModelService<M extends IModel> {
 	 * Deletes a Model.
 	 * @param id The Model ID
 	 */
-	async deleteModel(id: number) {
+	async deleteModel(id: number): Promise<boolean> {
 		return axiosDelete(this.basePath + id, false)
 	}
 }

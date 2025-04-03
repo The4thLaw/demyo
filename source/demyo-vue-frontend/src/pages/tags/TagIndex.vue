@@ -18,7 +18,7 @@ function getMaxUsageCount(tags: Tag[]) {
 		return 0
 	}
 
-	const max = Math.max.apply(Math, tags.map(t => t.usageCount))
+	const max = Math.max(...tags.map(t => t.usageCount))
 	// Have a reasonable minimum else it just looks silly if there are few tags and they are seldom used
 	return Math.max(max, 10)
 }

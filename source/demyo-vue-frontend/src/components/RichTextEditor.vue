@@ -4,7 +4,7 @@
 	-->
 	<Editor
 		v-model="model"
-		api-key="sample-api"
+		api-key="gpl"
 		:init="{
 			plugins: 'autoresize lists link image help',
 			license_key: 'gpl',

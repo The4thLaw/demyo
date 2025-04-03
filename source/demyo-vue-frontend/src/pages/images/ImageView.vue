@@ -82,12 +82,12 @@ const { model: image, loading, appTasksMenu, deleteModel }
 const imageUrl = computed(() => getBaseImageUrl(image.value))
 
 const hasDependencies = computed(() =>
-	dependencies.value?.albumCovers
-		|| dependencies.value?.albumOtherImages
-		|| dependencies.value?.authors
-		|| dependencies.value?.collections
-		|| dependencies.value?.derivatives
-		|| dependencies.value?.publishers
+	!!dependencies.value?.albumCovers
+		|| !!dependencies.value?.albumOtherImages
+		|| !!dependencies.value?.authors
+		|| !!dependencies.value?.collections
+		|| !!dependencies.value?.derivatives
+		|| !!dependencies.value?.publishers
 )
 
 function hasSeries(item: IModel) {
@@ -95,15 +95,15 @@ function hasSeries(item: IModel) {
 }
 
 const parsedDependencies = computed(() => {
-	const covs: Album[] = dependencies.value?.albumCovers || []
-	const other: Album[] = dependencies.value?.albumOtherImages || []
+	const covs: Album[] = dependencies.value?.albumCovers ?? []
+	const other: Album[] = dependencies.value?.albumOtherImages ?? []
 	// This won't work if an image is used twice in an Album, although that hardly makes any sense
 	return {
 		albums: [...covs, ...other],
-		authors: dependencies.value?.authors || [] as Author[],
-		collections: dependencies.value?.collections || [] as Collection[],
-		derivatives: dependencies.value?.derivatives || [] as Derivative[],
-		publishers: dependencies.value?.publishers || [] as Publisher[]
+		authors: dependencies.value?.authors ?? [] as Author[],
+		collections: dependencies.value?.collections ?? [] as Collection[],
+		derivatives: dependencies.value?.derivatives ?? [] as Derivative[],
+		publishers: dependencies.value?.publishers ?? [] as Publisher[]
 	}
 })
 </script>

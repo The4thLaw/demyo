@@ -22,6 +22,8 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IFilePondService;
 
+import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
+
 /**
  * Implements the contract defined by {@link IFilePondService}.
  */
@@ -80,7 +82,9 @@ public class FilePondService implements IFilePondService {
 
 	@Override
 	public String process(String originalFileName, InputStream input) throws IOException {
-		LOGGER.debug("Uploading a file through FilePond: {}", originalFileName);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Uploading a file through FilePond: {}", sanitize(originalFileName));
+		}
 
 		String extension = FilenameUtils.getFileExtension(originalFileName);
 		if (extension == null) {
@@ -101,7 +105,9 @@ public class FilePondService implements IFilePondService {
 		// Request to delete on exit, just in case
 		destinationFile.toFile().deleteOnExit();
 
-		LOGGER.debug("{} was stored to {}", originalFileName, destinationFile.toAbsolutePath());
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{} was stored to {}", sanitize(originalFileName), destinationFile.toAbsolutePath());
+		}
 
 		return filename;
 	}

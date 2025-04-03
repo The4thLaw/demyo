@@ -19,6 +19,7 @@ import org.demyo.model.config.ApplicationConfiguration;
 import org.demyo.service.IConfigurationService;
 import org.demyo.service.ITranslationService;
 import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
+import org.demyo.utils.logging.LoggingSanitizer;
 
 /**
  * Implements the contract defined by {@link ITranslationService}.
@@ -36,14 +37,18 @@ public class TranslationService implements ITranslationService {
 
 	@Cacheable(cacheNames = "ReferenceData")
 	@Override
-	public Map<String, String> getAllTranslations(String locale) {
+	public Map<String, String> getAllTranslations(String localeString) {
 		if (!(messageSource instanceof BrowsableResourceBundleMessageSource)) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_SPRING_CONFIG_INCONSISTENT,
 					"Unexpected MessageSource class: " + messageSource.getClass());
 		}
-		LOGGER.debug("Detecting translations for all messages of locale {}", locale);
+		Locale locale = Locale.forLanguageTag(localeString);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Detecting translations for all messages of locale {} ({})",
+				locale, LoggingSanitizer.sanitize(localeString));
+		}
 		return ((BrowsableResourceBundleMessageSource) messageSource)//
-				.getAllMessages(Locale.forLanguageTag(locale));
+				.getAllMessages(locale);
 	}
 
 	@Override

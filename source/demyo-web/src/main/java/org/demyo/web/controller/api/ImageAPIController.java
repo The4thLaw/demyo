@@ -19,6 +19,7 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Image;
 import org.demyo.model.ModelView;
 import org.demyo.service.IImageService;
+import org.demyo.utils.logging.LoggingSanitizer;
 
 /**
  * Controller handling the API calls for {@link Image}s.
@@ -87,7 +88,9 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 	 */
 	@PostMapping("/detect")
 	public List<Long> saveDetectedImages(@RequestBody List<String> paths) throws DemyoException {
-		LOGGER.debug("Selected images: {}", paths);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Selected images: {}", LoggingSanitizer.sanitize(paths));
+		}
 
 		List<Long> addedImages = new ArrayList<>(paths.size());
 		for (String path : paths) {

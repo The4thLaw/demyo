@@ -9,14 +9,14 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<AutoComplete
+						<Autocomplete
 							v-model="collection.publisher.id" :items="publishers" :loading="publishersLoading"
 							:rules="rules.publisher" label-key="field.Collection.publisher"
 							refreshable @refresh="loadPublishers"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
-						<AutoComplete
+						<Autocomplete
 							v-model="collection.logo.id" :items="images" :loading="imagesLoading"
 							label-key="field.Collection.logo" refreshable @refresh="loadImages"
 						/>

@@ -24,6 +24,7 @@ import org.demyo.service.ISearchService;
 import org.demyo.service.ISeriesService;
 import org.demyo.service.ITagService;
 import org.demyo.service.SearchResult;
+import org.demyo.utils.logging.LoggingSanitizer;
 
 /**
  * Implements the contract defined by {@link ISearchService}.
@@ -60,7 +61,9 @@ public class SearchService implements ISearchService {
 			exactMatch = false;
 			query = "%" + query + "%";
 		}
-		LOGGER.debug("Query on {} will be exact: {}", query, exactMatch);
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Query on {} will be exact: {}", LoggingSanitizer.sanitize(query), exactMatch);
+		}
 
 		CompletableFuture<List<Series>> series = seriesService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Album>> albums = albumService.quickSearch(query, exactMatch);

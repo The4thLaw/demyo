@@ -14,7 +14,7 @@
 						/>
 					</v-col>
 					<v-col cols="12">
-						<AutoComplete
+						<Autocomplete
 							v-model="series.relatedSeries" :items="allSeries" :loading="seriesLoading" multiple
 							label-key="field.Series.relatedSeries"
 						/>

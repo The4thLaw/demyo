@@ -4,27 +4,27 @@
 			<SectionCard :subtitle="$t('fieldset.Derivative.origin')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
 							:loading="seriesLoading" refreshable clearable
 							:rules="rules.albumOrSeries" @update:modelValue="loadAlbums(); formRef.validate()" @refresh="loadSeries"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
 							label-key="field.Derivative.album" refreshable clearable
 							:rules="rules.albumOrSeries" @update:modelValue="formRef.validate()" @refresh="loadAlbums"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="derivative.artist.id" :items="authors" :loading="authorsLoading"
 							label-key="field.Derivative.artist" refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="derivative.source.id" :items="sources" :loading="sourcesLoading"
 							label-key="field.Derivative.source" refreshable @refresh="loadSources"
 						/>
@@ -35,7 +35,7 @@
 			<SectionCard :subtitle="$t('fieldset.Derivative.format')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="derivative.type.id" :items="types" :loading="typesLoading"
 							label-key="field.Derivative.type" :rules="rules.type"
 							refreshable @refresh="loadTypes"
@@ -102,7 +102,7 @@
 						<RichTextEditor v-model="derivative.description" />
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="derivative.images" :items="images" :loading="imagesLoading"
 							multiple clearable
 							label-key="field.Derivative.images" refreshable @refresh="loadImages"

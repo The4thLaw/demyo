@@ -1,6 +1,8 @@
 import { contextRoot } from '@/myenv'
 import Home from '@/pages/Home.vue'
 import { useUiStore } from '@/stores/ui'
+import type { Component } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
@@ -16,11 +18,11 @@ import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
 
-const routes = [
+const routes: RouteRecordRaw[] = [
 	{
 		path: '/',
 		name: 'home',
-		component: Home
+		component: Home as Component
 	},
 	...albumRoutes,
 	...authorRoutes,
@@ -38,7 +40,7 @@ const routes = [
 	{
 		path: '/about',
 		name: 'about',
-		component: async () => import('@/pages/AboutDemyo.vue')
+		component: async () => import('@/pages/AboutDemyo.vue') as unknown as Promise<Component>
 	}
 ]
 

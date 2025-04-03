@@ -9,7 +9,7 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="publisher.logo.id" :items="images" :loading="imagesLoading"
 							label-key="field.Publisher.logo" refreshable @refresh="loadImages"
 						/>

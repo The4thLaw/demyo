@@ -1,6 +1,5 @@
 package org.demyo.web.controller.api;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -22,6 +21,8 @@ import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IDerivativeService;
+
+import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
 
 /**
  * Controller handling the API calls for {@link Albums}s.
@@ -91,7 +92,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Saving from FilePond: main image = {}, other images = {}",
-					mainImage, otherImages != null ? List.of(otherImages) : null);
+					sanitize(mainImage), sanitize(otherImages));
 		}
 
 		service.recoverFromFilePond(modelId, mainImage, otherImages);

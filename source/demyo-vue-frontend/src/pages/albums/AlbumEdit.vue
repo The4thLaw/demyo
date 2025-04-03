@@ -4,7 +4,7 @@
 			<SectionCard :subtitle="$t('fieldset.Album.identification')" :loading="loading">
 				<v-row>
 					<v-col cols="12">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.series.id" :items="series" :loading="seriesLoading"
 							label-key="field.Album.series" clearable refreshable @refresh="loadSeries"
 						/>
@@ -36,7 +36,7 @@
 						<v-text-field v-model="album.originalTitle" :label="$t('field.Album.originalTitle')" />
 					</v-col>
 					<v-col cols="12">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.tags" :items="tags" :loading="tagsLoading"
 							multiple clearable
 							label-key="field.Album.tags" refreshable @refresh="loadTags"
@@ -48,14 +48,14 @@
 			<SectionCard :subtitle="$t('fieldset.Album.publishing')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.publisher.id" :items="publishers" :loading="publishersLoading"
 							label-key="field.Album.publisher" required :rules="rules.publisher"
 							refreshable @refresh="loadPublishers" @input="loadCollections(album)"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.collection.id" :items="collections" :loading="collectionsLoading"
 							label-key="field.Album.collection" clearable
 							refreshable @refresh="loadCollections(album)"
@@ -67,31 +67,31 @@
 			<SectionCard :subtitle="$t('fieldset.Album.authoring')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.writers" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.writers" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.artists" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.artists" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.colorists" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.colorists" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.inkers" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.inkers" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.translators" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.translators" multiple refreshable @refresh="loadAuthors"
 						/>
@@ -115,13 +115,13 @@
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
-							:readonly="album.markedAsFirstEdition" @update:modelValue="adjustEditionDates"
+							:readonly="album.markedAsFirstEdition" @update:model-value="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-checkbox
 							v-model="album.markedAsFirstEdition" :label="$t('field.Album.markedAsFirstEdition.edit')"
-							@update:modelValue="adjustEditionDates"
+							@update:model-value="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
@@ -140,7 +140,7 @@
 			<SectionCard :subtitle="$t('fieldset.Album.format')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.binding.id" :items="bindings" :loading="bindingsLoading"
 							label-key="field.Album.binding" clearable refreshable @refresh="loadBindings"
 						/>
@@ -208,13 +208,13 @@
 			<SectionCard :subtitle="$t('fieldset.Album.images')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.cover.id" :items="images" :loading="imagesLoading"
 							label-key="field.Album.cover" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="album.images" :items="images" :loading="imagesLoading"
 							:multiple="true"
 							label-key="field.Album.images" refreshable @refresh="loadImages"

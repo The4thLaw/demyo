@@ -9,9 +9,9 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">
+						<span class="dem-fieldlabel">
 							{{ $t('field.Tag.preview') }}
-						</label>
+						</span>
 						<div>
 							<span :style="style" class="d-Tag">
 								{{ tag.name }}
@@ -21,7 +21,7 @@
 				</v-row>
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Tag.description') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Tag.description') }}</span>
 						<RichTextEditor v-model="tag.description" />
 					</v-col>
 				</v-row>
@@ -30,16 +30,16 @@
 			<SectionCard :subtitle="$t('fieldset.Tag.colours')">
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">
+						<span class="dem-fieldlabel">
 							{{ $t('field.Tag.fgColour') }}
-						</label>
+						</span>
 						<v-checkbox v-model="noFgColour" :label="$t('special.form.noColour')" />
 						<v-color-picker v-if="!noFgColour" v-model="tag.fgColour" />
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">
+						<span class="dem-fieldlabel">
 							{{ $t('field.Tag.bgColour') }}
-						</label>
+						</span>
 						<v-checkbox v-model="noBgColour" :label="$t('special.form.noColour')" />
 						<v-color-picker v-if="!noBgColour" v-model="tag.bgColour" />
 					</v-col>
@@ -62,15 +62,15 @@ const noBgColour = ref(true)
 
 async function fetchData(id: number | undefined): Promise<Partial<Tag>> {
 	if (!id) {
-		const tag: Partial<Tag> = {}
-		return Promise.resolve(tag)
+		const skeleton: Partial<Tag> = {}
+		return Promise.resolve(skeleton)
 	}
 
 	return tagService.findById(id)
-		.then(tag => {
-			noFgColour.value = !tag.fgColour
-			noBgColour.value = !tag.bgColour
-			return tag
+		.then(t => {
+			noFgColour.value = !t.fgColour
+			noBgColour.value = !t.bgColour
+			return t
 		})
 }
 
@@ -79,12 +79,12 @@ const { model: tag, loading, save, reset } = useSimpleEdit(fetchData, tagService
 
 const style = useTagStyle(tag)
 
-watch(noBgColour, async (newFlag) => {
+watch(noBgColour, (newFlag) => {
 	if (newFlag) {
 		tag.value.bgColour = undefined
 	}
 })
-watch(noFgColour, async (newFlag) => {
+watch(noFgColour, (newFlag) => {
 	if (newFlag) {
 		tag.value.fgColour = undefined
 	}

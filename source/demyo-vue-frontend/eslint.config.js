@@ -93,6 +93,7 @@ const commonRules = {
 	'@typescript-eslint/prefer-readonly-parameter-types': 'off',
 	'@typescript-eslint/init-declarations': 'off',
 	'@typescript-eslint/explicit-member-accessibility': 'off',
+	'@typescript-eslint/member-ordering': 'off',
 	// I like falsy usage tyvm
 	'@typescript-eslint/strict-boolean-expressions': 'off',
 	// We use this one all the time for empty models

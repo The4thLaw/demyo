@@ -23,7 +23,7 @@ class ReaderService extends AbstractModelService<Reader> {
 		if (reader) {
 			console.debug('Restoring Reader from local storage...')
 			// Already set it in store, it could be used temporarily at least
-			this.setCurrentReader(reader, false)
+			void this.setCurrentReader(reader, false)
 			// Revalidate the reader. Who knows, it could have been deleted in the mean time
 			reader = await axiosGet(this.basePath + reader.id, null)
 		} else {
@@ -33,7 +33,7 @@ class ReaderService extends AbstractModelService<Reader> {
 		if (reader) {
 			await this.setCurrentReader(reader, false)
 			// Manually load the lists because we requested no reload because we just loaded one
-			this.loadLists(reader)
+			void this.loadLists(reader)
 			console.log('Reader is initialized to', reader)
 			useUiStore().showSnackbar($t('core.reader.welcome', { reader: reader.name }))
 		} else {
@@ -138,27 +138,27 @@ class ReaderService extends AbstractModelService<Reader> {
 	}
 
 	async removeFavouriteSeries(item: number): Promise<void> {
-		return this.addOrRemoveListItem('removeFavouriteSeries', axiosDelete, 'favourites', 'series', item,
+		return this.addOrRemoveListItem('removeFavouriteSeries', axiosDelete, 'favourites', item,
 			'readers.confirm.favourite.remove')
 	}
 
 	async addFavouriteAlbum(item: number): Promise<void> {
-		return this.addOrRemoveListItem('addFavouriteAlbum', axiosPost, 'favourites', 'albums', item,
+		return this.addOrRemoveListItem('addFavouriteAlbum', axiosPost, 'favourites', item,
 			'readers.confirm.favourite.add')
 	}
 
 	async removeFavouriteAlbum(item: number): Promise<void> {
-		return this.addOrRemoveListItem('removeFavouriteAlbum', axiosDelete, 'favourites', 'albums', item,
+		return this.addOrRemoveListItem('removeFavouriteAlbum', axiosDelete, 'favourites', item,
 			'readers.confirm.favourite.remove')
 	}
 
 	async addToReadingList(item: number): Promise<void> {
-		return this.addOrRemoveListItem('addToReadingList', axiosPost, 'readingList', 'albums', item,
+		return this.addOrRemoveListItem('addToReadingList', axiosPost, 'readingList', item,
 			'readers.confirm.readingList.add')
 	}
 
 	async removeFromReadingList(item: number): Promise<void> {
-		return this.addOrRemoveListItem('removeFromReadingList', axiosDelete, 'readingList', 'albums', item,
+		return this.addOrRemoveListItem('removeFromReadingList', axiosDelete, 'readingList', item,
 			'readers.confirm.readingList.remove')
 	}
 
@@ -172,7 +172,8 @@ class ReaderService extends AbstractModelService<Reader> {
 
 	private async addOrRemoveListItem(storeAction: ReaderStoreFunction,
 		handler: (path: string, defaultValue: boolean) => Promise<boolean>,
-		listType: string, itemType: string, id: number, confirmLabel: string): Promise<void> {
+		listType: 'favourites' | 'readingList', id: number, confirmLabel: string): Promise<void> {
+		const itemType = /.*series$/i.test(storeAction) ? 'series' : 'albums'
 		const readerStore = useReaderStore()
 		const reader = readerStore.currentReader
 		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)

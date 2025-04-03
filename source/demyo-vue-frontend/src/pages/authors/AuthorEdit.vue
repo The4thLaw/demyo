@@ -21,7 +21,7 @@
 						<v-text-field v-model="author.deathDate" :label="$t('field.Author.deathDate')" type="date" />
 					</v-col>
 					<v-col cols="12" md="6">
-						<AutoComplete
+						<Autocomplete
 							v-model="author.portrait.id" :items="images" :loading="imagesLoading"
 							label-key="field.Author.portrait" refreshable @refresh="loadImages"
 						/>
