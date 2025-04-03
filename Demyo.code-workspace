@@ -24,6 +24,7 @@
 			"./demyo-vue-frontend"
 		],
 		"eslint.validate": [
+			"typescript",
 			"javascript",
 			"vue",
 			"html"
@@ -78,11 +79,13 @@
 			"revealWithFocus": "none",
 			"clearOnRun": "none"
 		},
-		"eslint.experimental.useFlatConfig": true,
 
 		"javascript.format.semicolons": "remove",
 		"typescript.format.semicolons": "remove",
 		"testing.automaticallyOpenTestResults": "neverOpen",
+		//"eslint.codeActionsOnSave.rules": null,
+		"eslint.debug": true,
+		"eslint.useFlatConfig": true,
 	},
 	"tasks": {
 		"version": "2.0.0",
