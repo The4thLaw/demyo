@@ -19,8 +19,7 @@ public enum DemyoErrorCode {
 	SYS_DIR_PATH_ALREADY_TAKEN(10003),
 	/** Failed to create a directory required to operate. */
 	SYS_DIR_CANNOT_CREATE(10004),
-	/** Generic I/O operation error. */
-	SYS_IO_ERROR(10005),
+	// 10005 is reserved
 	/** Generic error during application startup. */
 	SYS_STARTUP_ERROR(10006),
 	/** The Spring configuration is inconsistent. */
@@ -29,8 +28,6 @@ public enum DemyoErrorCode {
 	SYS_MISSING_H2_FOR_MIGRATION(10008),
 	/** The database version couldn't be found. */
 	SYS_MISSING_DB_SCHEMA_VERSION(10009),
-	/** There was an issue during a file compression. */
-	SYS_IO_COMPRESSION_ERROR(10010),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */
@@ -82,7 +79,11 @@ public enum DemyoErrorCode {
 	/** Web: Forms: The select options are of an unknown type. */
 	WEB_FORM_INVALID_OPTIONS(18000),
 	/** Cannot delete the last reader. */
-	READER_CANNOT_DELETE_LAST(19000);
+	READER_CANNOT_DELETE_LAST(19000),
+	/** Generic I/O operation error. */
+	IO_GENERIC_ERROR(20000),
+	/** There was an issue during a file compression. */
+	IO_COMPRESSION_ERROR(20001);
 
 	private final int numericCode;
 

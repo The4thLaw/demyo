@@ -59,7 +59,7 @@ public class FilePondService implements IFilePondService {
 		try {
 			Files.createDirectories(uploadDirectory);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
 		}
 	}
 

@@ -135,7 +135,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath.toString());
 			}
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
 		}
 	}
 
@@ -254,7 +254,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 					}
 				});
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e, "Failed to find the missing files");
+			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e, "Failed to find the missing files");
 		}
 
 		Collections.sort(unknownFiles);

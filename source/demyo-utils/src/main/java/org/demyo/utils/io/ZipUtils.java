@@ -103,7 +103,7 @@ public final class ZipUtils {
 						compress(p, null, destination, finalPath);
 					} catch (IOException e) {
 						throw new DemyoRuntimeException(
-							DemyoErrorCode.SYS_IO_COMPRESSION_ERROR,e, "Failed to compress " + p);
+							DemyoErrorCode.IO_COMPRESSION_ERROR,e, "Failed to compress " + p);
 					}
 				});
 			}

@@ -275,7 +275,7 @@ public final class SystemConfiguration {
 		try {
 			temp = Files.createTempFile(directory, prefix, suffix);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e);
+			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
 		}
 		temp.toFile().deleteOnExit();
 		return temp;
