@@ -50,6 +50,7 @@ class ImageServiceTest extends AbstractServiceTest {
 
 		ReflectionTestUtils.setField(service, "repo", repo);
 		ReflectionTestUtils.setField(service, "filePondService", fpService);
+		ReflectionTestUtils.setField(service, "imagesDirectory", Path.of("target"));
 
 		when(fpService.getFileForId(ArgumentMatchers.anyString())).thenAnswer(invocation -> generateDummyImmage());
 		when(repo.save(ArgumentMatchers.<Image>any())).thenAnswer(invocation -> invocation.getArgument(0, Image.class));

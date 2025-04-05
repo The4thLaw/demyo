@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
 import org.the4thlaw.commons.utils.fluent.FluentUtils;
+import org.the4thlaw.commons.utils.io.FileSecurityUtils;
 import org.the4thlaw.commons.utils.io.FileUtils;
 import org.the4thlaw.commons.utils.io.FilenameUtils;
 
@@ -59,6 +60,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Autowired
 	private IThumbnailService thumbnailService;
 
+	private final Path imagesDirectory;
 	private final Path uploadDirectory;
 
 	/**
@@ -69,7 +71,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	public ImageService() throws DemyoException {
 		super(Image.class);
 
-		uploadDirectory = SystemConfiguration.getInstance().getImagesDirectory().resolve(UPLOAD_DIRECTORY_NAME);
+		imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
+		uploadDirectory = imagesDirectory.resolve(UPLOAD_DIRECTORY_NAME);
 		try {
 			Files.createDirectories(uploadDirectory);
 		} catch (IOException e) {
@@ -144,6 +147,8 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	}
 
 	private Image uploadImage(String originalFileName, String description, Path imageFile) throws DemyoException {
+		FileSecurityUtils.assertChildOf(imagesDirectory, imageFile);
+
 		// Determine the hash of the uploaded file
 		String hash;
 		try (InputStream data = Files.newInputStream(imageFile)) {
@@ -201,7 +206,6 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long addExistingImage(@NotEmpty String path) throws DemyoException {
-		Path imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
 		Path targetFile = imagesDirectory.resolve(path);
 		validateImagePath(targetFile);
 
@@ -229,33 +233,29 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@Transactional(readOnly = true)
 	public List<String> findUnknownDiskImages() {
 		List<String> unknownFiles = new ArrayList<>();
-		Path imagesDirectory = SystemConfiguration.getInstance().getImagesDirectory();
 
 		// Find the paths known in the database
 		Set<String> knownFiles = repo.findAllPaths();
 		LOGGER.trace("Known files: {}", knownFiles);
 
 		// Find the files
-		Stream<Path> foundFiles;
-		try {
-			foundFiles = Files.walk(imagesDirectory, Integer.MAX_VALUE)
-					.filter(FluentUtils.fileWithExtension(".jpg", ".jpeg", ".png", ".gif"));
+		try (Stream<Path> foundFiles = Files.walk(imagesDirectory, Integer.MAX_VALUE)) {
+			foundFiles.filter(FluentUtils.fileWithExtension(".jpg", ".jpeg", ".png", ".gif"))
+				// Filter out the known files
+				.forEach(file -> {
+					String relativePath = imagesDirectory.relativize(file).toString();
+					// Normalize file separators so that collections imported and exported between OS's still work
+					relativePath = relativePath.replace(File.separatorChar, '/');
+					boolean known = knownFiles.contains(relativePath);
+					LOGGER.trace("Is {} known? {}", relativePath, known);
+
+					if (!known) {
+						unknownFiles.add(relativePath);
+					}
+				});
 		} catch (IOException e) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_IO_ERROR, e, "Failed to find the missing files");
 		}
-
-		// Filter out the known files
-		foundFiles.forEach(file -> {
-			String relativePath = imagesDirectory.relativize(file).toString();
-			// Normalize file separators so that collections imported and exported between OS's still work
-			relativePath = relativePath.replace(File.separatorChar, '/');
-			boolean known = knownFiles.contains(relativePath);
-			LOGGER.trace("Is {} known? {}", relativePath, known);
-
-			if (!known) {
-				unknownFiles.add(relativePath);
-			}
-		});
 
 		Collections.sort(unknownFiles);
 
