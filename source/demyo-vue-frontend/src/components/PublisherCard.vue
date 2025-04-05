@@ -5,7 +5,7 @@
 	>
 		<router-link
 			v-ripple :to="`/publishers/${publisher.id}/view` "
-			class="c-PublisherCard__title" role="heading" arial-level="3"
+			class="c-PublisherCard__title" role="heading" aria-level="3"
 		>
 			{{ publisher.identifyingName }}
 		</router-link>
@@ -43,7 +43,7 @@ const props = defineProps<{
 }>()
 
 const collections = computed(() => props.publisher.collections)
-const hasCollections = computed(() => collections.value && collections.value.length)
+const hasCollections = computed(() => collections.value?.length)
 
 const readerStore = useReaderStore()
 const itemsPerPage = computed(() => readerStore.currentReader.configuration.subItemsInCardIndex)

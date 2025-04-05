@@ -3,7 +3,7 @@
 		<template v-if="meta.album">
 			<router-link
 				v-ripple :to="cardLink"
-				class="c-MetaSeriesCard__title" role="heading" arial-level="3"
+				class="c-MetaSeriesCard__title" role="heading" aria-level="3"
 			>
 				{{ meta.album.title }}
 			</router-link>
@@ -16,7 +16,7 @@
 		<template v-if="meta.series">
 			<router-link
 				v-ripple :to="cardLink"
-				class="c-MetaSeriesCard__title" role="heading" arial-level="3"
+				class="c-MetaSeriesCard__title" role="heading" aria-level="3"
 			>
 				{{ meta.series.identifyingName }}
 			</router-link>
