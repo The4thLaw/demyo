@@ -21,33 +21,33 @@ interface FilePondData {
 type CombinationMode = 'AND' | 'OR'
 
 interface AbstractModelFilter {
-	mode: CombinationMode
+	mode?: CombinationMode
 }
 
 interface AlbumFilter extends AbstractModelFilter {
 	/** The internal ID of the {@link Publisher}. */
-	publisher: number
+	publisher?: number
 	/** The internal ID of the {@link Collection}. */
-	collection: number
+	collection?: number
 	/** The internal ID of the {@link Binding}. */
-	binding: number
+	binding?: number
 	/** The internal ID of the {@link Tag}. */
-	tag: number
+	tag?: number
 	/** The internal ID of the {@link Reader} that has this {@link Album} as favourite. */
-	readerIdFavourite: number
+	readerIdFavourite?: number
 	/** The internal ID of the {@link Reader} that has this {@link Album} in their reading list. */
-	readerIdReadingList: number
+	readerIdReadingList?: number
 }
 
 interface DerivativeFilter extends AbstractModelFilter {
 	/** The internal ID of the {@link Series}. */
-	series: number
+	series?: number
 	/** The internal ID of the {@link Album}. */
-	album: number
+	album?: number
 	/** The internal ID of the {@link org.demyo.model.Author artist}. */
-	artist: number
+	artist?: number
 	/** The internal ID of the {@link DerivativeType}. */
-	type: number
+	type?: number
 	/** The internal ID of the {@link DerivativeSource}. */
-	source: number
+	source?: number
 }

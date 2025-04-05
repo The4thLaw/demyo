@@ -178,6 +178,7 @@
 </template>
 
 <script setup lang="ts">
+import SectionCard from '@/components/SectionCard.vue'
 import { useSimpleView } from '@/composables/model-view'
 import { mergeModels } from '@/helpers/fields'
 import albumService from '@/services/album-service'
@@ -204,6 +205,29 @@ const derivativeCount = ref(-1)
 const showWishlist = ref(true)
 const currentTab = ref(0)
 
+async function fetchData(id: number): Promise<Series> {
+	const dcPromise = seriesService.countDerivatives(id)
+
+	const fetched = await seriesService.findById(id)
+
+	if (fetched.albumIds) {
+		fetched.albumIds.forEach(aid => {
+			albums.value[aid] = {
+				loading: true
+			}
+		})
+	}
+
+	void loadAlbums(fetched)
+
+	derivativeCount.value = await dcPromise
+
+	return Promise.resolve(fetched)
+}
+
+const { model: series, appTasksMenu, loading, deleteModel } = useSimpleView(
+	fetchData, seriesService, 'quickTasks.delete.series.confirm.done', 'SeriesIndex')
+
 const ownedIds = computed(() => {
 	if (!series.value.albumIds) {
 		return []
@@ -213,7 +237,7 @@ const ownedIds = computed(() => {
 		if (!album) {
 			return false
 		}
-		return album.loading || !album.wishlist
+		return !!album.loading || !album.wishlist
 	})
 })
 
@@ -227,17 +251,55 @@ const filteredIds = computed(() => {
 const albumsArray = computed(() => albumsLoaded.value ? Object.values(albums.value) as Album[] : [])
 const albumCount = computed(() => series.value.albumIds ? series.value.albumIds.length : 0)
 const ownedAlbumCount = computed(() => ownedIds.value.length)
-const allPublishers = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'publisher', 'identifyingName') : [])
-const allWriters = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'writers', ['name', 'firstName']) : [])
-const allArtists = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'artists', ['name', 'firstName']) : [])
-const allColorists = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'colorists', ['name', 'firstName']) : [])
-const allInkers = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'inkers', ['name', 'firstName']) : [])
-const allTranslators = computed(() => albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
+const allPublishers = computed(() =>
+	albumsLoaded.value ? mergeModels(albumsArray.value, 'publisher', 'identifyingName') : [])
+const allWriters = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'writers', ['name', 'firstName']) : [])
+const allArtists = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'artists', ['name', 'firstName']) : [])
+const allColorists = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'colorists', ['name', 'firstName']) : [])
+const allInkers = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'inkers', ['name', 'firstName']) : [])
+const allTranslators = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
 const allTags = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'tags', 'identifyingName') : [])
 
 const authorsAlive = computed(() => {
 	const relevantAuthors = [...allWriters.value, ...allArtists.value]
 	return relevantAuthors.length === 0 || relevantAuthors.some(a => !a.deathDate)
+})
+
+const albumDates = computed(() => {
+	if (!albumsLoaded.value) {
+		return []
+	}
+
+	return albumsArray.value
+		.map(a => a.firstEditionDate || a.currentEditionDate || a.printingDate)
+		.filter(Boolean)
+		.map(d => new Date(d))
+})
+
+const minAlbumYear = computed(() => {
+	if (!albumDates.value.length) {
+		return null
+	}
+
+	const minDate = new Date(Math.min.apply(null, albumDates.value.map(d => d.getTime())))
+	return minDate.getFullYear()
+})
+
+const maxAlbumYear = computed(() => {
+	if (!albumDates.value.length) {
+		return null
+	}
+	if (!series.value.completed) {
+		return null
+	}
+
+	const maxDate = new Date(Math.max.apply(null, albumDates.value.map(d => d.getTime())))
+	return maxDate.getFullYear()
 })
 
 const completionLabel = computed(() => {
@@ -281,43 +343,11 @@ const hasAlbumsOutsideReadingList = computed(() => {
 	return albumsArray.value.some(a => sortedIndexOf(readerStore.readingList, a.id) <= -1)
 })
 
-const albumDates = computed(() => {
-	if (!albumsLoaded.value) {
-		return []
-	}
-
-	return albumsArray.value
-		.map(a => a.firstEditionDate || a.currentEditionDate || a.printingDate)
-		.filter(Boolean)
-		.map(d => new Date(d))
-})
-
-const minAlbumYear = computed(() => {
-	if (!albumDates.value.length) {
-		return null
-	}
-
-	const minDate = new Date(Math.min.apply(null, albumDates.value.map(d => d.getTime())))
-	return minDate.getFullYear()
-})
-
-const maxAlbumYear = computed(() => {
-	if (!albumDates.value.length) {
-		return null
-	}
-	if (!series.value.completed) {
-		return null
-	}
-
-	const maxDate = new Date(Math.max.apply(null, albumDates.value.map(d => d.getTime())))
-	return maxDate.getFullYear()
-})
-
-async function loadAlbums(series: Series) {
-	if (series.albumIds) {
+async function loadAlbums(forSeries: Series): Promise<void> {
+	if (forSeries.albumIds) {
 		// We need the variable to iterate and, without iteration, this doesn't work
 
-		for await (const _value of asyncPool(2, series.albumIds, albumLoader)) {
+		for await (const _value of asyncPool(2, forSeries.albumIds, albumLoader)) {
 			// Nothing to do
 		}
 	}
@@ -337,10 +367,10 @@ async function albumLoader(id: number) {
 }
 
 function addSeriesToReadingList() {
-	readerService.addSeriesToReadingList(series.value.id)
+	void readerService.addSeriesToReadingList(series.value.id)
 }
 
-async function loadDerivatives() {
+async function loadDerivatives(): Promise<void> {
 	if (derivatives.value.length > 0) {
 		// Don't reload every time
 		return
@@ -348,29 +378,7 @@ async function loadDerivatives() {
 	derivatives.value = await derivativeService.findForIndex({ series: series.value.id })
 }
 
-async function fetchData(id: number): Promise<Series> {
-	const dcPromise = seriesService.countDerivatives(id)
-
-	const series = await seriesService.findById(id)
-
-	if (series.albumIds) {
-		series.albumIds.forEach(id => {
-			albums.value[id] = {
-				loading: true
-			}
-		})
-	}
-
-	void loadAlbums(series)
-
-	derivativeCount.value = await dcPromise
-
-	return Promise.resolve(series)
-}
-
-const { model: series, appTasksMenu, loading, deleteModel } = useSimpleView(fetchData, seriesService, 'quickTasks.delete.series.confirm.done', 'SeriesIndex')
-
-const contentSectionRef = useTemplateRef('content-section')
+const contentSectionRef = useTemplateRef<typeof SectionCard>('content-section')
 </script>
 
 <style lang="scss">

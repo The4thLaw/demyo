@@ -13,12 +13,12 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import tagService from '@/services/tag-service'
 
-function getMaxUsageCount(tags: Tag[]) {
-	if (tags.length === 0) {
+function getMaxUsageCount(tagsToCount: Tag[]) {
+	if (tagsToCount.length === 0) {
 		return 0
 	}
 
-	const max = Math.max(...tags.map(t => t.usageCount))
+	const max = Math.max(...tagsToCount.map(t => t.usageCount))
 	// Have a reasonable minimum else it just looks silly if there are few tags and they are seldom used
 	return Math.max(max, 10)
 }

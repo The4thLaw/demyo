@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiRoot } from '@/myenv'
 import axios from 'axios'
 
-function baselineUrl(url: string) {
+function baselineUrl(url: string): string {
 	return apiRoot + url
 }
 
-export async function axiosGet<T>(url: string, data: T | any | undefined = undefined, defaultValue: T | undefined = undefined): Promise<T> {
+export async function axiosGet<T>(url: string, data: any = undefined,
+		defaultValue: T | undefined = undefined): Promise<T> {
 	let def: T
 	if (defaultValue === undefined) {
-		def = data
+		def = data as T
 		data = {}
 	} else {
 		def = defaultValue
@@ -16,18 +19,19 @@ export async function axiosGet<T>(url: string, data: T | any | undefined = undef
 
 	let response
 	try {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		response = await axios.get(baselineUrl(url), { params: data })
 	} catch (e) {
 		console.warn(`Failed to get the resource at ${url}`, e)
 		return def
 	}
-	return response.data
+	return response.data as T
 }
 
-export async function axiosPost<T>(url: string, data: T | any, defaultValue: T | undefined = undefined): Promise<T> {
+export async function axiosPost<T>(url: string, data: any, defaultValue: T | undefined = undefined): Promise<T> {
 	let def: T
 	if (defaultValue === undefined) {
-		def = data
+		def = data as T
 		data = {}
 	} else {
 		def = defaultValue
@@ -40,7 +44,7 @@ export async function axiosPost<T>(url: string, data: T | any, defaultValue: T |
 		console.warn(`Failed to post the data at ${url}`, data, e)
 		return def
 	}
-	return response.data
+	return response.data as T
 }
 
 export async function axiosPut<T>(url: string, data: any, defaultValue: T): Promise<T> {
@@ -51,7 +55,7 @@ export async function axiosPut<T>(url: string, data: any, defaultValue: T): Prom
 		console.warn(`Failed to post the data at ${url}`, data, e)
 		return defaultValue
 	}
-	return response.data
+	return response.data as T
 }
 
 export async function axiosDelete<T>(url: string, defaultValue: T): Promise<T> {
@@ -62,5 +66,5 @@ export async function axiosDelete<T>(url: string, defaultValue: T): Promise<T> {
 		console.warn(`Failed to delete the resource at ${url}`, e)
 		return Promise.resolve(defaultValue)
 	}
-	return response.data
+	return response.data as T
 }

@@ -31,7 +31,7 @@
 				<div v-html="author.biography" />
 			</FieldValue>
 			<v-alert
-				v-if="!albumsLoading && albums.length == 0"
+				v-if="!albumsLoading && albums.length === 0"
 				border="start" type="info" text class="my-4"
 			>
 				{{ $t('page.Author.noAlbums') }}

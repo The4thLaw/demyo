@@ -8,11 +8,12 @@ import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
 import tagService from '@/services/tag-service'
 
-function useRefreshable<M extends IModel>(service: AbstractModelService<M>) {
-	const models = ref([] as M[])
+function useRefreshable<M extends IModel>(
+		service: AbstractModelService<M>): { models: Ref<M[]>, loading: Ref<boolean>, load: () => Promise<void> } {
+	const models = ref<M[]>([]) as Ref<M[]>
 	const loading = ref(false)
 
-	async function load() {
+	async function load(): Promise<void> {
 		loading.value = true
 		models.value = await service.findForList()
 		loading.value = false
@@ -25,7 +26,8 @@ function useRefreshable<M extends IModel>(service: AbstractModelService<M>) {
 	}
 }
 
-export function useRefreshableAuthors() {
+interface RefreshAuthor { authors: Ref<Author[]>; authorsLoading: Ref<boolean>; loadAuthors: () => Promise<void> }
+export function useRefreshableAuthors(): RefreshAuthor {
 	const refreshable = useRefreshable(authorService)
 	return {
 		authors: refreshable.models,
@@ -34,7 +36,8 @@ export function useRefreshableAuthors() {
 	}
 }
 
-export function useRefreshableBindings() {
+interface RefreshBinding { bindings: Ref<Binding[]>; bindingsLoading: Ref<boolean>; loadBindings: () => Promise<void> }
+export function useRefreshableBindings(): RefreshBinding {
 	const refreshable = useRefreshable(bindingService)
 	return {
 		bindings: refreshable.models,
@@ -43,7 +46,12 @@ export function useRefreshableBindings() {
 	}
 }
 
-export function useRefreshableDerivativeSources() {
+interface RefreshSource {
+	sources: Ref<DerivativeSource[]>
+	sourcesLoading: Ref<boolean>
+	loadSources: () => Promise<void>
+}
+export function useRefreshableDerivativeSources(): RefreshSource {
 	const refreshable = useRefreshable(derivativeSourceService)
 	return {
 		sources: refreshable.models,
@@ -52,7 +60,12 @@ export function useRefreshableDerivativeSources() {
 	}
 }
 
-export function useRefreshableDerivativeTypes() {
+interface RefreshDerivativeType {
+	types: Ref<DerivativeType[]>
+	typesLoading: Ref<boolean>
+	loadTypes: () => Promise<void>
+}
+export function useRefreshableDerivativeTypes(): RefreshDerivativeType {
 	const refreshable = useRefreshable(derivativeTypeService)
 	return {
 		types: refreshable.models,
@@ -61,7 +74,8 @@ export function useRefreshableDerivativeTypes() {
 	}
 }
 
-export function useRefreshableImages() {
+interface RefreshImage { images: Ref<Image[]>; imagesLoading: Ref<boolean>; loadImages: () => Promise<void> }
+export function useRefreshableImages(): RefreshImage {
 	const refreshable = useRefreshable(imageService)
 	return {
 		images: refreshable.models,
@@ -70,7 +84,12 @@ export function useRefreshableImages() {
 	}
 }
 
-export function useRefreshablePublishers() {
+interface RefreshPublisher {
+	publishers: Ref<Publisher[]>
+	publishersLoading: Ref<boolean>
+	loadPublishers: () => Promise<void>
+}
+export function useRefreshablePublishers(): RefreshPublisher {
 	const refreshable = useRefreshable(publisherService)
 	return {
 		publishers: refreshable.models,
@@ -79,7 +98,8 @@ export function useRefreshablePublishers() {
 	}
 }
 
-export function useRefreshableSeries() {
+interface RefreshSeries { series: Ref<Series[]>; seriesLoading: Ref<boolean>; loadSeries: () => Promise<void> }
+export function useRefreshableSeries(): RefreshSeries {
 	const refreshable = useRefreshable(seriesService)
 	return {
 		series: refreshable.models,
@@ -88,7 +108,8 @@ export function useRefreshableSeries() {
 	}
 }
 
-export function useRefreshableTags() {
+interface RefreshTag { tags: Ref<Tag[]>; tagsLoading: Ref<boolean>; loadTags: () => Promise<void> }
+export function useRefreshableTags(): RefreshTag {
 	const refreshable = useRefreshable(tagService)
 	return {
 		tags: refreshable.models,

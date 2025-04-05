@@ -111,7 +111,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			xmlFis = Files.newInputStream(xmlFile);
 			xmlBis = new BufferedInputStream(xmlFis);
 			Source source = new SAXSource(xmlReader, new InputSource(xmlBis));
-			Result result = new SAXResult(new Demyo2Handler());
+			Result result = new SAXResult(new Demyo2Handler(rawSqlDao));
 
 			// Transform and import
 			trans.transform(source, result);

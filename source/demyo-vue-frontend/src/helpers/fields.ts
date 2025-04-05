@@ -15,11 +15,11 @@ export function mergeModels<T extends IModel, S extends IModel>(collection: T[],
 		sortProperties = [sortProperties]
 	}
 	const all = Object.values(collection).reduce((aggregate: S[], value: T) => {
-		const subModel = value[modelProperty] as S
+		const subModel = value[modelProperty] as S | undefined
 		if (Array.isArray(subModel)) {
 			// Arrays of models
 			aggregate.push(...subModel)
-		} else if (subModel && subModel.id) {
+		} else if (subModel?.id) {
 			// Plain models
 			aggregate.push(subModel)
 		}

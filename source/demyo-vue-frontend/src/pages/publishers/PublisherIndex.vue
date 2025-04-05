@@ -2,7 +2,7 @@
 	<div>
 		<CardTextIndex
 			:items="modelList" :first-letter-extractor="(item) => item.identifyingName[0]"
-			@page-change="$emit('page-change')"
+			@page-change="scrollToTop"
 		>
 			<template #default="slotProps">
 				<PublisherCard :publisher="slotProps.item" />

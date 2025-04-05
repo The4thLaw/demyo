@@ -206,7 +206,7 @@ const route = useRoute()
 watch(route, () => {
 	// Route changed, clear the quick search and collapse the field
 	clearSearch()
-	blur()
+	blurSearch()
 })
 
 </script>

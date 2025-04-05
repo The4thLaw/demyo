@@ -195,11 +195,11 @@
 			<SectionCard :subtitle="$t('fieldset.Album.freeText')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Album.summary') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Album.summary') }}</span>
 						<RichTextEditor v-model="album.summary" />
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Album.comment') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Album.comment') }}</span>
 						<RichTextEditor v-model="album.comment" />
 					</v-col>
 				</v-row>
@@ -230,7 +230,10 @@
 
 <script setup lang="ts">
 import { useSimpleEdit } from '@/composables/model-edit'
-import { useRefreshableAuthors, useRefreshableBindings, useRefreshableImages, useRefreshablePublishers, useRefreshableSeries, useRefreshableTags } from '@/composables/refreshable-models'
+import {
+	useRefreshableAuthors, useRefreshableBindings, useRefreshableImages,
+	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags
+} from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
 import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import albumService from '@/services/album-service'
@@ -242,36 +245,36 @@ const route = useRoute()
 
 const sameEditionDates = ref(false)
 
-const {authors, authorsLoading, loadAuthors} = useRefreshableAuthors()
-const {bindings, bindingsLoading, loadBindings} = useRefreshableBindings()
-const {images, imagesLoading, loadImages} = useRefreshableImages()
-const {publishers, publishersLoading, loadPublishers} = useRefreshablePublishers()
-const {series, seriesLoading, loadSeries} = useRefreshableSeries()
-const {tags, tagsLoading, loadTags} = useRefreshableTags()
+const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors()
+const { bindings, bindingsLoading, loadBindings } = useRefreshableBindings()
+const { images, imagesLoading, loadImages } = useRefreshableImages()
+const { publishers, publishersLoading, loadPublishers } = useRefreshablePublishers()
+const { series, seriesLoading, loadSeries } = useRefreshableSeries()
+const { tags, tagsLoading, loadTags } = useRefreshableTags()
 
 const collections = ref([] as Collection[])
 const collectionsLoading = ref(false)
-async function loadCollections(album: Partial<Album>) {
+async function loadCollections(forAlbum: Partial<Album>) {
 	collectionsLoading.value = true
-	collections.value = await publisherService.findCollectionsForList(album.publisher?.id)
+	collections.value = await publisherService.findCollectionsForList(forAlbum.publisher?.id)
 
-	if (album.collection?.id) {
+	if (forAlbum.collection?.id) {
 		// If the current album ID is not in the returned list, clear it
-		if (!collections.value.find(val => val.id === album.collection?.id)) {
-			album.collection.id = null as unknown as number
+		if (!collections.value.find(val => val.id === forAlbum.collection?.id)) {
+			forAlbum.collection.id = null as unknown as number
 		}
 	}
 	collectionsLoading.value = false
 }
 
-async function fetchData(id: number|undefined): Promise<Partial<Album>> {
-	let album: Partial<Album>
+async function fetchData(id: number | undefined): Promise<Partial<Album>> {
+	let fetched: Partial<Album>
 	if (id) {
-		album = await albumService.findById(id)
+		fetched = await albumService.findById(id)
 	} else if (route.query.toSeries) {
-		album = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
+		fetched = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
 	} else {
-		album = {
+		fetched = {
 			series: {} as Series,
 			writers: [],
 			artists: [],
@@ -287,16 +290,16 @@ async function fetchData(id: number|undefined): Promise<Partial<Album>> {
 	}
 
 	// Load collections with the currently available data
-	loadCollections(album)
+	void loadCollections(fetched)
 
 	// Check the edition dates
-	sameEditionDates.value = (album.firstEditionDate
-		&& album.firstEditionDate === album.currentEditionDate) || false
+	sameEditionDates.value = (!!fetched.firstEditionDate
+		&& fetched.firstEditionDate === fetched.currentEditionDate) || false
 
-	return Promise.resolve(album)
+	return Promise.resolve(fetched)
 }
 
-const {model: album, loading, save, reset} = useSimpleEdit(fetchData, albumService,
+const { model: album, loading, save, reset } = useSimpleEdit(fetchData, albumService,
 	[loadAuthors, loadBindings, loadImages, loadPublishers, loadSeries, loadTags],
 	'title.add.album', 'title.edit.album', 'AlbumView')
 
@@ -309,7 +312,7 @@ function adjustEditionDates() {
 	}
 }
 
-const rules =  {
+const rules = {
 	cycle: [integer()],
 	number: [number()],
 	title: [mandatory()],

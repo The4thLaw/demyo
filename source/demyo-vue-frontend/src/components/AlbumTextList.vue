@@ -74,19 +74,18 @@ const albumsBySeries = computed(() => {
 		} else {
 			id = -a.id // Negative for albums, positive for series
 		}
+
 		if (bySeries[id]) {
 			bySeries[id].albums.push(a)
+		} else if (id > 0) {
+			bySeries[id] = a.series
+			bySeries[id].isSeries = true
+			bySeries[id].albums = [a]
+			bySeries[id].sortName = a.series.identifyingName
 		} else {
-			if (id > 0) {
-				bySeries[id] = a.series
-				bySeries[id].isSeries = true
-				bySeries[id].albums = [a]
-				bySeries[id].sortName = a.series.identifyingName
-			} else {
-				bySeries[id] = a
-				bySeries[id].isSeries = false
-				bySeries[id].sortName = a.title
-			}
+			bySeries[id] = a
+			bySeries[id].isSeries = false
+			bySeries[id].sortName = a.title
 		}
 	})
 

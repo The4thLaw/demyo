@@ -1,31 +1,31 @@
-import { getParsedId } from "@/helpers/route"
-import AbstractModelService from "@/services/abstract-model-service"
-import { useUiStore } from "@/stores/ui"
-import { useHead } from "@unhead/vue"
-import { useTemplateRef } from "vue"
-import { useI18n } from "vue-i18n"
-import { useRoute, useRouter } from "vue-router"
+import { getParsedId } from '@/helpers/route'
+import type AbstractModelService from '@/services/abstract-model-service'
+import { useUiStore } from '@/stores/ui'
+import { useHead } from '@unhead/vue'
+import { useTemplateRef } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute, useRouter } from 'vue-router'
 
 interface EditData<T extends AbstractModel> {
 	model: Ref<Partial<T>>
 	loading: Ref<boolean>
-	save: () => void
+	save: () => Promise<void>
 	reset: () => void
-	loadData: () => void
+	loadData: () => Promise<void>
 	formRef: Readonly<Ref<HTMLFormElement | null>>
 }
 
-
-export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|undefined) => Promise<Partial<T>>,
-	service: AbstractModelService<T>, additionalLoaders: (() => Promise<any>)[],
+// eslint-disable-next-line @typescript-eslint/max-params
+export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
+	service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
 	addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
-	saveHandler = (model: T) => service.save(model)): EditData<T> {
+	saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
 	//
 	const route = useRoute()
 	const i18n = useI18n()
 	const router = useRouter()
 	const uiStore = useUiStore()
-	const formRef = useTemplateRef<HTMLFormElement, string>('form')
+	const formRef = useTemplateRef<HTMLFormElement>('form')
 
 	const parsedId = ref(undefined) as Ref<number | undefined>
 	const loading = ref(false)
@@ -38,14 +38,14 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 		return parsedId.value ? i18n.t(editTitleLabel) : i18n.t(addTitleLabel)
 	})
 
-	async function loadData() {
+	async function loadData(): Promise<void> {
 		useHead({
 			title: pageTitle
 		})
 
 		uiStore.enableGlobalOverlay()
 		loading.value = true
-		const loadPromises = [] as Promise<any>[]
+		const loadPromises = [] as Promise<unknown>[]
 
 		if (route.params.id) {
 			parsedId.value = getParsedId(route)
@@ -55,7 +55,7 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 		const modelP = fetchData(parsedId.value)
 		loadPromises.push(modelP)
 		// Set it as soon as it's resolved but without blocking other promises
-		modelP.then(m => model.value = m)
+		void modelP.then(m => (model.value = m))
 
 		additionalLoaders.forEach(l => loadPromises.push(l()))
 
@@ -67,10 +67,12 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 
 	uiStore.disableSearch()
 	watch(route, loadData)
-	loadData()
+	void loadData()
 
-	async function save() {
+	async function save(): Promise<void> {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		const validation = await formRef.value?.validate()
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		if (!validation.valid) {
 			console.debug('Form validation error', validation)
 			return
@@ -81,16 +83,16 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number|un
 		if (id <= 0) {
 			uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 		} else {
-			router.push({ name: redirectRouteName, params: { id: id }})
+			void router.push({ name: redirectRouteName, params: { id } })
 		}
 		uiStore.disableGlobalOverlay()
 	}
 
-	function reset() {
+	function reset(): void {
 		if (formRef.value) {
 			formRef.value.reset()
 		}
-		loadData()
+		void loadData()
 	}
 
 	return {

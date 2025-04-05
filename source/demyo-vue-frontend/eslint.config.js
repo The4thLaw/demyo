@@ -62,7 +62,9 @@ const commonRules = {
 
 	// Style
 	'block-spacing': 'error',
-	'@stylistic/indent': ['error', 'tab'],
+	'@stylistic/indent': ['error', 'tab', {
+		FunctionDeclaration: { parameters: 2 }
+	}],
 	'max-len': ['error', {
 		code: 120
 	}],
@@ -87,6 +89,7 @@ const commonRules = {
 	// TypeScript tweaks
 	'@typescript-eslint/prefer-destructuring': ['error', { array: false }],
 	'@typescript-eslint/max-params': ['error', { max: 5 }],
+	'@typescript-eslint/no-use-before-define': ['error', { functions: false }],
 	// TypeScript warnings we don't really care about
 	'@typescript-eslint/no-confusing-void-expression': 'off',
 	'@typescript-eslint/no-magic-numbers': 'off',

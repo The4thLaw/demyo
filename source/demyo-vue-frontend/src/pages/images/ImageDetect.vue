@@ -48,7 +48,7 @@ const detectedImages = ref([] as string[])
 const imageSelections = ref({} as Record<string, boolean>)
 const addedImages = ref([] as Image[])
 
-async function fetchData() {
+async function fetchData(): Promise<void> {
 	uiStore.enableGlobalOverlay()
 	detectedImages.value = await imageService.detectDiskImages()
 	imageSelections.value = {}
@@ -76,10 +76,10 @@ async function save() {
 
 	const added = await imageService.saveDiskImages(selectedImages)
 	addedImages.value = await imageService.findMultipleById(added)
-	fetchData() // Will take care of hiding the overlay
+	await fetchData() // Will take care of hiding the overlay
 }
 
-fetchData()
+void fetchData()
 </script>
 
 <style lang="scss">

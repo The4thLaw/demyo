@@ -62,7 +62,7 @@ function print() {
 	window.print()
 }
 
-fetchData()
+void fetchData()
 </script>
 
 <style lang="scss">

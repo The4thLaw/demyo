@@ -1,7 +1,5 @@
 package org.demyo.service.importing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -11,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import org.demyo.common.exception.DemyoException;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for {@link Demyo1Importer}.
  */
@@ -18,7 +18,7 @@ class Demyo1ImporterTest {
 
 	/**
 	 * Tests {@link Demyo1Importer#supports(String, Path)} for a simple 1.5 file.
-	 * 
+	 *
 	 * @throws IOException In case of support error.
 	 * @throws DemyoException In case of I/O error while writing or reading the sample file.
 	 */
@@ -30,20 +30,22 @@ class Demyo1ImporterTest {
 
 	/**
 	 * Tests {@link Demyo1Importer#supports(String, Path)} for a 1.4 file with an embedded XSL.
-	 * 
+	 *
 	 * @throws IOException In case of support error.
 	 * @throws DemyoException In case of I/O error while writing or reading the sample file.
 	 */
 	@Test
 	void testSupportsHollisterWithXSL() throws IOException, DemyoException {
-		String sampleHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "<?xml-stylesheet href=\"#style\" type=\"text/xsl\"?>\n"
-				+ "<!DOCTYPE doc [\n"
-				+ "<!ATTLIST xsl:stylesheet id ID #REQUIRED>\n"
-				+ "]>\n"
-				+ "<library xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" "
-				+ "xmlns:default=\"http://www.w3.org/1999/xhtml\" demyo-version=\"1.4\" "
-				+ "schema-version=\"3\" entries=\"10864\">";
+		String sampleHeader = """
+				<?xml version="1.0" encoding="UTF-8"?>
+				<?xml-stylesheet href="#style" type="text/xsl"?>
+				<!DOCTYPE doc [
+					<!ATTLIST xsl:stylesheet id ID #REQUIRED>
+				]>
+				<library xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+					xmlns:default="http://www.w3.org/1999/xhtml" demyo-version="1.4"
+					schema-version="3" entries="10864">
+				""";
 		assertSupportsFile(sampleHeader);
 	}
 

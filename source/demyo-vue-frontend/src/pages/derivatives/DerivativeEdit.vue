@@ -7,14 +7,15 @@
 						<Autocomplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
 							:loading="seriesLoading" refreshable clearable
-							:rules="rules.albumOrSeries" @update:modelValue="loadAlbums(); formRef.validate()" @refresh="loadSeries"
+							:rules="rules.albumOrSeries" @update:model-value="loadAlbums(); formRef.validate()"
+							@refresh="loadSeries"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
 							label-key="field.Derivative.album" refreshable clearable
-							:rules="rules.albumOrSeries" @update:modelValue="formRef.validate()" @refresh="loadAlbums"
+							:rules="rules.albumOrSeries" @update:model-value="formRef.validate()" @refresh="loadAlbums"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -98,7 +99,7 @@
 				</v-row>
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Derivative.description') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Derivative.description') }}</span>
 						<RichTextEditor v-model="derivative.description" />
 					</v-col>
 					<v-col cols="12" md="6">
@@ -145,19 +146,57 @@ import { useRoute } from 'vue-router'
 const i18n = useI18n()
 const route = useRoute()
 
-const {authors, authorsLoading, loadAuthors} = useRefreshableAuthors()
-const {sources, sourcesLoading, loadSources} = useRefreshableDerivativeSources()
-const {types, typesLoading, loadTypes} = useRefreshableDerivativeTypes()
-const {images, imagesLoading, loadImages} = useRefreshableImages()
-const {series: allSeries, seriesLoading, loadSeries} = useRefreshableSeries()
+const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors()
+const { sources, sourcesLoading, loadSources } = useRefreshableDerivativeSources()
+const { types, typesLoading, loadTypes } = useRefreshableDerivativeTypes()
+const { images, imagesLoading, loadImages } = useRefreshableImages()
+const { series: allSeries, seriesLoading, loadSeries } = useRefreshableSeries()
 
 const relatedAlbums = ref([] as Album[])
 const relatedAlbumsLoading = ref(false)
 
-async function loadAlbums(derivativeParam?: Partial<Derivative>) {
-	if (!derivativeParam) {
-		derivativeParam = derivative.value
+async function fetchData(id: number | undefined): Promise<Partial<Derivative>> {
+	if (id) {
+		const fetched = await derivativeService.findById(id)
+		void loadAlbums(fetched)
+		return Promise.resolve(fetched)
 	}
+
+	const skeleton: Partial<Derivative> = {
+		series: {} as Series,
+		album: {} as Album,
+		artist: {} as Author,
+		source: {} as DerivativeSource,
+		type: {} as DerivativeType,
+		prices: []
+	}
+
+	const toSeries = getParsedRouteParam(route.query.toSeries)
+	if (toSeries && skeleton.series) {
+		skeleton.series.id = toSeries
+	}
+
+	const toAlbum = getParsedRouteParam(route.query.toAlbum)
+	if (toAlbum && skeleton.album) {
+		skeleton.album.id = toAlbum
+	}
+
+	const toArtist = getParsedRouteParam(route.query.toArtist)
+	if (toArtist && skeleton.artist) {
+		skeleton.artist.id = toArtist
+	}
+
+	void loadAlbums(skeleton)
+
+	return Promise.resolve(skeleton)
+}
+
+const { model: derivative, loading, save, reset, formRef } = useSimpleEdit(fetchData, derivativeService,
+	[loadAuthors, loadImages, loadSources, loadTypes, loadSeries],
+	'title.add.derivative', 'title.edit.derivative', 'DerivativeView')
+
+async function loadAlbums(derivativeParam?: Partial<Derivative>) {
+	derivativeParam ??= derivative.value
 	relatedAlbumsLoading.value = true
 	relatedAlbums.value = await seriesService.findAlbumsForList(derivativeParam.series?.id)
 	if (derivativeParam.album?.id) {
@@ -168,47 +207,6 @@ async function loadAlbums(derivativeParam?: Partial<Derivative>) {
 	}
 	relatedAlbumsLoading.value = false
 }
-
-async function fetchData(id: number|undefined): Promise<Partial<Derivative>> {
-	if (id) {
-		const derivative = await derivativeService.findById(id)
-		loadAlbums(derivative)
-		return Promise.resolve(derivative)
-	}
-
-	const derivative: Partial<Derivative> = {
-		series: {} as Series,
-		album: {} as Album,
-		artist: {} as Author,
-		source: {} as DerivativeSource,
-		type: {} as DerivativeType,
-		prices: []
-	}
-
-	const toSeries = getParsedRouteParam(route.query.toSeries)
-	if (toSeries && derivative.series) {
-		derivative.series.id = toSeries
-	}
-
-	const toAlbum = getParsedRouteParam(route.query.toAlbum)
-	if (toAlbum && derivative.album) {
-		derivative.album.id = toAlbum
-	}
-
-	const toArtist = getParsedRouteParam(route.query.toArtist)
-	if (toArtist && derivative.artist) {
-		derivative.artist.id = toArtist
-	}
-
-
-	loadAlbums(derivative)
-
-	return Promise.resolve(derivative)
-}
-
-const {model: derivative, loading, save, reset, formRef} = useSimpleEdit(fetchData, derivativeService,
-	[loadAuthors, loadImages, loadSources, loadTypes, loadSeries],
-	'title.add.derivative', 'title.edit.derivative', 'DerivativeView')
 
 function oneNotNull() {
 	// In addition to this rule, an @input handler forces full form validation when one of the relevant

@@ -39,7 +39,7 @@ async function doImport() {
 		} else {
 			uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 		}
-		router.push('/')
+		void router.push('/')
 	}
 }
 </script>

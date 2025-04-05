@@ -6,9 +6,9 @@
 			</v-card-title>
 			<v-card-text>
 				<div v-if="mainImageLabel">
-					<label class="dem-fieldlabel">
+					<span class="dem-fieldlabel">
 						{{ $t(mainImageLabel) }}
-					</label>
+					</span>
 					<file-pond
 						ref="mainPond"
 						name="filePondMainImage"
@@ -41,9 +41,9 @@
 				</div>
 
 				<div v-if="otherImagesLabel">
-					<label class="dem-fieldlabel">
+					<span class="dem-fieldlabel">
 						{{ $t(otherImagesLabel) }}
-					</label>
+					</span>
 					<file-pond
 						ref="otherPond"
 						name="filePondOtherImage"
@@ -96,7 +96,7 @@ import { apiRoot } from '@/myenv'
 import type { FilePond as FilePondType } from 'filepond'
 import { useTemplateRef } from 'vue'
 
-const model = defineModel()
+const model = defineModel<boolean>()
 
 interface SaveData {
 	mainImage?: string
@@ -134,6 +134,17 @@ function cancel() {
 	model.value = false
 }
 
+function getServerIds(filepond: FilePondType | null) {
+	if (!filepond) {
+		return undefined
+	}
+	const objects = filepond.getFiles()
+	if (!objects?.length) {
+		return undefined
+	}
+	return objects.map(e => e.serverId)
+}
+
 function save() {
 	const mainIds = getServerIds(mainPond.value)
 	let mainId
@@ -155,17 +166,6 @@ function save() {
 
 	// Clear the dialog
 	cancel()
-}
-
-function getServerIds(filepond: FilePondType | null) {
-	if (!filepond) {
-		return undefined
-	}
-	const objects = filepond.getFiles()
-	if (!objects?.length) {
-		return undefined
-	}
-	return objects.map(e => e.serverId)
 }
 
 onMounted(() => {

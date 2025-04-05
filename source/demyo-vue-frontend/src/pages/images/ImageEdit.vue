@@ -29,7 +29,8 @@ async function fetchData(id: number | undefined): Promise<Image> {
 	return imageService.findById(id)
 }
 
-const { model: image, loading, save, reset } = useSimpleEdit(fetchData, imageService, [], '-', 'title.edit.image', 'ImageView')
+const { model: image, loading, save, reset } = useSimpleEdit(
+	fetchData, imageService, [], '-', 'title.edit.image', 'ImageView')
 
 const rules = {
 	description: [mandatory()]

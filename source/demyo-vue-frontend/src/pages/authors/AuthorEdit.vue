@@ -63,7 +63,8 @@ async function fetchData(id: number | undefined): Promise<Partial<Author>> {
 	})
 }
 
-const { model: author, loading, save, reset } = useSimpleEdit(fetchData, authorService, [loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
+const { model: author, loading, save, reset } = useSimpleEdit(
+	fetchData, authorService, [loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
 
 const rules = {
 	name: [

@@ -1,6 +1,5 @@
 package org.demyo.dao.config;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -65,7 +64,7 @@ public class DaoConfig {
 	}
 
 	@Bean(name = DS_BEAN_NAME)
-	public DataSource dataSource() throws IOException, SQLException {
+	public DataSource dataSource() throws SQLException {
 		// To debug, use java -cp h2-*.jar org.h2.tools.Console
 
 		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
@@ -125,7 +124,7 @@ public class DaoConfig {
 	@Bean(name = FLYWAY_BEAN_NAME, initMethod = "migrate")
 	// Must be run after the Datasource to be sure that a potential repair has been flagged
 	@DependsOn(DS_BEAN_NAME)
-	public Flyway flyway() throws IOException, SQLException {
+	public Flyway flyway() throws SQLException {
 		ClassicConfiguration conf = new ClassicConfiguration();
 		// Old Demyo databases may have schema_version, but that is no longer the default since Flyway 5
 		conf.setTable("schema_version");
@@ -141,7 +140,7 @@ public class DaoConfig {
 	@Bean(name = "entityManagerFactory")
 	// Must be run after Flyway to ensure the database is compatible with the code
 	@DependsOn(FLYWAY_BEAN_NAME)
-	public LocalSessionFactoryBean entityManagerFactory() throws IOException, SQLException {
+	public LocalSessionFactoryBean entityManagerFactory() throws SQLException {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 		factory.setPackagesToScan("org.demyo.model", "org.demyo.model.*", "org.demyo.model.**.*");
 		factory.setDataSource(dataSource());
@@ -166,7 +165,7 @@ public class DaoConfig {
 	 * https://github.com/spring-projects/spring-framework/issues/13599#issuecomment-453364266
 	 */
 	@Bean("transactionManager")
-	public TransactionManager transactionManager() throws IOException, SQLException {
+	public TransactionManager transactionManager() throws SQLException {
 		SessionFactory sessionFactory = entityManagerFactory().getObject();
 		if (sessionFactory == null) {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_STARTUP_ERROR, "The session factory is null");
