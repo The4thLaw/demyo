@@ -29,6 +29,8 @@ public enum DemyoErrorCode {
 	SYS_MISSING_H2_FOR_MIGRATION(10008),
 	/** The database version couldn't be found. */
 	SYS_MISSING_DB_SCHEMA_VERSION(10009),
+	/** There was an issue during a file compression. */
+	SYS_IO_COMPRESSION_ERROR(10010),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */

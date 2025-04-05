@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Enumeration;
@@ -15,6 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.the4thlaw.commons.utils.io.FileSecurityUtils;
 import org.the4thlaw.commons.utils.io.FileUtils;
+
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 
 /**
  * Utilities to manage ZIP files.
@@ -93,13 +97,16 @@ public final class ZipUtils {
 		}
 
 		if (Files.isDirectory(source)) {
-			Files.newDirectoryStream(source).forEach(p -> {
-				try {
-					compress(p,  null, destination, finalPath);
-				} catch (IOException e) {
-					throw new RuntimeException("Filed to compress " + p, e);
-				}
-			});
+			try (DirectoryStream<Path> sourceStream = Files.newDirectoryStream(source)) {
+				sourceStream.forEach(p -> {
+					try {
+						compress(p, null, destination, finalPath);
+					} catch (IOException e) {
+						throw new DemyoRuntimeException(
+							DemyoErrorCode.SYS_IO_COMPRESSION_ERROR,e, "Failed to compress " + p);
+					}
+				});
+			}
 		} else {
 			destination.putNextEntry(new ZipEntry(finalPath));
 			try (InputStream is = Files.newInputStream(source)) {
