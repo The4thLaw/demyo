@@ -37,12 +37,13 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
-			@update:modelValue="$emit('page-change')"
+			@update:model-value="emit('page-change')"
 		/>
 	</div>
 </template>
 
 <script setup lang="ts" generic="T extends IModel">
+import { emitTypes } from '@/composables/pagination'
 import { focusElement } from '@/helpers/dom'
 import { getBaseImageUrl } from '@/helpers/images'
 import { useReaderStore } from '@/stores/reader'
@@ -59,12 +60,15 @@ const props = withDefaults(defineProps<{
 	bordered?: boolean
 	keyboardNavigation?: boolean
 }>(), {
+	imagePath: undefined,
 	bordered: true,
 	keyboardNavigation: true
 })
 
-let lightboxOpened = ref(false)
-let observer: MutationObserver|null = null
+const emit = defineEmits(emitTypes)
+
+const lightboxOpened = ref(false)
+let observer: MutationObserver | null = null
 const currentPage = ref(1)
 
 const keyTarget = useTemplateRef('key-target')
@@ -80,13 +84,13 @@ const pageCount = computed(() => Math.ceil(props.items.length / itemsPerPage.val
 const paginatedItems = computed(() => {
 	const slice = props.items.slice((currentPage.value - 1) * itemsPerPage.value,
 		currentPage.value * itemsPerPage.value)
-	const mapped = slice.map(item => {
-		let processedItem: BasedImage & T = item
+	return slice.map(item => {
+		const processedItem: BasedImage & T = item
 		let image: Image
 		if (props.imagePath) {
 			image = item[props.imagePath] as Image
 		} else if (isImage(item)) {
-			image = item as Image
+			image = item
 		} else {
 			throw new Error(`${JSON.stringify(item)} isn't an image and no imagePath was provided`)
 		}
@@ -95,7 +99,6 @@ const paginatedItems = computed(() => {
 		}
 		return processedItem
 	})
-	return mapped
 })
 
 onMounted(() => {
@@ -114,10 +117,12 @@ onMounted(() => {
 	const callback: MutationCallback = (mutationList, _observer) => {
 		for (const mutation of mutationList) {
 			if (mutation.type === 'childList') {
-				if ([...mutation.addedNodes].some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
+				if ([...mutation.addedNodes]
+					.some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
 					onLightboxOpen()
 				}
-				if ([...mutation.removedNodes].some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
+				if ([...mutation.removedNodes]
+					.some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
 					onLightboxClose()
 				}
 			} else if (mutation.type === 'attributes' && mutation.target instanceof HTMLElement) {
@@ -163,7 +168,7 @@ function previousPageKeyboard() {
 
 function nextPageKeyboard() {
 	if (props.keyboardNavigation) {
-		nextPage
+		nextPage()
 	}
 }
 
@@ -187,7 +192,6 @@ function nextPage() {
 	}
 }
 </script>
-
 
 <style lang="scss">
 .c-GalleryIndex {

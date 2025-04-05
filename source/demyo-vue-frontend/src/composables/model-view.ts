@@ -9,14 +9,13 @@ interface ViewData<T extends AbstractModel> {
 	model: Ref<T>
 	appTasksMenu: Ref<boolean>
 	loading: Ref<boolean>
-	loadData: () => void
-	deleteModel: () => void
+	loadData: () => Promise<void>
+	deleteModel: () => Promise<void>
 }
 
 export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) => Promise<T>,
-	service: AbstractModelService<T>, confirmDeleteLabel: string, indexRouteName: string,
-	titleProvider = (model: T) => model.identifyingName): ViewData<T> {
-	//
+		service: AbstractModelService<T>, confirmDeleteLabel: string, indexRouteName: string,
+		titleProvider = (m: T): string => m.identifyingName): ViewData<T> {
 	const route = useRoute()
 	const i18n = useI18n()
 	const router = useRouter()
@@ -27,7 +26,7 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 	const model = ref({}) as Ref<T>
 	const appTasksMenu = ref(false)
 
-	async function loadData() {
+	async function loadData(): Promise<void> {
 		parsedId.value = getParsedId(route)
 		loading.value = true
 		model.value = await fetchData(parsedId.value)
@@ -38,9 +37,9 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 	}
 
 	watch(route, loadData)
-	loadData()
+	void loadData()
 
-	async function deleteModel() {
+	async function deleteModel(): Promise<void> {
 		appTasksMenu.value = false
 		if (!parsedId.value) {
 			return
@@ -49,7 +48,7 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 		const deleted = await service.deleteModel(parsedId.value)
 		if (deleted) {
 			uiStore.showSnackbar(i18n.t(confirmDeleteLabel))
-			router.push({ name: indexRouteName })
+			void router.push({ name: indexRouteName })
 		}
 	}
 

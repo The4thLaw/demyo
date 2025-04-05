@@ -17,9 +17,9 @@ interface EditData<T extends AbstractModel> {
 
 // eslint-disable-next-line @typescript-eslint/max-params
 export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
-	service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
-	addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
-	saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
+		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
+		addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
+		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
 	//
 	const route = useRoute()
 	const i18n = useI18n()
