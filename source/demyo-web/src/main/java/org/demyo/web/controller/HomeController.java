@@ -35,6 +35,8 @@ public class HomeController extends AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	private static final String MODEL_KEY_VERSION = "appVersion";
 	private static final String MODEL_KEY_CODENAME = "appCodename";
+	private static final String RES_PREFIX_INDEX = "index";
+	private static final String RES_PREFIX_VENDOR = "@vendor";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -63,16 +65,16 @@ public class HomeController extends AbstractController {
 		return (r1, r2) -> {
 			String name1 = r1.getFilename();
 			String name2 = r2.getFilename();
-			if (name1.startsWith("index")) {
+			if (name1.startsWith(RES_PREFIX_INDEX)) {
 				return position;
 			}
-			if (name2.startsWith("index")) {
+			if (name2.startsWith(RES_PREFIX_INDEX)) {
 				return -position;
 			}
-			if (!name1.startsWith("@vendor") && name2.startsWith("@vendor")) {
+			if (!name1.startsWith(RES_PREFIX_VENDOR) && name2.startsWith(RES_PREFIX_VENDOR)) {
 				return position;
 			}
-			if (name1.startsWith("@vendor") && !name2.startsWith("@vendor")) {
+			if (name1.startsWith(RES_PREFIX_VENDOR) && !name2.startsWith(RES_PREFIX_VENDOR)) {
 				return -position;
 			}
 			return name1.compareTo(name2);
@@ -127,7 +129,7 @@ public class HomeController extends AbstractController {
 		// Thymeleaf is even worse.
 		new NoncedCSPHeaderWriter().writeHeaders(request, response);
 
-		return "index";
+		return RES_PREFIX_INDEX;
 	}
 
 	/**

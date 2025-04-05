@@ -1,5 +1,6 @@
 package org.demyo.utils.logging;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -29,6 +30,9 @@ public final class LoggingSanitizer {
 	 * @return The sanitized copy.
 	 */
 	public static List<String> sanitize(String... input) {
+		if (input == null) {
+			return Collections.emptyList();
+		}
 		return Stream.of(input).map(LoggingSanitizer::sanitize).toList();
 	}
 
@@ -38,6 +42,9 @@ public final class LoggingSanitizer {
 	 * @return The sanitized copy.
 	 */
 	public static List<String> sanitize(List<String> input) {
+		if (input == null) {
+			return Collections.emptyList();
+		}
 		return input.stream().map(LoggingSanitizer::sanitize).toList();
 	}
 }

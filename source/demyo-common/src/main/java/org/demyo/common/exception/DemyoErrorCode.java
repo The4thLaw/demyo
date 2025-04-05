@@ -27,6 +27,8 @@ public enum DemyoErrorCode {
 	SYS_SPRING_CONFIG_INCONSISTENT(10007),
 	/** The H2 version that is needed for a migration is missing. */
 	SYS_MISSING_H2_FOR_MIGRATION(10008),
+	/** The database version couldn't be found. */
+	SYS_MISSING_DB_SCHEMA_VERSION(10009),
 	/** This import format is not supported. */
 	IMPORT_FORMAT_NOT_SUPPORTED(11000),
 	/** The system encountered an I/O error during import. */

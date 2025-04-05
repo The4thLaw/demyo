@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import org.demyo.common.exception.DemyoErrorCode;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IRawSQLDao;
 
 /**
@@ -23,7 +25,7 @@ import org.demyo.dao.IRawSQLDao;
  */
 @Repository
 public class RawSQLDao implements IRawSQLDao {
-	private static final Logger LOGGER =  LoggerFactory.getLogger(RawSQLDao.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RawSQLDao.class);
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -64,8 +66,10 @@ public class RawSQLDao implements IRawSQLDao {
 	public void fixAutoIncrements() {
 		LOGGER.debug("Fixing auto-increments");
 		for (String table : new String[] { "albums", "authors", "bindings", "borrowers", "collections", "configuration",
-				"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series", "sources", "tags" }) {
-			executeUpdate("ALTER TABLE "+table+" ALTER COLUMN ID RESTART WITH (SELECT MAX(id) + 1 FROM "+table+")");
+				"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series", "sources",
+				"tags" }) {
+			executeUpdate(
+					"ALTER TABLE " + table + " ALTER COLUMN ID RESTART WITH (SELECT MAX(id) + 1 FROM " + table + ")");
 		}
 	}
 
@@ -103,7 +107,11 @@ public class RawSQLDao implements IRawSQLDao {
 
 	@Override
 	public int getSchemaVersion() {
-		return jdbcTemplate.queryForObject(
+		Integer version = jdbcTemplate.queryForObject(
 				"select \"version\" from \"schema_version\" order by \"installed_rank\" desc LIMIT 1", Integer.class);
+		if (version == null) {
+			throw new DemyoRuntimeException(DemyoErrorCode.SYS_MISSING_DB_SCHEMA_VERSION);
+		}
+		return version;
 	}
 }

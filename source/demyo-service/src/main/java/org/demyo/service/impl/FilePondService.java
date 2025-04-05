@@ -5,7 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.UUID;
+import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,10 +71,10 @@ public class FilePondService implements IFilePondService {
 		LOGGER.debug("Auto-cleaning FilePond directory...");
 
 		long curTime = System.currentTimeMillis();
-		try {
-			Files.find(uploadDirectory, Integer.MAX_VALUE,
-				(p, attrs) -> curTime - attrs.lastModifiedTime().toMillis() > AUTOCLEAN_MIN_AGE)
-				.forEach(f -> {
+		BiPredicate<Path, BasicFileAttributes> autocleanPred =
+			(p, attrs) -> curTime - attrs.lastModifiedTime().toMillis() > AUTOCLEAN_MIN_AGE;
+		try (Stream<Path> autocleanUploadContents = Files.find(uploadDirectory, Integer.MAX_VALUE, autocleanPred)) {
+				autocleanUploadContents.forEach(f -> {
 					LOGGER.debug("Auto-cleaning FilePond file: {}", f);
 					FileUtils.deleteQuietly(f);
 				});
