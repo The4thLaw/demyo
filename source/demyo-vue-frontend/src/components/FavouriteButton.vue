@@ -40,7 +40,7 @@ const favourites = computed(() => {
 
 const isFavourite = computed(() => sortedIndexOf(favourites.value, props.modelId) > -1)
 
-async function toggle() {
+async function toggle(): Promise<void> {
 	loading.value = true
 	// Call the right service method depending on type and state
 	// The service should alter the store on its own and reactivity should propagate here
@@ -50,12 +50,10 @@ async function toggle() {
 		} else if (props.type === 'Series') {
 			await readerService.removeFavouriteSeries(props.modelId)
 		}
-	} else {
-		if (props.type === 'Album') {
-			await readerService.addFavouriteAlbum(props.modelId)
-		} else if (props.type === 'Series') {
-			await readerService.addFavouriteSeries(props.modelId)
-		}
+	} else if (props.type === 'Album') {
+		await readerService.addFavouriteAlbum(props.modelId)
+	} else if (props.type === 'Series') {
+		await readerService.addFavouriteSeries(props.modelId)
 	}
 	loading.value = false
 }

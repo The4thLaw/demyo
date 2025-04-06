@@ -45,7 +45,7 @@ const emit = defineEmits(['click', 'confirm', 'cancel'])
 
 const confirmationDialog = ref(false)
 
-function handleClick(e: MouseEvent) {
+function handleClick(e: MouseEvent): void {
 	emit('click', e)
 	if (props.confirm) {
 		confirmationDialog.value = true

@@ -37,9 +37,9 @@ useHead({
 const uiStore = useUiStore()
 const route = useRoute()
 
-const derivatives = ref([])
+const derivatives = ref([] as Derivative[])
 
-async function fetchData() {
+async function fetchData(): Promise<void> {
 	uiStore.enableGlobalOverlay()
 	const filter = retrieveFilter(route)
 	derivatives.value = await derivativeService.findForIndex(filter)

@@ -39,7 +39,7 @@ defineProps<{
 	modelName: string
 }>()
 
-function addPrice() {
+function addPrice(): void {
 	const newPrice: Partial<AbstractPrice<unknown, IModel>> = {
 		date: undefined,
 		price: undefined
@@ -47,7 +47,7 @@ function addPrice() {
 	model.value?.prices.push(newPrice as AbstractPrice<unknown, IModel>)
 }
 
-function removePrice(index: number) {
+function removePrice(index: number): void {
 	model.value?.prices.splice(index, 1)
 }
 

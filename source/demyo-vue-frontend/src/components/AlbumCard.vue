@@ -154,12 +154,13 @@ const expanded = ref(false)
 const readingListLoading = ref(false)
 
 const baseImageUrl = computed(() => getBaseImageUrl(props.album.cover))
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 const eagerCovers = !(navigator.connection?.saveData)
 
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, props.album.id) > -1)
 
-async function markAsRead() {
+async function markAsRead(): Promise<void> {
 	readingListLoading.value = true
 	await readerService.removeFromReadingList(props.album.id)
 	readingListLoading.value = false

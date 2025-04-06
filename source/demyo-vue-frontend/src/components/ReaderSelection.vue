@@ -48,11 +48,11 @@ const emit = defineEmits(['select', 'cancel'])
 const dialog = ref(true)
 const readers = ref([] as Reader[])
 
-async function fetchData() {
+async function fetchData(): Promise<void> {
 	readers.value = await readerService.findForIndex()
 }
 
-async function select(reader: Reader) {
+async function select(reader: Reader): Promise<void> {
 	await readerService.setCurrentReader(reader)
 	emit('select')
 }

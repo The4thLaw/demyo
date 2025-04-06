@@ -173,7 +173,7 @@ const { userAgent } = navigator
 
 const env = ref({} as Record<string, string>)
 
-void (async () => {
+void (async (): Promise<void> => {
 	env.value = await aboutService.getEnvironment()
 })()
 </script>

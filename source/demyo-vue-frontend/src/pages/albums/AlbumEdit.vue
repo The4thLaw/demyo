@@ -254,7 +254,7 @@ const { tags, tagsLoading, loadTags } = useRefreshableTags()
 
 const collections = ref([] as Collection[])
 const collectionsLoading = ref(false)
-async function loadCollections(forAlbum: Partial<Album>) {
+async function loadCollections(forAlbum: Partial<Album>): Promise<void> {
 	collectionsLoading.value = true
 	collections.value = await publisherService.findCollectionsForList(forAlbum.publisher?.id)
 
@@ -303,7 +303,7 @@ const { model: album, loading, save, reset } = useSimpleEdit(fetchData, albumSer
 	[loadAuthors, loadBindings, loadImages, loadPublishers, loadSeries, loadTags],
 	'title.add.album', 'title.edit.album', 'AlbumView')
 
-function adjustEditionDates() {
+function adjustEditionDates(): void {
 	if (album.value.markedAsFirstEdition) {
 		sameEditionDates.value = true
 	}

@@ -236,10 +236,6 @@ export default [
 			'@typescript-eslint/naming-convention': 'off',
 			'@typescript-eslint/unbound-method': 'off',
 			'@typescript-eslint/no-unnecessary-condition': 'off',
-			// TODO: enable some of these little by little
-			'@typescript-eslint/no-unsafe-assignment': 'off',
-			'@typescript-eslint/explicit-function-return-type': 'off',
-			'@typescript-eslint/no-unsafe-member-access': 'off',
 			// For this one, maybe allow some cases, like nullable strings?
 			'@typescript-eslint/strict-boolean-expressions': 'off',
 			'@typescript-eslint/explicit-module-boundary-types': 'off',

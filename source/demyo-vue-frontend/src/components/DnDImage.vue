@@ -119,12 +119,12 @@ const serverConfig = {
 	revert: apiRoot + 'filepond/revert'
 }
 
-function showDialog(e: Event) {
+function showDialog(e: Event): void {
 	e.preventDefault()
 	model.value = true
 }
 
-function cancel() {
+function cancel(): void {
 	if (mainPond.value) {
 		mainPond.value.removeFiles()
 	}
@@ -134,7 +134,7 @@ function cancel() {
 	model.value = false
 }
 
-function getServerIds(filepond: FilePondType | null) {
+function getServerIds(filepond: FilePondType | null): string[] | undefined {
 	if (!filepond) {
 		return undefined
 	}
@@ -145,7 +145,7 @@ function getServerIds(filepond: FilePondType | null) {
 	return objects.map(e => e.serverId)
 }
 
-function save() {
+function save(): void {
 	const mainIds = getServerIds(mainPond.value)
 	let mainId
 	if (mainIds) {

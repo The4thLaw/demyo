@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<TextIndex :items="modelList" :first-letter-extractor="(item) => item.name[0]" @page-change="scrollToTop">
+		<TextIndex
+			:items="modelList" :first-letter-extractor="(item: Author) => item.name[0]"
+			@page-change="scrollToTop"
+		>
 			<template #default="slotProps">
 				<router-link :to="`/authors/${slotProps.item.id}/view`">
 					{{ slotProps.item.identifyingName }}

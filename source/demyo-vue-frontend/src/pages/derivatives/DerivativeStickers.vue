@@ -53,12 +53,12 @@ useHead({
 const loading = ref(true)
 const derivatives = ref([] as Derivative[])
 
-async function fetchData() {
+async function fetchData(): Promise<void> {
 	derivatives.value = await derivativeService.findForIndex(undefined, 'full')
 	loading.value = false
 }
 
-function print() {
+function print(): void {
 	window.print()
 }
 

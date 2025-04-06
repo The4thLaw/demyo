@@ -58,7 +58,7 @@ async function fetchData(): Promise<void> {
 	uiStore.disableGlobalOverlay()
 }
 
-async function save() {
+async function save(): Promise<void> {
 	uiStore.enableGlobalOverlay()
 
 	addedImages.value = []

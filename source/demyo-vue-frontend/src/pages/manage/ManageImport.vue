@@ -29,7 +29,7 @@ useHead({
 
 const file: Ref<File | undefined> = ref(undefined)
 
-async function doImport() {
+async function doImport(): Promise<void> {
 	if (file.value) {
 		uiStore.enableGlobalOverlay()
 		const success = await service.doImport(file.value)

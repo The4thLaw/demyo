@@ -13,7 +13,7 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import tagService from '@/services/tag-service'
 
-function getMaxUsageCount(tagsToCount: Tag[]) {
+function getMaxUsageCount(tagsToCount: Tag[]): number {
 	if (tagsToCount.length === 0) {
 		return 0
 	}

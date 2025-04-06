@@ -349,7 +349,7 @@ const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, al
 
 const uiStore = useUiStore()
 const i18n = useI18n()
-async function saveDndImages(data: FilePondData) {
+async function saveDndImages(data: FilePondData): Promise<void> {
 	const ok = await albumService.saveFilepondImages(album.value.id, data.mainImage, data.otherImages)
 	if (ok) {
 		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
@@ -360,7 +360,7 @@ async function saveDndImages(data: FilePondData) {
 	}
 }
 
-async function loadDerivatives() {
+async function loadDerivatives(): Promise<void> {
 	if (inhibitObserver.value || derivativeCount.value <= 0) {
 		// The page isn't loaded yet. Don't do anything
 		return

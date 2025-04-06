@@ -21,8 +21,8 @@ defineProps<{
 	model: IModel
 }>()
 
-function hasCount(tag: ProcessedTag) {
-	return tag.usageCount === 0 || tag.usageCount
+function hasCount(tag: ProcessedTag): boolean {
+	return tag.usageCount >= 0
 }
 </script>
 

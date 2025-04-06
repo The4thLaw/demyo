@@ -201,7 +201,7 @@ const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => de
 
 const uiStore = useUiStore()
 const i18n = useI18n()
-async function saveDndImages(data: FilePondData) {
+async function saveDndImages(data: FilePondData): Promise<void> {
 	const ok = await derivativeService.saveFilepondImages(derivative.value.id, data.otherImages)
 	if (ok) {
 		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))

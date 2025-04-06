@@ -360,14 +360,14 @@ async function loadAlbums(forSeries: Series): Promise<void> {
 	}
 }
 
-async function albumLoader(id: number) {
+async function albumLoader(id: number): Promise<void> {
 	const album = await albumService.findById(id)
 	albums.value[id] = album
 	albums.value[id].loading = false
 }
 
-function addSeriesToReadingList() {
-	void readerService.addSeriesToReadingList(series.value.id)
+async function addSeriesToReadingList(): Promise<void> {
+	return readerService.addSeriesToReadingList(series.value.id)
 }
 
 async function loadDerivatives(): Promise<void> {

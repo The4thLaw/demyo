@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<{
 })
 
 const isArray = computed(() => Array.isArray(props.model))
-const length = computed(() => Array.isArray(props.model) ? props.model.length : 1)
+const length = computed(() => Array.isArray(props.model) ? (props.model as IModel[]).length : 1)
 
 const slots = useSlots()
 const hasDefaultSlot = computed(() => !!slots.default)

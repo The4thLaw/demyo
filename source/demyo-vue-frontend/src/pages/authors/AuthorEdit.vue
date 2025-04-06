@@ -32,7 +32,7 @@
 			<SectionCard :subtitle="$t('fieldset.Author.biography')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Author.biography') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Author.biography') }}</span>
 						<RichTextEditor v-model="author.biography" />
 					</v-col>
 					<v-col cols="12" md="6">

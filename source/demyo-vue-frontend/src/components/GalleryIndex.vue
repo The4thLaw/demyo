@@ -144,13 +144,13 @@ onUnmounted(() => {
 	}
 })
 
-function onLightboxOpen() {
+function onLightboxOpen(): void {
 	lightboxOpened.value = true
-	console.log('Lightbox opened')
+	console.debug('Lightbox opened')
 }
 
-function onLightboxClose() {
-	console.log('Lightbox closed')
+function onLightboxClose(): void {
+	console.debug('Lightbox closed')
 	if (!lightboxOpened.value) {
 		// Don't trigger twice
 		return
@@ -160,19 +160,19 @@ function onLightboxClose() {
 	focusElement(keyTarget.value)
 }
 
-function previousPageKeyboard() {
+function previousPageKeyboard():void {
 	if (props.keyboardNavigation) {
 		previousPage()
 	}
 }
 
-function nextPageKeyboard() {
+function nextPageKeyboard(): void {
 	if (props.keyboardNavigation) {
 		nextPage()
 	}
 }
 
-function previousPage() {
+function previousPage(): void {
 	if (lightboxOpened.value) {
 		// lightbox is active, don't do anything
 		return
@@ -182,7 +182,7 @@ function previousPage() {
 	}
 }
 
-function nextPage() {
+function nextPage(): void {
 	if (lightboxOpened.value) {
 		// lightbox is active, don't do anything
 		return

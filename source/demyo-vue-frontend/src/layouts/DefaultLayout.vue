@@ -192,13 +192,13 @@ async function enterSearch(): Promise<void> {
 	await performSearch()
 }
 
-function focusSearch() {
+function focusSearch(): void {
 	toolbarSearch.value?.focus()
 	// Vuetify doesn't forward the Vue transition events so we delay a refocus
 	window.setTimeout(() => toolbarSearch.value?.focus(), 300)
 }
 
-function blurSearch() {
+function blurSearch(): void {
 	showQuicksearch.value = !!quicksearchQuery.value
 }
 

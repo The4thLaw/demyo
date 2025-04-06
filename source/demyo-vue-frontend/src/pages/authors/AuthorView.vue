@@ -85,7 +85,7 @@ async function fetchData(id: number): Promise<Author> {
 	authorLoading.value = false
 
 	const loadedAuthorAlbums = await authorService.getAuthorAlbums(id)
-	authorAlbums.value = JSON.parse(JSON.stringify(loadedAuthorAlbums))
+	authorAlbums.value = JSON.parse(JSON.stringify(loadedAuthorAlbums)) as AuthorAlbums
 	albumsLoading.value = false
 
 	derivativeCount.value = await derivCountP

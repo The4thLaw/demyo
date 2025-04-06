@@ -39,7 +39,7 @@ const search = ref('')
 
 const emit = defineEmits(['refresh'])
 
-function onUpdateSelection() {
+function onUpdateSelection(): void {
 	search.value = ''
 }
 </script>

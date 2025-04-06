@@ -195,7 +195,7 @@ const { model: derivative, loading, save, reset, formRef } = useSimpleEdit(fetch
 	[loadAuthors, loadImages, loadSources, loadTypes, loadSeries],
 	'title.add.derivative', 'title.edit.derivative', 'DerivativeView')
 
-async function loadAlbums(derivativeParam?: Partial<Derivative>) {
+async function loadAlbums(derivativeParam?: Partial<Derivative>): Promise<void> {
 	derivativeParam ??= derivative.value
 	relatedAlbumsLoading.value = true
 	relatedAlbums.value = await seriesService.findAlbumsForList(derivativeParam.series?.id)
@@ -208,7 +208,7 @@ async function loadAlbums(derivativeParam?: Partial<Derivative>) {
 	relatedAlbumsLoading.value = false
 }
 
-function oneNotNull() {
+function oneNotNull(): boolean | string {
 	// In addition to this rule, an @input handler forces full form validation when one of the relevant
 	// input changes. This guarantees that errors on other fields are cleared when only one changes
 	if (!derivative.value.series?.id && !derivative.value.album?.id) {

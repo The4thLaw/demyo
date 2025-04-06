@@ -90,8 +90,8 @@ const hasDependencies = computed(() =>
 		|| !!dependencies.value?.publishers
 )
 
-function hasSeries(item: IModel) {
-	return (item as Album).series
+function hasSeries(item: IModel): boolean {
+	return !!(item as Album).series
 }
 
 const parsedDependencies = computed(() => {

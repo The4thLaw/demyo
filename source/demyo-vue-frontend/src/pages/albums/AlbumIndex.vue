@@ -13,7 +13,7 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-async function fetchData() {
+async function fetchData(): Promise<Album[]> {
 	const filter = retrieveFilter(route)
 	return albumService.findForIndex(filter)
 }

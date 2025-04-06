@@ -39,7 +39,7 @@ useHead({
 	title: useI18n().t('title.manage.export.select')
 })
 
-function doExport() {
+function doExport(): void {
 	exportForm.value?.submit()
 }
 </script>
