@@ -95,7 +95,8 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 * @return The Albums, as a list of {@link MetaSeries}
 	 */
 	@GetMapping("/{modelId}/readingList/albums")
-	public MappingJacksonValue getReadingList(@PathVariable("modelId") long modelId, @RequestParam("view") Optional<String> view) {
+	public MappingJacksonValue getReadingList(@PathVariable("modelId") long modelId,
+			@RequestParam("view") Optional<String> view) {
 		Iterable<MetaSeries> value = service.getReadingListAlbums(modelId);
 		return getIndexView(view, value);
 	}
@@ -173,7 +174,8 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 * @return Always <code>true</code>.
 	 */
 	@DeleteMapping("/{modelId}/readingList/albums/{albumId}")
-	public boolean removeAlbumFromReadingList(@PathVariable("modelId") long modelId, @PathVariable("albumId") long albumId) {
+	public boolean removeAlbumFromReadingList(@PathVariable("modelId") long modelId,
+			@PathVariable("albumId") long albumId) {
 		service.removeAlbumFromReadingList(modelId, albumId);
 		return true;
 	}
@@ -186,7 +188,8 @@ public class ReaderAPIController extends AbstractModelAPIController<Reader> {
 	 * @return The updated reading list.
 	 */
 	@PostMapping("/{modelId}/readingList/series/{seriesId}")
-	public Set<Number> addSeriesToReadingList(@PathVariable("modelId") long modelId, @PathVariable("seriesId") long seriesId) {
+	public Set<Number> addSeriesToReadingList(@PathVariable("modelId") long modelId,
+			@PathVariable("seriesId") long seriesId) {
 		service.addSeriesToReadingList(modelId, seriesId);
 		return service.getReadingList(modelId);
 	}

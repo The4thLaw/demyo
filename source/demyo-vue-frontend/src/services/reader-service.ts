@@ -133,7 +133,7 @@ class ReaderService extends AbstractModelService<Reader> {
 	}
 
 	async addFavouriteSeries(item: number): Promise<void> {
-		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', 'series', item,
+		return this.addOrRemoveListItem('addFavouriteSeries', axiosPost, 'favourites', item,
 			'readers.confirm.favourite.add')
 	}
 

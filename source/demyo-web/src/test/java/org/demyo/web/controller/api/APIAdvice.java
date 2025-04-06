@@ -15,5 +15,6 @@ public class APIAdvice {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler({ EntityNotFoundException.class })
 	public void handle(EntityNotFoundException e) {
+		// Nothing to do, the status is sent by the annotation
 	}
 }

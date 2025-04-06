@@ -72,23 +72,9 @@ public class Demyo2Handler extends DefaultHandler {
 			case "version":
 				handleVersion(attributes);
 				break;
-			case "image":
-				createLine("images", attributes);
-				break;
-			case "publisher":
-				createLine("publishers", attributes);
-				break;
-			case "collection":
-				createLine("collections", attributes);
-				break;
-			case "binding":
-				createLine("bindings", attributes);
-				break;
-			case "author":
-				createLine("authors", attributes);
-				break;
-			case "tag":
-				createLine("tags", attributes);
+			case "image", "publisher", "collection", "binding", "author",
+			"tag", "album_price", "borrower", "source", "derivative_price":
+				createLine(localName + "s", attributes);
 				break;
 			case "series":
 				seriesId = attributes.getValue("id");
@@ -125,20 +111,11 @@ public class Demyo2Handler extends DefaultHandler {
 			case "album-image":
 				albumImages.add(join(FK_ALBUM_ID, albumId, "image_id", attributes.getValue("ref")));
 				break;
-			case "album_price":
-				createLine("albums_prices", attributes);
-				break;
-			case "borrower":
-				createLine("borrowers", attributes);
-				break;
 			case "loan":
 				createLine("albums_borrowers", attributes);
 				break;
 			case "derivative_type":
 				createLine("derivative_types", attributes);
-				break;
-			case "source":
-				createLine("sources", attributes);
 				break;
 			case "derivative":
 				derivativeId = attributes.getValue("id");
@@ -146,9 +123,6 @@ public class Demyo2Handler extends DefaultHandler {
 				break;
 			case "derivative-image":
 				derivativeImages.add(join("derivative_id", derivativeId, "image_id", attributes.getValue("ref")));
-				break;
-			case "derivative_price":
-				createLine("derivatives_prices", attributes);
 				break;
 			case "reader":
 				readerId = attributes.getValue("id");

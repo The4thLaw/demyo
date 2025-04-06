@@ -15,7 +15,7 @@
 						/>
 					</v-col>
 				</v-row>
-				<label class="dem-fieldlabel">{{ $t('field.Publisher.history') }}</label>
+				<span class="dem-fieldlabel">{{ $t('field.Publisher.history') }}</span>
 				<RichTextEditor v-model="publisher.history" />
 			</SectionCard>
 
@@ -58,11 +58,11 @@ async function fetchData(id: number | undefined): Promise<Partial<Publisher>> {
 			})
 	}
 
-	const publisher: Partial<Publisher> = {
+	const skeleton: Partial<Publisher> = {
 		logo: {} as Image
 	}
 
-	return Promise.resolve(publisher)
+	return Promise.resolve(skeleton)
 }
 
 const { model: publisher, loading, save, reset } = useSimpleEdit(fetchData, publisherService,

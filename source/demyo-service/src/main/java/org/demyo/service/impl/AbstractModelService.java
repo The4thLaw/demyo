@@ -151,8 +151,6 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	@Override
 	public int getFirstPageForLetter(char startsWith) {
 		throw new UnsupportedOperationException("Not migrated to Spring Data yet");
-		/*return getDao().getFirstPageForLetter(startsWith,
-				configurationService.getConfiguration().getPageSizeForText());*/
 	}
 
 	@Transactional(readOnly = true)

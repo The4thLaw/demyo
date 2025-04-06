@@ -46,7 +46,7 @@ class FilePondServiceTest {
 	 */
 	@AfterEach
 	void tearDown() {
-		FileUtils.deleteDirectoryQuietly(uploadDir);;
+		FileUtils.deleteDirectoryQuietly(uploadDir);
 	}
 
 	private static void createSampleFile(Path toDelete) throws IOException {

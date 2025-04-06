@@ -61,7 +61,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Reader>> {
 		throw new Error('Cannot load the configuration for an undefined reader')
 	}
 	return readerService.findById(id)
-		.then(reader => {
+		.then(fetched => {
 			// Must load language name translations *after* the page is initialized
 			// Before, we would just should the label codes
 			const languageCodes = ['en', 'fr']
@@ -71,7 +71,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Reader>> {
 					title: i18n.t(`core.language.${c}`)
 				}
 			})
-			return reader
+			return fetched
 		})
 }
 

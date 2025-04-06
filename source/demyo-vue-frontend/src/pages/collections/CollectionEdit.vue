@@ -22,7 +22,7 @@
 						/>
 					</v-col>
 				</v-row>
-				<label class="dem-fieldlabel">{{ $t('field.Collection.history') }}</label>
+				<span class="dem-fieldlabel">{{ $t('field.Collection.history') }}</span>
 				<RichTextEditor v-model="collection.history" />
 			</SectionCard>
 
@@ -64,16 +64,16 @@ async function fetchData(id: number | undefined): Promise<Partial<Collection>> {
 		return collectionService.findById(id)
 	}
 
-	const collection: Partial<Collection> = {
+	const skeleton: Partial<Collection> = {
 		publisher: {} as Publisher,
 		logo: {} as Image
 	}
 
-	if (route.query.toPublisher && collection.publisher) {
-		collection.publisher.id = getParsedRouteParam(route.query.toPublisher) ?? 0
+	if (route.query.toPublisher && skeleton.publisher) {
+		skeleton.publisher.id = getParsedRouteParam(route.query.toPublisher) ?? 0
 	}
 
-	return Promise.resolve(collection)
+	return Promise.resolve(skeleton)
 }
 
 const { model: collection, loading, save, reset } = useSimpleEdit(fetchData, collectionService,

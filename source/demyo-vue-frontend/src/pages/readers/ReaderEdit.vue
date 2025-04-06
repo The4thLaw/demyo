@@ -9,9 +9,9 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">
+						<span class="dem-fieldlabel">
 							{{ $t('field.Reader.colour') }}
-						</label>
+						</span>
 						<v-checkbox v-model="noColour" :label="$t('special.form.noColour')" />
 						<v-color-picker v-if="!noColour" v-model="reader.colour" />
 					</v-col>
@@ -32,14 +32,13 @@ const noColour = ref(true)
 
 async function fetchData(id: number | undefined): Promise<Partial<Reader>> {
 	if (!id) {
-		const reader: Partial<Reader> = {}
-		return Promise.resolve(reader)
+		return Promise.resolve({} as Partial<Reader>)
 	}
 
 	return readerService.findById(id)
-		.then(reader => {
-			noColour.value = !reader.colour
-			return reader
+		.then(fetched => {
+			noColour.value = !fetched.colour
+			return fetched
 		})
 }
 

@@ -41,8 +41,8 @@ public class ExportAPIController {
 	 * @return The
 	 */
 	@GetMapping
-	public HttpEntity<Resource> exportFile(@RequestParam("format") String format, @RequestParam("withResources") boolean withResources)
-			throws DemyoException, IOException {
+	public HttpEntity<Resource> exportFile(@RequestParam("format") String format,
+			@RequestParam("withResources") boolean withResources) throws DemyoException, IOException {
 		Output exportedData = exportService.export(withResources);
 		Path file = exportedData.getFile();
 

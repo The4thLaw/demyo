@@ -34,11 +34,11 @@
 			<SectionCard :subtitle="$t('fieldset.Series.freeText')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Series.summary') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Series.summary') }}</span>
 						<RichTextEditor v-model="series.summary" />
 					</v-col>
 					<v-col cols="12" md="6">
-						<label class="dem-fieldlabel">{{ $t('field.Series.comment') }}</label>
+						<span class="dem-fieldlabel">{{ $t('field.Series.comment') }}</span>
 						<RichTextEditor v-model="series.comment" />
 					</v-col>
 				</v-row>

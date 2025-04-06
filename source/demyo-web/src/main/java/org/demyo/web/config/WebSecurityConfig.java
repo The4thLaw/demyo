@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.HstsConfig;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
@@ -41,7 +42,7 @@ public class WebSecurityConfig {
 								.xssProtection(xss -> xss
 										.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK)))
 						// Don't care for HSTS: It's not supported by Demyo yet anyway
-						.httpStrictTransportSecurity(hsts -> hsts.disable()))
+						.httpStrictTransportSecurity(HstsConfig::disable))
 
 				// Disable CSRF protection for now
 				.csrf(csrf -> csrf.disable())
