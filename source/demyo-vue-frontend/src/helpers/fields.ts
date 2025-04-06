@@ -10,7 +10,7 @@ import uniqBy from 'lodash/uniqBy'
  * @param sortProperties The property or properties to sort the models by.
  */
 export function mergeModels<T extends IModel, S extends IModel>(collection: T[], modelProperty: keyof T,
-	sortProperties: (keyof S)[]|(keyof S)): S[] {
+		sortProperties: (keyof S)[]|(keyof S)): S[] {
 	if (!Array.isArray(sortProperties)) {
 		sortProperties = [sortProperties]
 	}

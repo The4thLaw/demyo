@@ -205,7 +205,7 @@ async function saveDndImages(data: FilePondData) {
 	const ok = await derivativeService.saveFilepondImages(derivative.value.id, data.otherImages)
 	if (ok) {
 		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
-		loadData()
+		void loadData()
 	} else {
 		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 	}

@@ -44,7 +44,7 @@
 			:length="pageCount"
 			total-visible="10"
 			class="my-2"
-			@update:modelValue="emit('page-change')"
+			@update:model-value="emit('page-change')"
 		/>
 	</div>
 </template>

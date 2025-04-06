@@ -28,7 +28,7 @@
 import { useCurrencies } from '@/composables/currency'
 
 const props = defineProps<{
-	prices: AbstractPrice<any, IModel>[]
+	prices: AbstractPrice<unknown, IModel>[]
 	modelName: string
 }>()
 

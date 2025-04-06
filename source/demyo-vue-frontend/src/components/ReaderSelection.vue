@@ -1,7 +1,7 @@
 <template>
 	<v-dialog
 		v-model="dialog" :persistent="requireSelection" max-width="400px"
-		@click:outside="$emit('cancel')"
+		@click:outside="emit('cancel')"
 	>
 		<v-card>
 			<v-card-title>
@@ -26,7 +26,7 @@
 			<v-card-actions v-if="!requireSelection">
 				<v-spacer />
 
-				<v-btn color="primary" variant="text" @click="dialog = false; $emit('cancel')">
+				<v-btn color="primary" variant="text" @click="dialog = false; emit('cancel')">
 					{{ $t('quickTasks.confirm.cancel.label') }}
 				</v-btn>
 			</v-card-actions>
@@ -43,7 +43,7 @@ withDefaults(defineProps<{
 	requireSelection: false
 })
 
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select', 'cancel'])
 
 const dialog = ref(true)
 const readers = ref([] as Reader[])
@@ -57,5 +57,5 @@ async function select(reader: Reader) {
 	emit('select')
 }
 
-fetchData()
+void fetchData()
 </script>

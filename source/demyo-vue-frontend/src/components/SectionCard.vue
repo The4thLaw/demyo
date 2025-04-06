@@ -58,7 +58,10 @@ const props = withDefaults(defineProps<{
 	subtitle?: string,
 	image?: Image
 }>(), {
-	loading: false
+	loading: false,
+	title: undefined,
+	subtitle: undefined,
+	image: undefined
 })
 
 const hasImage = computed(() => props.image?.id)

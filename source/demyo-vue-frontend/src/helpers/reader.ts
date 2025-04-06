@@ -7,7 +7,7 @@ const LOCAL_STORAGE_READER_KEY = 'currentReader'
 export function loadReaderFromLocalStorage(): Reader | undefined {
 	const readerStr = localStorage.getItem(LOCAL_STORAGE_READER_KEY)
 	if (readerStr) {
-		return JSON.parse(readerStr)
+		return JSON.parse(readerStr) as Reader
 	}
 	return undefined
 }
@@ -25,6 +25,6 @@ export function loadReaderLanguageFromLocalStorage(): string | undefined {
  * Saves a reader to the local storage.
  * @param reader The reader to save
  */
-export function saveReaderToLocalStorage(reader: Reader) {
+export function saveReaderToLocalStorage(reader: Reader): void {
 	localStorage.setItem(LOCAL_STORAGE_READER_KEY, JSON.stringify(reader))
 }

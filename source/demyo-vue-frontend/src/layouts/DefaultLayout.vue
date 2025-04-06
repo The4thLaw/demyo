@@ -185,11 +185,11 @@ const {
 const menuSearch = useTemplateRef<HTMLInputElement>('menu-search')
 const toolbarSearch = useTemplateRef<HTMLInputElement>('toolbar-search')
 
-function enterSearch() {
+async function enterSearch(): Promise<void> {
 	mainMenu.value = false
 	menuSearch.value?.blur()
 	toolbarSearch.value?.blur()
-	performSearch()
+	await performSearch()
 }
 
 function focusSearch() {

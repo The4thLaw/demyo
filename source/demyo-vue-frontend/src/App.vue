@@ -27,7 +27,7 @@ useHead({
 // Inspired by:
 // https://itnext.io/b379baa91a05
 // https://markus.oberlehner.net/blog/dynamic-vue-layout-components/
-const layout = computed(() => route.meta.layout || DefaultLayout)
+const layout = computed(() => route.meta.layout ?? DefaultLayout)
 
 document.body.addEventListener('click', (e: MouseEvent) => {
 	if (!(e.target instanceof HTMLElement)) {

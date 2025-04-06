@@ -230,10 +230,10 @@ async function markAsRead() {
 
 @keyframes pulsate {
 	/*
-	 * Animating opacity is much, much more efficient than animating the background color,
-	 * which requires repaints. See
-	 * https://developer.mozilla.org/en-US/docs/Tools/Performance/Scenarios/Animating_CSS_properties#CSS_property_cost
-	 */
+	Animating opacity is much, much more efficient than animating the background color,
+	which requires repaints. See
+	https://developer.mozilla.org/en-US/docs/Tools/Performance/Scenarios/Animating_CSS_properties#CSS_property_cost
+	*/
 	from {
 		opacity: 1;
 	}

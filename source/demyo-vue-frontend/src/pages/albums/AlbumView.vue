@@ -35,7 +35,7 @@
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.derivative.to.album')"
-				:to="{ name: 'DerivativeAdd', query: derivativeQuery}"
+				:to="{ name: 'DerivativeAdd', query: derivativeQuery }"
 				icon="mdi-image-frame dem-overlay-add"
 			/>
 		</AppTasks>
@@ -132,8 +132,9 @@
 							:label="$t('field.Album.currentEditionDate')"
 						>
 							{{ $d(new Date(album.firstEditionDate), 'long') }}
-							{{ $t(album.markedAsFirstEdition ?
-								'field.Album.markedAsFirstEdition.view' : 'field.Album.isFirstEdition') }}
+							{{ $t(album.markedAsFirstEdition
+								? 'field.Album.markedAsFirstEdition.view'
+								: 'field.Album.isFirstEdition') }}
 						</FieldValue>
 						<FieldValue v-else :label="$t('field.Album.firstEditionDate')">
 							{{ $d(new Date(album.firstEditionDate), 'long') }}
@@ -272,6 +273,7 @@
 </template>
 
 <script setup lang="ts">
+import GalleryIndex from '@/components/GalleryIndex.vue'
 import { useCurrency } from '@/composables/currency'
 import { useSimpleView } from '@/composables/model-view'
 import albumService from '@/services/album-service'
@@ -288,7 +290,7 @@ const derivativeCount = ref(-1)
 const inhibitObserver = ref(true)
 const derivativesLoading = ref(false)
 const derivatives = ref([] as Derivative[])
-const derivativeSection = useTemplateRef('derivative-section')
+const derivativeSection = useTemplateRef<typeof GalleryIndex>('derivative-section')
 
 async function fetchData(id: number): Promise<Album> {
 	const dcPromise = albumService.countDerivatives(id)
@@ -304,7 +306,7 @@ async function fetchData(id: number): Promise<Album> {
 	return albumP
 }
 
-const {model: album, loading, appTasksMenu, deleteModel, loadData}
+const { model: album, loading, appTasksMenu, deleteModel, loadData }
 	= useSimpleView(fetchData, albumService,
 		'quickTasks.delete.album.confirm.done', 'AlbumIndex',
 		a => a.title)
@@ -352,7 +354,7 @@ async function saveDndImages(data: FilePondData) {
 	if (ok) {
 		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
 		// Refresh
-		loadData()
+		void loadData()
 	} else {
 		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
 	}
@@ -372,12 +374,12 @@ async function loadDerivatives() {
 	derivativesLoading.value = false
 }
 
-function addToReadingList() {
-	readerService.addToReadingList(album.value.id)
+async function addToReadingList(): Promise<void> {
+	await readerService.addToReadingList(album.value.id)
 }
 
-function markAsRead() {
-	readerService.removeFromReadingList(album.value.id)
+async function markAsRead(): Promise<void> {
+	await readerService.removeFromReadingList(album.value.id)
 }
 </script>
 

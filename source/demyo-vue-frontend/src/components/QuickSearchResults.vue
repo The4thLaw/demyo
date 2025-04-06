@@ -9,7 +9,7 @@
 					<v-list :key="`ti-${key}`" class="dem-columnized c-QuickSearchResults__list" density="compact">
 						<v-list-item v-for="item in results[key]" :key="item.id">
 							<div>
-								<router-link :to="`/${key}/${item.id}/view`" @click="$emit('navigate')">
+								<router-link :to="`/${key}/${item.id}/view`" @click="emit('navigate')">
 									<template v-if="key !== 'albums'">
 										{{ item.identifyingName }}
 									</template>
@@ -19,7 +19,7 @@
 								</router-link>
 							</div>
 							<div v-if="key === 'albums' && item.series" class="c-QuickSearchResults__albumSeries">
-								<router-link :to="`/series/${item.series.id}/view`" @click="$emit('navigate')">
+								<router-link :to="`/series/${item.series.id}/view`" @click="emit('navigate')">
 									{{ item.series.identifyingName }}
 								</router-link>
 							</div>
@@ -46,6 +46,8 @@ const props = withDefaults(defineProps<{
 	results: undefined,
 	loading: false
 })
+
+const emit = defineEmits(['navigate'])
 
 const hasLoadedResults = computed(() => props.results !== undefined)
 const hasResults = computed(() => props.results && Object.keys(props.results).length > 0)

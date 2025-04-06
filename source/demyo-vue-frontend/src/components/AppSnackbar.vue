@@ -1,5 +1,5 @@
 <template>
-	<v-snackbar :model-value="shown" @update:modelValue="$emit('close')">
+	<v-snackbar :model-value="shown" @update:model-value="$emit('close')">
 		{{ message }}
 		<template #actions>
 			<v-btn color="secondary" variant="text" @click="$emit('close')">

@@ -21,7 +21,7 @@ export const currencyList = processedCurrencyList
  * Checks if the selected locale shows currencies as a prefix of the amounts. en does, fr doesn't, for example.
  * @returns true if the selected locale shows currencies as prefixes.
  */
-export function isCurrencyPrefix() {
+export function isCurrencyPrefix(): boolean {
 	// TODO: ideally, this NumberFormat should be created once, at the change of locale
 	const locale = i18n.global.locale.value.replace(/_/g, '-')
 	return new Intl.NumberFormat(locale, { style: 'currency', currency: 'XTS' }).format(1).startsWith('XTS')
@@ -37,7 +37,7 @@ export function isCurrencyPrefix() {
  * @param currency The currency to use
  * @returns The formatted currency amount.
  */
-export function formatCurrency(amount: number, currency: string): string | undefined {
+export function formatCurrency(amount?: number, currency?: string): string | undefined {
 	if (amount === undefined) {
 		return undefined
 	}
@@ -50,7 +50,8 @@ export function formatCurrency(amount: number, currency: string): string | undef
 	currency = getCurrencySymbol(currency)
 
 	// Format with a default currency
-	const formatted = new Intl.NumberFormat(i18n.global.locale, { style: 'currency', currency: 'XTS' }).format(amount)
+	const formatted = new Intl.NumberFormat(i18n.global.locale.value,
+		{ style: 'currency', currency: 'XTS' }).format(amount)
 
 	// Pad the currency if needed. Worst case: it's padded twice and HTML strips the extra padding
 	if (currency.length !== 1 && formatted.startsWith('XTS')) {
@@ -73,5 +74,5 @@ export function getCurrencySymbol(currency: string): string {
 	}
 
 	// Looks like a currency code, try the map
-	return getSymbolFromCurrency(currency) || currency
+	return getSymbolFromCurrency(currency) ?? currency
 }

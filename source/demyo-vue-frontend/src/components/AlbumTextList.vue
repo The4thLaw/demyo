@@ -7,8 +7,8 @@
 					:key="key"
 					color="primary"
 				>
-					<template #activator="{ props }">
-						<v-list-item v-bind="props" :title="value.identifyingName">
+					<template #activator="{ props: templateProps }">
+						<v-list-item v-bind="templateProps" :title="value.identifyingName">
 							<template #append="appendProps">
 								<v-icon v-if="appendProps.isActive">
 									mdi-chevron-up
@@ -63,8 +63,14 @@ const props = defineProps<{
 
 const currentPage = ref(1)
 
+interface MetaSeries extends Partial<Album>, Partial<Series> {
+	isSeries?: boolean
+	sortName: string
+	albums?: Album[]
+}
+
 const albumsBySeries = computed(() => {
-	const bySeries = {} as Record<number, any>
+	const bySeries = {} as Record<number, MetaSeries>
 	// Work on a copy of the albums, else we modify the data from the parent
 
 	props.albums.forEach(a => {
@@ -76,16 +82,20 @@ const albumsBySeries = computed(() => {
 		}
 
 		if (bySeries[id]) {
-			bySeries[id].albums.push(a)
+			bySeries[id].albums?.push(a)
 		} else if (id > 0) {
-			bySeries[id] = a.series
-			bySeries[id].isSeries = true
-			bySeries[id].albums = [a]
-			bySeries[id].sortName = a.series.identifyingName
+			bySeries[id] = {
+				...a.series,
+				isSeries: true,
+				albums: [a],
+				sortName: a.series.identifyingName
+			}
 		} else {
-			bySeries[id] = a
-			bySeries[id].isSeries = false
-			bySeries[id].sortName = a.title
+			bySeries[id] = {
+				...a,
+				isSeries: false,
+				sortName: a.title
+			}
 		}
 	})
 

@@ -1,12 +1,12 @@
 <template>
 	<div class="c-FormActions">
 		<template v-if="!hasDefaultSlot">
-			<v-btn color="secondary" class="c-FormActions__submit" type="submit" @click.prevent="$emit('save')">
+			<v-btn color="secondary" class="c-FormActions__submit" type="submit" @click.prevent="emit('save')">
 				{{ $t('button.save') }}
 			</v-btn>
 			<v-btn
 				v-if="showReset" class="c-FormActions__reset" variant="text" color="primary"
-				@click="$emit('reset')"
+				@click="emit('reset')"
 			>
 				{{ $t('button.reset') }}
 			</v-btn>
@@ -30,6 +30,8 @@ withDefaults(defineProps<{
 	showReset: true,
 	showBack: true
 })
+
+const emit = defineEmits(['save', 'reset'])
 
 const hasDefaultSlot = computed(() => !!slots.default)
 </script>

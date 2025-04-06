@@ -7,17 +7,19 @@ import type { Dictionary } from 'lodash'
 import deburr from 'lodash/deburr'
 import groupBy from 'lodash/groupBy'
 
+const PAGE_CHANGE_EVENT = 'page-change'
+
 function extractFirstLetter<T extends AbstractModel>(item: T, firstLetterExtractor: (item: T) => string): string {
 	const first = deburr(firstLetterExtractor(item)).toUpperCase()
 	if (/[A-Za-z]/.exec(first)) {
 		return first
-	} else if (/[0-9]/.exec(first)) {
+	} else if (/\d/.exec(first)) {
 		return '0-9'
 	}
 	return '#'
 }
 
-export const emitTypes = ['page-change']
+export const emitTypes = [PAGE_CHANGE_EVENT]
 
 interface PaginationState<T extends AbstractModel> {
 	/** The current page number. */
@@ -38,18 +40,17 @@ interface PaginationState<T extends AbstractModel> {
 	nextPage: () => void
 }
 
-export function useBasicPagination<T extends AbstractModel>(items: Ref<T[]>, itemsPerPage?: Ref<number>): PaginationState<T> {
-	return usePagination(items, () => '#', () => {}, itemsPerPage)
+export function useBasicPagination<T extends AbstractModel>(items: Ref<T[]>,
+		itemsPerPage?: Ref<number>): PaginationState<T> {
+	return usePagination(items, () => '#', () => undefined, itemsPerPage)
 }
 
 export function usePagination<T extends AbstractModel>(items: Ref<T[]>, firstLetterExtractor: (item: T) => string,
-	emit: (evt: string) => void, itemsPerPage?: Ref<number>): PaginationState<T> {
+		emit: (evt: string) => void, itemsPerPage?: Ref<number>): PaginationState<T> {
 	const currentPage = ref(1)
 
 	const readerStore = useReaderStore()
-	if (!itemsPerPage) {
-		itemsPerPage = computed(() => readerStore.currentReader.configuration.pageSizeForText)
-	}
+	itemsPerPage ??= computed(() => readerStore.currentReader.configuration.pageSizeForText)
 
 	const paginatedItems = computed(() => items.value.slice(
 		(currentPage.value - 1) * itemsPerPage.value, currentPage.value * itemsPerPage.value))
@@ -64,14 +65,14 @@ export function usePagination<T extends AbstractModel>(items: Ref<T[]>, firstLet
 	function previousPage(): void {
 		if (hasPreviousPage.value) {
 			currentPage.value--
-			emit('page-change')
+			emit(PAGE_CHANGE_EVENT)
 		}
 	}
 
 	function nextPage(): void {
 		if (hasNextPage.value) {
 			currentPage.value++
-			emit('page-change')
+			emit(PAGE_CHANGE_EVENT)
 		}
 	}
 

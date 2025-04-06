@@ -4,16 +4,19 @@ import { useHead } from '@unhead/vue'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+interface Index<T extends IModel> {
+	loading: Ref<boolean>
+	modelList: Ref<T[]>
+}
+
 /**
  * Composable for simple model indexes loading data from the service.
  * @param serviceInstance The service to use to fetch the data.
  * @param titleKey the page title key
  */
 export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelService<T>, titleKey: string,
-	fetchData?: (() => Promise<T[]>)) {
-	//
-	let safeFetchData: () => Promise<T[]>
-	safeFetchData = fetchData || (async () => serviceInstance.findForIndex())
+		fetchData?: (() => Promise<T[]>)): Index<T> {
+	const safeFetchData: () => Promise<T[]> = fetchData ?? (async ():Promise<T[]> => serviceInstance.findForIndex())
 
 	useHead({
 		title: useI18n().t(titleKey)
@@ -22,15 +25,15 @@ export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelS
 	const uiStore = useUiStore()
 	const loading = computed(() => uiStore.globalOverlay)
 
-	const modelList = ref([] as T[])
+	const modelList = ref([] as T[]) as Ref<T[]>
 
-	async function loadData() {
+	async function loadData(): Promise<void> {
 		uiStore.enableGlobalOverlay()
 		modelList.value = await safeFetchData()
 		uiStore.disableGlobalOverlay()
 	}
 
-	loadData()
+	void loadData()
 
 	return { loading, modelList }
 }

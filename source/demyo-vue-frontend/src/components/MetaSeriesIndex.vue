@@ -12,9 +12,13 @@
 </template>
 
 <script setup lang="ts">
+import { emitTypes } from '@/composables/pagination'
+
 defineProps<{
 	items: MetaSeries[]
 }>()
+
+defineEmits(emitTypes)
 
 function firstLetterExtractor(meta: MetaSeries): string {
 	if (meta.series) {

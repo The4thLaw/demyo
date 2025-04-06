@@ -1,7 +1,7 @@
 <template>
 	<!-- Forward cols attributes -->
 	<v-col v-bind="$attrs">
-		<label class="dem-fieldlabel">{{ $t(`field.${modelName}.prices.history`) }}</label>
+		<span class="dem-fieldlabel">{{ $t(`field.${modelName}.prices.history`) }}</span>
 		<!-- Note: keyed by index, which is not ideal, because the price doesn't have a technical ID -->
 		<v-row
 			v-for="(price, index) in model.prices" :key="'price_' + index"
@@ -34,17 +34,17 @@
 <script setup lang="ts">
 import { mandatory, number } from '@/helpers/rules'
 
-const model = defineModel<AbstractPricedModel<AbstractPrice<any, IModel>, IModel>>()
+const model = defineModel<AbstractPricedModel<AbstractPrice<unknown, IModel>, IModel>>()
 defineProps<{
 	modelName: string
 }>()
 
 function addPrice() {
-	const newPrice: Partial<AbstractPrice<any, IModel>> = {
+	const newPrice: Partial<AbstractPrice<unknown, IModel>> = {
 		date: undefined,
 		price: undefined
 	}
-	model.value?.prices.push(newPrice as AbstractPrice<any, IModel>)
+	model.value?.prices.push(newPrice as AbstractPrice<unknown, IModel>)
 }
 
 function removePrice(index: number) {

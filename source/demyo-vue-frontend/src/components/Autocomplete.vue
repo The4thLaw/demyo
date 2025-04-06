@@ -11,7 +11,7 @@
 		:closable-chips="multiple"
 		:loading="loading ? 'primary' : false"
 		:no-data-text="$t('core.components.Autocomplete.nodata')"
-		@update:modelValue="onUpdateSelection"
+		@update:model-value="onUpdateSelection"
 	>
 		<template v-if="refreshable" #append>
 			<v-btn icon size="small" variant="flat" @click.stop="emit('refresh')">
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel<unknown>()
 
 withDefaults(defineProps<{
 	labelKey: string

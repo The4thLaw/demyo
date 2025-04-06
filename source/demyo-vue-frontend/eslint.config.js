@@ -55,6 +55,7 @@ const commonRules = {
 	'no-useless-concat': 'error',
 	'no-useless-return': 'error',
 	'@stylistic/operator-linebreak': ['error', 'before'],
+	'vue/operator-linebreak': ['error', 'before'],
 	radix: 'warn',
 	'wrap-iife': 'error',
 	// Used to explicitely mark promises as not awaited
@@ -229,6 +230,8 @@ export default [
 			'@typescript-eslint/no-unused-vars': 'off',
 			// Broken in conjunction with tsParser
 			'vue/valid-v-for': 'off',
+			// Kinda tedious for us, I'd rather deal with migrations
+			'vue/multi-word-component-names': 'off',
 			// These are irrelevant for Vue SFC's, not working properly, or very cumbersome
 			'@typescript-eslint/naming-convention': 'off',
 			'@typescript-eslint/unbound-method': 'off',

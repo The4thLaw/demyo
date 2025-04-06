@@ -54,21 +54,21 @@ async function loadLanguageFromServer(lang: string): Promise<void> {
 	}
 	const response = await axios.get(`${apiRoot}translations/${lang}`)
 	i18n.global.setLocaleMessage(lang, response.data)
-	console.log(`Loaded ${Object.keys(response.data).length} translations from the server in ${lang}`)
+	console.log(`Loaded ${Object.keys(response.data as object).length} translations from the server in ${lang}`)
 	loadedLanguages.push(lang)
 }
 
 // i18n is already initialized and serving the critical messages in the language of choice
 // Now, we should load the full translations in the default and fallback languages
 // Load the default language, and then the fallback (prioritise the default rather than relying on luck)
-loadLanguageFromServer(defaultLanguage).then(
+void loadLanguageFromServer(defaultLanguage).then(
 	async () => loadLanguageFromServer(fallbackLanguage))
 
 /**
  * Switches to a different language, potentially loading translations if needed
  * @param {String} lang the new language
  */
-export async function switchLanguage(lang: string) {
+export async function switchLanguage(lang: string): Promise<void> {
 	// Java and browsers have a different way of formatting language variants
 	lang = lang.replace(/_/g, '-')
 	console.log(`Switching language to ${lang}`)
