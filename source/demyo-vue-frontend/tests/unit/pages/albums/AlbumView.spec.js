@@ -1,25 +1,8 @@
 // This test is disabled for now as I just can't understand how I'm supposed to test the composable
 import AlbumView from '@/pages/albums/AlbumView.vue'
-import { createTestingPinia } from '@pinia/testing'
-import { RouterLinkStub, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { describe, vi } from 'vitest'
 import { ref } from 'vue'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
-// Eventually, we could mock this in common setup files, see
-// https://stackoverflow.com/a/73424585/109813
-vi.mock('@/i18n', () => ({
-	loadLocaleMessages: () => ({})
-}))
-
-vi.mock('vue-i18n', () => ({
-	useI18n: () => ({
-		t: (key) => key,
-		d: (key) => key
-	})
-}))
 
 vi.mock('vue-router', () => ({
 	useRoute: () => ({
@@ -32,35 +15,7 @@ vi.mock('vue-router', () => ({
 	}))
 }))
 
-const vuetify = createVuetify({
-	components,
-	directives
-})
-
 global.ResizeObserver = require('resize-observer-polyfill')
-
-function createWrapper() {
-	return shallowMount(AlbumView, {
-		global: {
-			plugins: [vuetify,
-				createTestingPinia({
-					stubActions: false
-				})
-			],
-			mocks: {
-				route: {
-					params: {
-						id: 42
-					}
-				},
-				$t: s => s
-			},
-			stubs: {
-				RouterLink: RouterLinkStub
-			}
-		}
-	})
-}
 
 vi.mock('@/composables/model-view', () => ({
 	useSimpleView: () => ({
@@ -84,11 +39,10 @@ describe('AlbumView.vue', () => {
 
 	beforeEach(() => {
 		vi.resetAllMocks()
-		wrapper = createWrapper()
+		wrapper = shallowMount(AlbumView)
 	})
 
 	it('Check if there are authors', () => {
-		const wrapper = createWrapper()
 		for (const prop of ['writers', 'artists', 'colorists', 'inkers', 'translators']) {
 			// No authors by default
 			expect(wrapper.vm.hasAuthors).toBeFalsy()

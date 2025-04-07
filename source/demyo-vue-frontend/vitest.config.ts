@@ -31,6 +31,9 @@ export default defineConfig({
 		coverage: {
 			reporter: ['lcov']
 		},
+		setupFiles: [
+			'tests/setup-mocks.ts'
+		],
 		server: {
 			deps: {
 				inline: ['vuetify'],
