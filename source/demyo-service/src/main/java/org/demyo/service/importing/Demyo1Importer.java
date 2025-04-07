@@ -81,11 +81,7 @@ public class Demyo1Importer extends Demyo2Importer {
 
 			Path xmlFile;
 			if (isArchive) {
-				try {
-					archiveDirectory = extractZip(file);
-				} catch (IOException e) {
-					throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
-				}
+				archiveDirectory = extractZip(file);
 				xmlFile = archiveDirectory.resolve("demyo.xml");
 			} else {
 				xmlFile = file;

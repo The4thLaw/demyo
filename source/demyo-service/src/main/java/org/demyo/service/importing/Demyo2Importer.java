@@ -70,13 +70,17 @@ public class Demyo2Importer implements IImporter {
 	 *
 	 * @param file The file to extract.
 	 * @return The temporary directory where the file was extracted.
-	 * @throws IOException in case of error during extraction.
+	 * @throws DemyoException in case of error during extraction.
 	 */
-	protected Path extractZip(Path file) throws IOException {
-		Path extractionDir = Files.createTempDirectory(SystemConfiguration.getInstance().getTempDirectory(),
+	protected Path extractZip(Path file) throws DemyoException {
+		try {
+			Path extractionDir = Files.createTempDirectory(SystemConfiguration.getInstance().getTempDirectory(),
 				"extracted-import-");
-		ZipUtils.extractZip(file, extractionDir);
-		return extractionDir;
+			ZipUtils.extractZip(file, extractionDir);
+			return extractionDir;
+		} catch (IOException e) {
+			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
+		}
 	}
 
 	@Override
@@ -98,11 +102,7 @@ public class Demyo2Importer implements IImporter {
 
 			Path xmlFile;
 			if (isArchive) {
-				try {
-					archiveDirectory = extractZip(file);
-				} catch (IOException e) {
-					throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, e);
-				}
+				archiveDirectory = extractZip(file);
 				xmlFile = archiveDirectory.resolve("demyo.xml");
 			} else {
 				xmlFile = file;

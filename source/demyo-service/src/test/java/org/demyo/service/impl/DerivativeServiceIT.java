@@ -12,6 +12,8 @@ import org.demyo.service.IDerivativeService;
 import org.demyo.service.IDerivativeTypeService;
 import org.demyo.service.ISeriesService;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests for {@link DerivativeService} and for the configuration of {@link Derivative}.
  */
@@ -26,7 +28,7 @@ class DerivativeServiceIT extends AbstractServiceTest {
 
 	/**
 	 * Ensures that it is possible to save a derivative with a large number or total.
-	 * 
+	 *
 	 * @see https://github.com/The4thLaw/demyo/issues/20
 	 */
 	@Test
@@ -37,6 +39,6 @@ class DerivativeServiceIT extends AbstractServiceTest {
 		deriv.setSeries(seriesService.getByIdForEdition(232L));
 		deriv.setNumber(2_000_000_000);
 		deriv.setTotal(2_000_000_000);
-		service.save(deriv);
+		assertThat(service.save(deriv)).isPositive();
 	}
 }
