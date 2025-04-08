@@ -1,24 +1,27 @@
-// This test is disabled for now as I just can't understand how I'm supposed to test the composable
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AlbumView from '@/pages/albums/AlbumView.vue'
+import type { VueWrapper } from '@vue/test-utils'
 import { shallowMount } from '@vue/test-utils'
-import { describe, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ref } from 'vue'
 
 vi.mock('vue-router', () => ({
-	useRoute: () => ({
+	useRoute: (): any => ({
 		params: {
 			id: 42
 		}
 	}),
 	useRouter: vi.fn(() => ({
-		push: () => {}
+		push: vi.fn()
 	}))
 }))
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
 global.ResizeObserver = require('resize-observer-polyfill')
 
 vi.mock('@/composables/model-view', () => ({
-	useSimpleView: () => ({
+	useSimpleView: (): any => ({
 		model: ref({
 			id: undefined,
 			series: {},
@@ -28,14 +31,13 @@ vi.mock('@/composables/model-view', () => ({
 		}),
 		appTaskMenu: ref(false),
 		loading: ref(false),
-		deleteModel: () => {},
-		loadData: () => {}
+		deleteModel: vi.fn(),
+		loadData: vi.fn()
 	})
 }))
 
 describe('AlbumView.vue', () => {
-	/** @type VueWrapper */
-	let wrapper
+	let wrapper: VueWrapper<unknown, any>
 
 	beforeEach(() => {
 		vi.resetAllMocks()

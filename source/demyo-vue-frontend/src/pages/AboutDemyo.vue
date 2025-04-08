@@ -126,7 +126,7 @@
 
 		<SectionCard :subtitle="$t('page.About.aboutInstall')">
 			<p v-text="$t('page.About.aboutInstall.description')" />
-			<v-table>
+			<v-table id="v-About__aboutInstall">
 				<template #default>
 					<thead>
 						<tr>
@@ -175,6 +175,7 @@ const env = ref({} as Record<string, string>)
 
 void (async (): Promise<void> => {
 	env.value = await aboutService.getEnvironment()
+	console.log(env.value)
 })()
 </script>
 
