@@ -4,6 +4,8 @@ import java.text.Collator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -61,5 +63,47 @@ public class MetaSeries implements Comparable<MetaSeries> {
 			return comp;
 		}
 		return Long.compare(getId(), o.getId());
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) {
+			return false;
+		}
+		if (!other.getClass().equals(getClass())) {
+			return false;
+		}
+
+		MetaSeries otherMeta = (MetaSeries) other;
+
+		if ((series != null && otherMeta.series == null)
+			|| (series == null && otherMeta.series != null)
+			|| (album != null && otherMeta.album == null)
+			|| (album == null && otherMeta.album != null)) {
+			return false;
+		}
+
+		EqualsBuilder builder = new EqualsBuilder();
+		builder.append(getTitle(), otherMeta.getTitle());
+		if (series != null) {
+			builder.append(series.getId(), otherMeta.series.getId());
+		}
+		if (album != null) {
+			builder.append(album.getId(), otherMeta.album.getId());
+		}
+
+		return builder.build();
+	}
+
+	@Override
+	public int hashCode() {
+		HashCodeBuilder builder = new HashCodeBuilder();
+		if (series != null) {
+			builder.append(series.getId());
+		}
+		if (album != null) {
+			builder.append(album.getId());
+		}
+		return builder.build();
 	}
 }

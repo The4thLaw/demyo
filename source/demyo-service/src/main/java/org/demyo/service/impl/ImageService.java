@@ -302,8 +302,6 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 			return Collections.emptyList();
 		}
 
-		List<Image> newImages = new ArrayList<>();
-
 		if (filePondIds.length > 1 && !alwaysNumber) {
 			throw new DemyoException(DemyoErrorCode.IMAGE_FILEPOND_RENUMBER_MORE_THAN_ONE);
 		}
@@ -313,6 +311,13 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 		for (Image img : existingImages) {
 			imageNames.add(img.getDescription());
 		}
+
+		return setUniqueDescriptionAndSave(baseImageName, alwaysNumber, imageNames, filePondIds);
+	}
+
+	private List<Image> setUniqueDescriptionAndSave(String baseImageName, boolean alwaysNumber,
+			Set<String> imageNames, String... filePondIds) throws DemyoException {
+		List<Image> newImages = new ArrayList<>();
 
 		int currentNumber = 1;
 		for (String id : filePondIds) {
