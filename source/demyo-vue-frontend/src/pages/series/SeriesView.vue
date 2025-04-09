@@ -390,7 +390,7 @@ const contentSectionRef = useTemplateRef<typeof SectionCard>('content-section')
 .c-SeriesView__albumAggregateData {
 	// Must rely on rgba to use Vuetify variables
 	/* stylelint-disable-next-line color-function-notation */
-	border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+	border-bottom: 1px solid rgb(var(--v-border-color), var(--v-border-opacity));
 	margin-bottom: 1.5em;
 }
 </style>

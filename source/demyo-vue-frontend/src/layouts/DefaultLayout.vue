@@ -233,20 +233,20 @@ watch(route, () => {
 	--indent-padding: -16px;
 }
 
-@media screen and (max-width: 600px) { // Vuetify "xs" breakpoint
+@media screen and (width <= 600px) { // Vuetify "xs" breakpoint
 	#l-DefaultLayout__toolbarSearchField,
 	#l-DefaultLayout__toolbarSearchButton {
 		display: none;
 	}
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (width >= 600px) {
 	#l-DefaultLayout__menuSearch {
 		display: none;
 	}
 }
 
-@media (max-width: 435px) {
+@media (width <= 435px) {
 	#l-DefaultLayout__mainContainer,
 	#l-DefaultLayout__mainContainer > .container,
 	#l-DefaultLayout__routerView > .container,

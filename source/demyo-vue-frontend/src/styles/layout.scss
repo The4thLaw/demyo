@@ -5,9 +5,9 @@
 
 	// Must rely on rgba to use Vuetify variables
 	/* stylelint-disable-next-line color-function-notation */
-	column-rule: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+	column-rule: 1px solid rgb(var(--v-border-color), var(--v-border-opacity));
 
-	@media (min-width: 1264px) { // Vuetify "lg" breakpoint
+	@media (width >= 1264px) { // Vuetify "lg" breakpoint
 		columns: 2;
 	}
 
@@ -32,7 +32,7 @@
 
 	// Must rely on rgba to use Vuetify variables
 	/* stylelint-disable-next-line color-function-notation */
-	border-top: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+	border-top: 1px solid rgb(var(--v-border-color), var(--v-border-opacity));
 
 	&:first-of-type {
 		border-top: 0;
@@ -43,7 +43,7 @@
 .dem-fieldlabel {
 	// Must rely on rgba to use Vuetify variables
 	/* stylelint-disable-next-line color-function-notation */
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 	font-size: 12px;
 }
 

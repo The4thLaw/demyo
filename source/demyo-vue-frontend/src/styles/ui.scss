@@ -1,9 +1,9 @@
 // Colors and fonts
 :root {
 	/* stylelint-disable-next-line color-function-notation */
-	--dem-text: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+	--dem-text: rgb(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
 	/* stylelint-disable-next-line color-function-notation */
-	--dem-text-lighter: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	--dem-text-lighter: rgb(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 html[lang],
@@ -44,12 +44,12 @@ html[lang],
 	.v-input--checkbox.v-input--readonly:not(.v-input--disabled) label {
 		// Must rely on rgba to use Vuetify variables
 		/* stylelint-disable-next-line color-function-notation */
-		color: rgba(var(--v-theme-on-background), var(--v-disabled-opacity));
+		color: rgb(var(--v-theme-on-background), var(--v-disabled-opacity));
 	}
 
 	.v-card--variant-outlined {
 		// Must rely on rgba to use Vuetify variables
 		/* stylelint-disable-next-line color-function-notation */
-		border-color: rgba(var(--v-border-color), var(--v-border-opacity));
+		border-color: rgb(var(--v-border-color), var(--v-border-opacity));
 	}
 }

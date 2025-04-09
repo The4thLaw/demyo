@@ -95,7 +95,7 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 		> .v-tabs .v-tab:not(.v-tab--selected) {
 			// Need old rgba function for vuetify
 			/* stylelint-disable-next-line color-function-notation */
-			color: rgba(var(--v-theme-on-primary), 0.6);
+			color: rgb(var(--v-theme-on-primary), 0.6);
 		}
 
 		> .v-window {
@@ -113,7 +113,7 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 	flex: 1;
 }
 
-@media (max-width: 600px) { // Vuetify "xs" breakpoint
+@media (width <= 600px) { // Vuetify "xs" breakpoint
 	.c-SectionCard__container--image {
 		flex-direction: column;
 	}
@@ -143,7 +143,7 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 	max-width: 350px;
 }
 
-@media (max-width: 700px) {
+@media (width <= 700px) {
 	.c-SectionCard__image img {
 		max-width: 200px;
 	}

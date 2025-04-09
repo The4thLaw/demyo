@@ -11,7 +11,7 @@
 	&:focus {
 		// Must rely on rgba to use Vuetify variables
 		/* stylelint-disable-next-line color-function-notation */
-		background: rgba(var(--v-theme-on-background), var(--v-hover-opacity));
+		background: rgb(var(--v-theme-on-background), var(--v-hover-opacity));
 		text-decoration: none;
 	}
 }

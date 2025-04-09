@@ -38,5 +38,9 @@ module.exports = {
 			files: ['**/*.scss'],
 			rules: commonRules
 		}
+	],
+
+	ignoreFiles: [
+		'src/assets/*.css'
 	]
 }
