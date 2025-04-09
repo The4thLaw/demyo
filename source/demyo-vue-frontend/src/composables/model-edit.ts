@@ -38,11 +38,11 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | 
 		return parsedId.value ? i18n.t(editTitleLabel) : i18n.t(addTitleLabel)
 	})
 
-	async function loadData(): Promise<void> {
-		useHead({
-			title: pageTitle
-		})
+	useHead({
+		title: pageTitle
+	})
 
+	async function loadData(): Promise<void> {
 		uiStore.enableGlobalOverlay()
 		loading.value = true
 		const loadPromises = [] as Promise<unknown>[]

@@ -26,13 +26,14 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 	const model = ref({}) as Ref<T>
 	const appTasksMenu = ref(false)
 
+	useHead({
+		title: () => titleProvider(model.value)
+	})
+
 	async function loadData(): Promise<void> {
 		parsedId.value = getParsedId(route)
 		loading.value = true
 		model.value = await fetchData(parsedId.value)
-		useHead({
-			title: titleProvider(model.value)
-		})
 		loading.value = false
 	}
 

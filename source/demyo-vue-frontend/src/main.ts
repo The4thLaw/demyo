@@ -1,9 +1,8 @@
 import '@mdi/font/css/materialdesignicons.css'
+import { createHead } from '@unhead/vue/client'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import type { Component, ComponentOptions } from 'vue'
-import { createApp } from 'vue'
 // From https://gitlab.com/totol.toolsuite/vue-3-fullscreen-image
-import { VueHeadMixin, createHead } from '@unhead/vue'
 import { fullscreenImagePlugin } from 'vue-3-fullscreen-image-directive-plugin'
 import 'vue-3-fullscreen-image-directive-plugin/style.css'
 import App from './App.vue'
@@ -32,7 +31,6 @@ app.use(vuetify)
 app.use(fullscreenImagePlugin)
 
 app.use(createHead())
-app.mixin(VueHeadMixin as ComponentOptions)
 
 // Add the ID to the body element to ease style overrides
 document.getElementsByTagName('body')[0].id = 'demyo'
