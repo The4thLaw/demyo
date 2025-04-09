@@ -1,6 +1,4 @@
 // https://groovy-lang.org/processing-xml.html
-// TODO: slf4j ?
-
 import groovy.xml.XmlParser
 import groovy.xml.XmlUtil
 
@@ -14,17 +12,44 @@ XmlParser sourceParser = new XmlParser()
 Node source = sourceParser.parse(args[1])
 
 // All mappings
+def imageIdMapping = [:]
 def publisherIdMapping = [:]
 def collectionIdMapping = [:]
-def tagIdMapping = [:]
 def bindingIdMapping = [:]
+def authorIdMapping = [:]
+def tagIdMapping = [:]
+def seriesIdMapping = [:]
+
+void copySimple(XmlParser destinationParser, NodeList sourceList, NodeList destList, Node copyTarget,
+        Map idMapping, String type, Closure nodeProcessor = (n) -> { }) {
+    println '\n----------\n'
+    int newId = sourceList.collect { it['@id'] as int }.max() + 1
+    int added = 0
+    println "New entries of type ${type} will start at ID ${newId}"
+
+    sourceList.each {
+        source -> {
+            Map attribs = source.attributes()
+            idMapping[attribs.id] = newId
+            attribs.id = newId
+            Node created = destinationParser.createNode(copyTarget, new QName(type), source.attributes())
+            nodeProcessor(created)
+            newId++
+            added++
+        }
+    }
+
+    println "Added ${added} ${type}s"
+    println '\n----------'
+}
 
 void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList destList, Node mergeTarget,
         Closure nodeMatcher, Map idMapping, String type, Closure nameExtractor,
-        Closure nodeProcessor = (n) -> { }) {
-    println '\n----------'
+        Closure nodeProcessor = (n) -> { }, Closure attributeProcessor = (n, a) -> { }) {
+    println '\n----------\n'
     int newId = sourceList.collect { it['@id'] as int }.max() + 1
-    println "New entries of type ${type} will start at ID ${newId}"
+    int added = 0
+    println "New entries of type ${type} will start at ID ${newId}\n"
 
     sourceList.each {
         source -> {
@@ -36,6 +61,7 @@ void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList dest
                 Node created = destinationParser.createNode(mergeTarget, new QName(type), source.attributes())
                 nodeProcessor(created)
                 newId++
+                added++
                 println "Adding new ${type} ${nameExtractor(source)}"
             } else {
                 idMapping[source['@id']] = destination['@id']
@@ -43,7 +69,8 @@ void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList dest
                     key, value -> {
                         if (destination['@' + key] == null && value != null && !value.empty) {
                             destination['@' + key] = value
-                            println "Adding missing attribute ${key} with value ${value} to ${type} ${nameExtractor(source)}"
+                            attributeProcessor(destination, '@' + key)
+                            println "Adding missing attribute ${key} with value ${destination['@' + key]} to ${type} ${nameExtractor(source)}"
                         }
                     }
                 }
@@ -51,6 +78,7 @@ void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList dest
         }
     }
 
+    println "\nAdded ${added} ${type}s"
     println '\n----------'
 }
 
@@ -58,7 +86,13 @@ void remap(Node node, String attrib, Map idMapping) {
     node[attrib] = idMapping[node[attrib]]
 }
 
-// TODO: Just copy and renumber: Images
+// Image
+copySimple(destinationParser,
+    source.images.image,
+    destination.images.image,
+    destination.images[0],
+    imageIdMapping,
+    'image')
 
 // Publishers
 mergeSimple(destinationParser,
@@ -68,8 +102,13 @@ mergeSimple(destinationParser,
     { s, d -> s['@name'] == d['@name'] },
     publisherIdMapping,
     'publisher',
-    { p -> p['@name'] }
-    /* TODO: image mapping */)
+    { p -> p['@name'] },
+    { p -> remap(p, '@logo_id', imageIdMapping)},
+    { p, a -> {
+        if (a == '@logo_id') {
+            remap(p, a, imageIdMapping)
+        }
+    }})
 
 // Collections
 mergeSimple(destinationParser,
@@ -79,9 +118,19 @@ mergeSimple(destinationParser,
     { s, d -> s['@name'] == d['@name'] },
     collectionIdMapping,
     'collection',
-    { p -> p['@name'] },
-    { n -> remap(n, '@publisher_id', publisherIdMapping)
-    /* TODO: image mapping */ })
+    { c -> c['@name'] },
+    { c -> {
+        remap(c, '@publisher_id', publisherIdMapping)
+        remap(c, '@logo_id', imageIdMapping)
+    }},
+    { c, a -> {
+        if (a == '@publisher_id') {
+            remap(c, a, publisherIdMapping)
+        }
+        if (a == '@logo_id') {
+            remap(c, a, imageIdMapping)
+        }
+    }})
 
 // Bindings
 mergeSimple(destinationParser,
@@ -93,7 +142,21 @@ mergeSimple(destinationParser,
     'binding',
     { p -> p['@name'] })
 
-// TODO: authors
+// Authors
+mergeSimple(destinationParser,
+    source.authors.author,
+    destination.authors.author,
+    destination.authors[0],
+    { s, d -> s['@name'] == d['@name'] && s['@fname'] == d['@fname']},
+    authorIdMapping,
+    'author',
+    { a -> "${a['@fname']} ${a['@name']}" },
+    { a -> remap(a, '@portrait_id', imageIdMapping)},
+    { p, a -> {
+        if (a == '@portrait_id') {
+            remap(p, a, imageIdMapping)
+        }
+    }})
 
 // Tags
 mergeSimple(destinationParser,
@@ -103,9 +166,22 @@ mergeSimple(destinationParser,
     { s, d -> s['@name'] == d['@name'] },
     tagIdMapping,
     'tag',
-    { p -> p['@name'] })
+    { t -> t['@name'] })
 
-// TODO: series-list/series
+// Series
+int maxInitialSeriesId = destination['series-list'].series.collect { it['@id'] as int }.max() + 1
+println "Max series ID is ${maxInitialSeriesId}"
+mergeSimple(destinationParser,
+    // TODO: series-list
+    source.series.series,
+    destination['series-list'].series,
+    destination['series-list'][0],
+    { s, d -> s['@name'] == d['@name'] },
+    seriesIdMapping,
+    'series',
+    { p -> p['@name'] })
+// TODO: process related series afterwards
+
 // TODO: albums
 // TODO: album_prices
 // TODO: derivative_types
