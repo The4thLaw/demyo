@@ -37,7 +37,7 @@
 const props = defineProps<{
 	label: string,
 	icon: string,
-	to?: string
+	to?: string | { name: string, query: Record<string, unknown> }
 	confirm?: string
 }>()
 
