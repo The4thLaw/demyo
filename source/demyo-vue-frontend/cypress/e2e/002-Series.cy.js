@@ -12,6 +12,11 @@ describe('Series', () => {
 		cy.contains('This series is ongoing').should('exist')
 	})
 
+	it('Views a series', () => {
+		cy.visit('/series/1/view')
+		cy.assertTitle('Sillage')
+	})
+
 	it('Deletes an empty series', () => {
 		cy.visit('/series/2/view')
 		cy.openQuickTasks()

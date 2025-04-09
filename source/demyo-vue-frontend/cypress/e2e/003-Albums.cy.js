@@ -24,6 +24,11 @@ describe('Albums', () => {
 		cy.contains('Publisher').parents('.v-input').contains('This field cannot be empty')
 	})
 
+	it('Views an album', () => {
+		cy.visit('/albums/1/view')
+		cy.assertTitle('À Feu et à Cendres')
+	})
+
 	// See https://github.com/The4thLaw/demyo/issues/88
 	it('Prevents deletion of an album with a derivative', () => {
 		cy.visit('/albums/1/view')

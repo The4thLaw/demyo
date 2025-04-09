@@ -6,4 +6,9 @@ describe('Tags', () => {
 		// The SF tag should have one occurrence
 		cy.contains('science-fiction').find('.d-Tag__count').should('have.text', '2')
 	})
+
+	it('Views a tag', () => {
+		cy.visit('/tags/1/view')
+		cy.assertTitle('science-fiction')
+	})
 })

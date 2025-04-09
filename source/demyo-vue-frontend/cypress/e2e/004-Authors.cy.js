@@ -13,4 +13,9 @@ describe('Authors', () => {
 		cy.contains('You have no albums by this author').should('exist')
 		cy.contains('You have no derivatives by this author').should('exist')
 	})
+
+	it('Views an author', () => {
+		cy.visit('/authors/1/view')
+		cy.assertTitle('Jean-David Morvan')
+	})
 })

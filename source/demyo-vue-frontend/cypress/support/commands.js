@@ -36,6 +36,6 @@ Cypress.Commands.add('openQuickTasks', () => {
 })
 
 Cypress.Commands.add('assertTitle', (title) => {
-	cy.title().should('include', title)
+	cy.title().should('include', `${title} – Demyo`)
 	cy.get('.v-toolbar-title').should('have.text', title)
 })
