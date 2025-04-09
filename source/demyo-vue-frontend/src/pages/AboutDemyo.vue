@@ -175,7 +175,6 @@ const env = ref({} as Record<string, string>)
 
 void (async (): Promise<void> => {
 	env.value = await aboutService.getEnvironment()
-	console.log(env.value)
 })()
 </script>
 
