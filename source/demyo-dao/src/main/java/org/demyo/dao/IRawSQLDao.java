@@ -52,4 +52,12 @@ public interface IRawSQLDao {
 	 * @return The schema version.
 	 */
 	int getSchemaVersion();
+
+	/**
+	 * Reassigns any entry using one book type to another.
+	 *
+	 * @param from The old book type
+	 * @param to The new book type
+	 */
+	void reassignBookTypes(long from, long to);
 }

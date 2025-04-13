@@ -23,7 +23,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
@@ -53,6 +55,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	private ISeriesRepo seriesRepo;
 	@Autowired
 	private IReaderRepo readerRepo;
+	@Autowired
+	private IBookTypeService bookTypeService;
 	@Autowired
 	private IImageService imageService;
 	@Autowired
@@ -191,6 +195,15 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			if (isLeavingWishlist) {
 				LOGGER.debug("The saved album is leaving the wishlist");
 			}
+		}
+
+		// Check if a book type was provided
+		if (newAlbum.getBookType() == null) {
+			if (bookTypeService.isManagementEnabled()) {
+				throw new DemyoRuntimeException(DemyoErrorCode.BOOK_TYPE_MGMT_ENABLED_REQ_ON_ALBUM);
+			}
+			// Assign a default one
+			newAlbum.setBookType(bookTypeService.findAll().get(0));
 		}
 
 		long id = super.save(newAlbum);

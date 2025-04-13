@@ -59,15 +59,21 @@ import org.demyo.model.util.IdentifyingNameComparator;
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
 		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
-		@NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites") })
+		@NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites"), @NamedAttributeNode("bookType")})
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
 		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
-		@NamedAttributeNode("prices") })
+		@NamedAttributeNode("prices"), @NamedAttributeNode("bookType") })
 @JsonView(ModelView.AlbumTemplate.class)
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
+	/** The type of book. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "book_type_id")
+	@JsonView(ModelView.Basic.class)
+	private BookType bookType;
+
 	/** The parent {@link Series}. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
@@ -312,6 +318,24 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 				.append(getQualifiedNumber());
 
 		return sb.toString();
+	}
+
+	/**
+	 * Gets the {@link BookType type} of book.
+	 *
+	 * @return the type of book
+	 */
+	public BookType getBookType() {
+		return bookType;
+	}
+
+	/**
+	 * Sets the {@link BookType type} of book.
+	 *
+	 * @param bookType the new type of book
+	 */
+	public void setBookType(BookType bookType) {
+		this.bookType = bookType;
 	}
 
 	/**

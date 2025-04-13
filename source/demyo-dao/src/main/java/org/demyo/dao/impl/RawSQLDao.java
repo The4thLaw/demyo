@@ -114,4 +114,12 @@ public class RawSQLDao implements IRawSQLDao {
 		}
 		return version;
 	}
+
+	@Override
+	public void reassignBookTypes(long from, long to) {
+		Query query = entityManager.createNativeQuery("UPDATE albums SET book_type_id = :to where book_type_id = :to");
+		query.setParameter("from", from);
+		query.setParameter("to", to);
+		query.executeUpdate();
+	}
 }
