@@ -72,7 +72,8 @@ public class Demyo2Handler extends DefaultHandler {
 			case "version":
 				handleVersion(attributes);
 				break;
-			case "image", "publisher", "collection", "binding", "author", "tag", "borrower", "source":
+			case "image", "publisher", "collection", "binding", "author", "tag", "borrower", "source",
+					"derivative_type", "book_type":
 				createLine(localName + "s", attributes);
 				break;
 			case "series":
@@ -115,9 +116,6 @@ public class Demyo2Handler extends DefaultHandler {
 				break;
 			case "loan":
 				createLine("albums_borrowers", attributes);
-				break;
-			case "derivative_type":
-				createLine("derivative_types", attributes);
 				break;
 			case "derivative":
 				derivativeId = attributes.getValue("id");
