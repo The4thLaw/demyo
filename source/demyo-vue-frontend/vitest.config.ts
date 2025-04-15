@@ -32,6 +32,7 @@ export default defineConfig({
 			reporter: ['lcov']
 		},
 		setupFiles: [
+			'tests/setup-plugins.ts',
 			'tests/setup-mocks.ts'
 		],
 		server: {
