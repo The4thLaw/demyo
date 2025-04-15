@@ -240,8 +240,9 @@
 			</FieldValue>
 			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')">
 				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="album.comment" />
+				<!--<div v-html="album.comment" />-->
 			</FieldValue>
+			<component :is="{ template: processedComment }" />
 		</SectionCard>
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Album.gallery')">
@@ -368,6 +369,12 @@ const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => al
 
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)
+const processedComment = computed(() => {
+	if (!album.value.comment) {
+		return album.value.comment
+	}
+	return album.value.comment.replace(/\[tag:(\d+)\]/g, '<DeferredTagLink tag-id="$1"/>')
+})
 
 const uiStore = useUiStore()
 const i18n = useI18n()
