@@ -40,14 +40,13 @@ void copySimple(XmlParser destinationParser, NodeList sourceList, NodeList destL
     }
 
     println "Added ${added} ${type}s"
-    println '\n----------'
 }
 
 void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList destList, Node mergeTarget,
         Closure nodeMatcher, Map idMapping, String type, Closure nameExtractor,
         Closure nodeProcessor = (n) -> { }, Closure attributeProcessor = (n, a) -> { }) {
     println '\n----------\n'
-    int newId = sourceList.collect { it['@id'] as int }.max() + 1
+    int newId = destList.collect { it['@id'] as int }.max() + 1
     int added = 0
     println "New entries of type ${type} will start at ID ${newId}\n"
 
@@ -58,12 +57,13 @@ void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList dest
                 Map attribs = source.attributes()
                 idMapping[attribs.id] = newId
                 attribs.id = newId
-                Node created = destinationParser.createNode(mergeTarget, new QName(type), source.attributes())
+                Node created = destinationParser.createNode(mergeTarget, new QName(type), attribs)
                 nodeProcessor(created)
                 newId++
                 added++
                 println "Adding new ${type} ${nameExtractor(source)}"
             } else {
+                // println "Found a match: ${destination}"
                 idMapping[source['@id']] = destination['@id']
                 source.attributes().each {
                     key, value -> {
@@ -79,11 +79,13 @@ void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList dest
     }
 
     println "\nAdded ${added} ${type}s"
-    println '\n----------'
 }
 
 void remap(Node node, String attrib, Map idMapping) {
-    node[attrib] = idMapping[node[attrib]]
+    def value = idMapping[node[attrib]]
+    if (value != null) {
+        node[attrib] = value
+    }
 }
 
 // Image
@@ -115,7 +117,11 @@ mergeSimple(destinationParser,
     source.collections.collection,
     destination.collections.collection,
     destination.collections[0],
-    { s, d -> s['@name'] == d['@name'] },
+    { s, d -> {
+            def mappedPublisherId = publisherIdMapping[s['@publisher_id']]
+            return s['@name'] == d['@name'] && mappedPublisherId == d['@publisher_id']
+        }
+    },
     collectionIdMapping,
     'collection',
     { c -> c['@name'] },
@@ -172,8 +178,7 @@ mergeSimple(destinationParser,
 int maxInitialSeriesId = destination['series-list'].series.collect { it['@id'] as int }.max() + 1
 println "Max series ID is ${maxInitialSeriesId}"
 mergeSimple(destinationParser,
-    // TODO: series-list
-    source.series.series,
+    source['series-list'].series,
     destination['series-list'].series,
     destination['series-list'][0],
     { s, d -> s['@name'] == d['@name'] },
@@ -183,6 +188,7 @@ mergeSimple(destinationParser,
 // TODO: process related series afterwards
 
 // TODO: albums
+// TODO: add albums to reading list?
 // TODO: album_prices
 // TODO: derivative_types
 // TODO: sources
