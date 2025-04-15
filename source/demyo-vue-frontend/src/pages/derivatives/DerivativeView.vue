@@ -156,7 +156,7 @@
 		</SectionCard>
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Derivative.gallery')">
-			<GalleryIndex :items="derivative.images">
+			<GalleryIndex :items="derivative.images" :keyboard-navigation="false">
 				<template #default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
 						{{ slotProps.item.identifyingName }}
