@@ -55,7 +55,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 		resolve: {
 			alias: {
 				'@': path.resolve(__dirname, './src'),
-				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js'
+				'vue-i18n-bridge': 'vue-i18n-bridge/dist/vue-i18n-bridge.runtime.esm-bundler.js',
+				// Enable runtime compilation
+				vue: 'vue/dist/vue.esm-bundler.js'
 			}
 		},
 
