@@ -19,11 +19,12 @@ def bindingIdMapping = [:]
 def authorIdMapping = [:]
 def tagIdMapping = [:]
 def seriesIdMapping = [:]
+def albumIdMapping = [:]
 
 void copySimple(XmlParser destinationParser, NodeList sourceList, NodeList destList, Node copyTarget,
-        Map idMapping, String type, Closure nodeProcessor = (n) -> { }) {
+        Map idMapping, String type, Closure nodeProcessor = (s, c) -> { }) {
     println '\n----------\n'
-    int newId = sourceList.collect { it['@id'] as int }.max() + 1
+    int newId = destList.collect { it['@id'] as int }.max() + 1
     int added = 0
     println "New entries of type ${type} will start at ID ${newId}"
 
@@ -33,7 +34,7 @@ void copySimple(XmlParser destinationParser, NodeList sourceList, NodeList destL
             idMapping[attribs.id] = newId
             attribs.id = newId
             Node created = destinationParser.createNode(copyTarget, new QName(type), source.attributes())
-            nodeProcessor(created)
+            nodeProcessor(source, created)
             newId++
             added++
         }
@@ -54,7 +55,8 @@ void mergeSimple(XmlParser destinationParser, NodeList sourceList, NodeList dest
         source -> {
             Node destination = destList.find{dest -> nodeMatcher(source, dest)}
             if (destination == null) {
-                Map attribs = source.attributes()
+                // Clone to avoid changing the source document when mapping IDs
+                Map attribs = source.attributes().clone()
                 idMapping[attribs.id] = newId
                 attribs.id = newId
                 Node created = destinationParser.createNode(mergeTarget, new QName(type), attribs)
@@ -176,7 +178,9 @@ mergeSimple(destinationParser,
 
 // Series
 int maxInitialSeriesId = destination['series-list'].series.collect { it['@id'] as int }.max() + 1
+def tgt = destination['series-list'][0]
 println "Max series ID is ${maxInitialSeriesId}"
+println destination['series-list'][0].children().size()
 mergeSimple(destinationParser,
     source['series-list'].series,
     destination['series-list'].series,
@@ -185,10 +189,61 @@ mergeSimple(destinationParser,
     seriesIdMapping,
     'series',
     { p -> p['@name'] })
-// TODO: process related series afterwards
+println destination['series-list'][0].children().size()
 
-// TODO: albums
-// TODO: add albums to reading list?
+// Related series
+source['series-list'].series.each { s -> {
+    def related = s['related_series-list']['related_series']
+    related.each { r -> {
+        def mappedSeriesFromId = seriesIdMapping[s['@id']]
+        // Note that we must work on .children() to include the added nodes
+        def mappedSeriesFrom = destination['series-list'][0].children().find { it['@id'] as int == mappedSeriesFromId }
+        if (mappedSeriesFrom != null) {
+            // Only work on added series, not existing ones
+            def relParent = mappedSeriesFrom.children().find{it.name() as String == 'related_series-list'}
+            if (relParent == null) {
+                relParent = destinationParser.createNode(mappedSeriesFrom, new QName('related_series-list'), [:])
+            }
+            destinationParser.createNode(relParent, new QName('related_series'), [ref: seriesIdMapping[r['@ref']]])
+        }
+    }}
+}}
+
+// Albums
+void remapNested(XmlParser destinationParser, Node original, Node created, String collectionName, String itemName, Map mapping) {
+    if (original[collectionName][itemName].size() > 0) {
+        Node parent = destinationParser.createNode(created, new QName(collectionName), [:])
+        original[collectionName][itemName].each {
+            destinationParser.createNode(parent, new QName(itemName), [ref: mapping[it['@ref']]])
+        }
+    }
+}
+copySimple(destinationParser,
+    source.albums.album,
+    destination.albums.album,
+    destination.albums[0],
+    albumIdMapping,
+    'album',
+    { original, created -> {
+        // Simple attributes
+        remap(created, '@series_id', seriesIdMapping)
+        remap(created, '@publisher_id', publisherIdMapping)
+        remap(created, '@collection_id', collectionIdMapping)
+        remap(created, '@binding_id', bindingIdMapping)
+        remap(created, '@cover_id', imageIdMapping)
+        // Authors writers/writer, etc
+        remapNested(destinationParser, original, created, 'writers', 'writer', authorIdMapping)
+        remapNested(destinationParser, original, created, 'artists', 'artist', authorIdMapping)
+        remapNested(destinationParser, original, created, 'colorists', 'colorist', authorIdMapping)
+        remapNested(destinationParser, original, created, 'translators', 'translator', authorIdMapping)
+        // Tags album-tags/album-tag
+        remapNested(destinationParser, original, created, 'album-tags', 'album-tag', tagIdMapping)
+        // Images album-images/album-image
+        remapNested(destinationParser, original, created, 'album-images', 'album-image', imageIdMapping)
+        // Reading list
+        // TODO ? Check internally
+    }})
+
 // TODO: album_prices
 // TODO: derivative_types
 // TODO: sources
