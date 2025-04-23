@@ -20,22 +20,32 @@ def authorIdMapping = [:]
 def tagIdMapping = [:]
 def seriesIdMapping = [:]
 def albumIdMapping = [:]
+def derivativeTypeIdMapping = [:]
+def sourceIdMapping = [:]
+def derivativeIdMapping = [:]
 
 void copySimple(XmlParser destinationParser, NodeList sourceList, NodeList destList, Node copyTarget,
         Map idMapping, String type, Closure nodeProcessor = (s, c) -> { }) {
     println '\n----------\n'
-    int newId = destList.collect { it['@id'] as int }.max() + 1
+    int newId = -1
+    if (idMapping != null) {
+        newId = destList.collect { it['@id'] as int }.max() + 1
+        println "New entries of type ${type} will start at ID ${newId}"
+    }
     int added = 0
-    println "New entries of type ${type} will start at ID ${newId}"
 
     sourceList.each {
         source -> {
             Map attribs = source.attributes()
-            idMapping[attribs.id] = newId
-            attribs.id = newId
+            if (idMapping != null) {
+                idMapping[attribs.id] = newId
+                attribs.id = newId
+            }
             Node created = destinationParser.createNode(copyTarget, new QName(type), source.attributes())
             nodeProcessor(source, created)
-            newId++
+            if (idMapping != null) {
+                newId++
+            }
             added++
         }
     }
@@ -177,10 +187,6 @@ mergeSimple(destinationParser,
     { t -> t['@name'] })
 
 // Series
-int maxInitialSeriesId = destination['series-list'].series.collect { it['@id'] as int }.max() + 1
-def tgt = destination['series-list'][0]
-println "Max series ID is ${maxInitialSeriesId}"
-println destination['series-list'][0].children().size()
 mergeSimple(destinationParser,
     source['series-list'].series,
     destination['series-list'].series,
@@ -188,8 +194,7 @@ mergeSimple(destinationParser,
     { s, d -> s['@name'] == d['@name'] },
     seriesIdMapping,
     'series',
-    { p -> p['@name'] })
-println destination['series-list'][0].children().size()
+    { s -> s['@name'] })
 
 // Related series
 source['series-list'].series.each { s -> {
@@ -240,15 +245,68 @@ copySimple(destinationParser,
         remapNested(destinationParser, original, created, 'album-tags', 'album-tag', tagIdMapping)
         // Images album-images/album-image
         remapNested(destinationParser, original, created, 'album-images', 'album-image', imageIdMapping)
-        // Reading list
-        // TODO ? Check internally
     }})
 
-// TODO: album_prices
-// TODO: derivative_types
-// TODO: sources
-// TODO: derivatives
-// TODO: derivative_prices
+// Album prices
+copySimple(destinationParser,
+    source.album_prices.album_price,
+    destination.album_prices.album_price,
+    destination.album_prices[0],
+    null,
+    'album_price',
+    { s, d -> {
+        d['@album_id'] = albumIdMapping[s['@album_id']]
+    }})
+
+// Derivative types
+mergeSimple(destinationParser,
+    source.derivative_types.derivative_type,
+    destination.derivative_types.derivative_type,
+    destination.derivative_types[0],
+    { s, d -> s['@name'] == d['@name'] },
+    derivativeTypeIdMapping,
+    'derivative_type',
+    { dt -> dt['@name'] })
+
+// Sources
+mergeSimple(destinationParser,
+    source.sources.source,
+    destination.sources.source,
+    destination.sources[0],
+    { s, d -> s['@name'] == d['@name'] },
+    sourceIdMapping,
+    'source',
+    { s -> s['@name'] })
+
+// Derivatives
+copySimple(destinationParser,
+    source.derivatives.derivative,
+    destination.derivatives.derivative,
+    destination.derivatives[0],
+    derivativeIdMapping,
+    'derivative',
+    { original, created -> {
+        // Simple attributes
+        remap(created, '@series_id', seriesIdMapping)
+        remap(created, '@album_id', albumIdMapping)
+        remap(created, '@artist_id', authorIdMapping)
+        remap(created, '@derivative_type_id', derivativeTypeIdMapping)
+        remap(created, '@source_id', sourceIdMapping)
+        remapNested(destinationParser, original, created, 'album-tags', 'album-tag', tagIdMapping)
+        // Images derivative-images/derivative-image
+        remapNested(destinationParser, original, created, 'derivative-images', 'derivative-image', imageIdMapping)
+    }})
+
+// Derivative prices
+copySimple(destinationParser,
+    source.derivative_prices.derivative_price,
+    destination.derivative_prices.derivative_price,
+    destination.derivative_prices[0],
+    null,
+    'derivative_price',
+    { s, d -> {
+        d['@derivative_id'] = derivativeIdMapping[s['@derivative_price']]
+    }})
 
 String asText = XmlUtil.serialize(destination)
 new File(args[2]).text = asText
