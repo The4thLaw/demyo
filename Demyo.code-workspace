@@ -93,37 +93,37 @@
 			{
 				"label": "Maven install (dev, skip tests)",
 				"type": "shell",
-				"command": "./mvnw -B install -Pdev -DskipTests",
+				"command": "./mvnw install -Pdev -DskipTests '-Dstyle.color=always'",
 				"group": "build"
 			},
 			{
 				"label": "Maven install (dev, vue, skip tests)",
 				"type": "shell",
-				"command": "./mvnw -B install '-Pdev,vue' -DskipTests",
+				"command": "./mvnw install '-Pdev,vue' -DskipTests '-Dstyle.color=always'",
 				"group": "build"
 			},
 			{
 				"label": "Maven install (dev, tests)",
 				"type": "shell",
-				"command": "./mvnw -B install -Pdev",
+				"command": "./mvnw -B install -Pdev '-Dstyle.color=always'",
 				"group": "build"
 			},
 			{
 				"label": "Maven clean",
 				"type": "shell",
-				"command": "./mvnw -B clean",
+				"command": "./mvnw -B clean '-Dstyle.color=always'",
 				"group": "build"
 			},
 			{
 				"label": "Maven clean install with coverage",
 				"type": "shell",
-				"command": "./mvnw -B clean install -DCI=true -Pcoverage,dev",
+				"command": "./mvnw -B clean install -DCI=true -Pcoverage,dev '-Dstyle.color=always'",
 				"group": "build"
 			},
 			{
 				"label": "Maven check dependencies",
 				"type": "shell",
-				"command": "./mvnw -B site dev,check-deps -DskipTests",
+				"command": "./mvnw -B site dev,check-deps -DskipTests '-Dstyle.color=always'",
 				"group": "build"
 			},
 			{
