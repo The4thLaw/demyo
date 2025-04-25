@@ -34,7 +34,7 @@ public class BookTypeAPIController extends AbstractModelAPIController<BookType> 
 	 *
 	 * @return <code>true</code> if it's enabled.
 	 */
-	@GetMapping("management/enable")
+	@GetMapping("management/enabled")
 	public boolean isManagementEnabled() {
 		return service.isManagementEnabled();
 	}
