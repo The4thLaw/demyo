@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 import org.demyo.model.enums.ModelField;
@@ -27,6 +29,7 @@ public class BookType extends AbstractNamedModel {
 
 	/** The type of label to use for this type. */
 	@Column(name = "label_type")
+	@Enumerated(EnumType.STRING)
 	private TranslationLabelType labelType;
 
 	/** The fields to hide from this book type. */
