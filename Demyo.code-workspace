@@ -38,9 +38,6 @@
 		"i18n-ally.forceEnabled": true,
 		"i18n-ally.localesPaths": "demyo-vue-frontend/src/locales",
 
-		"jest.rootPath": "demyo-vue-frontend",
-		"jest.pathToJest": "node_modules/.bin/jest",
-
 		"java.checkstyle.configuration": "${workspaceFolder}/demyo-checkstyle-config.xml",
 		"java.format.settings.url": "../config/eclipse-formatter.xml",
 
@@ -54,11 +51,11 @@
 		},
 		"files.eol": "\n",
 		"java.compile.nullAnalysis.mode": "disabled",
-		"java.cleanup.actionsOnSave": [
+		"java.cleanup.actions": [
 			"addOverride",
 			"addDeprecated"
 		],
-		"java.completion.guessMethodArguments": true,
+		"java.completion.guessMethodArguments": "auto",
 		"java.saveActions.organizeImports": true,
 		"java.completion.importOrder": [
 			"java",
@@ -72,12 +69,6 @@
 		],
 		"editor.codeActionsOnSave": {
 			"source.organizeImports": "explicit"
-		},
-		"testing.openTesting": "neverOpen",
-		"jest.outputConfig": {
-			"revealOn": "run",
-			"revealWithFocus": "none",
-			"clearOnRun": "none"
 		},
 
 		"javascript.format.semicolons": "remove",
