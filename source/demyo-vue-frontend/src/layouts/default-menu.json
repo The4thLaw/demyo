@@ -48,6 +48,11 @@
 				"url": "/bindings"
 			},
 			{
+				"title": "menu.types.manage",
+				"icon": "mdi-shape",
+				"url": "/types"
+			},
+			{
 				"title": "menu.images.browse",
 				"icon": "mdi-camera",
 				"url": "/images"
