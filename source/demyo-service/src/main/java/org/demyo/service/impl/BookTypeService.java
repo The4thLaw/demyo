@@ -41,7 +41,7 @@ public class BookTypeService extends AbstractModelService<BookType> implements
 			return true;
 		}
 		BookType single = repo.findAll().get(0);
-		return BookType.DEFAULT_NAME.equals(single.getName());
+		return !BookType.DEFAULT_NAME.equals(single.getName());
 	}
 
 	@Override
