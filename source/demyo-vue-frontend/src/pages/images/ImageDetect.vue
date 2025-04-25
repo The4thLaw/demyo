@@ -17,7 +17,7 @@
 		</SectionCard>
 
 		<SectionCard v-if="addedImages.length" :subtitle="$t('page.Image.detect.lastBatch')">
-			<GalleryIndex :items="addedImages">
+			<GalleryIndex :items="addedImages" :keyboard-navigation="false">
 				<template #default="slotProps">
 					<router-link :to="`/images/${slotProps.item.id}/view`">
 						{{ slotProps.item.identifyingName }}

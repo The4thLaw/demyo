@@ -16,7 +16,7 @@
 			</span>
 		</template>
 		<template v-if="!isArray">
-			<router-link :to="{ name: view, params: { id: model.id } }" class="c-ModelLink">
+			<router-link :to="{ name: view, params: { id: model.id } }" :class="`c-ModelLink ${cssClass}`">
 				<template v-if="hasDefaultSlot">
 					<slot :item="model" />
 				</template>

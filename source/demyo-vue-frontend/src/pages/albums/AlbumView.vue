@@ -253,6 +253,7 @@
 			</div>
 			<GalleryIndex
 				:items="derivatives" image-path="mainImage" bordered
+				:keyboard-navigation="false"
 				@page-change="derivativeSection?.$el.scrollIntoView()"
 			>
 				<template #default="slotProps">

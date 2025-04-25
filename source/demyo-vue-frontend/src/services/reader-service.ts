@@ -173,7 +173,7 @@ class ReaderService extends AbstractModelService<Reader> {
 	private async addOrRemoveListItem(storeAction: ReaderStoreFunction,
 		handler: (path: string, defaultValue: boolean) => Promise<boolean>,
 		listType: 'favourites' | 'readingList', id: number, confirmLabel: string): Promise<void> {
-		const itemType = /.*series$/i.test(storeAction) ? 'series' : 'albums'
+		const itemType = storeAction.endsWith('Series') ? 'series' : 'albums'
 		const readerStore = useReaderStore()
 		const reader = readerStore.currentReader
 		const success = await handler(`${this.basePath}${reader.id}/${listType}/${itemType}/${id}`, false)

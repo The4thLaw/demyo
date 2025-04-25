@@ -4,13 +4,13 @@
 			<AppTask
 				:label="$t('quickTasks.edit.publisher')"
 				:to="`/publishers/${publisher.id}/edit`"
-				icon="mdi-brush dem-overlay-edit"
+				icon="mdi-office-building dem-overlay-edit"
 			/>
 			<AppTask
 				v-if="albumCount === 0 && collectionCount === 0"
 				:label="$t('quickTasks.delete.publisher')"
 				:confirm="$t('quickTasks.delete.publisher.confirm')"
-				icon="mdi-brush dem-overlay-delete"
+				icon="mdi-office-building dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteModel"
 			/>
