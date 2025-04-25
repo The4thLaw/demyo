@@ -17,6 +17,7 @@ import publisherRoutes from './publishers'
 import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
+import typeRoutes from './types'
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -37,6 +38,7 @@ const routes: RouteRecordRaw[] = [
 	...readerRoutes,
 	...seriesRoutes,
 	...tagRoutes,
+	...typeRoutes,
 	{
 		path: '/about',
 		name: 'about',

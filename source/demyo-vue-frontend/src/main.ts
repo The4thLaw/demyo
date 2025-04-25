@@ -11,12 +11,14 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import readerService from './services/reader-service'
 import pinia from './stores'
+import { useRefDataStore } from './stores/ref-data'
 
 const app = createApp(App as Component)
 
 app.use(pinia)
-// Do this as soon as possible but after pinia is set up. It's asynchronous and will work during bootstrap
+// Do these as soon as possible but after pinia is set up. It's asynchronous and will work during bootstrap
 void readerService.init()
+useRefDataStore().refreshBookTypeManagement()
 
 // Global mixin to allow components to scroll to the top of the page
 app.mixin({
