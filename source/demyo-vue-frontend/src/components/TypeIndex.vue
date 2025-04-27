@@ -2,6 +2,7 @@
 	<!-- Note: we don't tie the items per page to the configuration because it's not the same presentation
 	and it can get quite long. -->
 	<v-data-table
+		v-if="items.length"
 		:items="items" :headers="headers" :hide-default-footer="items.length < 11"
 		:page-text="$t('core.components.VDataTable.page')"
 		:items-per-page-text="$t('core.components.VDataTable.itemsPerPage')"
