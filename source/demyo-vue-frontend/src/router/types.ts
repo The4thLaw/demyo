@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import TypeManagement from '@/pages/types/TypeManagement.vue'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
