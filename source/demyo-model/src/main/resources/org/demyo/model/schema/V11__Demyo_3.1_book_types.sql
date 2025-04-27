@@ -13,7 +13,7 @@ ALTER TABLE albums
 
 -- Create the type
 INSERT INTO book_types(name, label_type) VALUES
-	('__DEFAULT__', 'COMIC');
+	('__DEFAULT__', 'GRAPHIC_NOVEL');
 
 -- Set the albums to the new type
 UPDATE albums SET book_type_id = (SELECT id FROM book_types WHERE name = '__DEFAULT__') WHERE 1=1;

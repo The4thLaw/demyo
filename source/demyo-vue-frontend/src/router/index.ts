@@ -7,6 +7,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
+import bookTypeRoutes from './book-types'
 import collectionRoutes from './collections'
 import derivativeSourceRoutes from './derivative-sources'
 import derivativeTypeRoutes from './derivative-types'
@@ -28,6 +29,7 @@ const routes: RouteRecordRaw[] = [
 	...albumRoutes,
 	...authorRoutes,
 	...bindingRoutes,
+	...bookTypeRoutes,
 	...collectionRoutes,
 	...derivativeRoutes,
 	...derivativeSourceRoutes,
