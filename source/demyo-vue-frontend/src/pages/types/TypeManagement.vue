@@ -61,7 +61,6 @@
 import bindingService from '@/services/binding-service'
 import bookTypeService from '@/services/book-type-service'
 import derivativeTypeService from '@/services/derivative-type-service'
-import { useRefDataStore } from '@/stores/ref-data'
 
 // Bindings
 const bindings = ref([] as Binding[])
@@ -80,12 +79,13 @@ void (async (): Promise<void> => {
 })()
 
 // Book types
-const refDataStore = useRefDataStore()
-const bookTypeManagement = computed(() => refDataStore.bookTypeManagement)
+const bookTypeManagement = ref(false)
 
 const bookTypes = ref([] as BookType[])
 const bookTypesLoading = ref(true)
 async function loadBookTypes(): Promise<void> {
+	bookTypesLoading.value = true
+	bookTypeManagement.value = await bookTypeService.isManagementEnabled()
 	bookTypes.value = await bookTypeService.findForIndex()
 	bookTypesLoading.value = false
 }
@@ -93,7 +93,7 @@ void loadBookTypes()
 
 async function enableBookTypeManagement(): Promise<void> {
 	await bookTypeService.enableManagement()
-	await refDataStore.refreshBookTypeManagement()
+	bookTypeManagement.value = true
 }
 
 function deleteBookType(): void {
