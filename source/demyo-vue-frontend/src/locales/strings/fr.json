@@ -52,6 +52,7 @@
 	"menu.series.browse": "Liste des séries",
 	"menu.tags.add": "Ajouter un tag",
 	"menu.tags.browse": "Liste des tags",
+	"menu.types.manage": "Gestion des types",
 
 	"tinymce.language": "fr_FR"
 }
