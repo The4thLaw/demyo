@@ -1,5 +1,5 @@
 <template>
-	<div id="v-TypeManagement">
+	<v-container id="v-TypeManagement">
 		<SectionCard :title="$t('title.index.binding')" :loading="bindingsLoading">
 			<TypeIndex
 				view-route="BindingView" edit-route="BindingEdit"
@@ -25,8 +25,8 @@
 			</template>
 			<TypeIndex
 				v-else
-				edit-route="BookTypeEdit" :items="bookTypes" deletable
-				@delete="deleteBookType"
+				view-route="BookTypeView" edit-route="BookTypeEdit"
+				:items="bookTypes"
 			/>
 		</SectionCard>
 
@@ -54,13 +54,17 @@
 				</template>
 			</v-tooltip>
 		</v-speed-dial>
-	</div>
+	</v-container>
 </template>
 
 <script setup lang="ts">
 import bindingService from '@/services/binding-service'
 import bookTypeService from '@/services/book-type-service'
 import derivativeTypeService from '@/services/derivative-type-service'
+
+// TODO: since we aligned book types with other types, maybe we should get rid of the data table and instead reuse the TextIndex like everywhere
+// This would improve consistency and maximize screen use
+// The keyboard interaction should be disabled, though
 
 // Bindings
 const bindings = ref([] as Binding[])
@@ -83,22 +87,16 @@ const bookTypeManagement = ref(false)
 
 const bookTypes = ref([] as BookType[])
 const bookTypesLoading = ref(true)
-async function loadBookTypes(): Promise<void> {
+void (async (): Promise<void> => {
 	bookTypesLoading.value = true
 	bookTypeManagement.value = await bookTypeService.isManagementEnabled()
 	bookTypes.value = await bookTypeService.findForIndex()
 	bookTypesLoading.value = false
-}
-void loadBookTypes()
+})()
 
 async function enableBookTypeManagement(): Promise<void> {
 	await bookTypeService.enableManagement()
+	// TODO: reload everything because the base type still has its old name
 	bookTypeManagement.value = true
-}
-
-function deleteBookType(): void {
-	// TODO: delete and reassign
-	// Reload
-	void loadBookTypes()
 }
 </script>

@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 
 import org.demyo.model.Album;
 import org.demyo.model.Binding;
+import org.demyo.model.BookType;
 import org.demyo.model.Collection;
 import org.demyo.model.Publisher;
 import org.demyo.model.QAlbum;
@@ -51,12 +52,27 @@ public class AlbumFilter extends AbstractModelFilter {
 		return filter;
 	}
 
+	/**
+	 * Factory method that creates a filter based on the {@link BookType} internal ID.
+	 *
+	 * @param The internal ID of the {@link BookType}.
+	 * @return the filter instance
+	 */
+	public static AlbumFilter forBookType(long modelId) {
+		AlbumFilter filter = new AlbumFilter();
+		filter.bookType = modelId;
+		return filter;
+	}
+
 	/** The internal ID of the {@link Publisher}. */
 	private Long publisher;
 	/** The internal ID of the {@link Collection}. */
 	private Long collection;
 	/** The internal ID of the {@link Binding}. */
 	private Long binding;
+	/** The internal ID of the {@link BookType}. */
+	// TODO: this should become a list but it will require some creative mapping on the frontend
+	private Long bookType;
 	/** The internal ID of the {@link Tag}. */
 	private Long tag;
 	/** The internal ID of the {@link Reader} that has this {@link Album} as favourite. */
@@ -76,6 +92,9 @@ public class AlbumFilter extends AbstractModelFilter {
 		}
 		if (binding != null) {
 			e = combine(e, QAlbum.album.binding.id.eq(binding));
+		}
+		if (bookType != null) {
+			e = combine(e, QAlbum.album.bookType.id.eq(bookType));
 		}
 		if (tag != null) {
 			e = combine(e, QAlbum.album.tags.any().id.eq(tag));
