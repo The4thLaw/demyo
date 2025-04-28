@@ -2,11 +2,14 @@ package org.demyo.web.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.demyo.model.BookType;
+import org.demyo.model.filters.AlbumFilter;
+import org.demyo.service.IAlbumService;
 import org.demyo.service.impl.IBookTypeService;
 
 
@@ -17,16 +20,19 @@ import org.demyo.service.impl.IBookTypeService;
 @RequestMapping("/api/bookTypes")
 public class BookTypeAPIController extends AbstractModelAPIController<BookType> {
 	private final IBookTypeService service;
+	private final IAlbumService albumService;
 
 	/**
 	 * Creates the controller.
 	 *
 	 * @param service The service to manage the entries.
+	 * @param albumService The service to manage albums.
 	 */
 	@Autowired
-	public BookTypeAPIController(IBookTypeService service) {
+	public BookTypeAPIController(IBookTypeService service, IAlbumService albumService) {
 		super(service);
 		this.service = service;
+		this.albumService = albumService;
 	}
 
 	/**
@@ -47,4 +53,14 @@ public class BookTypeAPIController extends AbstractModelAPIController<BookType> 
 		service.enableManagement();
 	}
 
+	/**
+	 * Counts how many Albums use the given {@link BookType}
+	 *
+	 * @param modelId The internal ID of the {@link BookType}
+	 * @return the count
+	 */
+	@GetMapping("{modelId}/albums/count")
+	public long countAlbumsByBinding(@PathVariable("modelId") long modelId) {
+		return albumService.countAlbumsByFilter(AlbumFilter.forBookType(modelId));
+	}
 }

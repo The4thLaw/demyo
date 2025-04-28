@@ -6,7 +6,9 @@ import AbstractModelService from './abstract-model-service'
  */
 class BookTypeService extends AbstractModelService<BookType> {
 	constructor() {
-		super('bookTypes/')
+		super('bookTypes/', {
+			fillMissingArrays: ['structuredFieldConfig']
+		})
 	}
 
 	/**
@@ -18,6 +20,14 @@ class BookTypeService extends AbstractModelService<BookType> {
 
 	async enableManagement(): Promise<void> {
 		await axiosPost('bookTypes/management/enable', undefined)
+	}
+
+	/**
+	 * Finds how many Albums use the given Book Type.
+	 * @param id The Book Type ID
+	 */
+	async countAlbums(id: number): Promise<number> {
+		return axiosGet(`bookTypes/${id}/albums/count`, 0)
 	}
 }
 

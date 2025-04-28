@@ -36,6 +36,10 @@ public class BookType extends AbstractNamedModel {
 	@Column(name = "field_config")
 	private String fieldConfig;
 
+	/** The description for this book type. */
+	@Column(name = "description")
+	private String description;
+
 	/**
 	 * Gets the type of label to use for this type.
 	 *
@@ -94,5 +98,23 @@ public class BookType extends AbstractNamedModel {
 		} else {
 			fieldConfig = config.stream().map(ModelField::name).collect(Collectors.joining(FIELD_DELIMITOR));
 		}
+	}
+
+	/**
+	 * Gets the description for this book type.
+	 *
+	 * @return the description for this book type
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * Sets the description for this book type.
+	 *
+	 * @param description the new description for this book type
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

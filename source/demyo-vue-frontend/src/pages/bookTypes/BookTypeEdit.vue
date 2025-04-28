@@ -8,11 +8,13 @@
 							v-model="bookType.name" :label="$t('field.BookType.name')" :rules="rules.name" required
 						/>
 					</v-col>
-				</v-row>
-				<v-row>
+					<v-col cols="12">
+						<span class="dem-fieldlabel">{{ $t('field.BookType.description') }}</span>
+						<RichTextEditor v-model="bookType.description" />
+					</v-col>
 					<v-col cols="12">
 						<span class="dem-fieldlabel">{{ $t('field.BookType.labelType') }}</span>
-						<v-radio-group v-model="bookType.labelType">
+						<v-radio-group v-model="bookType.labelType" :rules="rules.labelType">
 							<v-radio :label="$t('field.BookType.labelType.value.COMIC_ISSUE')" value="COMIC_ISSUE" />
 							<v-radio :label="$t('field.BookType.labelType.value.COMIC_VOLUME')" value="COMIC_VOLUME" />
 							<v-radio
@@ -54,18 +56,23 @@ import { useSimpleEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
 import bookTypeService from '@/services/book-type-service'
 
-async function fetchData(id :number | undefined): Promise<Partial<Binding>> {
+async function fetchData(id :number | undefined): Promise<Partial<BookType>> {
 	if (id) {
 		return bookTypeService.findById(id)
 	}
-	return Promise.resolve({})
+	return Promise.resolve({
+		structuredFieldConfig: [] as ModelField[]
+	})
 }
 
 const { model: bookType, loading, save, reset } = useSimpleEdit(fetchData, bookTypeService, [],
-	'title.add.bookType', 'title.edit.bookType', 'TypeManagement')
+	'title.add.bookType', 'title.edit.bookType', 'BookTypeView')
 
 const rules = {
 	name: [
+		mandatory()
+	],
+	labelType: [
 		mandatory()
 	]
 }

@@ -17,9 +17,6 @@
 			<v-btn :to="{ name: editRoute, params: { id: item.id } }" icon variant="text">
 				<v-icon>mdi-pencil</v-icon>
 			</v-btn>
-			<v-btn v-if="deletable" icon variant="text" @click="$emit('delete', item.id)">
-				<v-icon>mdi-delete</v-icon>
-			</v-btn>
 		</template>
 	</v-data-table>
 </template>
@@ -27,17 +24,11 @@
 <script setup lang="ts" generic="T extends AbstractNamedModel">
 import { useI18n } from 'vue-i18n'
 
-withDefaults(defineProps<{
+defineProps<{
 	items: T[]
-	viewRoute?: string
+	viewRoute: string
 	editRoute: string
-	deletable?: boolean
-}>(), {
-	viewRoute: undefined,
-	deletable: false
-})
-
-defineEmits<(e: 'delete', id: number) => void>()
+}>()
 
 const i18n = useI18n()
 

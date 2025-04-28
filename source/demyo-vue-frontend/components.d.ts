@@ -25,6 +25,7 @@ declare module 'vue' {
     BindingIndex: typeof import('./src/pages/bindings/BindingIndex.vue')['default']
     BindingView: typeof import('./src/pages/bindings/BindingView.vue')['default']
     BookTypeEdit: typeof import('./src/pages/bookTypes/BookTypeEdit.vue')['default']
+    BookTypeView: typeof import('./src/pages/bookTypes/BookTypeView.vue')['default']
     CardTextIndex: typeof import('./src/components/CardTextIndex.vue')['default']
     CollectionEdit: typeof import('./src/pages/collections/CollectionEdit.vue')['default']
     CollectionView: typeof import('./src/pages/collections/CollectionView.vue')['default']

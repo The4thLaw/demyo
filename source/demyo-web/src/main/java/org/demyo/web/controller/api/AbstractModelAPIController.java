@@ -43,6 +43,16 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	}
 
 	/**
+	 * Counts the total number of entities.
+	 *
+	 * @return The number of entities.
+	 */
+	@GetMapping("/count")
+	public long count() {
+		return service.count();
+	}
+
+	/**
 	 * Retrieves the full list of the entities.
 	 *
 	 * @param view The Jackson view to apply.

@@ -1,6 +1,7 @@
 package org.demyo.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +46,7 @@ public class BookTypeService extends AbstractModelService<BookType> implements
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Transactional(rollbackFor = Throwable.class)
 	public void enableManagement() {
 		if (repo.count() > 1) {
