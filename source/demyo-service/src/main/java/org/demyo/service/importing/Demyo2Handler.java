@@ -27,6 +27,7 @@ public class Demyo2Handler extends DefaultHandler {
 
 	private final IRawSQLDao rawSqlDao;
 
+	private boolean hasBookType;
 	private String seriesId;
 	private String albumId;
 	private String derivativeId;
@@ -72,8 +73,11 @@ public class Demyo2Handler extends DefaultHandler {
 			case "version":
 				handleVersion(attributes);
 				break;
+			case "book_type":
+				hasBookType = true;
+				// Fall-through
 			case "image", "publisher", "collection", "binding", "author", "tag", "borrower", "source",
-					"derivative_type", "book_type":
+					"derivative_type":
 				createLine(localName + "s", attributes);
 				break;
 			case "series":
@@ -86,9 +90,27 @@ public class Demyo2Handler extends DefaultHandler {
 				columns.put("sub", attributes.getValue("ref"));
 				relatedSeries.add(columns);
 				break;
+			case "albums":
+				if (!hasBookType) {
+					// If by now we don't have a book type, we should create the default one
+					// This behaviour is a bit peculiar but it's the first time we have a non-backwards compatible change
+					// so let's deal with it the best we can
+					LOGGER.info("Migrating an old import: the default book type will be created and assigned to all books");
+					Map<String, Object> bookType = new HashMap<>();
+					bookType.put("id", 1L);
+					bookType.put("name", "__DEFAULT__");
+					bookType.put("label_type", "GRAPHIC_NOVEL");
+					createLine("book_types", bookType);
+				}
+				break;
 			case "album":
 				albumId = attributes.getValue("id");
-				createLine("albums", attributes);
+				Map<String, String> albumAttributes = toMap(attributes);
+				if (!hasBookType) {
+					// Set the book type we just created
+					albumAttributes.put("book_type_id", "1");
+				}
+				createLine("albums", albumAttributes);
 				break;
 			case "artist":
 				albumArtists.add(join(FK_ALBUM_ID, albumId, "artist_id", attributes.getValue("ref")));
@@ -196,11 +218,20 @@ public class Demyo2Handler extends DefaultHandler {
 	}
 
 	private void createLine(String tableName, Attributes attributes) {
+		Map<String, String> attributeMap = toMap(attributes);
+		createLine(tableName, attributeMap);
+	}
+
+	private void createLine(String tableName, Map<String, ?> attributes) {
+		rawSqlDao.insert(tableName, attributes);
+	}
+
+	private static Map<String, String> toMap(Attributes attributes) {
 		Map<String, String> attributeMap = new HashMap<>(attributes.getLength());
 		for (int i = 0; i < attributes.getLength(); i++) {
 			attributeMap.put(attributes.getLocalName(i), attributes.getValue(i));
 		}
-		rawSqlDao.insert(tableName, attributeMap);
+		return attributeMap;
 	}
 
 	private void persistRelations() {
