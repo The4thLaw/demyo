@@ -19,7 +19,7 @@ export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelS
 	const safeFetchData: () => Promise<T[]> = fetchData ?? (async ():Promise<T[]> => serviceInstance.findForIndex())
 
 	useHead({
-		title: () => useI18n().t(titleKey)
+		title: computed(() => useI18n().t(titleKey))
 	})
 
 	const uiStore = useUiStore()
