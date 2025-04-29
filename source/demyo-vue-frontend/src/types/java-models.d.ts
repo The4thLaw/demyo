@@ -227,6 +227,6 @@ interface IModel {
     identifyingName: string;
 }
 
-type TranslationLabelType = "COMIC_ISSUE" | "COMIC_VOLUME" | "GRAPHIC_NOVEL" | "NOVEL";
+type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
 
 type ModelField = "ALBUM_COLORIST" | "ALBUM_INKER" | "ALBUM_TRANSLATOR";
