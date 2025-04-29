@@ -58,13 +58,10 @@
 			v-if="loading || collectionCount > 0" :loading="loading"
 			:title="$t('field.Publisher.collections')"
 		>
-			<TextIndex :items="publisher.collections" :split-by-first-letter="false" compact>
-				<template #default="slotProps">
-					<router-link :to="`/collections/${slotProps.item.id}/view`">
-						{{ slotProps.item.identifyingName }}
-					</router-link>
-				</template>
-			</TextIndex>
+			<TextIndex
+				view-route="CollectionView" :items="publisher.collections"
+				:split-by-first-letter="false" compact
+			/>
 		</SectionCard>
 	</v-container>
 </template>

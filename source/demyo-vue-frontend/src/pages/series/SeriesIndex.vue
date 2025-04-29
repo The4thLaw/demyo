@@ -1,15 +1,9 @@
 <template>
 	<div>
 		<TextIndex
-			:items="modelList" :first-letter-extractor="(item) => item.identifyingName[0]"
-			@page-change="scrollToTop"
-		>
-			<template #default="slotProps">
-				<router-link :to="`/series/${slotProps.item.id}/view`">
-					{{ slotProps.item.identifyingName }}
-				</router-link>
-			</template>
-		</TextIndex>
+			view-route="SeriesView" :items="modelList"
+			:first-letter-extractor="(item) => item.identifyingName[0]" @page-change="scrollToTop"
+		/>
 		<Fab to="/series/new" icon="mdi-plus" />
 	</div>
 </template>

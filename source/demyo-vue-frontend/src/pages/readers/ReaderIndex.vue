@@ -1,12 +1,9 @@
 <template>
 	<div>
-		<TextIndex :items="modelList" :split-by-first-letter="false" @page-change="scrollToTop">
-			<template #default="slotProps">
-				<router-link :to="`/readers/${slotProps.item.id}/view`">
-					{{ slotProps.item.identifyingName }}
-				</router-link>
-			</template>
-		</TextIndex>
+		<TextIndex
+			view-route="ReaderView" :items="modelList"
+			:split-by-first-letter="false" @page-change="scrollToTop"
+		/>
 		<Fab to="/readers/new" icon="mdi-plus" />
 	</div>
 </template>
