@@ -15,8 +15,6 @@
 					<v-col cols="12">
 						<span class="dem-fieldlabel">{{ $t('field.BookType.labelType') }}</span>
 						<v-radio-group v-model="bookType.labelType" :rules="rules.labelType">
-							<v-radio :label="$t('field.BookType.labelType.value.COMIC_ISSUE')" value="COMIC_ISSUE" />
-							<v-radio :label="$t('field.BookType.labelType.value.COMIC_VOLUME')" value="COMIC_VOLUME" />
 							<v-radio
 								:label="$t('field.BookType.labelType.value.GRAPHIC_NOVEL')" value="GRAPHIC_NOVEL"
 							/>
