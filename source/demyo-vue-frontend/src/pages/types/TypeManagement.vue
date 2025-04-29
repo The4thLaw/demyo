@@ -1,16 +1,16 @@
 <template>
 	<v-container id="v-TypeManagement">
 		<SectionCard :title="$t('title.index.binding')" :loading="bindingsLoading">
-			<TypeIndex
-				view-route="BindingView" edit-route="BindingEdit"
-				:items="bindings"
+			<TextIndex
+				:items="bindings" view-route="BindingView"
+				:keyboard-nav="false" :compact="true" :split-by-first-letter="false"
 			/>
 		</SectionCard>
 
 		<SectionCard :title="$t('title.index.derivativeType')" :loading="derivativeTypesLoading">
-			<TypeIndex
-				view-route="DerivativeTypeView" edit-route="DerivativeTypeEdit"
-				:items="derivativeTypes"
+			<TextIndex
+				:items="derivativeTypes" view-route="DerivativeTypeView"
+				:keyboard-nav="false" :compact="true" :split-by-first-letter="false"
 			/>
 		</SectionCard>
 
@@ -23,10 +23,10 @@
 					{{ $t('page.BookType.management.enable') }}
 				</v-btn>
 			</template>
-			<TypeIndex
+			<TextIndex
 				v-else
-				view-route="BookTypeView" edit-route="BookTypeEdit"
-				:items="bookTypes"
+				:items="bookTypes" view-route="BookTypeView"
+				:keyboard-nav="false" :compact="true" :split-by-first-letter="false"
 			/>
 		</SectionCard>
 
@@ -38,21 +38,18 @@
 				<Fab v-bind="activatorProps" icon="mdi-plus" />
 			</template>
 
-			<v-tooltip key="1" :text="$t('menu.bindings.add')">
-				<template #activator="{ props }">
-					<v-btn key="1" to="/bindings/new" icon="mdi-notebook" v-bind="props" />
-				</template>
-			</v-tooltip>
-			<v-tooltip key="2" :text="$t('menu.derivative_types.add')">
-				<template #activator="{ props }">
-					<v-btn key="1" to="/derivativeTypes/new" icon="mdi-brush" v-bind="props" />
-				</template>
-			</v-tooltip>
-			<v-tooltip key="3" :text="$t('menu.book_types.add')">
-				<template #activator="{ props }">
-					<v-btn key="1" to="/bookTypes/new" icon="mdi-bookshelf" v-bind="props" />
-				</template>
-			</v-tooltip>
+			<v-btn key="1" to="/bindings/new" icon>
+				<v-icon>mdi-notebook</v-icon>
+				<v-tooltip key="1" :text="$t('menu.bindings.add')" activator="parent" />
+			</v-btn>
+			<v-btn key="1" to="/derivativeTypes/new" icon>
+				<v-icon>mdi-brush</v-icon>
+				<v-tooltip key="2" :text="$t('menu.derivative_types.add')" activator="parent" />
+			</v-btn>
+			<v-btn key="1" to="/bookTypes/new" icon>
+				<v-icon>mdi-bookshelf</v-icon>
+				<v-tooltip key="3" :text="$t('menu.book_types.add')" activator="parent" />
+			</v-btn>
 		</v-speed-dial>
 	</v-container>
 </template>
@@ -61,10 +58,6 @@
 import bindingService from '@/services/binding-service'
 import bookTypeService from '@/services/book-type-service'
 import derivativeTypeService from '@/services/derivative-type-service'
-
-// TODO: since we aligned book types with other types, maybe we should get rid of the data table and instead reuse the TextIndex like everywhere
-// This would improve consistency and maximize screen use
-// The keyboard interaction should be disabled, though
 
 // Bindings
 const bindings = ref([] as Binding[])
@@ -87,16 +80,16 @@ const bookTypeManagement = ref(false)
 
 const bookTypes = ref([] as BookType[])
 const bookTypesLoading = ref(true)
-void (async (): Promise<void> => {
+async function loadBookTypes(): Promise<void> {
 	bookTypesLoading.value = true
 	bookTypeManagement.value = await bookTypeService.isManagementEnabled()
 	bookTypes.value = await bookTypeService.findForIndex()
 	bookTypesLoading.value = false
-})()
+}
+void loadBookTypes()
 
 async function enableBookTypeManagement(): Promise<void> {
 	await bookTypeService.enableManagement()
-	// TODO: reload everything because the base type still has its old name
-	bookTypeManagement.value = true
+	await loadBookTypes()
 }
 </script>
