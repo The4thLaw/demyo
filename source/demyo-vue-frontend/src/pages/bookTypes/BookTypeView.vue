@@ -28,8 +28,17 @@
 
 			<FieldValue v-if="bookType.structuredFieldConfig?.length" :label="$t('field.BookType.fieldConfig')">
 				<ul>
-					<li v-for="(value, index) in bookType.structuredFieldConfig" :key="index">
-						{{ $t(`field.${value.replace('_', '.').toLowerCase().replace(/^a/, 'A')}s`) }}
+					<li v-if="fieldConfig.has('ALBUM_ARTIST')">
+						{{ $t(`field.Album.artists.${bookType.labelType}`) }}
+					</li>
+					<li v-if="fieldConfig.has('ALBUM_COLORIST')">
+						{{ $t('field.Album.colorists') }}
+					</li>
+					<li v-if="fieldConfig.has('ALBUM_INKER')">
+						{{ $t('field.Album.inkers') }}
+					</li>
+					<li v-if="fieldConfig.has('ALBUM_TRANSLATOR')">
+						{{ $t('field.Album.translators') }}
 					</li>
 				</ul>
 			</FieldValue>
@@ -64,4 +73,6 @@ async function fetchData(id: number): Promise<BookType> {
 
 const { model: bookType, loading, appTasksMenu, deleteModel }
 	= useSimpleView(fetchData, bookTypeService, 'quickTasks.delete.bookType.confirm.done', 'TypeManagement')
+
+const fieldConfig = computed(() => new Set(bookType.value.structuredFieldConfig ?? []))
 </script>
