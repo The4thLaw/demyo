@@ -11,10 +11,10 @@
 
 	"menu.title": "Menu",
 	"menu.main.home": "Accueil",
-	"menu.albums.add": "Ajouter un album",
-	"menu.albums.browse": "Liste des séries et albums",
+	"menu.albums.add": "Ajouter un livre",
+	"menu.albums.browse": "Liste des séries et livres",
 	"menu.albums.browse_covers": "Liste des couvertures",
-	"menu.albums.loans": "Voir les albums prêtés",
+	"menu.albums.loans": "Voir les livres prêtés",
 	"menu.authors.add": "Ajouter un auteur",
 	"menu.authors.browse": "Liste des auteurs",
 	"menu.bindings.add": "Ajouter une reliure",
