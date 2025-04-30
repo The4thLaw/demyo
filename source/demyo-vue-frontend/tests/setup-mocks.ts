@@ -11,8 +11,6 @@ config.global.stubs = {
 	RouterLink: RouterLinkStub
 }
 
-
-
 vi.mock('@/i18n', () => ({
 	default: {
 		global: {

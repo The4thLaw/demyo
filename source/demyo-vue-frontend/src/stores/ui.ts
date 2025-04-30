@@ -29,7 +29,7 @@ export const useUiStore = defineStore('ui', {
 
 		showSnackbar(message: string) {
 			this.snackbarMessages.push(message)
-			this.displaySnackbar ??= true;
+			this.displaySnackbar = true
 		},
 
 		closeSnackbar() {
