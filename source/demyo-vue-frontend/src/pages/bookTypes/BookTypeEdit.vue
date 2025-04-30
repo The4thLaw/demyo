@@ -27,6 +27,11 @@
 						<span class="dem-fieldlabel">{{ $t('field.BookType.fieldConfig') }}</span>
 						<v-checkbox
 							v-model="bookType.structuredFieldConfig"
+							:label="$t(`field.Album.artists.${bookType.labelType}`)"
+							value="ALBUM_ARTIST"
+						/>
+						<v-checkbox
+							v-model="bookType.structuredFieldConfig"
 							:label="$t('field.Album.colorists')"
 							value="ALBUM_COLORIST"
 						/>
