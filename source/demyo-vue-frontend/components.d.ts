@@ -84,7 +84,6 @@ declare module 'vue' {
     TagLink: typeof import('./src/components/TagLink.vue')['default']
     TagView: typeof import('./src/pages/tags/TagView.vue')['default']
     TextIndex: typeof import('./src/components/TextIndex.vue')['default']
-    TypeIndex: typeof import('./src/components/TypeIndex.vue')['default']
     TypeManagement: typeof import('./src/pages/types/TypeManagement.vue')['default']
   }
 }
