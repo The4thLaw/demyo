@@ -3,10 +3,17 @@
 		<v-form ref="form">
 			<SectionCard :subtitle="$t('fieldset.Album.identification')" :loading="loading">
 				<v-row>
-					<v-col cols="12">
+					<v-col :cols="bookTypeManagement ? 8 : 12">
 						<Autocomplete
 							v-model="album.series.id" :items="series" :loading="seriesLoading"
 							label-key="field.Album.series" clearable refreshable @refresh="loadSeries"
+						/>
+					</v-col>
+					<v-col v-if="bookTypeManagement" cols="4">
+						<Autocomplete
+							v-model="album.bookType.id" :items="bookTypes" :loading="bookTypesLoading"
+							:rules="rules.bookType" label-key="field.Album.bookType"
+							refreshable @refresh="loadBookTypes"
 						/>
 					</v-col>
 				</v-row>
@@ -69,28 +76,28 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.writers" :items="authors" :loading="authorsLoading"
-							label-key="field.Album.writers" multiple refreshable @refresh="loadAuthors"
+							:label-key="`field.Album.writers.${labelType}`" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
+					<v-col v-if="!fieldConfig.has('ALBUM_ARTIST')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.artists" :items="authors" :loading="authorsLoading"
-							label-key="field.Album.artists" multiple refreshable @refresh="loadAuthors"
+							:label-key="`field.Album.artists.${labelType}`" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
+					<v-col v-if="!fieldConfig.has('ALBUM_COLORIST')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.colorists" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.colorists" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
+					<v-col v-if="!fieldConfig.has('ALBUM_INKER')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.inkers" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.inkers" multiple refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
+					<v-col v-if="!fieldConfig.has('ALBUM_TRANSLATOR')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.translators" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.translators" multiple refreshable @refresh="loadAuthors"
@@ -231,12 +238,13 @@
 <script setup lang="ts">
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
-	useRefreshableAuthors, useRefreshableBindings, useRefreshableImages,
+	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
 	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags
 } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
 import { integer, isbn, mandatory, number } from '@/helpers/rules'
 import albumService from '@/services/album-service'
+import bookTypeService from '@/services/book-type-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
 import { useRoute } from 'vue-router'
@@ -245,6 +253,7 @@ const route = useRoute()
 
 const sameEditionDates = ref(false)
 
+const { bookTypes, bookTypesLoading, loadBookTypes } = useRefreshableBookTypes()
 const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors()
 const { bindings, bindingsLoading, loadBindings } = useRefreshableBindings()
 const { images, imagesLoading, loadImages } = useRefreshableImages()
@@ -267,7 +276,11 @@ async function loadCollections(forAlbum: Partial<Album>): Promise<void> {
 	collectionsLoading.value = false
 }
 
+const bookTypeManagement = ref(false)
+
 async function fetchData(id: number | undefined): Promise<Partial<Album>> {
+	const btmP = bookTypeService.isManagementEnabled()
+
 	let fetched: Partial<Album>
 	if (id) {
 		fetched = await albumService.findById(id)
@@ -275,6 +288,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 		fetched = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
 	} else {
 		fetched = {
+			bookType: {} as BookType,
 			series: {} as Series,
 			writers: [],
 			artists: [],
@@ -296,12 +310,21 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	sameEditionDates.value = (!!fetched.firstEditionDate
 		&& fetched.firstEditionDate === fetched.currentEditionDate) || false
 
+	bookTypeManagement.value = await btmP
+
 	return Promise.resolve(fetched)
 }
 
 const { model: album, loading, save, reset } = useSimpleEdit(fetchData, albumService,
-	[loadAuthors, loadBindings, loadImages, loadPublishers, loadSeries, loadTags],
+	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTags],
 	'title.add.album', 'title.edit.album', 'AlbumView')
+
+const labelType = computed(() => {
+	return bookTypes.value.find(bt => bt.id === album.value.bookType?.id)?.labelType ?? 'GRAPHIC_NOVEL'
+})
+const fieldConfig = computed(() => {
+	return new Set(bookTypes.value.find(bt => bt.id === album.value.bookType?.id)?.structuredFieldConfig ?? [])
+})
 
 function adjustEditionDates(): void {
 	if (album.value.markedAsFirstEdition) {
@@ -313,6 +336,7 @@ function adjustEditionDates(): void {
 }
 
 const rules = {
+	bookType: [mandatory()],
 	cycle: [integer()],
 	number: [number()],
 	title: [mandatory()],

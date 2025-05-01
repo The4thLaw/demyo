@@ -11,6 +11,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import org.demyo.model.enums.ModelField;
 import org.demyo.model.enums.TranslationLabelType;
 import org.demyo.model.util.DefaultOrder;
@@ -30,6 +32,7 @@ public class BookType extends AbstractNamedModel {
 	/** The type of label to use for this type. */
 	@Column(name = "label_type")
 	@Enumerated(EnumType.STRING)
+	@JsonView(ModelView.Minimal.class)
 	private TranslationLabelType labelType;
 
 	/** The fields to hide from this book type. */
@@ -80,6 +83,7 @@ public class BookType extends AbstractNamedModel {
 	 * Gets the structured field configuration.
 	 * @return the structured field configuration
 	 */
+	@JsonView(ModelView.Minimal.class)
 	public Set<ModelField> getStructuredFieldConfig() {
 		if (fieldConfig == null) {
 			return Collections.emptySet();
