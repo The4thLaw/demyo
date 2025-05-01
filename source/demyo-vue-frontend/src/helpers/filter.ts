@@ -1,3 +1,4 @@
+import lowerFirst from 'lodash/lowerFirst'
 import type { RouteLocationNormalizedGeneric } from 'vue-router'
 import { getParsedRouteParam } from './route'
 
@@ -12,8 +13,7 @@ export function retrieveFilter<T extends AbstractModelFilter>(route: RouteLocati
 	const filter = {} as T
 	for (const key of Object.keys(route.query)) {
 		if (key.startsWith('with')) {
-			const newKey = key.replace(/^with/, '').toLowerCase()
-			// TODO: manage plural to map to an array
+			const newKey = lowerFirst(key.replace(/^with/, ''))
 			const val = getParsedRouteParam(route.query[key])
 			if (val) {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any

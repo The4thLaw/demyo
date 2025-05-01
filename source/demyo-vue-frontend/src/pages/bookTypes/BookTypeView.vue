@@ -43,15 +43,18 @@
 				</ul>
 			</FieldValue>
 
+			<v-btn
+				v-if="albumCount > 0"
+				:to="{ name: 'AlbumIndex', query: { withBookType: bookType.id } }"
+				color="secondary" class="my-4" size="small" variant="outlined"
+			>
+				{{ $t('page.BookType.viewAlbums', albumCount) }}
+			</v-btn>
 			<v-alert
+				v-if="albumCount === 0"
 				border="start" type="info" text class="my-4"
 			>
-				<template v-if="albumCount === 0">
-					{{ $t('page.BookType.noAlbums') }}
-				</template>
-				<template v-else>
-					{{ $t('page.BookType.albumCount', albumCount) }}
-				</template>
+				{{ $t('page.BookType.noAlbums') }}
 			</v-alert>
 		</SectionCard>
 	</v-container>
