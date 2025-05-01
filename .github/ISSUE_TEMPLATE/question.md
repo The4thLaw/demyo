@@ -2,7 +2,7 @@
 name: Question
 about: You have a question regarding the behaviour of the software
 title: ''
-labels: 'type:question :grey_question:'
+labels: 'type:question :grey_question:','prio:undecided ❓'
 assignees: ''
 
 ---
