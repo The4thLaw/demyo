@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-04-28 15:48:08.
+// Generated using typescript-generator version 3.2.1263 on 2025-05-01 09:38:45.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -182,8 +182,8 @@ interface Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
     depth: number;
     prices: DerivativePrice[];
     images: Image[];
-    mainImage: Image;
     baseNameForImages: string;
+    mainImage: Image;
     pricesRaw: DerivativePrice[];
 }
 
@@ -229,4 +229,4 @@ interface IModel {
 
 type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
 
-type ModelField = "ALBUM_COLORIST" | "ALBUM_INKER" | "ALBUM_TRANSLATOR";
+type ModelField = "ALBUM_ARTIST" | "ALBUM_COLORIST" | "ALBUM_INKER" | "ALBUM_TRANSLATOR";

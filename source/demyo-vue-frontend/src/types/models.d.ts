@@ -29,6 +29,8 @@ interface AlbumFilter extends AbstractModelFilter {
 	publisher?: number
 	/** The internal ID of the {@link Collection}. */
 	collection?: number
+	/** The internal ID of the {@link BookType}. */
+	bookType?: number
 	/** The internal ID of the {@link Binding}. */
 	binding?: number
 	/** The internal ID of the {@link Tag}. */

@@ -71,7 +71,6 @@ public class AlbumFilter extends AbstractModelFilter {
 	/** The internal ID of the {@link Binding}. */
 	private Long binding;
 	/** The internal ID of the {@link BookType}. */
-	// TODO: this should become a list but it will require some creative mapping on the frontend
 	private Long bookType;
 	/** The internal ID of the {@link Tag}. */
 	private Long tag;
@@ -135,6 +134,15 @@ public class AlbumFilter extends AbstractModelFilter {
 	 */
 	public void setBinding(Long binding) {
 		this.binding = binding;
+	}
+
+	/**
+	 * Sets the internal ID of the {@link BookType}.
+	 *
+	 * @param bookType the {@link BookType} ID
+	 */
+	public void setBookType(Long bookType) {
+		this.bookType = bookType;
 	}
 
 	/**
