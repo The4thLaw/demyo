@@ -2,7 +2,7 @@
 name: Bug report
 about: Report what you perceive as an actual issue in the software
 title: ''
-labels: 'type:bug :boom:'
+labels: ["type:bug :boom:", "prio:undecided :question:"]
 assignees: ''
 
 ---
