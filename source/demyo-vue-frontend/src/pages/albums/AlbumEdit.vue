@@ -76,7 +76,9 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.writers" :items="authors" :loading="authorsLoading"
-							:label-key="`field.Album.writers.${labelType}`" multiple refreshable @refresh="loadAuthors"
+							:label-key="`field.Album.writers.${labelType}`" multiple
+							:add-component="AuthorEdit" add-label="title.add.author"
+							refreshable @refresh="loadAuthors" @added="(id: number) => album.writers.push(id)"
 						/>
 					</v-col>
 					<v-col v-if="!fieldConfig.has('ALBUM_ARTIST')" cols="12" md="6">
@@ -236,6 +238,7 @@
 </template>
 
 <script setup lang="ts">
+import AuthorEdit from '@/components/authors/AuthorEdit.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,

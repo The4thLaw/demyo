@@ -19,11 +19,11 @@ export default [
 	{
 		path: '/authors/:id/edit',
 		name: 'AuthorEdit',
-		component: async () => import('@/pages/authors/AuthorEdit.vue') as unknown as Promise<Component>
+		component: async () => import('@/pages/authors/AuthorEditPage.vue') as unknown as Promise<Component>
 	},
 	{
 		path: '/authors/new',
 		name: 'AuthorAdd',
-		component: async () => import('@/pages/authors/AuthorEdit.vue') as unknown as Promise<Component>
+		component: async () => import('@/pages/authors/AuthorEditPage.vue') as unknown as Promise<Component>
 	}
 ] satisfies RouteRecordRaw[]

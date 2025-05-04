@@ -6,19 +6,19 @@ import { useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 
-interface EditData<T extends AbstractModel> {
+export interface EditData<T extends AbstractModel> {
 	model: Ref<Partial<T>>
 	loading: Ref<boolean>
-	save: () => Promise<void>
+	save: () => Promise<number>
 	reset: () => void
 	loadData: () => Promise<void>
 	formRef: Readonly<Ref<HTMLFormElement | null>>
 }
 
 // eslint-disable-next-line @typescript-eslint/max-params
-export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
+function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
 		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
-		addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
+		addTitleLabel?: string, editTitleLabel?: string, redirectRouteName?: string,
 		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
 	//
 	const route = useRoute()
@@ -31,16 +31,18 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | 
 	const loading = ref(false)
 	const model = ref({}) as Ref<Partial<T>>
 
-	const pageTitle = computed(() => {
-		if (loading.value) {
-			return null
-		}
-		return parsedId.value ? i18n.t(editTitleLabel) : i18n.t(addTitleLabel)
-	})
+	if (addTitleLabel && editTitleLabel) {
+		const pageTitle = computed(() => {
+			if (loading.value) {
+				return null
+			}
+			return parsedId.value ? i18n.t(editTitleLabel) : i18n.t(addTitleLabel)
+		})
 
-	useHead({
-		title: pageTitle
-	})
+		useHead({
+			title: pageTitle
+		})
+	}
 
 	async function loadData(): Promise<void> {
 		uiStore.enableGlobalOverlay()
@@ -69,23 +71,25 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | 
 	watch(route, loadData)
 	void loadData()
 
-	async function save(): Promise<void> {
+	async function save(): Promise<number> {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		const validation = await formRef.value?.validate()
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		if (!validation.valid) {
 			console.debug('Form validation error', validation)
-			return
+			return -1
 		}
 
 		uiStore.enableGlobalOverlay()
 		const id = await saveHandler(model.value as T)
 		if (id <= 0) {
 			uiStore.showSnackbar(i18n.t('core.exception.api.title'))
-		} else {
+		} else if (redirectRouteName) {
 			void router.push({ name: redirectRouteName, params: { id } })
 		}
 		uiStore.disableGlobalOverlay()
+
+		return id
 	}
 
 	function reset(): void {
@@ -103,4 +107,18 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | 
 		loadData,
 		formRef
 	}
+}
+
+// eslint-disable-next-line @typescript-eslint/max-params
+export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
+		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
+		addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
+		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
+	return useEdit(fetchData, service, additionalLoaders, addTitleLabel, editTitleLabel, redirectRouteName, saveHandler)
+}
+
+export function useLightEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
+		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
+		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
+	return useEdit(fetchData, service, additionalLoaders, undefined, undefined, undefined, saveHandler)
 }

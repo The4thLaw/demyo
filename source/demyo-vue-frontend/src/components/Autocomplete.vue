@@ -1,45 +1,105 @@
 <template>
-	<v-autocomplete
-		v-model="model"
-		v-model:search="search"
-		v-bind="$attrs"
-		:label="$t(labelKey, multiple ? 2 : 1)"
-		item-title="identifyingName"
-		item-value="id"
-		:multiple="multiple"
-		:chips="multiple"
-		:closable-chips="multiple"
-		:loading="loading ? 'primary' : false"
-		:no-data-text="$t('core.components.Autocomplete.nodata')"
-		@update:model-value="onUpdateSelection"
-	>
-		<template v-if="refreshable" #append>
-			<v-btn icon size="small" variant="flat" @click.stop="emit('refresh')">
-				<v-icon>mdi-refresh</v-icon>
-			</v-btn>
-		</template>
-	</v-autocomplete>
+	<div class="c-Autocomplete">
+		<v-autocomplete
+			v-model="model"
+			v-model:search="search"
+			v-bind="$attrs"
+			:label="$t(labelKey, multiple ? 2 : 1)"
+			item-title="identifyingName"
+			item-value="id"
+			:multiple="multiple"
+			:chips="multiple"
+			:closable-chips="multiple"
+			:loading="loading ? 'primary' : false"
+			:no-data-text="$t('core.components.Autocomplete.nodata')"
+			@update:model-value="onUpdateSelection"
+		>
+			<template v-if="refreshable || addComponent" #append>
+				<v-btn
+					v-if="addComponent"
+					icon size="small" variant="flat" @click.stop="showAddDialog = true"
+				>
+					<v-icon>mdi-plus</v-icon>
+				</v-btn>
+				<v-btn
+					v-if="refreshable"
+					icon size="small" variant="flat" @click.stop="emit('refresh')"
+				>
+					<v-icon>mdi-refresh</v-icon>
+				</v-btn>
+			</template>
+		</v-autocomplete>
+		<v-dialog v-if="addComponent" v-model="showAddDialog" max-width="45em">
+			<v-card>
+				<v-card-title>
+					{{ $t(addLabel) }}
+				</v-card-title>
+				<v-card-text>
+					<component
+						:is="addComponent" mode="minimal" :saving="saving"
+						@save="saved" @save-error="saving = false"
+					/>
+				</v-card-text>
+
+				<v-card-actions>
+					<v-spacer />
+
+					<v-btn
+						color="secondary" class="c-AppTask__confirm" variant="elevated"
+						@click="showAddDialog = false; saving = true"
+					>
+						{{ $t('quickTasks.confirm.ok.label') }}
+					</v-btn>
+
+					<v-btn color="primary" @click="showAddDialog = false">
+						{{ $t('quickTasks.confirm.cancel.label') }}
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+	</div>
 </template>
 
 <script setup lang="ts">
+import type { Component } from 'vue'
+
 const model = defineModel<unknown>()
 
 withDefaults(defineProps<{
 	labelKey: string
 	refreshable?: boolean
 	loading?: boolean
-	multiple?: boolean
+	multiple?: boolean,
+	addComponent?: Component,
+	addLabel?: string
 }>(), {
 	refreshable: false,
 	loading: false,
-	multiple: false
+	multiple: false,
+	addComponent: undefined,
+	addLabel: undefined
 })
 
 const search = ref('')
+const showAddDialog = ref(false)
+const saving = ref(false)
 
-const emit = defineEmits(['refresh'])
+const emit = defineEmits<{
+	refresh: [],
+	added: [id: number]
+}>()
 
 function onUpdateSelection(): void {
 	search.value = ''
+}
+
+function saved(id: number): void {
+	// TODO: sometimes the save event just doesn't work. Maybe try with the component directly, and with the keep-alive thing ? Or without vue Debug ? But keepalive would keep the state, which is not wanted
+	console.log('Received save', id)
+	console.log('Emitting refresh')
+	emit('refresh')
+	console.log('Emitting added', id)
+	emit('added', id)
+	saving.value = false
 }
 </script>
