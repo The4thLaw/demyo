@@ -59,6 +59,9 @@
 						v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required
 					/>
 				</v-col>
+				<Teleport defer :disabled="!teleportActions" :to="teleportActions">
+					<FormActions v-if="!loading" :show-reset="false" :show-back="false" @save="saveAndEmit" />
+				</Teleport>
 			</v-row>
 		</v-form>
 	</v-container>
@@ -71,13 +74,14 @@ import { useRefreshableImages } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
 import authorService from '@/services/author-service'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
 	mode: EditMode
-	saving: boolean
-}>()
+	teleportActions?: string
+}>(), {
+	teleportActions: undefined
+})
 const emit = defineEmits<{
 	save: [id: number]
-	'save-error': []
 }>()
 
 const { images, imagesLoading, loadImages } = useRefreshableImages()
@@ -102,21 +106,13 @@ if (props.mode === 'full') {
 }
 const { model: author, loading, save, reset } = editData
 
-watch(() => props.saving, async (newValue) => {
-	console.log('Saving switched to ', newValue)
-	if (newValue) {
-		console.log('Going to save')
-		const id = await save()
-		console.log('Saved to', id)
-		if (id > 0) {
-			console.log('AuthorEdit: emitting save', id)
-			emit('save', id)
-		} else {
-			console.log('AuthorEdit: Emitting save-error')
-			emit('save-error')
-		}
+async function saveAndEmit(): Promise<void> {
+	const id = await save()
+	if (id) {
+		// Only emit if the save was successful
+		emit('save', id)
 	}
-})
+}
 
 const rules = {
 	name: [

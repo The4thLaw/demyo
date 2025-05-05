@@ -84,25 +84,33 @@
 					<v-col v-if="!fieldConfig.has('ALBUM_ARTIST')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.artists" :items="authors" :loading="authorsLoading"
-							:label-key="`field.Album.artists.${labelType}`" multiple refreshable @refresh="loadAuthors"
+							:label-key="`field.Album.artists.${labelType}`" multiple
+							:add-component="AuthorEdit" add-label="title.add.author"
+							refreshable @refresh="loadAuthors" @added="(id: number) => album.artists.push(id)"
 						/>
 					</v-col>
 					<v-col v-if="!fieldConfig.has('ALBUM_COLORIST')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.colorists" :items="authors" :loading="authorsLoading"
-							label-key="field.Album.colorists" multiple refreshable @refresh="loadAuthors"
+							label-key="field.Album.colorists" multiple
+							:add-component="AuthorEdit" add-label="title.add.author"
+							refreshable @refresh="loadAuthors" @added="(id: number) => album.colorists.push(id)"
 						/>
 					</v-col>
 					<v-col v-if="!fieldConfig.has('ALBUM_INKER')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.inkers" :items="authors" :loading="authorsLoading"
-							label-key="field.Album.inkers" multiple refreshable @refresh="loadAuthors"
+							label-key="field.Album.inkers" multiple
+							:add-component="AuthorEdit" add-label="title.add.author"
+							refreshable @refresh="loadAuthors" @added="(id: number) => album.inkers.push(id)"
 						/>
 					</v-col>
 					<v-col v-if="!fieldConfig.has('ALBUM_TRANSLATOR')" cols="12" md="6">
 						<Autocomplete
 							v-model="album.translators" :items="authors" :loading="authorsLoading"
-							label-key="field.Album.translators" multiple refreshable @refresh="loadAuthors"
+							label-key="field.Album.translators" multiple
+							:add-component="AuthorEdit" add-label="title.add.author"
+							refreshable @refresh="loadAuthors" @added="(id: number) => album.translators.push(id)"
 						/>
 					</v-col>
 				</v-row>

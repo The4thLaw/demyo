@@ -36,21 +36,16 @@
 				</v-card-title>
 				<v-card-text>
 					<component
-						:is="addComponent" mode="minimal" :saving="saving"
-						@save="saved" @save-error="saving = false"
+						:is="addComponent" mode="minimal" teleport-actions=".c-Autocomplete__dialog-actions"
+						@save="saved"
 					/>
 				</v-card-text>
 
 				<v-card-actions>
 					<v-spacer />
-
-					<v-btn
-						color="secondary" class="c-AppTask__confirm" variant="elevated"
-						@click="showAddDialog = false; saving = true"
-					>
-						{{ $t('quickTasks.confirm.ok.label') }}
-					</v-btn>
-
+					<!-- Placeholder for the form actions -->
+					<div class="c-Autocomplete__dialog-actions" />
+					<!-- Our own cancel -->
 					<v-btn color="primary" @click="showAddDialog = false">
 						{{ $t('quickTasks.confirm.cancel.label') }}
 					</v-btn>
@@ -82,7 +77,6 @@ withDefaults(defineProps<{
 
 const search = ref('')
 const showAddDialog = ref(false)
-const saving = ref(false)
 
 const emit = defineEmits<{
 	refresh: [],
@@ -94,12 +88,9 @@ function onUpdateSelection(): void {
 }
 
 function saved(id: number): void {
-	// TODO: sometimes the save event just doesn't work. Maybe try with the component directly, and with the keep-alive thing ? Or without vue Debug ? But keepalive would keep the state, which is not wanted
-	console.log('Received save', id)
-	console.log('Emitting refresh')
+	console.debug(`Saved new Autocomplete entry with id ${id}, will refresh and add`)
 	emit('refresh')
-	console.log('Emitting added', id)
 	emit('added', id)
-	saving.value = false
+	showAddDialog.value = false
 }
 </script>

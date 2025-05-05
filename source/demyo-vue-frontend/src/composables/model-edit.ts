@@ -9,7 +9,7 @@ import { useRoute, useRouter } from 'vue-router'
 export interface EditData<T extends AbstractModel> {
 	model: Ref<Partial<T>>
 	loading: Ref<boolean>
-	save: () => Promise<number>
+	save: () => Promise<number | undefined>
 	reset: () => void
 	loadData: () => Promise<void>
 	formRef: Readonly<Ref<HTMLFormElement | null>>
@@ -71,13 +71,13 @@ function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) =>
 	watch(route, loadData)
 	void loadData()
 
-	async function save(): Promise<number> {
+	async function save(): Promise<number | undefined> {
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 		const validation = await formRef.value?.validate()
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 		if (!validation.valid) {
 			console.debug('Form validation error', validation)
-			return -1
+			return undefined
 		}
 
 		uiStore.enableGlobalOverlay()
