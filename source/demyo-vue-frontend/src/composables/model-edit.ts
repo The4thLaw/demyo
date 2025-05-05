@@ -6,7 +6,7 @@ import { useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 
-export interface EditData<T extends AbstractModel> {
+interface EditData<T extends AbstractModel> {
 	model: Ref<Partial<T>>
 	loading: Ref<boolean>
 	save: () => Promise<number | undefined>

@@ -53,5 +53,3 @@ interface DerivativeFilter extends AbstractModelFilter {
 	/** The internal ID of the {@link DerivativeSource}. */
 	source?: number
 }
-
-type EditMode = 'full' | 'minimal'

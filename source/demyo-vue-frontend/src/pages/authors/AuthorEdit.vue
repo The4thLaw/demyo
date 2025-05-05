@@ -6,7 +6,7 @@
 					<v-col cols="12" md="4">
 						<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
 					</v-col>
-					<v-col v-if="isFull" cols="12" md="4">
+					<v-col cols="12" md="4">
 						<v-text-field v-model="author.nickname" :label="$t('field.Author.nickname')" />
 					</v-col>
 					<v-col cols="12" md="4">
@@ -33,7 +33,7 @@
 				</v-row>
 			</SectionCard>
 
-			<SectionCard v-if="isFull" :subtitle="$t('fieldset.Author.biography')" :loading="loading">
+			<SectionCard :subtitle="$t('fieldset.Author.biography')" :loading="loading">
 				<v-row>
 					<v-col cols="12" md="6">
 						<span class="dem-fieldlabel">{{ $t('field.Author.biography') }}</span>
