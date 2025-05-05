@@ -77,7 +77,7 @@
 						<Autocomplete
 							v-model="album.writers" :items="authors" :loading="authorsLoading"
 							:label-key="`field.Album.writers.${labelType}`" multiple
-							:add-component="AuthorEdit" add-label="title.add.author"
+							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.writers.push(id)"
 						/>
 					</v-col>
@@ -85,7 +85,7 @@
 						<Autocomplete
 							v-model="album.artists" :items="authors" :loading="authorsLoading"
 							:label-key="`field.Album.artists.${labelType}`" multiple
-							:add-component="AuthorEdit" add-label="title.add.author"
+							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.artists.push(id)"
 						/>
 					</v-col>
@@ -93,7 +93,7 @@
 						<Autocomplete
 							v-model="album.colorists" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.colorists" multiple
-							:add-component="AuthorEdit" add-label="title.add.author"
+							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.colorists.push(id)"
 						/>
 					</v-col>
@@ -101,7 +101,7 @@
 						<Autocomplete
 							v-model="album.inkers" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.inkers" multiple
-							:add-component="AuthorEdit" add-label="title.add.author"
+							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.inkers.push(id)"
 						/>
 					</v-col>
@@ -109,7 +109,7 @@
 						<Autocomplete
 							v-model="album.translators" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.translators" multiple
-							:add-component="AuthorEdit" add-label="title.add.author"
+							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.translators.push(id)"
 						/>
 					</v-col>
@@ -246,7 +246,7 @@
 </template>
 
 <script setup lang="ts">
-import AuthorEdit from '@/components/authors/AuthorEdit.vue'
+import AuthorLightCreate from '@/components/authors/AuthorLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
