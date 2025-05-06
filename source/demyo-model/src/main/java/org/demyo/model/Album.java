@@ -54,6 +54,8 @@ import org.demyo.model.util.IdentifyingNameComparator;
 		@DefaultOrder.Order(property = "title") })
 @NamedEntityGraph(name = "Album.forIndex", attributeNodes =
 { @NamedAttributeNode("series") })
+@NamedEntityGraph(name = "Album.forWorks", attributeNodes =
+{ @NamedAttributeNode("series"), @NamedAttributeNode("bookType") })
 @NamedEntityGraph(name = "Album.forView", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
