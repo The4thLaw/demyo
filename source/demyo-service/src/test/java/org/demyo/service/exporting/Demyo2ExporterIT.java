@@ -46,8 +46,10 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		LOGGER.error(expContent);
 
 		assertThat(expContent)
+				// Book type assertions
+				.contains("<book_type id=\"1\" name=\"Bande dessinée\" description=\"Pour toutes les BDs\" label_type=\"GRAPHIC_NOVEL\"/>")
 				// Album assertions
-				.containsPattern(".*<album id=\"1313\".*printing=\"2015-09-01\".*>")
+				.containsPattern(".*<album id=\"1313\" .*printing=\"2015-09-01\" .*book_type_id=\"1\".*>")
 				// Tag assertions
 				.contains("<tag id=\"1\" name=\"science-fiction\" description=\"SF\"/>")
 				// Reader assertions

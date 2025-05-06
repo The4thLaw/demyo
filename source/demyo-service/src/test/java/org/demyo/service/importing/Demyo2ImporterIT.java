@@ -12,13 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.Album;
+import org.demyo.model.BookType;
 import org.demyo.model.Reader;
 import org.demyo.model.Tag;
 import org.demyo.model.beans.ReaderLists;
+import org.demyo.model.enums.TranslationLabelType;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IReaderService;
 import org.demyo.service.ITagService;
 import org.demyo.service.impl.AbstractServiceTest;
+import org.demyo.service.impl.IBookTypeService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,6 +37,8 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 	private ITagService tagService;
 	@Autowired
 	private IAlbumService albumService;
+	@Autowired
+	private IBookTypeService bookTypeService;
 	@Autowired
 	@Qualifier("demyo2Importer")
 	private IImporter importer;
@@ -63,6 +68,10 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(tags).hasSize(3);
 		Tag tag2 = tags.get(1);
 		assertThat(tag2.getDescription()).isEqualTo("rofl");
+
+		List<BookType> bookTypes = bookTypeService.findAll();
+		assertThat(bookTypes).hasSize(2);
+		assertThat(bookTypes.get(1).getLabelType()).isEqualTo(TranslationLabelType.NOVEL);
 
 		List<Reader> readers = readerService.findAll();
 		assertThat(readers).hasSize(1);
