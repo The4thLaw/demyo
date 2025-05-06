@@ -27,7 +27,6 @@ import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.dao.IAlbumRepo;
-import org.demyo.dao.IBookTypeRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
@@ -52,8 +51,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 
 	@Autowired
 	private IAlbumRepo repo;
-	@Autowired
-	private IBookTypeRepo bookTypeRepo;
 	@Autowired
 	private ISeriesRepo seriesRepo;
 	@Autowired
