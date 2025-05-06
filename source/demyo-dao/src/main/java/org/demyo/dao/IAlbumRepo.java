@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.querydsl.core.types.Predicate;
 
 import org.demyo.model.Album;
+import org.demyo.model.BookType;
 import org.demyo.model.Series;
 import org.demyo.model.projections.IAuthorAlbum;
 
@@ -20,7 +21,7 @@ import org.demyo.model.projections.IAuthorAlbum;
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	/**
 	 * Returns a model for the view page.
-	 * 
+	 *
 	 * @param id The identifier of the model.
 	 * @return The fetched model.
 	 */
@@ -35,7 +36,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Finds the first Album for a given Series.
-	 * 
+	 *
 	 * @param id The Series ID
 	 * @param sort The order to determine the "first"
 	 * @return The matching Album
@@ -45,7 +46,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.
-	 * 
+	 *
 	 * @param seriesId The Series ID. Can be <code>null</code> to find Albums without Series
 	 * @return The associated Albums
 	 */
@@ -53,7 +54,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series} but not in the wishlist.
-	 * 
+	 *
 	 * @param seriesId The Series ID.
 	 * @return The associated Albums
 	 */
@@ -70,18 +71,18 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	List<Album> quickSearchLike(String query);
 
 	/**
-	 * Finds a set of {@link Album}s by their ID. Also fetches the associated {@link Series}.
-	 * 
+	 * Finds a set of {@link Album}s by their ID. Also fetches the associated {@link Series} and {@link BookType}.
+	 *
 	 * @param albumIds The Album internal IDs
 	 * @return The matching Albums
 	 */
 	@Override
-	@EntityGraph("Album.forIndex")
+	@EntityGraph("Album.forWorks")
 	List<Album> findAllById(Iterable<Long> albumIds);
 
 	/**
 	 * Returns a {@link List} of entities. Will also fetch the related {@link Series}.
-	 * 
+	 *
 	 * @return The entities
 	 */
 	@Override
@@ -90,7 +91,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Returns a {@link List} of entities meeting the requested predicate. Will also fetch the related {@link Series}.
-	 * 
+	 *
 	 * @param p The predicate to filter the entities.
 	 * @return The entities
 	 */
@@ -100,7 +101,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Finds the albums to which an Author participated, in a structured manner.
-	 * 
+	 *
 	 * @param id The Author ID
 	 * @return The identifiers of all matching albums, split by author role
 	 */
@@ -123,7 +124,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Finds the IDs of the Albums belonging to a Series, ordered logically.
-	 * 
+	 *
 	 * @param seriesId The Series ID
 	 * @return The Album IDs, if any.
 	 */
@@ -133,7 +134,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Counts the number of Albums that feature the provided tag.
-	 * 
+	 *
 	 * @param tagId The Tag internal ID
 	 * @return The album count
 	 */
@@ -143,7 +144,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 
 	/**
 	 * Counts how many Albums use the given Binding.
-	 * 
+	 *
 	 * @param bindingId The internal ID of the Binding
 	 * @return the count
 	 */
