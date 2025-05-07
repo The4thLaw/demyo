@@ -40,6 +40,7 @@ public class Image extends AbstractModel {
 	/** The URL to access the image. */
 	@Column(name = "url")
 	@NotBlank
+	@JsonView(ModelView.Basic.class)
 	private String url;
 	/** The description of the image. */
 	@Column(name = "description")
