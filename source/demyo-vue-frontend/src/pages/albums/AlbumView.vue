@@ -128,12 +128,11 @@
 			</div>
 		</SectionCard>
 
-		<SectionCard :loading="loading" :subtitle="$t('page.Album.aboutEdition')">
-			<div
-				v-if="album.firstEditionDate || album.currentEditionDate || album.wishlist
-					|| album.acquisitionDate || album.isbn"
-				class="dem-fieldset"
-			>
+		<SectionCard
+			v-if="hasDateOrIsbn || hasPhysicalData || hasAnyPrice"
+			:loading="loading" :subtitle="$t('page.Album.aboutEdition')"
+		>
+			<div v-if="hasDateOrIsbn" class="dem-fieldset">
 				<v-row>
 					<v-col v-if="album.firstEditionDate" cols="12" md="4">
 						<FieldValue
@@ -180,7 +179,7 @@
 				</v-row>
 			</div>
 
-			<div v-if="album.binding.id || sizeSpec || album.pages" class="dem-fieldset">
+			<div v-if="hasPhysicalData" class="dem-fieldset">
 				<v-row>
 					<v-col cols="12" md="4">
 						<FieldValue v-if="album.binding.id" :label="$t('field.Album.binding')">
@@ -215,10 +214,7 @@
 				</v-row>
 			</div>
 
-			<div
-				v-if="album.purchasePrice || hasPrices"
-				class="dem-fieldset"
-			>
+			<div v-if="hasAnyPrice" class="dem-fieldset">
 				<v-row>
 					<v-col v-if="album.purchasePrice" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.purchasePrice')">
@@ -333,6 +329,7 @@ const hasAuthors = computed(() =>
 	|| album.value.translators?.length)
 
 const hasPrices = computed(() => album.value.prices?.length)
+const hasAnyPrice = computed(() => !!hasPrices.value || !!album.value.purchasePrice)
 const hasImages = computed(() => album.value.images?.length)
 
 const sizeSpec = computed(() => {
@@ -342,6 +339,11 @@ const sizeSpec = computed(() => {
 
 	return null
 })
+const hasPhysicalData = computed(() => !!album.value.binding?.id || !!sizeSpec.value || !!album.value.pages)
+
+const hasDateOrIsbn = computed(() =>
+	!!album.value.firstEditionDate || !!album.value.currentEditionDate
+	|| !!album.value.wishlist || !!album.value.acquisitionDate || !!album.value.isbn)
 
 const derivativeQuery = computed(() => {
 	const query: DerivativeQuery = {
