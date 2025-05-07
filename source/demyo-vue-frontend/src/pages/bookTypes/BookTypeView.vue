@@ -75,7 +75,7 @@ async function fetchData(id: number): Promise<BookType> {
 }
 
 const { model: bookType, loading, appTasksMenu, deleteModel }
-	= useSimpleView(fetchData, bookTypeService, 'quickTasks.delete.bookType.confirm.done', 'TypeManagement')
+	= useSimpleView(fetchData, bookTypeService, 'quickTasks.delete.bookType.confirm.done', 'TypeIndex')
 
 const fieldConfig = computed(() => new Set(bookType.value.structuredFieldConfig ?? []))
 </script>

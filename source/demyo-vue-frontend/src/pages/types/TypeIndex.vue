@@ -14,7 +14,7 @@
 			/>
 		</SectionCard>
 
-		<SectionCard :title="$t('title.index.bookType')" :loading="bookTypeManagement && bookTypesLoading">
+		<SectionCard :title="$t('title.index.bookType')" :loading="bookTypesLoading">
 			<template v-if="!bookTypeManagement">
 				<v-alert border="start" type="info" text class="my-4">
 					{{ $t('page.BookType.management.disabled') }}
@@ -77,7 +77,6 @@ void (async (): Promise<void> => {
 
 // Book types
 const bookTypeManagement = ref(false)
-
 const bookTypes = ref([] as BookType[])
 const bookTypesLoading = ref(true)
 async function loadBookTypes(): Promise<void> {
