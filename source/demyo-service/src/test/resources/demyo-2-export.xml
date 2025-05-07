@@ -16,23 +16,27 @@
     <tag id="2" name="humour" description="rofl"/>
     <tag id="3" name="science-fiction" fgcolour="#ffffff" bgcolour="#ff0000"/>
   </tags>
+  <book_types>
+    <book_type id="1" name="Bande dessinée" label_type="GRAPHIC_NOVEL"/>
+    <book_type id="2" name="Roman" label_type="NOVEL" field_config="ALBUM_INKER,ALBUM_COLORIST,ALBUM_ARTIST"/>
+  </book_types>
   <series-list>
     <series id="1" name="XIII" summary="XIII is a guy suffering from amnesia." completed="false" comment="Comment for XIII." website="http://www.treize.com/"/>
     <series id="2" name="Sillage" completed="false"/>
   </series-list>
   <albums>
-    <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false" printing="1985-12-01">
+    <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false" printing="1985-12-01" book_type_id="1">
       <album-tags>
         <album-tag ref="1"/>
         <album-tag ref="3"/>
       </album-tags>
     </album>
-    <album id="2" title="Bludzee" publisher_id="1" wishlist="false">
+    <album id="2" title="Bludzee" publisher_id="1" wishlist="false" book_type_id="1">
       <album-tags>
         <album-tag ref="2"/>
       </album-tags>
     </album>
-    <album id="3" title="Z_test" publisher_id="1" wishlist="false"/>
+    <album id="3" title="Z_test" publisher_id="1" wishlist="false" book_type_id="2"/>
   </albums>
   <album_prices>
     <album_price album_id="1" date="2016-01-10" price="10.0"/>

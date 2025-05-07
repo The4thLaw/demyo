@@ -16,7 +16,7 @@ import pinia from './stores'
 const app = createApp(App as Component)
 
 app.use(pinia)
-// Do this as soon as possible but after pinia is set up. It's asynchronous and will work during bootstrap
+// Do these as soon as possible but after pinia is set up. It's asynchronous and will work during bootstrap
 void readerService.init()
 
 // Global mixin to allow components to scroll to the top of the page

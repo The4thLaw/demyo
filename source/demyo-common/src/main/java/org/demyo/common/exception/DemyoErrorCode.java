@@ -83,7 +83,11 @@ public enum DemyoErrorCode {
 	/** Generic I/O operation error. */
 	IO_GENERIC_ERROR(20000),
 	/** There was an issue during a file compression. */
-	IO_COMPRESSION_ERROR(20001);
+	IO_COMPRESSION_ERROR(20001),
+	/** Book type management is already enabled and cannot be re-enabled. */
+	BOOK_TYPE_MGMT_ALREADY_ENABLED(21000),
+	/** Book type management is enabled, so it's needed on albums. */
+	BOOK_TYPE_MGMT_ENABLED_REQ_ON_ALBUM(21001);
 
 	private final int numericCode;
 

@@ -49,7 +49,7 @@ console.log(`Initialized i18n with '${selectedLocale}' as default language and '
  */
 async function loadLanguageFromServer(lang: string): Promise<void> {
 	if (loadedLanguages.includes(lang)) {
-		console.log(`Language ${lang} was already loaded, it won't be loaded again`)
+		console.debug(`Language ${lang} was already loaded, it won't be loaded again`)
 		return
 	}
 	const response = await axios.get(`${apiRoot}translations/${lang}`)

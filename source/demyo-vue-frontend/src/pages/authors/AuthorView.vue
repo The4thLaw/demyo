@@ -58,7 +58,7 @@
 		>
 			<AlbumTextList :albums="albums">
 				<template #default="slotProps">
-					({{ describeAuthor(slotProps.album.id) }})
+					({{ describeAuthor(slotProps.album) }})
 				</template>
 			</AlbumTextList>
 		</SectionCard>
@@ -115,13 +115,14 @@ const age = computed(() => {
 })
 
 const i18n = useI18n()
-function describeAuthor(albumId: number): string {
+function describeAuthor(album: Album): string {
+	const albumId = album.id
 	const qualifiers = []
 	if (works.value.asArtist.has(albumId)) {
-		qualifiers.push(i18n.t('page.Author.works.role.artist'))
+		qualifiers.push(i18n.t(`page.Author.works.role.artist.${album.bookType.labelType}`))
 	}
 	if (works.value.asWriter.has(albumId)) {
-		qualifiers.push(i18n.t('page.Author.works.role.writer'))
+		qualifiers.push(i18n.t(`page.Author.works.role.writer.${album.bookType.labelType}`))
 	}
 	if (works.value.asColorist.has(albumId)) {
 		qualifiers.push(i18n.t('page.Author.works.role.colorist'))

@@ -129,6 +129,12 @@ public abstract class AbstractModelService<M extends IModel> implements IModelSe
 	 */
 	protected abstract IModelRepo<M> getRepo();
 
+	@Transactional(readOnly = true)
+	@Override
+	public long count() {
+		return getRepo().count();
+	}
+
 	/** {@inheritDoc} By default, this method delegates to {@link #getByIdForEdition(long)}. */
 	@Transactional(readOnly = true)
 	@Override

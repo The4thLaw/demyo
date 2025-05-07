@@ -1,6 +1,7 @@
 import type AbstractModelService from '@/services/abstract-model-service'
 import authorService from '@/services/author-service'
 import bindingService from '@/services/binding-service'
+import bookTypeService from '@/services/book-type-service'
 import derivativeSourceService from '@/services/derivative-source-service'
 import derivativeTypeService from '@/services/derivative-type-service'
 import imageService from '@/services/image-service'
@@ -115,5 +116,19 @@ export function useRefreshableTags(): RefreshTag {
 		tags: refreshable.models,
 		tagsLoading: refreshable.loading,
 		loadTags: refreshable.load
+	}
+}
+
+interface RefreshBookType {
+	bookTypes: Ref<BookType[]>
+	bookTypesLoading: Ref<boolean>
+	loadBookTypes: () => Promise<void>
+}
+export function useRefreshableBookTypes(): RefreshBookType {
+	const refreshable = useRefreshable(bookTypeService)
+	return {
+		bookTypes: refreshable.models,
+		bookTypesLoading: refreshable.loading,
+		loadBookTypes: refreshable.load
 	}
 }

@@ -47,5 +47,5 @@ async function fetchData(id: number): Promise<Binding> {
 }
 
 const { model: binding, loading, appTasksMenu, deleteModel }
-	= useSimpleView(fetchData, bindingService, 'quickTasks.delete.binding.confirm.done', 'BindingIndex')
+	= useSimpleView(fetchData, bindingService, 'quickTasks.delete.binding.confirm.done', 'TypeIndex')
 </script>

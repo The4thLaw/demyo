@@ -2,20 +2,21 @@
 	<div
 		ref="key-target"
 		v-touch="{
-			left: nextPage,
-			right: previousPage
+			left: next,
+			right: prev
 		}"
 		class="c-TextIndex"
 		:class="{ 'c-TextIndex__compact': compact }"
-		@keyup.arrow-left.exact="previousPage()"
-		@keyup.arrow-right.exact="nextPage()"
+		@keyup.arrow-left.exact="prev()"
+		@keyup.arrow-right.exact="next()"
 	>
 		<div v-if="!splitByFirstLetter">
 			<v-card :flat="compact">
 				<v-card-text>
 					<v-list class="dem-columnized c-TextIndex__list" density="compact">
 						<v-list-item v-for="item in paginatedItems" :key="item.id">
-							<slot :item="item" />
+							<slot v-if="hasDefaultSlot" :item="item" />
+							<ModelLink v-else :model="item" :view="viewRoute" />
 						</v-list-item>
 					</v-list>
 				</v-card-text>
@@ -31,7 +32,8 @@
 					<v-card-text>
 						<v-list class="dem-columnized c-TextIndex__list" density="compact">
 							<v-list-item v-for="item in value" :key="item.id">
-								<slot :item="item" />
+								<slot v-if="hasDefaultSlot" :item="item" />
+								<ModelLink v-else :model="item" :view="viewRoute" />
 							</v-list-item>
 						</v-list>
 					</v-card-text>
@@ -49,23 +51,34 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends IModel">
 import { emitTypes, usePagination } from '@/composables/pagination'
 import { focusElement } from '@/helpers/dom'
 import { useTemplateRef } from 'vue'
 
 interface Props {
-	items?: IModel[]
+	items?: T[]
 	splitByFirstLetter?: boolean,
-	firstLetterExtractor?: (item: AbstractModel) => string,
-	compact?: boolean
+	firstLetterExtractor?: (item: T) => string,
+	viewRoute?: string,
+	compact?: boolean,
+	keyboardNav?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
 	items: () => [],
 	splitByFirstLetter: true,
 	firstLetterExtractor: () => '#',
-	compact: false
+	viewRoute: undefined,
+	compact: false,
+	keyboardNav: true
 })
+
+const slots = useSlots()
+const hasDefaultSlot = computed(() => !!slots.default)
+
+if (!props.viewRoute && !hasDefaultSlot.value) {
+	console.error('No viewRoute and no default slot, behaviour is undefined for items', props.items)
+}
 
 const keyTarget = useTemplateRef('key-target')
 onMounted(() => focusElement(keyTarget.value))
@@ -74,6 +87,18 @@ const emit = defineEmits(emitTypes)
 
 const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
 	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit, undefined)
+
+function prev(): void {
+	if (props.keyboardNav) {
+		previousPage()
+	}
+}
+
+function next(): void {
+	if (props.keyboardNav) {
+		nextPage()
+	}
+}
 </script>
 
 <style lang="scss">

@@ -109,10 +109,10 @@
 							<ModelLink :model="allPublishers" view="PublisherView" />
 						</FieldValue>
 
-						<FieldValue v-if="allWriters.length" :label="$t('field.Album.writers', allWriters.length)">
+						<FieldValue v-if="allWriters.length" :label="allWritersLabels">
 							<ModelLink :model="allWriters" view="AuthorView" />
 						</FieldValue>
-						<FieldValue v-if="allArtists.length" :label="$t('field.Album.artists', allArtists.length)">
+						<FieldValue v-if="allArtists.length" :label="allArtistsLabels">
 							<ModelLink :model="allArtists" view="AuthorView" />
 						</FieldValue>
 						<FieldValue
@@ -254,6 +254,8 @@ const albumCount = computed(() => series.value.albumIds ? series.value.albumIds.
 const ownedAlbumCount = computed(() => ownedIds.value.length)
 const allPublishers = computed(() =>
 	albumsLoaded.value ? mergeModels(albumsArray.value, 'publisher', 'identifyingName') : [])
+const allBookTypes = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, BookType>(albumsArray.value, 'bookType', ['identifyingName']) : [])
 const allWriters = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'writers', ['name', 'firstName']) : [])
 const allArtists = computed(() =>
@@ -265,6 +267,22 @@ const allInkers = computed(() =>
 const allTranslators = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
 const allTags = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'tags', 'identifyingName') : [])
+
+const allWritersLabels = computed(() => {
+	return allBookTypes.value
+		.map(bt => `field.Album.writers.${bt.labelType}`)
+		.map(l => i18n.t(l, allWriters.value.length))
+		.sort((l1, l2) => l1.localeCompare(l2, i18n.locale.value))
+		.join(', ')
+})
+
+const allArtistsLabels = computed(() => {
+	return allBookTypes.value
+		.map(bt => `field.Album.artists.${bt.labelType}`)
+		.map(l => i18n.t(l, allArtists.value.length))
+		.sort((l1, l2) => l1.localeCompare(l2, i18n.locale.value))
+		.join(', ')
+})
 
 const authorsAlive = computed(() => {
 	const relevantAuthors = [...allWriters.value, ...allArtists.value]

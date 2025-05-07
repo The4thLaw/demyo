@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-02-05 22:52:24.
+// Generated using typescript-generator version 3.2.1263 on 2025-05-01 09:38:45.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -29,6 +29,7 @@ interface Album extends AbstractPricedModel<AlbumPrice, Album> {
     readersFavourites: Reader[];
     priceList: AlbumPrice[];
     readersReadingList: Reader[];
+    bookType: BookType;
     series: Series;
     cycle: number;
     number: number;
@@ -59,8 +60,8 @@ interface Album extends AbstractPricedModel<AlbumPrice, Album> {
     inkers: Author[];
     translators: Author[];
     images: Image[];
-    aggregatedLocation: string;
     baseNameForImages: string;
+    aggregatedLocation: string;
     pricesRaw: AlbumPrice[];
 }
 
@@ -87,6 +88,13 @@ interface Reader extends AbstractNamedModel {
 interface AlbumPrice extends AbstractPrice<AlbumPrice, Album> {
     album: Album;
     model: Album;
+}
+
+interface BookType extends AbstractNamedModel {
+    labelType: TranslationLabelType;
+    description: string;
+    structuredFieldConfig: ModelField[];
+    fieldConfig: string;
 }
 
 interface Publisher extends AbstractLegalEntity {
@@ -218,3 +226,7 @@ interface IModel {
     id: number;
     identifyingName: string;
 }
+
+type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
+
+type ModelField = "ALBUM_ARTIST" | "ALBUM_COLORIST" | "ALBUM_INKER" | "ALBUM_TRANSLATOR";

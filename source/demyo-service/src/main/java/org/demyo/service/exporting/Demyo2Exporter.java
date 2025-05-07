@@ -82,6 +82,7 @@ public class Demyo2Exporter implements IExporter {
 			exportModel(xsw, "bindings", "binding", "BINDINGS");
 			exportModel(xsw, "authors", "author", "AUTHORS");
 			exportModel(xsw, "tags", "tag", "TAGS");
+			exportModel(xsw, "book_types", "book_type", "BOOK_TYPES");
 
 			// Series
 			exportModel(xsw, "series-list", "series", "SERIES",
@@ -160,6 +161,7 @@ public class Demyo2Exporter implements IExporter {
 		writeCount(xsw, "albums_prices");
 		writeCount(xsw, "authors");
 		writeCount(xsw, "bindings");
+		writeCount(xsw, "book_types");
 		writeCount(xsw, "borrowers");
 		writeCount(xsw, "collections");
 		writeCount(xsw, "derivatives");

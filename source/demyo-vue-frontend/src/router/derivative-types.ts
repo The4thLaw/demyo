@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import DerivativeTypeIndex from '@/pages/derivativeTypes/DerivativeTypeIndex.vue'
 import DerivativeTypeView from '@/pages/derivativeTypes/DerivativeTypeView.vue'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 export default [
-	{
-		path: '/derivativeTypes',
-		name: 'DerivativeTypeIndex',
-		component: DerivativeTypeIndex as Component
-	},
 	{
 		path: '/derivativeTypes/:id/view',
 		alias: '/derivativeTypes/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1

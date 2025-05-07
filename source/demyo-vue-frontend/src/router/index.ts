@@ -7,6 +7,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import albumRoutes from './albums'
 import authorRoutes from './authors'
 import bindingRoutes from './bindings'
+import bookTypeRoutes from './book-types'
 import collectionRoutes from './collections'
 import derivativeSourceRoutes from './derivative-sources'
 import derivativeTypeRoutes from './derivative-types'
@@ -17,6 +18,7 @@ import publisherRoutes from './publishers'
 import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
+import typeRoutes from './types'
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -27,6 +29,7 @@ const routes: RouteRecordRaw[] = [
 	...albumRoutes,
 	...authorRoutes,
 	...bindingRoutes,
+	...bookTypeRoutes,
 	...collectionRoutes,
 	...derivativeRoutes,
 	...derivativeSourceRoutes,
@@ -37,6 +40,7 @@ const routes: RouteRecordRaw[] = [
 	...readerRoutes,
 	...seriesRoutes,
 	...tagRoutes,
+	...typeRoutes,
 	{
 		path: '/about',
 		name: 'about',

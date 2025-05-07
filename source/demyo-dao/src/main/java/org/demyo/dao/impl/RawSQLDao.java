@@ -57,7 +57,7 @@ public class RawSQLDao implements IRawSQLDao {
 				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
 				"albums_writers", "albums_artists", "albums_images", "albums_prices", "albums", "bindings",
 				"series_relations", "series", "authors", "collections", "publishers", "images", "readers",
-				"configuration" }) {
+				"configuration", "book_types" }) {
 			executeUpdate("DELETE FROM " + table);
 		}
 	}
@@ -67,7 +67,7 @@ public class RawSQLDao implements IRawSQLDao {
 		LOGGER.debug("Fixing auto-increments");
 		for (String table : new String[] { "albums", "authors", "bindings", "borrowers", "collections", "configuration",
 				"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series", "sources",
-				"tags" }) {
+				"tags", "book_types" }) {
 			executeUpdate(
 					"ALTER TABLE " + table + " ALTER COLUMN ID RESTART WITH (SELECT MAX(id) + 1 FROM " + table + ")");
 		}
@@ -113,5 +113,13 @@ public class RawSQLDao implements IRawSQLDao {
 			throw new DemyoRuntimeException(DemyoErrorCode.SYS_MISSING_DB_SCHEMA_VERSION);
 		}
 		return version;
+	}
+
+	@Override
+	public void reassignBookTypes(long from, long to) {
+		Query query = entityManager.createNativeQuery("UPDATE albums SET book_type_id = :to where book_type_id = :to");
+		query.setParameter("from", from);
+		query.setParameter("to", to);
+		query.executeUpdate();
 	}
 }

@@ -31,6 +31,10 @@ class AbstractModelService<M extends IModel> {
 		this.config = config ?? {}
 	}
 
+	async count(): Promise<number> {
+		return axiosGet(`${this.basePath}count`)
+	}
+
 	async findForIndex(): Promise<M[]> {
 		return axiosGet(this.basePath, [])
 	}

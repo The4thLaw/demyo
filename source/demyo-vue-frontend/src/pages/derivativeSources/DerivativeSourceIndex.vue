@@ -1,14 +1,9 @@
 <template>
 	<div>
 		<TextIndex
-			:items="modelList" :first-letter-extractor="(item) => item.identifyingName[0]" @page-change="scrollToTop"
-		>
-			<template #default="slotProps">
-				<router-link :to="`/derivativeSources/${slotProps.item.id}/view`">
-					{{ slotProps.item.identifyingName }}
-				</router-link>
-			</template>
-		</TextIndex>
+			view-route="DerivativeSourceView" :items="modelList"
+			:first-letter-extractor="(item) => item.identifyingName[0]" @page-change="scrollToTop"
+		/>
 		<Fab to="/derivativeSources/new" icon="mdi-plus" />
 	</div>
 </template>
