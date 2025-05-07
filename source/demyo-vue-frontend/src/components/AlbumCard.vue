@@ -60,13 +60,15 @@
 				</template>
 				<FieldValue
 					v-if="album.writers && album.writers.length"
-					:label="$t('field.Album.writers', album.writers ? album.writers.length : 0)"
+					:label="$t(`field.Album.writers.${album.bookType.labelType}`,
+						album.writers ? album.writers.length : 0)"
 				>
 					<ModelLink :model="album.writers" view="AuthorView" />
 				</FieldValue>
 				<FieldValue
 					v-if="album.artists && album.artists.length"
-					:label="$t('field.Album.artists', album.artists ? album.artists.length : 0)"
+					:label="$t(`field.Album.artists.${album.bookType.labelType}`,
+						album.artists ? album.artists.length : 0)"
 				>
 					<ModelLink :model="album.artists" view="AuthorView" />
 				</FieldValue>
