@@ -18,12 +18,10 @@
 	"menu.authors.add": "Ajouter un auteur",
 	"menu.authors.browse": "Liste des auteurs",
 	"menu.bindings.add": "Ajouter une reliure",
-	"menu.bindings.browse": "Liste des reliures",
 	"menu.collections.add": "Ajouter une collection",
 	"menu.derivative_sources.add": "Ajouter un publicateur de dérivés",
 	"menu.derivative_sources.browse": "Liste des publicateurs de dérivés",
 	"menu.derivative_types.add": "Ajouter un type de dérivé",
-	"menu.derivative_types.browse": "Liste des types de dérivés",
 	"menu.derivatives.add": "Ajouter un dérivé",
 	"menu.derivatives.browse": "Liste des dérivés",
 	"menu.derivatives.browse.stickers": "Impression d'étiquettes",
@@ -52,7 +50,8 @@
 	"menu.series.browse": "Liste des séries",
 	"menu.tags.add": "Ajouter un tag",
 	"menu.tags.browse": "Liste des tags",
-	"menu.types.manage": "Gestion des types",
+	"menu.types.browse": "Liste des types",
+	"menu.book_types.add": "Ajouter un type de livre",
 
 	"tinymce.language": "fr_FR"
 }

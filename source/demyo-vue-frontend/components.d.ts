@@ -22,7 +22,6 @@ declare module 'vue' {
     AuthorView: typeof import('./src/pages/authors/AuthorView.vue')['default']
     Autocomplete: typeof import('./src/components/Autocomplete.vue')['default']
     BindingEdit: typeof import('./src/pages/bindings/BindingEdit.vue')['default']
-    BindingIndex: typeof import('./src/pages/bindings/BindingIndex.vue')['default']
     BindingView: typeof import('./src/pages/bindings/BindingView.vue')['default']
     BookTypeEdit: typeof import('./src/pages/bookTypes/BookTypeEdit.vue')['default']
     BookTypeView: typeof import('./src/pages/bookTypes/BookTypeView.vue')['default']
@@ -37,7 +36,6 @@ declare module 'vue' {
     DerivativeSourceView: typeof import('./src/pages/derivativeSources/DerivativeSourceView.vue')['default']
     DerivativeStickers: typeof import('./src/pages/derivatives/DerivativeStickers.vue')['default']
     DerivativeTypeEdit: typeof import('./src/pages/derivativeTypes/DerivativeTypeEdit.vue')['default']
-    DerivativeTypeIndex: typeof import('./src/pages/derivativeTypes/DerivativeTypeIndex.vue')['default']
     DerivativeTypeView: typeof import('./src/pages/derivativeTypes/DerivativeTypeView.vue')['default']
     DerivativeView: typeof import('./src/pages/derivatives/DerivativeView.vue')['default']
     DnDImage: typeof import('./src/components/DnDImage.vue')['default']
@@ -84,6 +82,6 @@ declare module 'vue' {
     TagLink: typeof import('./src/components/TagLink.vue')['default']
     TagView: typeof import('./src/pages/tags/TagView.vue')['default']
     TextIndex: typeof import('./src/components/TextIndex.vue')['default']
-    TypeManagement: typeof import('./src/pages/types/TypeManagement.vue')['default']
+    TypeIndex: typeof import('./src/pages/types/TypeIndex.vue')['default']
   }
 }

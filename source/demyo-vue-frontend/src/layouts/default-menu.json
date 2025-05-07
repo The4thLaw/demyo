@@ -38,17 +38,7 @@
 				"url": "/derivativeSources"
 			},
 			{
-				"title": "menu.derivative_types.browse",
-				"icon": "mdi-brush",
-				"url": "/derivativeTypes"
-			},
-			{
-				"title": "menu.bindings.browse",
-				"icon": "mdi-notebook",
-				"url": "/bindings"
-			},
-			{
-				"title": "menu.types.manage",
+				"title": "menu.types.browse",
 				"icon": "mdi-shape",
 				"url": "/types"
 			},
@@ -117,6 +107,11 @@
 				"title": "menu.bindings.add",
 				"icon": "mdi-notebook dem-overlay-add",
 				"url": "/bindings/new"
+			},
+			{
+				"title": "menu.book_types.add",
+				"icon": "mdi-bookshelf dem-overlay-add",
+				"url": "/bookTypes/new"
 			}
 		]
 	},
