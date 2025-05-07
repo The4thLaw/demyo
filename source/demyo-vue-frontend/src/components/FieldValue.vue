@@ -27,6 +27,10 @@ defineProps<{
 	ul, ol {
 		margin-left: 2em;
 	}
+
+	a {
+		color: rgb(var(--v-theme-secondary));
+	}
 }
 
 // Don't set margins when in a flex grid: the grid has its own margins

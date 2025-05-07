@@ -179,7 +179,13 @@ void (async (): Promise<void> => {
 </script>
 
 <style lang="scss">
-.v-About .v-data-table {
-	margin-bottom: 2em;
+.v-About {
+	a {
+		color: rgb(var(--v-theme-secondary));
+	}
+
+	.v-table {
+		margin-bottom: 2em;
+	}
 }
 </style>
