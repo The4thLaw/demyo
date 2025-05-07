@@ -199,7 +199,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		}
 
 		// Check if a book type was provided
-		if (newAlbum.getBookType() == null) {
+		if (newAlbum.getBookType() == null || newAlbum.getBookType().getId() == null) {
 			if (bookTypeService.isManagementEnabled()) {
 				throw new DemyoRuntimeException(DemyoErrorCode.BOOK_TYPE_MGMT_ENABLED_REQ_ON_ALBUM);
 			}
