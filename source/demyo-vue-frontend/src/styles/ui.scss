@@ -21,17 +21,19 @@ html[lang],
 
 #demyo {
 	// Style the links
-	a {
+	a:not(.v-btn):not(.v-list-item) {
 		text-decoration: none;
 		text-decoration-skip-ink: all;
 
-		&:not(.v-btn):hover {
+		&:hover {
 			color: rgb(var(--v-theme-secondary));
-		}
-
-		&:not(.v-btn, .v-list-item):hover {
 			text-decoration: underline;
 		}
+	}
+
+	// Style the paragraphs. Used to be part of Vuetify but isn't anymore
+	p {
+		margin-bottom: 1em;
 	}
 
 	// But don't alter the menus
