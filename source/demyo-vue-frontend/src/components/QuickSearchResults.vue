@@ -29,7 +29,10 @@
 			</template>
 		</template>
 		<template v-else-if="hasLoadedResults">
-			<v-alert border="start" type="info" text class="my-4">
+			<v-alert
+				border="start" type="info" text
+				class="my-4" variant="outlined"
+			>
 				{{ $t('quicksearch.noResults') }}
 			</v-alert>
 		</template>

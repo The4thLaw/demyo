@@ -16,7 +16,10 @@
 
 		<SectionCard :title="$t('title.index.bookType')" :loading="bookTypesLoading">
 			<template v-if="!bookTypeManagement">
-				<v-alert border="start" type="info" text class="my-4">
+				<v-alert
+					border="start" type="info" text
+					class="my-4" variant="outlined"
+				>
 					{{ $t('page.BookType.management.disabled') }}
 				</v-alert>
 				<v-btn color="secondary" @click="enableBookTypeManagement">
@@ -40,15 +43,15 @@
 
 			<v-btn key="1" to="/bindings/new" icon>
 				<v-icon>mdi-notebook</v-icon>
-				<v-tooltip key="1" :text="$t('menu.bindings.add')" activator="parent" />
+				<v-tooltip :text="$t('menu.bindings.add')" activator="parent" />
 			</v-btn>
-			<v-btn key="1" to="/derivativeTypes/new" icon>
+			<v-btn key="2" to="/derivativeTypes/new" icon>
 				<v-icon>mdi-brush</v-icon>
-				<v-tooltip key="2" :text="$t('menu.derivative_types.add')" activator="parent" />
+				<v-tooltip :text="$t('menu.derivative_types.add')" activator="parent" />
 			</v-btn>
-			<v-btn key="1" to="/bookTypes/new" icon>
+			<v-btn key="3" to="/bookTypes/new" icon>
 				<v-icon>mdi-bookshelf</v-icon>
-				<v-tooltip key="3" :text="$t('menu.book_types.add')" activator="parent" />
+				<v-tooltip :text="$t('menu.book_types.add')" activator="parent" />
 			</v-btn>
 		</v-speed-dial>
 	</v-container>
