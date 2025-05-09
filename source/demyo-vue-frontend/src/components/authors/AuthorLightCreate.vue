@@ -8,6 +8,7 @@
 				<v-col cols="12">
 					<v-text-field
 						v-model="author.name" :label="$t('field.Author.name')" :rules="rules.name" required
+						@keydown.enter.stop.prevent="saveAndEmit"
 					/>
 				</v-col>
 				<Teleport defer :disabled="!teleportActions" :to="teleportActions">
@@ -30,15 +31,7 @@ const emit = defineEmits<{
 	save: [id: number]
 }>()
 
-const { model: author, loading, save } = useLightEdit(async () => Promise.resolve({}), authorService)
-
-async function saveAndEmit(): Promise<void> {
-	const id = await save()
-	if (id) {
-		// Only emit if the save was successful
-		emit('save', id)
-	}
-}
+const { model: author, loading, saveAndEmit } = useLightEdit(async () => Promise.resolve({}), authorService, emit)
 
 const rules = {
 	name: [

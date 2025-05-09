@@ -81,6 +81,7 @@ declare module 'vue' {
     SeriesView: typeof import('./src/pages/series/SeriesView.vue')['default']
     TagEdit: typeof import('./src/pages/tags/TagEdit.vue')['default']
     TagIndex: typeof import('./src/pages/tags/TagIndex.vue')['default']
+    TagLightCreate: typeof import('./src/components/tags/TagLightCreate.vue')['default']
     TagLink: typeof import('./src/components/TagLink.vue')['default']
     TagView: typeof import('./src/pages/tags/TagView.vue')['default']
     TextIndex: typeof import('./src/components/TextIndex.vue')['default']

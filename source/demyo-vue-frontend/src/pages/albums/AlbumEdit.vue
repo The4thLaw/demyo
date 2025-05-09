@@ -46,7 +46,9 @@
 						<Autocomplete
 							v-model="album.tags" :items="tags" :loading="tagsLoading"
 							multiple clearable
+							:add-component="TagLightCreate" add-label="title.add.tag"
 							label-key="field.Album.tags" refreshable @refresh="loadTags"
+							@added="(id: number) => album.tags.push(id)"
 						/>
 					</v-col>
 				</v-row>
@@ -247,6 +249,7 @@
 
 <script setup lang="ts">
 import AuthorLightCreate from '@/components/authors/AuthorLightCreate.vue'
+import TagLightCreate from '@/components/tags/TagLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
@@ -301,6 +304,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 		fetched = {
 			bookType: {} as BookType,
 			series: {} as Series,
+			tags: [],
 			writers: [],
 			artists: [],
 			colorists: [],

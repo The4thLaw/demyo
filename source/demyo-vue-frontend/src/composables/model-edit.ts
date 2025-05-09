@@ -15,6 +15,10 @@ interface EditData<T extends AbstractModel> {
 	formRef: Readonly<Ref<HTMLFormElement | null>>
 }
 
+interface LightEditData<T extends AbstractModel> extends EditData<T> {
+	saveAndEmit: () => Promise<void>
+}
+
 // eslint-disable-next-line @typescript-eslint/max-params
 function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
 		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
@@ -118,7 +122,21 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | 
 }
 
 export function useLightEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
-		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[] = [],
-		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
-	return useEdit(fetchData, service, additionalLoaders, undefined, undefined, undefined, saveHandler)
+		service: AbstractModelService<T>, emit: (evt: 'save', id: number) => void,
+		additionalLoaders: (() => Promise<unknown>)[] = [],
+		saveHandler = async (m: T): Promise<number> => service.save(m)): LightEditData<T> {
+	const editData = useEdit(fetchData, service, additionalLoaders, undefined, undefined, undefined, saveHandler)
+
+	const saveAndEmit = async (): Promise<void> => {
+		const id = await editData.save()
+		if (id) {
+			// Only emit if the save was successful
+			emit('save', id)
+		}
+	}
+
+	return {
+		...editData,
+		saveAndEmit
+	}
 }
