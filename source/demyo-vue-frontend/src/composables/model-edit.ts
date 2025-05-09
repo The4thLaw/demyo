@@ -118,7 +118,7 @@ export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | 
 }
 
 export function useLightEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
-		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
+		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[] = [],
 		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
 	return useEdit(fetchData, service, additionalLoaders, undefined, undefined, undefined, saveHandler)
 }

@@ -30,11 +30,7 @@ const emit = defineEmits<{
 	save: [id: number]
 }>()
 
-async function fetchData(): Promise<Partial<Author>> {
-	return Promise.resolve({})
-}
-
-const { model: author, loading, save } = useLightEdit(fetchData, authorService, [])
+const { model: author, loading, save } = useLightEdit(async () => Promise.resolve({}), authorService)
 
 async function saveAndEmit(): Promise<void> {
 	const id = await save()

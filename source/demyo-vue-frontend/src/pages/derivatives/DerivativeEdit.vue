@@ -27,7 +27,9 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="derivative.source.id" :items="sources" :loading="sourcesLoading"
+							:add-component="DerivativeSourceLightCreate" add-label="title.add.derivativeSource"
 							label-key="field.Derivative.source" refreshable @refresh="loadSources"
+							@added="(id: number) => derivative.source.id = id"
 						/>
 					</v-col>
 				</v-row>
@@ -131,6 +133,7 @@
 </template>
 
 <script setup lang="ts">
+import DerivativeSourceLightCreate from '@/components/derivativeSources/DerivativeSourceLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableDerivativeSources, useRefreshableDerivativeTypes,

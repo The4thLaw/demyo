@@ -34,6 +34,7 @@ declare module 'vue' {
     DerivativeIndex: typeof import('./src/pages/derivatives/DerivativeIndex.vue')['default']
     DerivativeSourceEdit: typeof import('./src/pages/derivativeSources/DerivativeSourceEdit.vue')['default']
     DerivativeSourceIndex: typeof import('./src/pages/derivativeSources/DerivativeSourceIndex.vue')['default']
+    DerivativeSourceLightCreate: typeof import('./src/components/derivativeSources/DerivativeSourceLightCreate.vue')['default']
     DerivativeSourceView: typeof import('./src/pages/derivativeSources/DerivativeSourceView.vue')['default']
     DerivativeStickers: typeof import('./src/pages/derivatives/DerivativeStickers.vue')['default']
     DerivativeTypeEdit: typeof import('./src/pages/derivativeTypes/DerivativeTypeEdit.vue')['default']
