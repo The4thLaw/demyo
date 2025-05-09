@@ -235,6 +235,6 @@ const rules = {
 	],
 	height: [number(), strictlyPositive()],
 	width: [number(), strictlyPositive()],
-	depth: [number(), strictlyPositive()],
+	depth: [number(), strictlyPositive()]
 }
 </script>
