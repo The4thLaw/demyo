@@ -58,6 +58,10 @@ const vuetify = createVuetify({
 		VTextField: {
 			color: 'primary',
 			variant: 'underlined'
+		},
+		VNumberInput: {
+			color: 'primary',
+			variant: 'underlined',
 		}
 	}
 })
