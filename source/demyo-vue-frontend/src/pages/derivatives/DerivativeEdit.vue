@@ -56,18 +56,21 @@
 						<v-text-field
 							v-model="derivative.width" :label="$t('field.Derivative.width')"
 							type="number" inputmode="decimal" step="any"
+							:rules="rules.width"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="derivative.height" :label="$t('field.Derivative.height')"
 							type="number" inputmode="decimal" step="any"
+							:rules="rules.height"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="derivative.depth" :label="$t('field.Derivative.depth')"
 							type="number" inputmode="decimal" step="any"
+							:rules="rules.depth"
 						/>
 					</v-col>
 				</v-row>
@@ -140,7 +143,7 @@ import {
 	useRefreshableImages, useRefreshableSeries
 } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
-import { integer, mandatory } from '@/helpers/rules'
+import { integer, mandatory, number, strictlyPositive } from '@/helpers/rules'
 import derivativeService from '@/services/derivative-service'
 import seriesService from '@/services/series-service'
 import { useI18n } from 'vue-i18n'
@@ -229,6 +232,9 @@ const rules = {
 	],
 	albumOrSeries: [
 		oneNotNull
-	]
+	],
+	height: [number(), strictlyPositive()],
+	width: [number(), strictlyPositive()],
+	depth: [number(), strictlyPositive()],
 }
 </script>

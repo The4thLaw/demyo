@@ -29,13 +29,31 @@ export function isbn(): ValidationFunction {
 export function integer(): ValidationFunction {
 	// Note that this rule only works partially because browsers will return an empty value for
 	// number fields. But that's the best we can do while keeping up/down arrows.
-	return regexMatch(/^\d*$/, 'validation.integer')
+	return regexMatch(/^-?\d*$/, 'validation.integer')
 }
 
 export function number(): ValidationFunction {
 	// Note that this rule only works partially because browsers will return an empty value for
 	// number fields. But that's the best we can do while keeping up/down arrows.
-	return regexMatch(/^(\d*|\d+\.\d+)$/, 'validation.number')
+	return regexMatch(/^-?(\d*|\d+\.\d+)$/, 'validation.number')
+}
+
+export function strictlyPositive(): ValidationFunction {
+	return (v: any) => {
+		if (v === null || v === undefined) {
+			return true
+		}
+		if (typeof v !== 'string') {
+			// Meant to be combined with some number validation
+			return true
+		}
+		const asNumber = parseFloat(v)
+		if (isNaN(asNumber)) {
+			return true
+		}
+
+		return asNumber > 0 || $t('validation.strictlyPositive')
+	}
 }
 
 export function phone(): ValidationFunction {

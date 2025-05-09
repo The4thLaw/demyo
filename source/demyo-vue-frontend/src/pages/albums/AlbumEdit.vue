@@ -172,19 +172,19 @@
 					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="album.width" :label="$t('field.Album.width')"
-							type="number" inputmode="decimal" step="any"
+							type="number" inputmode="decimal" step="any" :rules="rules.width"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="album.height" :label="$t('field.Album.height')"
-							type="number" inputmode="decimal" step="any"
+							type="number" inputmode="decimal" step="any" :rules="rules.height"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
 							v-model="album.pages" :label="$t('field.Album.pages')"
-							type="number" inputmode="decimal"
+							type="number" inputmode="decimal" :rules="rules.pages"
 						/>
 					</v-col>
 				</v-row>
@@ -256,7 +256,7 @@ import {
 	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags
 } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
-import { integer, isbn, mandatory, number } from '@/helpers/rules'
+import { integer, isbn, mandatory, number, strictlyPositive } from '@/helpers/rules'
 import albumService from '@/services/album-service'
 import bookTypeService from '@/services/book-type-service'
 import publisherService from '@/services/publisher-service'
@@ -356,6 +356,9 @@ const rules = {
 	number: [number()],
 	title: [mandatory()],
 	publisher: [mandatory()],
-	isbn: [isbn()]
+	isbn: [isbn()],
+	width: [number(), strictlyPositive()],
+	height: [number(), strictlyPositive()],
+	pages: [integer(), strictlyPositive()]
 }
 </script>
