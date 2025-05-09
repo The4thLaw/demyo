@@ -2,7 +2,7 @@
 	font-size: 18px;
 	font-weight: 600;
 	display: block;
-	color: currentColor;
+	color: currentcolor;
 	text-decoration: none;
 	cursor: pointer;
 	padding: 16px;
@@ -10,7 +10,7 @@
 	&:hover,
 	&:focus {
 		// Important is needed because with have the #demyo ID specificity at the top level
-		color: currentColor !important;
+		color: currentcolor !important;
 		background: rgb(var(--v-theme-on-background), var(--v-hover-opacity));
 		text-decoration: none !important;
 	}

@@ -21,7 +21,7 @@ html[lang],
 
 #demyo {
 	// Style the links
-	a:not(.v-btn):not(.v-list-item) {
+	a:not(.v-btn, .v-list-item) {
 		text-decoration: none;
 		text-decoration-skip-ink: all;
 
@@ -52,8 +52,8 @@ html[lang],
 	}
 
 	// Fix for issue #123. Unfortunately I couldn't find a way to only target WebKit/Safari, it only styled filled in inputs or only the "/"
-	input[type=date]:not([value]),
-	input[type=date][value=''] {
+	input[type='date']:not([value]),
+	input[type='date'][value=''] {
 		color: rgb(var(--v-theme-on-background), var(--v-disabled-opacity));
 	}
 }

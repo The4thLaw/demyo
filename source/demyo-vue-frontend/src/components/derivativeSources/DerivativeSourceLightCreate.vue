@@ -30,7 +30,7 @@ const emit = defineEmits<{
 
 const { model: source, loading, save } = useLightEdit(async () => Promise.resolve({}), sourceService)
 
-async function saveAndEmit(e: Event|undefined): Promise<void> {
+async function saveAndEmit(): Promise<void> {
 	const id = await save()
 	if (id) {
 		// Only emit if the save was successful
