@@ -44,14 +44,10 @@ html[lang],
 
 	.v-input--readonly:not(.v-input--disabled) input,
 	.v-input--checkbox.v-input--readonly:not(.v-input--disabled) label {
-		// Must rely on rgba to use Vuetify variables
-		/* stylelint-disable-next-line color-function-notation */
 		color: rgb(var(--v-theme-on-background), var(--v-disabled-opacity));
 	}
 
 	.v-card--variant-outlined {
-		// Must rely on rgba to use Vuetify variables
-		/* stylelint-disable-next-line color-function-notation */
 		border-color: rgb(var(--v-border-color), var(--v-border-opacity));
 	}
 
