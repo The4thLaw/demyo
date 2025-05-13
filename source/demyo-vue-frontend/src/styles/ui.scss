@@ -47,7 +47,13 @@ html[lang],
 		color: rgb(var(--v-theme-on-background), var(--v-disabled-opacity));
 	}
 
-	.v-card--variant-outlined {
+	.v-skeleton-loader--variant-outlined {
+		// Note that Vuetify doesn't even officially support this variant, we add it manually
+		border-width: 1px;
+		border-style: solid;
+	}
+
+	.v-card--variant-outlined, .v-skeleton-loader--variant-outlined {
 		border-color: rgb(var(--v-border-color), var(--v-border-opacity));
 	}
 

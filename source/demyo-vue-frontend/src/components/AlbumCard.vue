@@ -1,14 +1,9 @@
 <template>
 	<div>
-		<v-card v-if="loading" variant="outlined" class="c-AlbumCard--loading">
-			<v-card-title />
-			<v-card-text>
-				<div class="c-AlbumCard__contentFaker" />
-				<div class="c-AlbumCard__contentFaker" />
-				<div class="c-AlbumCard__contentFaker" />
-				<div class="c-AlbumCard__contentFaker" />
-			</v-card-text>
-		</v-card>
+		<v-skeleton-loader
+			v-if="loading" type="card,paragraph,actions"
+			class="v-skeleton-loader--variant-outlined"
+		/>
 		<v-card v-else variant="outlined" class="c-AlbumCard">
 			<router-link :to="`/albums/${album.id}/view`" class="c-AlbumCard__albumLink">
 				<v-img
@@ -196,53 +191,6 @@ async function markAsRead(): Promise<void> {
 
 	.v-responsive__content .row {
 		margin: 0;
-	}
-}
-
-.c-AlbumCard--loading {
-	.v-card-title {
-		min-height: 2.5em;
-	}
-
-	.v-card-title,
-	.c-AlbumCard__contentFaker {
-		background-color: #bbb;
-		animation: 1.5s ease-in-out 0s infinite alternate pulsate;
-
-		@media (prefers-reduced-motion: reduce) {
-			animation: none;
-		}
-	}
-
-	.c-AlbumCard__contentFaker:nth-child(1) {
-		max-width: 90%;
-	}
-
-	.c-AlbumCard__contentFaker:nth-child(2) {
-		max-width: 70%;
-	}
-
-	.c-AlbumCard__contentFaker:nth-child(3) {
-		max-width: 80%;
-	}
-
-	.c-AlbumCard__contentFaker:nth-child(4) {
-		max-width: 95%;
-	}
-}
-
-@keyframes pulsate {
-	/*
-	Animating opacity is much, much more efficient than animating the background color,
-	which requires repaints. See
-	https://developer.mozilla.org/en-US/docs/Tools/Performance/Scenarios/Animating_CSS_properties#CSS_property_cost
-	*/
-	from {
-		opacity: 1;
-	}
-
-	to {
-		opacity: 0.5;
 	}
 }
 </style>
