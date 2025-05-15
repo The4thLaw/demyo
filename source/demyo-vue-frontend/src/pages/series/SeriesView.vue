@@ -128,6 +128,12 @@
 						>
 							<ModelLink :model="allTranslators" view="AuthorView" />
 						</FieldValue>
+						<FieldValue
+							v-if="allCoverArtists.length"
+							:label="$t('field.Album.coverArtists', allCoverArtists.length)"
+						>
+							<ModelLink :model="allCoverArtists" view="AuthorView" />
+						</FieldValue>
 
 						<FieldValue v-if="allTags.length" :label="$t('field.Album.tags', allTags.length)">
 							<TagLink :model="allTags" />
@@ -266,6 +272,8 @@ const allInkers = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'inkers', ['name', 'firstName']) : [])
 const allTranslators = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
+const allCoverArtists = computed(() =>
+	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'coverArtists', ['name', 'firstName']) : [])
 const allTags = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'tags', 'identifyingName') : [])
 
 const allWritersLabels = computed(() => {

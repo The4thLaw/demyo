@@ -45,6 +45,11 @@
 							:label="$t('field.Album.translators')"
 							value="ALBUM_TRANSLATOR"
 						/>
+						<v-checkbox
+							v-model="bookType.structuredFieldConfig"
+							:label="$t('field.Album.coverArtists')"
+							value="ALBUM_COVER_ARTIST"
+						/>
 					</v-col>
 				</v-row>
 			</SectionCard>

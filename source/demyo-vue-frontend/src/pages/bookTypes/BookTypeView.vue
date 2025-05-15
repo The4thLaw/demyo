@@ -40,6 +40,9 @@
 					<li v-if="fieldConfig.has('ALBUM_TRANSLATOR')">
 						{{ $t('field.Album.translators') }}
 					</li>
+					<li v-if="fieldConfig.has('ALBUM_COVER_ARTIST')">
+						{{ $t('field.Album.coverArtists') }}
+					</li>
 				</ul>
 			</FieldValue>
 

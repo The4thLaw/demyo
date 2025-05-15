@@ -1,14 +1,14 @@
 package org.demyo.web.controller.api;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.jupiter.api.Test;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Integration tests for the Author API.
@@ -57,6 +57,7 @@ class AuthorAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$.asWriter").doesNotExist())
 				.andExpect(jsonPath("$.asInker").doesNotExist())
 				.andExpect(jsonPath("$.asTranslator").doesNotExist())
+				.andExpect(jsonPath("$.asCoverArtist").doesNotExist())
 				.andExpect(jsonPath("$.albums", hasSize(1)))
 				.andExpect(jsonPath("$.albums[0].id").value(1093))
 				.andExpect(jsonPath("$.albums[0].title").value("Esprit d'Équipe"));

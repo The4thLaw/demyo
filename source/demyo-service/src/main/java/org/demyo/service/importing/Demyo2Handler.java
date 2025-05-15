@@ -39,6 +39,7 @@ public class Demyo2Handler extends DefaultHandler {
 	private List<Map<String, String>> albumColorists = new ArrayList<>();
 	private List<Map<String, String>> albumInkers = new ArrayList<>();
 	private List<Map<String, String>> albumTranslators = new ArrayList<>();
+	private List<Map<String, String>> albumCoverArtists = new ArrayList<>();
 	private List<Map<String, String>> albumTags = new ArrayList<>();
 	private List<Map<String, String>> albumImages = new ArrayList<>();
 	private List<Map<String, String>> derivativeImages = new ArrayList<>();
@@ -58,6 +59,7 @@ public class Demyo2Handler extends DefaultHandler {
 		allRelations.put("albums_colorists", albumColorists);
 		allRelations.put("albums_inkers", albumInkers);
 		allRelations.put("albums_translators", albumTranslators);
+		allRelations.put("albums_cover_artists", albumCoverArtists);
 		allRelations.put("albums_tags", albumTags);
 		allRelations.put("albums_images", albumImages);
 		allRelations.put("derivatives_images", derivativeImages);
@@ -126,6 +128,9 @@ public class Demyo2Handler extends DefaultHandler {
 				break;
 			case "translator":
 				albumTranslators.add(join(FK_ALBUM_ID, albumId, "translator_id", attributes.getValue("ref")));
+				break;
+			case "cover-artist":
+				albumCoverArtists.add(join(FK_ALBUM_ID, albumId, "cover_artist_id", attributes.getValue("ref")));
 				break;
 			case "album-tag":
 				albumTags.add(join(FK_ALBUM_ID, albumId, "tag_id", attributes.getValue("ref")));

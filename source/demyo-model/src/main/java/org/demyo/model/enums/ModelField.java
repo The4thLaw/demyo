@@ -11,5 +11,7 @@ public enum ModelField {
 	/** The inkers of albums. */
 	ALBUM_INKER,
 	/** The translators of albums. */
-	ALBUM_TRANSLATOR
+	ALBUM_TRANSLATOR,
+	/** The cover artists of albums */
+	ALBUM_COVER_ARTIST
 }

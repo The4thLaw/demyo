@@ -20,6 +20,7 @@ import org.demyo.model.util.AlbumAndSeriesComparator;
 public class AuthorAlbums {
 	private final Set<Long> asArtist = new HashSet<>();
 	private final Set<Long> asColorist = new HashSet<>();
+	private final Set<Long> asCoverArtist = new HashSet<>();
 	private final Set<Long> asInker = new HashSet<>();
 	private final Set<Long> asTranslator = new HashSet<>();
 	private final Set<Long> asWriter = new HashSet<>();
@@ -33,12 +34,13 @@ public class AuthorAlbums {
 
 	/**
 	 * Adds an {@link IAuthorAlbum} to the set of {@link Album}s considered by this aggregate.
-	 * 
+	 *
 	 * @param album The album to add.
 	 */
 	public void addWork(IAuthorAlbum album) {
 		add(asArtist, album.getAsArtist());
 		add(asColorist, album.getAsColorist());
+		add(asCoverArtist, album.getAsCoverArtist());
 		add(asInker, album.getAsInker());
 		add(asTranslator, album.getAsTranslator());
 		add(asWriter, album.getAsWriter());
@@ -46,7 +48,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Gets the internal IDs of all considered {@link Album}s, regardless of the role.
-	 * 
+	 *
 	 * @return The IDs
 	 */
 	@JsonIgnore
@@ -54,6 +56,7 @@ public class AuthorAlbums {
 		Set<Long> ids = new HashSet<>();
 		ids.addAll(asArtist);
 		ids.addAll(asColorist);
+		ids.addAll(asCoverArtist);
 		ids.addAll(asInker);
 		ids.addAll(asTranslator);
 		ids.addAll(asWriter);
@@ -62,7 +65,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Sets the full {@link Album} entities.
-	 * 
+	 *
 	 * @param albums The albums
 	 */
 	public void setAlbums(Collection<Album> albums) {
@@ -72,7 +75,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Gets the internal IDs of the {@link Album}s to which the Author participated to as artist.
-	 * 
+	 *
 	 * @return The IDs
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -82,7 +85,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Gets the internal IDs of the {@link Album}s to which the Author participated to as colorist.
-	 * 
+	 *
 	 * @return The IDs
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -91,8 +94,18 @@ public class AuthorAlbums {
 	}
 
 	/**
+	 * Gets the internal IDs of the {@link Album}s to which the Author participated to as cover artist.
+	 *
+	 * @return The IDs
+	 */
+	@JsonView(ModelView.Basic.class)
+	public Set<Long> getAsCoverArtist() {
+		return asCoverArtist;
+	}
+
+	/**
 	 * Gets the internal IDs of the {@link Album}s to which the Author participated to as inker.
-	 * 
+	 *
 	 * @return The IDs
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -102,7 +115,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Gets the internal IDs of the {@link Album}s to which the Author participated to as translator.
-	 * 
+	 *
 	 * @return The IDs
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -112,7 +125,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Gets the internal IDs of the {@link Album}s to which the Author participated to as writer.
-	 * 
+	 *
 	 * @return The IDs
 	 */
 	@JsonView(ModelView.Basic.class)
@@ -122,7 +135,7 @@ public class AuthorAlbums {
 
 	/**
 	 * Gets the full {@link Album} entities. The list is sorted.
-	 * 
+	 *
 	 * @return The {@link Album}s
 	 */
 	@JsonView(ModelView.Basic.class)

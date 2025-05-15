@@ -110,8 +110,13 @@
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.translators && album.translators.length" cols="12" md="6">
-						<FieldValue :label="$t('field.Album.translators', album.writers.length)">
+						<FieldValue :label="$t('field.Album.translators', album.translators.length)">
 							<ModelLink :model="album.translators" view="AuthorView" />
+						</FieldValue>
+					</v-col>
+					<v-col v-if="album.coverArtists && album.coverArtists.length" cols="12" md="6">
+						<FieldValue :label="$t('field.Album.coverArtists', album.coverArtists.length)">
+							<ModelLink :model="album.coverArtists" view="AuthorView" />
 						</FieldValue>
 					</v-col>
 				</v-row>
@@ -326,7 +331,8 @@ const hasAuthors = computed(() =>
 	|| album.value.artists?.length
 	|| album.value.colorists?.length
 	|| album.value.inkers?.length
-	|| album.value.translators?.length)
+	|| album.value.translators?.length
+	|| album.value.coverArtists?.length)
 
 const hasPrices = computed(() => album.value.prices?.length)
 const hasAnyPrice = computed(() => !!hasPrices.value || !!album.value.purchasePrice)
@@ -343,7 +349,7 @@ const hasPhysicalData = computed(() => !!album.value.binding?.id || !!sizeSpec.v
 
 const hasDateOrIsbn = computed(() =>
 	!!album.value.firstEditionDate || !!album.value.currentEditionDate
-	|| !!album.value.wishlist || !!album.value.acquisitionDate || !!album.value.isbn)
+	|| album.value.wishlist || !!album.value.acquisitionDate || !!album.value.isbn)
 
 const derivativeQuery = computed(() => {
 	const query: DerivativeQuery = {

@@ -115,6 +115,14 @@
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.translators.push(id)"
 						/>
 					</v-col>
+					<v-col v-if="!fieldConfig.has('ALBUM_COVER_ARTIST')" cols="12" md="6">
+						<Autocomplete
+							v-model="album.coverArtists" :items="authors" :loading="authorsLoading"
+							label-key="field.Album.coverArtists" multiple
+							:add-component="AuthorLightCreate" add-label="title.add.author"
+							refreshable @refresh="loadAuthors" @added="(id: number) => album.coverArtists.push(id)"
+						/>
+					</v-col>
 				</v-row>
 			</SectionCard>
 
@@ -310,6 +318,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 			colorists: [],
 			inkers: [],
 			translators: [],
+			coverArtists: [],
 			publisher: {} as Publisher,
 			collection: {} as Collection,
 			binding: {} as Binding,

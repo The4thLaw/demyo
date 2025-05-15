@@ -132,6 +132,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setBinding(last.getBinding());
 			template.setCollection(last.getCollection());
 			template.setColorists(last.getColorists());
+			template.setCoverArtists(last.getCoverArtists());
 			template.setHeight(last.getHeight());
 			template.setInkers(last.getInkers());
 			template.setPages(last.getPages());

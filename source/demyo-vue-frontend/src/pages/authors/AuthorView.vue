@@ -105,7 +105,8 @@ const works = computed(() => ({
 	asWriter: new Set(authorAlbums.value.asWriter),
 	asColorist: new Set(authorAlbums.value.asColorist),
 	asInker: new Set(authorAlbums.value.asInker),
-	asTranslator: new Set(authorAlbums.value.asTranslator)
+	asTranslator: new Set(authorAlbums.value.asTranslator),
+	asCoverArtist: new Set(authorAlbums.value.asCoverArtist)
 }))
 const isAlive = computed(() => author.value.birthDate && !author.value.deathDate)
 const age = computed(() => {
@@ -134,6 +135,9 @@ function describeAuthor(album: Album): string {
 	}
 	if (works.value.asTranslator.has(albumId)) {
 		qualifiers.push(i18n.t('page.Author.works.role.translator'))
+	}
+	if (works.value.asCoverArtist.has(albumId)) {
+		qualifiers.push(i18n.t('page.Author.works.role.coverArtist'))
 	}
 	return qualifiers.join(', ')
 }

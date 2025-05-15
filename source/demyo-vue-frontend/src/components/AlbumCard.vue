@@ -87,6 +87,12 @@
 						>
 							<ModelLink :model="album.translators" view="AuthorView" />
 						</FieldValue>
+						<FieldValue
+							v-if="album.coverArtists && album.coverArtists.length"
+							:label="$t('field.Album.coverArtists', album.coverArtists ? album.coverArtists.length : 0)"
+						>
+							<ModelLink :model="album.coverArtists" view="AuthorView" />
+						</FieldValue>
 						<FieldValue v-if="album.publisher.id" :label="$t('field.Album.publisher', 1)">
 							<ModelLink :model="album.publisher" view="PublisherView" />
 						</FieldValue>

@@ -45,7 +45,7 @@ describe('AlbumView.vue', () => {
 	})
 
 	it('Check if there are authors', () => {
-		for (const prop of ['writers', 'artists', 'colorists', 'inkers', 'translators']) {
+		for (const prop of ['writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists']) {
 			// No authors by default
 			expect(wrapper.vm.hasAuthors).toBeFalsy()
 

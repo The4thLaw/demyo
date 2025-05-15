@@ -55,7 +55,8 @@ public class RawSQLDao implements IRawSQLDao {
 		for (String table : new String[] { "searches", "albums_borrowers", "borrowers", "derivatives_images",
 				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
 				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
-				"albums_writers", "albums_artists", "albums_images", "albums_prices", "albums", "bindings",
+				"albums_writers", "albums_artists", "albums_inkers", "albums_translators", "albums_cover_artists",
+				"albums_images", "albums_prices", "albums", "bindings",
 				"series_relations", "series", "authors", "collections", "publishers", "images", "readers",
 				"configuration", "book_types" }) {
 			executeUpdate("DELETE FROM " + table);

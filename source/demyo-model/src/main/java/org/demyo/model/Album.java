@@ -60,14 +60,15 @@ import org.demyo.model.util.IdentifyingNameComparator;
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
-		@NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites"), @NamedAttributeNode("bookType")})
+		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("coverArtists"),
+		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites"),
+		@NamedAttributeNode("bookType")})
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("images"),
-		@NamedAttributeNode("prices"), @NamedAttributeNode("bookType") })
+		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("coverArtists"),
+		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("bookType") })
 @JsonView(ModelView.AlbumTemplate.class)
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	/** The type of book. */
@@ -234,6 +235,14 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@SortComparator(AuthorComparator.class)
 	@JsonDeserialize(using = SortedSetDeserializer.class)
 	private SortedSet<Author> translators;
+
+	/** The {@link Author}s who worked on the covers for this Album. */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "albums_cover_artists", joinColumns = @JoinColumn(name = "album_id"), //
+			inverseJoinColumns = @JoinColumn(name = "cover_artist_id"))
+	@SortComparator(AuthorComparator.class)
+	@JsonDeserialize(using = SortedSetDeserializer.class)
+	private SortedSet<Author> coverArtists;
 
 	/** The {@link Image}s related to this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -875,6 +884,24 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	 */
 	public void setTranslators(SortedSet<Author> translators) {
 		this.translators = translators;
+	}
+
+	/**
+	 * Gets the {@link Author}s who worked on the covers for this Album.
+	 *
+	 * @return the {@link Author}s who worked on the covers for this Album
+	 */
+	public SortedSet<Author> getCoverArtists() {
+		return coverArtists;
+	}
+
+	/**
+	 * Sets the {@link Author}s who worked on the covers for this Album.
+	 *
+	 * @param coverArtists the new {@link Author}s who worked on the covers for this Album
+	 */
+	public void setCoverArtists(SortedSet<Author> coverArtists) {
+		this.coverArtists = coverArtists;
 	}
 
 	/**
