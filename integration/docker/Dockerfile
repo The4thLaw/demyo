@@ -1,7 +1,7 @@
 FROM node:16-slim AS node-build
 WORKDIR /node-app
 COPY demyo-vue-frontend .
-RUN npm install
+RUN npm ci
 RUN npm run build
 
 FROM maven:3.9-eclipse-temurin-17 AS mvn-build
