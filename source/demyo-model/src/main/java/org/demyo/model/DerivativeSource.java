@@ -31,6 +31,10 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
+	/** The flag indicating whether the source is active. */
+	@Column(name = "active")
+	private Boolean active;
+
 	/**
 	 * Gets the owner name.
 	 *
@@ -101,5 +105,23 @@ public class DerivativeSource extends AbstractBasicLegalEntity {
 	 */
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	/**
+	 * Gets the flag indicating whether the source is active.
+	 *
+	 * @return the flag indicating whether the source is active
+	 */
+	public Boolean getActive() {
+		return active;
+	}
+
+	/**
+	 * Sets the flag indicating whether the source is active.
+	 *
+	 * @param active the new flag indicating whether the source is active
+	 */
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 }

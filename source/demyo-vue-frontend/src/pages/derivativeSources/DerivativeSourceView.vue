@@ -23,6 +23,11 @@
 						{{ source.owner }}
 					</FieldValue>
 				</v-col>
+				<v-col cols="12" md="6">
+					<FieldValue :label="$t('field.DerivativeSource.active.view')">
+						{{ $t(`field.DerivativeSource.active.value.${source.active}`) }}
+					</FieldValue>
+				</v-col>
 				<v-col v-if="source.phoneNumber" cols="12" md="6">
 					<FieldValue :label="$t('field.DerivativeSource.phoneNumber')">
 						<a :href="phoneLink">{{ source.phoneNumber }}</a>

@@ -16,6 +16,9 @@
 					<v-col cols="12" md="6">
 						<v-text-field v-model="source.owner" :label="$t('field.DerivativeSource.owner')" />
 					</v-col>
+					<v-col cols="12" md="4">
+						<v-checkbox v-model="source.active" :label="$t('field.DerivativeSource.active.edit')" />
+					</v-col>
 					<v-col cols="12" md="6">
 						<v-text-field
 							v-model="source.phoneNumber" :label="$t('field.DerivativeSource.phoneNumber')"
@@ -61,7 +64,9 @@ async function fetchData(id :number | undefined): Promise<Partial<DerivativeSour
 	if (id) {
 		return sourceService.findById(id)
 	}
-	return Promise.resolve({})
+	return Promise.resolve({
+		active: true
+	})
 }
 
 const { model: source, loading, save, reset } = useSimpleEdit(fetchData, sourceService, [],
