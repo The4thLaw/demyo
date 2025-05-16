@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
+import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import jakarta.annotation.PostConstruct;
 
+import org.apache.commons.lang3.SystemUtils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +84,16 @@ public class DesktopIntegrationService {
 		// Note: cannot add a shutdown hook to remove the icons, see https://bugs.openjdk.java.net/browse/JDK-8042114
 		popup.add(exitItem);
 
-		URL iconUrl = getClass().getResource("/org/demyo/common/desktop/app-icon.png");
+		String iconPath;
+		if (SystemUtils.IS_OS_MAC_OSX) {
+			// OSX prefers monochrome icons. Unfortunately it won't switch the colors on
+			// its own so we keep the inside white instead of transparent to guarantee some contrast
+			LOGGER.debug("MacOS detected, the tray icon will be monochrome");
+			iconPath = "/org/demyo/common/desktop/app-icon-monochrome.png";
+		} else {
+			iconPath = "/org/demyo/common/desktop/app-icon.png";
+		}
+		URL iconUrl = getClass().getResource(iconPath);
 		assert (iconUrl != null);
 		BufferedImage iconBI;
 		try {
@@ -95,8 +106,20 @@ public class DesktopIntegrationService {
 		// Resize icon to expected size
 		SystemTray tray = SystemTray.getSystemTray();
 		Dimension trayIconSize = tray.getTrayIconSize();
-		LOGGER.debug("Tray icon size is (w x h): {} x {}", trayIconSize.width, trayIconSize.height);
-		iconBI = Scalr.resize(iconBI, trayIconSize.width, trayIconSize.height, Scalr.OP_ANTIALIAS);
+		int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
+		if (SystemUtils.IS_OS_MAC_OSX) {
+			// It's quite lame but I couldn't find a better way
+			LOGGER.debug("MacOS detected, increasing reported DPI");
+			dpi *= 2;
+		}
+		// 96 seems to be a bit of a magical number
+		int factor = (int) Math.ceil(dpi / (double) 96);
+		int targetWidth = trayIconSize.width * factor;
+		int targetHeight = trayIconSize.height * factor;
+		LOGGER.debug(
+			"Tray icon size reported by Java is {}x{} with {} dpi, so applying factor {} we get {}x{}",
+			trayIconSize.width, trayIconSize.height, dpi, factor, targetWidth, targetHeight);
+		iconBI = Scalr.resize(iconBI, Scalr.Method.ULTRA_QUALITY, targetWidth, targetHeight, Scalr.OP_ANTIALIAS);
 
 		// Won't be transparent :/
 		// See http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6453521
