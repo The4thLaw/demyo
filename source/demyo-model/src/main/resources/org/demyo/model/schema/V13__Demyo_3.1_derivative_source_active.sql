@@ -1,0 +1,2 @@
+ALTER TABLE sources
+	ADD COLUMN active BOOLEAN DEFAULT 'true';
