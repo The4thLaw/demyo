@@ -1,4 +1,4 @@
-FROM node:16-slim AS node-build
+FROM node:22-slim AS node-build
 WORKDIR /node-app
 COPY demyo-vue-frontend .
 RUN npm ci
