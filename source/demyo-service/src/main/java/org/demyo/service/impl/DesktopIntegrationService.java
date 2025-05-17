@@ -86,9 +86,9 @@ public class DesktopIntegrationService {
 
 		String iconPath;
 		if (SystemUtils.IS_OS_MAC_OSX) {
-			// OSX prefers monochrome icons. Unfortunately it won't switch the colors on
-			// its own so we keep the inside white instead of transparent to guarantee some contrast
-			LOGGER.debug("MacOS detected, the tray icon will be monochrome");
+			// Use template images on OSX: let the OS decide the color depending on the theme
+			LOGGER.debug("MacOS detected, the tray icon will be a template");
+			System.setProperty("apple.awt.enableTemplateImages", "true");
 			iconPath = "/org/demyo/common/desktop/app-icon-monochrome.png";
 		} else {
 			iconPath = "/org/demyo/common/desktop/app-icon.png";
@@ -108,7 +108,9 @@ public class DesktopIntegrationService {
 		Dimension trayIconSize = tray.getTrayIconSize();
 		int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
 		if (SystemUtils.IS_OS_MAC_OSX) {
-			// It's quite lame but I couldn't find a better way
+			// It's quite lame but I couldn't find a better way. Maybe using native APIs...
+			// It's probably the same on Windows but since MacOS hardware will nearly always
+			// be HiDPI...
 			LOGGER.debug("MacOS detected, increasing reported DPI");
 			dpi *= 2;
 		}

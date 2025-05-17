@@ -40,13 +40,13 @@ done
 # PNGCrush everything
 for file in /tmp/demyo-*.png; do
 	mv $file ${file}.orig
-	pngcrush -brute -l 9 ${file}.orig $file
+	pngcrush -brute -l 9 -q ${file}.orig $file
 	rm -f ${file}.orig
 done
 
 # Generate the favicon.ico and general purpose Windows ico
-convert /tmp/demyo-16.png /tmp/demyo-24.png /tmp/demyo-32.png /tmp/demyo-48.png /tmp/demyo-64.png /tmp/demyo-favicon.ico
-convert /tmp/demyo-16.png /tmp/demyo-24.png /tmp/demyo-32.png /tmp/demyo-48.png /tmp/demyo-64.png /tmp/demyo-192.png /tmp/demyo.ico
+magick /tmp/demyo-16.png /tmp/demyo-24.png /tmp/demyo-32.png /tmp/demyo-48.png /tmp/demyo-64.png /tmp/demyo-favicon.ico
+magick /tmp/demyo-16.png /tmp/demyo-24.png /tmp/demyo-32.png /tmp/demyo-48.png /tmp/demyo-64.png /tmp/demyo-192.png /tmp/demyo.ico
 
 # Finally, copy to the relevant locations
 cp -f /tmp/demyo.ico ../integration/windows/Demyo.ico
