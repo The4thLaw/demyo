@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-05-16 15:29:43.
+// Generated using typescript-generator version 3.2.1263 on 2025-05-22 23:59:21.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -16,8 +16,8 @@ interface MetaSeries {
     series: Series;
     album: Album;
     albums: Album[];
-    actualSeries: boolean;
     title: string;
+    actualSeries: boolean;
 }
 
 interface ReaderLists {
@@ -28,10 +28,11 @@ interface ReaderLists {
 
 interface Album extends AbstractPricedModel<AlbumPrice, Album> {
     readersFavourites: Reader[];
-    priceList: AlbumPrice[];
     readersReadingList: Reader[];
+    priceList: AlbumPrice[];
     bookType: BookType;
     series: Series;
+    universe: Universe;
     cycle: number;
     number: number;
     numberSuffix: string;
@@ -69,6 +70,7 @@ interface Album extends AbstractPricedModel<AlbumPrice, Album> {
 
 interface Series extends AbstractNamedModel {
     originalName: string;
+    universe: Universe;
     summary: string;
     comment: string;
     website: string;
@@ -97,6 +99,15 @@ interface BookType extends AbstractNamedModel {
     description: string;
     structuredFieldConfig: ModelField[];
     fieldConfig: string;
+}
+
+interface Universe extends AbstractNamedModel {
+    description: string;
+    logo: Image;
+    website: string;
+    images: Image[];
+    series: Series[];
+    albums: Album[];
 }
 
 interface Publisher extends AbstractLegalEntity {

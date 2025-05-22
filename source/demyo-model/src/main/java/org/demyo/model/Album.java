@@ -83,6 +83,11 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@JsonView(ModelView.Basic.class)
 	private Series series;
 
+	/** The universe to which this Album belongs. Should remain null if the {@link Series} has one. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "universe_id")
+	private Universe universe;
+
 	/** The cycle. */
 	@Column(name = "cycle")
 	private Integer cycle;
@@ -940,5 +945,21 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 			df.applyPattern("#0.#");
 		}
 		return fmt;
+	}
+
+	/**
+	 * Gets the universe to which this Album belongs.
+	 * @return The universe to which this Album belongs
+	 */
+	public Universe getUniverse() {
+		return universe;
+	}
+
+	/**
+	 * Sets the universe to which this Album belongs.
+	 * @param universe the new universe to which this Album belongs
+	 */
+	public void setUniverse(Universe universe) {
+		this.universe = universe;
 	}
 }
