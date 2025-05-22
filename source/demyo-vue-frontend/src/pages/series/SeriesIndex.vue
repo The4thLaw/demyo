@@ -2,7 +2,7 @@
 	<div>
 		<TextIndex
 			view-route="SeriesView" :items="modelList"
-			:first-letter-extractor="(item) => item.identifyingName[0]" @page-change="scrollToTop"
+			:first-letter-extractor="(item: Series) => item.identifyingName[0]" @page-change="scrollToTop"
 		/>
 		<Fab to="/series/new" icon="mdi-plus" />
 	</div>

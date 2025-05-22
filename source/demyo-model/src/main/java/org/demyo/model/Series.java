@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.Table;
@@ -36,6 +37,10 @@ public class Series extends AbstractNamedModel {
 	/** The name in the Series' original language. */
 	@Column(name = "original_name")
 	private String originalName;
+	/** The universe to which this Series belongs. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "universe_id")
+	private Universe universe;
 	/** The summary. */
 	@Column(name = "summary")
 	private String summary;
@@ -86,6 +91,22 @@ public class Series extends AbstractNamedModel {
 	 */
 	public void setOriginalName(String originalName) {
 		this.originalName = originalName;
+	}
+
+	/**
+	 * Gets the universe to which this Series belongs.
+	 * @return The universe to which this Series belongs
+	 */
+	public Universe getUniverse() {
+		return universe;
+	}
+
+	/**
+	 * Sets the universe to which this Series belongs.
+	 * @param universe the new universe to which this Series belongs
+	 */
+	public void setUniverse(Universe universe) {
+		this.universe = universe;
 	}
 
 	/**
