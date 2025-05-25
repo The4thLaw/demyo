@@ -86,5 +86,8 @@ declare module 'vue' {
     TagView: typeof import('./src/pages/tags/TagView.vue')['default']
     TextIndex: typeof import('./src/components/TextIndex.vue')['default']
     TypeIndex: typeof import('./src/pages/types/TypeIndex.vue')['default']
+    UniverseEdit: typeof import('./src/pages/universes/UniverseEdit.vue')['default']
+    UniverseIndex: typeof import('./src/pages/universes/UniverseIndex.vue')['default']
+    UniverseView: typeof import('./src/pages/universes/UniverseView.vue')['default']
   }
 }
