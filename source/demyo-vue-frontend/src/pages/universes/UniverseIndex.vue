@@ -4,7 +4,7 @@
 			view-route="UniverseView" :items="modelList"
 			:first-letter-extractor="(item: Universe) => item.identifyingName[0]" @page-change="scrollToTop"
 		/>
-		<Fab to="/series/new" icon="mdi-plus" />
+		<Fab to="/universes/new" icon="mdi-plus" />
 	</div>
 </template>
 
@@ -12,5 +12,5 @@
 import { useSimpleIndex } from '@/composables/model-index'
 import universeService from '@/services/universe-service'
 
-const { modelList } = useSimpleIndex(universeService, 'title.index.universes')
+const { modelList } = useSimpleIndex(universeService, 'title.index.universe')
 </script>
