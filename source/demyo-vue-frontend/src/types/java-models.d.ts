@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-05-22 23:59:21.
+// Generated using typescript-generator version 3.2.1263 on 2025-05-25 11:14:25.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -16,8 +16,8 @@ interface MetaSeries {
     series: Series;
     album: Album;
     albums: Album[];
-    title: string;
     actualSeries: boolean;
+    title: string;
 }
 
 interface ReaderLists {
@@ -237,8 +237,8 @@ interface DerivativeSource extends AbstractBasicLegalEntity {
 }
 
 interface IModel {
-    id: number;
     identifyingName: string;
+    id: number;
 }
 
 type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
