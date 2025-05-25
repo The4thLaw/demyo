@@ -31,9 +31,9 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "UNIVERSES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraph(name = "Author.forEdition", attributeNodes =
+@NamedEntityGraph(name = "Universe.forEdition", attributeNodes =
 { @NamedAttributeNode("logo"), @NamedAttributeNode("images") })
-@NamedEntityGraph(name = "Author.forView", attributeNodes =
+@NamedEntityGraph(name = "Universe.forView", attributeNodes =
 { @NamedAttributeNode("logo"), @NamedAttributeNode("images"),
 		@NamedAttributeNode("series"), @NamedAttributeNode("albums") })
 public class Universe extends AbstractNamedModel {
