@@ -23,6 +23,11 @@
 				"url": "/derivatives/stickers"
 			},
 			{
+				"title": "menu.universes.browse",
+				"icon": "mdi-earth",
+				"url": "/universes"
+			},
+			{
 				"title": "menu.tags.browse",
 				"icon": "mdi-tag",
 				"url": "/tags"
@@ -71,6 +76,11 @@
 				"title": "menu.derivatives.add",
 				"icon": "mdi-image-frame dem-overlay-add",
 				"url": "/derivatives/new"
+			},
+			{
+				"title": "menu.universes.add",
+				"icon": "mdi-earth dem-overlay-add",
+				"url": "/universes/new"
 			},
 			{
 				"title": "menu.images.add",
