@@ -1,0 +1,34 @@
+<template>
+	<ModelLink v-if="!loading" :model="entry" :view="view" :label="label" />
+</template>
+
+<script setup lang="ts">
+import type AbstractModelService from '@/services/abstract-model-service'
+import authorService from '@/services/author-service'
+
+const props = defineProps<{
+	modelId: number | string
+	type: 'author'
+	label?: string
+}>()
+const loading = ref(true)
+const entry = ref({} as IModel)
+const view = ref('')
+
+async function load(): Promise<void> {
+	let service: AbstractModelService<Author>
+	switch (props.type) {
+		case 'author':
+			service = authorService
+			view.value = 'AuthorView'
+			break
+		default:
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+			throw new Error(`Unsupported model type for dynamic linking: ${props.type}`)
+	}
+	entry.value = await service.findById(props.modelId as number)
+	loading.value = false
+}
+
+void load()
+</script>

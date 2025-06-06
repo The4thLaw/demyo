@@ -8,9 +8,8 @@
 					<template v-if="hasDefaultSlot">
 						<slot :item="item" /><!--
 					--></template>
-					<template v-else>
-						{{ item.identifyingName }}<!--
-					--></template><!--
+					<template v-else-if="label">{{ label }}</template>
+					<template v-else>{{ item.identifyingName }}</template><!--
 				--></router-link><!--
 				--><template v-if="commaSeparated && index + 1 < length">, </template>
 			</span>
@@ -20,9 +19,8 @@
 				<template v-if="hasDefaultSlot">
 					<slot :item="model" />
 				</template>
-				<template v-else>
-					{{ model.identifyingName }}
-				</template>
+				<template v-else-if="label">{{ label }}</template>
+				<template v-else>{{ model.identifyingName }}</template>
 			</router-link>
 		</template>
 	</span>
@@ -30,11 +28,13 @@
 
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-	model: IModel | IModel[],
-	view: string,
-	commaSeparated?: boolean,
+	model: IModel | IModel[]
+	view: string
+	label?: string
+	commaSeparated?: boolean
 	cssClass?: string
 }>(), {
+	label: undefined,
 	commaSeparated: true,
 	cssClass: ''
 })
