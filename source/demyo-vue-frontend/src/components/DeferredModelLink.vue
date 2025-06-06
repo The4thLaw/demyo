@@ -5,10 +5,11 @@
 <script setup lang="ts">
 import type AbstractModelService from '@/services/abstract-model-service'
 import authorService from '@/services/author-service'
+import seriesService from '@/services/series-service'
 
 const props = defineProps<{
 	modelId: number | string
-	type: 'author'
+	type: 'author' | 'series'
 	label?: string
 }>()
 const loading = ref(true)
@@ -16,11 +17,15 @@ const entry = ref({} as IModel)
 const view = ref('')
 
 async function load(): Promise<void> {
-	let service: AbstractModelService<Author>
+	let service: AbstractModelService<Author> | AbstractModelService<Series>
 	switch (props.type) {
 		case 'author':
 			service = authorService
 			view.value = 'AuthorView'
+			break
+		case 'series':
+			service = seriesService
+			view.value = 'SeriesView'
 			break
 		default:
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
