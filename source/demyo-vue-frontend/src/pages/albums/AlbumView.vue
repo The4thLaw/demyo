@@ -235,14 +235,11 @@
 
 		<SectionCard v-if="album.summary || album.comment">
 			<FieldValue v-if="album.summary" :label="$t('field.Album.summary')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="album.summary" />
+				<component :is="{ template: processedSummary }" />
 			</FieldValue>
 			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<!--<div v-html="album.comment" />-->
+				<component :is="{ template: processedComment }" />
 			</FieldValue>
-			<component :is="{ template: processedComment }" />
 		</SectionCard>
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Album.gallery')">
@@ -370,6 +367,7 @@ const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => al
 
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)
+const processedSummary = useRichTextTemplate(computed(() => album.value.summary))
 const processedComment = useRichTextTemplate(computed(() => album.value.comment))
 
 const uiStore = useUiStore()
