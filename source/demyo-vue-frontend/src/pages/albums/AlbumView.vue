@@ -288,6 +288,7 @@
 import GalleryIndex from '@/components/GalleryIndex.vue'
 import { useCurrency } from '@/composables/currency'
 import { useSimpleView } from '@/composables/model-view'
+import { useRichTextTemplate } from '@/composables/rich-text'
 import albumService from '@/services/album-service'
 import bookTypeService from '@/services/book-type-service'
 import derivativeService from '@/services/derivative-service'
@@ -369,12 +370,7 @@ const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => al
 
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)
-const processedComment = computed(() => {
-	if (!album.value.comment) {
-		return album.value.comment
-	}
-	return album.value.comment.replace(/\[tag:(\d+)\]/g, '<DeferredTagLink tag-id="$1"/>')
-})
+const processedComment = useRichTextTemplate(computed(() => album.value.comment))
 
 const uiStore = useUiStore()
 const i18n = useI18n()
