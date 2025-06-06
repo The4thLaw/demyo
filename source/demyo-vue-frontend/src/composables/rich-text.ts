@@ -6,6 +6,6 @@ export function useRichTextTemplate(userValue: Ref<string | undefined>): Ref<str
 		}
 		return userValue.value
 			// Tags
-			.replace(/\(tag:(\d+)\)/g, '<DeferredTagLink tag-id="$1"/>')
+			.replace(/(\[([^\]]*)\])?\(tag:(\d+)\)/g, '<DeferredTagLink tag-id="$3" label="$2"/>')
 	})
 }
