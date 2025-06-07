@@ -30,6 +30,7 @@ declare module 'vue' {
     CollectionEdit: typeof import('./src/pages/collections/CollectionEdit.vue')['default']
     CollectionView: typeof import('./src/pages/collections/CollectionView.vue')['default']
     CurrencyField: typeof import('./src/components/CurrencyField.vue')['default']
+    DeferredImageThumb: typeof import('./src/components/images/DeferredImageThumb.vue')['default']
     DeferredModelLink: typeof import('./src/components/generic/DeferredModelLink.vue')['default']
     DeferredTagLink: typeof import('./src/components/tags/DeferredTagLink.vue')['default']
     DerivativeEdit: typeof import('./src/pages/derivatives/DerivativeEdit.vue')['default']
