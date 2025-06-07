@@ -8,7 +8,8 @@
 		}"
 		:src="src"
 		:srcset="srcset"
-		:alt="image.identifyingName"
+		:alt="alt ?? image.identifyingName"
+		class="c-ImageThumb"
 	>
 </template>
 
@@ -18,37 +19,41 @@ import { getBaseImageUrl } from '@/helpers/images'
 const props = withDefaults(defineProps<{
 	image: Image
 	variant?: 'small' | 'large' | 'full'
+	alt?: string
 }>(), {
-	variant: 'small'
+	variant: 'small',
+	alt: undefined
 })
 
 const baseUrl = computed(() => getBaseImageUrl(props.image))
 
 const src = computed(() => {
 	switch (props.variant) {
-		case 'small':
-			return `${baseUrl.value}?w=250`
 		case 'large':
 			return `${baseUrl.value}?w=500`
 		case 'full':
 			return baseUrl.value
+		case 'small':
 		default:
-			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-			throw new Error(`Unsupported thumb variant ${props.variant}`)
+			return `${baseUrl.value}?w=250`
 	}
 })
 
 const srcset = computed(() => {
 	switch (props.variant) {
-		case 'small':
-			return `${baseUrl.value}?w=250 1x, ${baseUrl.value}?w=500 2x`
 		case 'large':
 			return `${baseUrl.value}?w=500 1x, ${baseUrl.value}?w=1000 2x`
 		case 'full':
 			return undefined
+		case 'small':
 		default:
-			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-			throw new Error(`Unsupported thumb variant ${props.variant}`)
+			return `${baseUrl.value}?w=250 1x, ${baseUrl.value}?w=500 2x`
 	}
 })
 </script>
+
+<style lang="scss">
+.c-ImageThumb {
+	max-width: 95%;
+}
+</style>

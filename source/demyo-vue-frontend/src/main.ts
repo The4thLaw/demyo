@@ -7,6 +7,7 @@ import { fullscreenImagePlugin } from 'vue-3-fullscreen-image-directive-plugin'
 import 'vue-3-fullscreen-image-directive-plugin/style.css'
 import App from './App.vue'
 import DeferredModelLink from './components/generic/DeferredModelLink.vue'
+import DeferredImageThumb from './components/images/DeferredImageThumb.vue'
 import DeferredTagLink from './components/tags/DeferredTagLink.vue'
 import i18n from './i18n'
 import vuetify from './plugins/vuetify'
@@ -35,6 +36,7 @@ app.use(fullscreenImagePlugin)
 app.use(createHead())
 
 // See #225: we need this so that the template compiler can interpret stuff without context
+app.component('DeferredImageThumb', DeferredImageThumb)
 app.component('DeferredModelLink', DeferredModelLink)
 app.component('DeferredTagLink', DeferredTagLink)
 
