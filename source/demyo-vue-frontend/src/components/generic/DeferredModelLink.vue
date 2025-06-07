@@ -28,7 +28,8 @@ async function load(): Promise<void> {
 			view.value = 'SeriesView'
 			break
 		default:
-			throw new Error('Unsupported model type for dynamic linking', props.type)
+			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+			throw new Error(`Unsupported model type for dynamic linking ${props.type}`)
 	}
 	entry.value = await service.findById(props.modelId as number)
 	loading.value = false
