@@ -12,19 +12,7 @@
 	>
 		<div class="c-GalleryIndex__list">
 			<v-sheet v-for="item in paginatedItems" :key="item.id" class="c-GalleryIndex__image" :border="bordered">
-				<img
-					v-if="item.baseImageUrl"
-					v-fullscreen-image="{
-						imageUrl: item.baseImageUrl,
-						withDownload: false,
-						maxHeight: '100vh'
-					}"
-					:src="`${item.baseImageUrl}?w=250`"
-					:srcset="`
-						${item.baseImageUrl}?w=250 1x,
-						${item.baseImageUrl}?w=500 2x`"
-					:alt="item.identifyingName"
-				>
+				<ImageThumb :image="item.thumbImage" />
 				<legend v-if="hasDefaultSlot" class="c-GalleryIndex__imageLegend">
 					<slot :item="item" />
 				</legend>
@@ -45,13 +33,12 @@
 <script setup lang="ts" generic="T extends IModel">
 import { emitTypes } from '@/composables/pagination'
 import { focusElement } from '@/helpers/dom'
-import { getBaseImageUrl } from '@/helpers/images'
 import { useReaderStore } from '@/stores/reader'
 import { isImage } from '@/types/type-guards'
 import { useTemplateRef } from 'vue'
 
-interface BasedImage {
-	baseImageUrl?: string
+interface ResolvedImage {
+	thumbImage?: Image
 }
 
 const props = withDefaults(defineProps<{
@@ -85,7 +72,7 @@ const paginatedItems = computed(() => {
 	const slice = props.items.slice((currentPage.value - 1) * itemsPerPage.value,
 		currentPage.value * itemsPerPage.value)
 	return slice.map(item => {
-		const processedItem: BasedImage & T = item
+		const processedItem: ResolvedImage & T = item
 		let image: Image
 		if (props.imagePath) {
 			image = item[props.imagePath] as Image
@@ -95,7 +82,7 @@ const paginatedItems = computed(() => {
 			throw new Error(`${JSON.stringify(item)} isn't an image and no imagePath was provided`)
 		}
 		if (image) { // Some entries may not have an image at all
-			processedItem.baseImageUrl = getBaseImageUrl(image)
+			processedItem.thumbImage = image
 		}
 		return processedItem
 	})
