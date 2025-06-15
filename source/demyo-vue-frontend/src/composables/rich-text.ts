@@ -5,11 +5,11 @@ export function useRichTextTemplate(userValue: Ref<string | undefined>): Ref<str
 		}
 		// const initial = userValue.value
 		const processed = userValue.value
-			// Authors
-			.replace(/(\[([^\]]*)\])?\((author|series):(\d+)\)/g,
+			// Simple models without specific processing
+			.replace(
+				// eslint-disable-next-line max-len
+				/(\[([^\]]*)\])?\((album|author|binding|bookType|collection|derivative|derivativeSource|derivativeType|publisher|series):(\d+)\)/g,
 				'<DeferredModelLink type="$3" model-id="$4" label="$2"/>')
-			// TODO: album, publisher, collection, derivative source, binding, derivative type,
-			// derivative, image (thumbnail, large or full), book type
 			// Images
 			.replace(/(\[([^\]]*)\])?\(image:(\d+)(:(small|large|full))?\)/g,
 				'<DeferredImageThumb image-id="$3" alt="$2" variant="$5"/>')
