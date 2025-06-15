@@ -234,10 +234,10 @@
 		</SectionCard>
 
 		<SectionCard v-if="album.summary || album.comment">
-			<FieldValue v-if="album.summary" :label="$t('field.Album.summary')">
+			<FieldValue v-if="album.summary" :label="$t('field.Album.summary')" rich-text>
 				<component :is="{ template: processedSummary }" />
 			</FieldValue>
-			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')">
+			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')" rich-text>
 				<component :is="{ template: processedComment }" />
 			</FieldValue>
 		</SectionCard>

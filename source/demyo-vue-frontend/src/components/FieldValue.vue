@@ -1,5 +1,10 @@
 <template>
-	<div class="c-FieldValue">
+	<div
+		:class="{
+			'c-FieldValue': true,
+			'c-FieldValue__rich-text': richText
+		}"
+	>
 		<div class="c-FieldValue__label">
 			{{ label }}
 		</div>
@@ -9,7 +14,8 @@
 
 <script setup lang="ts">
 defineProps<{
-	label: string
+	label: string,
+	richText?: boolean
 }>()
 </script>
 
@@ -29,6 +35,11 @@ defineProps<{
 	}
 
 	a {
+		color: rgb(var(--v-theme-secondary));
+	}
+
+	&.c-FieldValue__rich-text a.c-ModelLink:not(.c-TagLink) {
+		// Also restore model links. See #225
 		color: rgb(var(--v-theme-secondary));
 	}
 }
