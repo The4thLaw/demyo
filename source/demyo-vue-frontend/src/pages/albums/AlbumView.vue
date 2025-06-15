@@ -234,12 +234,8 @@
 		</SectionCard>
 
 		<SectionCard v-if="album.summary || album.comment">
-			<FieldValue v-if="album.summary" :label="$t('field.Album.summary')" rich-text>
-				<component :is="{ template: processedSummary }" />
-			</FieldValue>
-			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')" rich-text>
-				<component :is="{ template: processedComment }" />
-			</FieldValue>
+			<RichTextFieldValue :value="album.summary" :label="$t('field.Album.summary')" />
+			<RichTextFieldValue :value="album.comment" :label="$t('field.Album.comment')" />
 		</SectionCard>
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Album.gallery')">
@@ -285,7 +281,6 @@
 import GalleryIndex from '@/components/GalleryIndex.vue'
 import { useCurrency } from '@/composables/currency'
 import { useSimpleView } from '@/composables/model-view'
-import { useRichTextTemplate } from '@/composables/rich-text'
 import albumService from '@/services/album-service'
 import bookTypeService from '@/services/book-type-service'
 import derivativeService from '@/services/derivative-service'
@@ -367,8 +362,6 @@ const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => al
 
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)
-const processedSummary = useRichTextTemplate(computed(() => album.value.summary))
-const processedComment = useRichTextTemplate(computed(() => album.value.comment))
 
 const uiStore = useUiStore()
 const i18n = useI18n()

@@ -77,6 +77,7 @@ declare module 'vue' {
     ReaderView: typeof import('./src/pages/readers/ReaderView.vue')['default']
     ReadingList: typeof import('./src/pages/readers/ReadingList.vue')['default']
     RichTextEditor: typeof import('./src/components/RichTextEditor.vue')['default']
+    RichTextFieldValue: typeof import('./src/components/forms/RichTextFieldValue.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SectionCard: typeof import('./src/components/SectionCard.vue')['default']
