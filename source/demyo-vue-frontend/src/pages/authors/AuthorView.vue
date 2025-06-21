@@ -26,10 +26,7 @@
 				{{ $d(new Date(author.deathDate), 'long') }}
 				<span v-if="!isAlive">({{ $t('field.Author.age.dead', { age }) }})</span>
 			</FieldValue>
-			<FieldValue v-if="author.biography" :label="$t('field.Author.biography')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="author.biography" />
-			</FieldValue>
+			<RichTextFieldValue :value="author.biography" :label="$t('field.Author.biography')" />
 			<v-alert
 				v-if="!albumsLoading && albums.length === 0"
 				border="start" type="info" text class="my-4"
@@ -68,6 +65,7 @@
 </template>
 
 <script setup lang="ts">
+import RichTextFieldValue from '@/components/forms/RichTextFieldValue.vue'
 import { useSimpleView } from '@/composables/model-view'
 import authorService from '@/services/author-service'
 import dayjs from 'dayjs'
