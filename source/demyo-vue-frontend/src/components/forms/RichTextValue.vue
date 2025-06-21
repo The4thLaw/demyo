@@ -1,7 +1,5 @@
 <template>
-	<FieldValue v-if="value" :label="label" rich-text>
-		<component :is="{ template: processedValue }" />
-	</FieldValue>
+	<component :is="{ template: processedValue }" />
 </template>
 
 <script setup lang="ts">

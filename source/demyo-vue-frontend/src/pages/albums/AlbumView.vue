@@ -234,8 +234,8 @@
 		</SectionCard>
 
 		<SectionCard v-if="album.summary || album.comment">
-			<RichTextFieldValue :value="album.summary" :label="$t('field.Album.summary')" />
-			<RichTextFieldValue :value="album.comment" :label="$t('field.Album.comment')" />
+			<FieldValue :value="album.summary" type="rich-text" label-key="field.Album.summary" />
+			<FieldValue :value="album.comment" type="rich-text" label-key="field.Album.comment" />
 		</SectionCard>
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Album.gallery')">

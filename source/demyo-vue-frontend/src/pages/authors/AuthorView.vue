@@ -15,9 +15,7 @@
 		</AppTasks>
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
-			<FieldValue v-if="author.website" :label="$t('field.Author.website')">
-				<a :href="author.website">{{ author.website }}</a>
-			</FieldValue>
+			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 			<FieldValue v-if="author.birthDate" :label="$t('field.Author.birthDate')">
 				{{ $d(new Date(author.birthDate), 'long') }}
 				<span v-if="isAlive">({{ $t('field.Author.age.alive', { age }) }})</span>
@@ -26,7 +24,7 @@
 				{{ $d(new Date(author.deathDate), 'long') }}
 				<span v-if="!isAlive">({{ $t('field.Author.age.dead', { age }) }})</span>
 			</FieldValue>
-			<RichTextFieldValue :value="author.biography" :label="$t('field.Author.biography')" />
+			<FieldValue :value="author.biography" label-key="field.Author.biography" type="rich-text" />
 			<v-alert
 				v-if="!albumsLoading && albums.length === 0"
 				border="start" type="info" text class="my-4"
@@ -65,7 +63,6 @@
 </template>
 
 <script setup lang="ts">
-import RichTextFieldValue from '@/components/forms/RichTextFieldValue.vue'
 import { useSimpleView } from '@/composables/model-view'
 import authorService from '@/services/author-service'
 import dayjs from 'dayjs'
