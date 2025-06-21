@@ -1,22 +1,37 @@
 <template>
 	<div
+		v-if="!type || value"
 		:class="{
 			'c-FieldValue': true,
-			'c-FieldValue__rich-text': richText
+			'c-FieldValue__rich-text': type === 'rich-text'
 		}"
 	>
 		<div class="c-FieldValue__label">
-			{{ label }}
+			<template v-if="label">
+				{{ label }}
+			</template>
+			<template v-if="labelKey">
+				{{ $t(labelKey) }}
+			</template>
 		</div>
-		<slot />
+		<!-- TODO: prepend, append slots -->
+		<slot v-if="hasDefaultSlot" />
+		<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
+		<RichTextValue v-else-if="type === 'rich-text'" :value="value" />
 	</div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-	label: string,
-	richText?: boolean
+	value?: unknown,
+	label?: string,
+	labelKey?: string,
+	type?: 'url' | 'rich-text'
 }>()
+
+// TODO: migrate to defineSlots
+const slots = useSlots()
+const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <style lang="scss">
