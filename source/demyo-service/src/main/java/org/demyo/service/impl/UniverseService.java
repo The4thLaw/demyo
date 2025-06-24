@@ -1,5 +1,7 @@
 package org.demyo.service.impl;
 
+import java.util.List;
+
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IUniverseRepo;
+import org.demyo.model.Album;
 import org.demyo.model.Universe;
+import org.demyo.model.util.AlbumAndSeriesComparator;
 import org.demyo.service.IBindingService;
 import org.demyo.service.IUniverseService;
 
@@ -40,5 +44,13 @@ public class UniverseService extends AbstractModelService<Universe> implements I
 	@Override
 	protected IModelRepo<Universe> getRepo() {
 		return repo;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Album> getContents(long id) {
+		List<Album> contents = repo.findContents(id);
+		contents.sort(new AlbumAndSeriesComparator());
+		return contents;
 	}
 }

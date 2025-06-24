@@ -18,6 +18,10 @@
 							v-model="series.relatedSeries" :items="allSeries" :loading="seriesLoading" multiple
 							label-key="field.Series.relatedSeries"
 						/>
+						<Autocomplete
+							v-model="series.universe.id" :items="universes" :loading="universesLoading"
+							label-key="field.Series.universe" refreshable @refresh="loadUniverses"
+						/>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-checkbox v-model="series.completed" :label="$t('field.Series.completed.edit')" />
@@ -51,22 +55,24 @@
 
 <script setup lang="ts">
 import { useSimpleEdit } from '@/composables/model-edit'
-import { useRefreshableSeries } from '@/composables/refreshable-models'
+import { useRefreshableSeries, useRefreshableUniverses } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
 import seriesService from '@/services/series-service'
 
 const { series: allSeries, seriesLoading, loadSeries } = useRefreshableSeries()
 
+const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 async function fetchData(id :number | undefined): Promise<Partial<Series>> {
 	if (id) {
 		return seriesService.findById(id)
 	}
 	return Promise.resolve({
+		universe: {} as Universe,
 		relatedSeries: []
 	})
 }
 
-const { model: series, loading, save, reset } = useSimpleEdit(fetchData, seriesService, [loadSeries],
+const { model: series, loading, save, reset } = useSimpleEdit(fetchData, seriesService, [loadSeries, loadUniverses],
 	'title.add.series', 'title.edit.series', 'SeriesView')
 
 const rules = {
