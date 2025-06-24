@@ -305,7 +305,7 @@ copySimple(destinationParser,
     null,
     'derivative_price',
     { s, d -> {
-        d['@derivative_id'] = derivativeIdMapping[s['@derivative_price']]
+        d['@derivative_id'] = derivativeIdMapping[s['@derivative_id']]
     }})
 
 String asText = XmlUtil.serialize(destination)
