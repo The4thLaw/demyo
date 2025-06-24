@@ -20,6 +20,7 @@ import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import org.demyo.model.jackson.SortedSetDeserializer;
@@ -32,7 +33,9 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("relatedSeries"))
+@NamedEntityGraph(name = "Series.forView", attributeNodes = {
+	@NamedAttributeNode("relatedSeries"), @NamedAttributeNode("universe")
+})
 public class Series extends AbstractNamedModel {
 	/** The name in the Series' original language. */
 	@Column(name = "original_name")
@@ -40,6 +43,7 @@ public class Series extends AbstractNamedModel {
 	/** The universe to which this Series belongs. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "universe_id")
+	@JsonView(ModelView.Basic.class)
 	private Universe universe;
 	/** The summary. */
 	@Column(name = "summary")

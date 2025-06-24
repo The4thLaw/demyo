@@ -8,6 +8,7 @@ import albumService from './album-service'
 class SeriesService extends AbstractModelService<Series> {
 	constructor() {
 		super('series/', {
+			fillMissingObjects: ['universe'],
 			fillMissingArrays: ['relatedSeries'],
 			sanitizeArrays: ['relatedSeries'],
 			sanitizeHtml: ['summary', 'comment']
@@ -34,6 +35,15 @@ class SeriesService extends AbstractModelService<Series> {
 	 */
 	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
+	}
+
+	/**
+	 * Finds the Universe of a Series
+	 * @param id The Series ID
+	 * @returns The Universe, if any
+	 */
+	async getUniverse(id: number): Promise<Universe | undefined> {
+		return axiosGet(`${this.basePath}${id}/universe`)
 	}
 }
 

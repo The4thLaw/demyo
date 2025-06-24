@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -57,18 +58,21 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @NamedEntityGraph(name = "Album.forWorks", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("bookType") })
 @NamedEntityGraph(name = "Album.forView", attributeNodes =
-{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+{ @NamedAttributeNode(value = "series", subgraph = "Album.subgraph.Series"),
+		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
 		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("coverArtists"),
 		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites"),
-		@NamedAttributeNode("bookType")})
+		@NamedAttributeNode("bookType"), @NamedAttributeNode("universe")},
+	subgraphs = @NamedSubgraph(name = "Album.subgraph.Series", attributeNodes = @NamedAttributeNode("universe")))
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
 		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("coverArtists"),
-		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("bookType") })
+		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("bookType"),
+		@NamedAttributeNode("universe") })
 @JsonView(ModelView.AlbumTemplate.class)
 public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	/** The type of book. */
