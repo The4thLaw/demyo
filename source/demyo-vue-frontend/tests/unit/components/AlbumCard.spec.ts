@@ -29,11 +29,10 @@ describe('AlbumCard.vue', () => {
 
 	it('Defaults to not expanded', () => {
 		expect(wrapper.vm.expanded).toBeFalsy()
-		console.log()
 	})
 
 	it('Displays album information', () => {
 		expect(wrapper.findComponent('.c-AlbumCard__albumLink').text()).toContain('My album title')
-		expect(wrapper.findComponent('.v-card-text .c-FieldValue').text()).toContain('Jan 01 2024')
+		expect(wrapper.findComponent('.v-card-text .c-FieldValueRaw').text()).toContain('Jan 01 2024')
 	})
 })
