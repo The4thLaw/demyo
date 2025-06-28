@@ -16,14 +16,20 @@
 					{{ $t(labelKey) }}
 				</template>
 			</div>
-			<!-- TODO: prepend, append slots -->
-			<slot v-if="hasDefaultSlot" />
+			<slot v-if="$slots.prepend" name="prepend" />
+
+			<slot v-if="$slots.default" />
 			<template v-else-if="type === 'text'">
 				{{ value }}
+			</template>
+			<template v-else-if="type === 'date'">
+				{{ $d(new Date(value), 'long') }}
 			</template>
 			<RichTextValue v-else-if="type === 'rich-text'" :value="value" />
 			<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
 			<ModelLink v-else-if="type.endsWith('View')" :model="value" :view="type" />
+
+			<slot v-if="$slots.append" name="append" />
 		</div>
 	</Teleport>
 </template>
@@ -37,16 +43,18 @@ const props = defineProps<{
 	labelKey?: string,
 	type?: 'rich-text' | 'text' | 'url' |
 		'PublisherView'
-	cols?: number
-	md?: number
+	cols?: number | string
+	md?: number | string
 }>()
 
 const tpId = `c-FieldValue__teleport_${crypto.randomUUID()}`
 const hasCols = computed(() => !!props.cols || !!props.md)
 
-// TODO: migrate to defineSlots
-const slots = useSlots()
-const hasDefaultSlot = computed(() => !!slots.default)
+const slots = defineSlots<{
+	default: () => void
+	prepend: () => void
+	append: () => void
+}>()
 </script>
 
 <style lang="scss">
