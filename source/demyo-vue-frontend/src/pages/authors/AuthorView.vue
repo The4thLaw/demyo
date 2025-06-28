@@ -16,14 +16,19 @@
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
-			<FieldValue v-if="author.birthDate" :label="$t('field.Author.birthDate')">
-				{{ $d(new Date(author.birthDate), 'long') }}
-				<span v-if="isAlive">({{ $t('field.Author.age.alive', { age }) }})</span>
+
+			<FieldValue :value="author.birthDate" label-key="field.Author.birthDate" type="date">
+				<template v-if="isAlive" #append>
+					({{ $t('field.Author.age.alive', { age }) }})
+				</template>
 			</FieldValue>
-			<FieldValue v-if="author.deathDate" :label="$t('field.Author.deathDate')">
-				{{ $d(new Date(author.deathDate), 'long') }}
-				<span v-if="!isAlive">({{ $t('field.Author.age.dead', { age }) }})</span>
+
+			<FieldValue :value="author.deathDate" label-key="field.Author.deathDate" type="date">
+				<template v-if="!isAlive" #append>
+					({{ $t('field.Author.age.dead', { age }) }})
+				</template>
 			</FieldValue>
+
 			<FieldValue :value="author.biography" label-key="field.Author.biography" type="rich-text" />
 			<v-alert
 				v-if="!albumsLoading && albums.length === 0"
