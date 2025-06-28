@@ -28,7 +28,7 @@ vi.mock('@/composables/model-edit', () => ({
 	})
 }))
 
-vi.mock('@/components/RichTextEditor.vue', () => ({
+vi.mock('@/components/forms/RichTextEditor.vue', () => ({
 	default: {
 		render: (): any => '[RichTextEditorStub]',
 		inheritAttrs: false

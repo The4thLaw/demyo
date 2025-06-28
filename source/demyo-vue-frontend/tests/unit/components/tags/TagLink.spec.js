@@ -1,4 +1,4 @@
-import TagLink from '@/components/TagLink.vue'
+import TagLink from '@/components/tags/TagLink.vue'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 

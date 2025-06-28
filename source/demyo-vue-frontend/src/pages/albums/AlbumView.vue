@@ -245,14 +245,8 @@
 		</SectionCard>
 
 		<SectionCard v-if="album.summary || album.comment">
-			<FieldValue v-if="album.summary" :label="$t('field.Album.summary')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="album.summary" />
-			</FieldValue>
-			<FieldValue v-if="album.comment" :label="$t('field.Album.comment')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="album.comment" />
-			</FieldValue>
+			<FieldValue :value="album.summary" type="rich-text" label-key="field.Album.summary" />
+			<FieldValue :value="album.comment" type="rich-text" label-key="field.Album.comment" />
 		</SectionCard>
 
 		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Album.gallery')">
@@ -295,7 +289,7 @@
 </template>
 
 <script setup lang="ts">
-import GalleryIndex from '@/components/GalleryIndex.vue'
+import GalleryIndex from '@/components/generic/GalleryIndex.vue'
 import { useCurrency } from '@/composables/currency'
 import { useSimpleView } from '@/composables/model-view'
 import albumService from '@/services/album-service'

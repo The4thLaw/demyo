@@ -64,7 +64,8 @@ const commonRules = {
 	// Style
 	'block-spacing': 'error',
 	'@stylistic/indent': ['error', 'tab', {
-		FunctionDeclaration: { parameters: 2 }
+		FunctionDeclaration: { parameters: 2 },
+		SwitchCase: 1
 	}],
 	'max-len': ['error', {
 		code: 120

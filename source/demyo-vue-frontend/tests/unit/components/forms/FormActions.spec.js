@@ -1,14 +1,6 @@
-import FormActions from '@/components/FormActions.vue'
+import FormActions from '@/components/forms/FormActions.vue'
 import { mount } from '@vue/test-utils'
 import { describe, it } from 'vitest'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-
-const vuetify = createVuetify({
-	components,
-	directives
-})
 
 global.ResizeObserver = require('resize-observer-polyfill')
 
@@ -19,7 +11,6 @@ function createWrapper(props = {}) {
 			components: {
 				FormActions
 			},
-			plugins: [vuetify],
 			mocks: {
 				$t: s => s
 			}

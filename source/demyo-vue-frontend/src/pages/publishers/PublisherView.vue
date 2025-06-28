@@ -34,10 +34,7 @@
 					</FieldValue>
 				</v-col>
 			</v-row>
-			<FieldValue v-if="publisher.history" :label="$t('field.Publisher.history')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="publisher.history" />
-			</FieldValue>
+			<FieldValue :value="publisher.history" label-key="field.Publisher.history" type="rich-text" />
 
 			<v-btn
 				v-if="albumCount > 0"

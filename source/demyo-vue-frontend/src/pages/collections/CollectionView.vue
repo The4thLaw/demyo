@@ -17,25 +17,20 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading" :image="collection.logo" :title="collection.identifyingName">
-			<FieldValue :label="$t('field.Collection.publisher')">
-				<ModelLink :model="collection.publisher" view="PublisherView" />
-			</FieldValue>
+			<FieldValue
+				:value="collection.publisher" label-key="field.Collection.publisher" type="PublisherView"
+			/>
 			<v-row>
-				<v-col v-if="collection.website" cols="12" md="6">
-					<FieldValue :label="$t('field.Collection.website')">
-						<a :href="collection.website">{{ collection.website }}</a>
-					</FieldValue>
-				</v-col>
-				<v-col v-if="collection.feed" cols="12" md="6">
-					<FieldValue :label="$t('field.Collection.feed')">
-						<a :href="collection.feed">{{ collection.feed }}</a>
-					</FieldValue>
-				</v-col>
+				<FieldValue
+					:value="collection.website" label-key="field.Collection.website"
+					type="url" cols="12" md="6"
+				/>
+				<FieldValue
+					:value="collection.feed" label-key="field.Collection.feed"
+					type="url" cols="12" md="6"
+				/>
 			</v-row>
-			<FieldValue v-if="collection.history" :label="$t('field.Collection.history')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="collection.history" />
-			</FieldValue>
+			<FieldValue :value="collection.history" label-key="field.Collection.history" type="rich-text" />
 			<v-btn
 				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withCollection: collection.id } }"

@@ -17,10 +17,7 @@
 		</AppTasks>
 
 		<SectionCard :loading="loading" :title="bookType.identifyingName">
-			<FieldValue v-if="bookType.description" :label="$t('field.BookType.description')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="bookType.description" />
-			</FieldValue>
+			<FieldValue :value="bookType.description" label-key="field.BookType.description" type="rich-text" />
 
 			<FieldValue :label="$t('field.BookType.labelType')">
 				{{ $t(`field.BookType.labelType.value.${bookType.labelType}`) }}

@@ -2,7 +2,8 @@
 	<ModelLink :model="model" :comma-separated="false" css-class="c-TagLink" view="TagView">
 		<template #default="slotProps">
 			<span :style="getStyle(slotProps.item)" class="d-Tag">
-				{{ slotProps.item.identifyingName }}
+				<template v-if="label">label</template>
+				<template v-else>{{ slotProps.item.identifyingName }}</template>
 				<span
 					v-if="hasCount(slotProps.item)"
 					class="d-Tag__count" v-text="slotProps.item.usageCount"
@@ -19,6 +20,7 @@ import { getStyle } from '@/composables/tags'
 
 defineProps<{
 	model: IModel
+	label?: string
 }>()
 
 function hasCount(tag: ProcessedTag): boolean {

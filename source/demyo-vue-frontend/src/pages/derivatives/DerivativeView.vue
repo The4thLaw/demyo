@@ -94,7 +94,7 @@
 
 			<div class="dem-fieldset">
 				<v-row>
-					<v-col cols="12" md="6" xl="3">
+					<v-col v-if="derivative.number || derivative.total" cols="12" md="6" xl="3">
 						<template v-if="derivative.number && derivative.total">
 							<FieldValue :label="$t('field.Derivative.numberOverTotal')">
 								{{ $n(derivative.number) }} / {{ $n(derivative.total) }}
@@ -125,10 +125,9 @@
 						</FieldValue>
 					</v-col>
 					<v-col cols="12">
-						<FieldValue v-if="derivative.description" :label="$t('field.Derivative.description')">
-							<!-- eslint-disable-next-line vue/no-v-html -->
-							<div v-html="derivative.description" />
-						</FieldValue>
+						<FieldValue
+							:value="derivative.description" label-key="field.Derivative.description" type="rich-text"
+						/>
 					</v-col>
 				</v-row>
 			</div>

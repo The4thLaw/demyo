@@ -65,14 +65,8 @@
 			</FieldValue>
 
 			<div class="dem-columnized">
-				<FieldValue v-if="series.summary" :label="$t('field.Series.summary')">
-					<!-- eslint-disable-next-line vue/no-v-html -->
-					<div v-html="series.summary" />
-				</FieldValue>
-				<FieldValue v-if="series.comment" :label="$t('field.Series.comment')">
-					<!-- eslint-disable-next-line vue/no-v-html -->
-					<div v-html="series.comment" />
-				</FieldValue>
+				<FieldValue :value="series.summary" label-key="field.Series.summary" type="rich-text" />
+				<FieldValue :value="series.comment" label-key="field.Series.comment" type="rich-text" />
 			</div>
 		</SectionCard>
 
@@ -190,7 +184,7 @@
 </template>
 
 <script setup lang="ts">
-import SectionCard from '@/components/SectionCard.vue'
+import SectionCard from '@/components/generic/SectionCard.vue'
 import { useSimpleView } from '@/composables/model-view'
 import { mergeModels } from '@/helpers/fields'
 import albumService from '@/services/album-service'
