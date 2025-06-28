@@ -1,38 +1,48 @@
 <template>
-	<div
-		v-if="!type || value"
-		:class="{
-			'c-FieldValue': true,
-			'c-FieldValue__rich-text': type === 'rich-text'
-		}"
-	>
-		<div class="c-FieldValue__label">
-			<template v-if="label">
-				{{ label }}
+	<v-col v-if="(!type || value) && hasCols" :id="tpId" :cols="cols" :md="md" />
+	<Teleport defer :to="`#${tpId}`" :disabled="!hasCols">
+		<div
+			v-if="!type || value"
+			:class="{
+				'c-FieldValue': true,
+				'c-FieldValue__rich-text': type === 'rich-text'
+			}"
+		>
+			<div class="c-FieldValue__label">
+				<template v-if="label">
+					{{ label }}
+				</template>
+				<template v-if="labelKey">
+					{{ $t(labelKey) }}
+				</template>
+			</div>
+			<!-- TODO: prepend, append slots -->
+			<slot v-if="hasDefaultSlot" />
+			<template v-else-if="type === 'text'">
+				{{ value }}
 			</template>
-			<template v-if="labelKey">
-				{{ $t(labelKey) }}
-			</template>
+			<RichTextValue v-else-if="type === 'rich-text'" :value="value" />
+			<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
+			<ModelLink v-else-if="type.endsWith('View')" :model="value" :view="type" />
 		</div>
-		<!-- TODO: prepend, append slots -->
-		<slot v-if="hasDefaultSlot" />
-		<template v-else-if="type === 'text'">
-			{{ value }}
-		</template>
-		<RichTextValue v-else-if="type === 'rich-text'" :value="value" />
-		<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
-		<ModelLink v-else-if="type.endsWith('View')" :model="value" :view="type" />
-	</div>
+	</Teleport>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+// The teleport is used to conditionnally provide a parent v-col element
+
+const props = defineProps<{
 	value?: unknown,
 	label?: string,
 	labelKey?: string,
 	type?: 'rich-text' | 'text' | 'url' |
 		'PublisherView'
+	cols?: number
+	md?: number
 }>()
+
+const tpId = `c-FieldValue__teleport_${crypto.randomUUID()}`
+const hasCols = computed(() => !!props.cols || !!props.md)
 
 // TODO: migrate to defineSlots
 const slots = useSlots()
