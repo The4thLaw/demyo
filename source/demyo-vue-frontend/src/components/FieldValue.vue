@@ -16,8 +16,12 @@
 		</div>
 		<!-- TODO: prepend, append slots -->
 		<slot v-if="hasDefaultSlot" />
-		<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
+		<template v-else-if="type === 'text'">
+			{{ value }}
+		</template>
 		<RichTextValue v-else-if="type === 'rich-text'" :value="value" />
+		<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
+		<ModelLink v-else-if="type.endsWith('View')" :model="value" :view="type" />
 	</div>
 </template>
 
@@ -26,7 +30,8 @@ defineProps<{
 	value?: unknown,
 	label?: string,
 	labelKey?: string,
-	type?: 'url' | 'rich-text'
+	type?: 'rich-text' | 'text' | 'url' |
+		'PublisherView'
 }>()
 
 // TODO: migrate to defineSlots

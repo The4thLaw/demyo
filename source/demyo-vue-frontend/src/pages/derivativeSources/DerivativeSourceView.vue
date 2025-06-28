@@ -19,9 +19,7 @@
 		<SectionCard :loading="loading" :title="source.identifyingName">
 			<v-row>
 				<v-col v-if="source.owner" cols="12" md="6">
-					<FieldValue :label="$t('field.DerivativeSource.owner')">
-						{{ source.owner }}
-					</FieldValue>
+					<FieldValue :value="source.owner" label-key="field.DerivativeSource.owner" type="text" />
 				</v-col>
 				<v-col cols="12" md="6">
 					<FieldValue :label="$t('field.DerivativeSource.active.view')">
@@ -36,9 +34,7 @@
 			</v-row>
 			<v-row>
 				<v-col v-if="source.website" cols="12" md="6">
-					<FieldValue :label="$t('field.DerivativeSource.website')">
-						<a :href="source.website">{{ source.website }}</a>
-					</FieldValue>
+					<FieldValue :value="source.website" label-key="field.DerivativeSource.website" type="url" />
 				</v-col>
 				<v-col v-if="source.email" cols="12" md="6">
 					<FieldValue :label="$t('field.DerivativeSource.email')">
