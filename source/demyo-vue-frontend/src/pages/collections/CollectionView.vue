@@ -21,12 +21,14 @@
 				:value="collection.publisher" label-key="field.Collection.publisher" type="PublisherView"
 			/>
 			<v-row>
-				<v-col v-if="collection.website" cols="12" md="6">
-					<FieldValue :value="collection.website" label-key="field.Collection.website" type="url" />
-				</v-col>
-				<v-col v-if="collection.feed" cols="12" md="6">
-					<FieldValue :value="collection.feed" label-key="field.Collection.feed" type="url" />
-				</v-col>
+				<FieldValue
+					:value="collection.website" label-key="field.Collection.website"
+					type="url" cols="12" md="6"
+				/>
+				<FieldValue
+					:value="collection.feed" label-key="field.Collection.feed"
+					type="url" cols="12" md="6"
+				/>
 			</v-row>
 			<FieldValue :value="collection.history" label-key="field.Collection.history" type="rich-text" />
 			<v-btn
