@@ -1,37 +1,33 @@
 <template>
-	<v-col v-if="(!type || value) && hasCols" :id="tpId" :cols="cols" :md="md" />
-	<Teleport defer :to="`#${tpId}`" :disabled="!hasCols">
-		<div
-			v-if="!type || value"
-			:class="{
-				'c-FieldValue': true,
-				'c-FieldValue__rich-text': type === 'rich-text'
-			}"
+	<v-col v-if="(!type || value) && hasCols" :cols="cols" :md="md" class="c-FieldValue__vcol">
+		<FieldValueRaw
+			:value="value" :label="label" :label-key="labelKey" :type="type"
 		>
-			<div class="c-FieldValue__label">
-				<template v-if="label">
-					{{ label }}
-				</template>
-				<template v-if="labelKey">
-					{{ $t(labelKey) }}
-				</template>
-			</div>
-			<slot v-if="$slots.prepend" name="prepend" />
-
-			<slot v-if="$slots.default" />
-			<template v-else-if="type === 'text'">
-				{{ value }}
+			<template v-if="$slots.prepend" #prepend>
+				<slot name="prepend" />
 			</template>
-			<template v-else-if="type === 'date'">
-				{{ $d(new Date(value), 'long') }}
+			<template v-if="$slots.default" #default>
+				<slot name="default" />
 			</template>
-			<RichTextValue v-else-if="type === 'rich-text'" :value="value" />
-			<a v-else-if="type === 'url'" :href="value">{{ value }}</a>
-			<ModelLink v-else-if="type.endsWith('View')" :model="value" :view="type" />
-
-			<slot v-if="$slots.append" name="append" />
-		</div>
-	</Teleport>
+			<template v-if="$slots.append" #append>
+				<slot name="append" />
+			</template>
+		</FieldValueRaw>
+	</v-col>
+	<FieldValueRaw
+		v-else-if="!type || value"
+		:value="value" :label="label" :label-key="labelKey" :type="type"
+	>
+		<template v-if="$slots.prepend" #prepend>
+			<slot name="prepend" />
+		</template>
+		<template v-if="$slots.default" #default>
+			<slot name="default" />
+		</template>
+		<template v-if="$slots.append" #append>
+			<slot name="append" />
+		</template>
+	</FieldValueRaw>
 </template>
 
 <script setup lang="ts">
@@ -47,7 +43,6 @@ const props = defineProps<{
 	md?: number | string
 }>()
 
-const tpId = `c-FieldValue__teleport_${crypto.randomUUID()}`
 const hasCols = computed(() => !!props.cols || !!props.md)
 
 const slots = defineSlots<{
