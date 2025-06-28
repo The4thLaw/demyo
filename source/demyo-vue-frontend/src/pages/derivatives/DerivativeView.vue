@@ -125,10 +125,9 @@
 						</FieldValue>
 					</v-col>
 					<v-col cols="12">
-						<FieldValue v-if="derivative.description" :label="$t('field.Derivative.description')">
-							<!-- eslint-disable-next-line vue/no-v-html -->
-							<div v-html="derivative.description" />
-						</FieldValue>
+						<FieldValue
+							:value="derivative.description" label-key="field.Derivative.description" type="rich-text"
+						/>
 					</v-col>
 				</v-row>
 			</div>
