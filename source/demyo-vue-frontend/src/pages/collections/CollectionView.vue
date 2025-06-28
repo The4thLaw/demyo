@@ -32,10 +32,7 @@
 					</FieldValue>
 				</v-col>
 			</v-row>
-			<FieldValue v-if="collection.history" :label="$t('field.Collection.history')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="collection.history" />
-			</FieldValue>
+			<FieldValue :value="collection.history" label-key="field.Collection.history" type="rich-text" />
 			<v-btn
 				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withCollection: collection.id } }"

@@ -22,10 +22,7 @@
 					{{ tag.identifyingName }}
 				</span>
 			</h1>
-			<FieldValue v-if="tag.description" :label="$t('field.Tag.description')">
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="tag.description" />
-			</FieldValue>
+			<FieldValue :value="tag.description" label-key="field.Tag.description" type="rich-text" />
 			<v-btn
 				v-if="albumCount > 0"
 				:to="{ name: 'AlbumIndex', query: { withTag: tag.id } }"
