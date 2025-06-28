@@ -179,7 +179,7 @@
 </template>
 
 <script setup lang="ts">
-import SectionCard from '@/components/SectionCard.vue'
+import SectionCard from '@/components/generic/SectionCard.vue'
 import { useSimpleView } from '@/composables/model-view'
 import { mergeModels } from '@/helpers/fields'
 import albumService from '@/services/album-service'

@@ -1,4 +1,4 @@
-import FormActions from '@/components/FormActions.vue'
+import FormActions from '@/components/forms/FormActions.vue'
 import { mount } from '@vue/test-utils'
 import { describe, it } from 'vitest'
 

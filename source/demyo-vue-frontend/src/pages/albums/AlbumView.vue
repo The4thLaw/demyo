@@ -278,7 +278,7 @@
 </template>
 
 <script setup lang="ts">
-import GalleryIndex from '@/components/GalleryIndex.vue'
+import GalleryIndex from '@/components/generic/GalleryIndex.vue'
 import { useCurrency } from '@/composables/currency'
 import { useSimpleView } from '@/composables/model-view'
 import albumService from '@/services/album-service'
