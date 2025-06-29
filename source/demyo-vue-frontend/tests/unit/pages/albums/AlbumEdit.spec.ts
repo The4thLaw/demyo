@@ -15,6 +15,7 @@ vi.mock('@/composables/model-edit', () => ({
 		model: ref({
 			id: undefined,
 			series: {},
+			universe: {},
 			publisher: {},
 			binding: {},
 			collection: {},
