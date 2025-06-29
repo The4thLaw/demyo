@@ -52,11 +52,16 @@
 				{{ series.location }}
 			</FieldValue>
 
+			<!-- TODO[universe]: remove everything relatedSeries -->
 			<FieldValue
 				v-if="series.relatedSeries && series.relatedSeries.length > 0"
 				:label="$t('field.Series.relatedSeries')"
 			>
 				<ModelLink :model="series.relatedSeries" view="SeriesView" />
+			</FieldValue>
+
+			<FieldValue v-if="series.universe.id" :label="$t('field.Series.universe')">
+				<ModelLink :model="series.universe" view="UniverseView" />
 			</FieldValue>
 
 			<div class="dem-columnized">

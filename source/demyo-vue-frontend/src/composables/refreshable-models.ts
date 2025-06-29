@@ -8,6 +8,7 @@ import imageService from '@/services/image-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
 import tagService from '@/services/tag-service'
+import universeService from '@/services/universe-service'
 
 function useRefreshable<M extends IModel>(
 		service: AbstractModelService<M>): { models: Ref<M[]>, loading: Ref<boolean>, load: () => Promise<void> } {
@@ -116,6 +117,20 @@ export function useRefreshableTags(): RefreshTag {
 		tags: refreshable.models,
 		tagsLoading: refreshable.loading,
 		loadTags: refreshable.load
+	}
+}
+
+interface RefreshUniverse {
+	universes: Ref<Universe[]>
+	universesLoading: Ref<boolean>
+	loadUniverses: () => Promise<void>
+}
+export function useRefreshableUniverses(): RefreshUniverse {
+	const refreshable = useRefreshable(universeService)
+	return {
+		universes: refreshable.models,
+		universesLoading: refreshable.loading,
+		loadUniverses: refreshable.load
 	}
 }
 

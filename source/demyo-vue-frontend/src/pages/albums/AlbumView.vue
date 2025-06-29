@@ -50,11 +50,22 @@
 					({{ album.originalTitle }})
 				</div>
 				<v-row>
-					<v-col v-if="album.series.id" cols="12" :md="bookTypeManagement ? 6 : 12">
+					<v-col v-if="album.series.id" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.series')">
 							<ModelLink :model="album.series" view="SeriesView" />
 						</FieldValue>
 					</v-col>
+					<v-col v-if="album.universe.id || album.series.universe?.id" cols="12" md="6">
+						<FieldValue :label="$t('field.Album.universe')">
+							<ModelLink v-if="album.universe.id" :model="album.universe" view="UniverseView" />
+							<ModelLink
+								v-if="album.series?.universe?.id" :model="album.series.universe"
+								view="UniverseView"
+							/>
+						</FieldValue>
+					</v-col>
+				</v-row>
+				<v-row>
 					<v-col v-if="bookTypeManagement" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.bookType')">
 							<ModelLink :model="album.bookType" view="BookTypeView" />

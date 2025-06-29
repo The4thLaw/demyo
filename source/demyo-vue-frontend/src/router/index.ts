@@ -19,6 +19,7 @@ import readerRoutes from './readers'
 import seriesRoutes from './series'
 import tagRoutes from './tags'
 import typeRoutes from './types'
+import universeRoutes from './universes'
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -41,6 +42,7 @@ const routes: RouteRecordRaw[] = [
 	...seriesRoutes,
 	...tagRoutes,
 	...typeRoutes,
+	...universeRoutes,
 	{
 		path: '/about',
 		name: 'about',

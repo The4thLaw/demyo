@@ -42,6 +42,18 @@
 					<v-col cols="12" md="6">
 						<v-text-field v-model="album.originalTitle" :label="$t('field.Album.originalTitle')" />
 					</v-col>
+					<v-col cols="12" md="6">
+						<v-text-field
+							v-if="seriesUniverse?.id"
+							v-model="seriesUniverse.identifyingName" :label="$t('field.Album.universe')"
+							:readonly="true" append-icon="mdi-pencil-off-outline"
+						/>
+						<Autocomplete
+							v-else
+							v-model="album.universe.id" :items="universes" :loading="universesLoading"
+							label-key="field.Album.universe" refreshable @refresh="loadUniverses"
+						/>
+					</v-col>
 					<v-col cols="12">
 						<Autocomplete
 							v-model="album.tags" :items="tags" :loading="tagsLoading"
@@ -261,7 +273,8 @@ import TagLightCreate from '@/components/tags/TagLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
-	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags
+	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags,
+	useRefreshableUniverses
 } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
 import { integer, isbn, mandatory, number, strictlyPositive } from '@/helpers/rules'
@@ -282,6 +295,7 @@ const { images, imagesLoading, loadImages } = useRefreshableImages()
 const { publishers, publishersLoading, loadPublishers } = useRefreshablePublishers()
 const { series, seriesLoading, loadSeries } = useRefreshableSeries()
 const { tags, tagsLoading, loadTags } = useRefreshableTags()
+const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 
 const collections = ref([] as Collection[])
 const collectionsLoading = ref(false)
@@ -299,6 +313,7 @@ async function loadCollections(forAlbum: Partial<Album>): Promise<void> {
 }
 
 const bookTypeManagement = ref(false)
+const seriesUniverse: Ref<Universe | undefined> = ref(undefined)
 
 async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	const btmP = bookTypeService.isManagementEnabled()
@@ -306,6 +321,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	let fetched: Partial<Album>
 	if (id) {
 		fetched = await albumService.findById(id)
+		seriesUniverse.value = fetched.series?.universe
 	} else if (route.query.toSeries) {
 		fetched = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
 	} else {
@@ -323,7 +339,8 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 			collection: {} as Collection,
 			binding: {} as Binding,
 			prices: [],
-			cover: {} as Image
+			cover: {} as Image,
+			universe: {} as Universe
 		}
 	}
 
@@ -340,7 +357,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 }
 
 const { model: album, loading, save, reset } = useSimpleEdit(fetchData, albumService,
-	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTags],
+	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTags, loadUniverses],
 	'title.add.album', 'title.edit.album', 'AlbumView')
 
 const labelType = computed(() => {
@@ -358,6 +375,19 @@ function adjustEditionDates(): void {
 		album.value.currentEditionDate = album.value.firstEditionDate
 	}
 }
+
+watch(() => album.value.series?.id, async (newSeriesId) => {
+	// Clear the current cache
+	seriesUniverse.value = undefined
+	// Check the new applicable one
+	if (newSeriesId) {
+		seriesUniverse.value = await seriesService.getUniverse(newSeriesId)
+		// If the new one exists, clear what could be in the album
+		if (seriesUniverse.value) {
+			album.value.universe = {} as Universe
+		}
+	}
+})
 
 const rules = {
 	bookType: [mandatory()],
