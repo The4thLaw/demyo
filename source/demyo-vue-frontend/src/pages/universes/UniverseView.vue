@@ -15,7 +15,8 @@
 		</AppTasks>
 
 		<SectionCard :loading="universeLoading" :image="universe.logo" :title="universe.identifyingName">
-			TODO[universe]: depends on #225
+			<FieldValue :value="universe.website" label-key="field.Universe.website" type="url" />
+			<FieldValue :value="universe.description" label-key="field.Universe.description" type="rich-text" />
 		</SectionCard>
 
 		<SectionCard
@@ -24,6 +25,16 @@
 			:title="$t('page.Universe.content', albumCount)"
 		>
 			<AlbumTextList :albums="albums" />
+		</SectionCard>
+
+		<SectionCard v-if="hasImages" :loading="loading" :title="$t('page.Universe.gallery')">
+			<GalleryIndex :items="universe.images" :keyboard-navigation="false">
+				<template #default="slotProps">
+					<router-link :to="`/images/${slotProps.item.id}/view`">
+						{{ slotProps.item.identifyingName }}
+					</router-link>
+				</template>
+			</GalleryIndex>
 		</SectionCard>
 	</v-container>
 </template>
@@ -52,5 +63,6 @@ async function fetchData(id: number): Promise<Universe> {
 const { model: universe, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData, universeService,
 	'quickTasks.delete.universe.confirm.done', 'UniverseIndex')
 
+const hasImages = computed(() => universe.value.images?.length)
 const albumCount = computed(() => albums.value.length)
 </script>
