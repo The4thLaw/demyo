@@ -14,11 +14,12 @@ import derivativeSourceService from '@/services/derivative-source-service'
 import derivativeTypeService from '@/services/derivative-type-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
+import universeService from '@/services/universe-service'
 
 const props = defineProps<{
 	modelId: number | string
 	type: 'album' | 'author' | 'binding' | 'bookType' | 'collection' | 'derivative' | 'derivativeSource'
-		| 'derivativeType' | 'publisher' | 'series'
+		| 'derivativeType' | 'publisher' | 'series' | 'universe'
 	label?: string
 }>()
 const loading = ref(true)
@@ -68,6 +69,10 @@ async function load(): Promise<void> {
 		case 'series':
 			service = seriesService
 			view.value = 'SeriesView'
+			break
+		case 'universe':
+			service = universeService
+			view.value = 'UniverseView'
 			break
 		default:
 			// eslint-disable-next-line @typescript-eslint/restrict-template-expressions
