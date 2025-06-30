@@ -58,7 +58,7 @@ public class RawSQLDao implements IRawSQLDao {
 				"albums_writers", "albums_artists", "albums_inkers", "albums_translators", "albums_cover_artists",
 				"albums_images", "albums_prices", "albums", "bindings",
 				"series_relations", "series", "authors", "collections", "publishers", "images", "readers",
-				"configuration", "book_types" }) {
+				"configuration", "book_types", "universes" }) {
 			executeUpdate("DELETE FROM " + table);
 		}
 	}
@@ -68,7 +68,7 @@ public class RawSQLDao implements IRawSQLDao {
 		LOGGER.debug("Fixing auto-increments");
 		for (String table : new String[] { "albums", "authors", "bindings", "borrowers", "collections", "configuration",
 				"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series", "sources",
-				"tags", "book_types" }) {
+				"tags", "book_types", "universes" }) {
 			executeUpdate(
 					"ALTER TABLE " + table + " ALTER COLUMN ID RESTART WITH (SELECT MAX(id) + 1 FROM " + table + ")");
 		}
