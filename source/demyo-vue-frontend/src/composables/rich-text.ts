@@ -8,7 +8,7 @@ export function useRichTextTemplate(userValue: Ref<string | undefined>): Ref<str
 			// Simple models without specific processing
 			.replace(
 				// eslint-disable-next-line max-len
-				/(\[([^\]]*)\])?\((album|author|binding|bookType|collection|derivative|derivativeSource|derivativeType|publisher|series):(\d+)\)/g,
+				/(\[([^\]]*)\])?\((album|author|binding|bookType|collection|derivative|derivativeSource|derivativeType|publisher|series|universe):(\d+)\)/g,
 				'<DeferredModelLink type="$3" model-id="$4" label="$2"/>')
 			// Images
 			.replace(/(\[([^\]]*)\])?\(image:(\d+)(:(small|large|full))?\)/g,
