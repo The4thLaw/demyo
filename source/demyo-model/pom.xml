@@ -47,6 +47,12 @@
 			<artifactId>commons-beanutils</artifactId>
 		</dependency>
 
+		<!-- Required for the Java-based migrations -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>

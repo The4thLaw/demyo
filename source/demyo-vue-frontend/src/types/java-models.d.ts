@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-05-25 11:14:25.
+// Generated using typescript-generator version 3.2.1263 on 2025-06-30 19:05:26.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -237,8 +237,8 @@ interface DerivativeSource extends AbstractBasicLegalEntity {
 }
 
 interface IModel {
-    identifyingName: string;
     id: number;
+    identifyingName: string;
 }
 
 type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
