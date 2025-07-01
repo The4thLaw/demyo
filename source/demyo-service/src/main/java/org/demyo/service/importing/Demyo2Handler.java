@@ -1,13 +1,17 @@
 package org.demyo.service.importing;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -15,6 +19,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
+import org.demyo.model.schema.common.RelationsToUniverseConverter;
 
 /**
  * SAX handler for import of Demyo 2.x files.
@@ -33,27 +38,27 @@ public class Demyo2Handler extends DefaultHandler {
 	private String derivativeId;
 	private String readerId;
 
-	private List<Map<String, String>> relatedSeries = new ArrayList<>();
-	private List<Map<String, String>> albumArtists = new ArrayList<>();
-	private List<Map<String, String>> albumWriters = new ArrayList<>();
-	private List<Map<String, String>> albumColorists = new ArrayList<>();
-	private List<Map<String, String>> albumInkers = new ArrayList<>();
-	private List<Map<String, String>> albumTranslators = new ArrayList<>();
-	private List<Map<String, String>> albumCoverArtists = new ArrayList<>();
-	private List<Map<String, String>> albumTags = new ArrayList<>();
-	private List<Map<String, String>> albumImages = new ArrayList<>();
-	private List<Map<String, String>> derivativeImages = new ArrayList<>();
-	private List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
-	private List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
-	private List<Map<String, String>> readerReadingList = new ArrayList<>();
-	private Map<String, List<Map<String, String>>> allRelations = new HashMap<>();
+	private final RelationsToUniverseConverter rtuConverter;
+	private final List<Map<String, String>> albumArtists = new ArrayList<>();
+	private final List<Map<String, String>> albumWriters = new ArrayList<>();
+	private final List<Map<String, String>> albumColorists = new ArrayList<>();
+	private final List<Map<String, String>> albumInkers = new ArrayList<>();
+	private final List<Map<String, String>> albumTranslators = new ArrayList<>();
+	private final List<Map<String, String>> albumCoverArtists = new ArrayList<>();
+	private final List<Map<String, String>> albumTags = new ArrayList<>();
+	private final List<Map<String, String>> albumImages = new ArrayList<>();
+	private final List<Map<String, String>> derivativeImages = new ArrayList<>();
+	private final List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
+	private final List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
+	private final List<Map<String, String>> readerReadingList = new ArrayList<>();
+	private final Map<String, List<Map<String, String>>> allRelations = new HashMap<>();
 
 	/**
 	 * Initializes structures for the handler.
 	 */
-	public Demyo2Handler(IRawSQLDao rawSqlDao) {
+	public Demyo2Handler(IRawSQLDao rawSqlDao, DataSource dataSource) {
 		this.rawSqlDao = rawSqlDao;
-		allRelations.put("series_relations", relatedSeries);
+		rtuConverter = new RelationsToUniverseConverter(DataSourceUtils.getConnection(dataSource));
 		allRelations.put("albums_artists", albumArtists);
 		allRelations.put("albums_writers", albumWriters);
 		allRelations.put("albums_colorists", albumColorists);
@@ -87,10 +92,9 @@ public class Demyo2Handler extends DefaultHandler {
 				createLine("series", attributes);
 				break;
 			case "related_series":
-				HashMap<String, String> columns = new HashMap<>();
-				columns.put("main", seriesId);
-				columns.put("sub", attributes.getValue("ref"));
-				relatedSeries.add(columns);
+				rtuConverter.addToGroups(
+					Long.valueOf(seriesId),
+					Long.valueOf(attributes.getValue("ref")));
 				break;
 			case "albums":
 				if (!hasBookType) {
@@ -216,6 +220,11 @@ public class Demyo2Handler extends DefaultHandler {
 				break;
 			case "library":
 				persistRelations();
+				try {
+					persistSeriesRelations();
+				} catch (SQLException e) {
+					throw new SAXException("Failed to persist universe migrations");
+				}
 				break;
 			default:
 				// No special behaviour for other tags
@@ -249,5 +258,10 @@ public class Demyo2Handler extends DefaultHandler {
 				rawSqlDao.insert(tableName, line);
 			}
 		}
+	}
+
+	private void persistSeriesRelations() throws SQLException {
+		LOGGER.debug("Persisting series relations to universes migration...");
+		rtuConverter.convert();
 	}
 }
