@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
+import javax.sql.DataSource;
 import javax.xml.parsers.ParserConfigurationException;
 
 import jakarta.annotation.PostConstruct;
@@ -48,6 +49,8 @@ public class Demyo2Importer implements IImporter {
 	private IImageService imageService;
 	@Autowired
 	protected IRawSQLDao rawSqlDao;
+	@Autowired
+	protected DataSource dataSource;
 
 	@PostConstruct
 	private void init() {
@@ -117,7 +120,7 @@ public class Demyo2Importer implements IImporter {
 			xmlBis = new BufferedInputStream(xmlFis);
 
 			// Import
-			xmlReader.setContentHandler(new Demyo2Handler(rawSqlDao));
+			xmlReader.setContentHandler(new Demyo2Handler(rawSqlDao, dataSource));
 			xmlReader.parse(new InputSource(xmlBis));
 
 			stopWatch.split();
