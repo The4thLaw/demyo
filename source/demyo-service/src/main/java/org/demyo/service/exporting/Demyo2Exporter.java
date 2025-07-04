@@ -83,11 +83,8 @@ public class Demyo2Exporter implements IExporter {
 			exportModel(xsw, "authors", "author", "AUTHORS");
 			exportModel(xsw, "tags", "tag", "TAGS");
 			exportModel(xsw, "book_types", "book_type", "BOOK_TYPES");
-
-			// Series
-			exportModel(xsw, "series-list", "series", "SERIES",
-					new ManyToManyRelation("related_series-list", "related_series", "MAIN", "SUB",
-							rawSqlDao.getRawRecords("SERIES_RELATIONS")));
+			exportModel(xsw, "universes", "universe", "UNIVERSES");
+			exportModel(xsw, "series-list", "series", "SERIES");
 
 			// Albums
 			exportModel(xsw, "albums", "album", "ALBUMS",
