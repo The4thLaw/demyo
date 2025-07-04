@@ -12,9 +12,13 @@ import org.demyo.model.ModelView;
 import org.demyo.model.Publisher;
 import org.demyo.model.Series;
 import org.demyo.model.Tag;
+import org.demyo.model.Universe;
 
 /** Represents the results of a search across multiple model types. */
 public final class SearchResult {
+	/** The matching {@link Universe}s. */
+	@JsonView(ModelView.Basic.class)
+	private final List<Universe> universes;
 	/** The matching {@link Series}. */
 	@JsonView(ModelView.Basic.class)
 	private final List<Series> series;
@@ -36,6 +40,7 @@ public final class SearchResult {
 
 	/** Creates a completely blank search result. */
 	public SearchResult() {
+		this.universes = Collections.emptyList();
 		this.series = Collections.emptyList();
 		this.albums = Collections.emptyList();
 		this.tags = Collections.emptyList();
@@ -46,7 +51,8 @@ public final class SearchResult {
 
 	/**
 	 * Creates a search result with the provided matches.
-	 * 
+	 *
+	 * @param universes The matching {@link Universe}s.
 	 * @param series The matching {@link Series}.
 	 * @param albums The matching {@link Album}s.
 	 * @param tags The matching {@link Tag}s.
@@ -54,8 +60,10 @@ public final class SearchResult {
 	 * @param publishers The matching {@link Publisher}s.
 	 * @param collections The matching {@link Collection}s.
 	 */
-	public SearchResult(List<Series> series, List<Album> albums, List<Tag> tags, List<Author> authors,
-			List<Publisher> publishers, List<Collection> collections) {
+	public SearchResult(List<Universe> universes, List<Series> series, List<Album> albums,
+			List<Tag> tags, List<Author> authors, List<Publisher> publishers,
+			List<Collection> collections) {
+		this.universes = universes;
 		this.series = series;
 		this.albums = albums;
 		this.tags = tags;
@@ -65,8 +73,17 @@ public final class SearchResult {
 	}
 
 	/**
+	 * Gets the matching {@link Universe}s.
+	 *
+	 * @return the matching {@link Universe}s
+	 */
+	public List<Universe> getUniverses() {
+		return universes;
+	}
+
+	/**
 	 * Gets the matching {@link Series}.
-	 * 
+	 *
 	 * @return the matching {@link Series}
 	 */
 	public List<Series> getSeries() {
@@ -75,7 +92,7 @@ public final class SearchResult {
 
 	/**
 	 * Gets the matching {@link Album}s.
-	 * 
+	 *
 	 * @return the matching {@link Album}s
 	 */
 	public List<Album> getAlbums() {
@@ -84,7 +101,7 @@ public final class SearchResult {
 
 	/**
 	 * Gets the matching {@link Tag}s.
-	 * 
+	 *
 	 * @return the matching {@link Tag}s
 	 */
 	public List<Tag> getTags() {
@@ -93,7 +110,7 @@ public final class SearchResult {
 
 	/**
 	 * Gets the matching {@link Author}s.
-	 * 
+	 *
 	 * @return the matching {@link Author}s
 	 */
 	public List<Author> getAuthors() {
@@ -102,7 +119,7 @@ public final class SearchResult {
 
 	/**
 	 * Gets the matching {@link Publisher}s.
-	 * 
+	 *
 	 * @return the matching {@link Publisher}s
 	 */
 	public List<Publisher> getPublishers() {
@@ -111,7 +128,7 @@ public final class SearchResult {
 
 	/**
 	 * Gets the matching {@link Collection}s.
-	 * 
+	 *
 	 * @return the matching {@link Collection}s
 	 */
 	public List<Collection> getCollections() {

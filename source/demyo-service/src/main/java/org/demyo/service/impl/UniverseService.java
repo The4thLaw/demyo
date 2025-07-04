@@ -1,10 +1,12 @@
 package org.demyo.service.impl;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +41,13 @@ public class UniverseService extends AbstractModelService<Universe> implements I
 			throw new EntityNotFoundException("No Universe for ID " + id);
 		}
 		return entity;
+	}
+
+	@Transactional(readOnly = true)
+	@Async
+	@Override
+	public CompletableFuture<List<Universe>> quickSearch(String query, boolean exact) {
+		return quickSearch(query, exact, repo);
 	}
 
 	@Override

@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-const modelTypes = ['series', 'albums', 'tags', 'authors', 'publishers', 'collections']
+const modelTypes = ['universes', 'series', 'albums', 'tags', 'authors', 'publishers', 'collections']
 
 const props = withDefaults(defineProps<{
 	results?: Record<string, IModel[]>,

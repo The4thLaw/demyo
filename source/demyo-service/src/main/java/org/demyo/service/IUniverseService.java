@@ -8,7 +8,7 @@ import org.demyo.model.Universe;
 /**
  * Service for management of {@link Univers}s.
  */
-public interface IUniverseService extends IModelService<Universe> {
+public interface IUniverseService extends IModelService<Universe>, IQuickSearchableService<Universe> {
 	/**
 	 * Finds the Albums which are part of a Universe, either directly or through its Series.
 	 * @param id The Universe ID
