@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
+  <UNIVERSES ID="17" NAME="Sillage" />
   <BOOK_TYPES ID="1" NAME="Bande dessinée" LABEL_TYPE="GRAPHIC_NOVEL" DESCRIPTION="Pour toutes les BDs" />
   <BOOK_TYPES ID="2" NAME="Roman" LABEL_TYPE="NOVEL" DESCRIPTION="Romans non illustrés" FIELD_CONFIG="ALBUM_INKER,ALBUM_COLORIST,ALBUM_ARTIST" />
   <IMAGES ID="1" URL="Covers/P-T/Sillage_02.jpg" DESCRIPTION="Sillage 02 - Couverture"/>
@@ -67,10 +68,8 @@
   <AUTHORS ID="717" NAME="Montlló Ribó" FNAME="Miquel" NICKNAME="Miki" WEBSITE="http://miquelmontllo.blogspot.be/"/>
   <AUTHORS ID="718" NAME="Picard" FNAME="Alice"/>
   <SERIES ID="2" NAME="Sample empty series" COMPLETED="false"/>
-  <SERIES ID="99" NAME="Sillage" COMPLETED="false" WEBSITE="http://www.poukram.org/" LOCATION="Bibliothèque, F2"/>
-  <SERIES ID="232" NAME="Sillage - Premières Armes" COMPLETED="false" LOCATION="Bibliothèque, F2"/>
-  <SERIES_RELATIONS MAIN="99" SUB="232"/>
-  <SERIES_RELATIONS MAIN="232" SUB="99"/>
+  <SERIES ID="99" NAME="Sillage" UNIVERSE_ID="17" COMPLETED="false" WEBSITE="http://www.poukram.org/" LOCATION="Bibliothèque, F2"/>
+  <SERIES ID="232" NAME="Sillage - Premières Armes" UNIVERSE_ID="17" COMPLETED="false" LOCATION="Bibliothèque, F2"/>
   <TAGS ID="1" NAME="science-fiction" DESCRIPTION="SF" />
   <TAGS ID="3" NAME="comic" FGCOLOUR="#ffffff" BGCOLOUR="#1c1d82"/>
   <TAGS ID="7" NAME="dédicacé"/>

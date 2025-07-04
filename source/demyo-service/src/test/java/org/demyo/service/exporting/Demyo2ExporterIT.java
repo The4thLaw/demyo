@@ -46,6 +46,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		LOGGER.error(expContent);
 
 		assertThat(expContent)
+				// Universe assertions
+				.contains("<universe id=\"17\" name=\"Sillage\"/>")
+				.containsPattern(".*<series id=\"99\" .*universe_id=\"17\".*")
 				// Book type assertions
 				.contains("<book_type id=\"1\" name=\"Bande dessinée\" description=\"Pour toutes les BDs\" label_type=\"GRAPHIC_NOVEL\"/>")
 				// Album assertions

@@ -1,5 +1,12 @@
 package org.demyo.web.controller.api;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import com.github.springtestdbunit.annotation.DatabaseOperation;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -7,13 +14,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import com.github.springtestdbunit.annotation.DatabaseOperation;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 /**
  * Integration tests for the Author API.
@@ -43,8 +43,7 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$.id").value(99))
 				.andExpect(jsonPath("$.name").value("Sillage"))
 				.andExpect(jsonPath("$.website").value("http://www.poukram.org/"))
-				.andExpect(jsonPath("$.relatedSeries", hasSize(1)))
-				.andExpect(jsonPath("$.relatedSeries[0].id").value(232))
+				.andExpect(jsonPath("$.universe.id").value(17))
 				.andExpect(jsonPath("$.albumIds", hasSize(24)))
 				.andExpect(jsonPath("$.albumIds",
 						contains(444, 737, 764, 435, 436, 437, 438, 439, 440, 441, 442, 443, 567, 669, 746, 848, 945,
