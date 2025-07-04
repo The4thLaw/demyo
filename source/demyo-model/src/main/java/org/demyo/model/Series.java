@@ -1,14 +1,12 @@
 package org.demyo.model;
 
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
@@ -19,11 +17,8 @@ import jakarta.persistence.Transient;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 
@@ -33,9 +28,7 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraph(name = "Series.forView", attributeNodes = {
-	@NamedAttributeNode("relatedSeries"), @NamedAttributeNode("universe")
-})
+@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("universe"))
 public class Series extends AbstractNamedModel {
 	/** The name in the Series' original language. */
 	@Column(name = "original_name")
@@ -61,14 +54,6 @@ public class Series extends AbstractNamedModel {
 	/** The physical location of this Series. */
 	@Column(name = "location")
 	private String location;
-	/** The series related to this one. */
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "series_relations", joinColumns = @JoinColumn(name = "main"), //
-			inverseJoinColumns = @JoinColumn(name = "sub"))
-	@SortComparator(IdentifyingNameComparator.class)
-	@JsonIgnoreProperties("relatedSeries")
-	@JsonDeserialize(using = SortedSetDeserializer.class)
-	private SortedSet<Series> relatedSeries;
 
 	/** The internal IDs of the Albums belonging to this Series. */
 	@Transient
@@ -201,24 +186,6 @@ public class Series extends AbstractNamedModel {
 	 */
 	public void setLocation(String location) {
 		this.location = location;
-	}
-
-	/**
-	 * Gets the series related to this one.
-	 *
-	 * @return the series related to this one
-	 */
-	public Set<Series> getRelatedSeries() {
-		return relatedSeries;
-	}
-
-	/**
-	 * Sets the series related to this one.
-	 *
-	 * @param relatedSeries the new series related to this one
-	 */
-	public void setRelatedSeries(SortedSet<Series> relatedSeries) {
-		this.relatedSeries = relatedSeries;
 	}
 
 	/**

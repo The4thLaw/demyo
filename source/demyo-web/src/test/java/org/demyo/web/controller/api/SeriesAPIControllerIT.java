@@ -37,7 +37,7 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 
 	@Test
 	void view() throws Exception {
-		mockMvc.perform(get("/api/series/99"))
+		mockMvc.perform(get( "/api/series/99"))
 				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(jsonPath("$.id").value(99))
@@ -99,7 +99,7 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 				.content("{"
 						+ "\"id\":99,"
 						+ "\"name\":\"Sillage 2\","
-						+ "\"relatedSeries\":[{\"id\":2}]"
+						+ "\"universe\": {}"
 						+ "}"))
 
 				.andExpect(status().isOk())
@@ -110,8 +110,6 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/series/99"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(99))
-				.andExpect(jsonPath("$.name").value("Sillage 2"))
-				.andExpect(jsonPath("$.relatedSeries", hasSize(1)))
-				.andExpect(jsonPath("$.relatedSeries[0].id").value("2"));
+				.andExpect(jsonPath("$.name").value("Sillage 2"));
 	}
 }

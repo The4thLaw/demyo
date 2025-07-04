@@ -12,7 +12,7 @@ import org.demyo.model.Series;
  * This class provides methods to manipulate {@link Series}.
  */
 @Repository
-public interface ISeriesRepo extends IModelRepo<Series>, IQuickSearchableRepo<Series>, ISeriesCustomRepo {
+public interface ISeriesRepo extends IModelRepo<Series>, IQuickSearchableRepo<Series> {
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Series.forView")
 	Series findOneForView(long id);

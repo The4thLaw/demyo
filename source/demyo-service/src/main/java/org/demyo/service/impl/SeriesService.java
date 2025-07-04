@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,14 +48,6 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	@Override
 	public List<Series> findOtherSeries(long id) {
 		return repo.findByIdNot(id);
-	}
-
-	@Transactional(rollbackFor = Throwable.class)
-	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
-	@Override
-	public long save(@NotNull Series model) {
-		Series savedModel = repo.saveWithReverseRelations(model);
-		return savedModel.getId();
 	}
 
 	@Transactional(readOnly = true)
