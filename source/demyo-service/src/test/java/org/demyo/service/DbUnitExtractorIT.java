@@ -62,8 +62,8 @@ class DbUnitExtractorIT extends AbstractServiceTest {
 		IDatabaseConnection connection = new DatabaseConnection(jdbcConnection.getConnection());
 		QueryDataSet fullDataSet = new QueryDataSet(connection);
 		// The order of this list is important: DBUnit will keep the same and may fail if foreign keys are missing
-		for (String table : new String[] { "IMAGES", "PUBLISHERS", "COLLECTIONS", "AUTHORS", "SERIES",
-				"SERIES_RELATIONS", "TAGS", "BINDINGS", "ALBUMS", "ALBUMS_PRICES", "ALBUMS_IMAGES", "ALBUMS_ARTISTS",
+		for (String table : new String[] { "IMAGES", "PUBLISHERS", "COLLECTIONS", "AUTHORS", "UNIVERSES", "SERIES",
+				"TAGS", "BINDINGS", "ALBUMS", "ALBUMS_PRICES", "ALBUMS_IMAGES", "ALBUMS_ARTISTS",
 				"ALBUMS_WRITERS", "ALBUMS_COLORISTS", "ALBUMS_INKERS", "ALBUMS_TRANSLATORS", "ALBUMS_COVER_ARTISTS",
 				"ALBUMS_TAGS", "SOURCES", "DERIVATIVE_TYPES", "DERIVATIVES", "DERIVATIVES_PRICES", "DERIVATIVES_IMAGES",
 				"READERS", "READERS_FAVOURITE_SERIES", "READERS_FAVOURITE_ALBUMS", "READERS_READING_LIST",

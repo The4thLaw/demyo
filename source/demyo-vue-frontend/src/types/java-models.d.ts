@@ -76,7 +76,6 @@ interface Series extends AbstractNamedModel {
     website: string;
     completed: boolean;
     location: string;
-    relatedSeries: Series[];
     albumIds: number[];
 }
 

@@ -57,7 +57,7 @@ public class RawSQLDao implements IRawSQLDao {
 				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
 				"albums_writers", "albums_artists", "albums_inkers", "albums_translators", "albums_cover_artists",
 				"albums_images", "albums_prices", "albums", "bindings",
-				"series_relations", "series", "authors", "collections", "publishers", "images", "readers",
+				"series", "authors", "collections", "publishers", "images", "readers",
 				"configuration", "book_types", "universes" }) {
 			executeUpdate("DELETE FROM " + table);
 		}
