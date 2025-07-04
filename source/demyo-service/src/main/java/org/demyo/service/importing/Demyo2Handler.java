@@ -84,7 +84,7 @@ public class Demyo2Handler extends DefaultHandler {
 				hasBookType = true;
 				// Fall-through
 			case "image", "publisher", "collection", "binding", "author", "tag", "borrower", "source",
-					"derivative_type":
+					"derivative_type", "universe":
 				createLine(localName + "s", attributes);
 				break;
 			case "series":
