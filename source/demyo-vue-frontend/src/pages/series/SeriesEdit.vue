@@ -16,7 +16,9 @@
 					<v-col cols="12">
 						<Autocomplete
 							v-model="series.universe.id" :items="universes" :loading="universesLoading"
+							:add-component="UniverseLightCreate" add-label="title.add.universe"
 							label-key="field.Series.universe" refreshable @refresh="loadUniverses"
+							@added="(id: number) => series.universe.id = id"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
@@ -50,6 +52,7 @@
 </template>
 
 <script setup lang="ts">
+import UniverseLightCreate from '@/components/universes/UniverseLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import { useRefreshableUniverses } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'

@@ -63,6 +63,7 @@ declare module 'vue' {
     MetaSeriesCard: typeof import('./src/components/series/MetaSeriesCard.vue')['default']
     MetaSeriesIndex: typeof import('./src/components/series/MetaSeriesIndex.vue')['default']
     ModelLink: typeof import('./src/components/generic/ModelLink.vue')['default']
+    NamedLightCreate: typeof import('./src/components/forms/NamedLightCreate.vue')['default']
     PriceManagement: typeof import('./src/components/forms/PriceManagement.vue')['default']
     PriceTable: typeof import('./src/components/forms/PriceTable.vue')['default']
     PublisherCard: typeof import('./src/components/publishers/PublisherCard.vue')['default']
@@ -94,6 +95,7 @@ declare module 'vue' {
     TypeIndex: typeof import('./src/pages/types/TypeIndex.vue')['default']
     UniverseEdit: typeof import('./src/pages/universes/UniverseEdit.vue')['default']
     UniverseIndex: typeof import('./src/pages/universes/UniverseIndex.vue')['default']
+    UniverseLightCreate: typeof import('./src/components/universes/UniverseLightCreate.vue')['default']
     UniverseView: typeof import('./src/pages/universes/UniverseView.vue')['default']
   }
 }
