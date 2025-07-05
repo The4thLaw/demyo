@@ -8,6 +8,7 @@ import autoComponents from 'unplugin-vue-components/vite'
 import type { ConfigEnv, UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
+import worldCountriesFilter from './vite-plugins/world-countries-filter'
 
 export default ({ mode }: ConfigEnv): UserConfig => {
 	return defineConfig({
@@ -82,6 +83,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 			VueI18nPlugin({
 				include: [path.resolve(__dirname, './src/locales/strings/**')]
 			}),
+			worldCountriesFilter(),
 			visualizer()
 		],
 

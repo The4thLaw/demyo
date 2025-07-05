@@ -14,6 +14,9 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import readerService from './services/reader-service'
 import pinia from './stores'
+import countries from 'world-countries/countries.json'
+
+console.log('COUNTRIES', countries)
 
 const app = createApp(App as Component)
 

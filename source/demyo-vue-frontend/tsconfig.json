@@ -26,6 +26,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["auto-imports.d.ts", "components.d.ts", "types/augments.d.ts", "src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts"],
+  "include": [
+		"auto-imports.d.ts", "components.d.ts", "types/augments.d.ts",
+		"src/**/*.ts", "src/**/*.tsx", "src/**/*.vue",
+		"tests/**/*.ts"
+	],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
