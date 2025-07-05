@@ -15,16 +15,29 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Migrates the series_relations to sensible universes.
+ * This class can be used for a database migration or for a migration that starts from the import.
+ */
 public class RelationsToUniverseConverter {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RelationsToUniverseConverter.class);
 
 	private final Connection connection;
 	private final List<Set<Long>> groups = new ArrayList<>();
 
+	/**
+	 * Creates a converter.
+	 * @param connection The connection to the database, used to save the universes.
+	 */
 	public RelationsToUniverseConverter(Connection connection) {
 		this.connection = connection;
 	}
 
+	/**
+	 * Adds a series pair to the groups of series.
+	 * @param main The first series in the pair
+	 * @param sub The second series in the pair
+	 */
 	public void addToGroups(long main, long sub) {
 		// Find any existing group
 		Optional<Set<Long>> groupOpt = groups.stream()
@@ -41,6 +54,10 @@ public class RelationsToUniverseConverter {
 		group.add(sub);
 	}
 
+	/**
+	 * Computes and persists the conversion based on the registered groups.
+	 * @throws SQLException In case of database error (read/write)
+	 */
 	public void convert() throws SQLException {
 		LOGGER.info("Found {} series groups to migrate to universes", groups.size());
 
