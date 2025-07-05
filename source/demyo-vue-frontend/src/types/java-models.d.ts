@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-06-30 19:05:26.
+// Generated using typescript-generator version 3.2.1263 on 2025-07-05 20:06:10.
 
 interface AuthorAlbums {
     asArtist: number[];
@@ -194,8 +194,8 @@ interface Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
     depth: number;
     prices: DerivativePrice[];
     images: Image[];
-    baseNameForImages: string;
     mainImage: Image;
+    baseNameForImages: string;
     pricesRaw: DerivativePrice[];
 }
 
