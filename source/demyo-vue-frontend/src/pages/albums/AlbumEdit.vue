@@ -51,7 +51,9 @@
 						<Autocomplete
 							v-else
 							v-model="album.universe.id" :items="universes" :loading="universesLoading"
+							:add-component="UniverseLightCreate" add-label="title.add.universe"
 							label-key="field.Album.universe" refreshable @refresh="loadUniverses"
+							@added="(id: number) => album.universe.id = id"
 						/>
 					</v-col>
 					<v-col cols="12">
@@ -270,6 +272,7 @@
 <script setup lang="ts">
 import AuthorLightCreate from '@/components/authors/AuthorLightCreate.vue'
 import TagLightCreate from '@/components/tags/TagLightCreate.vue'
+import UniverseLightCreate from '@/components/universes/UniverseLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
