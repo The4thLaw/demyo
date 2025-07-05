@@ -6,7 +6,7 @@
 			'c-FieldValueRaw__rich-text': type === 'rich-text'
 		}"
 	>
-		<div class="c-FieldValue__label">
+		<div class="c-FieldValueRaw__label">
 			<template v-if="label">
 				{{ label }}
 			</template>
@@ -75,13 +75,13 @@ defineSlots<{
 // Don't set margins when in a flex grid: the grid has its own margins
 .col,
 [class*="col-"] {
-	& > .c-FieldValue {
+	& > .c-FieldValueRaw {
 		margin-top: 0;
 		margin-bottom: 0;
 	}
 }
 
-.c-FieldValue__label {
+.c-FieldValueRaw__label {
 	color: rgb(var(--v-theme-primary));
 	font-size: 0.9em;
 }
