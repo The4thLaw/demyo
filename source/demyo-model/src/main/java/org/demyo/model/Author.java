@@ -33,7 +33,7 @@ import org.demyo.model.util.StartsWithField;
 { @NamedAttributeNode("portrait") })
 public class Author extends AbstractModel {
 	/** The last name. */
-	@Column(name = "name")
+	@Column
 	@NotBlank
 	@StartsWithField
 	@JsonView(ModelView.Basic.class)
@@ -43,17 +43,17 @@ public class Author extends AbstractModel {
 	@JsonView(ModelView.Basic.class)
 	private String firstName;
 	/** The nickname. */
-	@Column(name = "nickname")
+	@Column
 	private String nickname;
 	/** The biography. */
-	@Column(name = "biography")
+	@Column
 	private String biography;
 	/** The portrait. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "portrait_id")
 	private Image portrait;
 	/** The website. */
-	@Column(name = "website")
+	@Column
 	@URL
 	private String website;
 
@@ -64,6 +64,10 @@ public class Author extends AbstractModel {
 	/** The death date of the author. */
 	@Column(name = "death")
 	private Date deathDate;
+
+	/** The country of origin of the author. */
+	@Column
+	private String country;
 
 	@Override
 	public String getIdentifyingName() {
@@ -229,5 +233,23 @@ public class Author extends AbstractModel {
 	 */
 	public void setDeathDate(Date deathDate) {
 		this.deathDate = deathDate;
+	}
+
+	/**
+	 * Gets the country of origin of the author.
+	 *
+	 * @return the country of origin of the author
+	 */
+	public String getCountry() {
+		return country;
+	}
+
+	/**
+	 * Sets the country of origin of the author.
+	 *
+	 * @param country the new country of origin of the author.
+	 */
+	public void setCountry(String country) {
+		this.country = country;
 	}
 }

@@ -17,7 +17,9 @@
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 
-			{{ country }}
+			<FieldValue v-if="author.country" :value="author.country" label-key="field.Author.country">
+				{{ country }}
+			</FieldValue>
 
 			<FieldValue :value="author.birthDate" label-key="field.Author.birthDate" type="date">
 				<template v-if="isAlive" #append>
@@ -80,7 +82,6 @@ const authorLoading = ref(true)
 const albumsLoading = ref(true)
 const authorAlbums = ref({} as AuthorAlbums)
 const derivativeCount = ref(-1)
-const country = useCountry(computed(() => 'FRA'))
 
 async function fetchData(id: number): Promise<Author> {
 	authorLoading.value = true
@@ -120,6 +121,7 @@ const age = computed(() => {
 	const endDate = author.value.deathDate ? dayjs(author.value.deathDate) : dayjs()
 	return endDate.diff(author.value.birthDate, 'year')
 })
+const country = useCountry(computed(() => author.value.country))
 
 const i18n = useI18n()
 function describeAuthor(album: Album): string {
