@@ -337,12 +337,12 @@ const { model: album, loading, appTasksMenu, deleteModel, loadData }
 		a => a.title)
 
 const allAuthors = computed(() => [
-	...album.value.writers,
-	...album.value.artists,
-	...album.value.colorists,
-	...album.value.inkers,
-	...album.value.translators,
-	...album.value.coverArtists
+	...album.value.writers || [],
+	...album.value.artists || [],
+	...album.value.colorists || [],
+	...album.value.inkers || [],
+	...album.value.translators || [],
+	...album.value.coverArtists || []
 ])
 const hasAuthors = computed(() => allAuthors.value.length > 0)
 const authorOrigins = useAuthorCountries(allAuthors)
