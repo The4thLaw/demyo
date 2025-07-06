@@ -34,14 +34,17 @@ export function useCountry(countryCode: Ref<string>): Ref<string | undefined> {
 	})
 }
 
-export function useCountries(countryCodes: Ref<string[]>): Ref<string> {
+export function useCountries(countryCodes: Ref<(string | undefined)[]>): Ref<string | undefined> {
 	const locale = useIso639alpha3()
 	return computed(() => {
 		const l = locale.value
-		// Distinct
-		const codeSet = new Set(countryCodes.value)
+		// Distinct, removed undefined
+		const codeSet = new Set<string>(countryCodes.value.filter(e => !!e) as string[])
 		// Back to array
 		const codes = [...codeSet]
+		if (codes.length === 0) {
+			return undefined
+		}
 		// Sort
 		codes.sort((a, b) => {
 			const ca = indexedCountries[a].translations[l].common
@@ -54,4 +57,8 @@ export function useCountries(countryCodes: Ref<string[]>): Ref<string> {
 			return `${c.flag} ${c.translations[l].common}`
 		}).join(', ')
 	})
+}
+
+export function useAuthorCountries(authors: Ref<Author[]>): Ref<string | undefined> {
+	return useCountries(computed(() => authors.value.map(a => a.country)))
 }

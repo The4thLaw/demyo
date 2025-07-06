@@ -101,6 +101,10 @@
 							<ModelLink :model="allPublishers" view="PublisherView" />
 						</FieldValue>
 
+						<FieldValue
+							:value="authorOrigins" label-key="field.Series.origin" type="text"
+						/>
+
 						<FieldValue v-if="allWriters.length" :label="allWritersLabels">
 							<ModelLink :model="allWriters" view="AuthorView" />
 						</FieldValue>
@@ -179,6 +183,7 @@
 <script setup lang="ts">
 import SectionCard from '@/components/generic/SectionCard.vue'
 import { useSimpleView } from '@/composables/model-view'
+import { useAuthorCountries } from '@/helpers/countries'
 import { mergeModels } from '@/helpers/fields'
 import albumService from '@/services/album-service'
 import derivativeService from '@/services/derivative-service'
@@ -266,6 +271,15 @@ const allTranslators = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
 const allCoverArtists = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'coverArtists', ['name', 'firstName']) : [])
+const allAuthors = computed(() => [
+	...allWriters.value,
+	...allArtists.value,
+	...allColorists.value,
+	...allInkers.value,
+	...allTranslators.value,
+	...allCoverArtists.value
+])
+const authorOrigins = useAuthorCountries(allAuthors)
 const allTags = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'tags', 'identifyingName') : [])
 
 const allWritersLabels = computed(() => {

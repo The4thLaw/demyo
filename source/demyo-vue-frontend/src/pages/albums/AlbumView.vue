@@ -96,6 +96,10 @@
 
 			<div v-if="hasAuthors" class="dem-fieldset">
 				<v-row>
+					<FieldValue
+						:value="authorOrigins" label-key="field.Album.origin" type="text"
+						cols="12" md="6"
+					/>
 					<v-col v-if="album.writers && album.writers.length" cols="12" md="6">
 						<FieldValue
 							:label="$t(`field.Album.writers.${album.bookType.labelType}`, album.writers.length)"
@@ -301,6 +305,7 @@ import { useUiStore } from '@/stores/ui'
 import sortedIndexOf from 'lodash/sortedIndexOf'
 import { useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useAuthorCountries } from '../../helpers/countries'
 
 const dndDialog = ref(false)
 const derivativeCount = ref(-1)
@@ -331,13 +336,16 @@ const { model: album, loading, appTasksMenu, deleteModel, loadData }
 		'quickTasks.delete.album.confirm.done', 'AlbumIndex',
 		a => a.title)
 
-const hasAuthors = computed(() =>
-	album.value.writers?.length
-	|| album.value.artists?.length
-	|| album.value.colorists?.length
-	|| album.value.inkers?.length
-	|| album.value.translators?.length
-	|| album.value.coverArtists?.length)
+const allAuthors = computed(() => [
+	...album.value.writers,
+	...album.value.artists,
+	...album.value.colorists,
+	...album.value.inkers,
+	...album.value.translators,
+	...album.value.coverArtists
+])
+const hasAuthors = computed(() => allAuthors.value.length > 0)
+const authorOrigins = useAuthorCountries(allAuthors)
 
 const hasPrices = computed(() => album.value.prices?.length)
 const hasAnyPrice = computed(() => !!hasPrices.value || !!album.value.purchasePrice)
