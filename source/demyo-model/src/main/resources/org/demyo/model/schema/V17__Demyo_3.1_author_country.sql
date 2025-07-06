@@ -1,0 +1,2 @@
+ALTER TABLE authors
+	ADD COLUMN country VARCHAR(31) NULL;

@@ -23,9 +23,12 @@ export function useCountryList(): Ref<{ id: string, identifyingName: string }[]>
 	})
 }
 
-export function useCountry(countryCode: Ref<string>): Ref<string> {
+export function useCountry(countryCode: Ref<string>): Ref<string | undefined> {
 	const locale = useIso639alpha3()
 	return computed(() => {
+		if (!countryCode.value) {
+			return undefined
+		}
 		const c = indexedCountries[countryCode.value]
 		return `${c.flag} ${c.translations[locale.value].common}`
 	})
