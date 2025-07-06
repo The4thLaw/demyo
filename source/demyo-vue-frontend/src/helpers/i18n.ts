@@ -76,3 +76,12 @@ export function getCurrencySymbol(currency: string): string {
 	// Looks like a currency code, try the map
 	return getSymbolFromCurrency(currency) ?? currency
 }
+
+export function useIso639alpha3(): Ref<string> {
+	return computed(() => {
+		if (i18n.global.locale.value.startsWith('fr')) {
+			return 'fra'
+		}
+		return 'eng'
+	})
+}

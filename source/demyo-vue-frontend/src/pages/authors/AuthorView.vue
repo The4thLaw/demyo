@@ -17,6 +17,8 @@
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 
+			{{ country }}
+
 			<FieldValue :value="author.birthDate" label-key="field.Author.birthDate" type="date">
 				<template v-if="isAlive" #append>
 					({{ $t('field.Author.age.alive', { age }) }})
@@ -69,6 +71,7 @@
 
 <script setup lang="ts">
 import { useSimpleView } from '@/composables/model-view'
+import { useCountry } from '@/helpers/countries'
 import authorService from '@/services/author-service'
 import dayjs from 'dayjs'
 import { useI18n } from 'vue-i18n'
@@ -77,6 +80,7 @@ const authorLoading = ref(true)
 const albumsLoading = ref(true)
 const authorAlbums = ref({} as AuthorAlbums)
 const derivativeCount = ref(-1)
+const country = useCountry(computed(() => 'FRA'))
 
 async function fetchData(id: number): Promise<Author> {
 	authorLoading.value = true

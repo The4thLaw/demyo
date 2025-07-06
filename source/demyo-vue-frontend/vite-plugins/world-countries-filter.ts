@@ -7,7 +7,7 @@ import * as fs from 'fs'
 import type { Plugin, TransformResult } from 'vite'
 import type { Country } from 'world-countries/index.d.ts'
 
-// TODO: find a way to share this interface with the frontend code
+// Not sure there is a way to share this with the frontend...
 interface LightCountry {
 	cca3: string
 	translations: Record<string, { common: string }>
@@ -22,6 +22,7 @@ export default function worldCountriesFilter(): Plugin<void> {
 			if (/.*world-countries\/countries\.json$/.test(id)) {
 				// Read from the filesystem to get the original file instead of what is already
 				// transformed to a JSON module (see console.log(src.substring(0, 100)))
+				// This might not be the best way to work but I don't know of a better one right now
 				const fileData = fs.readFileSync(id, 'utf8')
 
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
