@@ -1,0 +1,18 @@
+[Unit]
+Description=Demyo Comic Manager
+DefaultDependencies=no
+
+[Service]
+Type=simple
+User=demyo
+Group=demyo
+ExecStart=/usr/bin/java -Xmx512m -Djava.net.preferIPv4Stack=true -Ddemyo.applicationDirectory=/home/demyo/opt/demyo/demyo-latest -Ddemyo.war.path=/home/demyo/opt/demyo/demyo-web-latest.war -Ddemyo.http.address=0.0.0.0 -Ddemyo.http.port=16071 -Ddemyo.war.contextRoot=/bds -server -Djava.awt.headless=true -cp '/home/demyo/opt/demyo/demyo-latest/lib/*' org.demyo.desktop.Start
+ExecStop=/bin/kill "$MAINPID"
+TimeoutStartSec=0
+StandardOutput=journal
+# Or if your systemd installation supports file: and append:
+#StandardOutput=append:/home/demyo/.demyo/logs/stdout.log
+#StandardError=append:/home/demyo/.demyo/logs/stderr.log
+
+[Install]
+WantedBy=default.target
