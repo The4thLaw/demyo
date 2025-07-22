@@ -93,6 +93,7 @@
 						<Autocomplete
 							v-model="album.writers" :items="authors" :loading="authorsLoading"
 							:label-key="`field.Album.writers.${labelType}`" multiple
+							item-title="nameWithPseudonym"
 							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.writers.push(id)"
 						/>
@@ -101,6 +102,7 @@
 						<Autocomplete
 							v-model="album.artists" :items="authors" :loading="authorsLoading"
 							:label-key="`field.Album.artists.${labelType}`" multiple
+							item-title="nameWithPseudonym"
 							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.artists.push(id)"
 						/>
@@ -109,6 +111,7 @@
 						<Autocomplete
 							v-model="album.colorists" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.colorists" multiple
+							item-title="nameWithPseudonym"
 							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.colorists.push(id)"
 						/>
@@ -117,6 +120,7 @@
 						<Autocomplete
 							v-model="album.inkers" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.inkers" multiple
+							item-title="nameWithPseudonym"
 							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.inkers.push(id)"
 						/>
@@ -125,6 +129,7 @@
 						<Autocomplete
 							v-model="album.translators" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.translators" multiple
+							item-title="nameWithPseudonym"
 							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.translators.push(id)"
 						/>
@@ -133,6 +138,7 @@
 						<Autocomplete
 							v-model="album.coverArtists" :items="authors" :loading="authorsLoading"
 							label-key="field.Album.coverArtists" multiple
+							item-title="nameWithPseudonym"
 							:add-component="AuthorLightCreate" add-label="title.add.author"
 							refreshable @refresh="loadAuthors" @added="(id: number) => album.coverArtists.push(id)"
 						/>

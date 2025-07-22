@@ -104,34 +104,34 @@
 						<FieldValue
 							:label="$t(`field.Album.writers.${album.bookType.labelType}`, album.writers.length)"
 						>
-							<ModelLink :model="album.writers" view="AuthorView" />
+							<ModelLink :model="album.writers" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.artists && album.artists.length" cols="12" md="6">
 						<FieldValue
 							:label="$t(`field.Album.artists.${album.bookType.labelType}`, album.artists.length)"
 						>
-							<ModelLink :model="album.artists" view="AuthorView" />
+							<ModelLink :model="album.artists" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.colorists && album.colorists.length" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.colorists', album.colorists.length)">
-							<ModelLink :model="album.colorists" view="AuthorView" />
+							<ModelLink :model="album.colorists" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.inkers && album.inkers.length" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.inkers', album.inkers.length)">
-							<ModelLink :model="album.inkers" view="AuthorView" />
+							<ModelLink :model="album.inkers" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.translators && album.translators.length" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.translators', album.translators.length)">
-							<ModelLink :model="album.translators" view="AuthorView" />
+							<ModelLink :model="album.translators" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.coverArtists && album.coverArtists.length" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.coverArtists', album.coverArtists.length)">
-							<ModelLink :model="album.coverArtists" view="AuthorView" />
+							<ModelLink :model="album.coverArtists" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 				</v-row>

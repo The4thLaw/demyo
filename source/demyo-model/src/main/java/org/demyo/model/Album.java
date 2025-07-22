@@ -61,11 +61,18 @@ import org.demyo.model.util.IdentifyingNameComparator;
 { @NamedAttributeNode(value = "series", subgraph = "Album.subgraph.Series"),
 		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
-		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
-		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("coverArtists"),
+		@NamedAttributeNode(value = "writers", subgraph = "Album.subgraph.Author"),
+		@NamedAttributeNode(value = "artists", subgraph = "Album.subgraph.Author"),
+		@NamedAttributeNode(value = "colorists", subgraph = "Album.subgraph.Author"),
+		@NamedAttributeNode(value = "inkers", subgraph = "Album.subgraph.Author"),
+		@NamedAttributeNode(value = "translators", subgraph = "Album.subgraph.Author"),
+		@NamedAttributeNode(value = "coverArtists", subgraph = "Album.subgraph.Author"),
 		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites"),
 		@NamedAttributeNode("bookType"), @NamedAttributeNode("universe")},
-	subgraphs = @NamedSubgraph(name = "Album.subgraph.Series", attributeNodes = @NamedAttributeNode("universe")))
+	subgraphs = {
+		@NamedSubgraph(name = "Album.subgraph.Series", attributeNodes = @NamedAttributeNode("universe")),
+		@NamedSubgraph(name = "Album.subgraph.Author", attributeNodes = @NamedAttributeNode("pseudonymOf"))
+	})
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),

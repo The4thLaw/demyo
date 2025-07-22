@@ -42,7 +42,7 @@
 				<v-row>
 					<v-col v-if="derivative.artist.id" cols="12" md="6">
 						<FieldValue :label="$t('field.Derivative.artist')">
-							<ModelLink :model="derivative.artist" view="AuthorView" />
+							<ModelLink :model="derivative.artist" view="AuthorPseudonym" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="derivative.source.id" cols="12" md="6">

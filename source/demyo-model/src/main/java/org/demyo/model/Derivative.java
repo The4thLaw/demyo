@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
@@ -46,9 +47,11 @@ import org.demyo.model.util.IdentifyingNameComparator;
 { @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("type"),
 		@NamedAttributeNode("source"), @NamedAttributeNode("images") })
 @NamedEntityGraph(name = "Derivative.forEdition", attributeNodes =
-{ @NamedAttributeNode("series"), @NamedAttributeNode("album"), @NamedAttributeNode("artist"),
+{ @NamedAttributeNode("series"), @NamedAttributeNode("album"),
+		@NamedAttributeNode(value = "artist", subgraph = "Derivative.subgraph.Author"),
 		@NamedAttributeNode("type"), @NamedAttributeNode("source"), @NamedAttributeNode("images"),
-		@NamedAttributeNode("prices") })
+		@NamedAttributeNode("prices") },
+		subgraphs = @NamedSubgraph(name = "Derivative.subgraph.Author", attributeNodes = @NamedAttributeNode("pseudonymOf")))
 @OneNotNull(fields =
 { "series.id", "album.id" })
 public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {

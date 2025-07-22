@@ -58,14 +58,14 @@
 					:label="$t(`field.Album.writers.${album.bookType.labelType}`,
 						album.writers ? album.writers.length : 0)"
 				>
-					<ModelLink :model="album.writers" view="AuthorView" />
+					<ModelLink :model="album.writers" view="AuthorPseudonym" />
 				</FieldValue>
 				<FieldValue
 					v-if="album.artists && album.artists.length"
 					:label="$t(`field.Album.artists.${album.bookType.labelType}`,
 						album.artists ? album.artists.length : 0)"
 				>
-					<ModelLink :model="album.artists" view="AuthorView" />
+					<ModelLink :model="album.artists" view="AuthorPseudonym" />
 				</FieldValue>
 				<v-fade-transition>
 					<div v-if="expanded">
@@ -73,25 +73,25 @@
 							v-if="album.colorists && album.colorists.length"
 							:label="$t('field.Album.colorists', album.colorists ? album.colorists.length : 0)"
 						>
-							<ModelLink :model="album.colorists" view="AuthorView" />
+							<ModelLink :model="album.colorists" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.inkers && album.inkers.length"
 							:label="$t('field.Album.inkers', album.inkers ? album.inkers.length : 0)"
 						>
-							<ModelLink :model="album.inkers" view="AuthorView" />
+							<ModelLink :model="album.inkers" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.translators && album.translators.length"
 							:label="$t('field.Album.translators', album.translators ? album.translators.length : 0)"
 						>
-							<ModelLink :model="album.translators" view="AuthorView" />
+							<ModelLink :model="album.translators" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue
 							v-if="album.coverArtists && album.coverArtists.length"
 							:label="$t('field.Album.coverArtists', album.coverArtists ? album.coverArtists.length : 0)"
 						>
-							<ModelLink :model="album.coverArtists" view="AuthorView" />
+							<ModelLink :model="album.coverArtists" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue v-if="album.publisher.id" :label="$t('field.Album.publisher', 1)">
 							<ModelLink :model="album.publisher" view="PublisherView" />

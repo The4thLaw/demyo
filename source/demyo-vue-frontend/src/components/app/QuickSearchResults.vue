@@ -10,11 +10,14 @@
 						<v-list-item v-for="item in results[key]" :key="item.id">
 							<div>
 								<router-link :to="`/${key}/${item.id}/view`" @click="emit('navigate')">
-									<template v-if="key !== 'albums'">
-										{{ item.identifyingName }}
+									<template v-if="key === 'albums'">
+										{{ item.title }}
+									</template>
+									<template v-else-if="key === 'authors'">
+										{{ item.nameWithPseudonym }}
 									</template>
 									<template v-else>
-										{{ item.title }}
+										{{ item.identifyingName }}
 									</template>
 								</router-link>
 							</div>
