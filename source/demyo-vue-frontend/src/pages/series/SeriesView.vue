@@ -106,29 +106,29 @@
 						/>
 
 						<FieldValue v-if="allWriters.length" :label="allWritersLabels">
-							<ModelLink :model="allWriters" view="AuthorView" />
+							<ModelLink :model="allWriters" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue v-if="allArtists.length" :label="allArtistsLabels">
-							<ModelLink :model="allArtists" view="AuthorView" />
+							<ModelLink :model="allArtists" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue
 							v-if="allColorists.length" :label="$t('field.Album.colorists', allColorists.length)"
 						>
-							<ModelLink :model="allColorists" view="AuthorView" />
+							<ModelLink :model="allColorists" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue v-if="allInkers.length" :label="$t('field.Album.inkers', allInkers.length)">
-							<ModelLink :model="allInkers" view="AuthorView" />
+							<ModelLink :model="allInkers" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue
 							v-if="allTranslators.length" :label="$t('field.Album.translators', allTranslators.length)"
 						>
-							<ModelLink :model="allTranslators" view="AuthorView" />
+							<ModelLink :model="allTranslators" view="AuthorPseudonym" />
 						</FieldValue>
 						<FieldValue
 							v-if="allCoverArtists.length"
 							:label="$t('field.Album.coverArtists', allCoverArtists.length)"
 						>
-							<ModelLink :model="allCoverArtists" view="AuthorView" />
+							<ModelLink :model="allCoverArtists" view="AuthorPseudonym" />
 						</FieldValue>
 
 						<FieldValue v-if="allTags.length" :label="$t('field.Album.tags', allTags.length)">

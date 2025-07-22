@@ -21,7 +21,8 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="derivative.artist.id" :items="authors" :loading="authorsLoading"
-							label-key="field.Derivative.artist" refreshable @refresh="loadAuthors"
+							item-title="nameWithPseudonym" label-key="field.Derivative.artist"
+							refreshable @refresh="loadAuthors"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
