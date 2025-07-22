@@ -49,8 +49,7 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 	 * @return The list.
 	 */
 	@Override
-	@GetMapping(
-	{ "/", "/index" })
+	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		Iterable<Derivative> value = service.findAllForIndex();
 		return getIndexView(view, value);

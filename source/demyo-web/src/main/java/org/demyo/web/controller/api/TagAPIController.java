@@ -44,8 +44,7 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 	 * @return The list.
 	 */
 	@Override
-	@GetMapping(
-	{ "/", "/index" })
+	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<Tag> value = service.findAllForIndex();
 		return getIndexView(view, value);
