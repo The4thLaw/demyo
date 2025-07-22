@@ -1,9 +1,14 @@
 package org.demyo.web.controller.api;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -35,6 +40,25 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 		super(service);
 		this.service = service;
 		this.derivativeService = derivativeService;
+	}
+
+	@Override
+    @GetMapping({ "/", "/index" })
+	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
+		List<Author> value = service.findAll(true);
+		return getIndexView(view, value);
+	}
+
+	/**
+	 * Retrieves the list of real authors.
+	 *
+	 * @param view The Jackson view to apply.
+	 * @return The list.
+	 */
+	@GetMapping({ "/real" })
+	public MappingJacksonValue indexReal(@RequestParam("view") Optional<String> view) {
+		List<Author> value = service.findAll(false);
+		return getIndexView(view, value);
 	}
 
 	/**

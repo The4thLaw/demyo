@@ -55,8 +55,7 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	 * @return The list.
 	 */
 	@Override
-	@GetMapping(
-	{ "/", "/index" })
+	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		Iterable<MetaSeries> value = service.findAllForIndex();
 		return getIndexView(view, value);
