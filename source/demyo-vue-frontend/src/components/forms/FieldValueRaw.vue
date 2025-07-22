@@ -1,6 +1,5 @@
 <template>
 	<div
-		v-if="!type || value"
 		:class="{
 			'c-FieldValueRaw': true,
 			'c-FieldValueRaw__rich-text': type === 'rich-text'
@@ -37,7 +36,7 @@ defineProps<{
 	label?: string,
 	labelKey?: string,
 	type?: 'rich-text' | 'text' | 'url' |
-		'PublisherView'
+		'AuthorView' | 'PublisherView'
 }>()
 
 defineSlots<{

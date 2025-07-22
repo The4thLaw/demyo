@@ -63,6 +63,7 @@ declare module 'vue' {
     MetaSeriesCard: typeof import('./src/components/series/MetaSeriesCard.vue')['default']
     MetaSeriesIndex: typeof import('./src/components/series/MetaSeriesIndex.vue')['default']
     ModelLink: typeof import('./src/components/generic/ModelLink.vue')['default']
+    ModelLinkSingle: typeof import('./src/components/generic/ModelLinkSingle.vue')['default']
     NamedLightCreate: typeof import('./src/components/forms/NamedLightCreate.vue')['default']
     PriceManagement: typeof import('./src/components/forms/PriceManagement.vue')['default']
     PriceTable: typeof import('./src/components/forms/PriceTable.vue')['default']
