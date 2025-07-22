@@ -5,7 +5,7 @@
 			v-model:search="search"
 			v-bind="$attrs"
 			:label="$t(labelKey, multiple ? 2 : 1)"
-			item-title="identifyingName"
+			:item-title="itemTitle"
 			item-value="id"
 			:multiple="multiple"
 			:chips="multiple"
@@ -62,12 +62,14 @@ const model = defineModel<unknown>()
 
 withDefaults(defineProps<{
 	labelKey: string
+	itemTitle?: string
 	refreshable?: boolean
 	loading?: boolean
 	multiple?: boolean,
 	addComponent?: Component,
 	addLabel?: string
 }>(), {
+	itemTitle: 'identifyingName',
 	refreshable: false,
 	loading: false,
 	multiple: false,

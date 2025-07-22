@@ -29,12 +29,19 @@ function useRefreshable<M extends IModel>(
 }
 
 interface RefreshAuthor { authors: Ref<Author[]>; authorsLoading: Ref<boolean>; loadAuthors: () => Promise<void> }
-export function useRefreshableAuthors(): RefreshAuthor {
+export function useRefreshableAuthors(real = false): RefreshAuthor {
 	const refreshable = useRefreshable(authorService)
+
+	async function load(): Promise<void> {
+		refreshable.loading.value = true
+		refreshable.models.value = await (real ? authorService.findRealForList() : authorService.findForList())
+		refreshable.loading.value = false
+	}
+
 	return {
 		authors: refreshable.models,
 		authorsLoading: refreshable.loading,
-		loadAuthors: refreshable.load
+		loadAuthors: load
 	}
 }
 

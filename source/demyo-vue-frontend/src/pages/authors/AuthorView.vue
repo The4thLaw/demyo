@@ -15,6 +15,10 @@
 		</AppTasks>
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
+			<FieldValue
+				v-if="author.pseudonymOf?.id" :value="author.pseudonymOf"
+				label-key="field.Author.pseudonymOf" type="AuthorView"
+			/>
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 
 			<FieldValue v-if="author.country" :value="author.country" label-key="field.Author.country">
@@ -31,6 +35,14 @@
 				<template v-if="!isAlive" #append>
 					({{ $t('field.Author.age.dead', { age }) }})
 				</template>
+			</FieldValue>
+
+			<FieldValue v-if="author.pseudonyms?.length" label-key="field.Author.pseudonyms">
+				<ul>
+					<li v-for="pseudo of author.pseudonyms" :key="pseudo.id">
+						<ModelLink :model="pseudo" view="AuthorView" />
+					</li>
+				</ul>
 			</FieldValue>
 
 			<FieldValue :value="author.biography" label-key="field.Author.biography" type="rich-text" />

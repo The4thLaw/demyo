@@ -15,6 +15,12 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
+						<Autocomplete
+							v-model="author.pseudonymOf.id" :items="otherAuthors" :loading="authorsLoading"
+							clearable label-key="field.Author.pseudonymOf"
+						/>
+					</v-col>
+					<v-col cols="12" md="4">
 						<Autocomplete v-model="author.country" :items="countries" label-key="field.Author.country" />
 					</v-col>
 					<v-col cols="12" md="4">
@@ -55,11 +61,12 @@
 
 <script setup lang="ts">
 import { useSimpleEdit } from '@/composables/model-edit'
-import { useRefreshableImages } from '@/composables/refreshable-models'
+import { useRefreshableAuthors, useRefreshableImages } from '@/composables/refreshable-models'
 import { useCountryList } from '@/helpers/countries'
 import { mandatory } from '@/helpers/rules'
 import authorService from '@/services/author-service'
 
+const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors(true)
 const { images, imagesLoading, loadImages } = useRefreshableImages()
 const countries = useCountryList()
 
@@ -73,7 +80,14 @@ async function fetchData(id: number | undefined): Promise<Partial<Author>> {
 }
 
 const { model: author, loading, save, reset } = useSimpleEdit(
-	fetchData, authorService, [loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
+	fetchData, authorService, [loadAuthors, loadImages], 'title.add.author', 'title.edit.author', 'AuthorView')
+
+const otherAuthors = computed(() => {
+	if (!author.value.id) {
+		return authors.value
+	}
+	return authors.value.filter(a => a.id !== author.value.id)
+})
 
 const rules = {
 	name: [

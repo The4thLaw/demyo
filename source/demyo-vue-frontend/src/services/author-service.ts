@@ -7,9 +7,23 @@ import AbstractModelService from './abstract-model-service'
 class AuthorService extends AbstractModelService<Author> {
 	constructor() {
 		super('authors/', {
-			fillMissingObjects: ['portrait'],
+			fillMissingObjects: ['portrait', 'pseudonymOf'],
 			sanitizeHtml: ['biography']
 		})
+	}
+
+	/**
+	 * Finds the real authors.
+	 */
+	async findRealForIndex(): Promise<Author[]> {
+		return axiosGet('authors/real', [])
+	}
+
+	/**
+	 * Finds the real authors, applying the list view.
+	 */
+	async findRealForList(): Promise<Author[]> {
+		return axiosGet('authors/real', { view: 'minimal' }, [])
 	}
 
 	/**
