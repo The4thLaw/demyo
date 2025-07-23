@@ -181,7 +181,7 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 			sb.append(series.getIdentifyingName());
 		}
 
-		if (sb.length() > 0) {
+		if (!sb.isEmpty()) {
 			sb.append(" - ");
 		}
 

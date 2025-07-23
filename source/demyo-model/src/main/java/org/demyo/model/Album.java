@@ -283,7 +283,7 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	public String getIdentifyingName() {
 		StringBuilder sb = getQualifiedNumber();
 
-		if (sb.length() > 0) {
+		if (!sb.isEmpty()) {
 			sb.append(" - ");
 		}
 		if (title != null) {
@@ -307,13 +307,13 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 			sb.append(cycle);
 		}
 		if (number != null) {
-			if (sb.length() > 0) {
+			if (!sb.isEmpty()) {
 				sb.append(".");
 			}
 			sb.append(getNumberFormat().format(number.doubleValue()));
 		}
 		if (numberSuffix != null) {
-			if (sb.length() > 0) {
+			if (!sb.isEmpty()) {
 				sb.append(" ");
 			}
 			sb.append(numberSuffix);
