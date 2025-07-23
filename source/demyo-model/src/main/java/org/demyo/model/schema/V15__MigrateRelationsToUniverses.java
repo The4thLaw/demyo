@@ -24,7 +24,8 @@ public class V15__MigrateRelationsToUniverses extends BaseJavaMigration {
 		converter.convert();
 	}
 
-	private void gatherGroups(Connection connection, RelationsToUniverseConverter converter) throws SQLException {
+	private static void gatherGroups(Connection connection, RelationsToUniverseConverter converter)
+			throws SQLException {
 		try (PreparedStatement stmt = connection.prepareStatement("select * from SERIES_RELATIONS")) {
 			try (ResultSet rows = stmt.executeQuery()) {
 				while (rows.next()) {
