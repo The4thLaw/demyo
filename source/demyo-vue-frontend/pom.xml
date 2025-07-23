@@ -69,6 +69,9 @@
 						</executions>
 						<configuration>
 							<jsonLibrary>jackson2</jsonLibrary>
+							<mapMap>asRecord</mapMap>
+							<noFileComment>true</noFileComment>
+							<sortDeclarations>true</sortDeclarations>
 							<!-- Can't get the patterns to work so use the classes, the plugin will load the dependencies -->
 							<classes>
 								<class>org.demyo.model.beans.AuthorAlbums</class>

@@ -76,7 +76,7 @@
 		>
 			<AlbumTextList :albums="albums">
 				<template #default="slotProps">
-					({{ describeAuthor(slotProps.album) }})
+					{{ describeAuthor(slotProps.album) }}
 				</template>
 			</AlbumTextList>
 		</SectionCard>
@@ -157,6 +157,19 @@ function describeAuthor(album: Album): string {
 	if (works.value.asCoverArtist.has(albumId)) {
 		qualifiers.push(i18n.t('page.Author.works.role.coverArtist'))
 	}
-	return qualifiers.join(', ')
+
+	let pseudonym = ''
+	if (authorAlbums.value?.albumPseudonyms) {
+		const albumPseudonym = authorAlbums.value?.albumPseudonyms[`${albumId}`]
+		if (albumPseudonym && author.value.pseudonyms) {
+			const pseudonymAuthor = author.value.pseudonyms.find(a => a.id === albumPseudonym)
+			if (pseudonymAuthor) {
+				pseudonym = `${i18n.t('field.Author.asPseudonym.before')} ${pseudonymAuthor.identifyingName
+				}${i18n.t('field.Author.asPseudonym.after')}`
+			}
+		}
+	}
+
+	return `${qualifiers.join(', ')} ${pseudonym}`
 }
 </script>
