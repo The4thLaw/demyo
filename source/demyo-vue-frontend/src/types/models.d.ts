@@ -57,3 +57,8 @@ interface DerivativeFilter extends AbstractModelFilter {
 /** The types of model that support deferred links. */
 type DeferrableLinkModel = 'album' | 'author' | 'binding' | 'bookType' | 'collection' | 'derivative'
 		| 'derivativeSource' | 'derivativeType' | 'publisher' | 'series' | 'universe'
+
+/** The supported automatic types for FieldValue. */
+type FieldValueType = 'rich-text' | 'text' | 'url' |
+		'AuthorView' | 'PublisherView' |
+		'AuthorPseudonym'
