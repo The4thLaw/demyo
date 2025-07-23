@@ -53,3 +53,7 @@ interface DerivativeFilter extends AbstractModelFilter {
 	/** The internal ID of the {@link DerivativeSource}. */
 	source?: number
 }
+
+/** The types of model that support deferred links. */
+type DeferrableLinkModel = 'album' | 'author' | 'binding' | 'bookType' | 'collection' | 'derivative'
+		| 'derivativeSource' | 'derivativeType' | 'publisher' | 'series' | 'universe'
