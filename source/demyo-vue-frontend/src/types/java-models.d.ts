@@ -1,177 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
-// Generated using typescript-generator version 3.2.1263 on 2025-07-22 19:50:07.
 
-interface AuthorAlbums {
-    asArtist: number[];
-    asColorist: number[];
-    asCoverArtist: number[];
-    asInker: number[];
-    asTranslator: number[];
-    asWriter: number[];
-    albums: Album[];
-}
-
-interface MetaSeries {
-    series: Series;
-    album: Album;
-    albums: Album[];
-    title: string;
-    actualSeries: boolean;
-}
-
-interface ReaderLists {
-    favouriteSeries: number[];
-    favouriteAlbums: number[];
-    readingList: number[];
-}
-
-interface Album extends AbstractPricedModel<AlbumPrice, Album> {
-    readersFavourites: Reader[];
-    readersReadingList: Reader[];
-    priceList: AlbumPrice[];
-    bookType: BookType;
-    series: Series;
-    universe: Universe;
-    cycle: number;
-    number: number;
-    numberSuffix: string;
-    title: string;
-    originalTitle: string;
-    publisher: Publisher;
-    collection: Collection;
-    firstEditionDate: Date;
-    currentEditionDate: Date;
-    printingDate: Date;
-    markedAsFirstEdition: boolean;
-    isbn: string;
-    prices: AlbumPrice[];
-    wishlist: boolean;
-    location: string;
-    binding: Binding;
-    height: number;
-    width: number;
-    pages: number;
-    cover: Image;
-    summary: string;
-    comment: string;
-    tags: Tag[];
-    writers: Author[];
-    artists: Author[];
-    colorists: Author[];
-    inkers: Author[];
-    translators: Author[];
-    coverArtists: Author[];
-    images: Image[];
-    aggregatedLocation: string;
-    baseNameForImages: string;
-    pricesRaw: AlbumPrice[];
-}
-
-interface Series extends AbstractNamedModel {
-    originalName: string;
-    universe: Universe;
-    summary: string;
-    comment: string;
-    website: string;
-    completed: boolean;
-    location: string;
-    albumIds: number[];
-}
-
-interface Reader extends AbstractNamedModel {
-    colour: string;
-    configurationEntries: ConfigurationEntry[];
-    configuration: ApplicationConfiguration;
-    favouriteSeries: Series[];
-    favouriteAlbums: Album[];
-    readingList: Album[];
-}
-
-interface AlbumPrice extends AbstractPrice<AlbumPrice, Album> {
-    album: Album;
-    model: Album;
-}
-
-interface BookType extends AbstractNamedModel {
-    labelType: TranslationLabelType;
-    description: string;
-    structuredFieldConfig: ModelField[];
-    fieldConfig: string;
-}
-
-interface Universe extends AbstractNamedModel {
-    description: string;
-    logo: Image;
-    website: string;
-    images: Image[];
-    series: Series[];
-    albums: Album[];
-}
-
-interface Publisher extends AbstractLegalEntity {
-    collections: Collection[];
-}
-
-interface Collection extends AbstractLegalEntity {
-    publisher: Publisher;
-}
-
-interface Binding extends AbstractNamedModel {
-}
-
-interface Image extends AbstractModel {
-    url: string;
-    description?: string;
-    albumCovers?: Album[];
-    albumOtherImages?: Album[];
-    authors?: Author[];
-    collections?: Collection[];
-    derivatives?: Derivative[];
-    publishers?: Publisher[];
-    userFileName: string;
-}
-
-interface Tag extends AbstractNamedModel {
-    fgColour: string;
-    bgColour: string;
-    description: string;
-    usageCount: number;
-}
-
-interface Author extends AbstractModel {
-    name: string;
-    firstName: string;
-    nickname: string;
-    biography: string;
-    portrait: Image;
-    website: string;
-    birthDate: Date;
-    deathDate: Date;
-    country: string;
-    pseudonymOf: Author;
-    pseudonyms: Author[];
-    fullName: string;
-    nameWithPseudonym: string;
-}
-
-interface AbstractNamedModel extends AbstractModel {
-    name: string;
-}
-
-interface ConfigurationEntry extends AbstractModel {
-    key: string;
-    value: string;
-    reader: Reader;
-}
-
-interface ApplicationConfiguration {
-    language: string;
-    currency: string;
-    pageSizeForText: number;
-    pageSizeForImages: number;
-    pageSizeForCards: number;
-    subItemsInCardIndex: number;
+interface AbstractBasicLegalEntity extends AbstractNamedModel {
+    history?: string;
+    website?: string;
 }
 
 interface AbstractLegalEntity extends AbstractBasicLegalEntity {
@@ -179,38 +11,11 @@ interface AbstractLegalEntity extends AbstractBasicLegalEntity {
     logo?: Image;
 }
 
-interface Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
-    priceList: DerivativePrice[];
-    series: Series;
-    album: Album;
-    artist: Author;
-    type: DerivativeType;
-    colours: number;
-    source: DerivativeSource;
-    number: number;
-    total: number;
-    signed: boolean;
-    authorsCopy: boolean;
-    restrictedSale: boolean;
-    description: string;
-    height: number;
-    width: number;
-    depth: number;
-    prices: DerivativePrice[];
-    images: Image[];
-    baseNameForImages: string;
-    mainImage: Image;
-    pricesRaw: DerivativePrice[];
-}
-
 interface AbstractModel extends IModel {
 }
 
-interface AbstractPricedModel<P, M> extends AbstractModel {
-    acquisitionDate: Date;
-    purchasePrice: number;
-    priceList: P[];
-    prices: P[];
+interface AbstractNamedModel extends AbstractModel {
+    name: string;
 }
 
 interface AbstractPrice<P, M> {
@@ -218,9 +23,139 @@ interface AbstractPrice<P, M> {
     price: number;
 }
 
-interface AbstractBasicLegalEntity extends AbstractNamedModel {
-    website?: string;
-    history?: string;
+interface AbstractPricedModel<P, M> extends AbstractModel {
+    acquisitionDate: Date;
+    priceList: P[];
+    prices: P[];
+    purchasePrice: number;
+}
+
+interface Album extends AbstractPricedModel<AlbumPrice, Album> {
+    aggregatedLocation: string;
+    artists: Author[];
+    baseNameForImages: string;
+    binding: Binding;
+    bookType: BookType;
+    collection: Collection;
+    colorists: Author[];
+    comment: string;
+    cover: Image;
+    coverArtists: Author[];
+    currentEditionDate: Date;
+    cycle: number;
+    firstEditionDate: Date;
+    height: number;
+    images: Image[];
+    inkers: Author[];
+    isbn: string;
+    location: string;
+    markedAsFirstEdition: boolean;
+    number: number;
+    numberSuffix: string;
+    originalTitle: string;
+    pages: number;
+    priceList: AlbumPrice[];
+    prices: AlbumPrice[];
+    pricesRaw: AlbumPrice[];
+    printingDate: Date;
+    publisher: Publisher;
+    readersFavourites: Reader[];
+    readersReadingList: Reader[];
+    series: Series;
+    summary: string;
+    tags: Tag[];
+    title: string;
+    translators: Author[];
+    universe: Universe;
+    width: number;
+    wishlist: boolean;
+    writers: Author[];
+}
+
+interface AlbumPrice extends AbstractPrice<AlbumPrice, Album> {
+    album: Album;
+    model: Album;
+}
+
+interface ApplicationConfiguration {
+    currency: string;
+    language: string;
+    pageSizeForCards: number;
+    pageSizeForImages: number;
+    pageSizeForText: number;
+    subItemsInCardIndex: number;
+}
+
+interface Author extends AbstractModel {
+    biography: string;
+    birthDate: Date;
+    country: string;
+    deathDate: Date;
+    firstName: string;
+    fullName: string;
+    name: string;
+    nameWithPseudonym: string;
+    nickname: string;
+    portrait: Image;
+    pseudonymOf: Author;
+    pseudonyms: Author[];
+    website: string;
+}
+
+interface AuthorAlbums {
+    albumPseudonyms: Record<string, number>;
+    albums: Album[];
+    asArtist: number[];
+    asColorist: number[];
+    asCoverArtist: number[];
+    asInker: number[];
+    asTranslator: number[];
+    asWriter: number[];
+    pseudonyms: Record<string, Author>;
+}
+
+interface Binding extends AbstractNamedModel {
+}
+
+interface BookType extends AbstractNamedModel {
+    description: string;
+    fieldConfig: string;
+    labelType: TranslationLabelType;
+    structuredFieldConfig: ModelField[];
+}
+
+interface Collection extends AbstractLegalEntity {
+    publisher: Publisher;
+}
+
+interface ConfigurationEntry extends AbstractModel {
+    key: string;
+    reader: Reader;
+    value: string;
+}
+
+interface Derivative extends AbstractPricedModel<DerivativePrice, Derivative> {
+    album: Album;
+    artist: Author;
+    authorsCopy: boolean;
+    baseNameForImages: string;
+    colours: number;
+    depth: number;
+    description: string;
+    height: number;
+    images: Image[];
+    mainImage: Image;
+    number: number;
+    priceList: DerivativePrice[];
+    prices: DerivativePrice[];
+    pricesRaw: DerivativePrice[];
+    restrictedSale: boolean;
+    series: Series;
+    signed: boolean;
+    source: DerivativeSource;
+    total: number;
+    type: DerivativeType;
+    width: number;
 }
 
 interface DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> {
@@ -228,15 +163,15 @@ interface DerivativePrice extends AbstractPrice<DerivativePrice, Derivative> {
     model: Derivative;
 }
 
-interface DerivativeType extends AbstractNamedModel {
+interface DerivativeSource extends AbstractBasicLegalEntity {
+    active: boolean;
+    address: string;
+    email: string;
+    owner: string;
+    phoneNumber: string;
 }
 
-interface DerivativeSource extends AbstractBasicLegalEntity {
-    owner: string;
-    email: string;
-    address: string;
-    phoneNumber: string;
-    active: boolean;
+interface DerivativeType extends AbstractNamedModel {
 }
 
 interface IModel {
@@ -244,6 +179,72 @@ interface IModel {
     identifyingName: string;
 }
 
-type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
+interface Image extends AbstractModel {
+    albumCovers?: Album[];
+    albumOtherImages?: Album[];
+    authors?: Author[];
+    collections?: Collection[];
+    derivatives?: Derivative[];
+    description?: string;
+    publishers?: Publisher[];
+    url: string;
+    userFileName: string;
+}
+
+interface MetaSeries {
+    actualSeries: boolean;
+    album: Album;
+    albums: Album[];
+    series: Series;
+    title: string;
+}
+
+interface Publisher extends AbstractLegalEntity {
+    collections: Collection[];
+}
+
+interface Reader extends AbstractNamedModel {
+    colour: string;
+    configuration: ApplicationConfiguration;
+    configurationEntries: ConfigurationEntry[];
+    favouriteAlbums: Album[];
+    favouriteSeries: Series[];
+    readingList: Album[];
+}
+
+interface ReaderLists {
+    favouriteAlbums: number[];
+    favouriteSeries: number[];
+    readingList: number[];
+}
+
+interface Series extends AbstractNamedModel {
+    albumIds: number[];
+    comment: string;
+    completed: boolean;
+    location: string;
+    originalName: string;
+    summary: string;
+    universe: Universe;
+    website: string;
+}
+
+interface Tag extends AbstractNamedModel {
+    bgColour: string;
+    description: string;
+    fgColour: string;
+    usageCount: number;
+}
+
+interface Universe extends AbstractNamedModel {
+    albums: Album[];
+    description: string;
+    images: Image[];
+    logo: Image;
+    series: Series[];
+    website: string;
+}
 
 type ModelField = "ALBUM_ARTIST" | "ALBUM_COLORIST" | "ALBUM_INKER" | "ALBUM_TRANSLATOR" | "ALBUM_COVER_ARTIST";
+
+type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";

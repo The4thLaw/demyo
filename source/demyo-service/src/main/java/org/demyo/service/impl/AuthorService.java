@@ -87,9 +87,13 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	public AuthorAlbums getAuthorAlbums(long authorId) {
 		AuthorAlbums ret = new AuthorAlbums();
 
+		Author mainAuthor = repo.findOneForView(authorId);
+
 		List<IAuthorAlbum> works = albumRepo.findAlbumsFromAuthor(authorId);
-		for (IAuthorAlbum w : works) {
-			ret.addWork(w);
+		ret.addWorks(works);
+
+		for (Author pseudonym : mainAuthor.getPseudonyms()) {
+			ret.addPseudonymWorks(pseudonym, albumRepo.findAlbumsFromAuthor(pseudonym.getId()));
 		}
 
 		Set<Long> albumIds = ret.getAllAlbumsIds();
