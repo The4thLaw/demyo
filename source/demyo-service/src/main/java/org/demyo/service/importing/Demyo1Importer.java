@@ -88,7 +88,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			}
 
 			stopWatch.split();
-			long splitTime = stopWatch.getSplitTime();
+			long splitTime = stopWatch.getSplitDuration().toMillis();
 
 			stripXslDoctype(xmlFile);
 
@@ -113,7 +113,7 @@ public class Demyo1Importer extends Demyo2Importer {
 			trans.transform(source, result);
 
 			stopWatch.split();
-			splitTime = stopWatch.getSplitTime() - splitTime;
+			splitTime = stopWatch.getSplitDuration().toMillis() - splitTime;
 
 			// Move extracted images to the right directory
 			if (isArchive) {

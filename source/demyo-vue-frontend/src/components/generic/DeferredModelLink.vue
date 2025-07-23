@@ -18,8 +18,7 @@ import universeService from '@/services/universe-service'
 
 const props = defineProps<{
 	modelId: number | string
-	type: 'album' | 'author' | 'binding' | 'bookType' | 'collection' | 'derivative' | 'derivativeSource'
-		| 'derivativeType' | 'publisher' | 'series' | 'universe'
+	type: DeferrableLinkModel
 	label?: string
 }>()
 const loading = ref(true)

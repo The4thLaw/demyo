@@ -3,8 +3,7 @@ export function useRichTextTemplate(userValue: Ref<string | undefined>): Ref<str
 		if (!userValue.value) {
 			return userValue.value
 		}
-		// const initial = userValue.value
-		const processed = userValue.value
+		return userValue.value
 			// Simple models without specific processing
 			.replace(
 				// eslint-disable-next-line max-len
@@ -15,7 +14,5 @@ export function useRichTextTemplate(userValue: Ref<string | undefined>): Ref<str
 				'<DeferredImageThumb image-id="$3" alt="$2" variant="$5"/>')
 			// Tags
 			.replace(/(\[([^\]]*)\])?\(tag:(\d+)\)/g, '<DeferredTagLink tag-id="$3" label="$2"/>')
-		// console.debug('Processed rich text field for model links', { initial, processed })
-		return processed
 	})
 }

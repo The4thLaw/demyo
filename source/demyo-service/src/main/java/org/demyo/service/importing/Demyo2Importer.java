@@ -112,7 +112,7 @@ public class Demyo2Importer implements IImporter {
 			}
 
 			stopWatch.split();
-			long splitTime = stopWatch.getSplitTime();
+			long splitTime = stopWatch.getSplitDuration().toMillis();
 
 			// Create a SAX parser for the input file
 			XMLReader xmlReader = XMLUtils.createXmlReader();
@@ -124,7 +124,7 @@ public class Demyo2Importer implements IImporter {
 			xmlReader.parse(new InputSource(xmlBis));
 
 			stopWatch.split();
-			splitTime = stopWatch.getSplitTime() - splitTime;
+			splitTime = stopWatch.getSplitDuration().toMillis() - splitTime;
 
 			rawSqlDao.fixAutoIncrements();
 
