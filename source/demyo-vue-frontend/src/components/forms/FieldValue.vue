@@ -37,8 +37,7 @@ const props = defineProps<{
 	value?: unknown,
 	label?: string,
 	labelKey?: string,
-	type?: 'rich-text' | 'text' | 'url' |
-		'PublisherView'
+	type?: FieldValueType
 	cols?: number | string
 	md?: number | string
 }>()

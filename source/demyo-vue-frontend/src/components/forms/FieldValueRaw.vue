@@ -35,8 +35,7 @@ defineProps<{
 	value?: unknown,
 	label?: string,
 	labelKey?: string,
-	type?: 'rich-text' | 'text' | 'url' |
-		'AuthorView' | 'PublisherView'
+	type?: FieldValueType
 }>()
 
 defineSlots<{
