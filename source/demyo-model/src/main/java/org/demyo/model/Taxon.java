@@ -2,20 +2,29 @@ package org.demyo.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import org.demyo.model.enums.TaxonType;
 import org.demyo.model.util.DefaultOrder;
 
 /**
- * Represents a Tag.
+ * Represents a Taxon.
  */
 @Entity
+// TODO: #14: Rename this table and the join columns from the join table
 @Table(name = "TAGS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-public class Tag extends AbstractNamedModel {
+public class Taxon extends AbstractNamedModel {
+	/** The type of taxon. */
+	@Enumerated(EnumType.STRING)
+	@Column(name = "taxon_type")
+	private TaxonType type;
+
 	/** The foreground colour. */
 	@Column(name = "fgcolour")
 	private String fgColour;
@@ -24,13 +33,31 @@ public class Tag extends AbstractNamedModel {
 	@Column(name = "bgcolour")
 	private String bgColour;
 
-	/** The description for this tag. */
+	/** The description for this taxon. */
 	@Column(name = "description")
 	private String description;
 
-	/** The number of times this Tag has been used. */
+	/** The number of times this Taxon has been used. */
 	@Transient
 	private Integer usageCount;
+
+	/**
+	 * Gets the type of taxon.
+	 *
+	 * @return the type
+	 */
+	public TaxonType getType() {
+		return type;
+	}
+
+	/**
+	 * Sets the type of taxon.
+	 *
+	 * @param type the new type
+	 */
+	public void setType(TaxonType type) {
+		this.type = type;
+	}
 
 	/**
 	 * Gets the foreground colour.
@@ -71,27 +98,27 @@ public class Tag extends AbstractNamedModel {
 	}
 
 	/**
-	 * Gets the description for this tag.
+	 * Gets the description for this taxon.
 	 *
-	 * @return the description for this tag
+	 * @return the description for this taxon
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Sets the description for this tag.
+	 * Sets the description for this taxon.
 	 *
-	 * @param description the new description for this tag
+	 * @param description the new description for this taxon
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Gets the number of times this Tag has been used.
+	 * Gets the number of times this Taxon has been used.
 	 *
-	 * @return the number of times this Tag has been used
+	 * @return the number of times this Taxon has been used
 	 */
 	@JsonView(ModelView.Basic.class)
 	public Integer getUsageCount() {
@@ -99,9 +126,9 @@ public class Tag extends AbstractNamedModel {
 	}
 
 	/**
-	 * Sets the number of times this Tag has been used.
+	 * Sets the number of times this Taxon has been used.
 	 *
-	 * @param usageCount the new number of times this Tag has been used
+	 * @param usageCount the new number of times this Taxon has been used
 	 */
 	public void setUsageCount(Integer usageCount) {
 		this.usageCount = usageCount;

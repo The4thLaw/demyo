@@ -138,7 +138,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setPages(last.getPages());
 			template.setPublisher(last.getPublisher());
 			template.setSeries(last.getSeries());
-			template.setTags(last.getTags());
+			template.setTaxons(last.getTaxons());
 			template.setTranslators(last.getTranslators());
 			template.setWidth(last.getWidth());
 			template.setWriters(last.getWriters());
@@ -188,6 +188,9 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	public long save(@NotNull Album newAlbum) {
 		boolean isNewAlbum = newAlbum.getId() == null;
 		boolean isLeavingWishlist = false;
+
+		// Merge tags and genres to save them as taxons
+		newAlbum.mergeTaxons();
 
 		if (!isNewAlbum) {
 			// Check if the album is leaving the wishlist

@@ -9,39 +9,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.dao.IModelRepo;
-import org.demyo.dao.ITagRepo;
-import org.demyo.model.Tag;
-import org.demyo.service.ITagService;
+import org.demyo.dao.ITaxonRepo;
+import org.demyo.model.Taxon;
+import org.demyo.service.ITaxonService;
 
 /**
- * Implements the contract defined by {@link ITagService}.
+ * Implements the contract defined by {@link ITaxonService}.
  */
 @Service
-public class TagService extends AbstractModelService<Tag> implements ITagService {
+public class TaxonService extends AbstractModelService<Taxon> implements ITaxonService {
 	@Autowired
-	private ITagRepo repo;
+	private ITaxonRepo repo;
 
 	/**
 	 * Default constructor.
 	 */
-	public TagService() {
-		super(Tag.class);
+	public TaxonService() {
+		super(Taxon.class);
 	}
 
 	@Override
-	public List<Tag> findAllForIndex() {
+	public List<Taxon> findAllForIndex() {
 		return repo.findAllWithUsageCounts();
 	}
 
 	@Async
 	@Override
 	@Transactional(readOnly = true)
-	public CompletableFuture<List<Tag>> quickSearch(String query, boolean exact) {
+	public CompletableFuture<List<Taxon>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
 	}
 
 	@Override
-	protected IModelRepo<Tag> getRepo() {
+	protected IModelRepo<Taxon> getRepo() {
 		return repo;
 	}
 }

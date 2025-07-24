@@ -11,28 +11,29 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
-import org.demyo.model.Tag;
+import org.demyo.model.Taxon;
 
 /**
- * Custom implementation of some methods from {@link ITagCustomRepo}, to be used as base implementation by Spring Data
- * for {@link ITagRepo}.
+ * Custom implementation of some methods from {@link ITaxonCustomRepo}, to be used as base implementation by Spring Data
+ * for {@link ITaxonRepo}.
  */
 // Unfortunately, the "I" has to remain as Spring Data expects <InterfaceName>Impl. Also, the implementation has
 // to be in the same package as the interface.
-/*package*/class ITagRepoImpl implements ITagCustomRepo {
+/*package*/class ITaxonRepoImpl implements ITaxonCustomRepo {
 	@Autowired
 	// Inject "self" so that we can use the findAll method
-	private ITagRepo repo;
+	private ITaxonRepo repo;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	@Override
-	public List<Tag> findAllWithUsageCounts() {
-		// Find all tags
-		List<Tag> tags = repo.findAll(Sort.by("name"));
+	public List<Taxon> findAllWithUsageCounts() {
+		// Find all taxons
+		List<Taxon> taxons = repo.findAll(Sort.by("name"));
 
 		// Custom query to get usage counts
+		// TODO: #14: Also aggregate from series
 		Query query = entityManager
 				.createNativeQuery("select tag_id, count(album_id) from albums_tags group by tag_id");
 		List<?> results = query.getResultList();
@@ -47,7 +48,7 @@ import org.demyo.model.Tag;
 		}
 
 		// Set all counts one by one
-		for (Tag t : tags) {
+		for (Taxon t : taxons) {
 			Integer usageCount = occurrences.get(t.getId());
 			if (usageCount == null) {
 				usageCount = 0;
@@ -55,7 +56,7 @@ import org.demyo.model.Tag;
 			t.setUsageCount(usageCount);
 		}
 
-		return tags;
+		return taxons;
 	}
 
 }

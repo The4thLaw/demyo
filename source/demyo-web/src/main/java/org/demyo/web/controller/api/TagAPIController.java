@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.demyo.model.Tag;
+import org.demyo.model.Taxon;
 import org.demyo.service.IAlbumService;
-import org.demyo.service.ITagService;
+import org.demyo.service.ITaxonService;
 
 /**
- * Controller handling the API calls for {@link Tag}s.
+ * Controller handling the API calls for {@link Taxon}s.
  */
 @RestController
 @RequestMapping("/api/tags")
-public class TagAPIController extends AbstractModelAPIController<Tag> {
-	private final ITagService service;
+public class TagAPIController extends AbstractModelAPIController<Taxon> {
+	private final ITaxonService service;
 	private final IAlbumService albumService;
 
 	/**
@@ -31,7 +31,7 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 	 * @param albumService The service to manage the Albums.
 	 */
 	@Autowired
-	public TagAPIController(ITagService service, IAlbumService albumService) {
+	public TagAPIController(ITaxonService service, IAlbumService albumService) {
 		super(service);
 		this.service = service;
 		this.albumService = albumService;
@@ -46,7 +46,7 @@ public class TagAPIController extends AbstractModelAPIController<Tag> {
 	@Override
 	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
-		List<Tag> value = service.findAllForIndex();
+		List<Taxon> value = service.findAllForIndex();
 		return getIndexView(view, value);
 	}
 

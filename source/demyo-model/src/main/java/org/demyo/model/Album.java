@@ -31,11 +31,14 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.querydsl.core.annotations.PropertyType;
 import com.querydsl.core.annotations.QueryType;
 
+import org.demyo.model.behaviour.Taxonomized;
 import org.demyo.model.constraints.ISBN;
 import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.AuthorComparator;
@@ -60,7 +63,7 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @NamedEntityGraph(name = "Album.forView", attributeNodes =
 { @NamedAttributeNode(value = "series", subgraph = "Album.subgraph.Series"),
 		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
+		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("taxons"),
 		@NamedAttributeNode(value = "writers", subgraph = "Album.subgraph.Author"),
 		@NamedAttributeNode(value = "artists", subgraph = "Album.subgraph.Author"),
 		@NamedAttributeNode(value = "colorists", subgraph = "Album.subgraph.Author"),
@@ -75,13 +78,13 @@ import org.demyo.model.util.IdentifyingNameComparator;
 	})
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
-		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("tags"),
+		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("taxons"),
 		@NamedAttributeNode("writers"), @NamedAttributeNode("artists"), @NamedAttributeNode("colorists"),
 		@NamedAttributeNode("inkers"), @NamedAttributeNode("translators"), @NamedAttributeNode("coverArtists"),
 		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("bookType"),
 		@NamedAttributeNode("universe") })
 @JsonView(ModelView.AlbumTemplate.class)
-public class Album extends AbstractPricedModel<AlbumPrice, Album> {
+public class Album extends AbstractPricedModel<AlbumPrice, Album> implements Taxonomized {
 	/** The type of book. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_type_id")
@@ -204,13 +207,19 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	@Column(name = "comment")
 	private String comment;
 
-	/** The {@link Tag}s labeling this Album. */
+	/** The {@link Taxon}s labeling this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"), //
 			inverseJoinColumns = @JoinColumn(name = "tag_id"))
 	@SortComparator(IdentifyingNameComparator.class)
 	@JsonDeserialize(using = SortedSetDeserializer.class)
-	private SortedSet<Tag> tags;
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private SortedSet<Taxon> taxons;
+
+	@Transient
+	private SortedSet<Taxon> genres;
+	@Transient
+	private SortedSet<Taxon> tags;
 
 	/** The {@link Author}s who wrote this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -795,21 +804,41 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> {
 	}
 
 	/**
-	 * Gets the {@link Tag}s labelling this Album.
+	 * Gets the {@link Taxon}s labelling this Album.
 	 *
-	 * @return the {@link Tag}s labelling this Album
+	 * @return the {@link Taxon}s labelling this Album
 	 */
-	public SortedSet<Tag> getTags() {
-		return tags;
+	public SortedSet<Taxon> getTaxons() {
+		return taxons;
 	}
 
 	/**
-	 * Sets the {@link Tag}s labelling this Album.
+	 * Sets the {@link Taxon}s labelling this Album.
 	 *
-	 * @param tags the new {@link Tag}s labelling this Album
+	 * @param taxons the new {@link Taxon}s labelling this Album
 	 */
-	public void setTags(SortedSet<Tag> tags) {
+	public void setTaxons(SortedSet<Taxon> taxons) {
+		this.taxons = taxons;
+	}
+
+	@Override
+	public void setGenres(SortedSet<Taxon> genres) {
+		this.genres = genres;
+	}
+
+	@Override
+	public void setTags(SortedSet<Taxon> tags) {
 		this.tags = tags;
+	}
+
+	@Override
+	public SortedSet<Taxon> getTransientGenreCache() {
+		return genres;
+	}
+
+	@Override
+	public SortedSet<Taxon> getTransientTagCache() {
+		return tags;
 	}
 
 	/**

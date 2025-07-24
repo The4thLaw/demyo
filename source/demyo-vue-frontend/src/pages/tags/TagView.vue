@@ -25,7 +25,7 @@
 			<FieldValue :value="tag.description" label-key="field.Tag.description" type="rich-text" />
 			<v-btn
 				v-if="albumCount > 0"
-				:to="{ name: 'AlbumIndex', query: { withTag: tag.id } }"
+				:to="{ name: 'AlbumIndex', query: { withTaxon: tag.id } }"
 				color="secondary" class="my-4" size="small" variant="outlined"
 			>
 				{{ $t('page.Tag.viewAlbums', albumCount) }}

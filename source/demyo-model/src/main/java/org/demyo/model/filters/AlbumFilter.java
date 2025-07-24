@@ -10,7 +10,7 @@ import org.demyo.model.Collection;
 import org.demyo.model.Publisher;
 import org.demyo.model.QAlbum;
 import org.demyo.model.Reader;
-import org.demyo.model.Tag;
+import org.demyo.model.Taxon;
 
 /**
  * An {@link IModelFilter} for {@link Album}s.
@@ -72,8 +72,8 @@ public class AlbumFilter extends AbstractModelFilter {
 	private Long binding;
 	/** The internal ID of the {@link BookType}. */
 	private Long bookType;
-	/** The internal ID of the {@link Tag}. */
-	private Long tag;
+	/** The internal ID of the {@link Taxon}. */
+	private Long taxon;
 	/** The internal ID of the {@link Reader} that has this {@link Album} as favourite. */
 	private Long readerIdFavourite;
 	/** The internal ID of the {@link Reader} that has this {@link Album} in their reading list. */
@@ -95,8 +95,9 @@ public class AlbumFilter extends AbstractModelFilter {
 		if (bookType != null) {
 			e = combine(e, QAlbum.album.bookType.id.eq(bookType));
 		}
-		if (tag != null) {
-			e = combine(e, QAlbum.album.tags.any().id.eq(tag));
+		if (taxon != null) {
+			// TODO: #14: Also check the series
+			e = combine(e, QAlbum.album.taxons.any().id.eq(taxon));
 		}
 		if (readerIdFavourite != null) {
 			e = combine(e, QAlbum.album.readersFavourites.any().id.eq(readerIdFavourite)
@@ -146,12 +147,12 @@ public class AlbumFilter extends AbstractModelFilter {
 	}
 
 	/**
-	 * Sets the internal ID of the {@link Tag}.
+	 * Sets the internal ID of the {@link Taxon}.
 	 *
-	 * @param tag the new internal ID of the {@link Tag}
+	 * @param taxon the new internal ID of the {@link Taxon}
 	 */
-	public void setTag(Long tag) {
-		this.tag = tag;
+	public void setTaxon(Long taxon) {
+		this.taxon = taxon;
 	}
 
 	/**

@@ -11,7 +11,7 @@ import org.demyo.model.Collection;
 import org.demyo.model.ModelView;
 import org.demyo.model.Publisher;
 import org.demyo.model.Series;
-import org.demyo.model.Tag;
+import org.demyo.model.Taxon;
 import org.demyo.model.Universe;
 
 /** Represents the results of a search across multiple model types. */
@@ -25,9 +25,9 @@ public final class SearchResult {
 	/** The matching {@link Album}s. */
 	@JsonView(ModelView.Basic.class)
 	private final List<Album> albums;
-	/** The matching {@link Tag}s. */
+	/** The matching {@link Taxon}s. */
 	@JsonView(ModelView.Basic.class)
-	private final List<Tag> tags;
+	private final List<Taxon> tags;
 	/** The matching {@link Author}s. */
 	@JsonView(ModelView.Basic.class)
 	private final List<Author> authors;
@@ -55,13 +55,13 @@ public final class SearchResult {
 	 * @param universes The matching {@link Universe}s.
 	 * @param series The matching {@link Series}.
 	 * @param albums The matching {@link Album}s.
-	 * @param tags The matching {@link Tag}s.
+	 * @param tags The matching {@link Taxon}s.
 	 * @param authors The matching {@link Author}s.
 	 * @param publishers The matching {@link Publisher}s.
 	 * @param collections The matching {@link Collection}s.
 	 */
 	public SearchResult(List<Universe> universes, List<Series> series, List<Album> albums,
-			List<Tag> tags, List<Author> authors, List<Publisher> publishers,
+			List<Taxon> tags, List<Author> authors, List<Publisher> publishers,
 			List<Collection> collections) {
 		this.universes = universes;
 		this.series = series;
@@ -100,11 +100,11 @@ public final class SearchResult {
 	}
 
 	/**
-	 * Gets the matching {@link Tag}s.
+	 * Gets the matching {@link Taxon}s.
 	 *
-	 * @return the matching {@link Tag}s
+	 * @return the matching {@link Taxon}s
 	 */
-	public List<Tag> getTags() {
+	public List<Taxon> getTags() {
 		return tags;
 	}
 

@@ -30,7 +30,7 @@ interface AbstractPricedModel<P, M> extends AbstractModel {
     purchasePrice: number;
 }
 
-interface Album extends AbstractPricedModel<AlbumPrice, Album> {
+interface Album extends AbstractPricedModel<AlbumPrice, Album>, Taxonomized {
     aggregatedLocation: string;
     artists: Author[];
     baseNameForImages: string;
@@ -63,7 +63,6 @@ interface Album extends AbstractPricedModel<AlbumPrice, Album> {
     readersReadingList: Reader[];
     series: Series;
     summary: string;
-    tags: Tag[];
     title: string;
     translators: Author[];
     universe: Universe;
@@ -229,11 +228,20 @@ interface Series extends AbstractNamedModel {
     website: string;
 }
 
-interface Tag extends AbstractNamedModel {
+interface Taxon extends AbstractNamedModel {
     bgColour: string;
     description: string;
     fgColour: string;
+    type: TaxonType;
     usageCount: number;
+}
+
+interface Taxonomized {
+    genres: Taxon[];
+    tags: Taxon[];
+    taxons: Taxon[];
+    transientGenreCache: Taxon[];
+    transientTagCache: Taxon[];
 }
 
 interface Universe extends AbstractNamedModel {
@@ -246,5 +254,7 @@ interface Universe extends AbstractNamedModel {
 }
 
 type ModelField = "ALBUM_ARTIST" | "ALBUM_COLORIST" | "ALBUM_INKER" | "ALBUM_TRANSLATOR" | "ALBUM_COVER_ARTIST";
+
+type TaxonType = "TAG" | "GENRE";
 
 type TranslationLabelType = "GRAPHIC_NOVEL" | "NOVEL";
