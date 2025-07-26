@@ -16,13 +16,13 @@ import org.demyo.model.util.DefaultOrder;
  * Represents a Taxon.
  */
 @Entity
-// TODO: #14: Rename this table and the join columns from the join table
-@Table(name = "TAGS")
+@Table(name = "TAXONS")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 public class Taxon extends AbstractNamedModel {
 	/** The type of taxon. */
 	@Enumerated(EnumType.STRING)
 	@Column(name = "taxon_type")
+	@JsonView(ModelView.Minimal.class)
 	private TaxonType type;
 
 	/** The foreground colour. */

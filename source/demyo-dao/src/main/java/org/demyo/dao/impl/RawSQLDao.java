@@ -53,7 +53,8 @@ public class RawSQLDao implements IRawSQLDao {
 	public void pruneAllTables() {
 		LOGGER.debug("Pruning all tables");
 		for (String table : new String[] { "searches", "albums_borrowers", "borrowers", "derivatives_images",
-				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_tags", "tags",
+				"derivatives_prices", "derivatives", "derivative_types", "sources", "albums_taxons", "series_taxons",
+				"taxons",
 				"readers_favourite_series", "readers_favourite_albums", "readers_reading_list", "albums_colorists",
 				"albums_writers", "albums_artists", "albums_inkers", "albums_translators", "albums_cover_artists",
 				"albums_images", "albums_prices", "albums", "bindings",
@@ -68,7 +69,7 @@ public class RawSQLDao implements IRawSQLDao {
 		LOGGER.debug("Fixing auto-increments");
 		for (String table : new String[] { "albums", "authors", "bindings", "borrowers", "collections", "configuration",
 				"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series", "sources",
-				"tags", "book_types", "universes" }) {
+				"taxons", "book_types", "universes" }) {
 			executeUpdate(
 					"ALTER TABLE " + table + " ALTER COLUMN ID RESTART WITH (SELECT MAX(id) + 1 FROM " + table + ")");
 		}

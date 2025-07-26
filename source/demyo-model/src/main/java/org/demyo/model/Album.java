@@ -31,8 +31,6 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.querydsl.core.annotations.PropertyType;
@@ -209,11 +207,9 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> implements Tax
 
 	/** The {@link Taxon}s labeling this Album. */
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "albums_tags", joinColumns = @JoinColumn(name = "album_id"), //
-			inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	@JoinTable(name = "albums_taxons", joinColumns = @JoinColumn(name = "album_id"), //
+			inverseJoinColumns = @JoinColumn(name = "taxon_id"))
 	@SortComparator(IdentifyingNameComparator.class)
-	@JsonDeserialize(using = SortedSetDeserializer.class)
-	@JsonProperty(access = Access.WRITE_ONLY)
 	private SortedSet<Taxon> taxons;
 
 	@Transient
@@ -803,20 +799,12 @@ public class Album extends AbstractPricedModel<AlbumPrice, Album> implements Tax
 		this.comment = comment;
 	}
 
-	/**
-	 * Gets the {@link Taxon}s labelling this Album.
-	 *
-	 * @return the {@link Taxon}s labelling this Album
-	 */
+	@Override
 	public SortedSet<Taxon> getTaxons() {
 		return taxons;
 	}
 
-	/**
-	 * Sets the {@link Taxon}s labelling this Album.
-	 *
-	 * @param taxons the new {@link Taxon}s labelling this Album
-	 */
+	@Override
 	public void setTaxons(SortedSet<Taxon> taxons) {
 		this.taxons = taxons;
 	}

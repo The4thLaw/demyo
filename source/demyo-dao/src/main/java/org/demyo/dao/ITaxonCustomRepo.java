@@ -9,9 +9,9 @@ import org.demyo.model.Taxon;
  */
 /*package*/interface ITaxonCustomRepo {
 	/**
-	 * Finds all Tags, along with the number of times the tag has been used.
+	 * Finds all Taxons, along with the number of times the taxon has been used.
 	 *
-	 * @return The tag list
+	 * @return The taxon list
 	 */
 	List<Taxon> findAllWithUsageCounts();
 }

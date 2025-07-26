@@ -35,7 +35,7 @@ import org.demyo.model.Taxon;
 		// Custom query to get usage counts
 		// TODO: #14: Also aggregate from series
 		Query query = entityManager
-				.createNativeQuery("select tag_id, count(album_id) from albums_tags group by tag_id");
+				.createNativeQuery("select taxon_id, count(album_id) from albums_taxons group by taxon_id");
 		List<?> results = query.getResultList();
 
 		// Create a map for faster lookup
