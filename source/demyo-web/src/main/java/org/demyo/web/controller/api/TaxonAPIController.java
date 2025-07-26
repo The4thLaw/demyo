@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,30 +16,31 @@ import org.demyo.model.Taxon;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.ITaxonService;
 
+
 /**
  * Controller handling the API calls for {@link Taxon}s.
  */
 @RestController
-@RequestMapping("/api/tags")
-public class TagAPIController extends AbstractModelAPIController<Taxon> {
+@RequestMapping("/api/taxons")
+public class TaxonAPIController extends AbstractModelAPIController<Taxon> {
 	private final ITaxonService service;
 	private final IAlbumService albumService;
 
 	/**
 	 * Creates the controller.
 	 *
-	 * @param service The service to manage the Tags.
+	 * @param service The service to manage the Taxons.
 	 * @param albumService The service to manage the Albums.
 	 */
 	@Autowired
-	public TagAPIController(ITaxonService service, IAlbumService albumService) {
+	public TaxonAPIController(ITaxonService service, IAlbumService albumService) {
 		super(service);
 		this.service = service;
 		this.albumService = albumService;
 	}
 
 	/**
-	 * Retrieves the full list of the tags with the counts.
+	 * Retrieves the full list of the taxons with the counts.
 	 *
 	 * @param view The Jackson view to apply.
 	 * @return The list.
@@ -51,13 +53,23 @@ public class TagAPIController extends AbstractModelAPIController<Taxon> {
 	}
 
 	/**
-	 * Counts how many Albums use the given Tag.
+	 * Counts how many Albums use the given Taxon.
 	 *
-	 * @param modelId The internal ID of the Tag
+	 * @param modelId The internal ID of the Taxon
 	 * @return the count
 	 */
 	@GetMapping("{modelId}/albums/count")
-	public int countDerivativesByType(@PathVariable("modelId") long modelId) {
-		return albumService.countAlbumsByTag(modelId);
+	public int countAlbumsByTaxon(@PathVariable("modelId") long modelId) {
+		return albumService.countAlbumsByTaxon(modelId);
 	}
+
+	/**
+	 * Converts a Taxon from tag to genre or vice-versa.
+	 * @param modelId The Taxon ID
+	 */
+	@PostMapping("{modelId}/convert")
+	public void convertType(@PathVariable("modelId") long modelId) {
+		service.convertType(modelId);
+	}
+
 }
