@@ -2,7 +2,7 @@
 <library>
   <meta>
     <version demyo="2.1.0" schema="4"/>
-    <counts albums="3" albums_prices="2" authors="0" bindings="0" borrowers="0" collections="1" derivatives="3" derivative_types="2" derivatives_prices="0" images="0" loan-history="0" publishers="2" series="2" sources="0" tags="3"/>
+    <counts albums="3" albums_prices="2" authors="0" bindings="0" borrowers="0" collections="1" derivatives="3" derivative_types="2" derivatives_prices="0" images="0" loan-history="0" publishers="2" series="2" sources="0" taxons="3"/>
   </meta>
   <publishers>
     <publisher id="1" name="Delcourt"/>
@@ -11,11 +11,11 @@
   <collections>
     <collection id="1" name="Série B" publisher_id="1"/>
   </collections>
-  <tags>
-    <tag id="1" name="action"/>
-    <tag id="2" name="humour" description="rofl"/>
-    <tag id="3" name="science-fiction" fgcolour="#ffffff" bgcolour="#ff0000"/>
-  </tags>
+  <taxons>
+    <taxon id="1" name="action"/>
+    <taxon id="2" name="humour" description="rofl"/>
+    <taxon id="3" name="science-fiction" fgcolour="#ffffff" bgcolour="#ff0000"/>
+  </taxons>
   <book_types>
     <book_type id="1" name="Bande dessinée" label_type="GRAPHIC_NOVEL"/>
     <book_type id="2" name="Roman" label_type="NOVEL" field_config="ALBUM_INKER,ALBUM_COLORIST,ALBUM_ARTIST"/>
@@ -26,15 +26,15 @@
   </series-list>
   <albums>
     <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false" printing="1985-12-01" book_type_id="1">
-      <album-tags>
-        <album-tag ref="1"/>
-        <album-tag ref="3"/>
-      </album-tags>
+      <album-taxons>
+        <album-taxon ref="1"/>
+        <album-taxon ref="3"/>
+      </album-taxons>
     </album>
     <album id="2" title="Bludzee" publisher_id="1" wishlist="false" book_type_id="1">
-      <album-tags>
-        <album-tag ref="2"/>
-      </album-tags>
+      <album-taxons>
+        <album-taxon ref="2"/>
+      </album-taxons>
     </album>
     <album id="3" title="Z_test" publisher_id="1" wishlist="false" book_type_id="2"/>
   </albums>

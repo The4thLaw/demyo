@@ -34,7 +34,7 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 	@Autowired
 	private IReaderService readerService;
 	@Autowired
-	private ITaxonService tagService;
+	private ITaxonService taxonService;
 	@Autowired
 	private IAlbumService albumService;
 	@Autowired
@@ -64,10 +64,10 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		Album album1 = albumService.getByIdForView(1);
 		assertThat(album1.getPrintingDate()).isCloseTo("1985-12-01", 3_600);
 
-		List<Taxon> tags = tagService.findAll();
-		assertThat(tags).hasSize(3);
-		Taxon tag2 = tags.get(1);
-		assertThat(tag2.getDescription()).isEqualTo("rofl");
+		List<Taxon> taxons = taxonService.findAll();
+		assertThat(taxons).hasSize(3);
+		Taxon taxon2 = taxons.get(1);
+		assertThat(taxon2.getDescription()).isEqualTo("rofl");
 
 		List<BookType> bookTypes = bookTypeService.findAll();
 		assertThat(bookTypes).hasSize(2);

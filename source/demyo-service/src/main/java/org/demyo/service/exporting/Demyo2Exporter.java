@@ -81,10 +81,12 @@ public class Demyo2Exporter implements IExporter {
 			exportModel(xsw, "collections", "collection", "COLLECTIONS");
 			exportModel(xsw, "bindings", "binding", "BINDINGS");
 			exportModel(xsw, "authors", "author", "AUTHORS");
-			exportModel(xsw, "tags", "tag", "TAGS");
+			exportModel(xsw, "taxons", "taxon", "TAXONS");
 			exportModel(xsw, "book_types", "book_type", "BOOK_TYPES");
 			exportModel(xsw, "universes", "universe", "UNIVERSES");
-			exportModel(xsw, "series-list", "series", "SERIES");
+			exportModel(xsw, "series-list", "series", "SERIES",
+					new ManyToManyRelation("series-taxons", "series-taxon", ALBUM_KEY, "TAXON_ID",
+							rawSqlDao.getRawRecords("SERIES_TAXONS")));
 
 			// Albums
 			exportModel(xsw, "albums", "album", "ALBUMS",
@@ -100,8 +102,8 @@ public class Demyo2Exporter implements IExporter {
 							rawSqlDao.getRawRecords("ALBUMS_TRANSLATORS")),
 					new ManyToManyRelation("cover-artists", "cover-artist", ALBUM_KEY, "COVER_ARTIST_ID",
 							rawSqlDao.getRawRecords("ALBUMS_COVER_ARTISTS")),
-					new ManyToManyRelation("album-tags", "album-tag", ALBUM_KEY, "TAG_ID",
-							rawSqlDao.getRawRecords("ALBUMS_TAGS")),
+					new ManyToManyRelation("album-taxons", "album-taxon", ALBUM_KEY, "TAXON_ID",
+							rawSqlDao.getRawRecords("ALBUMS_TAXONS")),
 					new ManyToManyRelation("album-images", "album-image", ALBUM_KEY, "IMAGE_ID",
 							rawSqlDao.getRawRecords("ALBUMS_IMAGES")));
 
@@ -171,7 +173,7 @@ public class Demyo2Exporter implements IExporter {
 		writeCount(xsw, "publishers");
 		writeCount(xsw, "series");
 		writeCount(xsw, "sources");
-		writeCount(xsw, "tags");
+		writeCount(xsw, "taxons");
 
 		xsw.writeEndElement();
 	}

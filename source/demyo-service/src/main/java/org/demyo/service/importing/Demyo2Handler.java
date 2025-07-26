@@ -29,6 +29,7 @@ public class Demyo2Handler extends DefaultHandler {
 
 	private static final String FK_ALBUM_ID = "album_id";
 	private static final String FK_READER_ID = "reader_id";
+	private static final String FK_SERIES_ID = "series_id";
 
 	private final IRawSQLDao rawSqlDao;
 
@@ -39,13 +40,15 @@ public class Demyo2Handler extends DefaultHandler {
 	private String readerId;
 
 	private final RelationsToUniverseConverter rtuConverter;
+	// TODO: #14: Extract this to a relations holder or something
+	private final List<Map<String, String>> seriesTaxons = new ArrayList<>();
 	private final List<Map<String, String>> albumArtists = new ArrayList<>();
 	private final List<Map<String, String>> albumWriters = new ArrayList<>();
 	private final List<Map<String, String>> albumColorists = new ArrayList<>();
 	private final List<Map<String, String>> albumInkers = new ArrayList<>();
 	private final List<Map<String, String>> albumTranslators = new ArrayList<>();
 	private final List<Map<String, String>> albumCoverArtists = new ArrayList<>();
-	private final List<Map<String, String>> albumTags = new ArrayList<>();
+	private final List<Map<String, String>> albumTaxons = new ArrayList<>();
 	private final List<Map<String, String>> albumImages = new ArrayList<>();
 	private final List<Map<String, String>> derivativeImages = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
@@ -59,13 +62,14 @@ public class Demyo2Handler extends DefaultHandler {
 	public Demyo2Handler(IRawSQLDao rawSqlDao, DataSource dataSource) {
 		this.rawSqlDao = rawSqlDao;
 		rtuConverter = new RelationsToUniverseConverter(DataSourceUtils.getConnection(dataSource));
+		allRelations.put("series_taxons", seriesTaxons);
 		allRelations.put("albums_artists", albumArtists);
 		allRelations.put("albums_writers", albumWriters);
 		allRelations.put("albums_colorists", albumColorists);
 		allRelations.put("albums_inkers", albumInkers);
 		allRelations.put("albums_translators", albumTranslators);
 		allRelations.put("albums_cover_artists", albumCoverArtists);
-		allRelations.put("albums_tags", albumTags);
+		allRelations.put("albums_taxons", albumTaxons);
 		allRelations.put("albums_images", albumImages);
 		allRelations.put("derivatives_images", derivativeImages);
 		allRelations.put("readers_favourite_series", readerFavouriteSeries);
@@ -83,9 +87,13 @@ public class Demyo2Handler extends DefaultHandler {
 			case "book_type":
 				hasBookType = true;
 				// Fall-through
-			case "image", "publisher", "collection", "binding", "author", "tag", "borrower", "source",
+			case "image", "publisher", "collection", "binding", "author", "taxon", "borrower", "source",
 					"derivative_type", "universe":
 				createLine(localName + "s", attributes);
+				break;
+			// Before 3.1, we used tags
+			case "tag":
+				createLine("taxons", attributes);
 				break;
 			case "series":
 				seriesId = attributes.getValue("id");
@@ -136,8 +144,12 @@ public class Demyo2Handler extends DefaultHandler {
 			case "cover-artist":
 				albumCoverArtists.add(join(FK_ALBUM_ID, albumId, "cover_artist_id", attributes.getValue("ref")));
 				break;
-			case "album-tag":
-				albumTags.add(join(FK_ALBUM_ID, albumId, "tag_id", attributes.getValue("ref")));
+			case "series-taxon":
+				seriesTaxons.add(join(FK_SERIES_ID, seriesId, "taxon_id", attributes.getValue("ref")));
+				break;
+			// Before v3.1, we used tags
+			case "album-tag", "album-taxon":
+				albumTaxons.add(join(FK_ALBUM_ID, albumId, "taxon_id", attributes.getValue("ref")));
 				break;
 			case "album-image":
 				albumImages.add(join(FK_ALBUM_ID, albumId, "image_id", attributes.getValue("ref")));
@@ -163,7 +175,7 @@ public class Demyo2Handler extends DefaultHandler {
 				createLine("readers", attributes);
 				break;
 			case "favourite-series":
-				readerFavouriteSeries.add(join(FK_READER_ID, readerId, "series_id", attributes.getValue("ref")));
+				readerFavouriteSeries.add(join(FK_READER_ID, readerId, FK_SERIES_ID, attributes.getValue("ref")));
 				break;
 			case "favourite-album":
 				readerFavouriteAlbums.add(join(FK_READER_ID, readerId, FK_ALBUM_ID, attributes.getValue("ref")));
