@@ -1,9 +1,9 @@
 <template>
-	<TagLink v-if="!loading" :model="tag" :label="label" />
+	<TaxonLink v-if="!loading" :model="tag" :label="label" />
 </template>
 
 <script setup lang="ts">
-import tagService from '@/services/tag-service'
+import tagService from '@/services/taxon-service'
 
 const props = defineProps<{
 	tagId: number | string

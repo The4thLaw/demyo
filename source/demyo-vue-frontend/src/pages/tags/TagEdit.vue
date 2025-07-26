@@ -13,7 +13,7 @@
 							{{ $t('field.Tag.preview') }}
 						</span>
 						<div>
-							<span :style="style" class="d-Tag">
+							<span :style="style" class="d-Taxon">
 								{{ tag.name }}
 							</span>
 						</div>
@@ -53,9 +53,9 @@
 
 <script setup lang="ts">
 import { useSimpleEdit } from '@/composables/model-edit'
-import { useTagStyle } from '@/composables/tags'
+import { useTaxonStyle } from '@/composables/taxons'
 import { mandatory } from '@/helpers/rules'
-import tagService from '@/services/tag-service'
+import tagService from '@/services/taxon-service'
 
 const noFgColour = ref(true)
 const noBgColour = ref(true)
@@ -75,9 +75,9 @@ async function fetchData(id: number | undefined): Promise<Partial<Tag>> {
 }
 
 const { model: tag, loading, save, reset } = useSimpleEdit(fetchData, tagService,
-	[], 'title.add.tag', 'title.edit.tag', 'TagView')
+	[], 'title.add.tag', 'title.edit.tag', 'TaxonView')
 
-const style = useTagStyle(tag)
+const style = useTaxonStyle(tag)
 
 watch(noBgColour, (newFlag) => {
 	if (newFlag) {

@@ -1,29 +1,28 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import TagIndex from '@/pages/tags/TagIndex.vue'
-import TagView from '@/pages/tags/TagView.vue'
+import TaxonView from '@/pages/taxons/TaxonView.vue'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 
 export default [
 	{
-		path: '/tags',
-		name: 'TagIndex',
+		path: '/taxons',
+		name: 'TaxonIndex',
 		component: TagIndex as Component
 	},
 	{
-		path: '/tags/:id/view',
-		alias: '/tags/view/:id', // Kept for backwards compatibility with Demyo 2.0, 2.1
-		name: 'TagView',
-		component: TagView as Component
+		path: '/taxons/:id/view',
+		name: 'TaxonView',
+		component: TaxonView as Component
 	},
 	{
-		path: '/tags/:id/edit',
-		name: 'TagEdit',
+		path: '/taxons/:id/edit',
+		name: 'TaxonEdit',
 		component: async () => import('@/pages/tags/TagEdit.vue') as unknown as Promise<Component>
 	},
 	{
-		path: '/tags/new',
-		name: 'TagAdd',
+		path: '/taxons/new',
+		name: 'TaxonAdd',
 		component: async () => import('@/pages/tags/TagEdit.vue') as unknown as Promise<Component>
 	}
 ] satisfies RouteRecordRaw[]

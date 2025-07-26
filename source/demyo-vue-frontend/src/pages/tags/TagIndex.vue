@@ -2,7 +2,7 @@
 	<div>
 		<v-container fluid class="v-TagIndex__list">
 			<SectionCard>
-				<TagLink :model="tags" />
+				<TaxonLink :model="tags" />
 			</SectionCard>
 		</v-container>
 		<Fab v-if="!loading" to="/tags/new" icon="mdi-plus" />
@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
-import tagService from '@/services/tag-service'
+import tagService from '@/services/taxon-service'
 
 function getMaxUsageCount(tagsToCount: Tag[]): number {
 	if (tagsToCount.length === 0) {

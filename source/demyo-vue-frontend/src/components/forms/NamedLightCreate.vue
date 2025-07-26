@@ -17,21 +17,23 @@
 	</v-container>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends AbstractNamedModel">
 import { useLightEdit } from '@/composables/model-edit'
 import { mandatory } from '@/helpers/rules'
 import type AbstractModelService from '@/services/abstract-model-service'
 
 const props = defineProps<{
-	service: AbstractModelService<AbstractNamedModel>
+	service: AbstractModelService<T>
 	modelName: string
 	teleportActions?: string
+	skeleton?: Partial<T>
 }>()
 const emit = defineEmits<{
 	save: [id: number]
 }>()
 
-const { model, loading, saveAndEmit } = useLightEdit(async () => Promise.resolve({}), props.service, emit)
+const { model, loading, saveAndEmit }
+	= useLightEdit(async () => Promise.resolve(props.skeleton ?? {}), props.service, emit)
 
 const rules = {
 	name: [

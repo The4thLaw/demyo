@@ -100,7 +100,7 @@
 							<ModelLink :model="album.collection" view="CollectionView" />
 						</FieldValue>
 						<FieldValue v-if="album.tags && album.tags.length" :label="$t('field.Album.tags')">
-							<TagLink :model="album.tags" />
+							<TaxonLink :model="album.tags" />
 						</FieldValue>
 						<FieldValue v-if="album.binding.id" :label="$t('field.Album.binding')">
 							<ModelLink :model="album.binding" view="BindingView" />

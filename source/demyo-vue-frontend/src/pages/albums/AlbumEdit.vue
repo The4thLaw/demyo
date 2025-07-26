@@ -56,12 +56,23 @@
 							@added="(id: number) => album.universe.id = id"
 						/>
 					</v-col>
+					<!-- TODO: #14: Include the taxons from the series and remove
+					them from the available choices in the autocomplets -->
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.genres" :items="genres" :loading="taxonsLoading"
+							multiple clearable
+							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
+							label-key="field.Album.genres" refreshable @refresh="loadTaxons"
+							@added="(id: number) => album.genres.push(id)"
+						/>
+					</v-col>
 					<v-col cols="12">
 						<Autocomplete
-							v-model="album.tags" :items="tags" :loading="tagsLoading"
+							v-model="album.tags" :items="tags" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TagLightCreate" add-label="title.add.tag"
-							label-key="field.Album.tags" refreshable @refresh="loadTags"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
+							label-key="field.Album.tags" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.tags.push(id)"
 						/>
 					</v-col>
@@ -277,12 +288,12 @@
 
 <script setup lang="ts">
 import AuthorLightCreate from '@/components/authors/AuthorLightCreate.vue'
-import TagLightCreate from '@/components/tags/TagLightCreate.vue'
+import TaxonLightCreate from '@/components/tags/TaxonLightCreate.vue'
 import UniverseLightCreate from '@/components/universes/UniverseLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
-	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags,
+	useRefreshablePublishers, useRefreshableSeries, useRefreshableTaxons,
 	useRefreshableUniverses
 } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
@@ -303,7 +314,7 @@ const { bindings, bindingsLoading, loadBindings } = useRefreshableBindings()
 const { images, imagesLoading, loadImages } = useRefreshableImages()
 const { publishers, publishersLoading, loadPublishers } = useRefreshablePublishers()
 const { series, seriesLoading, loadSeries } = useRefreshableSeries()
-const { tags, tagsLoading, loadTags } = useRefreshableTags()
+const { genres, tags, taxonsLoading, loadTaxons } = useRefreshableTaxons()
 const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 
 const collections = ref([] as Collection[])
@@ -366,7 +377,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 }
 
 const { model: album, loading, save, reset } = useSimpleEdit(fetchData, albumService,
-	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTags, loadUniverses],
+	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTaxons, loadUniverses],
 	'title.add.album', 'title.edit.album', 'AlbumView')
 
 const labelType = computed(() => {

@@ -17,7 +17,7 @@ import managementRoutes from './manage'
 import publisherRoutes from './publishers'
 import readerRoutes from './readers'
 import seriesRoutes from './series'
-import tagRoutes from './tags'
+import tagRoutes from './taxons'
 import typeRoutes from './types'
 import universeRoutes from './universes'
 

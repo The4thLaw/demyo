@@ -132,7 +132,7 @@
 						</FieldValue>
 
 						<FieldValue v-if="allTags.length" :label="$t('field.Album.tags', allTags.length)">
-							<TagLink :model="allTags" />
+							<TaxonLink :model="allTags" />
 						</FieldValue>
 					</div>
 					<v-switch
