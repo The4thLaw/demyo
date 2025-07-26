@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
@@ -17,8 +18,7 @@ import jakarta.persistence.Transient;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
+import org.demyo.model.behaviour.Taxonomized;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 
@@ -29,14 +29,13 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
 @NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("universe"))
-public class Series extends AbstractNamedModel {
+public class Series extends AbstractNamedModel implements Taxonomized {
 	/** The name in the Series' original language. */
 	@Column(name = "original_name")
 	private String originalName;
 	/** The universe to which this Series belongs. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "universe_id")
-	@JsonView(ModelView.Basic.class)
 	private Universe universe;
 	/** The summary. */
 	@Column(name = "summary")
@@ -54,6 +53,18 @@ public class Series extends AbstractNamedModel {
 	/** The physical location of this Series. */
 	@Column(name = "location")
 	private String location;
+
+	/** The {@link Taxon}s labeling this Series. */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "series_taxons", joinColumns = @JoinColumn(name = "series_id"), //
+			inverseJoinColumns = @JoinColumn(name = "taxon_id"))
+	@SortComparator(IdentifyingNameComparator.class)
+	private SortedSet<Taxon> taxons;
+
+	@Transient
+	private SortedSet<Taxon> genres;
+	@Transient
+	private SortedSet<Taxon> tags;
 
 	/** The internal IDs of the Albums belonging to this Series. */
 	@Transient
@@ -186,6 +197,36 @@ public class Series extends AbstractNamedModel {
 	 */
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	@Override
+	public SortedSet<Taxon> getTaxons() {
+		return taxons;
+	}
+
+	@Override
+	public void setTaxons(SortedSet<Taxon> taxons) {
+		this.taxons = taxons;
+	}
+
+	@Override
+	public void setGenres(SortedSet<Taxon> genres) {
+		this.genres = genres;
+	}
+
+	@Override
+	public void setTags(SortedSet<Taxon> tags) {
+		this.tags = tags;
+	}
+
+	@Override
+	public SortedSet<Taxon> getTransientGenreCache() {
+		return genres;
+	}
+
+	@Override
+	public SortedSet<Taxon> getTransientTagCache() {
+		return tags;
 	}
 
 	/**

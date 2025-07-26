@@ -217,7 +217,7 @@ interface ReaderLists {
     readingList: number[];
 }
 
-interface Series extends AbstractNamedModel {
+interface Series extends AbstractNamedModel, Taxonomized {
     albumIds: number[];
     comment: string;
     completed: boolean;
@@ -239,9 +239,6 @@ interface Taxon extends AbstractNamedModel {
 interface Taxonomized {
     genres: Taxon[];
     tags: Taxon[];
-    taxons: Taxon[];
-    transientGenreCache: Taxon[];
-    transientTagCache: Taxon[];
 }
 
 interface Universe extends AbstractNamedModel {
