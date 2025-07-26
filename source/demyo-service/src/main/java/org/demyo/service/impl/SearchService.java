@@ -43,7 +43,7 @@ public class SearchService implements ISearchService {
 	@Autowired
 	private IAlbumService albumService;
 	@Autowired
-	private ITaxonService tagService;
+	private ITaxonService taxonService;
 	@Autowired
 	private IAuthorService authorService;
 	@Autowired
@@ -72,12 +72,12 @@ public class SearchService implements ISearchService {
 		CompletableFuture<List<Universe>> universes = universeService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Series>> series = seriesService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Album>> albums = albumService.quickSearch(query, exactMatch);
-		CompletableFuture<List<Taxon>> tags = tagService.quickSearch(query, exactMatch);
+		CompletableFuture<List<Taxon>> taxons = taxonService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Author>> authors = authorService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Publisher>> publishers = publisherService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Collection>> collections = collectionService.quickSearch(query, exactMatch);
 
-		SearchResult result = new SearchResult(universes.join(), series.join(), albums.join(), tags.join(),
+		SearchResult result = new SearchResult(universes.join(), series.join(), albums.join(), taxons.join(),
 				authors.join(), publishers.join(), collections.join());
 
 		sw.stop();

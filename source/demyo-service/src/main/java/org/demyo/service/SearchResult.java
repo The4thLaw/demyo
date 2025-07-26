@@ -27,7 +27,7 @@ public final class SearchResult {
 	private final List<Album> albums;
 	/** The matching {@link Taxon}s. */
 	@JsonView(ModelView.Basic.class)
-	private final List<Taxon> tags;
+	private final List<Taxon> taxons;
 	/** The matching {@link Author}s. */
 	@JsonView(ModelView.Basic.class)
 	private final List<Author> authors;
@@ -43,7 +43,7 @@ public final class SearchResult {
 		this.universes = Collections.emptyList();
 		this.series = Collections.emptyList();
 		this.albums = Collections.emptyList();
-		this.tags = Collections.emptyList();
+		this.taxons = Collections.emptyList();
 		this.authors = Collections.emptyList();
 		this.publishers = Collections.emptyList();
 		this.collections = Collections.emptyList();
@@ -55,18 +55,18 @@ public final class SearchResult {
 	 * @param universes The matching {@link Universe}s.
 	 * @param series The matching {@link Series}.
 	 * @param albums The matching {@link Album}s.
-	 * @param tags The matching {@link Taxon}s.
+	 * @param taxons The matching {@link Taxon}s.
 	 * @param authors The matching {@link Author}s.
 	 * @param publishers The matching {@link Publisher}s.
 	 * @param collections The matching {@link Collection}s.
 	 */
 	public SearchResult(List<Universe> universes, List<Series> series, List<Album> albums,
-			List<Taxon> tags, List<Author> authors, List<Publisher> publishers,
+			List<Taxon> taxons, List<Author> authors, List<Publisher> publishers,
 			List<Collection> collections) {
 		this.universes = universes;
 		this.series = series;
 		this.albums = albums;
-		this.tags = tags;
+		this.taxons = taxons;
 		this.authors = authors;
 		this.publishers = publishers;
 		this.collections = collections;
@@ -104,8 +104,8 @@ public final class SearchResult {
 	 *
 	 * @return the matching {@link Taxon}s
 	 */
-	public List<Taxon> getTags() {
-		return tags;
+	public List<Taxon> getTaxons() {
+		return taxons;
 	}
 
 	/**

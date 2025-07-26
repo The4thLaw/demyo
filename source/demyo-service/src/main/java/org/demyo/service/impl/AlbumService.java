@@ -262,8 +262,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
-	public int countAlbumsByTag(long tagId) {
-		return repo.countAlbumsByTag(tagId);
+	public int countAlbumsByTaxon(long taxonId) {
+		return repo.countAlbumsByTaxon(taxonId);
 	}
 
 	@Override
