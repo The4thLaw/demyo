@@ -26,7 +26,7 @@ describe('TagLink.vue', () => {
 
 	it('Render a single tag', () => {
 		expect(wrapper.text()).toMatch('Sample tag')
-		expect(wrapper.find('.d-Tag__count').text()).toBe('1337')
+		expect(wrapper.find('.d-Taxon__count').text()).toBe('1337')
 	})
 
 	it('Produce the proper style', () => {

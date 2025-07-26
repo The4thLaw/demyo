@@ -29,7 +29,7 @@ public final class TestModelBuilders {
 		Album a = createModel(Album::new, id);
 		a.setTitle(title);
 		ReflectionTestUtils.setField(a, "artists", new TreeSet<Author>(new IdentifyingNameComparator()));
-		ReflectionTestUtils.setField(a, "tags", new TreeSet<Taxon>(new IdentifyingNameComparator()));
+		ReflectionTestUtils.setField(a, "taxons", new TreeSet<Taxon>(new IdentifyingNameComparator()));
 		ReflectionTestUtils.setField(a, "writers", new TreeSet<Author>(new IdentifyingNameComparator()));
 		return a;
 	}
@@ -64,13 +64,13 @@ public final class TestModelBuilders {
 	}
 
 	/**
-	 * Creates a Tag with the provided data.
+	 * Creates a Taxon with the provided data.
 	 *
 	 * @param id The desired ID
 	 * @param name The desired name
-	 * @return The created tag
+	 * @return The created taxon
 	 */
-	public static Taxon tagByName(long id, String name) {
+	public static Taxon taxonByName(long id, String name) {
 		Taxon t = createModel(Taxon::new, id);
 		t.setName(name);
 		return t;
