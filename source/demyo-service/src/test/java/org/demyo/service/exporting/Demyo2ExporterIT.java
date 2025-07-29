@@ -54,7 +54,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				// Album assertions
 				.containsPattern(".*<album id=\"1313\" .*printing=\"2015-09-01\" .*book_type_id=\"1\".*>")
 				// Taxon assertions
-				.contains("<taxon id=\"1\" name=\"science-fiction\" description=\"SF\"/>")
+				.contains("<taxon id=\"1\" name=\"science-fiction\" description=\"SF\" taxon_type=\"TAG\"/>")
 				// Reader assertions
 				.contains("<reader id=\"1\" name=\"Xavier\" colour=\"#304ffe\">")
 				.contains("<favourite-series ref=\"99\"/>")
