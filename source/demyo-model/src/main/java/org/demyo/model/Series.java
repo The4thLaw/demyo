@@ -28,7 +28,9 @@ import org.demyo.model.util.IdentifyingNameComparator;
 @Entity
 @Table(name = "SERIES")
 @DefaultOrder(expression = @DefaultOrder.Order(property = "name"))
-@NamedEntityGraph(name = "Series.forView", attributeNodes = @NamedAttributeNode("universe"))
+@NamedEntityGraph(name = "Series.forView", attributeNodes = {
+	@NamedAttributeNode("taxons"), @NamedAttributeNode("universe")
+})
 public class Series extends AbstractNamedModel implements Taxonomized {
 	/** The name in the Series' original language. */
 	@Column(name = "original_name")

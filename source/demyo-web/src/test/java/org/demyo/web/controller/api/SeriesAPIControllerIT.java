@@ -38,8 +38,9 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	@Test
 	void view() throws Exception {
 		mockMvc.perform(get( "/api/series/99"))
-				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
+				.andDo(printResolvedException())
+				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(99))
 				.andExpect(jsonPath("$.name").value("Sillage"))
 				.andExpect(jsonPath("$.website").value("http://www.poukram.org/"))
