@@ -1,14 +1,14 @@
-import TagLink from '@/components/tags/TagLink.vue'
+import TaxonLink from '@/components/tags/TaxonLink.vue'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-describe('TagLink.vue', () => {
+describe('TaxonLink.vue', () => {
 	/** @type VueWrapper */
 	let wrapper
 
 	beforeEach(() => {
 		// Don't do a shallow mount, we need the callback from ModelLink with scoped slots
-		wrapper = mount(TagLink, {
+		wrapper = mount(TaxonLink, {
 			global: {
 				stubs: {
 					RouterLink: RouterLinkStub
