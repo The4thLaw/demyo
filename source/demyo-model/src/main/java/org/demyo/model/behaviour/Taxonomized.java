@@ -5,6 +5,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.SortComparator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,7 +42,7 @@ public interface Taxonomized {
 	// TODO: #14: Make sure this doesn't mess with the Taxons when saving an album/series. The type must remain
 	@JsonIgnoreProperties("type")
 	default SortedSet<Taxon> getGenres() {
-		if (getTaxons() == null) {
+		if (!Hibernate.isInitialized(getTaxons()) || getTaxons() == null) {
 			return Collections.emptySortedSet();
 		}
 
@@ -57,7 +58,7 @@ public interface Taxonomized {
 	 */
 	@JsonIgnoreProperties("type")
 	default SortedSet<Taxon> getTags() {
-		if (getTaxons() == null) {
+		if (!Hibernate.isInitialized(getTaxons()) || getTaxons() == null) {
 			return Collections.emptySortedSet();
 		}
 

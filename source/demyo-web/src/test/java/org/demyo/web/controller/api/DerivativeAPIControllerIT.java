@@ -1,5 +1,12 @@
 package org.demyo.web.controller.api;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import com.github.springtestdbunit.annotation.DatabaseOperation;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,13 +14,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import com.github.springtestdbunit.annotation.DatabaseOperation;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 /**
  * Integration tests for the Derivative API.
@@ -86,6 +86,7 @@ class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 		// Now that we know the save was OK, check if the content was actually saved
 		// We only check the data that was changed compared to the database
 		mockMvc.perform(get("/api/derivatives/205"))
+				.andDo(printResolvedException())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(205))
 				.andExpect(jsonPath("$.acquisitionDate").value("2010-01-01"))
