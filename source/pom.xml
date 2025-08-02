@@ -383,7 +383,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
-    			<artifactId>jackson-datatype-hibernate6</artifactId>
+				<artifactId>jackson-datatype-hibernate6</artifactId>
 				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 
@@ -530,6 +530,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>3.2.5</version>
+				<configuration>
+					<systemPropertyVariables>
+						<demyo.userDirectory>${project.build.directory}/user-directory</demyo.userDirectory>
+					</systemPropertyVariables>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -633,6 +638,9 @@
 					<version>3.2.5</version>
 					<configuration>
 						<argLine>-Djava.awt.headless=true</argLine>
+						<systemPropertyVariables>
+							<demyo.userDirectory>${project.build.directory}/user-directory</demyo.userDirectory>
+						</systemPropertyVariables>
 					</configuration>
 				</plugin>
 
@@ -649,7 +657,7 @@
 		<profile>
 			<id>dev</id>
 			<properties>
-				<config.hibernate.debug>true</config.hibernate.debug>
+				<config.hibernate.debug>false</config.hibernate.debug>
 				<config.core.log.level>DEBUG</config.core.log.level>
 				<config.war.path>../demyo-web/target/demyo-web-${project.version}</config.war.path>
 			</properties>
@@ -677,6 +685,9 @@
 							<artifactId>maven-surefire-plugin</artifactId>
 							<configuration>
 								<argLine>@{argLine} -Djava.awt.headless=true</argLine>
+								<systemPropertyVariables>
+									<demyo.userDirectory>${project.build.directory}/user-directory</demyo.userDirectory>
+								</systemPropertyVariables>
 							</configuration>
 						</plugin>
 

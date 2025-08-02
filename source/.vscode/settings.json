@@ -2,5 +2,14 @@
     "sonarlint.connectedMode.project": {
         "connectionId": "the4thlaw",
         "projectKey": "The4thLaw_demyo"
-    }
+    },
+
+	"java.test.config": {
+		"name": "javaUnitTestConfiguration",
+		"vmArgs": [
+			"-Djava.awt.headless=true",
+			"-Ddemyo.userDirectory=target/user-directory"
+		]
+	},
+	"java.test.defaultConfig": "javaUnitTestConfiguration"
 }
