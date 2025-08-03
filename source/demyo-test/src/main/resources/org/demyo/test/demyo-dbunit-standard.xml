@@ -1,338 +1,794 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  encoding UTF-8
+
+  Extraction Model:  SERIES where T.NAME in ('Alvin', 'Cross Fire', 'Trolls de Troy')
+                     Union ALBUMS where T.TITLE in ('300')
+  Source DBMS:       H2
+  Target DBMS:       H2
+  Database User:     demyo
+
+  Exported Rows:     709
+     ALBUMS                           77
+     ALBUMS_ARTISTS                   78
+     ALBUMS_COLORISTS                 55
+     ALBUMS_IMAGES                     2
+     ALBUMS_INKERS                     1
+     ALBUMS_PRICES                     3
+     ALBUMS_TAXONS                   119
+     ALBUMS_WRITERS                   87
+     AUTHORS                          31
+     BINDINGS                          2
+     BOOK_TYPES                        1
+     COLLECTIONS                      22
+     CONFIGURATION                     5
+     DERIVATIVES                      36
+     DERIVATIVES_IMAGES               36
+     DERIVATIVES_PRICES                4
+     DERIVATIVE_TYPES                  5
+     IMAGES                           91
+     PUBLISHERS                        3
+     READERS                           1
+     READERS_FAVOURITE_ALBUMS          1
+     READERS_FAVOURITE_SERIES          3
+     READERS_READING_LIST             15
+     SERIES                           10
+     SOURCES                           7
+     TAXONS                           12
+     UNIVERSES                         2
+
+  Used Filters:
+      ALBUMS.SUMMARY := case when T.SUMMARY is not null then '<p>Sample HTML description</p>' else null end
+      ALBUMS.COMMENT := case when T.COMMENT is not null then '<p>Sample HTML description</p>' else null end
+      AUTHORS.BIOGRAPHY := case when T.BIOGRAPHY is not null then '<p>Sample HTML description</p>' else null end
+      BOOK_TYPES.DESCRIPTION := case when T.DESCRIPTION is not null then '<p>Sample HTML description</p>' else null end
+      COLLECTIONS.HISTORY := case when T.HISTORY is not null then '<p>Sample HTML description</p>' else null end
+      DERIVATIVES.DESCRIPTION := case when T.DESCRIPTION is not null then '<p>Sample HTML description</p>' else null end
+      IMAGES.URL := 'dummy-image.jpg'
+      PUBLISHERS.HISTORY := case when T.HISTORY is not null then '<p>Sample HTML description</p>' else null end
+      READERS.NAME := 'My Reader'
+      SERIES.SUMMARY := case when T.SUMMARY is not null then '<p>Sample HTML description</p>' else null end
+      SERIES.COMMENT := case when T.COMMENT is not null then '<p>Sample HTML description</p>' else null end
+      SOURCES.HISTORY := case when T.HISTORY is not null then '<p>Sample HTML description</p>' else null end
+      TAXONS.DESCRIPTION := case when T.DESCRIPTION is not null then '<p>Sample HTML description</p>' else null end
+      UNIVERSES.DESCRIPTION := case when T.DESCRIPTION is not null then '<p>Sample HTML description</p>' else null end
+-->
 <dataset>
-  <UNIVERSES ID="17" NAME="Sillage" />
-  <BOOK_TYPES ID="1" NAME="Bande dessinée" LABEL_TYPE="GRAPHIC_NOVEL" DESCRIPTION="Pour toutes les BDs" />
-  <BOOK_TYPES ID="2" NAME="Roman" LABEL_TYPE="NOVEL" DESCRIPTION="Romans non illustrés" FIELD_CONFIG="ALBUM_INKER,ALBUM_COLORIST,ALBUM_ARTIST" />
-  <IMAGES ID="1" URL="Covers/P-T/Sillage_02.jpg" DESCRIPTION="Sillage 02 - Couverture"/>
-  <IMAGES ID="2" URL="Covers/P-T/Sillage_09.jpg" DESCRIPTION="Sillage 09 - Couverture"/>
-  <IMAGES ID="3" URL="Covers/P-T/Sillage_01.jpg" DESCRIPTION="Sillage 01 - Couverture"/>
-  <IMAGES ID="4" URL="Covers/P-T/Sillage_01_reed.jpg" DESCRIPTION="Sillage 01 - Couverture de la réédition"/>
-  <IMAGES ID="5" URL="Covers/P-T/Sillage_03.jpg" DESCRIPTION="Sillage 03 - Couverture"/>
-  <IMAGES ID="6" URL="Covers/P-T/Sillage_04.jpg" DESCRIPTION="Sillage 04 - Couverture"/>
-  <IMAGES ID="7" URL="Covers/P-T/Sillage_05.jpg" DESCRIPTION="Sillage 05 - Couverture"/>
-  <IMAGES ID="8" URL="Covers/P-T/Sillage_06.jpg" DESCRIPTION="Sillage 06 - Couverture"/>
-  <IMAGES ID="9" URL="Covers/P-T/Sillage_07.jpg" DESCRIPTION="Sillage 07 - Couverture"/>
-  <IMAGES ID="10" URL="Covers/P-T/Sillage_08.jpg" DESCRIPTION="Sillage 08 - Couverture"/>
-  <IMAGES ID="11" URL="Covers/P-T/Sillage_10.jpg" DESCRIPTION="Sillage 10 - Couverture"/>
-  <IMAGES ID="12" URL="Covers/P-T/Sillage_collectionneur.jpg" DESCRIPTION="Sillage hors série Collectionneur - Couverture"/>
-  <IMAGES ID="13" URL="Coffrets/Sillage_coffret1234_back.jpg" DESCRIPTION="Sillage 1,2,3,4 - Coffret dos"/>
-  <IMAGES ID="14" URL="Coffrets/Sillage_coffret1234_front.jpg" DESCRIPTION="Sillage 1,2,3,4 - Coffret face"/>
-  <IMAGES ID="170" URL="Ex-Libris/Sillage_01_Forbidden.jpg" DESCRIPTION="Sillage 01 - Ex-Libris Forbidden Worlds"/>
-  <IMAGES ID="171" URL="Ex-Libris/Sillage_chevalier.jpg" DESCRIPTION="Sillage - Offset chevalier"/>
-  <IMAGES ID="172" URL="Ex-Libris/Sillage_dragon.jpg" DESCRIPTION="Sillage - Offset dragon"/>
-  <IMAGES ID="173" URL="Ex-Libris/Sillage_gym.jpg" DESCRIPTION="Sillage - Offset gym"/>
-  <IMAGES ID="174" URL="Ex-Libris/Sillage_militaire.jpg" DESCRIPTION="Sillage - Offset militaire"/>
-  <IMAGES ID="175" URL="Ex-Libris/Sillage_rondin_Sans_Titre.jpg" DESCRIPTION="Sillage - Sérigraphie rondin Sans Titre"/>
-  <IMAGES ID="176" URL="Ex-Libris/Sillage_01_Atlantis.jpg" DESCRIPTION="Sillage 01 - Ex-Libris Atlantis"/>
-  <IMAGES ID="177" URL="Ex-Libris/Sillage_02_Durango.jpg" DESCRIPTION="Sillage 02 - Ex-Libris Durango"/>
-  <IMAGES ID="178" URL="Ex-Libris/Sillage_douche_Bulles_Decume.jpg" DESCRIPTION="Sillage - Offset douche Bulles D&apos;écume"/>
-  <IMAGES ID="179" URL="Ex-Libris/Sillage_ruines.jpg" DESCRIPTION="Sillage - Offset ruines"/>
-  <IMAGES ID="180" URL="Ex-Libris/Sillage_03_Durango.jpg" DESCRIPTION="Sillage 03 - Ex-Libris Durango"/>
-  <IMAGES ID="182" URL="Ex-Libris/Sillage_03_Fantasmagories.jpg" DESCRIPTION="Sillage 03 - Ex-Libris Fantasmagories"/>
-  <IMAGES ID="183" URL="Ex-Libris/Sillage_05_Durango.jpg" DESCRIPTION="Sillage 05 - Ex-Libris Durango"/>
-  <IMAGES ID="184" URL="Ex-Libris/Sillage_noel_Durango.jpg" DESCRIPTION="Sillage - Sérigraphie noël Durango"/>
-  <IMAGES ID="185" URL="Ex-Libris/Sillage_04_Durango.jpg" DESCRIPTION="Sillage 04 - Ex-Libris Durango"/>
-  <IMAGES ID="186" URL="Ex-Libris/Sillage_armurerie_unk.jpg" DESCRIPTION="Sillage - Offset armurerie"/>
-  <IMAGES ID="187" URL="Signets/Sillage_Durango.jpg" DESCRIPTION="Sillage - Signet dos Durango"/>
-  <IMAGES ID="188" URL="Signets/Sillage_Durango_b.jpg" DESCRIPTION="Sillage - Signet bronzette Durango"/>
-  <IMAGES ID="189" URL="Ex-Libris/Sillage_SG9_Durango.jpg" DESCRIPTION="Sillage - Série Graphique 9 Durango"/>
-  <IMAGES ID="190" URL="Ex-Libris/Sillage_SG10_Durango.jpg" DESCRIPTION="Sillage - Série Graphique 10 Durango"/>
-  <IMAGES ID="191" URL="Ex-Libris/Sillage_06_Durango.jpg" DESCRIPTION="Sillage 06 - Ex-Libris Durango"/>
-  <IMAGES ID="192" URL="Ex-Libris/Sillage_07_Durango.jpg" DESCRIPTION="Sillage 07 - Ex-Libris Durango"/>
-  <IMAGES ID="195" URL="Divers/Sillage_tapis_souris.jpg" DESCRIPTION="Sillage - Tapis de souris"/>
-  <IMAGES ID="196" URL="Carnets/Sillages_coulisses.jpg" DESCRIPTION="Sillage - Les coulisses"/>
-  <IMAGES ID="241" URL="Ex-Libris/Sillage_tete_dragon.jpg" DESCRIPTION="Sillage - Offset à la tête de dragon"/>
-  <IMAGES ID="242" URL="Ex-Libris/Sillage_aristocrates.jpg" DESCRIPTION="Sillage - Offset aristocrates"/>
-  <IMAGES ID="278" URL="Covers/P-T/Sillage_11.jpg" DESCRIPTION="Sillage 11 - Couverture"/>
-  <IMAGES ID="582" URL="Covers/P-T/Sillage_BlockBuster.jpg" DESCRIPTION="Sillage BlockBuster - Couverture"/>
-  <IMAGES ID="654" URL="Logos/Delcourt_Neopolis.png" DESCRIPTION="Logo - Collection Neopolis (Delcourt)"/>
-  <IMAGES ID="666" URL="Covers/P-T/Sillage_12.jpg" DESCRIPTION="Sillage 12 - Couverture"/>
-  <IMAGES ID="667" URL="Covers/P-T/Sillage_13.jpg" DESCRIPTION="Sillage 13 - Couverture"/>
-  <IMAGES ID="752" URL="Covers/P-T/Sillage_15.jpg" DESCRIPTION="Sillage 15 - Couverture"/>
-  <IMAGES ID="943" URL="uploads/1fb0a95682a89b74990690add7f7ce1865774293edb81fc0ffb9ecb875f20fa6.jpg" DESCRIPTION="Sillage - Premières Armes 1 - Couverture"/>
-  <IMAGES ID="944" URL="uploads/e8909a8ed80fdfbc0ba7cf5ad7ae95cc55bbd547429d3e87d516a9953b879f2c.jpg" DESCRIPTION="Sillage 16 - Couverture"/>
-  <IMAGES ID="945" URL="uploads/7b302e269ce0faae6cf11321a7bf6efc1f228dc97f37c143f50eb87e7f614c69.jpg" DESCRIPTION="Sillage 17 - Couverture"/>
-  <IMAGES ID="946" URL="uploads/dc0e2361b8c1d7444daaaef3135a50fda4484b0f46cc7a01aa6e8b1b9fdc4dad.jpg" DESCRIPTION="Sillage 18 - Couverture"/>
-  <IMAGES ID="947" URL="uploads/8c47feff374558c008cf39d1092d5a822128f856381d540c955f82fca06c7fb1.jpg" DESCRIPTION="Sillage 19 - Couverture"/>
-  <IMAGES ID="948" URL="uploads/392de5c0d8f694d56b954b313156619bfbddd1affd4ef664dd7985550aeb2ca0.jpg" DESCRIPTION="Sillage 14 - Couverture"/>
-  <IMAGES ID="1328" URL="uploads/46c7ea97aff5410a0203507fe8d21836b825a6c209f87bf9b8c6457ae9e86d38.jpg" DESCRIPTION="Maître d&apos;Armes (Le) - Sérigraphie Durango - Image 1"/>
-  <PUBLISHERS ID="1" NAME="Dargaud" WEBSITE="http://www.dargaud.com/" FEED="http://www.dargaud.com/actualites/news.aspx"/>
-  <PUBLISHERS ID="3" NAME="Delcourt" WEBSITE="http://www.editions-delcourt.fr/" FEED="http://feeds2.feedburner.com/Delcourt-SortiesBd"/>
-  <COLLECTIONS ID="7" NAME="Série B" WEBSITE="http://www.editions-delcourt.fr/serieb/" PUBLISHER_ID="3"/>
-  <COLLECTIONS ID="9" NAME="Neopolis" WEBSITE="http://www.editions-delcourt.fr/catalogue/collections/neopolis" LOGO_ID="654" PUBLISHER_ID="3"/>
-  <AUTHORS ID="52" NAME="Buchet" FNAME="Philippe"/>
-  <AUTHORS ID="53" NAME="Morvan" FNAME="Jean-David"/>
-  <AUTHORS ID="201" NAME="Parnotte" FNAME="Joël"/>
-  <AUTHORS ID="313" NAME="Dorison" FNAME="Xavier"/>
-  <AUTHORS ID="610" NAME="Chan" FNAME="Pierre-Mony" WEBSITE="http://pmchan.fr.nf/"/>
-  <AUTHORS ID="717" NAME="Montlló Ribó" FNAME="Miquel" NICKNAME="Miki" WEBSITE="http://miquelmontllo.blogspot.be/"/>
-  <AUTHORS ID="718" NAME="Picard" FNAME="Alice"/>
-  <SERIES ID="2" NAME="Sample empty series" COMPLETED="false"/>
-  <SERIES ID="99" NAME="Sillage" UNIVERSE_ID="17" COMPLETED="false" WEBSITE="http://www.poukram.org/" LOCATION="Bibliothèque, F2"/>
-  <SERIES ID="232" NAME="Sillage - Premières Armes" UNIVERSE_ID="17" COMPLETED="false" LOCATION="Bibliothèque, F2"/>
-  <TAXONS ID="1" NAME="science-fiction" DESCRIPTION="SF" />
-  <TAXONS ID="3" NAME="comic" FGCOLOUR="#ffffff" BGCOLOUR="#1c1d82"/>
-  <TAXONS ID="7" NAME="dédicacé"/>
-  <TAXONS ID="10" NAME="vernis sélectif"/>
-  <TAXONS ID="13" NAME="coffret"/>
-  <TAXONS ID="21" NAME="one shot"/>
-  <TAXONS ID="50" NAME="tirage limité"/>
-  <TAXONS ID="53" NAME="cahier graphique"/>
-  <TAXONS ID="56" NAME="bandeau"/>
-  <TAXONS ID="79" NAME="héroïne"/>
-  <TAXONS ID="85" NAME="course"/>
-  <TAXONS ID="90" NAME="jungle"/>
-  <TAXONS ID="106" NAME="évasion"/>
   <BINDINGS ID="1" NAME="Cartonné"/>
-  <BINDINGS ID="2" NAME="Broché"/>
   <BINDINGS ID="3" NAME="Cartonné &amp; Toilé"/>
-  <ALBUMS ID="435" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="1.0" NUMBER_SUFFIX="ré" TITLE="À Feu et à Cendres" PUBLISHER_ID="3" COLLECTION_ID="9" THIS_EDITION="1998-02-01" WISHLIST="false" BINDING_ID="1" COVER_ID="3" COMMENT="&lt;p&gt;Dédicacé pour Xavier par les deux auteurs.&lt;/p&gt; &lt;p&gt;Réédition le même mois que la première après la mise au pilon de celle-ci.&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="436" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="2.0" TITLE="Collection Privée" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="1999-05-01" THIS_EDITION="1999-05-01" WISHLIST="false" BINDING_ID="1" COVER_ID="1" COMMENT="&lt;p&gt;Carnet de croquit de huit pages -               Ex-libris 175/220 Durango&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="437" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="3.0" TITLE="Engrenages" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2000-08-01" THIS_EDITION="2000-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="5" COMMENT="&lt;p&gt;Ex-libris 139/250 Durango&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="438" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="4.0" TITLE="Le Signe des Démons" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2001-09-01" THIS_EDITION="2001-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="6" COMMENT="&lt;p&gt;Coffret pour les 4 albums parus.&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="439" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="5.0" TITLE="&apos;J.VJ,..&apos;\_ " PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2002-06-01" THIS_EDITION="2002-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="7" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="440" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="6.0" TITLE="Artifices" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2003-08-01" THIS_EDITION="2003-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="8" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="441" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="7.0" TITLE="Q.H.I." PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2004-08-01" THIS_EDITION="2004-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="9" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="442" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="8.0" TITLE="Nature Humaine" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2005-09-01" THIS_EDITION="2005-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="10" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="443" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="9.0" TITLE="Infiltrations" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2006-09-01" THIS_EDITION="2006-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="2" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="444" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER_SUFFIX="HS" TITLE="Le Collectionneur" PUBLISHER_ID="3" FIRST_EDITION="2002-10-01" THIS_EDITION="2002-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="12" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="567" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="10.0" TITLE="Retour de Flammes" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2007-10-01" THIS_EDITION="2007-10-01" ACQUISITION_DATE="2007-11-10" WISHLIST="false" BINDING_ID="1" COVER_ID="11" COMMENT="&lt;p&gt;Édition Spéciale « 10 ans » : couverture à vernis sélectif, DVD anniversaire, carnet de croquis&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="48" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="669" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="11.0" TITLE="Monde Flottant" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2008-09-01" THIS_EDITION="2008-09-01" ISBN="978-2-7560-1184-4" ACQUISITION_DATE="2008-11-16" WISHLIST="false" BINDING_ID="1" COVER_ID="278" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="737" BOOK_TYPE_ID="2" SERIES_ID="99" NUMBER_SUFFIX="HS" TITLE="BlockBuster" PUBLISHER_ID="3" COLLECTION_ID="7" FIRST_EDITION="2005-11-01" THIS_EDITION="2005-11-01" ISBN="978-2-84789-949-8" WISHLIST="false" BINDING_ID="1" COVER_ID="582" SUMMARY="&lt;p&gt;Couvertures, dessins originaux et croquis comment&amp;eacute;s par l&apos;auteur.&lt;/p&gt;" COMMENT="&lt;p&gt;Pr&amp;eacute;face de [[Author:10|Vatine]].&lt;/p&gt; &lt;p&gt;Not&amp;eacute; //premi&amp;egrave;re &amp;eacute;dition//.&lt;/p&gt;" LOCATION="Bibliothèque, F2" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="746" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="12.0" TITLE="Zone Franche" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2009-10-01" THIS_EDITION="2009-10-01" ISBN="978-2-7560-1592-7" ACQUISITION_DATE="2009-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="666" SUMMARY="&lt;p&gt;Nävis est aux trousses de Soimitt, le tueur à gages qui l&apos;avait manipulée jusqu&apos;à la pousser à détruire une partie du vaisseau amiral de Sillage. Elle espère lui extirper des informations susceptibles de faire réviser son procès.&lt;/p&gt;&lt;p&gt;Mais le cerveau de l&apos;assassin est truffé de bloqueurs psychiques et le seul système capable de le faire parler est... une planète ! Elle émet des ondes forçant les gens à révéler leur vérité et, de ce fait, se trouve interdite d&apos;accès par les dirigeants de Sillage. Car quelle autorité serait capable d&apos;accepter en son sein une telle zone franche ?&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="764" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="1.0" TITLE="À Feu et à Cendres" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="1998-02-01" THIS_EDITION="1998-02-01" ISBN="978-2-84055-177-5" ACQUISITION_DATE="2009-07-04" PURCHASE_PRICE="200.0" WISHLIST="false" BINDING_ID="1" COVER_ID="3" COMMENT="&lt;p&gt;Version originale partie au pilon pour cause d&apos;erreur d&apos;impression : not&amp;eacute; &lt;em&gt;Achev&amp;eacute; d&apos;imprimer en d&amp;eacute;cembre 1998&lt;/em&gt; au lieu de 1997.&lt;/p&gt; &lt;p&gt;Coin sup&amp;eacute;rieur droit de la face enfonc&amp;eacute;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="848" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="13.0" TITLE="Dérapage Contrôlé" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2010-09-29" THIS_EDITION="2010-09-29" ISBN="978-2-7560-1997-0" ACQUISITION_DATE="2010-10-30" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COVER_ID="667" SUMMARY="&lt;p&gt;Nävis participe au Cannonball de l&apos;espace, une course illégale où tous les coups sont permis et son seul moyen pour rejoindre discrètement Bobo. Elle compte lui demander pourquoi il lui a menti et qu&apos;il lui révèle qui la finançait clandestinement pendant qu&apos;elle était agent de Sillage... Dérapages verbaux incontrôlés et prises de risques maximales seront au programme de cette course à la vérité.&lt;/p&gt;" COMMENT="&lt;p&gt;La suite d&apos;une série d&apos;albums charnières. L&apos;histoire globale avance mais le scénario local est assez anecdotique.&lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="945" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="14.0" TITLE="Liquidation Totale" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2011-10-01" THIS_EDITION="2011-10-01" ISBN="978-2-7560-2433-2" ACQUISITION_DATE="2011-11-10" WISHLIST="false" BINDING_ID="1" COVER_ID="948" COMMENT="&lt;p&gt;Noté //première édition//. &lt;/p&gt;" HEIGHT="320.0" WIDTH="240.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="946" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="14.0" NUMBER_SUFFIX="gf" TITLE="Liquidation Totale" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2011-10-01" THIS_EDITION="2011-10-01" ISBN="978-2-7560-2658-9" ACQUISITION_DATE="2011-11-10" PURCHASE_PRICE="40.0" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Tirage limit&amp;eacute; &amp;agrave; 2200 exemplaires (dont 50 HC) &amp;agrave; l&apos;occasion des 25 ans des &amp;Eacute;ditions Delcourt.&lt;/p&gt; &lt;p&gt;Album num&amp;eacute;rot&amp;eacute; 2101/2150.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" LOCATION="Bibliothèque, D8" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1000" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="15.0" TITLE="Chasse Gardée" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2012-10-03" THIS_EDITION="2012-10-03" ISBN="978-2-7560-2434-9" ACQUISITION_DATE="2012-10-27" WISHLIST="false" BINDING_ID="1" COVER_ID="752" SUMMARY="&lt;p&gt;Blanchie de l&apos;attentat contre la Constituante, Nävis a refusé de redevenir agent, lasse de la corruption qui règne aux plus hauts rangs des autorités. Désormais, elle enchaîne les petits boulots pour subvenir à ses besoins et poursuivre sa route à la recherche d&apos;autres humains. Jusqu&apos;au jour où elle répond à l&apos;annonce d&apos;un milliardaire proposant une mission très bien payée, et sans danger, en apparence...&lt;/p&gt;" COMMENT="&lt;p&gt;Noté //première édition//.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1086" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="16.0" TITLE="Liés par le Sang" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2013-09-01" THIS_EDITION="2013-09-01" ISBN="978-2-7560-3262-7" ACQUISITION_DATE="2013-10-19" PURCHASE_PRICE="18.0" WISHLIST="false" BINDING_ID="1" COVER_ID="944" COMMENT="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1093" BOOK_TYPE_ID="1" SERIES_ID="232" NUMBER="1.0" TITLE="Esprit d&apos;Équipe" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2014-06-01" THIS_EDITION="2014-06-01" ISBN="978-2-7560-3893-3" ACQUISITION_DATE="2014-11-08" WISHLIST="false" BINDING_ID="1" COVER_ID="943" COMMENT="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="52" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1186" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="18.0" TITLE="Psycholocauste" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2015-09-01" THIS_EDITION="2015-09-01" ISBN="978-2-7560-6485-7" ACQUISITION_DATE="2015-10-17" WISHLIST="false" BINDING_ID="1" COVER_ID="946" COMMENT="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1229" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="17.0" TITLE="Grands Froids" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2014-09-01" THIS_EDITION="2014-09-01" ISBN="978-2-7560-4126-1" ACQUISITION_DATE="2015-09-05" WISHLIST="false" BINDING_ID="1" COVER_ID="945" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="true"/>
-  <ALBUMS ID="1313" BOOK_TYPE_ID="1" TITLE="Maître d&apos;Armes (Le)" PUBLISHER_ID="1" FIRST_EDITION="2015-10-01" PRINTING="2015-09-01" ISBN="978-2-5050-6342-1" ACQUISITION_DATE="2016-10-16" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Not&amp;eacute;&amp;nbsp;&lt;em&gt;Quatri&amp;egrave;me &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="250.0" PAGES="94" LOCATION="Bibliothèque, E6" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1370" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="19.0" TITLE="Temps mort" PUBLISHER_ID="3" COLLECTION_ID="9" FIRST_EDITION="2016-10-01" THIS_EDITION="2016-10-01" ISBN="978-2-7560-6486-4" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COVER_ID="947" COMMENT="&lt;p&gt;Not&amp;eacute; &lt;em&gt;premi&amp;egrave;re &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" HEIGHT="360.0" WIDTH="260.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS ID="1459" BOOK_TYPE_ID="1" SERIES_ID="99" NUMBER="17.0" NUMBER_SUFFIX="TL" TITLE="Grands Froids" PUBLISHER_ID="3" COLLECTION_ID="9" ACQUISITION_DATE="2017-10-14" PURCHASE_PRICE="69.0" WISHLIST="false" BINDING_ID="3" COMMENT="&lt;p&gt;Tirage num&amp;eacute;rot&amp;eacute; 226/450, r&amp;eacute;alis&amp;eacute; par Bruno Graff.&lt;/p&gt; &lt;p&gt;Tir&amp;eacute; avec 3 ex-libris dont 1 sign&amp;eacute;.&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false"/>
-  <ALBUMS_PRICES ALBUM_ID="764" DATE="2010-09-26" PRICE="200.0"/>
-  <ALBUMS_PRICES ALBUM_ID="764" DATE="2011-09-26" PRICE="150.0"/>
-  <ALBUMS_IMAGES ALBUM_ID="435" IMAGE_ID="4"/>
-  <ALBUMS_ARTISTS ALBUM_ID="435" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="436" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="437" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="438" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="439" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="440" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="441" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="442" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="443" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="444" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="567" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="669" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="737" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="746" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="764" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="848" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="945" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="946" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1000" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1086" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1093" ARTIST_ID="610"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1186" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1229" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1313" ARTIST_ID="201"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1370" ARTIST_ID="52"/>
-  <ALBUMS_ARTISTS ALBUM_ID="1459" ARTIST_ID="52"/>
-  <ALBUMS_WRITERS ALBUM_ID="435" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="436" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="437" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="438" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="439" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="440" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="441" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="442" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="443" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="444" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="567" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="669" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="737" WRITER_ID="52"/>
-  <ALBUMS_WRITERS ALBUM_ID="746" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="764" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="848" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="945" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="946" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1000" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1086" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1093" WRITER_ID="52"/>
-  <ALBUMS_WRITERS ALBUM_ID="1093" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1186" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1229" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1313" WRITER_ID="313"/>
-  <ALBUMS_WRITERS ALBUM_ID="1370" WRITER_ID="53"/>
-  <ALBUMS_WRITERS ALBUM_ID="1459" WRITER_ID="53"/>
-  <ALBUMS_COLORISTS ALBUM_ID="435" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="669" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="737" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="746" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="764" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="848" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="945" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="946" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1000" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1086" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1093" COLORIST_ID="610"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1093" COLORIST_ID="718"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1186" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1229" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1313" COLORIST_ID="201"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1370" COLORIST_ID="52"/>
-  <ALBUMS_COLORISTS ALBUM_ID="1459" COLORIST_ID="52"/>
-  <ALBUMS_INKERS/>
-  <ALBUMS_TRANSLATORS/>
-  <ALBUMS_TAXONS ALBUM_ID="435" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="435" TAXON_ID="7"/>
-  <ALBUMS_TAXONS ALBUM_ID="435" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="435" TAXON_ID="90"/>
-  <ALBUMS_TAXONS ALBUM_ID="436" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="436" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="437" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="437" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="438" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="438" TAXON_ID="13"/>
-  <ALBUMS_TAXONS ALBUM_ID="438" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="439" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="439" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="440" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="440" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="441" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="441" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="441" TAXON_ID="106"/>
-  <ALBUMS_TAXONS ALBUM_ID="442" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="442" TAXON_ID="13"/>
-  <ALBUMS_TAXONS ALBUM_ID="442" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="443" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="443" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="444" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="444" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="567" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="567" TAXON_ID="10"/>
-  <ALBUMS_TAXONS ALBUM_ID="567" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="669" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="669" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="737" TAXON_ID="10"/>
-  <ALBUMS_TAXONS ALBUM_ID="737" TAXON_ID="53"/>
-  <ALBUMS_TAXONS ALBUM_ID="737" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="746" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="746" TAXON_ID="13"/>
-  <ALBUMS_TAXONS ALBUM_ID="746" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="764" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="764" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="764" TAXON_ID="90"/>
-  <ALBUMS_TAXONS ALBUM_ID="848" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="848" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="848" TAXON_ID="85"/>
-  <ALBUMS_TAXONS ALBUM_ID="945" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="945" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="946" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="946" TAXON_ID="10"/>
-  <ALBUMS_TAXONS ALBUM_ID="946" TAXON_ID="50"/>
-  <ALBUMS_TAXONS ALBUM_ID="946" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="1000" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1086" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1086" TAXON_ID="13"/>
-  <ALBUMS_TAXONS ALBUM_ID="1093" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1093" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="1186" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1186" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="1229" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1229" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="1313" TAXON_ID="21"/>
-  <ALBUMS_TAXONS ALBUM_ID="1313" TAXON_ID="56"/>
-  <ALBUMS_TAXONS ALBUM_ID="1370" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1370" TAXON_ID="79"/>
-  <ALBUMS_TAXONS ALBUM_ID="1459" TAXON_ID="1"/>
-  <ALBUMS_TAXONS ALBUM_ID="1459" TAXON_ID="50"/>
-  <ALBUMS_TAXONS ALBUM_ID="1459" TAXON_ID="53"/>
-  <ALBUMS_TAXONS ALBUM_ID="1459" TAXON_ID="79"/>
-  <SOURCES ID="1" NAME="Durango" EMAIL="user@example.org"/>
-  <SOURCES ID="2" NAME="Sans Titre"/>
-  <SOURCES ID="3" NAME="Fantasmagories"/>
-  <SOURCES ID="7" NAME="Forbidden Worlds"/>
-  <SOURCES ID="12" NAME="Atlantis"/>
-  <SOURCES ID="13" NAME="Bulles D&apos;écume"/>
-  <SOURCES ID="14" NAME="Delcourt"/>
-  <SOURCES ID="15" NAME="BDCaf&apos; Mag"/>
-  <SOURCES ID="17" NAME="Folle Image"/>
+
+  <BOOK_TYPES ID="1" NAME="__DEFAULT__" LABEL_TYPE="GRAPHIC_NOVEL"/>
+
   <DERIVATIVE_TYPES ID="1" NAME="Offset"/>
   <DERIVATIVE_TYPES ID="2" NAME="Sérigraphie"/>
   <DERIVATIVE_TYPES ID="3" NAME="Objet"/>
-  <DERIVATIVE_TYPES ID="4" NAME="Coffret"/>
-  <DERIVATIVE_TYPES ID="5" NAME="Carnet de croquis"/>
-  <DERIVATIVES ID="12" SERIES_ID="99" ALBUM_ID="438" ARTIST_ID="52" DERIVATIVE_TYPE_ID="4" SOURCE_ID="14" SIGNED="false" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Coffret Sillage 1, 2, 3, 4 représentant Nävis et Snivel.&lt;/p&gt;" WIDTH="241.0" HEIGHT="326.0" DEPTH="40.0"/>
-  <DERIVATIVES ID="66" SERIES_ID="99" ALBUM_ID="435" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="7" NUMBER="144" TOTAL="170" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Couverture de comic. Passages : 1 noir, 1 rouge, 1 vert, 2 bleus, 2 peau, 1 gris.&lt;/p&gt;" WIDTH="155.0" HEIGHT="235.0"/>
-  <DERIVATIVES ID="67" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="23" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Nävis en habit médiéval.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
-  <DERIVATIVES ID="68" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="54" TOTAL="290" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis avec un costume de dragon.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
-  <DERIVATIVES ID="69" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="23" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Nävis en tenue de gym.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
-  <DERIVATIVES ID="70" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="23" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Nävis en tenue militaire.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
-  <DERIVATIVES ID="71" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="2" NUMBER="239" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis et bobo façon début 20ème, roulant sur un rodin.&lt;/p&gt;" WIDTH="500.0" HEIGHT="700.0"/>
-  <DERIVATIVES ID="72" SERIES_ID="99" ALBUM_ID="435" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="12" NUMBER="210" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis sautant un branche dans la jungle, avec Bobo à ses trousses.&lt;/p&gt;" WIDTH="160.0" HEIGHT="250.0"/>
-  <DERIVATIVES ID="73" SERIES_ID="99" ALBUM_ID="436" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="175" TOTAL="220" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Liste d&apos;équipement pour une mission. Passages : 1 noir, 1 orange, 1 vert, 1 peau, 1 gris, 1 brun.&lt;/p&gt;" WIDTH="285.0" HEIGHT="145.0"/>
-  <DERIVATIVES ID="74" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="13" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis prenant sa douche.&lt;/p&gt;" WIDTH="210.0" HEIGHT="297.0"/>
-  <DERIVATIVES ID="75" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="17" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis couchée dans des ruines, le pistolet fumant.&lt;/p&gt;" WIDTH="267.0" HEIGHT="182.0"/>
-  <DERIVATIVES ID="76" SERIES_ID="99" ALBUM_ID="437" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="139" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis emmenant un prisonnier. Passages : 1 noir, 2 oranges, 2 violets, 2 peau, 2 gris&lt;/p&gt;" WIDTH="145.0" HEIGHT="283.0"/>
-  <DERIVATIVES ID="78" SERIES_ID="99" ALBUM_ID="437" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="3" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis couchée dans des feuillages.&lt;/p&gt;" WIDTH="119.0" HEIGHT="216.0"/>
-  <DERIVATIVES ID="79" SERIES_ID="99" ALBUM_ID="439" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="1" NUMBER="148" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Un rebelle assis sur un tuyau, les armes à la main. Passages : 1 noir, 1 ombre (bleu), 1 brun, 1 vert, 1 peau, 1 rouge, 1 os, 1 gris.&lt;/p&gt;" WIDTH="205.0" HEIGHT="304.0"/>
-  <DERIVATIVES ID="80" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="7" SOURCE_ID="1" NUMBER="150" TOTAL="254" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en père noël. Passages : 1 noir, 1 argenté, 2 violets (dont 1 ombre), 1 rouge, 1 vert, 1 orange. Impression sur papier glacé.&lt;/p&gt;" WIDTH="207.0" HEIGHT="298.0"/>
-  <DERIVATIVES ID="81" SERIES_ID="99" ALBUM_ID="438" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="181" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis et deux personnages à fourrure. Passages : 1 noir, 2 rouges, 1 peau, 2 bruns, 1 argenté, 1 bleu, 1 vert.&lt;/p&gt;" WIDTH="196.0" HEIGHT="300.0"/>
-  <DERIVATIVES ID="82" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="0" TOTAL="0" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis dans une armurerie.&lt;/p&gt;" WIDTH="200.0" HEIGHT="239.0"/>
-  <DERIVATIVES ID="83" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="169" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis de dos. Passages : 1 noir, 1 argenté (ombre), 1 peau, 1 jaune, 1 vert.&lt;/p&gt;" WIDTH="90.0" HEIGHT="240.0" ACQUISITION_DATE="2001-09-01"/>
-  <DERIVATIVES ID="84" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="169" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en train de faire bronzette, avec un oiseau couché sur une de ses jambes. Passages : 1 noir, 1 gris (ombre), 1 peau, 1 jaune, 2 verts.&lt;/p&gt;" WIDTH="95.0" HEIGHT="240.0" ACQUISITION_DATE="2001-09-01"/>
-  <DERIVATIVES ID="85" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="132" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en camouflage militaire près d&apos;une pocket bike. Série Graphique n°9. Passages : 1 noir, 2 bruns, 1 vert, 1 peau, 1 métal.&lt;/p&gt;" WIDTH="210.0" HEIGHT="299.0" ACQUISITION_DATE="2001-09-01"/>
-  <DERIVATIVES ID="86" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="132" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en princesse. Série Graphique n°10. Passages : 1 noir, 2 roses, 1 peau, 2 oranges, 1 vert, 1 jaune, 1 argenté.&lt;/p&gt;" WIDTH="210.0" HEIGHT="301.0" ACQUISITION_DATE="2001-09-01"/>
-  <DERIVATIVES ID="87" SERIES_ID="99" ALBUM_ID="440" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="1" NUMBER="187" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis en habit local. Passages : 1 noir, 1 peau, 1 jaune, 1 orange, 2 bruns, 1 vert, 1 gris.&lt;/p&gt;" WIDTH="169.0" HEIGHT="270.0"/>
-  <DERIVATIVES ID="88" SERIES_ID="99" ALBUM_ID="441" ARTIST_ID="52" DERIVATIVE_TYPE_ID="2" COLORS="4" SOURCE_ID="1" NUMBER="188" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis nue, adossée à un mur. Passages : 1 noir, 1 peau, 1 ombre, 1 vert.&lt;/p&gt;" WIDTH="176.0" HEIGHT="275.0"/>
-  <DERIVATIVES ID="90" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="3" COLORS="0" SOURCE_ID="14" NUMBER="0" TOTAL="0" SIGNED="false" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Tapis de souris circulaire présentant Nävis en train d&apos;appuyer sur un bouton Delcourt.&lt;/p&gt;" WIDTH="250.0" HEIGHT="250.0" DEPTH="3.0"/>
-  <DERIVATIVES ID="91" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="5" COLORS="0" SOURCE_ID="15" NUMBER="31" TOTAL="50" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Carnet de croquis avec interview de Buchet, accompagné d&apos;un emboîtage en carton bleu, lui-même assorti de croquis.&lt;/p&gt;" WIDTH="173.0" HEIGHT="235.0"/>
-  <DERIVATIVES ID="114" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="292" TOTAL="350" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis surplombée par une tête de dragon.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
-  <DERIVATIVES ID="115" SERIES_ID="99" ARTIST_ID="52" DERIVATIVE_TYPE_ID="1" COLORS="0" NUMBER="18" TOTAL="25" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Nävis et Bobo habillés en aristocrates.&lt;/p&gt;" WIDTH="300.0" HEIGHT="400.0"/>
-  <DERIVATIVES ID="205" ALBUM_ID="1313" ARTIST_ID="201" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="176" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Repr&amp;eacute;sente deux personnages et leurs montures en for&amp;ecirc;t.&lt;/p&gt; &lt;p&gt;Passages: 2 gris, 2 bleus, 1 noir.&lt;/p&gt;" WIDTH="205.0" HEIGHT="280.0" ACQUISITION_DATE="2016-10-16"/>
-  <DERIVATIVES_PRICES/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="12" IMAGE_ID="13"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="12" IMAGE_ID="14"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="66" IMAGE_ID="170"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="67" IMAGE_ID="171"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="68" IMAGE_ID="172"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="69" IMAGE_ID="173"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="70" IMAGE_ID="174"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="71" IMAGE_ID="175"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="72" IMAGE_ID="176"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="73" IMAGE_ID="177"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="74" IMAGE_ID="178"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="75" IMAGE_ID="179"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="76" IMAGE_ID="180"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="78" IMAGE_ID="182"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="79" IMAGE_ID="183"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="80" IMAGE_ID="184"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="81" IMAGE_ID="185"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="82" IMAGE_ID="186"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="83" IMAGE_ID="187"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="84" IMAGE_ID="188"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="85" IMAGE_ID="189"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="86" IMAGE_ID="190"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="87" IMAGE_ID="191"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="88" IMAGE_ID="192"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="90" IMAGE_ID="195"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="91" IMAGE_ID="196"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="114" IMAGE_ID="241"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="115" IMAGE_ID="242"/>
-  <DERIVATIVES_IMAGES DERIVATIVE_ID="205" IMAGE_ID="1328"/>
-  <READERS ID="1" NAME="Xavier" COLOUR="#304ffe"/>
-  <READERS_FAVOURITE_SERIES READER_ID="1" SERIES_ID="99"/>
-  <READERS_FAVOURITE_ALBUMS READER_ID="1" ALBUM_ID="1313"/>
-  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1459"/>
-  <CONFIGURATION ID="8" CONFIG_KEY="paging.textPageSize" CONFIG_VALUE="60" READER_ID="1"/>
-  <CONFIGURATION ID="9" CONFIG_KEY="language" CONFIG_VALUE="en" READER_ID="1"/>
+  <DERIVATIVE_TYPES ID="7" NAME="Cello (Sérigraphie ou Offset)"/>
+  <DERIVATIVE_TYPES ID="9" NAME="Sérigraphie sur calque"/>
+
+  <IMAGES ID="139" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 6 - Ex-Libris"/>
+  <IMAGES ID="140" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 8 - Ex-Libris Durango"/>
+  <IMAGES ID="141" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 2 - Ex-Libris Durango"/>
+  <IMAGES ID="142" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 7 - Ex-Libris Fantasmagories"/>
+  <IMAGES ID="194" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 1 - Ex-Libris Durango"/>
+  <IMAGES ID="211" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 02 - Ex-Libris Durango"/>
+  <IMAGES ID="212" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 03 - Ex-Libris Durango"/>
+  <IMAGES ID="213" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 04 - Ex-Libris Durango"/>
+  <IMAGES ID="229" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 11 - Couverture"/>
+  <IMAGES ID="230" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 11 - Médaille (a)"/>
+  <IMAGES ID="231" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 11 - Médaille (b)"/>
+  <IMAGES ID="277" URL="dummy-image.jpg" DESCRIPTION="Conquerants de Troy (Les) 2 - Couverture"/>
+  <IMAGES ID="291" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 1 - Couverture"/>
+  <IMAGES ID="292" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 2 - Couverture"/>
+  <IMAGES ID="293" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 3 - Couverture"/>
+  <IMAGES ID="294" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 4 - Couverture"/>
+  <IMAGES ID="295" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 5 - Couverture"/>
+  <IMAGES ID="296" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 6 - Couverture"/>
+  <IMAGES ID="297" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 7 - Couverture"/>
+  <IMAGES ID="298" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 8 - Couverture"/>
+  <IMAGES ID="302" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 1 - Couverture"/>
+  <IMAGES ID="303" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 2 - Couverture"/>
+  <IMAGES ID="304" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 3 - Couverture"/>
+  <IMAGES ID="305" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 4 - Couverture"/>
+  <IMAGES ID="306" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 5 - Couverture"/>
+  <IMAGES ID="307" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 6 - Couverture"/>
+  <IMAGES ID="308" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 7 - Couverture"/>
+  <IMAGES ID="309" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 7 - Couverture (version n&amp;b)"/>
+  <IMAGES ID="310" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 8 - Couverture"/>
+  <IMAGES ID="541" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 01 - Couverture"/>
+  <IMAGES ID="542" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 02 - Couverture"/>
+  <IMAGES ID="543" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 03 - Couverture"/>
+  <IMAGES ID="544" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 04 - Couverture"/>
+  <IMAGES ID="545" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 05 - Couverture"/>
+  <IMAGES ID="546" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 06 - Couverture"/>
+  <IMAGES ID="547" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 07 - Couverture"/>
+  <IMAGES ID="548" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 08 - Couverture"/>
+  <IMAGES ID="549" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 09 - Couverture"/>
+  <IMAGES ID="550" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 10 - Couverture"/>
+  <IMAGES ID="562" URL="dummy-image.jpg" DESCRIPTION="Conquérants de Troy (Les) 1 - Couverture"/>
+  <IMAGES ID="600" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 1 - Ex-Libris Durango (variante rouge)"/>
+  <IMAGES ID="601" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 1 - Ex-Libris Durango (variante bleue)"/>
+  <IMAGES ID="815" URL="dummy-image.jpg" DESCRIPTION="Soleil - Logo"/>
+  <IMAGES ID="914" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 16 - Couverture"/>
+  <IMAGES ID="927" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy - Affiche 01"/>
+  <IMAGES ID="928" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 07 - Affiche"/>
+  <IMAGES ID="955" URL="dummy-image.jpg" DESCRIPTION="Alvin 1 - Couverture"/>
+  <IMAGES ID="957" URL="dummy-image.jpg" DESCRIPTION="Abélard 1 - Couverture"/>
+  <IMAGES ID="958" URL="dummy-image.jpg" DESCRIPTION="Abélard 2 - Couverture"/>
+  <IMAGES ID="959" URL="dummy-image.jpg" DESCRIPTION="Alvin 2 - Couverture"/>
+  <IMAGES ID="1178" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 3.2 ré - Couverture"/>
+  <IMAGES ID="1179" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 3.1 - Couverture"/>
+  <IMAGES ID="1180" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 3.3 - Couverture"/>
+  <IMAGES ID="1181" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 5.2 - Couverture"/>
+  <IMAGES ID="1194" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 23 - Couverture"/>
+  <IMAGES ID="1253" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 2 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1254" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 2 - Sérigraphie Durango - Image 2"/>
+  <IMAGES ID="1255" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 2 - Sérigraphie sur cello Durango - Image 1"/>
+  <IMAGES ID="1256" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 5.1 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1257" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 5.1 - Sérigraphie Durango - Image 2"/>
+  <IMAGES ID="1416" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 4.2 - Couverture"/>
+  <IMAGES ID="1427" URL="dummy-image.jpg" DESCRIPTION="Lanfeust Odyssey 10 - Couverture"/>
+  <IMAGES ID="1682" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 24 - Couverture"/>
+  <IMAGES ID="1721" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 2 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1722" URL="dummy-image.jpg" DESCRIPTION="Lanfeust des Étoiles 2 - Sérigraphie sur calque Durango - Image 1"/>
+  <IMAGES ID="1723" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 2 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1724" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 3 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1725" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 4 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1726" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 5 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1727" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 6 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1728" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 7 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1729" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 8 - Offset Fantasmagories - Image 1"/>
+  <IMAGES ID="1730" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 2 - Sérigraphie Fantasmagories - Image 1"/>
+  <IMAGES ID="1825" URL="dummy-image.jpg" DESCRIPTION="Abélard 1 - Sérigraphie Dargaud - Image 1"/>
+  <IMAGES ID="1833" URL="dummy-image.jpg" DESCRIPTION="Légendes de Troy 2 - Offset Fantasmagories - Image 1"/>
+  <IMAGES ID="1853" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 4 - Sérigraphie sur calque Durango - Image 1"/>
+  <IMAGES ID="1854" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 2 - Sérigraphie Durango - Image 1"/>
+  <IMAGES ID="1855" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 3 - Offset Espace BD - Image 1"/>
+  <IMAGES ID="1856" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy - Offset Bulles D'écume - Image 1"/>
+  <IMAGES ID="1857" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy - Offset Fantasmagories - Image 1"/>
+  <IMAGES ID="1968" URL="dummy-image.jpg" DESCRIPTION="Conquérants de Troy (Les) 3 - Couverture"/>
+  <IMAGES ID="1969" URL="dummy-image.jpg" DESCRIPTION="Conquérants de Troy (Les) 4 - Couverture"/>
+  <IMAGES ID="1971" URL="dummy-image.jpg" DESCRIPTION="Codex de Troy  - Couverture"/>
+  <IMAGES ID="1972" URL="dummy-image.jpg" DESCRIPTION="Cixi de Troy 3 - Couverture"/>
+  <IMAGES ID="1973" URL="dummy-image.jpg" DESCRIPTION="Cixi de Troy 2 - Couverture"/>
+  <IMAGES ID="1974" URL="dummy-image.jpg" DESCRIPTION="Cixi de Troy 1 - Couverture"/>
+  <IMAGES ID="2359" URL="dummy-image.jpg" DESCRIPTION="Trolls de Troy 25 - Couverture"/>
+  <IMAGES ID="2399" URL="dummy-image.jpg" DESCRIPTION="Lanfeust de Troy 9 - Couverture"/>
+  <IMAGES ID="2812" URL="dummy-image.jpg" DESCRIPTION="300 - cover"/>
+  <IMAGES ID="5014" URL="dummy-image.jpg" DESCRIPTION="Dargaud Logo"/>
+  <IMAGES ID="6411" URL="dummy-image.jpg" DESCRIPTION="300 - backcover"/>
+
+  <READERS ID="1" NAME="My Reader" COLOUR="#304ffe"/>
+
+  <SOURCES ID="1" NAME="Durango" OWNER="Christian Joor" EMAIL="bdtop@scarlet.be" WEBSITE="http://durango.site.voila.fr/index.jhtml" ADDRESS="Rue de l'Athénée 3 1050 Ixelles" PHONE_NUMBER="02-513.50.88" ACTIVE="true"/>
+  <SOURCES ID="3" NAME="Fantasmagories" WEBSITE="http://fantasmagories.free.fr/" ADDRESS="&lt;p&gt;Quartier de l'Horloge Rue Brantôme, 13&lt;br /&gt;75003 Paris&lt;/p&gt;" HISTORY="&lt;p&gt;Sample HTML description&lt;/p&gt;" ACTIVE="true"/>
+  <SOURCES ID="4" NAME="Dargaud" ACTIVE="true"/>
+  <SOURCES ID="6" NAME="Espace BD" EMAIL="espacebd@espacebd.com" WEBSITE="http://www.espacebd.com" ADDRESS="Place Fernand Cocq, 2 Bruxelles - Belgique" PHONE_NUMBER="02- 512.68.69" ACTIVE="true"/>
+  <SOURCES ID="13" NAME="Bulles D'écume" ACTIVE="true"/>
+  <SOURCES ID="16" NAME="Soleil" WEBSITE="http://www.soleilprod.com/" ACTIVE="true"/>
+  <SOURCES ID="50" NAME="Objectif BD" ACTIVE="true"/>
+
+  <TAXONS ID="5" NAME="fantasy" FGCOLOUR="#00e612" BGCOLOUR="#0e0072" TAXON_TYPE="TAG"/>
+  <TAXONS ID="10" NAME="vernis sélectif" TAXON_TYPE="TAG"/>
+  <TAXONS ID="21" NAME="one shot" TAXON_TYPE="TAG"/>
+  <TAXONS ID="24" NAME="animal &#128057;" FGCOLOUR="#f57f17" BGCOLOUR="#fff59d" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" TAXON_TYPE="TAG"/>
+  <TAXONS ID="29" NAME="humour &#128514;" FGCOLOUR="#ff0057" BGCOLOUR="#ffbfd2" TAXON_TYPE="TAG"/>
+  <TAXONS ID="53" NAME="cahier graphique" FGCOLOUR="#fff3e0" BGCOLOUR="#ffb74d" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" TAXON_TYPE="TAG"/>
+  <TAXONS ID="63" NAME="voyage" TAXON_TYPE="TAG"/>
+  <TAXONS ID="69" NAME="encyclopédie" TAXON_TYPE="TAG"/>
+  <TAXONS ID="99" NAME="cadeau &#127873;" TAXON_TYPE="TAG"/>
+  <TAXONS ID="114" NAME="chat &#128049;" TAXON_TYPE="TAG"/>
+  <TAXONS ID="128" NAME="découpe" TAXON_TYPE="TAG"/>
+  <TAXONS ID="150" NAME="prix Eisner" TAXON_TYPE="TAG"/>
+
+  <CONFIGURATION ID="8" CONFIG_KEY="paging.textPageSize" CONFIG_VALUE="50" READER_ID="1"/>
+  <CONFIGURATION ID="9" CONFIG_KEY="language" CONFIG_VALUE="fr" READER_ID="1"/>
   <CONFIGURATION ID="10" CONFIG_KEY="paging.imagePageSize" CONFIG_VALUE="15" READER_ID="1"/>
-  <CONFIGURATION ID="11" CONFIG_KEY="thumbnail.width" CONFIG_VALUE="220" READER_ID="1"/>
-  <CONFIGURATION ID="12" CONFIG_KEY="header.quickLinks" CONFIG_VALUE="[]" READER_ID="1"/>
-  <CONFIGURATION ID="13" CONFIG_KEY="paging.albumPageSize" CONFIG_VALUE="20" READER_ID="1"/>
-  <CONFIGURATION ID="14" CONFIG_KEY="thumbnail.height" CONFIG_VALUE="200" READER_ID="1"/>
+  <CONFIGURATION ID="36" CONFIG_KEY="paging.pageSizeForCards" CONFIG_VALUE="40" READER_ID="1"/>
+  <CONFIGURATION ID="37" CONFIG_KEY="paging.subItemsInCardIndex" CONFIG_VALUE="5" READER_ID="1"/>
+
+  <PUBLISHERS ID="1" NAME="Dargaud" WEBSITE="http://www.dargaud.com/" FEED="http://www.dargaud.com/actualites/news.aspx" LOGO_ID="5014"/>
+  <PUBLISHERS ID="4" NAME="Soleil" WEBSITE="http://www.soleilprod.com/" LOGO_ID="815"/>
+  <PUBLISHERS ID="121" NAME="Rackam"/>
+
+  <UNIVERSES ID="8" NAME="Lanfeust de Troy"/>
+  <UNIVERSES ID="31" NAME="Abélard"/>
+
+  <COLLECTIONS ID="4" NAME="Poisson Classique" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="5" NAME="Poisson Club" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="18" NAME="Mondes Futurs" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="30" NAME="Abysses" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="31" NAME="Soleil US Comics" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="33" NAME="Soleil Levant" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="36" NAME="Soleil Celtic" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="38" NAME="Métamorphose" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="50" NAME="Soleil Blackberry" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="51" NAME="Anticipation" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="55" NAME="Soleil Manga" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="78" NAME="Long Courrier" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="82" NAME="Quadrant Solaire" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="89" NAME="Secrets du Vatican" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="90" NAME="Fictions" WEBSITE="http://www.dargaud.com/front/albums/collections/collection.aspx?id=954" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="94" NAME="Histoires Fantastiques" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="98" NAME="Phenix" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="117" NAME="Omnibus" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="118" NAME="Noctambule" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="133" NAME="Terres Secrètes" PUBLISHER_ID="4"/>
+  <COLLECTIONS ID="136" NAME="Légendes d'Aujourd'hui" PUBLISHER_ID="1"/>
+  <COLLECTIONS ID="144" NAME="Soleil Hero" PUBLISHER_ID="4"/>
+
+  <SERIES ID="69" NAME="Lanfeust de Troy" COMPLETED="false" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" LOCATION="Bibliothèque, B2" UNIVERSE_ID="8"/>
+  <SERIES ID="70" NAME="Lanfeust des Étoiles" COMPLETED="true" LOCATION="Bibliothèque, A3" UNIVERSE_ID="8"/>
+  <SERIES ID="107" NAME="Trolls de Troy" COMPLETED="false" LOCATION="Bibliothèque, A3" UNIVERSE_ID="8"/>
+  <SERIES ID="142" NAME="Conquérants de Troy (Les)" SUMMARY="&lt;p&gt;Sample HTML description&lt;/p&gt;" COMPLETED="false" LOCATION="Bibliothèque, A3" UNIVERSE_ID="8"/>
+  <SERIES ID="169" NAME="Lanfeust Odyssey" COMPLETED="true" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" LOCATION="Bibliothèque, A3" UNIVERSE_ID="8"/>
+  <SERIES ID="170" NAME="Codex de Troy" COMPLETED="true" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" LOCATION="Bibliothèque, B2" UNIVERSE_ID="8"/>
+  <SERIES ID="172" NAME="Cixi de Troy" SUMMARY="&lt;p&gt;Sample HTML description&lt;/p&gt;" COMPLETED="true" LOCATION="Bibliothèque, B2" UNIVERSE_ID="8"/>
+  <SERIES ID="296" NAME="Abélard" COMPLETED="true" LOCATION="Bibliothèque, B4" UNIVERSE_ID="31"/>
+  <SERIES ID="312" NAME="Alvin" COMPLETED="true" LOCATION="Bibliothèque, B4" UNIVERSE_ID="31"/>
+  <SERIES ID="320" NAME="Légendes de Troy" COMPLETED="true" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" LOCATION="Bibliothèque, B3" UNIVERSE_ID="8"/>
+
+  <ALBUMS ID="306" SERIES_ID="69" CYCLE="1" NUMBER="1.0" NUMBER_SUFFIX="ré" TITLE="L'Ivoire du Magohamoth" PUBLISHER_ID="4" FIRST_EDITION="1994-10-01" THIS_EDITION="1996-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="302" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="307" SERIES_ID="69" CYCLE="1" NUMBER="2.0" TITLE="Thanos l'Incongru" PUBLISHER_ID="4" THIS_EDITION="1996-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="303" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="308" SERIES_ID="69" CYCLE="1" NUMBER="3.0" TITLE="Castel Or-Azur" PUBLISHER_ID="4" THIS_EDITION="1996-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="304" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="309" SERIES_ID="69" CYCLE="1" NUMBER="4.0" TITLE="Le Paladin d'Eckmül" PUBLISHER_ID="4" FIRST_EDITION="1996-10-01" ISBN="2-87764-566-5" WISHLIST="false" BINDING_ID="1" COVER_ID="305" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="310" SERIES_ID="69" CYCLE="1" NUMBER="5.0" TITLE="Le Frisson de l'Haruspice" PUBLISHER_ID="4" FIRST_EDITION="1997-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="306" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="311" SERIES_ID="69" CYCLE="1" NUMBER="6.0" TITLE="Cixi Impératrice" PUBLISHER_ID="4" THIS_EDITION="1998-10-01" WISHLIST="false" BINDING_ID="1" COVER_ID="307" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="312" SERIES_ID="69" CYCLE="1" NUMBER="7.0" TITLE="Les Pétaures se Cachent pour Mourir" PUBLISHER_ID="4" FIRST_EDITION="1999-10-01" THIS_EDITION="2004-11-01" WISHLIST="false" BINDING_ID="3" COVER_ID="308" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="313" SERIES_ID="69" CYCLE="1" NUMBER="8.0" TITLE="La Bête Fabuleuse" PUBLISHER_ID="4" FIRST_EDITION="2000-12-01" THIS_EDITION="2000-12-01" WISHLIST="false" BINDING_ID="1" COVER_ID="310" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="314" SERIES_ID="70" NUMBER="1.0" TITLE="Un, Deux… Troy" PUBLISHER_ID="4" FIRST_EDITION="2001-12-01" THIS_EDITION="2001-12-01" WISHLIST="false" BINDING_ID="1" COVER_ID="291" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="315" SERIES_ID="70" NUMBER="2.0" TITLE="Les Tours De Meirrion" PUBLISHER_ID="4" FIRST_EDITION="2003-03-01" THIS_EDITION="2003-03-01" WISHLIST="false" BINDING_ID="1" COVER_ID="292" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="316" SERIES_ID="70" NUMBER="3.0" TITLE="Les Sables d'Abraxar" PUBLISHER_ID="4" FIRST_EDITION="2004-01-01" THIS_EDITION="2004-01-01" WISHLIST="false" BINDING_ID="1" COVER_ID="293" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="317" SERIES_ID="70" NUMBER="4.0" TITLE="Les Buveurs de Mondes" PUBLISHER_ID="4" FIRST_EDITION="2004-12-01" THIS_EDITION="2004-12-01" WISHLIST="false" BINDING_ID="1" COVER_ID="294" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="318" SERIES_ID="70" NUMBER="5.0" TITLE="La Chevauchée des Bactéries" PUBLISHER_ID="4" FIRST_EDITION="2005-12-01" THIS_EDITION="2005-12-01" WISHLIST="false" BINDING_ID="1" COVER_ID="295" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="319" SERIES_ID="70" NUMBER="6.0" TITLE="Le Râle du Flibustier" PUBLISHER_ID="4" FIRST_EDITION="2006-12-01" THIS_EDITION="2006-12-01" WISHLIST="false" BINDING_ID="1" COVER_ID="296" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="518" SERIES_ID="107" NUMBER="1.0" TITLE="Histoires Trolls" PUBLISHER_ID="4" FIRST_EDITION="1997-06-01" THIS_EDITION="1997-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="541" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="519" SERIES_ID="107" NUMBER="2.0" TITLE="Le Scalpe du Vénérable" PUBLISHER_ID="4" FIRST_EDITION="1998-06-01" THIS_EDITION="1998-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="542" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="520" SERIES_ID="107" NUMBER="3.0" TITLE="Comme un Vol de Pétaures" PUBLISHER_ID="4" FIRST_EDITION="1999-05-01" THIS_EDITION="1999-05-01" WISHLIST="false" BINDING_ID="1" COVER_ID="543" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="521" SERIES_ID="107" NUMBER="4.0" TITLE="Le Feu Occulte" PUBLISHER_ID="4" FIRST_EDITION="2000-06-01" THIS_EDITION="2000-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="544" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="522" SERIES_ID="107" NUMBER="5.0" TITLE="Les Maléfices de la Thaumaturge" PUBLISHER_ID="4" FIRST_EDITION="2001-08-01" THIS_EDITION="2001-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="545" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="523" SERIES_ID="107" NUMBER="6.0" TITLE="Trolls Dans la Brume" PUBLISHER_ID="4" FIRST_EDITION="2002-09-01" THIS_EDITION="2002-09-01" WISHLIST="false" BINDING_ID="1" COVER_ID="546" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="524" SERIES_ID="107" NUMBER="7.0" TITLE="Plume de Sage" PUBLISHER_ID="4" FIRST_EDITION="2004-04-01" THIS_EDITION="2004-04-01" WISHLIST="false" BINDING_ID="1" COVER_ID="547" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="525" SERIES_ID="107" NUMBER="8.0" TITLE="Rock'n Troll Attitude" PUBLISHER_ID="4" FIRST_EDITION="2005-06-01" THIS_EDITION="2005-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="548" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="526" SERIES_ID="107" NUMBER="9.0" TITLE="Les Prisonniers Du Darshan (I)" PUBLISHER_ID="4" FIRST_EDITION="2006-08-01" THIS_EDITION="2006-08-01" WISHLIST="false" BINDING_ID="1" COVER_ID="549" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="527" SERIES_ID="107" NUMBER="10.0" TITLE="Les Prisonniers Du Darshan (II)" PUBLISHER_ID="4" FIRST_EDITION="2007-06-01" THIS_EDITION="2007-06-01" WISHLIST="false" BINDING_ID="1" COVER_ID="550" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="564" SERIES_ID="70" NUMBER="7.0" TITLE="Le Secret des Dolphantes" PUBLISHER_ID="4" FIRST_EDITION="2007-12-01" THIS_EDITION="2007-12-01" ACQUISITION_DATE="2007-12-28" WISHLIST="false" BINDING_ID="1" COVER_ID="297" HEIGHT="325.0" WIDTH="234.0" PAGES="48" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="653" SERIES_ID="107" NUMBER="11.0" TITLE="Trollympiades" PUBLISHER_ID="4" FIRST_EDITION="2008-08-01" THIS_EDITION="2008-08-01" ACQUISITION_DATE="2008-08-30" WISHLIST="false" BINDING_ID="1" COVER_ID="229" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="233.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="658" SERIES_ID="142" NUMBER="1.0" TITLE="Exil à Port-Fleuri" PUBLISHER_ID="4" FIRST_EDITION="2005-05-01" THIS_EDITION="2005-05-01" WISHLIST="false" BINDING_ID="1" COVER_ID="562" HEIGHT="325.0" WIDTH="235.0" PAGES="47" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="668" SERIES_ID="142" NUMBER="2.0" TITLE="Echmül le Bûcheron" PUBLISHER_ID="4" FIRST_EDITION="2008-09-01" THIS_EDITION="2008-09-01" ISBN="978-2-30200-209-8" ACQUISITION_DATE="2008-11-16" WISHLIST="false" BINDING_ID="1" COVER_ID="277" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="235.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="681" SERIES_ID="70" NUMBER="8.0" TITLE="Le Sang des Comètes" PUBLISHER_ID="4" FIRST_EDITION="2008-11-01" THIS_EDITION="2008-11-01" ISBN="978-2-30200-382-8" ACQUISITION_DATE="2008-12-13" WISHLIST="false" BINDING_ID="1" COVER_ID="298" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="234.0" PAGES="54" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="788" SERIES_ID="107" NUMBER="12.0" TITLE="Sang Famille (I)" PUBLISHER_ID="4" FIRST_EDITION="2009-07-01" THIS_EDITION="2009-07-01" ISBN="978-2-30200-630-0" ACQUISITION_DATE="2009-10-01" WISHLIST="false" BINDING_ID="1" HEIGHT="325.0" WIDTH="233.0" PAGES="45" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="796" SERIES_ID="169" NUMBER="1.0" TITLE="L'Énigme Or-Azur - 1ère Partie" PUBLISHER_ID="4" FIRST_EDITION="2009-11-01" THIS_EDITION="2009-11-01" ISBN="978-2-30200-869-4" ACQUISITION_DATE="2009-11-28" WISHLIST="false" BINDING_ID="1" SUMMARY="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="323.0" WIDTH="233.0" PAGES="65" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="797" SERIES_ID="170" TITLE="Lanfeust" PUBLISHER_ID="4" FIRST_EDITION="2009-11-01" THIS_EDITION="2009-11-01" ISBN="978-2-30200-870-0" ACQUISITION_DATE="2009-11-28" WISHLIST="false" BINDING_ID="1" COVER_ID="1971" HEIGHT="323.0" WIDTH="233.0" PAGES="85" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="800" SERIES_ID="172" NUMBER="1.0" TITLE="Le Secret de Cixi - 1ère partie" PUBLISHER_ID="4" FIRST_EDITION="2009-12-01" THIS_EDITION="2009-12-01" ISBN="978-2-30200-878-6" ACQUISITION_DATE="2009-12-24" WISHLIST="false" BINDING_ID="1" COVER_ID="1974" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="323.0" WIDTH="232.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="846" SERIES_ID="107" NUMBER="13.0" TITLE="La Guerre des Gloutons (II)" PUBLISHER_ID="4" FIRST_EDITION="2010-07-01" THIS_EDITION="2010-07-01" ISBN="978-2-30201-102-1" ACQUISITION_DATE="2010-09-04" WISHLIST="false" BINDING_ID="1" SUMMARY="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="233.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="852" SERIES_ID="169" NUMBER="2.0" TITLE="L'Énigme Or-Azur - 2de Partie" PUBLISHER_ID="4" FIRST_EDITION="2010-09-01" THIS_EDITION="2010-09-01" ISBN="978-2-30201-251-6" ACQUISITION_DATE="2010-10-30" WISHLIST="false" BINDING_ID="1" HEIGHT="323.0" WIDTH="233.0" PAGES="50" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="859" SERIES_ID="172" NUMBER="2.0" TITLE="Le Secret de Cixi - 2ème Partie" PUBLISHER_ID="4" FIRST_EDITION="2010-12-01" THIS_EDITION="2010-12-01" ISBN="978-2-30201-382-7" ACQUISITION_DATE="2011-01-08" WISHLIST="false" BINDING_ID="1" COVER_ID="1973" HEIGHT="323.0" WIDTH="232.0" PAGES="46" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="942" SERIES_ID="107" NUMBER="15.0" TITLE="Boules de Poils (I)" PUBLISHER_ID="4" FIRST_EDITION="2011-10-26" THIS_EDITION="2011-10-26" ISBN="978-2-30201-629-3" ACQUISITION_DATE="2011-11-10" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="233.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="943" SERIES_ID="107" NUMBER="14.0" TITLE="L'Histoire de Waha" PUBLISHER_ID="4" FIRST_EDITION="2010-12-15" THIS_EDITION="2010-12-15" ISBN="978-2-302-01381-0" ACQUISITION_DATE="2011-12-17" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="233.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="948" SERIES_ID="142" NUMBER="3.0" TITLE="La Bataille de Port-Fleuri" PUBLISHER_ID="4" FIRST_EDITION="2011-11-01" THIS_EDITION="2011-11-01" ISBN="978-2-30201-589-0" ACQUISITION_DATE="2011-12-17" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COVER_ID="1968" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="235.0" PAGES="45" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="949" SERIES_ID="172" NUMBER="3.0" TITLE="Le Secret de Cixi - 3ème Partie" PUBLISHER_ID="4" FIRST_EDITION="2011-12-01" THIS_EDITION="2011-12-01" ISBN="978-2-30201-871-6" ACQUISITION_DATE="2011-12-17" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COVER_ID="1972" HEIGHT="323.0" WIDTH="232.0" PAGES="46" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="950" SERIES_ID="169" NUMBER="3.0" TITLE="Le Banni d'Eckmül" PUBLISHER_ID="4" FIRST_EDITION="2011-12-01" THIS_EDITION="2011-12-01" ISBN="978-2-30201-855-6" ACQUISITION_DATE="2011-12-17" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="985" SERIES_ID="107" NUMBER="16.0" TITLE="Poils de Trolls (II)" PUBLISHER_ID="4" FIRST_EDITION="2012-06-01" THIS_EDITION="2012-06-01" ISBN="978-2-302-02229-4" ACQUISITION_DATE="2012-06-23" WISHLIST="false" BINDING_ID="1" COVER_ID="914" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="233.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="988" SERIES_ID="69" CYCLE="1" NUMBER="1.0" TITLE="L'Ivoire du Magohamoth" PUBLISHER_ID="4" FIRST_EDITION="1994-10-01" THIS_EDITION="1994-10-01" ISBN="978-2-87764-257-6" ACQUISITION_DATE="2012-05-24" WISHLIST="false" BINDING_ID="1" COVER_ID="302" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1051" SERIES_ID="169" NUMBER="4.0" TITLE="La Grande Traque" PUBLISHER_ID="4" FIRST_EDITION="2012-11-01" THIS_EDITION="2012-11-01" ISBN="978-2-302-02424-3" ACQUISITION_DATE="2013-03-09" PURCHASE_PRICE="12.0" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="48" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1107" SERIES_ID="107" NUMBER="17.0" TITLE="La Trolle Impromptue" PUBLISHER_ID="4" FIRST_EDITION="2013-11-01" THIS_EDITION="2013-11-01" ISBN="978-2-302-03621-5" ACQUISITION_DATE="2014-02-01" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1108" SERIES_ID="169" NUMBER="5.0" TITLE="Le Piège de Sables" PUBLISHER_ID="4" FIRST_EDITION="2013-11-01" THIS_EDITION="2013-11-01" ISBN="978-2-302-03631-4" ACQUISITION_DATE="2014-02-01" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1167" SERIES_ID="107" NUMBER="18.0" TITLE="Pröfy Blues" PUBLISHER_ID="4" FIRST_EDITION="2014-06-01" THIS_EDITION="2014-06-01" ISBN="978-2-30202703-9" ACQUISITION_DATE="2014-11-08" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="43" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1191" SERIES_ID="107" NUMBER="19.0" TITLE="Pas de Nöl pour le Père Grommël" PUBLISHER_ID="4" FIRST_EDITION="2014-12-01" THIS_EDITION="2014-12-01" ISBN="978-2-302-04320-6" ACQUISITION_DATE="2015-10-17" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1220" SERIES_ID="142" NUMBER="4.0" TITLE="Le Mont Rapace" PUBLISHER_ID="4" FIRST_EDITION="2014-10-01" THIS_EDITION="2014-10-01" ISBN="978-2-302-03675-8" ACQUISITION_DATE="2015-09-05" WISHLIST="false" BINDING_ID="1" COVER_ID="1969" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="325.0" WIDTH="235.0" PAGES="45" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1221" SERIES_ID="107" NUMBER="20.0" TITLE="L'Héritage de Waha" PUBLISHER_ID="4" FIRST_EDITION="2015-08-01" THIS_EDITION="2015-08-01" ISBN="978-2-302-04674-2" ACQUISITION_DATE="2015-09-05" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1222" SERIES_ID="169" NUMBER="6.0" TITLE="Le Delta Bilieux" PUBLISHER_ID="4" FIRST_EDITION="2014-11-01" THIS_EDITION="2014-11-01" ISBN="978-2-302-04266-7" ACQUISITION_DATE="2015-09-05" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1362" SERIES_ID="107" NUMBER="22.0" TITLE="À l'École des Trolls" PUBLISHER_ID="4" FIRST_EDITION="2016-11-01" THIS_EDITION="2016-11-01" ISBN="978-2-3020-5593-3" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1369" SERIES_ID="169" NUMBER="8.0" TITLE="Tseu-Hi la gardienne" PUBLISHER_ID="4" FIRST_EDITION="2016-11-01" THIS_EDITION="2016-11-01" ISBN="978-2-3020-5592-6" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="47" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1374" SERIES_ID="296" NUMBER="1.0" TITLE="La danse des petits papiers" PUBLISHER_ID="1" FIRST_EDITION="2011-03-06" THIS_EDITION="2011-03-06" ISBN="978-2-5050-1035-7" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COVER_ID="957" HEIGHT="320.0" WIDTH="240.0" PAGES="62" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1375" SERIES_ID="296" NUMBER="2.0" TITLE="Une brève histoire de poussière et de cendre" PUBLISHER_ID="1" FIRST_EDITION="2011-09-02" THIS_EDITION="2011-09-02" ISBN="978-2-5050-1139-2" ACQUISITION_DATE="2017-02-25" WISHLIST="false" BINDING_ID="1" COVER_ID="958" HEIGHT="320.0" WIDTH="240.0" PAGES="62" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1449" SERIES_ID="312" NUMBER="1.0" TITLE="L'héritage d'Abérlard" PUBLISHER_ID="1" FIRST_EDITION="2015-06-01" THIS_EDITION="2015-06-01" ISBN="978-2-5050-6404-6" ACQUISITION_DATE="2017-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="955" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="54" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1450" SERIES_ID="312" NUMBER="2.0" TITLE="Le Bal des Monstres" PUBLISHER_ID="1" FIRST_EDITION="2016-01-01" THIS_EDITION="2016-01-01" ISBN="978-2-5050-6416-9" ACQUISITION_DATE="2017-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="959" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="54" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1456" SERIES_ID="107" NUMBER="21.0" TITLE="L'Or des Trolls" PUBLISHER_ID="4" FIRST_EDITION="2016-06-01" THIS_EDITION="2016-06-01" ISBN="978-2-3020-5207-9" ACQUISITION_DATE="2017-10-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1457" SERIES_ID="169" NUMBER="7.0" TITLE="La Méphitique Armada" PUBLISHER_ID="4" FIRST_EDITION="2015-11-01" THIS_EDITION="2015-11-01" ISBN="978-2-302-04851-1" ACQUISITION_DATE="2017-10-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="45" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1494" SERIES_ID="169" NUMBER="9.0" TITLE="Le stratège ingénu" PUBLISHER_ID="4" FIRST_EDITION="2017-11-01" THIS_EDITION="2017-11-01" ISBN="978-2-302-06291-7" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="48" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1515" SERIES_ID="320" CYCLE="1" TITLE="L'heure de la Gargouille" PUBLISHER_ID="4" FIRST_EDITION="2011-05-01" THIS_EDITION="2011-05-01" ISBN="978-2-302-01739-9" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="50" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1516" SERIES_ID="320" CYCLE="2" TITLE="Voyage aux Ombres" PUBLISHER_ID="4" FIRST_EDITION="2011-05-01" THIS_EDITION="2011-05-01" ISBN="978-2-302-01738-2" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="60" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1517" SERIES_ID="320" CYCLE="3" NUMBER="2.0" NUMBER_SUFFIX="ré" TITLE="Tykko des Sables - La Cité engloutie" PUBLISHER_ID="4" FIRST_EDITION="2010-01-01" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" COVER_ID="1178" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="48" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1518" SERIES_ID="320" CYCLE="4" NUMBER="1.0" TITLE="Les Guerrières de Troy - Yquem le généreux" PUBLISHER_ID="4" FIRST_EDITION="2010-05-01" THIS_EDITION="2010-05-01" ISBN="978-2-30201-069-7" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="51" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1519" SERIES_ID="320" CYCLE="5" NUMBER="1.0" TITLE="Nuit Safran - Albumen l'éthéré" PUBLISHER_ID="4" FIRST_EDITION="2010-03-01" THIS_EDITION="2010-03-01" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" HEIGHT="320.0" WIDTH="230.0" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1520" SERIES_ID="320" CYCLE="6" TITLE="L'Expédition d'Alunÿs" PUBLISHER_ID="4" FIRST_EDITION="2010-05-01" THIS_EDITION="2010-05-01" ISBN="978-2-30201-023-9" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="54" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1521" SERIES_ID="320" CYCLE="7" TITLE="Ploneïs l'incertain" PUBLISHER_ID="4" FIRST_EDITION="2014-01-01" THIS_EDITION="2014-01-01" ISBN="978-2-302-03690-1" ACQUISITION_DATE="2018-07-14" WISHLIST="false" BINDING_ID="1" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1552" SERIES_ID="320" CYCLE="4" NUMBER="2.0" TITLE="Les Guerrières de Troy - L'Or des profondeurs" PUBLISHER_ID="4" FIRST_EDITION="2013-10-01" THIS_EDITION="2013-10-01" ISBN="978-2-302-02074-2" ACQUISITION_DATE="2018-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="1416" HEIGHT="320.0" WIDTH="230.0" PAGES="50" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1561" SERIES_ID="320" CYCLE="3" NUMBER="1.0" TITLE="Tykko des Sables - Les Chevaucheurs des vents" PUBLISHER_ID="4" FIRST_EDITION="2009-01-01" THIS_EDITION="2009-01-01" ISBN="978-2-30200-386-6" ACQUISITION_DATE="2018-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="1179" HEIGHT="320.0" WIDTH="230.0" PAGES="52" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1562" SERIES_ID="320" CYCLE="3" NUMBER="3.0" TITLE="Tykko des Sables - La Colline des cent temples" PUBLISHER_ID="4" FIRST_EDITION="2014-08-01" THIS_EDITION="2014-08-01" ISBN="978-2-302-04202-5" ACQUISITION_DATE="2018-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="1180" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1563" SERIES_ID="320" CYCLE="5" NUMBER="2.0" TITLE="Nuit Safran - La Vengeance d'Albumen" PUBLISHER_ID="4" FIRST_EDITION="2012-01-01" THIS_EDITION="2016-07-01" ISBN="978-2-302-01950-8" ACQUISITION_DATE="2018-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="1181" HEIGHT="320.0" WIDTH="230.0" PAGES="50" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1574" SERIES_ID="107" NUMBER="23.0" TITLE="Art Brut" PUBLISHER_ID="4" FIRST_EDITION="2018-10-01" THIS_EDITION="2018-10-01" ISBN="978-2-302-06297-9" ACQUISITION_DATE="2018-10-14" WISHLIST="false" BINDING_ID="1" COVER_ID="1194" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1602" SERIES_ID="169" NUMBER="10.0" TITLE="Un Destin Karaxastin" PUBLISHER_ID="4" FIRST_EDITION="2018-11-01" THIS_EDITION="2018-11-01" ISBN="978-2-302-07279-4" ACQUISITION_DATE="2019-02-02" WISHLIST="false" BINDING_ID="1" COVER_ID="1427" HEIGHT="320.0" WIDTH="230.0" PAGES="50" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1770" SERIES_ID="107" NUMBER="24.0" TITLE="Un caillou sur la tête" PUBLISHER_ID="4" FIRST_EDITION="2019-11-01" THIS_EDITION="2019-11-01" ISBN="978-2-302-07894-9" ACQUISITION_DATE="2020-01-04" PURCHASE_PRICE="15.5" WISHLIST="false" BINDING_ID="1" COVER_ID="1682" HEIGHT="320.0" WIDTH="230.0" PAGES="46" MARKED_AS_FIRST_EDITION="true" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="1992" SERIES_ID="107" NUMBER="25.0" TITLE="On ne badine pas avec les mouches" PUBLISHER_ID="4" FIRST_EDITION="2021-04-01" THIS_EDITION="2021-04-01" ISBN="978-2-302-09095-8" ACQUISITION_DATE="2022-04-11" PURCHASE_PRICE="15.0" WISHLIST="false" BINDING_ID="1" COVER_ID="2359" HEIGHT="320.0" WIDTH="230.0" PAGES="44" MARKED_AS_FIRST_EDITION="true" PRINTING="2021-02-01" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="2030" SERIES_ID="69" CYCLE="2" NUMBER="9.0" TITLE="La forêt noiseuse" PUBLISHER_ID="4" FIRST_EDITION="2021-11-01" THIS_EDITION="2021-11-01" ISBN="978-2-302-09203-7" ACQUISITION_DATE="2022-05-02" PURCHASE_PRICE="15.0" WISHLIST="false" BINDING_ID="1" COVER_ID="2399" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="320.0" WIDTH="230.0" PAGES="56" MARKED_AS_FIRST_EDITION="true" PRINTING="2021-10-01" BOOK_TYPE_ID="1"/>
+  <ALBUMS ID="2892" TITLE="300" PUBLISHER_ID="121" FIRST_EDITION="1999-10-01" THIS_EDITION="2006-01-04" ISBN="2-87827-031-2" ACQUISITION_DATE="2007-11-10" WISHLIST="false" BINDING_ID="1" COVER_ID="2812" SUMMARY="&lt;p&gt;Sample HTML description&lt;/p&gt;" COMMENT="&lt;p&gt;Sample HTML description&lt;/p&gt;" HEIGHT="248.0" WIDTH="318.0" PAGES="81" MARKED_AS_FIRST_EDITION="false" BOOK_TYPE_ID="1"/>
+
+  <READERS_FAVOURITE_SERIES READER_ID="1" SERIES_ID="169"/>
+  <READERS_FAVOURITE_SERIES READER_ID="1" SERIES_ID="296"/>
+  <READERS_FAVOURITE_SERIES READER_ID="1" SERIES_ID="312"/>
+
+  <ALBUMS_IMAGES ALBUM_ID="312" IMAGE_ID="309"/>
+  <ALBUMS_IMAGES ALBUM_ID="2892" IMAGE_ID="6411"/>
+
+  <ALBUMS_PRICES ALBUM_ID="313" DATE="2010-09-26" PRICE="15.0"/>
+  <ALBUMS_PRICES ALBUM_ID="313" DATE="2018-09-16" PRICE="22.5"/>
+  <ALBUMS_PRICES ALBUM_ID="988" DATE="2012-06-01" PRICE="300.0"/>
+
+  <ALBUMS_TAXONS ALBUM_ID="306" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="307" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="308" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="309" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="310" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="311" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="312" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="313" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="314" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="315" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="316" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="317" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="318" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="319" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="564" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="653" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="653" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="653" TAXON_ID="128"/>
+  <ALBUMS_TAXONS ALBUM_ID="658" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="668" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="681" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="788" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="796" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="796" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="797" TAXON_ID="21"/>
+  <ALBUMS_TAXONS ALBUM_ID="797" TAXON_ID="69"/>
+  <ALBUMS_TAXONS ALBUM_ID="800" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="800" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="800" TAXON_ID="99"/>
+  <ALBUMS_TAXONS ALBUM_ID="846" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="852" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="852" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="852" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="852" TAXON_ID="53"/>
+  <ALBUMS_TAXONS ALBUM_ID="859" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="859" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="942" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="942" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="942" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="943" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="943" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="948" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="949" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="949" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="950" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="950" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="985" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="985" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="988" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1051" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1051" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1107" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1108" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1108" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1167" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1167" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1191" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1191" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1220" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1221" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1221" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1222" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1222" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1362" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1362" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1369" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1369" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1374" TAXON_ID="24"/>
+  <ALBUMS_TAXONS ALBUM_ID="1375" TAXON_ID="24"/>
+  <ALBUMS_TAXONS ALBUM_ID="1375" TAXON_ID="63"/>
+  <ALBUMS_TAXONS ALBUM_ID="1449" TAXON_ID="24"/>
+  <ALBUMS_TAXONS ALBUM_ID="1450" TAXON_ID="24"/>
+  <ALBUMS_TAXONS ALBUM_ID="1456" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1456" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1457" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1457" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1494" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1494" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1515" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1515" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1515" TAXON_ID="21"/>
+  <ALBUMS_TAXONS ALBUM_ID="1516" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1516" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1516" TAXON_ID="21"/>
+  <ALBUMS_TAXONS ALBUM_ID="1517" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1517" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1518" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1518" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1519" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1519" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1520" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1520" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1520" TAXON_ID="21"/>
+  <ALBUMS_TAXONS ALBUM_ID="1520" TAXON_ID="53"/>
+  <ALBUMS_TAXONS ALBUM_ID="1520" TAXON_ID="114"/>
+  <ALBUMS_TAXONS ALBUM_ID="1521" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1521" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1521" TAXON_ID="21"/>
+  <ALBUMS_TAXONS ALBUM_ID="1552" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1552" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1561" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1562" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1562" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1563" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1563" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1574" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1574" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1574" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1574" TAXON_ID="53"/>
+  <ALBUMS_TAXONS ALBUM_ID="1602" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1602" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1770" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1770" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1770" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="1992" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="1992" TAXON_ID="10"/>
+  <ALBUMS_TAXONS ALBUM_ID="1992" TAXON_ID="29"/>
+  <ALBUMS_TAXONS ALBUM_ID="2030" TAXON_ID="5"/>
+  <ALBUMS_TAXONS ALBUM_ID="2892" TAXON_ID="150"/>
+
+  <READERS_FAVOURITE_ALBUMS READER_ID="1" ALBUM_ID="1362"/>
+
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1515"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1516"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1517"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1518"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1519"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1520"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1521"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1552"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1561"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1562"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1563"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1770"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="1992"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="2030"/>
+  <READERS_READING_LIST READER_ID="1" ALBUM_ID="2892"/>
+
+  <AUTHORS ID="10" NAME="Vatine" FNAME="Olivier" BIOGRAPHY="&lt;p&gt;Sample HTML description&lt;/p&gt;"/>
+  <AUTHORS ID="12" NAME="Tota" FNAME="Ciro" BIOGRAPHY="&lt;p&gt;Sample HTML description&lt;/p&gt;"/>
+  <AUTHORS ID="119" NAME="Tarquin" FNAME="Didier" BIOGRAPHY="&lt;p&gt;Sample HTML description&lt;/p&gt;"/>
+  <AUTHORS ID="120" NAME="Arleston" FNAME="Christophe"/>
+  <AUTHORS ID="156" NAME="Dany"/>
+  <AUTHORS ID="193" NAME="Mourier"/>
+  <AUTHORS ID="209" NAME="Guth" FNAME="Claude"/>
+  <AUTHORS ID="216" NAME="Besson" FNAME="Frédéric" NICKNAME="Fred"/>
+  <AUTHORS ID="221" NAME="Guillo" FNAME="Yoann"/>
+  <AUTHORS ID="233" NAME="Augustin" FNAME="Virginie"/>
+  <AUTHORS ID="311" NAME="Lamirand" FNAME="Sébastien"/>
+  <AUTHORS ID="375" NAME="Cassegrain" FNAME="Didier"/>
+  <AUTHORS ID="446" NAME="Lyse"/>
+  <AUTHORS ID="533" NAME="Floch" FNAME="Adrien"/>
+  <AUTHORS ID="534" NAME="Hautière" FNAME="Régis"/>
+  <AUTHORS ID="569" NAME="Lencot" FNAME="Yves"/>
+  <AUTHORS ID="611" NAME="Sala" FNAME="Jean-Luc"/>
+  <AUTHORS ID="663" NAME="Keramidas" FNAME="Nicolas"/>
+  <AUTHORS ID="664" NAME="Garcia" FNAME="Bruno"/>
+  <AUTHORS ID="665" NAME="Alwett" FNAME="Audrey"/>
+  <AUTHORS ID="730" NAME="Vincent" FNAME="Cyril"/>
+  <AUTHORS ID="755" NAME="Tarquin" FNAME="Lyse"/>
+  <AUTHORS ID="817" NAME="Dillies" FNAME="Renaud" BIOGRAPHY="&lt;p&gt;Sample HTML description&lt;/p&gt;"/>
+  <AUTHORS ID="818" NAME="Bouchard" FNAME="Christophe"/>
+  <AUTHORS ID="873" NAME="Melanÿn"/>
+  <AUTHORS ID="874" NAME="Hérenguel" FNAME="Éric"/>
+  <AUTHORS ID="875" NAME="Cartier"/>
+  <AUTHORS ID="876" NAME="Pepoy"/>
+  <AUTHORS ID="877" NAME="Hübsch" FNAME="Éric"/>
+  <AUTHORS ID="1422" NAME="Miller" FNAME="Frank"/>
+  <AUTHORS ID="1423" NAME="Varley" FNAME="Lynn"/>
+
+  <ALBUMS_ARTISTS ALBUM_ID="306" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="307" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="308" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="309" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="310" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="311" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="312" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="313" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="314" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="315" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="316" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="317" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="318" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="319" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="518" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="519" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="520" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="521" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="522" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="523" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="524" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="525" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="526" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="527" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="564" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="653" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="658" ARTIST_ID="12"/>
+  <ALBUMS_ARTISTS ALBUM_ID="668" ARTIST_ID="12"/>
+  <ALBUMS_ARTISTS ALBUM_ID="681" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="788" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="796" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="797" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="800" ARTIST_ID="10"/>
+  <ALBUMS_ARTISTS ALBUM_ID="846" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="852" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="859" ARTIST_ID="10"/>
+  <ALBUMS_ARTISTS ALBUM_ID="942" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="943" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="948" ARTIST_ID="12"/>
+  <ALBUMS_ARTISTS ALBUM_ID="949" ARTIST_ID="10"/>
+  <ALBUMS_ARTISTS ALBUM_ID="949" ARTIST_ID="533"/>
+  <ALBUMS_ARTISTS ALBUM_ID="950" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="985" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="988" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1051" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1107" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1108" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1167" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1191" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1220" ARTIST_ID="12"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1221" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1222" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1362" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1369" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1374" ARTIST_ID="817"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1375" ARTIST_ID="817"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1449" ARTIST_ID="817"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1450" ARTIST_ID="817"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1456" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1457" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1494" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1515" ARTIST_ID="375"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1516" ARTIST_ID="233"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1517" ARTIST_ID="663"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1518" ARTIST_ID="156"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1519" ARTIST_ID="874"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1520" ARTIST_ID="875"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1521" ARTIST_ID="877"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1552" ARTIST_ID="156"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1561" ARTIST_ID="663"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1562" ARTIST_ID="663"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1563" ARTIST_ID="874"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1574" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1602" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1770" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="1992" ARTIST_ID="193"/>
+  <ALBUMS_ARTISTS ALBUM_ID="2030" ARTIST_ID="119"/>
+  <ALBUMS_ARTISTS ALBUM_ID="2892" ARTIST_ID="1422"/>
+
+  <ALBUMS_COLORISTS ALBUM_ID="564" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="653" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="658" COLORIST_ID="311"/>
+  <ALBUMS_COLORISTS ALBUM_ID="668" COLORIST_ID="311"/>
+  <ALBUMS_COLORISTS ALBUM_ID="681" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="788" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="796" COLORIST_ID="216"/>
+  <ALBUMS_COLORISTS ALBUM_ID="800" COLORIST_ID="10"/>
+  <ALBUMS_COLORISTS ALBUM_ID="846" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="852" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="859" COLORIST_ID="216"/>
+  <ALBUMS_COLORISTS ALBUM_ID="942" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="943" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="948" COLORIST_ID="311"/>
+  <ALBUMS_COLORISTS ALBUM_ID="949" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="950" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="985" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="988" COLORIST_ID="569"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1051" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1107" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1108" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1167" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1191" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1220" COLORIST_ID="311"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1221" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1222" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1362" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1369" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1374" COLORIST_ID="818"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1375" COLORIST_ID="818"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1449" COLORIST_ID="818"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1450" COLORIST_ID="818"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1456" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1457" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1494" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1515" COLORIST_ID="375"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1516" COLORIST_ID="221"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1516" COLORIST_ID="233"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1517" COLORIST_ID="730"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1518" COLORIST_ID="156"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1518" COLORIST_ID="193"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1519" COLORIST_ID="874"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1520" COLORIST_ID="730"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1521" COLORIST_ID="730"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1552" COLORIST_ID="156"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1552" COLORIST_ID="193"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1561" COLORIST_ID="664"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1562" COLORIST_ID="730"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1563" COLORIST_ID="874"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1574" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1602" COLORIST_ID="446"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1770" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="1992" COLORIST_ID="209"/>
+  <ALBUMS_COLORISTS ALBUM_ID="2030" COLORIST_ID="755"/>
+  <ALBUMS_COLORISTS ALBUM_ID="2892" COLORIST_ID="1423"/>
+
+  <ALBUMS_INKERS ALBUM_ID="1520" INKER_ID="876"/>
+
+  <ALBUMS_WRITERS ALBUM_ID="306" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="307" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="308" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="309" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="310" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="311" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="312" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="313" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="314" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="315" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="316" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="317" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="318" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="319" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="518" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="519" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="520" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="521" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="522" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="523" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="524" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="525" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="526" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="527" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="564" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="653" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="658" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="668" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="681" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="788" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="796" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="797" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="800" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="846" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="852" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="859" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="942" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="943" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="948" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="949" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="950" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="985" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="988" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1051" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1107" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1108" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1167" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1191" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1220" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1221" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1222" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1362" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1369" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1374" WRITER_ID="534"/>
+  <ALBUMS_WRITERS ALBUM_ID="1375" WRITER_ID="534"/>
+  <ALBUMS_WRITERS ALBUM_ID="1449" WRITER_ID="534"/>
+  <ALBUMS_WRITERS ALBUM_ID="1450" WRITER_ID="534"/>
+  <ALBUMS_WRITERS ALBUM_ID="1456" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1457" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1494" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1515" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1516" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1516" WRITER_ID="665"/>
+  <ALBUMS_WRITERS ALBUM_ID="1517" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1517" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1518" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1518" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1519" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1519" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1520" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1520" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1521" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1521" WRITER_ID="611"/>
+  <ALBUMS_WRITERS ALBUM_ID="1552" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1552" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1561" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1561" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1562" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1562" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1563" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1563" WRITER_ID="873"/>
+  <ALBUMS_WRITERS ALBUM_ID="1574" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1602" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1770" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="1992" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="2030" WRITER_ID="120"/>
+  <ALBUMS_WRITERS ALBUM_ID="2892" WRITER_ID="1422"/>
+
+  <DERIVATIVES ID="53" SERIES_ID="69" ALBUM_ID="311" ARTIST_ID="119" DERIVATIVE_TYPE_ID="1" COLORS="7" NUMBER="89" TOTAL="150" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="177.0" HEIGHT="272.0"/>
+  <DERIVATIVES ID="54" SERIES_ID="69" ALBUM_ID="313" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="9" SOURCE_ID="1" NUMBER="267" TOTAL="325" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="189.0" HEIGHT="268.0"/>
+  <DERIVATIVES ID="55" SERIES_ID="70" ALBUM_ID="315" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="8" SOURCE_ID="1" NUMBER="181" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="139.0" HEIGHT="230.0"/>
+  <DERIVATIVES ID="56" SERIES_ID="70" ALBUM_ID="564" ARTIST_ID="119" DERIVATIVE_TYPE_ID="1" COLORS="0" SOURCE_ID="3" NUMBER="23" TOTAL="40" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="195.0" HEIGHT="191.0"/>
+  <DERIVATIVES ID="89" SERIES_ID="70" ALBUM_ID="314" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="39" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="180.0" HEIGHT="230.0"/>
+  <DERIVATIVES ID="105" SERIES_ID="107" ALBUM_ID="521" ARTIST_ID="193" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="229" TOTAL="325" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="198.0" HEIGHT="274.0"/>
+  <DERIVATIVES ID="106" SERIES_ID="107" ALBUM_ID="520" ARTIST_ID="193" DERIVATIVE_TYPE_ID="2" COLORS="10" SOURCE_ID="1" NUMBER="167" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="185.0" HEIGHT="265.0"/>
+  <DERIVATIVES ID="107" SERIES_ID="107" ALBUM_ID="519" ARTIST_ID="193" DERIVATIVE_TYPE_ID="2" COLORS="7" SOURCE_ID="1" NUMBER="86" TOTAL="275" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="190.0" HEIGHT="215.0"/>
+  <DERIVATIVES ID="113" SERIES_ID="107" ALBUM_ID="653" ARTIST_ID="193" DERIVATIVE_TYPE_ID="3" COLORS="0" SOURCE_ID="16" NUMBER="0" TOTAL="7000" SIGNED="false" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="79.0" HEIGHT="87.0" DEPTH="5.0" ACQUISITION_DATE="2008-08-30"/>
+  <DERIVATIVES ID="134" SERIES_ID="70" ALBUM_ID="314" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="29" TOTAL="37" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="280.0" HEIGHT="230.0"/>
+  <DERIVATIVES ID="135" SERIES_ID="70" ALBUM_ID="314" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="6" SOURCE_ID="1" NUMBER="26" TOTAL="50" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="180.0" HEIGHT="230.0"/>
+  <DERIVATIVES ID="213" SERIES_ID="69" ARTIST_ID="119" DERIVATIVE_TYPE_ID="1" NUMBER="122" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" WIDTH="400.0" HEIGHT="600.0" PURCHASE_PRICE="25.0"/>
+  <DERIVATIVES ID="214" SERIES_ID="69" ALBUM_ID="312" ARTIST_ID="119" DERIVATIVE_TYPE_ID="1" NUMBER="196" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="500.0" HEIGHT="700.0" PURCHASE_PRICE="30.0"/>
+  <DERIVATIVES ID="253" SERIES_ID="320" ALBUM_ID="1516" ARTIST_ID="665" DERIVATIVE_TYPE_ID="2" SOURCE_ID="1" NUMBER="40" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" WIDTH="155.0" HEIGHT="290.0" ACQUISITION_DATE="2018-07-14"/>
+  <DERIVATIVES ID="254" SERIES_ID="320" ALBUM_ID="1516" ARTIST_ID="665" DERIVATIVE_TYPE_ID="2" COLORS="1" SOURCE_ID="1" NUMBER="21" TOTAL="30" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="155.0" HEIGHT="290.0" ACQUISITION_DATE="2018-07-14"/>
+  <DERIVATIVES ID="255" SERIES_ID="320" ALBUM_ID="1516" ARTIST_ID="665" DERIVATIVE_TYPE_ID="7" SOURCE_ID="1" NUMBER="25" TOTAL="35" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" WIDTH="155.0" HEIGHT="290.0" ACQUISITION_DATE="2018-07-14"/>
+  <DERIVATIVES ID="256" SERIES_ID="320" ALBUM_ID="1519" ARTIST_ID="874" DERIVATIVE_TYPE_ID="2" COLORS="4" SOURCE_ID="1" NUMBER="186" TOTAL="200" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="155.0" HEIGHT="210.0" ACQUISITION_DATE="2018-07-14"/>
+  <DERIVATIVES ID="257" SERIES_ID="320" ALBUM_ID="1519" ARTIST_ID="874" DERIVATIVE_TYPE_ID="2" COLORS="1" SOURCE_ID="1" NUMBER="20" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="155.0" HEIGHT="210.0" ACQUISITION_DATE="2018-07-14"/>
+  <DERIVATIVES ID="422" SERIES_ID="69" ALBUM_ID="307" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="4" SOURCE_ID="1" NUMBER="211" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="120.0" HEIGHT="250.0" ACQUISITION_DATE="2019-02-02"/>
+  <DERIVATIVES ID="423" SERIES_ID="69" DERIVATIVE_TYPE_ID="2" COLORS="3" SOURCE_ID="50" NUMBER="166" TOTAL="168" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;"/>
+  <DERIVATIVES ID="424" SERIES_ID="69" ALBUM_ID="310" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="5" SOURCE_ID="1" NUMBER="5" TOTAL="275" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="302.0" HEIGHT="112.0"/>
+  <DERIVATIVES ID="425" SERIES_ID="69" ALBUM_ID="313" ARTIST_ID="119" DERIVATIVE_TYPE_ID="1" SOURCE_ID="3" NUMBER="4" TOTAL="45" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="160.0" HEIGHT="220.0"/>
+  <DERIVATIVES ID="426" SERIES_ID="69" ALBUM_ID="312" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" SOURCE_ID="1" NUMBER="5" TOTAL="350" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="185.0" HEIGHT="255.0"/>
+  <DERIVATIVES ID="427" SERIES_ID="69" ALBUM_ID="311" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="7" SOURCE_ID="1" NUMBER="127" TOTAL="300" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="190.0" HEIGHT="230.0"/>
+  <DERIVATIVES ID="428" SERIES_ID="69" ALBUM_ID="309" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" SOURCE_ID="1" NUMBER="120" TOTAL="275" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="190.0" HEIGHT="270.0"/>
+  <DERIVATIVES ID="429" SERIES_ID="69" ALBUM_ID="308" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="4" SOURCE_ID="1" NUMBER="5" TOTAL="250" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="135.0" HEIGHT="250.0"/>
+  <DERIVATIVES ID="430" SERIES_ID="70" ALBUM_ID="315" ARTIST_ID="119" DERIVATIVE_TYPE_ID="2" COLORS="1" SOURCE_ID="1" NUMBER="35" TOTAL="50" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="140.0" HEIGHT="230.0"/>
+  <DERIVATIVES ID="431" SERIES_ID="70" ALBUM_ID="315" ARTIST_ID="119" DERIVATIVE_TYPE_ID="9" COLORS="1" SOURCE_ID="1" NUMBER="33" TOTAL="45" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="140.0" HEIGHT="220.0"/>
+  <DERIVATIVES ID="433" SERIES_ID="320" ALBUM_ID="1516" ARTIST_ID="233" DERIVATIVE_TYPE_ID="2" COLORS="3" SOURCE_ID="3" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="160.0" HEIGHT="240.0" ACQUISITION_DATE="2019-02-02" PURCHASE_PRICE="15.0"/>
+  <DERIVATIVES ID="491" SERIES_ID="296" ALBUM_ID="1374" ARTIST_ID="817" DERIVATIVE_TYPE_ID="2" COLORS="1" SOURCE_ID="4" NUMBER="889" TOTAL="900" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="200.0" HEIGHT="250.0" PURCHASE_PRICE="15.0"/>
+  <DERIVATIVES ID="497" SERIES_ID="320" ALBUM_ID="1516" ARTIST_ID="233" DERIVATIVE_TYPE_ID="1" SOURCE_ID="3" SIGNED="true" AUTHORS_COPY="true" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="160.0" HEIGHT="240.0" PURCHASE_PRICE="13.0"/>
+  <DERIVATIVES ID="508" SERIES_ID="107" ALBUM_ID="521" ARTIST_ID="193" DERIVATIVE_TYPE_ID="9" COLORS="6" SOURCE_ID="1" NUMBER="42" TOTAL="50" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="200.0" HEIGHT="275.0" ACQUISITION_DATE="2019-02-02" PURCHASE_PRICE="20.0"/>
+  <DERIVATIVES ID="509" SERIES_ID="107" ALBUM_ID="519" ARTIST_ID="193" DERIVATIVE_TYPE_ID="2" COLORS="1" SOURCE_ID="1" NUMBER="7" TOTAL="25" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="190.0" HEIGHT="215.0" ACQUISITION_DATE="2019-02-02" PURCHASE_PRICE="30.0"/>
+  <DERIVATIVES ID="510" SERIES_ID="107" ALBUM_ID="520" ARTIST_ID="193" DERIVATIVE_TYPE_ID="1" SOURCE_ID="6" NUMBER="2" TOTAL="225" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="170.0" HEIGHT="240.0" ACQUISITION_DATE="2019-02-02" PURCHASE_PRICE="15.0"/>
+  <DERIVATIVES ID="511" SERIES_ID="107" ARTIST_ID="193" DERIVATIVE_TYPE_ID="1" SOURCE_ID="13" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="false" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="210.0" HEIGHT="300.0" ACQUISITION_DATE="2019-02-02"/>
+  <DERIVATIVES ID="512" SERIES_ID="107" ARTIST_ID="193" DERIVATIVE_TYPE_ID="1" SOURCE_ID="3" NUMBER="13" TOTAL="50" SIGNED="true" AUTHORS_COPY="false" RESTRICTED_SALE="true" DESCRIPTION="&lt;p&gt;Sample HTML description&lt;/p&gt;" WIDTH="210.0" HEIGHT="300.0" ACQUISITION_DATE="2019-02-02" PURCHASE_PRICE="15.0"/>
+
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="53" IMAGE_ID="139"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="54" IMAGE_ID="140"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="55" IMAGE_ID="141"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="56" IMAGE_ID="142"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="89" IMAGE_ID="194"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="105" IMAGE_ID="213"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="106" IMAGE_ID="212"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="107" IMAGE_ID="211"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="113" IMAGE_ID="230"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="113" IMAGE_ID="231"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="134" IMAGE_ID="600"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="135" IMAGE_ID="601"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="213" IMAGE_ID="927"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="214" IMAGE_ID="928"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="253" IMAGE_ID="1253"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="254" IMAGE_ID="1254"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="255" IMAGE_ID="1255"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="256" IMAGE_ID="1256"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="257" IMAGE_ID="1257"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="422" IMAGE_ID="1723"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="424" IMAGE_ID="1726"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="425" IMAGE_ID="1729"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="426" IMAGE_ID="1728"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="427" IMAGE_ID="1727"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="428" IMAGE_ID="1725"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="429" IMAGE_ID="1724"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="430" IMAGE_ID="1721"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="431" IMAGE_ID="1722"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="433" IMAGE_ID="1730"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="491" IMAGE_ID="1825"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="497" IMAGE_ID="1833"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="508" IMAGE_ID="1853"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="509" IMAGE_ID="1854"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="510" IMAGE_ID="1855"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="511" IMAGE_ID="1856"/>
+  <DERIVATIVES_IMAGES DERIVATIVE_ID="512" IMAGE_ID="1857"/>
+
+  <DERIVATIVES_PRICES DERIVATIVE_ID="53" DATE="2010-09-26" PRICE="30.0"/>
+  <DERIVATIVES_PRICES DERIVATIVE_ID="56" DATE="2010-09-26" PRICE="20.0"/>
+  <DERIVATIVES_PRICES DERIVATIVE_ID="134" DATE="2010-09-26" PRICE="30.0"/>
+  <DERIVATIVES_PRICES DERIVATIVE_ID="135" DATE="2010-09-26" PRICE="30.0"/>
+
+
 </dataset>
