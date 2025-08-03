@@ -103,7 +103,13 @@ public class ExportService implements IExportService {
 			throw new DemyoException(DemyoErrorCode.EXPORT_IO_ERROR);
 		}
 
-		LOGGER.debug("All resources added, export is fully complete");
+		long length = -1;
+		try {
+			length = Files.size(zipFile);
+		} catch (IOException e) {
+			LOGGER.warn("Failed to get the file size", e);
+		}
+		LOGGER.debug("All resources added, export is fully complete ({} bytes)", length);
 
 		return new Output(zipFile, baseExportFileName + exporter.getExtension(true));
 	}
