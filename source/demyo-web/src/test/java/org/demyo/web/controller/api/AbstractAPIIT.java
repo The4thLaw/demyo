@@ -1,6 +1,7 @@
 package org.demyo.web.controller.api;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.context.ContextConfiguration;
@@ -53,13 +54,13 @@ public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 	 * Gets a result handler that prints more details about the resolved exception if it exists.
 	 * @return the handler
 	 */
-	protected ResultHandler printResolvedException() {
+	protected ResultHandler logResolvedException() {
+		Class<?> clazz = getClass();
 		return result -> {
 			Exception res = result.getResolvedException();
 			if (res != null) {
-				System.out.printf("MockHttpServletRequest:%n\tResolved Exception:%n\t\tType = %s%n\t\tMessage = %s%n",
-					res.getClass().getName(), res.getMessage());
-					res.printStackTrace();
+				LoggerFactory.getLogger(clazz).info("Exception encountered in MockMVC request to {}",
+					result.getRequest().getRequestURI(), res);
 			}
 		};
 	}

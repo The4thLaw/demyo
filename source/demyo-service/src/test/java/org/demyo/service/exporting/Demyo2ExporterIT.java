@@ -47,19 +47,19 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		assertThat(expContent)
 				// Universe assertions
-				.contains("<universe id=\"17\" name=\"Sillage\"/>")
-				.containsPattern(".*<series id=\"99\" .*universe_id=\"17\".*")
+				.contains("<universe id=\"8\" name=\"Lanfeust de Troy\"/>")
+				.containsPattern(".*<series id=\"107\" .*universe_id=\"8\".*")
 				// Book type assertions
-				.contains("<book_type id=\"1\" name=\"Bande dessinée\" description=\"Pour toutes les BDs\" label_type=\"GRAPHIC_NOVEL\"/>")
+				.contains("<book_type id=\"1\" name=\"__DEFAULT__\" label_type=\"GRAPHIC_NOVEL\"/>")
 				// Album assertions
-				.containsPattern(".*<album id=\"1313\" .*printing=\"2015-09-01\" .*book_type_id=\"1\".*>")
+				.containsPattern(".*<album id=\"1992\" .*printing=\"2021-02-01\" .*book_type_id=\"1\".*>")
 				// Taxon assertions
-				.contains("<taxon id=\"1\" name=\"science-fiction\" description=\"SF\" taxon_type=\"TAG\"/>")
+				.contains("<taxon id=\"21\" name=\"one shot\" taxon_type=\"TAG\"/>")
 				// Reader assertions
-				.contains("<reader id=\"1\" name=\"Xavier\" colour=\"#304ffe\">")
-				.contains("<favourite-series ref=\"99\"/>")
-				.contains("<favourite-album ref=\"1313\"/>")
-				.contains("<reading-list-entry ref=\"1459\"/>");
+				.contains("<reader id=\"1\" name=\"My Reader\" colour=\"#304ffe\">")
+				.contains("<favourite-series ref=\"169\"/>")
+				.contains("<favourite-album ref=\"1362\"/>")
+				.contains("<reading-list-entry ref=\"1515\"/>");
 
 	}
 }

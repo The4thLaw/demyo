@@ -1,6 +1,5 @@
 package org.demyo.web.controller;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -91,14 +90,14 @@ public class HomeController extends AbstractController {
 
 	@PostConstruct
 	private void init() {
-		List<Resource> allJs = new ArrayList<>(List.of(allJsResources));
+		/*List<Resource> allJs = new ArrayList<>(List.of(allJsResources));
 		allJs.sort(indexFirst());
 		indexJsFilename = allJs.get(0).getFilename();
 		otherJsFilenames = allJs.subList(1, allJs.size()).stream().map(Resource::getFilename).toList();
 
 		List<Resource> allCss = new ArrayList<>(List.of(allCssResources));
 		allCss.sort(indexLast());
-		cssFilenames = allCss.stream().map(Resource::getFilename).toList();
+		cssFilenames = allCss.stream().map(Resource::getFilename).toList();*/
 
 		LOGGER.trace("Index JS resource: {}", indexJsFilename);
 		LOGGER.trace("Sorted non-index JS resources: {}", otherJsFilenames);

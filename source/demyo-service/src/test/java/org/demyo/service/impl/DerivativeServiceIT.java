@@ -36,7 +36,7 @@ class DerivativeServiceIT extends AbstractServiceTest {
 	void testLargeDerivativeNumbers() {
 		Derivative deriv = new Derivative();
 		deriv.setType(typeService.getByIdForEdition(1L));
-		deriv.setSeries(seriesService.getByIdForEdition(232L));
+		deriv.setSeries(seriesService.getByIdForEdition(69L));
 		deriv.setNumber(2_000_000_000);
 		deriv.setTotal(2_000_000_000);
 		assertThat(service.save(deriv)).isPositive();

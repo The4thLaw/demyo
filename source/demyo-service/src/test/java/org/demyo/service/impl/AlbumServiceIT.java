@@ -28,17 +28,18 @@ class AlbumServiceIT extends AbstractServiceTest {
 	 */
 	@Test
 	void testFindPrices() {
-		Album a = service.getByIdForEdition(764);
+		long albumId = 313L;
+		Album a = service.getByIdForEdition(albumId);
 		assertThat(a.getPrices()).hasSize(2);
 		Iterator<AlbumPrice> priceIterator = a.getPrices().iterator();
 		AlbumPrice price1 = priceIterator.next();
-		assertThat(price1.getAlbum().getId()).isEqualTo(764);
+		assertThat(price1.getAlbum().getId()).isEqualTo(albumId);
 		assertThat(new Date(price1.getDate().getTime())).isEqualTo("2010-09-26");
-		assertThat(price1.getPrice()).isEqualTo("200.0");
+		assertThat(price1.getPrice()).isEqualTo("15.0");
 		AlbumPrice price2 = priceIterator.next();
-		assertThat(price2.getAlbum().getId()).isEqualTo(764);
-		assertThat(new Date(price2.getDate().getTime())).isEqualTo("2011-09-26");
-		assertThat(price2.getPrice()).isEqualTo("150.0");
+		assertThat(price2.getAlbum().getId()).isEqualTo(albumId);
+		assertThat(new Date(price2.getDate().getTime())).isEqualTo("2018-09-16");
+		assertThat(price2.getPrice()).isEqualTo("22.5");
 	}
 
 	/**
@@ -46,6 +47,6 @@ class AlbumServiceIT extends AbstractServiceTest {
 	 */
 	@Test
 	void testCountAlbumByFilter() {
-		assertThat(service.countAlbumsByTaxon(1L)).isEqualTo(24);
+		assertThat(service.countAlbumsByTaxon(5L)).isEqualTo(58);
 	}
 }

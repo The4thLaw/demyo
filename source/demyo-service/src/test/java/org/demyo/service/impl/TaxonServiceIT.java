@@ -22,9 +22,10 @@ class TaxonServiceIT extends AbstractServiceTest {
 
 	@Test
 	void testGetByIdForView() {
-		Taxon taxon = taxonService.getByIdForView(1);
-		assertThat(taxon.getId()).isEqualTo(1);
-		assertThat(taxon.getName()).isEqualTo("science-fiction");
+		long taxonId = 5L;
+		Taxon taxon = taxonService.getByIdForView(taxonId);
+		assertThat(taxon.getId()).isEqualTo(taxonId);
+		assertThat(taxon.getName()).isEqualTo("fantasy");
 	}
 
 	@Test

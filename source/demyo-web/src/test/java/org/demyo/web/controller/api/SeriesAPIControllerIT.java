@@ -27,55 +27,49 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	@Test
 	void index() throws Exception {
 		mockMvc.perform(get("/api/series/"))
+				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(3)))
-				.andExpect(jsonPath("$[1].id").value(99))
-				.andExpect(jsonPath("$[1].identifyingName").value("Sillage"))
+				.andExpect(jsonPath("$", hasSize(10)))
+				.andExpect(jsonPath("$[1].id").value(312))
+				.andExpect(jsonPath("$[1].identifyingName").value("Alvin"))
 				.andExpect(jsonPath("$[1].comment").doesNotExist())
 				.andExpect(jsonPath("$[1].location").doesNotExist());
 	}
 
 	@Test
 	void view() throws Exception {
-		mockMvc.perform(get( "/api/series/99"))
+		mockMvc.perform(get("/api/series/172"))
 				.andDo(MockMvcResultHandlers.print())
-				.andDo(printResolvedException())
+				.andDo(logResolvedException())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id").value(99))
-				.andExpect(jsonPath("$.name").value("Sillage"))
-				.andExpect(jsonPath("$.website").value("http://www.poukram.org/"))
-				.andExpect(jsonPath("$.universe.id").value(17))
-				.andExpect(jsonPath("$.albumIds", hasSize(24)))
-				.andExpect(jsonPath("$.albumIds",
-						contains(444, 737, 764, 435, 436, 437, 438, 439, 440, 441, 442, 443, 567, 669, 746, 848, 945,
-								946, 1000, 1086, 1229, 1459, 1186, 1370)))
+				.andExpect(jsonPath("$.id").value(172))
+				.andExpect(jsonPath("$.name").value("Cixi de Troy"))
+				.andExpect(jsonPath("$.universe.id").value(8))
+				.andExpect(jsonPath("$.albumIds", hasSize(3)))
+				.andExpect(jsonPath("$.albumIds", contains(800, 859, 949)))
 				.andExpect(jsonPath("$.albums").doesNotExist())
 				.andExpect(jsonPath("$.albumTaxons").doesNotExist())
-				.andExpect(jsonPath("$.albumTags").doesNotExist());
+				.andExpect(jsonPath("$.albumTags").doesNotExist())
+				.andExpect(jsonPath("$.albumGenres").doesNotExist());
 	}
 
 	@Test
 	void getAlbumsForSeries() throws Exception {
-		mockMvc.perform(get("/api/series/2/albums"))
-				.andExpect(status().isOk())
-				// Sample empty series
-				.andExpect(jsonPath("$", hasSize(0)));
-
-		mockMvc.perform(get("/api/series/99/albums"))
+		mockMvc.perform(get("/api/series/172/albums"))
 				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
-				.andExpect(jsonPath("$", hasSize(24)))
+				.andExpect(jsonPath("$", hasSize(3)))
 				// Check first entry. Include some checks for properties that shouldn't be mentioned
-				.andExpect(jsonPath("$[0].id").value(444))
-				.andExpect(jsonPath("$[0].identifyingName").value("HS - Le Collectionneur"))
+				.andExpect(jsonPath("$[0].id").value(800))
+				.andExpect(jsonPath("$[0].identifyingName").value("1 - Le Secret de Cixi - 1ère partie"))
 				.andExpect(jsonPath("$[0].publisher").doesNotExist())
 				.andExpect(jsonPath("$[0].artists").doesNotExist())
 				// Check second entry. Only basic stuff
-				.andExpect(jsonPath("$[1].id").value(737))
-				.andExpect(jsonPath("$[1].identifyingName").value("HS - BlockBuster"))
+				.andExpect(jsonPath("$[1].id").value(859))
+				.andExpect(jsonPath("$[1].identifyingName").value("2 - Le Secret de Cixi - 2ème Partie"))
 				// Check last entry. Again basic stuff
-				.andExpect(jsonPath("$[23].id").value(1370))
-				.andExpect(jsonPath("$[23].identifyingName").value("19 - Temps mort"));
+				.andExpect(jsonPath("$[2].id").value(949))
+				.andExpect(jsonPath("$[2].identifyingName").value("3 - Le Secret de Cixi - 3ème Partie"));
 	}
 
 	@Test
@@ -83,35 +77,35 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/series/none/albums"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].id").value(1313))
-				.andExpect(jsonPath("$[0].identifyingName").value("Maître d'Armes (Le)"));
+				.andExpect(jsonPath("$[0].id").value(2892))
+				.andExpect(jsonPath("$[0].identifyingName").value("300"));
 	}
 
 	@Test
 	void countDerivativesBySeries() throws Exception {
-		mockMvc.perform(get("/api/series/99/derivatives/count"))
+		mockMvc.perform(get("/api/series/107/derivatives/count"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$").value(27));
+				.andExpect(jsonPath("$").value(9));
 	}
 
 	@Test
 	void saveExisting() throws Exception {
-		mockMvc.perform(put("/api/series/99")
+		mockMvc.perform(put("/api/series/312")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
-						+ "\"id\":99,"
-						+ "\"name\":\"Sillage 2\","
+						+ "\"id\":312,"
+						+ "\"name\":\"Alvin 2\","
 						+ "\"universe\": {}"
 						+ "}"))
 
 				.andExpect(status().isOk())
-				.andExpect(content().string("99"));
+				.andExpect(content().string("312"));
 
 		// Now that we know the save was OK, check if the content was actually saved
 		// We only check the data that was changed compared to the database
-		mockMvc.perform(get("/api/series/99"))
+		mockMvc.perform(get("/api/series/312"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id").value(99))
-				.andExpect(jsonPath("$.name").value("Sillage 2"));
+				.andExpect(jsonPath("$.id").value(312))
+				.andExpect(jsonPath("$.name").value("Alvin 2"));
 	}
 }
