@@ -137,13 +137,9 @@
 				</v-row>
 			</div>
 
-			<div v-if="album.aggregatedLocation" class="dem-fieldset">
+			<div v-if="album.location" class="dem-fieldset">
 				<v-row>
-					<v-col cols="12">
-						<FieldValue :label="$t('field.Album.location')">
-							{{ album.aggregatedLocation }}
-						</FieldValue>
-					</v-col>
+					<FieldValue :value="album.location" :cols="12" type="text" label-key="field.Album.location" />
 				</v-row>
 			</div>
 		</SectionCard>
