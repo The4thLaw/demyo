@@ -23,7 +23,7 @@ import bindingService from '@/services/binding-service'
 
 async function fetchData(id :number | undefined): Promise<Partial<Binding>> {
 	if (id) {
-		return bindingService.findById(id)
+		return bindingService.editById(id)
 	}
 	return Promise.resolve({})
 }

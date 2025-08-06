@@ -61,7 +61,7 @@ const { publishers, publishersLoading, loadPublishers } = useRefreshablePublishe
 
 async function fetchData(id: number | undefined): Promise<Partial<Collection>> {
 	if (id) {
-		return collectionService.findById(id)
+		return collectionService.editById(id)
 	}
 
 	const skeleton: Partial<Collection> = {

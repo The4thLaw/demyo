@@ -61,7 +61,7 @@ import seriesService from '@/services/series-service'
 const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 async function fetchData(id :number | undefined): Promise<Partial<Series>> {
 	if (id) {
-		return seriesService.findById(id)
+		return seriesService.editById(id)
 	}
 	return Promise.resolve({
 		universe: {} as Universe

@@ -66,7 +66,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Tag>> {
 		return Promise.resolve(skeleton)
 	}
 
-	return tagService.findById(id)
+	return tagService.editById(id)
 		.then(t => {
 			noFgColour.value = !t.fgColour
 			noBgColour.value = !t.bgColour

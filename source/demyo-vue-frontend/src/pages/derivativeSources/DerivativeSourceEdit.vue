@@ -62,7 +62,7 @@ import sourceService from '@/services/derivative-source-service'
 
 async function fetchData(id :number | undefined): Promise<Partial<DerivativeSource>> {
 	if (id) {
-		return sourceService.findById(id)
+		return sourceService.editById(id)
 	}
 	return Promise.resolve({
 		active: true
