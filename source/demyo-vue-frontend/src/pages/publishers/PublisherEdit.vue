@@ -50,7 +50,7 @@ const { images, imagesLoading, loadImages } = useRefreshableImages()
 
 async function fetchData(id: number | undefined): Promise<Partial<Publisher>> {
 	if (id) {
-		return publisherService.findById(id)
+		return publisherService.editById(id)
 			// Clear the collections: we won't be editing those and don't want to save them
 			.then(p => {
 				p.collections = null as unknown as Collection[]
