@@ -67,13 +67,14 @@
 							<ModelLink :model="album.bookType" view="BookTypeView" />
 						</FieldValue>
 					</v-col>
+					<!-- TODO: #14: include the data from the series -->
 					<v-col v-if="album.genres && album.genres.length > 0" cols="12" md="6">
-						<FieldValue :label="$t('field.Album.genres', album.genres.length)">
+						<FieldValue :label="$t('field.Taxonomized.genres', album.genres.length)">
 							<TaxonLink :model="album.genres" />
 						</FieldValue>
 					</v-col>
 					<v-col v-if="album.tags && album.tags.length > 0" cols="12">
-						<FieldValue :label="$t('field.Album.tags', album.tags.length)">
+						<FieldValue :label="$t('field.Taxonomized.tags', album.tags.length)">
 							<TaxonLink :model="album.tags" />
 						</FieldValue>
 					</v-col>

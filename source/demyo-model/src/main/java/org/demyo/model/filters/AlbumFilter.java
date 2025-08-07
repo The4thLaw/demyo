@@ -9,6 +9,7 @@ import org.demyo.model.BookType;
 import org.demyo.model.Collection;
 import org.demyo.model.Publisher;
 import org.demyo.model.QAlbum;
+import org.demyo.model.QSeries;
 import org.demyo.model.Reader;
 import org.demyo.model.Taxon;
 
@@ -96,8 +97,8 @@ public class AlbumFilter extends AbstractModelFilter {
 			e = combine(e, QAlbum.album.bookType.id.eq(bookType));
 		}
 		if (taxon != null) {
-			// TODO: #14: Also check the series
-			e = combine(e, QAlbum.album.taxons.any().id.eq(taxon));
+			e = combine(e, QSeries.series.taxons.any().id.eq(taxon)
+				.or(QAlbum.album.taxons.any().id.eq(taxon)));
 		}
 		if (readerIdFavourite != null) {
 			e = combine(e, QAlbum.album.readersFavourites.any().id.eq(readerIdFavourite)

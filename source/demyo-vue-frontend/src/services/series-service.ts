@@ -9,6 +9,8 @@ class SeriesService extends AbstractModelService<Series> {
 	constructor() {
 		super('series/', {
 			fillMissingObjects: ['universe'],
+			fillMissingArrays: ['tags', 'genres'],
+			sanitizeArrays: ['tags', 'genres'],
 			sanitizeHtml: ['summary', 'comment']
 		})
 	}

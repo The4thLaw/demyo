@@ -39,7 +39,6 @@ public interface Taxonomized {
 	 *
 	 * @return the {@link Taxon}s labelling this entity as genres
 	 */
-	// TODO: #14: Make sure this doesn't mess with the Taxons when saving an album/series. The type must remain
 	@JsonIgnoreProperties("type")
 	default SortedSet<Taxon> getGenres() {
 		if (!Hibernate.isInitialized(getTaxons()) || getTaxons() == null) {

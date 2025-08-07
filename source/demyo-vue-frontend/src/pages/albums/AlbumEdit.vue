@@ -63,16 +63,16 @@
 							v-model="album.genres" :items="genres" :loading="taxonsLoading"
 							multiple clearable
 							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
-							label-key="field.Album.genres" refreshable @refresh="loadTaxons"
+							label-key="field.Taxonomized.genres" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.genres.push(id)"
 						/>
 					</v-col>
-					<v-col cols="12">
+					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.tags" :items="tags" :loading="taxonsLoading"
 							multiple clearable
 							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
-							label-key="field.Album.tags" refreshable @refresh="loadTaxons"
+							label-key="field.Taxonomized.tags" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.tags.push(id)"
 						/>
 					</v-col>

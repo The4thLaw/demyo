@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +57,14 @@ public class SeriesService extends AbstractModelService<Series> implements ISeri
 	@Override
 	public CompletableFuture<List<Series>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public long save(@NotNull Series newSeries) {
+		newSeries.mergeTaxons();
+		return super.save(newSeries);
 	}
 
 	@Override
