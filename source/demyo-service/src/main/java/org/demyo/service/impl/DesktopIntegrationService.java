@@ -8,6 +8,7 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -37,6 +38,9 @@ import org.demyo.service.ITranslationService;
 public class DesktopIntegrationService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DesktopIntegrationService.class);
 
+	private static final String APP_ICON = "/org/demyo/common/desktop/app-icon.png";
+	private static final String APP_ICON_MONOCHROME = "/org/demyo/common/desktop/app-icon-monochrome.png";
+
 	@Autowired
 	private DesktopCallbacks desktop;
 
@@ -62,39 +66,42 @@ public class DesktopIntegrationService {
 			LOGGER.warn("Failed to set the Look and Feel", e);
 		}
 
-		SwingUtilities.invokeLater(this::createSysTray);
+		createDorkSysTray();
 	}
 
-	private void createSysTray() {
+	private void createDorkSysTray() {
+		dorkbox.systemTray.SystemTray systemTray = dorkbox.systemTray.SystemTray.get();
+		if (systemTray == null) {
+			LOGGER.warn("Failed to use the Dorkbox system tray");
+			SwingUtilities.invokeLater(this::createAWTSysTray);
+			return;
+		}
+
+		systemTray.setTooltip(getTooltip());
+		systemTray.setImage(getTrayIcon());
+		systemTray.getMenu().add(new dorkbox.systemTray.MenuItem(
+				getTrayBrowserStartLabel(),
+				getTrayBrowserStartAction()));
+		systemTray.getMenu().add(new dorkbox.systemTray.MenuItem(
+				getTrayExitLabel(),
+				getTrayExitAction(getSpecificDorkboxTrayExitAction(systemTray))));
+
+		LOGGER.info("Dorkbox system tray menu is available");
+	}
+
+	private void createAWTSysTray() {
 		final PopupMenu popup = new PopupMenu();
 
-		MenuItem browserItem = new MenuItem(translationService.translate("desktop.tray.browser.label"));
-		browserItem.addActionListener(e -> DesktopUtils.startBrowser());
+		MenuItem browserItem = new MenuItem(getTrayBrowserStartLabel());
+		browserItem.addActionListener(getTrayBrowserStartAction());
 		popup.add(browserItem);
 
-		MenuItem exitItem = new MenuItem(translationService.translate("desktop.tray.exit.label"));
-		exitItem.addActionListener(e -> {
-			LOGGER.info("Stopping Demyo");
-			for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
-				SystemTray.getSystemTray().remove(icon);
-			}
-
-			desktop.stopServer();
-		});
+		MenuItem exitItem = new MenuItem(getTrayExitLabel());
+		exitItem.addActionListener(getTrayExitAction(getSpecificAWTTrayExitAction()));
 		// Note: cannot add a shutdown hook to remove the icons, see https://bugs.openjdk.java.net/browse/JDK-8042114
 		popup.add(exitItem);
 
-		String iconPath;
-		if (SystemUtils.IS_OS_MAC_OSX) {
-			// Use template images on OSX: let the OS decide the color depending on the theme
-			LOGGER.debug("MacOS detected, the tray icon will be a template");
-			System.setProperty("apple.awt.enableTemplateImages", "true");
-			iconPath = "/org/demyo/common/desktop/app-icon-monochrome.png";
-		} else {
-			iconPath = "/org/demyo/common/desktop/app-icon.png";
-		}
-		URL iconUrl = getClass().getResource(iconPath);
-		assert (iconUrl != null);
+		URL iconUrl = getTrayIcon();
 		BufferedImage iconBI;
 		try {
 			iconBI = ImageIO.read(iconUrl);
@@ -119,13 +126,13 @@ public class DesktopIntegrationService {
 		int targetWidth = trayIconSize.width * factor;
 		int targetHeight = trayIconSize.height * factor;
 		LOGGER.debug(
-			"Tray icon size reported by Java is {}x{} with {} dpi, so applying factor {} we get {}x{}",
-			trayIconSize.width, trayIconSize.height, dpi, factor, targetWidth, targetHeight);
+				"Tray icon size reported by Java is {}x{} with {} dpi, so applying factor {} we get {}x{}",
+				trayIconSize.width, trayIconSize.height, dpi, factor, targetWidth, targetHeight);
 		iconBI = Scalr.resize(iconBI, Scalr.Method.ULTRA_QUALITY, targetWidth, targetHeight, Scalr.OP_ANTIALIAS);
 
 		// Won't be transparent :/
 		// See http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6453521
-		TrayIcon trayIcon = new TrayIcon(iconBI, translationService.translate("desktop.tray.mainIcon.tooltip"));
+		TrayIcon trayIcon = new TrayIcon(iconBI, getTooltip());
 		trayIcon.setPopupMenu(popup);
 		try {
 			tray.add(trayIcon);
@@ -134,6 +141,59 @@ public class DesktopIntegrationService {
 			return;
 		}
 
-		LOGGER.info("System tray menu is available");
+		LOGGER.info("AWT System tray menu is available");
+	}
+
+	private URL getTrayIcon() {
+		String iconPath;
+		if (SystemUtils.IS_OS_MAC_OSX) {
+			// Use template images on OSX: let the OS decide the color depending on the theme
+			LOGGER.debug("MacOS detected, the tray icon will be a template");
+			System.setProperty("apple.awt.enableTemplateImages", "true");
+			iconPath = APP_ICON_MONOCHROME;
+		} else {
+			iconPath = APP_ICON;
+		}
+		URL iconUrl = getClass().getResource(iconPath);
+		assert (iconUrl != null);
+		return iconUrl;
+	}
+
+	private String getTooltip() {
+		return translationService.translate("desktop.tray.mainIcon.tooltip");
+	}
+
+	private String getTrayBrowserStartLabel() {
+		return translationService.translate("desktop.tray.browser.label");
+	}
+
+	private static ActionListener getTrayBrowserStartAction() {
+		return e -> DesktopUtils.startBrowser();
+	}
+
+	private String getTrayExitLabel() {
+		return translationService.translate("desktop.tray.exit.label");
+	}
+
+	private ActionListener getTrayExitAction(Runnable r) {
+		return e -> {
+			LOGGER.info("Stopping Demyo");
+			r.run();
+			desktop.stopServer();
+		};
+	}
+
+	private static Runnable getSpecificAWTTrayExitAction() {
+		return () -> {
+			for (TrayIcon icon : SystemTray.getSystemTray().getTrayIcons()) {
+				SystemTray.getSystemTray().remove(icon);
+			}
+		};
+	}
+
+	private static Runnable getSpecificDorkboxTrayExitAction(dorkbox.systemTray.SystemTray systemTray) {
+		return () -> {
+			systemTray.shutdown();
+		};
 	}
 }
