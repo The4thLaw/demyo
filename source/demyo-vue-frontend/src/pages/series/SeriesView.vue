@@ -210,6 +210,9 @@ const showWishlist = ref(true)
 const currentTab = ref(0)
 
 async function fetchData(id: number): Promise<Series> {
+	// Clear the albums. Else they're kept from one series to the next when navigating
+	albums.value = {}
+
 	const dcPromise = seriesService.countDerivatives(id)
 
 	const fetched = await seriesService.findById(id)

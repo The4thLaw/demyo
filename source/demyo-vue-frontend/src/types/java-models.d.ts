@@ -31,7 +31,6 @@ interface AbstractPricedModel<P, M> extends AbstractModel {
 }
 
 interface Album extends AbstractPricedModel<AlbumPrice, Album>, Taxonomized {
-    aggregatedLocation: string;
     artists: Author[];
     baseNameForImages: string;
     binding: Binding;

@@ -72,11 +72,29 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Transactional(readOnly = true)
 	@Override
 	public Album getByIdForView(long id) {
-		Album entity = repo.findOneForView(id);
-		if (entity == null) {
+		Album album = repo.findOneForEdition(id);
+		if (album == null) {
 			throw new EntityNotFoundException("No Album for ID " + id);
 		}
-		return entity;
+
+		Series series = album.getSeries();
+		if (series != null) {
+			if (StringUtils.isBlank(album.getLocation())) {
+					album.setLocation(series.getLocation());
+			}
+		}
+
+		return album;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Album getByIdForEdition(long id) {
+		Album album = repo.findOneForEdition(id);
+		if (album == null) {
+			throw new EntityNotFoundException("No Album for ID " + id);
+		}
+		return album;
 	}
 
 	@Override

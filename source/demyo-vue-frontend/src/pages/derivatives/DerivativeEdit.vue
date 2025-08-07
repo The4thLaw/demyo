@@ -164,7 +164,7 @@ const relatedAlbumsLoading = ref(false)
 
 async function fetchData(id: number | undefined): Promise<Partial<Derivative>> {
 	if (id) {
-		const fetched = await derivativeService.findById(id)
+		const fetched = await derivativeService.editById(id)
 		void loadAlbums(fetched)
 		return Promise.resolve(fetched)
 	}

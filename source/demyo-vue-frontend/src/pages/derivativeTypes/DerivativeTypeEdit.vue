@@ -23,7 +23,7 @@ import typeService from '@/services/derivative-type-service'
 
 async function fetchData(id :number | undefined): Promise<Partial<DerivativeType>> {
 	if (id) {
-		return typeService.findById(id)
+		return typeService.editById(id)
 	}
 	return Promise.resolve({})
 }

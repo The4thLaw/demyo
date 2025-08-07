@@ -14,6 +14,11 @@ interface ServiceConfig<M extends IModel> {
 
 }
 
+enum FieldLoadMode {
+	auto = 'auto',
+	raw = 'raw'
+}
+
 /**
  * Base class for Model API services.
  */
@@ -49,7 +54,17 @@ class AbstractModelService<M extends IModel> {
 	 * @return The Model
 	 */
 	async findById(id: number): Promise<M> {
-		const model: M = await axiosGet(this.basePath + id, {})
+		const model: M = await axiosGet(this.basePath + id, { fields: FieldLoadMode.auto }, {} as M)
+		return this.fillMissingData(model)
+	}
+
+	/**
+	 * Finds a Model by its ID in order to edit it.
+	 * @param id The Model ID
+	 * @return The Model
+	 */
+	async editById(id: number): Promise<M> {
+		const model: M = await axiosGet(this.basePath + id, { fields: FieldLoadMode.raw }, {} as M)
 		return this.fillMissingData(model)
 	}
 

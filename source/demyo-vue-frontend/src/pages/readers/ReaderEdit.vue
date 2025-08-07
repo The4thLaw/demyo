@@ -35,7 +35,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Reader>> {
 		return Promise.resolve({} as Partial<Reader>)
 	}
 
-	return readerService.findById(id)
+	return readerService.editById(id)
 		.then(fetched => {
 			noColour.value = !fetched.colour
 			return fetched

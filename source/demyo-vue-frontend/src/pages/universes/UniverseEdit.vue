@@ -51,7 +51,7 @@ const { images, imagesLoading, loadImages } = useRefreshableImages()
 
 async function fetchData(id :number | undefined): Promise<Partial<Universe>> {
 	if (id) {
-		return universeService.findById(id)
+		return universeService.editById(id)
 	}
 	return Promise.resolve({
 		logo: {} as Image

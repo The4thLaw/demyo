@@ -26,7 +26,7 @@ async function fetchData(id: number | undefined): Promise<Image> {
 	if (!id) {
 		throw new Error("Can't add an image this way")
 	}
-	return imageService.findById(id)
+	return imageService.editById(id)
 }
 
 const { model: image, loading, save, reset } = useSimpleEdit(

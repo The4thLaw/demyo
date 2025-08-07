@@ -66,7 +66,7 @@ import bookTypeService from '@/services/book-type-service'
 
 async function fetchData(id :number | undefined): Promise<Partial<BookType>> {
 	if (id) {
-		return bookTypeService.findById(id)
+		return bookTypeService.editById(id)
 	}
 	return Promise.resolve({
 		structuredFieldConfig: [] as ModelField[]

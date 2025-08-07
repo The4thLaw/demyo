@@ -340,7 +340,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 
 	let fetched: Partial<Album>
 	if (id) {
-		fetched = await albumService.findById(id)
+		fetched = await albumService.editById(id)
 		seriesUniverse.value = fetched.series?.universe
 	} else if (route.query.toSeries) {
 		fetched = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
