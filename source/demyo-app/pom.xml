@@ -75,6 +75,15 @@ Includes the Web server, H2 server, and startup program.</description>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jcl</artifactId>
 		</dependency>
+
+		<!--
+			We need this at the app level to avoid classpath issues when exiting
+			See https://github.com/dorkbox/SystemTray/issues/228
+		-->
+		<dependency>
+			<groupId>com.dorkbox</groupId>
+			<artifactId>Collections</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
