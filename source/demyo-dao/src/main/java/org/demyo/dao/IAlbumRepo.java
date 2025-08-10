@@ -148,8 +148,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 * @return The album count
 	 */
 	// Way more efficient than any JPA query we could make
-	// TODO: #14: Also count from the series
-	@Query(value = "select count(*) from albums_taxons where taxon_id = ?1", nativeQuery = true)
+	@Query(value = "select count(*) from albums_aggregated_taxons where taxon_id = ?1", nativeQuery = true)
 	int countAlbumsByTaxon(long taxonId);
 
 	/**

@@ -14,4 +14,10 @@ import org.demyo.model.Taxon;
 	 * @return The taxon list
 	 */
 	List<Taxon> findAllWithUsageCounts();
+
+	/**
+	 * Finds all Taxons an Author has worked on in at least one album, along with the number
+	 * of albums the taxon has been used in for that author.
+	 */
+	List<Taxon> findAllGenresByAuthor(long authorId);
 }

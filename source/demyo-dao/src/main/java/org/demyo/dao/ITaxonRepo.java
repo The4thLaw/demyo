@@ -2,6 +2,7 @@ package org.demyo.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,6 @@ public interface ITaxonRepo extends IModelRepo<Taxon>, IQuickSearchableRepo<Taxo
 	@Override
 	@Query("select x from #{#entityName} x where name like ?1 order by name")
 	List<Taxon> quickSearchLike(String query);
+
+	List<Taxon> findAllById(Iterable<Long> ids, Sort sort);
 }

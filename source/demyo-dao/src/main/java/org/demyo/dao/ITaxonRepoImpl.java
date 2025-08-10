@@ -14,12 +14,14 @@ import org.springframework.data.domain.Sort;
 import org.demyo.model.Taxon;
 
 /**
- * Custom implementation of some methods from {@link ITaxonCustomRepo}, to be used as base implementation by Spring Data
+ * Custom implementation of some methods from {@link ITaxonCustomRepo}, to be
+ * used as base implementation by Spring Data
  * for {@link ITaxonRepo}.
  */
-// Unfortunately, the "I" has to remain as Spring Data expects <InterfaceName>Impl. Also, the implementation has
+// Unfortunately, the "I" has to remain as Spring Data expects
+// <InterfaceName>Impl. Also, the implementation has
 // to be in the same package as the interface.
-/*package*/class ITaxonRepoImpl implements ITaxonCustomRepo {
+/* package */class ITaxonRepoImpl implements ITaxonCustomRepo {
 	@Autowired
 	// Inject "self" so that we can use the findAll method
 	private ITaxonRepo repo;
@@ -33,11 +35,14 @@ import org.demyo.model.Taxon;
 		List<Taxon> taxons = repo.findAll(Sort.by("name"));
 
 		// Custom query to get usage counts
-		// TODO: #14: Also aggregate from series
 		Query query = entityManager
-				.createNativeQuery("select taxon_id, count(album_id) from albums_taxons group by taxon_id");
+				.createNativeQuery("select taxon_id, count(album_id) from albums_aggregated_taxons group by taxon_id");
 		List<?> results = query.getResultList();
 
+		return setUsageCounts(taxons, results);
+	}
+
+	private static List<Taxon> setUsageCounts(List<Taxon> taxons, List<?> results) {
 		// Create a map for faster lookup
 		Map<Long, Integer> occurrences = new HashMap<>();
 		for (Object result : results) {
@@ -59,4 +64,23 @@ import org.demyo.model.Taxon;
 		return taxons;
 	}
 
+	@Override
+	public List<Taxon> findAllGenresByAuthor(long authorId) {
+		Query query = entityManager.createNativeQuery(
+				"""
+						SELECT
+							t.id, count(at.album_id)
+						FROM
+							albums_authors aa
+							INNER JOIN albums_aggregated_taxons at ON aa.album_id = at.album_id
+							INNER JOIN taxons t ON t.id = at.taxon_id
+						WHERE author_id = ? and t.taxon_type = 'GENRE'
+						GROUP BY t.id""");
+		query.setParameter(1, authorId);
+		List<?> results = query.getResultList();
+
+		List<Long> ids = results.stream().map(row -> ((Number) ((Object[])row)[0]).longValue()).toList();
+		List<Taxon> taxons = repo.findAllById(ids, Sort.by("name"));
+		return setUsageCounts(taxons, results);
+	}
 }
