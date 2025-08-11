@@ -14,8 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.demyo.model.Taxon;
 
 /**
- * Custom implementation of some methods from {@link ITaxonCustomRepo}, to be
- * used as base implementation by Spring Data
+ * Custom implementation of some methods from {@link ITaxonCustomRepo}, to be used as base implementation by Spring Data
  * for {@link ITaxonRepo}.
  */
 // Unfortunately, the "I" has to remain as Spring Data expects
@@ -79,8 +78,8 @@ import org.demyo.model.Taxon;
 		query.setParameter(1, authorId);
 		List<?> results = query.getResultList();
 
-		List<Long> ids = results.stream().map(row -> ((Number) ((Object[])row)[0]).longValue()).toList();
-		List<Taxon> taxons = repo.findAllById(ids, Sort.by("name"));
+		List<Long> ids = results.stream().map(row -> ((Number) ((Object[]) row)[0]).longValue()).toList();
+		List<Taxon> taxons = repo.findAllById(ids);
 		return setUsageCounts(taxons, results);
 	}
 }
