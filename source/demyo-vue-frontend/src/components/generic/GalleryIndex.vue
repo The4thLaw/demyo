@@ -88,14 +88,18 @@ const paginatedItems = computed(() => {
 	})
 })
 
-onMounted(() => {
+function focusKeyboardNav(): void {
 	if (props.keyboardNavigation) {
 		// Focus may cause the browser to scroll to the element. It's fine if the element is the main one on the
 		// page but causes issues once it's further down, like in the AlbumView
 		focusElement(keyTarget.value)
 	}
+}
 
-	// Monitor the lightbox plugin DOM since we
+onMounted(() => {
+	focusKeyboardNav()
+
+	// Monitor the lightbox plugin DOM since we don't have callacks
 	const targetNode = document.getElementById('demyo')
 	if (!targetNode) {
 		console.log("Can't monitor the status of the lightbox, the target node is missing")
@@ -105,7 +109,7 @@ onMounted(() => {
 		for (const mutation of mutationList) {
 			if (mutation.type === 'childList') {
 				if ([...mutation.addedNodes]
-					.some(n => n instanceof HTMLElement && n.classList?.contains('fullscreen-image'))) {
+					.some(n => n instanceof HTMLElement && n.classList?.contains('	'))) {
 					onLightboxOpen()
 				}
 				if ([...mutation.removedNodes]
@@ -144,7 +148,7 @@ function onLightboxClose(): void {
 	}
 	lightboxOpened.value = false
 	// Refocus to allow keyboard navigation again
-	focusElement(keyTarget.value)
+	focusKeyboardNav()
 }
 
 function previousPageKeyboard():void {
