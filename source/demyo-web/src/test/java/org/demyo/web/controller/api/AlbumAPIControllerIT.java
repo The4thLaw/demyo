@@ -68,11 +68,11 @@ class AlbumAPIControllerIT extends AbstractModelAPIIT {
 						+ "}")) //
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(1)))
+				.andExpect(jsonPath("$", hasSize(2)))
 				// Test the single match
 				.andExpect(jsonPath("$[0].album").doesNotExist())
 				.andExpect(jsonPath("$[0].series.identifyingName").value("Sillage"))
-				.andExpect(jsonPath("$[0].albums", hasSize(1)))
-				.andExpect(jsonPath("$[0].albums[0].title").value("Grands Froids"));
+				.andExpect(jsonPath("$[0].albums", hasSize(23)))
+				.andExpect(jsonPath("$[0].albums[0].title").value("Le Collectionneur"));
 	}
 }
