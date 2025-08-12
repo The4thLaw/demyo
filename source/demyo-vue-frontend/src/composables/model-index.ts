@@ -7,6 +7,7 @@ import { useI18n } from 'vue-i18n'
 interface Index<T extends IModel> {
 	loading: Ref<boolean>
 	modelList: Ref<T[]>
+	load: () => Promise<void>
 }
 
 /**
@@ -36,5 +37,5 @@ export function useSimpleIndex<T extends IModel>(serviceInstance: AbstractModelS
 
 	void loadData()
 
-	return { loading, modelList }
+	return { loading, modelList, load: loadData }
 }
