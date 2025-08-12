@@ -28,9 +28,9 @@
 				"url": "/universes"
 			},
 			{
-				"title": "menu.tags.browse",
+				"title": "menu.taxonomy.browse",
 				"icon": "mdi-tag",
-				"url": "/tags"
+				"url": "/taxons"
 			},
 			{
 				"title": "menu.publishers.browse",
@@ -86,6 +86,11 @@
 				"title": "menu.images.add",
 				"icon": "mdi-camera dem-overlay-add",
 				"url": "/images/new"
+			},
+			{
+				"title": "menu.genres.add",
+				"icon": "mdi-drama-masks dem-overlay-add",
+				"url": "/genres/new"
 			},
 			{
 				"title": "menu.tags.add",
