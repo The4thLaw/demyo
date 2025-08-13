@@ -1,13 +1,13 @@
 <template>
 	<div>
 		<v-container fluid>
-			<SectionCard :title="$t('title.index.taxonomy.GENRE')">
+			<SectionCard :loading="loading" :title="$t('title.index.taxonomy.GENRE')">
 				<div class="v-TaxonIndex__list">
 					<TaxonLink :model="genres" />
 				</div>
 			</SectionCard>
 
-			<SectionCard :title="$t('title.index.taxonomy.TAG')">
+			<SectionCard :loading="loading" :title="$t('title.index.taxonomy.TAG')">
 				<div class="v-TaxonIndex__list">
 					<TaxonLink :model="tags" />
 				</div>
@@ -36,37 +36,15 @@
 
 <script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
-import tagService from '@/services/taxon-service'
-
-function getMaxUsageCount(tagsToCount: Taxon[], type: TaxonType): number {
-	if (tagsToCount.length === 0) {
-		return 0
-	}
-
-	const max = Math.max(...tagsToCount.filter(t => t.type === type).map(t => t.usageCount))
-	// Have a reasonable minimum else it just looks silly if there are few tags and they are seldom used
-	return Math.max(max, 10)
-}
+import { postProcessTaxons } from '@/composables/taxons'
+import taxonService from '@/services/taxon-service'
 
 async function fetchData(): Promise<ProcessedTaxon[]> {
-	const loadedTags = await tagService.findForIndex() as ProcessedTaxon[]
-
-	// Post-process tags: compute the relative weight in %
-	// (the base is 100% and the max is 200%, which is very convenient for the font-size)
-	const maxUsageCount: Record<TaxonType, number> = {
-		GENRE: 0,
-		TAG: 0
-	}
-	maxUsageCount.GENRE = getMaxUsageCount(loadedTags, 'GENRE')
-	maxUsageCount.TAG = getMaxUsageCount(loadedTags, 'TAG')
-	for (const tag of loadedTags) {
-		tag.relativeWeight = Math.round(100 * tag.usageCount / maxUsageCount[tag.type] + 100)
-	}
-
-	return Promise.resolve(loadedTags)
+	const loadedTaxons = await taxonService.findForIndex()
+	return Promise.resolve(postProcessTaxons(loadedTaxons))
 }
 
-const { loading, modelList: taxons } = useSimpleIndex(tagService, 'title.index.taxonomy', fetchData)
+const { loading, modelList: taxons } = useSimpleIndex(taxonService, 'title.index.taxonomy', fetchData)
 
 const genres = computed(() => taxons.value.filter(t => t.type === 'GENRE'))
 const tags = computed(() => taxons.value.filter(t => t.type === 'TAG'))
