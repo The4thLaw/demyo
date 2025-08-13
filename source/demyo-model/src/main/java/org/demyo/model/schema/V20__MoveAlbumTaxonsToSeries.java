@@ -31,7 +31,8 @@ public class V20__MoveAlbumTaxonsToSeries extends BaseJavaMigration {
 				where
 					-- At least one album has the taxon
 					exists
-						(select * from ALBUMS a inner join ALBUMS_TAXONS at on at.ALBUM_ID = a.ID where SERIES_ID=s.ID and TAXON_ID = t.ID)
+						(select * from ALBUMS a inner join ALBUMS_TAXONS at on at.ALBUM_ID = a.ID
+							where SERIES_ID=s.ID and TAXON_ID = t.ID)
 					-- There isn't an album that doesn't have the taxon
 					and not exists
 						(select * from ALBUMS a
