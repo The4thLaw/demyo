@@ -30,6 +30,24 @@
 					<v-col cols="12" md="4">
 						<v-text-field v-model="series.location" :label="$t('field.Series.location')" />
 					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="series.genres" :items="genres" :loading="taxonsLoading"
+							multiple clearable
+							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
+							label-key="field.Taxonomized.genres" refreshable @refresh="loadTaxons"
+							@added="(id: number) => series.genres.push(id)"
+						/>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="series.tags" :items="tags" :loading="taxonsLoading"
+							multiple clearable
+							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
+							label-key="field.Taxonomized.tags" refreshable @refresh="loadTaxons"
+							@added="(id: number) => series.tags.push(id)"
+						/>
+					</v-col>
 				</v-row>
 			</SectionCard>
 
@@ -54,10 +72,11 @@
 <script setup lang="ts">
 import UniverseLightCreate from '@/components/universes/UniverseLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
-import { useRefreshableUniverses } from '@/composables/refreshable-models'
+import { useRefreshableTaxons, useRefreshableUniverses } from '@/composables/refreshable-models'
 import { mandatory } from '@/helpers/rules'
 import seriesService from '@/services/series-service'
 
+const { genres, tags, taxonsLoading, loadTaxons } = useRefreshableTaxons()
 const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 async function fetchData(id :number | undefined): Promise<Partial<Series>> {
 	if (id) {
@@ -68,7 +87,7 @@ async function fetchData(id :number | undefined): Promise<Partial<Series>> {
 	})
 }
 
-const { model: series, loading, save, reset } = useSimpleEdit(fetchData, seriesService, [loadUniverses],
+const { model: series, loading, save, reset } = useSimpleEdit(fetchData, seriesService, [loadTaxons, loadUniverses],
 	'title.add.series', 'title.edit.series', 'SeriesView')
 
 const rules = {

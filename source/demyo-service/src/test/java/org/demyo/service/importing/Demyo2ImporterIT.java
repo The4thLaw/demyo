@@ -14,12 +14,12 @@ import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.Album;
 import org.demyo.model.BookType;
 import org.demyo.model.Reader;
-import org.demyo.model.Tag;
+import org.demyo.model.Taxon;
 import org.demyo.model.beans.ReaderLists;
 import org.demyo.model.enums.TranslationLabelType;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IReaderService;
-import org.demyo.service.ITagService;
+import org.demyo.service.ITaxonService;
 import org.demyo.service.impl.AbstractServiceTest;
 import org.demyo.service.impl.IBookTypeService;
 
@@ -34,7 +34,7 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 	@Autowired
 	private IReaderService readerService;
 	@Autowired
-	private ITagService tagService;
+	private ITaxonService taxonService;
 	@Autowired
 	private IAlbumService albumService;
 	@Autowired
@@ -64,10 +64,10 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		Album album1 = albumService.getByIdForView(1);
 		assertThat(album1.getPrintingDate()).isCloseTo("1985-12-01", 3_600);
 
-		List<Tag> tags = tagService.findAll();
-		assertThat(tags).hasSize(3);
-		Tag tag2 = tags.get(1);
-		assertThat(tag2.getDescription()).isEqualTo("rofl");
+		List<Taxon> taxons = taxonService.findAll();
+		assertThat(taxons).hasSize(3);
+		Taxon taxon2 = taxons.get(1);
+		assertThat(taxon2.getDescription()).isEqualTo("rofl");
 
 		List<BookType> bookTypes = bookTypeService.findAll();
 		assertThat(bookTypes).hasSize(2);

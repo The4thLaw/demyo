@@ -44,10 +44,14 @@
 					</v-col>
 					<v-col cols="12" md="6">
 						<v-text-field
-							v-if="seriesUniverse?.id"
-							v-model="seriesUniverse.identifyingName" :label="$t('field.Album.universe')"
-							:readonly="true" append-icon="mdi-pencil-off-outline"
-						/>
+							v-if="seriesDetails?.universe?.id"
+							v-model="seriesDetails.universe.identifyingName" :label="$t('field.Album.universe')"
+							:readonly="true"
+						>
+							<template #append>
+								<v-icon icon="mdi-pencil-off-outline" :title="$t('page.Album.inheritedFromSeries')" />
+							</template>
+						</v-text-field>
 						<Autocomplete
 							v-else
 							v-model="album.universe.id" :items="universes" :loading="universesLoading"
@@ -56,14 +60,33 @@
 							@added="(id: number) => album.universe.id = id"
 						/>
 					</v-col>
-					<v-col cols="12">
+				</v-row>
+				<v-row>
+					<v-col cols="12" md="6">
 						<Autocomplete
-							v-model="album.tags" :items="tags" :loading="tagsLoading"
+							v-model="album.genres" :items="filteredGenres" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TagLightCreate" add-label="title.add.tag"
-							label-key="field.Album.tags" refreshable @refresh="loadTags"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
+							label-key="field.Taxonomized.genres" refreshable @refresh="loadTaxons"
+							@added="(id: number) => album.genres.push(id)"
+						/>
+						<div v-if="seriesDetails?.genres?.length > 0">
+							<div class="v-AlbumEdit__inherited" v-text="$t('page.Album.inheritedFromSeries')" />
+							<TaxonLink :model="seriesDetails.genres" />
+						</div>
+					</v-col>
+					<v-col cols="12" md="6">
+						<Autocomplete
+							v-model="album.tags" :items="filteredTags" :loading="taxonsLoading"
+							multiple clearable
+							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
+							label-key="field.Taxonomized.tags" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.tags.push(id)"
 						/>
+						<div v-if="seriesDetails?.tags?.length > 0">
+							<div class="v-AlbumEdit__inherited" v-text="$t('page.Album.inheritedFromSeries')" />
+							<TaxonLink :model="seriesDetails.tags" />
+						</div>
 					</v-col>
 				</v-row>
 			</SectionCard>
@@ -194,6 +217,10 @@
 					</v-col>
 					<v-col cols="12" md="6">
 						<v-text-field v-model="album.location" :label="$t('field.Album.location')" />
+						<div v-if="seriesDetails?.location">
+							<div class="v-AlbumEdit__inherited" v-text="$t('page.Album.inheritedFromSeries')" />
+							{{ seriesDetails?.location }}
+						</div>
 					</v-col>
 				</v-row>
 				<v-row>
@@ -277,12 +304,12 @@
 
 <script setup lang="ts">
 import AuthorLightCreate from '@/components/authors/AuthorLightCreate.vue'
-import TagLightCreate from '@/components/tags/TagLightCreate.vue'
+import TaxonLightCreate from '@/components/tags/TaxonLightCreate.vue'
 import UniverseLightCreate from '@/components/universes/UniverseLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import {
 	useRefreshableAuthors, useRefreshableBindings, useRefreshableBookTypes, useRefreshableImages,
-	useRefreshablePublishers, useRefreshableSeries, useRefreshableTags,
+	useRefreshablePublishers, useRefreshableSeries, useRefreshableTaxons,
 	useRefreshableUniverses
 } from '@/composables/refreshable-models'
 import { getParsedRouteParam } from '@/helpers/route'
@@ -303,7 +330,7 @@ const { bindings, bindingsLoading, loadBindings } = useRefreshableBindings()
 const { images, imagesLoading, loadImages } = useRefreshableImages()
 const { publishers, publishersLoading, loadPublishers } = useRefreshablePublishers()
 const { series, seriesLoading, loadSeries } = useRefreshableSeries()
-const { tags, tagsLoading, loadTags } = useRefreshableTags()
+const { genres, tags, taxonsLoading, loadTaxons } = useRefreshableTaxons()
 const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 
 const collections = ref([] as Collection[])
@@ -322,7 +349,22 @@ async function loadCollections(forAlbum: Partial<Album>): Promise<void> {
 }
 
 const bookTypeManagement = ref(false)
-const seriesUniverse: Ref<Universe | undefined> = ref(undefined)
+const seriesDetails: Ref<Series | undefined> = ref(undefined)
+
+async function loadSeriesDetails(newSeriesId?: number): Promise<void> {
+	console.log('New series:', newSeriesId)
+	// Clear the current cache
+	seriesDetails.value = undefined
+	// Check the new applicable one
+	if (newSeriesId) {
+		seriesDetails.value = await seriesService.findById(newSeriesId)
+		// If the new one exists, clear what could be in the album
+		if (seriesDetails.value.universe) {
+			// eslint-disable-next-line @typescript-eslint/no-use-before-define
+			album.value.universe = {} as Universe
+		}
+	}
+}
 
 async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	const btmP = bookTypeService.isManagementEnabled()
@@ -330,9 +372,11 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	let fetched: Partial<Album>
 	if (id) {
 		fetched = await albumService.editById(id)
-		seriesUniverse.value = fetched.series?.universe
+		void loadSeriesDetails(fetched.series?.id)
 	} else if (route.query.toSeries) {
-		fetched = await seriesService.getAlbumTemplate(getParsedRouteParam(route.query.toSeries) ?? 0)
+		const toSeries = getParsedRouteParam(route.query.toSeries) ?? 0
+		void loadSeriesDetails(toSeries)
+		fetched = await seriesService.getAlbumTemplate(toSeries)
 	} else {
 		fetched = {
 			bookType: {} as BookType,
@@ -366,7 +410,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 }
 
 const { model: album, loading, save, reset } = useSimpleEdit(fetchData, albumService,
-	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTags, loadUniverses],
+	[loadAuthors, loadBindings, loadBookTypes, loadImages, loadPublishers, loadSeries, loadTaxons, loadUniverses],
 	'title.add.album', 'title.edit.album', 'AlbumView')
 
 const labelType = computed(() => {
@@ -385,18 +429,15 @@ function adjustEditionDates(): void {
 	}
 }
 
-watch(() => album.value.series?.id, async (newSeriesId) => {
-	// Clear the current cache
-	seriesUniverse.value = undefined
-	// Check the new applicable one
-	if (newSeriesId) {
-		seriesUniverse.value = await seriesService.getUniverse(newSeriesId)
-		// If the new one exists, clear what could be in the album
-		if (seriesUniverse.value) {
-			album.value.universe = {} as Universe
-		}
-	}
-})
+// Try to avoid albums repeating the data from the parent series
+const filteredGenres = computed(() =>
+	genres.value.filter(g => seriesDetails.value?.genres?.length === 0
+		|| !seriesDetails.value?.genres.find(sg => sg.id === g.id)))
+const filteredTags = computed(() =>
+	tags.value.filter(t => seriesDetails.value?.tags?.length === 0
+		|| !seriesDetails.value?.tags.find(st => st.id === t.id)))
+
+watch(() => album.value.series?.id, loadSeriesDetails)
 
 const rules = {
 	bookType: [mandatory()],
@@ -410,3 +451,10 @@ const rules = {
 	pages: [integer(), strictlyPositive()]
 }
 </script>
+
+<style lang="scss">
+.v-AlbumEdit__inherited {
+	color: rgb(var(--v-theme-primary));
+	font-size: 0.8em;
+}
+</style>

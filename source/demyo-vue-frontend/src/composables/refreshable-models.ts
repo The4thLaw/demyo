@@ -7,7 +7,7 @@ import derivativeTypeService from '@/services/derivative-type-service'
 import imageService from '@/services/image-service'
 import publisherService from '@/services/publisher-service'
 import seriesService from '@/services/series-service'
-import tagService from '@/services/tag-service'
+import tagService from '@/services/taxon-service'
 import universeService from '@/services/universe-service'
 
 function useRefreshable<M extends IModel>(
@@ -117,13 +117,19 @@ export function useRefreshableSeries(): RefreshSeries {
 	}
 }
 
-interface RefreshTag { tags: Ref<Tag[]>; tagsLoading: Ref<boolean>; loadTags: () => Promise<void> }
-export function useRefreshableTags(): RefreshTag {
+interface RefreshTag {
+	genres: Ref<Taxon[]>
+	tags: Ref<Taxon[]>
+	taxonsLoading: Ref<boolean>
+	loadTaxons: () => Promise<void>
+}
+export function useRefreshableTaxons(): RefreshTag {
 	const refreshable = useRefreshable(tagService)
 	return {
-		tags: refreshable.models,
-		tagsLoading: refreshable.loading,
-		loadTags: refreshable.load
+		genres: computed(() => refreshable.models.value.filter(t => t.type === 'GENRE')),
+		tags: computed(() => refreshable.models.value.filter(t => t.type === 'TAG')),
+		taxonsLoading: refreshable.loading,
+		loadTaxons: refreshable.load
 	}
 }
 

@@ -22,7 +22,8 @@ interface LightEditData<T extends AbstractModel> extends EditData<T> {
 // eslint-disable-next-line @typescript-eslint/max-params
 function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
 		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
-		addTitleLabel?: string, editTitleLabel?: string, redirectRouteName?: string,
+		addTitleLabel?: string | ((m: Partial<T>) => string), editTitleLabel?: string | ((m: Partial<T>) => string),
+		redirectRouteName?: string,
 		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
 	//
 	const route = useRoute()
@@ -40,7 +41,11 @@ function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) =>
 			if (loading.value) {
 				return null
 			}
-			return parsedId.value ? i18n.t(editTitleLabel) : i18n.t(addTitleLabel)
+			let label = parsedId.value ? editTitleLabel : addTitleLabel
+			if (typeof label === 'function') {
+				label = label(model.value)
+			}
+			return i18n.t(label)
 		})
 
 		useHead({
@@ -116,7 +121,8 @@ function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) =>
 // eslint-disable-next-line @typescript-eslint/max-params
 export function useSimpleEdit<T extends AbstractModel>(fetchData: (id: number | undefined) => Promise<Partial<T>>,
 		service: AbstractModelService<T>, additionalLoaders: (() => Promise<unknown>)[],
-		addTitleLabel: string, editTitleLabel: string, redirectRouteName: string,
+		addTitleLabel: string | ((m: T) => string), editTitleLabel: string | ((m: T) => string),
+		redirectRouteName: string,
 		saveHandler = async (m: T): Promise<number> => service.save(m)): EditData<T> {
 	return useEdit(fetchData, service, additionalLoaders, addTitleLabel, editTitleLabel, redirectRouteName, saveHandler)
 }

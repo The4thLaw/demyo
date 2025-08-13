@@ -80,26 +80,44 @@
 				</template>
 			</AlbumTextList>
 		</SectionCard>
+
+		<SectionCard v-if="loading || genres.length > 0" :loading="loading" :title="$t('page.Author.genres')">
+			<TaxonLink :model="genres" />
+			<div class="v-AuthorView__genresChart">
+				<Doughnut
+					id="author-genres-chart"
+					:data="chartData"
+				/>
+			</div>
+		</SectionCard>
 	</v-container>
 </template>
 
 <script setup lang="ts">
 import { useSimpleView } from '@/composables/model-view'
+import { postProcessTaxons } from '@/composables/taxons'
 import { useCountry } from '@/helpers/countries'
 import authorService from '@/services/author-service'
+import { ArcElement, Chart as ChartJS, Title, Tooltip } from 'chart.js'
 import dayjs from 'dayjs'
+import randomColor from 'randomcolor'
+import { Doughnut } from 'vue-chartjs'
 import { useI18n } from 'vue-i18n'
+
+ChartJS.register(Title, Tooltip, ArcElement)
 
 const authorLoading = ref(true)
 const albumsLoading = ref(true)
 const authorAlbums = ref({} as AuthorAlbums)
 const derivativeCount = ref(-1)
+const genres = ref([] as ProcessedTaxon[])
 
 async function fetchData(id: number): Promise<Author> {
 	authorLoading.value = true
 	albumsLoading.value = true
 
 	const derivCountP = authorService.countDerivatives(id)
+	const genresP = authorService.getAuthorGenres(id)
 	const authorP = await authorService.findById(id)
 	authorLoading.value = false
 
@@ -108,6 +126,16 @@ async function fetchData(id: number): Promise<Author> {
 	albumsLoading.value = false
 
 	derivativeCount.value = await derivCountP
+
+	const processedGenres = postProcessTaxons(await genresP)
+	processedGenres.sort((g1, g2) => {
+		const weightDiff = g2.relativeWeight - g1.relativeWeight
+		if (weightDiff !== 0) {
+			return weightDiff
+		}
+		return g1.identifyingName.toLowerCase().localeCompare(g2.identifyingName.toLowerCase())
+	})
+	genres.value = processedGenres
 
 	return authorP
 }
@@ -172,4 +200,25 @@ function describeAuthor(album: Album): string {
 
 	return `${qualifiers.join(', ')} ${pseudonym}`
 }
+
+const chartData = computed(() => {
+	const labels = genres.value.map(g => g.identifyingName)
+	const data = genres.value.map(g => g.usageCount)
+	const backgroundColor = genres.value.map(g => g.bgColour ?? randomColor())
+	return {
+		labels,
+		datasets: [{
+			data,
+			backgroundColor
+		}]
+	}
+})
 </script>
+
+<style lang="scss">
+.v-AuthorView__genresChart {
+	width: max(200px, 20vw);
+	margin: auto;
+	position: relative;
+}
+</style>

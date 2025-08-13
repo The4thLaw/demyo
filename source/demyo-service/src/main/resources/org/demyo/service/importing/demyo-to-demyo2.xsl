@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="xml" encoding="utf-8" indent="yes"/>
-	
+
 	<xsl:template match="/library">
 		<library>
 			<meta>
@@ -10,13 +10,13 @@
 					<!-- Reset the schema version on conversion -->
 					<xsl:attribute name="schema">1</xsl:attribute>
 				</version>
-				
+
 				<counts>
 					<xsl:attribute name="publishers"><xsl:value-of select="publishers/@entries"/></xsl:attribute>
 					<xsl:attribute name="collections"><xsl:value-of select="collections/@entries"/></xsl:attribute>
 					<xsl:attribute name="bindings"><xsl:value-of select="bindings/@entries"/></xsl:attribute>
 					<xsl:attribute name="authors"><xsl:value-of select="authors/@entries"/></xsl:attribute>
-					<xsl:attribute name="tags"><xsl:value-of select="tags/@entries"/></xsl:attribute>
+					<xsl:attribute name="taxons"><xsl:value-of select="tags/@entries"/></xsl:attribute>
 					<xsl:attribute name="images"><xsl:value-of select="images/@entries"/></xsl:attribute>
 					<xsl:attribute name="series"><xsl:value-of select="series/@entries"/></xsl:attribute>
 					<xsl:attribute name="albums"><xsl:value-of select="albums/@entries"/></xsl:attribute>
@@ -44,21 +44,21 @@
 			<xsl:apply-templates select="sources"/>
 			<xsl:apply-templates select="derivatives"/>
 			<xsl:apply-templates select="derivative_prices"/>
-			
+
 			<readers>
 				<reader id="1" name="Demyo" />
 			</readers>
 		</library>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/images">
 		<images>
 			<xsl:apply-templates select="image"/>
 		</images>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/images/image">
 		<image>
 			<!-- Copy all attributes except generated and obsolete ones -->
@@ -72,15 +72,15 @@
 			</xsl:for-each>
 		</image>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/publishers">
 		<publishers>
 			<xsl:apply-templates select="publisher"/>
 		</publishers>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/publishers/publisher">
 		<publisher>
 			<!-- Copy all attributes -->
@@ -94,15 +94,15 @@
 			</xsl:for-each>
 		</publisher>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/collections">
 		<collections>
 			<xsl:apply-templates select="collection"/>
 		</collections>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/collections/collection">
 		<collection>
 			<!-- Copy all attributes -->
@@ -116,15 +116,15 @@
 			</xsl:for-each>
 		</collection>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/bindings">
 		<bindings>
 			<xsl:apply-templates select="binding"/>
 		</bindings>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/bindings/binding">
 		<binding>
 			<!-- Copy all attributes -->
@@ -138,15 +138,15 @@
 			</xsl:for-each>
 			</binding>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/authors">
 		<authors>
 			<xsl:apply-templates select="author"/>
 		</authors>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/authors/author">
 		<author>
 			<!-- Copy all attributes except generated ones -->
@@ -160,17 +160,17 @@
 			</xsl:for-each>
 		</author>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/tags">
-		<tags>
+		<taxons>
 			<xsl:apply-templates select="tag"/>
-		</tags>
+		</taxons>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/tags/tag">
-		<tag>
+		<taxon>
 			<!-- Copy all attributes -->
 			<xsl:for-each select="@*">
 				<xsl:choose>
@@ -186,17 +186,17 @@
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:for-each>
-		</tag>
+		</taxon>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/series">
 		<series-list>
 			<xsl:apply-templates select="series"/>
 		</series-list>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/series/series">
 		<series>
 			<!-- Copy all attributes except ones to split -->
@@ -222,15 +222,15 @@
 			</xsl:if>
 		</series>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/albums">
 		<albums>
 			<xsl:apply-templates select="album"/>
 		</albums>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/albums/album">
 		<album>
 			<!-- Copy all attributes except ones to split -->
@@ -281,12 +281,12 @@
 				</colorists>
 			</xsl:if>
 			<xsl:if test="string-length(@tags)">
-				<album-tags>
+				<album-taxons>
 					<xsl:call-template name="split-id-list">
 						<xsl:with-param name="toSplit"><xsl:value-of select="@tags"/></xsl:with-param>
-						<xsl:with-param name="elementName">album-tag</xsl:with-param>
+						<xsl:with-param name="elementName">album-taxon</xsl:with-param>
 					</xsl:call-template>
-				</album-tags>
+				</album-taxons>
 			</xsl:if>
 			<xsl:if test="string-length(@images)">
 				<album-images>
@@ -298,15 +298,15 @@
 			</xsl:if>
 		</album>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/album_prices">
 		<albums_prices>
 			<xsl:apply-templates select="album_price"/>
 		</albums_prices>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/album_prices/album_price">
 		<album_price>
 			<!-- Copy all attributes -->
@@ -320,15 +320,15 @@
 			</xsl:for-each>
 		</album_price>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/borrowers">
 		<borrowers>
 			<xsl:apply-templates select="borrower"/>
 		</borrowers>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/borrowers/borrower">
 		<borrower>
 			<!-- Copy all attributes -->
@@ -342,15 +342,15 @@
 			</xsl:for-each>
 		</borrower>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/loan-history">
 		<loan-history>
 			<xsl:apply-templates select="loan"/>
 		</loan-history>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/loan-history/loan">
 		<loan>
 			<!-- Copy all attributes -->
@@ -364,15 +364,15 @@
 			</xsl:for-each>
 		</loan>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/derivative_types">
 		<derivative_types>
 			<xsl:apply-templates select="derivative_type"/>
 		</derivative_types>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/derivative_types/derivative_type">
 		<derivative_type>
 			<!-- Copy all attributes -->
@@ -386,15 +386,15 @@
 			</xsl:for-each>
 		</derivative_type>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/sources">
 		<sources>
 			<xsl:apply-templates select="source"/>
 		</sources>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/sources/source">
 		<source>
 			<!-- Copy all attributes -->
@@ -408,15 +408,15 @@
 			</xsl:for-each>
 		</source>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/derivatives">
 		<derivatives>
 			<xsl:apply-templates select="derivative"/>
 		</derivatives>
 	</xsl:template>
-	
+
 	<!-- ignore meta_name="Sérigraphie pour Amenophis IV, de Durango", split images="94"/ -->
 	<xsl:template match="/library/derivatives/derivative">
 		<derivative>
@@ -448,15 +448,15 @@
 			</xsl:if>
 		</derivative>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<xsl:template match="/library/derivative_prices">
 		<derivatives_prices>
 			<xsl:apply-templates select="derivative_price"/>
 		</derivatives_prices>
 	</xsl:template>
-	
+
 	<xsl:template match="/library/derivative_prices/derivative_price">
 		<derivative_price>
 			<!-- Copy all attributes -->
@@ -470,9 +470,9 @@
 			</xsl:for-each>
 		</derivative_price>
 	</xsl:template>
-	
-	
-	
+
+
+
 	<!--http://stackoverflow.com/questions/4845660/xsl-how-to-split-strings-->
 	<xsl:template name="split-id-list">
 		<xsl:param name="toSplit" select="."/>

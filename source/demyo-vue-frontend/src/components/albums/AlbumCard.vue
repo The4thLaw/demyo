@@ -99,8 +99,17 @@
 						<FieldValue v-if="album.collection.id" :label="$t('field.Album.collection')">
 							<ModelLink :model="album.collection" view="CollectionView" />
 						</FieldValue>
-						<FieldValue v-if="album.tags && album.tags.length" :label="$t('field.Album.tags')">
-							<TagLink :model="album.tags" />
+						<FieldValue
+							v-if="album.genres && album.genres.length"
+							:label="$t('field.Taxonomized.genres', album.genres.length)"
+						>
+							<TaxonLink :model="album.genres" />
+						</FieldValue>
+						<FieldValue
+							v-if="album.tags && album.tags.length"
+							:label="$t('field.Taxonomized.tags', album.tags.length)"
+						>
+							<TaxonLink :model="album.tags" />
 						</FieldValue>
 						<FieldValue v-if="album.binding.id" :label="$t('field.Album.binding')">
 							<ModelLink :model="album.binding" view="BindingView" />

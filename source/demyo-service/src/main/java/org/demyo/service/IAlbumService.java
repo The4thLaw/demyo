@@ -17,7 +17,7 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	/**
 	 * Finds a template {@link Album} for a given {@link Series}, with the aim of adding a new entry. The retrieved
 	 * {@link Album} is the last one from the {@link Series}.
-	 * 
+	 *
 	 * @param seriesId The {@link Series} to query.
 	 * @return The template {@link Album}.
 	 */
@@ -25,7 +25,7 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.
-	 * 
+	 *
 	 * @param seriesId The Series ID. Can be <code>null</code> to find Albums without Series
 	 * @return The associated Albums
 	 */
@@ -36,7 +36,7 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 * <p>
 	 * The cover replaces any existing one. The other images are added to the current one.
 	 * </p>
-	 * 
+	 *
 	 * @param albumId The ID of the Album to change.
 	 * @param coverFilePondId The FilePond ID of the cover to recover.
 	 * @param otherFilePondIds The FilePond IDs of the other images to recover.
@@ -46,33 +46,33 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 
 	/**
 	 * Finds all {@link Album}s grouped by series, in the suitable order.
-	 * 
+	 *
 	 * @return The {@link Album}s grouped by series.
 	 */
 	Collection<MetaSeries> findAllForIndex();
 
 	/**
 	 * Finds all {@link Album}s grouped by series, in the suitable order.
-	 * 
+	 *
 	 * @param filter The filter to apply to the albums to fetch.
 	 * @return The {@link Album}s grouped by series.
 	 */
 	Collection<MetaSeries> findAllForIndex(AlbumFilter filter);
 
 	/**
-	 * Counts the number of Albums that feature the provided tag.
+	 * Counts the number of Albums that feature the provided taxon.
 	 * <p>
 	 * This method is more efficient than an equivalent call to {@link #countAlbumsByFilter(AlbumFilter)}.
 	 * </p>
-	 * 
-	 * @param tagId The Tag internal ID
+	 *
+	 * @param taxonId The Taxon internal ID
 	 * @return The album count
 	 */
-	int countAlbumsByTag(long tagId);
+	int countAlbumsByTaxon(long taxonId);
 
 	/**
 	 * Counts how many Albums use the given criteria.
-	 * 
+	 *
 	 * @param filter The criteria.
 	 * @return the count
 	 */

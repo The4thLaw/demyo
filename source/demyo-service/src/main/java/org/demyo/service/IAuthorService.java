@@ -3,6 +3,7 @@ package org.demyo.service;
 import java.util.List;
 
 import org.demyo.model.Author;
+import org.demyo.model.Taxon;
 import org.demyo.model.beans.AuthorAlbums;
 
 /**
@@ -25,5 +26,13 @@ public interface IAuthorService extends IModelService<Author>, IQuickSearchableS
 	 * @return The structured works
 	 */
 	AuthorAlbums getAuthorAlbums(long authorId);
+
+	/**
+	 * Gets the genres in which a specific author is active.
+	 *
+	 * @param id The Author internal identifier
+	 * @return The genres.
+	 */
+    List<Taxon> getAuthorGenres(long id);
 
 }

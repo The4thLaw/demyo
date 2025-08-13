@@ -2,6 +2,13 @@ package org.demyo.model;
 
 import java.util.SortedSet;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 
@@ -13,13 +20,6 @@ import org.demyo.model.jackson.SortedSetDeserializer;
 import org.demyo.model.util.DefaultOrder;
 import org.demyo.model.util.IdentifyingNameComparator;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.NamedAttributeNode;
-import jakarta.persistence.NamedEntityGraph;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-
 /**
  * Represents a Publisher of comics.
  */
@@ -29,8 +29,7 @@ import jakarta.persistence.Table;
 { @DefaultOrder.Order(property = "name") })
 @NamedEntityGraph(name = "Publisher.forIndex", attributeNodes = @NamedAttributeNode("collections"))
 @NamedEntityGraph(name = "Publisher.forView", attributeNodes =
-{ @NamedAttributeNode("collections"),
-		@NamedAttributeNode("logo") })
+	{ @NamedAttributeNode("collections"), @NamedAttributeNode("logo") })
 @NamedEntityGraph(name = "Publisher.forEdition", attributeNodes = @NamedAttributeNode("logo"))
 public class Publisher extends AbstractLegalEntity {
 	/** The collections belonging to this publisher. */

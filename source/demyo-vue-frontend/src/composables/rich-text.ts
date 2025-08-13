@@ -13,6 +13,6 @@ export function useRichTextTemplate(userValue: Ref<string | undefined>): Ref<str
 			.replace(/(\[([^\]]*)\])?\(image:(\d+)(:(small|large|full))?\)/g,
 				'<DeferredImageThumb image-id="$3" alt="$2" variant="$5"/>')
 			// Tags
-			.replace(/(\[([^\]]*)\])?\(tag:(\d+)\)/g, '<DeferredTagLink tag-id="$3" label="$2"/>')
+			.replace(/(\[([^\]]*)\])?\((genre|tag|taxon):(\d+)\)/g, '<DeferredTagLink tag-id="$4" label="$2"/>')
 	})
 }

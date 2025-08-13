@@ -15,7 +15,7 @@ import org.demyo.model.Author;
 import org.demyo.model.Collection;
 import org.demyo.model.Publisher;
 import org.demyo.model.Series;
-import org.demyo.model.Tag;
+import org.demyo.model.Taxon;
 import org.demyo.model.Universe;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IAuthorService;
@@ -23,7 +23,7 @@ import org.demyo.service.ICollectionService;
 import org.demyo.service.IPublisherService;
 import org.demyo.service.ISearchService;
 import org.demyo.service.ISeriesService;
-import org.demyo.service.ITagService;
+import org.demyo.service.ITaxonService;
 import org.demyo.service.IUniverseService;
 import org.demyo.service.SearchResult;
 import org.demyo.utils.logging.LoggingSanitizer;
@@ -43,7 +43,7 @@ public class SearchService implements ISearchService {
 	@Autowired
 	private IAlbumService albumService;
 	@Autowired
-	private ITagService tagService;
+	private ITaxonService taxonService;
 	@Autowired
 	private IAuthorService authorService;
 	@Autowired
@@ -72,12 +72,12 @@ public class SearchService implements ISearchService {
 		CompletableFuture<List<Universe>> universes = universeService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Series>> series = seriesService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Album>> albums = albumService.quickSearch(query, exactMatch);
-		CompletableFuture<List<Tag>> tags = tagService.quickSearch(query, exactMatch);
+		CompletableFuture<List<Taxon>> taxons = taxonService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Author>> authors = authorService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Publisher>> publishers = publisherService.quickSearch(query, exactMatch);
 		CompletableFuture<List<Collection>> collections = collectionService.quickSearch(query, exactMatch);
 
-		SearchResult result = new SearchResult(universes.join(), series.join(), albums.join(), tags.join(),
+		SearchResult result = new SearchResult(universes.join(), series.join(), albums.join(), taxons.join(),
 				authors.join(), publishers.join(), collections.join());
 
 		sw.stop();

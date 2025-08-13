@@ -13,10 +13,13 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
+const filter = computed(() => retrieveFilter(route))
+
 async function fetchData(): Promise<Album[]> {
-	const filter = retrieveFilter(route)
-	return albumService.findForIndex(filter)
+	return albumService.findForIndex(filter.value)
 }
 
-const { loading, modelList: albums } = useSimpleIndex(albumService, 'title.index.album', fetchData)
+const { loading, modelList: albums, load } = useSimpleIndex(albumService, 'title.index.album', fetchData)
+
+watch(filter, load)
 </script>

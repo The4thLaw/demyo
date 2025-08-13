@@ -2,7 +2,7 @@
 <library>
 	<meta>
 		<version demyo="2.1.0" schema="4" />
-		<counts albums="1684" albums_prices="165" authors="957" bindings="5" borrowers="1" collections="52" derivatives="407" derivative_types="15" derivatives_prices="15" images="1507" loan-history="5" publishers="60" series="329" sources="46" tags="111" />
+		<counts albums="1684" albums_prices="165" authors="957" bindings="5" borrowers="1" collections="52" derivatives="407" derivative_types="15" derivatives_prices="15" images="1507" loan-history="5" publishers="60" series="329" sources="46" taxons="111" />
 	</meta>
 	<images>
 		<!-- Get list of images with: grep -Eo 'cover_id="[0-9]+"|album-image ref="[0-9]+"|logo_id="[0-9]+"|derivative-image ref="[0-9]+"' demyo-sample-import.xml | grep -Eo "[0-9]+" | sort -n | uniq -->
@@ -82,21 +82,21 @@
 		<author id="717" name="Montlló Ribó" fname="Miquel" nickname="Miki" website="http://miquelmontllo.blogspot.be/"/>
 		<author id="718" name="Picard" fname="Alice"/>
 	</authors>
-	<tags>
-		<tag id="1" name="science-fiction" />
-		<tag id="3" name="comic" fgcolour="#ffffff" bgcolour="#1c1d82"/>
-		<tag id="7" name="dédicacé" />
-		<tag id="10" name="vernis sélectif" />
-		<tag id="13" name="coffret" />
-		<tag id="21" name="one shot" />
-		<tag id="50" name="tirage limité" />
-		<tag id="53" name="cahier graphique" />
-		<tag id="56" name="bandeau" />
-		<tag id="79" name="héroïne" />
-		<tag id="85" name="course" />
-		<tag id="90" name="jungle" />
-		<tag id="106" name="évasion" />
-	</tags>
+	<taxons>
+		<taxon id="1" name="science-fiction" />
+		<taxon id="3" name="comic" fgcolour="#ffffff" bgcolour="#1c1d82"/>
+		<taxon id="7" name="dédicacé" />
+		<taxon id="10" name="vernis sélectif" />
+		<taxon id="13" name="coffret" />
+		<taxon id="21" name="one shot" />
+		<taxon id="50" name="tirage limité" />
+		<taxon id="53" name="cahier graphique" />
+		<taxon id="56" name="bandeau" />
+		<taxon id="79" name="héroïne" />
+		<taxon id="85" name="course" />
+		<taxon id="90" name="jungle" />
+		<taxon id="106" name="évasion" />
+	</taxons>
 	<series-list>
 		<series id="2" name="Sample empty series" />
 		<series id="99" name="Sillage" completed="false" website="http://www.poukram.org/" location="Bibliothèque, F2">
@@ -122,12 +122,12 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="7" />
-				<album-tag ref="79" />
-				<album-tag ref="90" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="7" />
+				<album-taxon ref="79" />
+				<album-taxon ref="90" />
+				<album-taxon ref="1" />
+			</album-taxons>
 			<album-images>
 				<album-image ref="4" />
 			</album-images>
@@ -139,10 +139,10 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="437" series_id="99" number="3.0" title="Engrenages" publisher_id="3" collection_id="9" first_edition="2000-08-01" this_edition="2000-08-01" wishlist="false" binding_id="1" cover_id="5" comment="&lt;p&gt;Ex-libris 139/250 Durango&lt;/p&gt;" marked_as_first_edition="false">
 			<writers>
@@ -151,10 +151,10 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="438" series_id="99" number="4.0" title="Le Signe des Démons" publisher_id="3" collection_id="9" first_edition="2001-09-01" this_edition="2001-09-01" wishlist="false" binding_id="1" cover_id="6" comment="&lt;p&gt;Coffret pour les 4 albums parus.&lt;/p&gt;" marked_as_first_edition="false">
 			<writers>
@@ -163,11 +163,11 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="13" />
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="13" />
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="439" series_id="99" number="5.0" title="'J.VJ,..'\_ " publisher_id="3" collection_id="9" first_edition="2002-06-01" this_edition="2002-06-01" wishlist="false" binding_id="1" cover_id="7" marked_as_first_edition="false">
 			<writers>
@@ -176,10 +176,10 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="440" series_id="99" number="6.0" title="Artifices" publisher_id="3" collection_id="9" first_edition="2003-08-01" this_edition="2003-08-01" wishlist="false" binding_id="1" cover_id="8" marked_as_first_edition="false">
 			<writers>
@@ -188,10 +188,10 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="441" series_id="99" number="7.0" title="Q.H.I." publisher_id="3" collection_id="9" first_edition="2004-08-01" this_edition="2004-08-01" wishlist="false" binding_id="1" cover_id="9" marked_as_first_edition="false">
 			<writers>
@@ -200,11 +200,11 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="106" />
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="106" />
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="442" series_id="99" number="8.0" title="Nature Humaine" publisher_id="3" collection_id="9" first_edition="2005-09-01" this_edition="2005-09-01" wishlist="false" binding_id="1" cover_id="10" marked_as_first_edition="false">
 			<writers>
@@ -213,11 +213,11 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="13" />
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="13" />
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="443" series_id="99" number="9.0" title="Infiltrations" publisher_id="3" collection_id="9" first_edition="2006-09-01" this_edition="2006-09-01" wishlist="false" binding_id="1" cover_id="2" marked_as_first_edition="false">
 			<writers>
@@ -226,10 +226,10 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="444" series_id="99" number_suffix="HS" title="Le Collectionneur" publisher_id="3" first_edition="2002-10-01" this_edition="2002-10-01" wishlist="false" binding_id="1" cover_id="12" marked_as_first_edition="false">
 			<writers>
@@ -238,10 +238,10 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="567" series_id="99" number="10.0" title="Retour de Flammes" publisher_id="3" collection_id="9" first_edition="2007-10-01" this_edition="2007-10-01" acquisition_date="2007-11-10" wishlist="false" binding_id="1" cover_id="11" comment="&lt;p&gt;Édition Spéciale « 10 ans » : couverture à vernis sélectif, DVD anniversaire, carnet de croquis&lt;/p&gt;" height="320.0" width="240.0" pages="48" marked_as_first_edition="false">
 			<writers>
@@ -250,11 +250,11 @@
 			<artists>
 				<artist ref="52" />
 			</artists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-				<album-tag ref="10" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+				<album-taxon ref="10" />
+			</album-taxons>
 		</album>
 		<album id="669" series_id="99" number="11.0" title="Monde Flottant" publisher_id="3" collection_id="9" first_edition="2008-09-01" this_edition="2008-09-01" isbn="978-2-7560-1184-4" acquisition_date="2008-11-16" wishlist="false" binding_id="1" cover_id="278" height="320.0" width="240.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -266,10 +266,10 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="746" series_id="99" number="12.0" title="Zone Franche" publisher_id="3" collection_id="9" first_edition="2009-10-01" this_edition="2009-10-01" isbn="978-2-7560-1592-7" acquisition_date="2009-10-01" wishlist="false" binding_id="1" cover_id="666" summary="&lt;p&gt;Nävis est aux trousses de Soimitt, le tueur à gages qui l'avait manipulée jusqu'à la pousser à détruire une partie du vaisseau amiral de Sillage. Elle espère lui extirper des informations susceptibles de faire réviser son procès.&lt;/p&gt;&lt;p&gt;Mais le cerveau de l'assassin est truffé de bloqueurs psychiques et le seul système capable de le faire parler est... une planète ! Elle émet des ondes forçant les gens à révéler leur vérité et, de ce fait, se trouve interdite d'accès par les dirigeants de Sillage. Car quelle autorité serait capable d'accepter en son sein une telle zone franche ?&lt;/p&gt;" height="320.0" width="240.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -281,11 +281,11 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="13" />
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="13" />
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="764" series_id="99" number="1.0" title="À Feu et à Cendres" publisher_id="3" collection_id="9" first_edition="1998-02-01" this_edition="1998-02-01" isbn="978-2-84055-177-5" acquisition_date="2009-07-04" purchase_price="200.0" wishlist="false" binding_id="1" cover_id="3" comment="&lt;p&gt;Version originale partie au pilon pour cause d'erreur d'impression : not&amp;eacute; &lt;em&gt;Achev&amp;eacute; d'imprimer en d&amp;eacute;cembre 1998&lt;/em&gt; au lieu de 1997.&lt;/p&gt; &lt;p&gt;Coin sup&amp;eacute;rieur droit de la face enfonc&amp;eacute;.&lt;/p&gt;" height="320.0" width="240.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -297,11 +297,11 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="90" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="90" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="848" series_id="99" number="13.0" title="Dérapage Contrôlé" publisher_id="3" collection_id="9" first_edition="2010-09-29" this_edition="2010-09-29" isbn="978-2-7560-1997-0" acquisition_date="2010-10-30" purchase_price="12.0" wishlist="false" binding_id="1" cover_id="667" summary="&lt;p&gt;Nävis participe au Cannonball de l'espace, une course illégale où tous les coups sont permis et son seul moyen pour rejoindre discrètement Bobo. Elle compte lui demander pourquoi il lui a menti et qu'il lui révèle qui la finançait clandestinement pendant qu'elle était agent de Sillage... Dérapages verbaux incontrôlés et prises de risques maximales seront au programme de cette course à la vérité.&lt;/p&gt;" comment="&lt;p&gt;La suite d'une série d'albums charnières. L'histoire globale avance mais le scénario local est assez anecdotique.&lt;/p&gt;" height="320.0" width="240.0" marked_as_first_edition="false">
 			<writers>
@@ -313,11 +313,11 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="85" />
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="85" />
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="946" series_id="99" number="14.0" number_suffix="gf" title="Liquidation Totale" publisher_id="3" collection_id="9" first_edition="2011-10-01" this_edition="2011-10-01" isbn="978-2-7560-2658-9" acquisition_date="2011-11-10" purchase_price="40.0" wishlist="false" binding_id="1" comment="&lt;p&gt;Tirage limit&amp;eacute; &amp;agrave; 2200 exemplaires (dont 50 HC) &amp;agrave; l'occasion des 25 ans des &amp;Eacute;ditions Delcourt.&lt;/p&gt; &lt;p&gt;Album num&amp;eacute;rot&amp;eacute; 2101/2150.&lt;/p&gt;" height="360.0" width="260.0" pages="46" location="Bibliothèque, D8" marked_as_first_edition="false">
 			<writers>
@@ -329,12 +329,12 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-				<album-tag ref="50" />
-				<album-tag ref="10" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+				<album-taxon ref="50" />
+				<album-taxon ref="10" />
+			</album-taxons>
 		</album>
 		<album id="1000" series_id="99" number="15.0" title="Chasse Gardée" publisher_id="3" collection_id="9" first_edition="2012-10-03" this_edition="2012-10-03" isbn="978-2-7560-2434-9" acquisition_date="2012-10-27" wishlist="false" binding_id="1" cover_id="752" summary="&lt;p&gt;Blanchie de l'attentat contre la Constituante, Nävis a refusé de redevenir agent, lasse de la corruption qui règne aux plus hauts rangs des autorités. Désormais, elle enchaîne les petits boulots pour subvenir à ses besoins et poursuivre sa route à la recherche d'autres humains. Jusqu'au jour où elle répond à l'annonce d'un milliardaire proposant une mission très bien payée, et sans danger, en apparence...&lt;/p&gt;" comment="&lt;p&gt;Noté //première édition//.&lt;/p&gt;" height="360.0" width="260.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -346,9 +346,9 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="1086" series_id="99" number="16.0" title="Liés par le Sang" publisher_id="3" collection_id="9" first_edition="2013-09-01" this_edition="2013-09-01" isbn="978-2-7560-3262-7" acquisition_date="2013-10-19" purchase_price="18.0" wishlist="false" binding_id="1" cover_id="944" comment="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" height="360.0" width="260.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -360,10 +360,10 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="13" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="13" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="1186" series_id="99" number="18.0" title="Psycholocauste" publisher_id="3" collection_id="9" first_edition="2015-09-01" this_edition="2015-09-01" isbn="978-2-7560-6485-7" acquisition_date="2015-10-17" wishlist="false" binding_id="1" cover_id="946" comment="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" height="360.0" width="260.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -375,10 +375,10 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="1370" series_id="99" number="19.0" title="Temps mort" publisher_id="3" collection_id="9" first_edition="2016-10-01" this_edition="2016-10-01" isbn="978-2-7560-6486-4" acquisition_date="2017-02-25" wishlist="false" binding_id="1" cover_id="947" comment="&lt;p&gt;Not&amp;eacute; &lt;em&gt;premi&amp;egrave;re &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" height="360.0" width="260.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -390,10 +390,10 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="1" />
-				<album-tag ref="79" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="1" />
+				<album-taxon ref="79" />
+			</album-taxons>
 		</album>
 		<album id="945" series_id="99" number="14.0" title="Liquidation Totale" publisher_id="3" collection_id="9" first_edition="2011-10-01" this_edition="2011-10-01" isbn="978-2-7560-2433-2" acquisition_date="2011-11-10" wishlist="false" binding_id="1" cover_id="948" comment="&lt;p&gt;Noté //première édition//. &lt;/p&gt;" height="320.0" width="240.0" pages="46" marked_as_first_edition="false">
 			<writers>
@@ -405,10 +405,10 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="1229" series_id="99" number="17.0" title="Grands Froids" publisher_id="3" collection_id="9" first_edition="2014-09-01" this_edition="2014-09-01" isbn="978-2-7560-4126-1" acquisition_date="2015-09-05" wishlist="false" binding_id="1" cover_id="945" height="360.0" width="260.0" pages="46" marked_as_first_edition="true">
 			<writers>
@@ -420,10 +420,10 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<album id="737" series_id="99" number_suffix="HS" title="BlockBuster" publisher_id="3" collection_id="7" first_edition="2005-11-01" this_edition="2005-11-01" isbn="978-2-84789-949-8" wishlist="false" binding_id="1" cover_id="582" summary="&lt;p&gt;Couvertures, dessins originaux et croquis comment&amp;eacute;s par l'auteur.&lt;/p&gt;" comment="&lt;p&gt;Pr&amp;eacute;face de [[Author:10|Vatine]].&lt;/p&gt;
 &lt;p&gt;Not&amp;eacute; //premi&amp;egrave;re &amp;eacute;dition//.&lt;/p&gt;" location="Bibliothèque, F2" marked_as_first_edition="false">
@@ -436,11 +436,11 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="53" />
-				<album-tag ref="79" />
-				<album-tag ref="10" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="53" />
+				<album-taxon ref="79" />
+				<album-taxon ref="10" />
+			</album-taxons>
 		</album>
 		<album id="1459" series_id="99" number="17.0" number_suffix="TL" title="Grands Froids" publisher_id="3" collection_id="9" acquisition_date="2017-10-14" purchase_price="69.0" wishlist="false" binding_id="3" comment="&lt;p&gt;Tirage num&amp;eacute;rot&amp;eacute; 226/450, r&amp;eacute;alis&amp;eacute; par Bruno Graff.&lt;/p&gt;
 &lt;p&gt;Tir&amp;eacute; avec 3 ex-libris dont 1 sign&amp;eacute;.&lt;/p&gt;" height="320.0" width="230.0" pages="46" marked_as_first_edition="false">
@@ -453,12 +453,12 @@
 			<colorists>
 				<colorist ref="52" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="53" />
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-				<album-tag ref="50" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="53" />
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+				<album-taxon ref="50" />
+			</album-taxons>
 		</album>
 		<!-- Sillage - Premières Armes -->
 		<album id="1093" series_id="232" number="1.0" title="Esprit d'Équipe" publisher_id="3" collection_id="9" first_edition="2014-06-01" this_edition="2014-06-01" isbn="978-2-7560-3893-3" acquisition_date="2014-11-08" wishlist="false" binding_id="1" cover_id="943" comment="&lt;p&gt;Noté &lt;em&gt;Première édition&lt;/em&gt;.&lt;/p&gt;" height="320.0" width="230.0" pages="52" marked_as_first_edition="false">
@@ -473,10 +473,10 @@
 				<colorist ref="610" />
 				<colorist ref="718" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="79" />
-				<album-tag ref="1" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="79" />
+				<album-taxon ref="1" />
+			</album-taxons>
 		</album>
 		<!-- A one shot -->
 		<album id="1313" title="Maître d'Armes (Le)" publisher_id="1" first_edition="2015-10-01" isbn="978-2-5050-6342-1" acquisition_date="2016-10-16" wishlist="false" binding_id="1" comment="&lt;p&gt;Not&amp;eacute;&amp;nbsp;&lt;em&gt;Quatri&amp;egrave;me &amp;eacute;dition&lt;/em&gt;.&lt;/p&gt;" height="320.0" width="250.0" pages="94" location="Bibliothèque, E6" marked_as_first_edition="false">
@@ -489,10 +489,10 @@
 			<colorists>
 				<colorist ref="201" />
 			</colorists>
-			<album-tags>
-				<album-tag ref="56" />
-				<album-tag ref="21" />
-			</album-tags>
+			<album-taxons>
+				<album-taxon ref="56" />
+				<album-taxon ref="21" />
+			</album-taxons>
 		</album>
 	</albums>
 	<albums_prices>

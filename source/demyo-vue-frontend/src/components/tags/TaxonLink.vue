@@ -1,35 +1,35 @@
 <template>
-	<ModelLink :model="model" :comma-separated="false" css-class="c-TagLink" view="TagView">
+	<ModelLink :model="model" :comma-separated="false" css-class="c-TaxonLink" view="TaxonView">
 		<template #default="slotProps">
-			<span :style="getStyle(slotProps.item)" class="d-Tag">
+			<span :style="getStyle(slotProps.item)" class="d-Taxon">
 				<template v-if="label">label</template>
 				<template v-else>{{ slotProps.item.identifyingName }}</template>
 				<span
 					v-if="hasCount(slotProps.item)"
-					class="d-Tag__count" v-text="slotProps.item.usageCount"
+					class="d-Taxon__count" v-text="slotProps.item.usageCount"
 				/>
 			</span>
-			<!-- Need to allow line breaks between tags -->
+			<!-- Need to allow line breaks between taxons -->
 			<wbr>
 		</template>
 	</ModelLink>
 </template>
 
 <script setup lang="ts">
-import { getStyle } from '@/composables/tags'
+import { getStyle } from '@/composables/taxons'
 
 defineProps<{
 	model: IModel
 	label?: string
 }>()
 
-function hasCount(tag: ProcessedTag): boolean {
-	return tag.usageCount >= 0
+function hasCount(taxon: ProcessedTaxon): boolean {
+	return taxon.usageCount >= 0
 }
 </script>
 
 <style lang="scss">
-.d-Tag {
+.d-Taxon {
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
@@ -42,7 +42,7 @@ function hasCount(tag: ProcessedTag): boolean {
 	h1 &,
 	h2 &,
 	h3 & {
-		// Avoid overflows in titles containing tags
+		// Avoid overflows in titles containing taxons
 		white-space: initial;
 		line-height: 100%;
 	}
@@ -61,7 +61,7 @@ function hasCount(tag: ProcessedTag): boolean {
 	}
 }
 
-a.c-TagLink:hover {
+a.c-TaxonLink:hover {
 	text-decoration: none !important;
 }
 </style>

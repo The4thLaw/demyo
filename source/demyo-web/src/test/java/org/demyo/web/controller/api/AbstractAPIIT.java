@@ -8,6 +8,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -46,5 +47,20 @@ public abstract class AbstractAPIIT extends AbstractPersistenceTest {
 		for (String cacheName : cacheManager.getCacheNames()) {
 			cacheManager.getCache(cacheName).clear();
 		}
+	}
+
+	/**
+	 * Gets a result handler that prints more details about the resolved exception if it exists.
+	 * @return the handler
+	 */
+	protected ResultHandler printResolvedException() {
+		return result -> {
+			Exception res = result.getResolvedException();
+			if (res != null) {
+				System.out.printf("MockHttpServletRequest:%n\tResolved Exception:%n\t\tType = %s%n\t\tMessage = %s%n",
+					res.getClass().getName(), res.getMessage());
+					res.printStackTrace();
+			}
+		};
 	}
 }
