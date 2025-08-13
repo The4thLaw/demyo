@@ -14,6 +14,7 @@ public enum FieldLoadMode {
 	/**
 	 * Similar to {@link #valueOf(String)}, but ignoring the case of the input value.
 	 * @param value The string representation
+	 * @return A valid enum value
 	 */
 	public static FieldLoadMode valueOfIgnoreCase(String value) {
 		value = value.toUpperCase(Locale.ROOT);
