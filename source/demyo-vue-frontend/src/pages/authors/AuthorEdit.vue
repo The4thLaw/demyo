@@ -72,7 +72,7 @@ const countries = useCountryList()
 
 async function fetchData(id: number | undefined): Promise<Partial<Author>> {
 	if (id) {
-		return authorService.findById(id)
+		return authorService.editById(id)
 	}
 	return Promise.resolve({
 		portrait: {} as Image

@@ -60,7 +60,7 @@ async function fetchData(id: number): Promise<Taxon> {
 }
 
 const { model: taxon, appTasksMenu, loading, deleteModel, loadData } = useSimpleView(fetchData, taxonService,
-	(t: Taxon) => `quickTasks.delete.tag.confirm.done.${t.type}`, 'TagIndex')
+	(t: Taxon) => `quickTasks.delete.tag.confirm.done.${t.type}`, 'TaxonIndex')
 
 const style = useTaxonStyle(taxon)
 

@@ -1,4 +1,4 @@
--- Issue #14: Add support for genres
+-- Issue #14: Add genre to Series, Albums
 ALTER TABLE tags
 	ADD COLUMN taxon_type VARCHAR(63) NOT NULL DEFAULT 'TAG';
 
@@ -16,3 +16,23 @@ CREATE TABLE series_taxons (
 	CONSTRAINT fk_series_taxons_series FOREIGN KEY (series_id) REFERENCES series(id) ON DELETE CASCADE,
 	CONSTRAINT fk_series_taxons_taxon FOREIGN KEY (taxon_id) REFERENCES taxons(id) ON DELETE CASCADE
 );
+
+-- Create a view to keep track of album authors regardless of their role
+CREATE VIEW albums_authors(album_id, author_id) as
+	SELECT * FROM albums_artists
+	UNION
+	SELECT * FROM albums_writers
+	UNION
+	SELECT * FROM albums_colorists
+	UNION
+	SELECT * FROM albums_inkers
+	UNION
+	SELECT * FROM albums_cover_artists
+	UNION
+	SELECT * FROM albums_translators;
+
+-- Create a view to aggregate taxons that are somehow part of an album, possibly through their series
+CREATE VIEW albums_aggregated_taxons AS
+	SELECT a.id AS album_id, st.taxon_id FROM series_taxons st INNER JOIN albums a ON st.series_id = a.series_id
+	UNION
+	SELECT album_id, taxon_id FROM albums_taxons;

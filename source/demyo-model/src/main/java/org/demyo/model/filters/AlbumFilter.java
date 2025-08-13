@@ -96,8 +96,8 @@ public class AlbumFilter extends AbstractModelFilter {
 			e = combine(e, QAlbum.album.bookType.id.eq(bookType));
 		}
 		if (taxon != null) {
-			// TODO: #14: Also check the series
-			e = combine(e, QAlbum.album.taxons.any().id.eq(taxon));
+			e = combine(e, QAlbum.album.series.taxons.any().id.eq(taxon)
+				.or(QAlbum.album.taxons.any().id.eq(taxon)));
 		}
 		if (readerIdFavourite != null) {
 			e = combine(e, QAlbum.album.readersFavourites.any().id.eq(readerIdFavourite)

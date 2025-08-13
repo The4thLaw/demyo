@@ -1,3 +1,4 @@
+-- Issue #17: Add a field for cover illustrators
 CREATE TABLE albums_cover_artists (
 	album_id INT NOT NULL,
 	cover_artist_id INT NOT NULL,

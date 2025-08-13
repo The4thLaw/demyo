@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import TagIndex from '@/pages/tags/TagIndex.vue'
+import TaxonIndex from '@/pages/taxons/TaxonIndex.vue'
 import TaxonView from '@/pages/taxons/TaxonView.vue'
 import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
@@ -8,7 +8,7 @@ export default [
 	{
 		path: '/taxons',
 		name: 'TaxonIndex',
-		component: TagIndex as Component
+		component: TaxonIndex as Component
 	},
 	{
 		path: '/taxons/:id/view',
@@ -18,11 +18,22 @@ export default [
 	{
 		path: '/taxons/:id/edit',
 		name: 'TaxonEdit',
-		component: async () => import('@/pages/tags/TagEdit.vue') as unknown as Promise<Component>
+		component: async () => import('@/pages/taxons/TaxonEdit.vue') as unknown as Promise<Component>
 	},
 	{
-		path: '/taxons/new',
-		name: 'TaxonAdd',
-		component: async () => import('@/pages/tags/TagEdit.vue') as unknown as Promise<Component>
+		path: '/genres/new',
+		name: 'GenreAdd',
+		props: {
+			type: 'GENRE' satisfies TaxonType
+		},
+		component: async () => import('@/pages/taxons/TaxonEdit.vue') as unknown as Promise<Component>
+	},
+	{
+		path: '/tags/new',
+		name: 'TagAdd',
+		props: {
+			type: 'TAG' satisfies TaxonType
+		},
+		component: async () => import('@/pages/taxons/TaxonEdit.vue') as unknown as Promise<Component>
 	}
 ] satisfies RouteRecordRaw[]

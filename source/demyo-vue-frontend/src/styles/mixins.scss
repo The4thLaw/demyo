@@ -1,3 +1,5 @@
+/* stylelint-disable nesting-selector-no-missing-scoping-root */
+// Disabled because it actually works as expected, stylelint just doesn't see the mixin scope
 @mixin dem-model-card-title {
 	font-size: 18px;
 	font-weight: 600;

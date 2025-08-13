@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IAuthorRepo;
 import org.demyo.dao.IModelRepo;
+import org.demyo.dao.ITaxonRepo;
 import org.demyo.model.Author;
+import org.demyo.model.Taxon;
 import org.demyo.model.beans.AuthorAlbums;
 import org.demyo.model.projections.IAuthorAlbum;
 import org.demyo.model.util.AuthorComparator;
@@ -34,6 +36,8 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	private IAuthorRepo repo;
 	@Autowired
 	private IAlbumRepo albumRepo;
+	@Autowired
+	private ITaxonRepo taxonRepo;
 
 	/**
 	 * Default constructor.
@@ -105,5 +109,10 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	@Override
 	protected IModelRepo<Author> getRepo() {
 		return repo;
+	}
+
+	@Override
+	public List<Taxon> getAuthorGenres(long id) {
+		return taxonRepo.findAllGenresByAuthor(id);
 	}
 }

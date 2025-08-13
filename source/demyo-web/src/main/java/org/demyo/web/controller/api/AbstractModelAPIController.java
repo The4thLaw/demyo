@@ -85,11 +85,19 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	 * Returns the requested model, with relevant links initialized.
 	 *
 	 * @param modelId The model ID.
+	 * @param fieldMode The way to load model fields.
 	 * @return The model.
 	 */
 	@GetMapping("/{modelId}")
-	public M view(@PathVariable("modelId") long modelId) {
-		return service.getByIdForView(modelId);
+	public M view(@PathVariable("modelId") long modelId,
+			@RequestParam(value = "fields", defaultValue = "auto") String fieldMode) {
+		FieldLoadMode load = FieldLoadMode.valueOfIgnoreCase(fieldMode);
+		if (load == FieldLoadMode.AUTO) {
+			return service.getByIdForView(modelId);
+		} else if (load == FieldLoadMode.RAW) {
+			return service.getByIdForEdition(modelId);
+		}
+		throw new IllegalArgumentException("Unsupported field load mode: " + fieldMode);
 	}
 
 	/**
