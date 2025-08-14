@@ -31,14 +31,12 @@ import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IReaderRepo;
 import org.demyo.dao.ISeriesRepo;
 import org.demyo.model.Album;
-import org.demyo.model.Image;
 import org.demyo.model.Series;
 import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
-import org.demyo.service.IImageService;
-import org.demyo.service.ITranslationService;
+import org.demyo.service.IFilePondModelService;
 
 import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
 
@@ -58,9 +56,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Autowired
 	private IBookTypeService bookTypeService;
 	@Autowired
-	private IImageService imageService;
-	@Autowired
-	private ITranslationService translationService;
+	private IFilePondModelService filePondModelService;
 
 	/**
 	 * Default constructor.
@@ -80,7 +76,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		Series series = album.getSeries();
 		if (series != null) {
 			if (StringUtils.isBlank(album.getLocation())) {
-					album.setLocation(series.getLocation());
+				album.setLocation(series.getLocation());
 			}
 		}
 
@@ -258,22 +254,11 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	public void recoverFromFilePond(long albumId, String coverFilePondId, String[] otherFilePondIds)
 			throws DemyoException {
-		Album album = getByIdForEdition(albumId);
-		String baseName = album.getBaseNameForImages();
-
-		if (!StringUtils.isBlank(coverFilePondId)) {
-			String coverBaseName = translationService.translateVargs("special.filepond.Album.baseCoverName", baseName);
-			Image cover = imageService.recoverImagesFromFilePond(coverBaseName, false, coverFilePondId).get(0);
-			album.setCover(cover);
-		}
-
-		if (otherFilePondIds != null && otherFilePondIds.length > 0) {
-			String imageBaseName = translationService.translateVargs("special.filepond.Album.baseImageName", baseName);
-			List<Image> images = imageService.recoverImagesFromFilePond(imageBaseName, true, otherFilePondIds);
-			album.getImages().addAll(images);
-		}
-
-		save(album);
+		filePondModelService.recoverFromFilePond(albumId,
+				coverFilePondId, otherFilePondIds,
+				"special.filepond.Album.baseCoverName", "special.filepond.Album.baseImageName",
+				(a, i) -> a.setCover(i), (a, li) -> a.getImages().addAll(li),
+				this, (a) -> a.getBaseNameForImages());
 	}
 
 	@Override

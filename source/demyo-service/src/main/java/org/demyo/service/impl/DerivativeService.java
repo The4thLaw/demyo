@@ -12,12 +12,10 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IDerivativeRepo;
 import org.demyo.dao.IModelRepo;
 import org.demyo.model.Derivative;
-import org.demyo.model.Image;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.model.util.DerivativeComparator;
 import org.demyo.service.IDerivativeService;
-import org.demyo.service.IImageService;
-import org.demyo.service.ITranslationService;
+import org.demyo.service.IFilePondModelService;
 
 /**
  * Implements the contract defined by {@link IDerivativeService}.
@@ -27,9 +25,7 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@Autowired
 	private IDerivativeRepo repo;
 	@Autowired
-	private IImageService imageService;
-	@Autowired
-	private ITranslationService translationService;
+	private IFilePondModelService filePondModelService;
 
 	/**
 	 * Default constructor.
@@ -82,17 +78,11 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public void recoverFromFilePond(long derivativeId, String[] otherFilePondIds) throws DemyoException {
-		Derivative derivative = getByIdForEdition(derivativeId);
-		String baseName = derivative.getBaseNameForImages();
-
-		if (otherFilePondIds != null && otherFilePondIds.length > 0) {
-			String imageBaseName = translationService.translateVargs("special.filepond.Derivative.baseImageName",
-					baseName);
-			List<Image> images = imageService.recoverImagesFromFilePond(imageBaseName, true, otherFilePondIds);
-			derivative.getImages().addAll(images);
-
-			save(derivative); // Only save if we changed something
-		}
+		filePondModelService.recoverFromFilePond(derivativeId,
+				null, otherFilePondIds,
+				null, "special.filepond.Derivative.baseImageName",
+				null, (d, li) -> d.getImages().addAll(li),
+				this, (d) -> d.getBaseNameForImages());
 	}
 
 	@Override
