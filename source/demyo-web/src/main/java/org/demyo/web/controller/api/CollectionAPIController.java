@@ -1,8 +1,6 @@
 package org.demyo.web.controller.api;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,16 +15,12 @@ import org.demyo.model.filters.AlbumFilter;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.ICollectionService;
 
-import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
-
 /**
  * Controller handling the API calls for {@link Collection}s.
  */
 @RestController
 @RequestMapping("/api/collections")
 public class CollectionAPIController extends AbstractModelAPIController<Collection> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(CollectionAPIController.class);
-
 	private final ICollectionService service;
 	private final IAlbumService albumService;
 
@@ -65,14 +59,6 @@ public class CollectionAPIController extends AbstractModelAPIController<Collecti
 	@PostMapping("/{modelId}/images")
 	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
 			@RequestBody FilePondData data) throws DemyoException {
-		String mainImage = data.getMainImage();
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Saving from FilePond: main image = {}", sanitize(mainImage));
-		}
-
-		service.recoverFromFilePond(modelId, mainImage);
-
-		return true;
+		return saveFromFilePond(data, () -> service.recoverFromFilePond(modelId, data.getMainImage()));
 	}
 }

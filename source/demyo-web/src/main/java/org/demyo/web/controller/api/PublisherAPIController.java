@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,15 +25,12 @@ import org.demyo.service.IAlbumService;
 import org.demyo.service.ICollectionService;
 import org.demyo.service.IPublisherService;
 
-import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
-
 /**
  * Controller handling the API calls for {@link Publisher}s.
  */
 @RestController
 @RequestMapping("/api/publishers")
 public class PublisherAPIController extends AbstractModelAPIController<Publisher> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(PublisherAPIController.class);
 	private final IPublisherService service;
 	private final ICollectionService collectionService;
 	private final IAlbumService albumService;
@@ -97,14 +92,6 @@ public class PublisherAPIController extends AbstractModelAPIController<Publisher
 	@PostMapping("/{modelId}/images")
 	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
 			@RequestBody FilePondData data) throws DemyoException {
-		String mainImage = data.getMainImage();
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Saving from FilePond: main image = {}", sanitize(mainImage));
-		}
-
-		service.recoverFromFilePond(modelId, mainImage);
-
-		return true;
+		return saveFromFilePond(data, () -> service.recoverFromFilePond(modelId, data.getMainImage()));
 	}
 }

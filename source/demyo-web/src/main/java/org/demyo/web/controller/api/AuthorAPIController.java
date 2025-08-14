@@ -3,8 +3,6 @@ package org.demyo.web.controller.api;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +23,12 @@ import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAuthorService;
 import org.demyo.service.IDerivativeService;
 
-import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
-
-
 /**
  * Controller handling the API calls for {@link Author}s.
  */
 @RestController
 @RequestMapping("/api/authors")
 public class AuthorAPIController extends AbstractModelAPIController<Author> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthorAPIController.class);
-
 	private final IAuthorService service;
 	private final IDerivativeService derivativeService;
 
@@ -53,7 +46,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	}
 
 	@Override
-    @GetMapping({ "/", "/index" })
+	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<Author> value = service.findAll(true);
 		return getIndexView(view, value);
@@ -105,14 +98,6 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	@PostMapping("/{modelId}/images")
 	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
 			@RequestBody FilePondData data) throws DemyoException {
-		String mainImage = data.getMainImage();
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Saving from FilePond: main image = {}", sanitize(mainImage));
-		}
-
-		service.recoverFromFilePond(modelId, mainImage);
-
-		return true;
+		return saveFromFilePond(data, () -> service.recoverFromFilePond(modelId, data.getMainImage()));
 	}
 }
