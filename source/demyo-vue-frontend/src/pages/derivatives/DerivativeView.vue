@@ -168,12 +168,9 @@
 
 <script setup lang="ts">
 import { useCurrency } from '@/composables/currency'
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import derivativeService from '@/services/derivative-service'
-import { useUiStore } from '@/stores/ui'
-import { useI18n } from 'vue-i18n'
-
-const dndDialog = ref(false)
 
 async function fetchData(id: number): Promise<Derivative> {
 	return derivativeService.findById(id)
@@ -198,15 +195,9 @@ const sizeSpec = computed(() => {
 
 const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => derivative.value.purchasePrice))
 
-const uiStore = useUiStore()
-const i18n = useI18n()
-async function saveDndImages(data: FilePondData): Promise<void> {
-	const ok = await derivativeService.saveFilepondImages(derivative.value.id, data.otherImages)
-	if (ok) {
-		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
-		void loadData()
-	} else {
-		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
-	}
-}
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => derivativeService.saveFilepondImages(derivative.value.id, data.otherImages),
+	loadData
+)
+
 </script>
