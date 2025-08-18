@@ -28,6 +28,9 @@
 			<FieldValue :value="author.birthDate" label-key="field.Author.birthDate" type="date">
 				<template v-if="isAlive" #append>
 					({{ $t('field.Author.age.alive', { age }) }})
+					<v-icon v-if="isBirthday" class="v-AuthorView__cake">
+						mdi-cake-variant-outline
+					</v-icon>
 				</template>
 			</FieldValue>
 
@@ -90,6 +93,7 @@
 				/>
 			</div>
 		</SectionCard>
+		Loading: {{ authorLoading }}
 	</v-container>
 </template>
 
@@ -161,6 +165,14 @@ const age = computed(() => {
 	const endDate = author.value.deathDate ? dayjs(author.value.deathDate) : dayjs()
 	return endDate.diff(author.value.birthDate, 'year')
 })
+const isBirthday = computed(() => {
+	if (!author.value.birthDate) {
+		return false
+	}
+	const today = dayjs()
+	const birth = dayjs(author.value.birthDate)
+	return today.date() === birth.date() && today.month() === birth.month()
+})
 const country = useCountry(computed(() => author.value.country))
 
 const i18n = useI18n()
@@ -220,5 +232,9 @@ const chartData = computed(() => {
 	width: max(200px, 20vw);
 	margin: auto;
 	position: relative;
+}
+
+.v-AuthorView__cake {
+	margin-top: -0.3em;
 }
 </style>
