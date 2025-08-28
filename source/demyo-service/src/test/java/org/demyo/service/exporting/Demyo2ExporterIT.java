@@ -26,6 +26,7 @@ import org.demyo.test.assertions.xml.ElementAssert;
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 class Demyo2ExporterIT extends AbstractServiceTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2ExporterIT.class);
+	private static final String SAMPLE_HTML_DESCRIPTION = "<p>Sample HTML description</p>";
 
 	@Autowired
 	@Qualifier("demyo2Exporter")
@@ -65,9 +66,16 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		 *  - feed
 		 *  - history
 		 *  - logo
+		 *  - Album with collection_id
+		 *
+		 * SERIES
+		 *  - Everything
+		 *  - Including universe_id
 		 *
 		 * ALBUM
 		 *  - All author types
+		 *  - Original title
+		 *  - Location
 		 *
 		 * TAXONS
 		 *  - series-taxon
@@ -78,9 +86,12 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		 *
 		 * UNIVERSES
 		 *  - album universe
+		 *  - logo
+		 *  - description
 		 *
 		 * DERIVATIVES
 		 *  - All properties
+		 *
 		 */
 
 		// Images
@@ -109,15 +120,18 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("name", "Dargaud")
 				.hasAttribute("website", "http://www.dargaud.com/")
 				.hasAttribute("feed", "http://www.dargaud.com/actualites/news.aspx")
-				.hasAttribute("logo_id", "5014");
+				.hasAttribute("logo_id", 5014);
+		documentAssert.xpathSingle("//album[@id=306]")
+				.hasAttribute("publisher_id", 4);
+		documentAssert.xpathSingle("//collection[@id=90]")
+				.hasAttribute("publisher_id", 1);
 
 		// Collections
 		documentAssert.css("collection")
 				.hasSize(22)
 				.byId(90)
 				.hasAttribute("name", "Fictions")
-				.hasAttribute("website", "http://www.dargaud.com/front/albums/collections/collection.aspx?id=954")
-				.hasAttribute("publisher_id", "1");
+				.hasAttribute("website", "http://www.dargaud.com/front/albums/collections/collection.aspx?id=954");
 
 		// Bindings
 		documentAssert.css("binding")
@@ -131,7 +145,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.byId(10)
 				.hasAttribute("name", "Vatine")
 				.hasAttribute("fname", "Olivier")
-				.hasAttribute("biography", "<p>Sample HTML description</p>");
+				.hasAttribute("biography", SAMPLE_HTML_DESCRIPTION);
 		documentAssert.xpathSingle("//author[@id=216]")
 				.hasAttribute("nickname", "Fred");
 
@@ -144,10 +158,10 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		documentAssert.xpath("//album[@id=797]/album-taxons/album-taxon")
 				.hasSize(2)
 				.at(0)
-				.hasAttribute("ref", "21")
+				.hasAttribute("ref", 21)
 				.siblings()
 				.at(0)
-				.hasAttribute("ref", "69");
+				.hasAttribute("ref", 69);
 
 		// Book types
 		documentAssert.css("book_type")
@@ -155,15 +169,41 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.byId(1)
 				.hasAttribute("name", "__DEFAULT__")
 				.hasAttribute("label_type", "GRAPHIC_NOVEL");
+		documentAssert.xpathSingle("//album[@id=306]")
+				.hasAttribute("book_type_id", 1);
+
+		// Universes
+		documentAssert.css("universe")
+				.hasSize(2)
+				.byId(8)
+				.hasAttribute("name", "Lanfeust de Troy");
+
+		// Albums
+		documentAssert.css("album")
+				.hasSize(77)
+				.byId(306)
+				.hasAttribute("series_id", 69)
+				.hasAttribute("cycle", 1)
+				.hasAttribute("number", "1.0")
+				.hasAttribute("number_suffix", "ré")
+				.hasAttribute("title", "L'Ivoire du Magohamoth")
+				.hasAttribute("first_edition", "1994-10-01")
+				.hasAttribute("this_edition", "1996-10-01")
+				.hasAttribute("wishlist", false)
+				.hasAttribute("binding_id", 1)
+				.hasAttribute("cover_id", 302)
+				.hasAttribute("comment", SAMPLE_HTML_DESCRIPTION)
+				.hasAttribute("height", "320.0")
+				.hasAttribute("width", "230.0")
+				.hasAttribute("pages", 44)
+				.hasAttribute("marked_as_first_edition", false);
+		documentAssert.xpathSingle("//album[@id=1992]")
+				.hasAttribute("printing", "2021-02-01");
+		documentAssert.xpathSingle("//album[@id=796]")
+				.hasAttribute("isbn", "978-2-30200-869-4")
+				.hasAttribute("summary", SAMPLE_HTML_DESCRIPTION);
 
 		documentAssert.source()
-				// Universes
-				.contains("<universe id=\"8\" name=\"Lanfeust de Troy\" />")
-				.containsPattern(".*<series id=\"107\" .*universe_id=\"8\".*")
-
-				// Album assertions
-				.containsPattern(".*<album id=\"1992\" .*printing=\"2021-02-01\" .*book_type_id=\"1\".*>")
-
 				// Album prices
 				.contains("<album_price album_id=\"313\" date=\"2010-09-26\" price=\"15.0\" />")
 

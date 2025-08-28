@@ -64,6 +64,10 @@ public class ElementAssert extends AbstractAssert<ElementAssert, Element> {
 		return new ElementsAssert(elements).hasSize(1).at(0);
 	}
 
+	public ElementAssert hasAttribute(String attrName, Object attrValue) {
+		return hasAttribute(attrName, String.valueOf(attrValue));
+	}
+
 	public ElementAssert hasAttribute(String attrName, String attrValue) {
 		String actualValue = element.attr(attrName);
 
