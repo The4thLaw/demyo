@@ -65,15 +65,15 @@ class AlbumAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(post("/api/albums/index/filtered")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
-						+ "\"taxon\": 1"
+						+ "\"taxon\": 24"
 						+ "}")) //
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(2)))
 				// Test the single match
 				.andExpect(jsonPath("$[0].album").doesNotExist())
-				.andExpect(jsonPath("$[0].series.identifyingName").value("Sillage"))
-				.andExpect(jsonPath("$[0].albums", hasSize(23)))
-				.andExpect(jsonPath("$[0].albums[0].title").value("Le Collectionneur"));
+				.andExpect(jsonPath("$[0].series.identifyingName").value("Abélard"))
+				.andExpect(jsonPath("$[0].albums", hasSize(2)))
+				.andExpect(jsonPath("$[0].albums[1].title").value("Une brève histoire de poussière et de cendre"));
 	}
 }

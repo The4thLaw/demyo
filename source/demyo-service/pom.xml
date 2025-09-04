@@ -83,4 +83,19 @@
 			<artifactId>SystemTray</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+				<!--
+					Needed to make VSCode aware of the new test sources.
+					See https://github.com/redhat-developer/vscode-java/issues/1639#issuecomment-2504710880
+				-->
+				<?m2e execute onConfiguration?>
+				<?m2e execute onIncremental?>
+			</plugin>
+		</plugins>
+	</build>
 </project>

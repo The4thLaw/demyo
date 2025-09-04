@@ -597,6 +597,70 @@
 					<version>1.1.3</version>
 				</plugin>
 
+				<plugin>
+					<!--
+						Template plugin execution for the AssertJ assertions generator.
+						We can't directly include this in demyo-test because it introduces all kinds of
+						inconvenient dependency loops or prevents us from making a dependency to demyo-test
+						in some modules to get all the convenient auto configuration (such as junit dependencies
+						or logging configuration)
+					-->
+					<groupId>org.assertj</groupId>
+					<artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+					<version>2.1.0</version>
+					<!--
+						Override the generator dependency to fix annotation issues
+						https://github.com/assertj/assertj-assertions-generator-maven-plugin/issues/93#issuecomment-2823351574
+					-->
+					<dependencies>
+						<dependency>
+							<groupId>org.assertj</groupId>
+							<artifactId>assertj-assertions-generator</artifactId>
+							<version>3.0.0-M5</version>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<hierarchical>true</hierarchical>
+						<generateBddAssertions>false</generateBddAssertions>
+						<!-- The generateAssertionsInPackage property seems to be broken as it's forgetting that we need to
+						import all other models when relevant since we're no longer in the same package. Leave the default. -->
+						<entryPointClassPackage>org.demyo.test.assertions.model</entryPointClassPackage>
+						<classes>
+							<param>org.demyo.model.AbstractBasicLegalEntity</param>
+							<param>org.demyo.model.AbstractLegalEntity</param>
+							<param>org.demyo.model.AbstractModel</param>
+							<param>org.demyo.model.AbstractNamedModel</param>
+							<param>org.demyo.model.AbstractPricedModel</param>
+							<param>org.demyo.model.Album</param>
+							<param>org.demyo.model.AlbumPrice</param>
+							<param>org.demyo.model.Author</param>
+							<param>org.demyo.model.Binding</param>
+							<param>org.demyo.model.BookType</param>
+							<param>org.demyo.model.Collection</param>
+							<param>org.demyo.model.ConfigurationEntry</param>
+							<param>org.demyo.model.Derivative</param>
+							<param>org.demyo.model.DervativePrice</param>
+							<param>org.demyo.model.DerivativeSource</param>
+							<param>org.demyo.model.DerivativeType</param>
+							<param>org.demyo.model.Image</param>
+							<param>org.demyo.model.Publisher</param>
+							<param>org.demyo.model.Reader</param>
+							<param>org.demyo.model.Series</param>
+							<param>org.demyo.model.Taxon</param>
+							<param>org.demyo.model.Universe</param>
+						</classes>
+					</configuration>
+					<executions>
+						<execution>
+							<id>generate-assertions</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>generate-assertions</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
 				<!--
 					The following plugins are used internally by Maven and versionned here for reproducibility.
 					There is no direct dependency to them in the child POMs and there is no explicit configuration.

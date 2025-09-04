@@ -1,67 +1,1491 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <library>
   <meta>
-    <version demyo="2.1.0" schema="4"/>
-    <counts albums="3" albums_prices="2" authors="0" bindings="0" borrowers="0" collections="1" derivatives="3" derivative_types="2" derivatives_prices="0" images="0" loan-history="0" publishers="2" series="2" sources="0" taxons="3"/>
+    <version demyo="3.1.0-SNAPSHOT" schema="20" />
+    <counts albums="77" albums_prices="3" authors="31" bindings="2" book_types="1" borrowers="0" collections="22" derivatives="36" derivative_types="5" derivatives_prices="4" images="91" loan-history="0" publishers="3" series="10" sources="7" taxons="12" />
   </meta>
+  <images>
+    <image id="139" url="dummy-image.jpg" description="Lanfeust de Troy 6 - Ex-Libris" />
+    <image id="140" url="dummy-image.jpg" description="Lanfeust de Troy 8 - Ex-Libris Durango" />
+    <image id="141" url="dummy-image.jpg" description="Lanfeust des Étoiles 2 - Ex-Libris Durango" />
+    <image id="142" url="dummy-image.jpg" description="Lanfeust des Étoiles 7 - Ex-Libris Fantasmagories" />
+    <image id="194" url="dummy-image.jpg" description="Lanfeust des Étoiles 1 - Ex-Libris Durango" />
+    <image id="211" url="dummy-image.jpg" description="Trolls de Troy 02 - Ex-Libris Durango" />
+    <image id="212" url="dummy-image.jpg" description="Trolls de Troy 03 - Ex-Libris Durango" />
+    <image id="213" url="dummy-image.jpg" description="Trolls de Troy 04 - Ex-Libris Durango" />
+    <image id="229" url="dummy-image.jpg" description="Trolls de Troy 11 - Couverture" />
+    <image id="230" url="dummy-image.jpg" description="Trolls de Troy 11 - Médaille (a)" />
+    <image id="231" url="dummy-image.jpg" description="Trolls de Troy 11 - Médaille (b)" />
+    <image id="277" url="dummy-image.jpg" description="Conquerants de Troy (Les) 2 - Couverture" />
+    <image id="291" url="dummy-image.jpg" description="Lanfeust des Étoiles 1 - Couverture" />
+    <image id="292" url="dummy-image.jpg" description="Lanfeust des Étoiles 2 - Couverture" />
+    <image id="293" url="dummy-image.jpg" description="Lanfeust des Étoiles 3 - Couverture" />
+    <image id="294" url="dummy-image.jpg" description="Lanfeust des Étoiles 4 - Couverture" />
+    <image id="295" url="dummy-image.jpg" description="Lanfeust des Étoiles 5 - Couverture" />
+    <image id="296" url="dummy-image.jpg" description="Lanfeust des Étoiles 6 - Couverture" />
+    <image id="297" url="dummy-image.jpg" description="Lanfeust des Étoiles 7 - Couverture" />
+    <image id="298" url="dummy-image.jpg" description="Lanfeust des Étoiles 8 - Couverture" />
+    <image id="302" url="dummy-image.jpg" description="Lanfeust de Troy 1 - Couverture" />
+    <image id="303" url="dummy-image.jpg" description="Lanfeust de Troy 2 - Couverture" />
+    <image id="304" url="dummy-image.jpg" description="Lanfeust de Troy 3 - Couverture" />
+    <image id="305" url="dummy-image.jpg" description="Lanfeust de Troy 4 - Couverture" />
+    <image id="306" url="dummy-image.jpg" description="Lanfeust de Troy 5 - Couverture" />
+    <image id="307" url="dummy-image.jpg" description="Lanfeust de Troy 6 - Couverture" />
+    <image id="308" url="dummy-image.jpg" description="Lanfeust de Troy 7 - Couverture" />
+    <image id="309" url="dummy-image.jpg" description="Lanfeust de Troy 7 - Couverture (version n&amp;b)" />
+    <image id="310" url="dummy-image.jpg" description="Lanfeust de Troy 8 - Couverture" />
+    <image id="541" url="dummy-image.jpg" description="Trolls de Troy 01 - Couverture" />
+    <image id="542" url="dummy-image.jpg" description="Trolls de Troy 02 - Couverture" />
+    <image id="543" url="dummy-image.jpg" description="Trolls de Troy 03 - Couverture" />
+    <image id="544" url="dummy-image.jpg" description="Trolls de Troy 04 - Couverture" />
+    <image id="545" url="dummy-image.jpg" description="Trolls de Troy 05 - Couverture" />
+    <image id="546" url="dummy-image.jpg" description="Trolls de Troy 06 - Couverture" />
+    <image id="547" url="dummy-image.jpg" description="Trolls de Troy 07 - Couverture" />
+    <image id="548" url="dummy-image.jpg" description="Trolls de Troy 08 - Couverture" />
+    <image id="549" url="dummy-image.jpg" description="Trolls de Troy 09 - Couverture" />
+    <image id="550" url="dummy-image.jpg" description="Trolls de Troy 10 - Couverture" />
+    <image id="562" url="dummy-image.jpg" description="Conquérants de Troy (Les) 1 - Couverture" />
+    <image id="600" url="dummy-image.jpg" description="Lanfeust des Étoiles 1 - Ex-Libris Durango (variante rouge)" />
+    <image id="601" url="dummy-image.jpg" description="Lanfeust des Étoiles 1 - Ex-Libris Durango (variante bleue)" />
+    <image id="815" url="dummy-image.jpg" description="Soleil - Logo" />
+    <image id="914" url="dummy-image.jpg" description="Trolls de Troy 16 - Couverture" />
+    <image id="927" url="dummy-image.jpg" description="Lanfeust de Troy - Affiche 01" />
+    <image id="928" url="dummy-image.jpg" description="Lanfeust de Troy 07 - Affiche" />
+    <image id="955" url="dummy-image.jpg" description="Alvin 1 - Couverture" />
+    <image id="957" url="dummy-image.jpg" description="Abélard 1 - Couverture" />
+    <image id="958" url="dummy-image.jpg" description="Abélard 2 - Couverture" />
+    <image id="959" url="dummy-image.jpg" description="Alvin 2 - Couverture" />
+    <image id="1178" url="dummy-image.jpg" description="Légendes de Troy 3.2 ré - Couverture" />
+    <image id="1179" url="dummy-image.jpg" description="Légendes de Troy 3.1 - Couverture" />
+    <image id="1180" url="dummy-image.jpg" description="Légendes de Troy 3.3 - Couverture" />
+    <image id="1181" url="dummy-image.jpg" description="Légendes de Troy 5.2 - Couverture" />
+    <image id="1194" url="dummy-image.jpg" description="Trolls de Troy 23 - Couverture" />
+    <image id="1253" url="dummy-image.jpg" description="Légendes de Troy 2 - Sérigraphie Durango - Image 1" />
+    <image id="1254" url="dummy-image.jpg" description="Légendes de Troy 2 - Sérigraphie Durango - Image 2" />
+    <image id="1255" url="dummy-image.jpg" description="Légendes de Troy 2 - Sérigraphie sur cello Durango - Image 1" />
+    <image id="1256" url="dummy-image.jpg" description="Légendes de Troy 5.1 - Sérigraphie Durango - Image 1" />
+    <image id="1257" url="dummy-image.jpg" description="Légendes de Troy 5.1 - Sérigraphie Durango - Image 2" />
+    <image id="1416" url="dummy-image.jpg" description="Légendes de Troy 4.2 - Couverture" />
+    <image id="1427" url="dummy-image.jpg" description="Lanfeust Odyssey 10 - Couverture" />
+    <image id="1682" url="dummy-image.jpg" description="Trolls de Troy 24 - Couverture" />
+    <image id="1721" url="dummy-image.jpg" description="Lanfeust des Étoiles 2 - Sérigraphie Durango - Image 1" />
+    <image id="1722" url="dummy-image.jpg" description="Lanfeust des Étoiles 2 - Sérigraphie sur calque Durango - Image 1" />
+    <image id="1723" url="dummy-image.jpg" description="Lanfeust de Troy 2 - Sérigraphie Durango - Image 1" />
+    <image id="1724" url="dummy-image.jpg" description="Lanfeust de Troy 3 - Sérigraphie Durango - Image 1" />
+    <image id="1725" url="dummy-image.jpg" description="Lanfeust de Troy 4 - Sérigraphie Durango - Image 1" />
+    <image id="1726" url="dummy-image.jpg" description="Lanfeust de Troy 5 - Sérigraphie Durango - Image 1" />
+    <image id="1727" url="dummy-image.jpg" description="Lanfeust de Troy 6 - Sérigraphie Durango - Image 1" />
+    <image id="1728" url="dummy-image.jpg" description="Lanfeust de Troy 7 - Sérigraphie Durango - Image 1" />
+    <image id="1729" url="dummy-image.jpg" description="Lanfeust de Troy 8 - Offset Fantasmagories - Image 1" />
+    <image id="1730" url="dummy-image.jpg" description="Légendes de Troy 2 - Sérigraphie Fantasmagories - Image 1" />
+    <image id="1825" url="dummy-image.jpg" description="Abélard 1 - Sérigraphie Dargaud - Image 1" />
+    <image id="1833" url="dummy-image.jpg" description="Légendes de Troy 2 - Offset Fantasmagories - Image 1" />
+    <image id="1853" url="dummy-image.jpg" description="Trolls de Troy 4 - Sérigraphie sur calque Durango - Image 1" />
+    <image id="1854" url="dummy-image.jpg" description="Trolls de Troy 2 - Sérigraphie Durango - Image 1" />
+    <image id="1855" url="dummy-image.jpg" description="Trolls de Troy 3 - Offset Espace BD - Image 1" />
+    <image id="1856" url="dummy-image.jpg" description="Trolls de Troy - Offset Bulles D'écume - Image 1" />
+    <image id="1857" url="dummy-image.jpg" description="Trolls de Troy - Offset Fantasmagories - Image 1" />
+    <image id="1968" url="dummy-image.jpg" description="Conquérants de Troy (Les) 3 - Couverture" />
+    <image id="1969" url="dummy-image.jpg" description="Conquérants de Troy (Les) 4 - Couverture" />
+    <image id="1971" url="dummy-image.jpg" description="Codex de Troy  - Couverture" />
+    <image id="1972" url="dummy-image.jpg" description="Cixi de Troy 3 - Couverture" />
+    <image id="1973" url="dummy-image.jpg" description="Cixi de Troy 2 - Couverture" />
+    <image id="1974" url="dummy-image.jpg" description="Cixi de Troy 1 - Couverture" />
+    <image id="2359" url="dummy-image.jpg" description="Trolls de Troy 25 - Couverture" />
+    <image id="2399" url="dummy-image.jpg" description="Lanfeust de Troy 9 - Couverture" />
+    <image id="2812" url="dummy-image.jpg" description="300 - cover" />
+    <image id="5014" url="dummy-image.jpg" description="Dargaud Logo" />
+    <image id="6411" url="dummy-image.jpg" description="300 - backcover" />
+  </images>
   <publishers>
-    <publisher id="1" name="Delcourt"/>
-    <publisher id="2" name="Dargaud"/>
+    <publisher id="1" name="Dargaud" website="http://www.dargaud.com/" feed="http://www.dargaud.com/actualites/news.aspx" logo_id="5014" />
+    <publisher id="4" name="Soleil" website="http://www.soleilprod.com/" logo_id="815" />
+    <publisher id="121" name="Rackam" />
   </publishers>
   <collections>
-    <collection id="1" name="Série B" publisher_id="1"/>
+    <collection id="4" name="Poisson Classique" publisher_id="1" />
+    <collection id="5" name="Poisson Club" publisher_id="1" />
+    <collection id="18" name="Mondes Futurs" publisher_id="4" />
+    <collection id="30" name="Abysses" publisher_id="4" />
+    <collection id="31" name="Soleil US Comics" publisher_id="4" />
+    <collection id="33" name="Soleil Levant" publisher_id="4" />
+    <collection id="36" name="Soleil Celtic" publisher_id="4" />
+    <collection id="38" name="Métamorphose" publisher_id="4" />
+    <collection id="50" name="Soleil Blackberry" publisher_id="4" />
+    <collection id="51" name="Anticipation" publisher_id="4" />
+    <collection id="55" name="Soleil Manga" publisher_id="4" />
+    <collection id="78" name="Long Courrier" publisher_id="1" />
+    <collection id="82" name="Quadrant Solaire" publisher_id="4" />
+    <collection id="89" name="Secrets du Vatican" publisher_id="4" />
+    <collection id="90" name="Fictions" website="http://www.dargaud.com/front/albums/collections/collection.aspx?id=954" publisher_id="1" />
+    <collection id="94" name="Histoires Fantastiques" publisher_id="1" />
+    <collection id="98" name="Phenix" publisher_id="1" />
+    <collection id="117" name="Omnibus" publisher_id="1" />
+    <collection id="118" name="Noctambule" publisher_id="4" />
+    <collection id="133" name="Terres Secrètes" publisher_id="4" />
+    <collection id="136" name="Légendes d'Aujourd'hui" publisher_id="1" />
+    <collection id="144" name="Soleil Hero" publisher_id="4" />
   </collections>
+  <bindings>
+    <binding id="1" name="Cartonné" />
+    <binding id="3" name="Cartonné &amp; Toilé" />
+  </bindings>
+  <authors>
+    <author id="10" name="Vatine" fname="Olivier" biography="&lt;p&gt;Sample HTML description&lt;/p&gt;" />
+    <author id="12" name="Tota" fname="Ciro" biography="&lt;p&gt;Sample HTML description&lt;/p&gt;" />
+    <author id="119" name="Tarquin" fname="Didier" biography="&lt;p&gt;Sample HTML description&lt;/p&gt;" />
+    <author id="120" name="Arleston" fname="Christophe" />
+    <author id="156" name="Dany" />
+    <author id="193" name="Mourier" />
+    <author id="209" name="Guth" fname="Claude" />
+    <author id="216" name="Besson" fname="Frédéric" nickname="Fred" />
+    <author id="221" name="Guillo" fname="Yoann" />
+    <author id="233" name="Augustin" fname="Virginie" />
+    <author id="311" name="Lamirand" fname="Sébastien" />
+    <author id="375" name="Cassegrain" fname="Didier" />
+    <author id="446" name="Lyse" />
+    <author id="533" name="Floch" fname="Adrien" />
+    <author id="534" name="Hautière" fname="Régis" />
+    <author id="569" name="Lencot" fname="Yves" />
+    <author id="611" name="Sala" fname="Jean-Luc" />
+    <author id="663" name="Keramidas" fname="Nicolas" />
+    <author id="664" name="Garcia" fname="Bruno" />
+    <author id="665" name="Alwett" fname="Audrey" />
+    <author id="730" name="Vincent" fname="Cyril" />
+    <author id="755" name="Tarquin" fname="Lyse" />
+    <author id="817" name="Dillies" fname="Renaud" biography="&lt;p&gt;Sample HTML description&lt;/p&gt;" />
+    <author id="818" name="Bouchard" fname="Christophe" />
+    <author id="873" name="Melanÿn" />
+    <author id="874" name="Hérenguel" fname="Éric" />
+    <author id="875" name="Cartier" />
+    <author id="876" name="Pepoy" />
+    <author id="877" name="Hübsch" fname="Éric" />
+    <author id="1422" name="Miller" fname="Frank" />
+    <author id="1423" name="Varley" fname="Lynn" />
+  </authors>
   <taxons>
-    <taxon id="1" name="action"/>
-    <taxon id="2" name="humour" description="rofl"/>
-    <taxon id="3" name="science-fiction" fgcolour="#ffffff" bgcolour="#ff0000"/>
+    <taxon id="5" name="fantasy" fgcolour="#00e612" bgcolour="#0e0072" taxon_type="TAG" />
+    <taxon id="10" name="vernis sélectif" taxon_type="TAG" />
+    <taxon id="21" name="one shot" taxon_type="TAG" />
+    <taxon id="24" name="animal 🐹" fgcolour="#f57f17" bgcolour="#fff59d" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" taxon_type="TAG" />
+    <taxon id="29" name="humour 😂" fgcolour="#ff0057" bgcolour="#ffbfd2" taxon_type="TAG" />
+    <taxon id="53" name="cahier graphique" fgcolour="#fff3e0" bgcolour="#ffb74d" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" taxon_type="TAG" />
+    <taxon id="63" name="voyage" taxon_type="TAG" />
+    <taxon id="69" name="encyclopédie" taxon_type="TAG" />
+    <taxon id="99" name="cadeau 🎁" taxon_type="TAG" />
+    <taxon id="114" name="chat 🐱" taxon_type="TAG" />
+    <taxon id="128" name="découpe" taxon_type="TAG" />
+    <taxon id="150" name="prix Eisner" taxon_type="TAG" />
   </taxons>
   <book_types>
-    <book_type id="1" name="Bande dessinée" label_type="GRAPHIC_NOVEL"/>
-    <book_type id="2" name="Roman" label_type="NOVEL" field_config="ALBUM_INKER,ALBUM_COLORIST,ALBUM_ARTIST"/>
+    <book_type id="1" name="__DEFAULT__" label_type="GRAPHIC_NOVEL" />
   </book_types>
+  <universes>
+    <universe id="8" name="Lanfeust de Troy" />
+    <universe id="31" name="Abélard" />
+  </universes>
   <series-list>
-    <series id="1" name="XIII" summary="XIII is a guy suffering from amnesia." completed="false" comment="Comment for XIII." website="http://www.treize.com/"/>
-    <series id="2" name="Sillage" completed="false"/>
+    <series id="69" name="Lanfeust de Troy" completed="false" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" location="Bibliothèque, B2" universe_id="8" />
+    <series id="70" name="Lanfeust des Étoiles" completed="true" location="Bibliothèque, A3" universe_id="8" />
+    <series id="107" name="Trolls de Troy" completed="false" location="Bibliothèque, A3" universe_id="8" />
+    <series id="142" name="Conquérants de Troy (Les)" summary="&lt;p&gt;Sample HTML description&lt;/p&gt;" completed="false" location="Bibliothèque, A3" universe_id="8" />
+    <series id="169" name="Lanfeust Odyssey" completed="true" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" location="Bibliothèque, A3" universe_id="8" />
+    <series id="170" name="Codex de Troy" completed="true" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" location="Bibliothèque, B2" universe_id="8" />
+    <series id="172" name="Cixi de Troy" summary="&lt;p&gt;Sample HTML description&lt;/p&gt;" completed="true" location="Bibliothèque, B2" universe_id="8" />
+    <series id="296" name="Abélard" completed="true" location="Bibliothèque, B4" universe_id="31" />
+    <series id="312" name="Alvin" completed="true" location="Bibliothèque, B4" universe_id="31" />
+    <series id="320" name="Légendes de Troy" completed="true" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" location="Bibliothèque, B3" universe_id="8" />
   </series-list>
   <albums>
-    <album id="1" series_id="1" number="3.0" title="Toutes les larmes de l'enfer" publisher_id="2" wishlist="false" printing="1985-12-01" book_type_id="1">
+    <album id="306" series_id="69" cycle="1" number="1.0" number_suffix="ré" title="L'Ivoire du Magohamoth" publisher_id="4" first_edition="1994-10-01" this_edition="1996-10-01" wishlist="false" binding_id="1" cover_id="302" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
       <album-taxons>
-        <album-taxon ref="1"/>
-        <album-taxon ref="3"/>
+        <album-taxon ref="5" />
       </album-taxons>
     </album>
-    <album id="2" title="Bludzee" publisher_id="1" wishlist="false" book_type_id="1">
+    <album id="307" series_id="69" cycle="1" number="2.0" title="Thanos l'Incongru" publisher_id="4" this_edition="1996-10-01" wishlist="false" binding_id="1" cover_id="303" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
       <album-taxons>
-        <album-taxon ref="2"/>
+        <album-taxon ref="5" />
       </album-taxons>
     </album>
-    <album id="3" title="Z_test" publisher_id="1" wishlist="false" book_type_id="2"/>
+    <album id="308" series_id="69" cycle="1" number="3.0" title="Castel Or-Azur" publisher_id="4" this_edition="1996-10-01" wishlist="false" binding_id="1" cover_id="304" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="309" series_id="69" cycle="1" number="4.0" title="Le Paladin d'Eckmül" publisher_id="4" first_edition="1996-10-01" isbn="2-87764-566-5" wishlist="false" binding_id="1" cover_id="305" height="320.0" width="230.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="310" series_id="69" cycle="1" number="5.0" title="Le Frisson de l'Haruspice" publisher_id="4" first_edition="1997-10-01" wishlist="false" binding_id="1" cover_id="306" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="311" series_id="69" cycle="1" number="6.0" title="Cixi Impératrice" publisher_id="4" this_edition="1998-10-01" wishlist="false" binding_id="1" cover_id="307" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="312" series_id="69" cycle="1" number="7.0" title="Les Pétaures se Cachent pour Mourir" publisher_id="4" first_edition="1999-10-01" this_edition="2004-11-01" wishlist="false" binding_id="3" cover_id="308" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+      <album-images>
+        <album-image ref="309" />
+      </album-images>
+    </album>
+    <album id="313" series_id="69" cycle="1" number="8.0" title="La Bête Fabuleuse" publisher_id="4" first_edition="2000-12-01" this_edition="2000-12-01" wishlist="false" binding_id="1" cover_id="310" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="314" series_id="70" number="1.0" title="Un, Deux… Troy" publisher_id="4" first_edition="2001-12-01" this_edition="2001-12-01" wishlist="false" binding_id="1" cover_id="291" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="315" series_id="70" number="2.0" title="Les Tours De Meirrion" publisher_id="4" first_edition="2003-03-01" this_edition="2003-03-01" wishlist="false" binding_id="1" cover_id="292" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="316" series_id="70" number="3.0" title="Les Sables d'Abraxar" publisher_id="4" first_edition="2004-01-01" this_edition="2004-01-01" wishlist="false" binding_id="1" cover_id="293" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="317" series_id="70" number="4.0" title="Les Buveurs de Mondes" publisher_id="4" first_edition="2004-12-01" this_edition="2004-12-01" wishlist="false" binding_id="1" cover_id="294" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="318" series_id="70" number="5.0" title="La Chevauchée des Bactéries" publisher_id="4" first_edition="2005-12-01" this_edition="2005-12-01" wishlist="false" binding_id="1" cover_id="295" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="319" series_id="70" number="6.0" title="Le Râle du Flibustier" publisher_id="4" first_edition="2006-12-01" this_edition="2006-12-01" wishlist="false" binding_id="1" cover_id="296" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="518" series_id="107" number="1.0" title="Histoires Trolls" publisher_id="4" first_edition="1997-06-01" this_edition="1997-06-01" wishlist="false" binding_id="1" cover_id="541" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="519" series_id="107" number="2.0" title="Le Scalpe du Vénérable" publisher_id="4" first_edition="1998-06-01" this_edition="1998-06-01" wishlist="false" binding_id="1" cover_id="542" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="520" series_id="107" number="3.0" title="Comme un Vol de Pétaures" publisher_id="4" first_edition="1999-05-01" this_edition="1999-05-01" wishlist="false" binding_id="1" cover_id="543" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="521" series_id="107" number="4.0" title="Le Feu Occulte" publisher_id="4" first_edition="2000-06-01" this_edition="2000-06-01" wishlist="false" binding_id="1" cover_id="544" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="522" series_id="107" number="5.0" title="Les Maléfices de la Thaumaturge" publisher_id="4" first_edition="2001-08-01" this_edition="2001-08-01" wishlist="false" binding_id="1" cover_id="545" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="523" series_id="107" number="6.0" title="Trolls Dans la Brume" publisher_id="4" first_edition="2002-09-01" this_edition="2002-09-01" wishlist="false" binding_id="1" cover_id="546" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="524" series_id="107" number="7.0" title="Plume de Sage" publisher_id="4" first_edition="2004-04-01" this_edition="2004-04-01" wishlist="false" binding_id="1" cover_id="547" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="525" series_id="107" number="8.0" title="Rock'n Troll Attitude" publisher_id="4" first_edition="2005-06-01" this_edition="2005-06-01" wishlist="false" binding_id="1" cover_id="548" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="526" series_id="107" number="9.0" title="Les Prisonniers Du Darshan (I)" publisher_id="4" first_edition="2006-08-01" this_edition="2006-08-01" wishlist="false" binding_id="1" cover_id="549" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="527" series_id="107" number="10.0" title="Les Prisonniers Du Darshan (II)" publisher_id="4" first_edition="2007-06-01" this_edition="2007-06-01" wishlist="false" binding_id="1" cover_id="550" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+    </album>
+    <album id="564" series_id="70" number="7.0" title="Le Secret des Dolphantes" publisher_id="4" first_edition="2007-12-01" this_edition="2007-12-01" acquisition_date="2007-12-28" wishlist="false" binding_id="1" cover_id="297" height="325.0" width="234.0" pages="48" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="653" series_id="107" number="11.0" title="Trollympiades" publisher_id="4" first_edition="2008-08-01" this_edition="2008-08-01" acquisition_date="2008-08-30" wishlist="false" binding_id="1" cover_id="229" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="233.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="128" />
+      </album-taxons>
+    </album>
+    <album id="658" series_id="142" number="1.0" title="Exil à Port-Fleuri" publisher_id="4" first_edition="2005-05-01" this_edition="2005-05-01" wishlist="false" binding_id="1" cover_id="562" height="325.0" width="235.0" pages="47" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="12" />
+      </artists>
+      <colorists>
+        <colorist ref="311" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="668" series_id="142" number="2.0" title="Echmül le Bûcheron" publisher_id="4" first_edition="2008-09-01" this_edition="2008-09-01" isbn="978-2-30200-209-8" acquisition_date="2008-11-16" wishlist="false" binding_id="1" cover_id="277" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="235.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="12" />
+      </artists>
+      <colorists>
+        <colorist ref="311" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="681" series_id="70" number="8.0" title="Le Sang des Comètes" publisher_id="4" first_edition="2008-11-01" this_edition="2008-11-01" isbn="978-2-30200-382-8" acquisition_date="2008-12-13" wishlist="false" binding_id="1" cover_id="298" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="234.0" pages="54" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="788" series_id="107" number="12.0" title="Sang Famille (I)" publisher_id="4" first_edition="2009-07-01" this_edition="2009-07-01" isbn="978-2-30200-630-0" acquisition_date="2009-10-01" wishlist="false" binding_id="1" height="325.0" width="233.0" pages="45" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="796" series_id="169" number="1.0" title="L'Énigme Or-Azur - 1ère Partie" publisher_id="4" first_edition="2009-11-01" this_edition="2009-11-01" isbn="978-2-30200-869-4" acquisition_date="2009-11-28" wishlist="false" binding_id="1" summary="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="323.0" width="233.0" pages="65" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="216" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="797" series_id="170" title="Lanfeust" publisher_id="4" first_edition="2009-11-01" this_edition="2009-11-01" isbn="978-2-30200-870-0" acquisition_date="2009-11-28" wishlist="false" binding_id="1" cover_id="1971" height="323.0" width="233.0" pages="85" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <album-taxons>
+        <album-taxon ref="21" />
+        <album-taxon ref="69" />
+      </album-taxons>
+    </album>
+    <album id="800" series_id="172" number="1.0" title="Le Secret de Cixi - 1ère partie" publisher_id="4" first_edition="2009-12-01" this_edition="2009-12-01" isbn="978-2-30200-878-6" acquisition_date="2009-12-24" wishlist="false" binding_id="1" cover_id="1974" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="323.0" width="232.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="10" />
+      </artists>
+      <colorists>
+        <colorist ref="10" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="99" />
+      </album-taxons>
+    </album>
+    <album id="846" series_id="107" number="13.0" title="La Guerre des Gloutons (II)" publisher_id="4" first_edition="2010-07-01" this_edition="2010-07-01" isbn="978-2-30201-102-1" acquisition_date="2010-09-04" wishlist="false" binding_id="1" summary="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="233.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="852" series_id="169" number="2.0" title="L'Énigme Or-Azur - 2de Partie" publisher_id="4" first_edition="2010-09-01" this_edition="2010-09-01" isbn="978-2-30201-251-6" acquisition_date="2010-10-30" wishlist="false" binding_id="1" height="323.0" width="233.0" pages="50" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="29" />
+        <album-taxon ref="53" />
+      </album-taxons>
+    </album>
+    <album id="859" series_id="172" number="2.0" title="Le Secret de Cixi - 2ème Partie" publisher_id="4" first_edition="2010-12-01" this_edition="2010-12-01" isbn="978-2-30201-382-7" acquisition_date="2011-01-08" wishlist="false" binding_id="1" cover_id="1973" height="323.0" width="232.0" pages="46" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="10" />
+      </artists>
+      <colorists>
+        <colorist ref="216" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="942" series_id="107" number="15.0" title="Boules de Poils (I)" publisher_id="4" first_edition="2011-10-26" this_edition="2011-10-26" isbn="978-2-30201-629-3" acquisition_date="2011-11-10" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="233.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="943" series_id="107" number="14.0" title="L'Histoire de Waha" publisher_id="4" first_edition="2010-12-15" this_edition="2010-12-15" isbn="978-2-302-01381-0" acquisition_date="2011-12-17" purchase_price="12.0" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="233.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="948" series_id="142" number="3.0" title="La Bataille de Port-Fleuri" publisher_id="4" first_edition="2011-11-01" this_edition="2011-11-01" isbn="978-2-30201-589-0" acquisition_date="2011-12-17" purchase_price="12.0" wishlist="false" binding_id="1" cover_id="1968" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="235.0" pages="45" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="12" />
+      </artists>
+      <colorists>
+        <colorist ref="311" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="949" series_id="172" number="3.0" title="Le Secret de Cixi - 3ème Partie" publisher_id="4" first_edition="2011-12-01" this_edition="2011-12-01" isbn="978-2-30201-871-6" acquisition_date="2011-12-17" purchase_price="12.0" wishlist="false" binding_id="1" cover_id="1972" height="323.0" width="232.0" pages="46" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="10" />
+        <artist ref="533" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="950" series_id="169" number="3.0" title="Le Banni d'Eckmül" publisher_id="4" first_edition="2011-12-01" this_edition="2011-12-01" isbn="978-2-30201-855-6" acquisition_date="2011-12-17" purchase_price="12.0" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="985" series_id="107" number="16.0" title="Poils de Trolls (II)" publisher_id="4" first_edition="2012-06-01" this_edition="2012-06-01" isbn="978-2-302-02229-4" acquisition_date="2012-06-23" wishlist="false" binding_id="1" cover_id="914" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="233.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="10" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="988" series_id="69" cycle="1" number="1.0" title="L'Ivoire du Magohamoth" publisher_id="4" first_edition="1994-10-01" this_edition="1994-10-01" isbn="978-2-87764-257-6" acquisition_date="2012-05-24" wishlist="false" binding_id="1" cover_id="302" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="569" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="1051" series_id="169" number="4.0" title="La Grande Traque" publisher_id="4" first_edition="2012-11-01" this_edition="2012-11-01" isbn="978-2-302-02424-3" acquisition_date="2013-03-09" purchase_price="12.0" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="48" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1107" series_id="107" number="17.0" title="La Trolle Impromptue" publisher_id="4" first_edition="2013-11-01" this_edition="2013-11-01" isbn="978-2-302-03621-5" acquisition_date="2014-02-01" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="1108" series_id="169" number="5.0" title="Le Piège de Sables" publisher_id="4" first_edition="2013-11-01" this_edition="2013-11-01" isbn="978-2-302-03631-4" acquisition_date="2014-02-01" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1167" series_id="107" number="18.0" title="Pröfy Blues" publisher_id="4" first_edition="2014-06-01" this_edition="2014-06-01" isbn="978-2-30202703-9" acquisition_date="2014-11-08" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="43" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1191" series_id="107" number="19.0" title="Pas de Nöl pour le Père Grommël" publisher_id="4" first_edition="2014-12-01" this_edition="2014-12-01" isbn="978-2-302-04320-6" acquisition_date="2015-10-17" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1220" series_id="142" number="4.0" title="Le Mont Rapace" publisher_id="4" first_edition="2014-10-01" this_edition="2014-10-01" isbn="978-2-302-03675-8" acquisition_date="2015-09-05" wishlist="false" binding_id="1" cover_id="1969" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="325.0" width="235.0" pages="45" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="12" />
+      </artists>
+      <colorists>
+        <colorist ref="311" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="1221" series_id="107" number="20.0" title="L'Héritage de Waha" publisher_id="4" first_edition="2015-08-01" this_edition="2015-08-01" isbn="978-2-302-04674-2" acquisition_date="2015-09-05" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1222" series_id="169" number="6.0" title="Le Delta Bilieux" publisher_id="4" first_edition="2014-11-01" this_edition="2014-11-01" isbn="978-2-302-04266-7" acquisition_date="2015-09-05" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1362" series_id="107" number="22.0" title="À l'École des Trolls" publisher_id="4" first_edition="2016-11-01" this_edition="2016-11-01" isbn="978-2-3020-5593-3" acquisition_date="2017-02-25" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1369" series_id="169" number="8.0" title="Tseu-Hi la gardienne" publisher_id="4" first_edition="2016-11-01" this_edition="2016-11-01" isbn="978-2-3020-5592-6" acquisition_date="2017-02-25" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="47" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1374" series_id="296" number="1.0" title="La danse des petits papiers" publisher_id="1" first_edition="2011-03-06" this_edition="2011-03-06" isbn="978-2-5050-1035-7" acquisition_date="2017-02-25" wishlist="false" binding_id="1" cover_id="957" height="320.0" width="240.0" pages="62" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="534" />
+      </writers>
+      <artists>
+        <artist ref="817" />
+      </artists>
+      <colorists>
+        <colorist ref="818" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="24" />
+      </album-taxons>
+    </album>
+    <album id="1375" series_id="296" number="2.0" title="Une brève histoire de poussière et de cendre" publisher_id="1" first_edition="2011-09-02" this_edition="2011-09-02" isbn="978-2-5050-1139-2" acquisition_date="2017-02-25" wishlist="false" binding_id="1" cover_id="958" height="320.0" width="240.0" pages="62" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="534" />
+      </writers>
+      <artists>
+        <artist ref="817" />
+      </artists>
+      <colorists>
+        <colorist ref="818" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="24" />
+        <album-taxon ref="63" />
+      </album-taxons>
+    </album>
+    <album id="1449" series_id="312" number="1.0" title="L'héritage d'Abérlard" publisher_id="1" first_edition="2015-06-01" this_edition="2015-06-01" isbn="978-2-5050-6404-6" acquisition_date="2017-10-14" wishlist="false" binding_id="1" cover_id="955" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="54" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="534" />
+      </writers>
+      <artists>
+        <artist ref="817" />
+      </artists>
+      <colorists>
+        <colorist ref="818" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="24" />
+      </album-taxons>
+    </album>
+    <album id="1450" series_id="312" number="2.0" title="Le Bal des Monstres" publisher_id="1" first_edition="2016-01-01" this_edition="2016-01-01" isbn="978-2-5050-6416-9" acquisition_date="2017-10-14" wishlist="false" binding_id="1" cover_id="959" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="54" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="534" />
+      </writers>
+      <artists>
+        <artist ref="817" />
+      </artists>
+      <colorists>
+        <colorist ref="818" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="24" />
+      </album-taxons>
+    </album>
+    <album id="1456" series_id="107" number="21.0" title="L'Or des Trolls" publisher_id="4" first_edition="2016-06-01" this_edition="2016-06-01" isbn="978-2-3020-5207-9" acquisition_date="2017-10-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="44" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1457" series_id="169" number="7.0" title="La Méphitique Armada" publisher_id="4" first_edition="2015-11-01" this_edition="2015-11-01" isbn="978-2-302-04851-1" acquisition_date="2017-10-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="45" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1494" series_id="169" number="9.0" title="Le stratège ingénu" publisher_id="4" first_edition="2017-11-01" this_edition="2017-11-01" isbn="978-2-302-06291-7" acquisition_date="2018-07-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="48" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1515" series_id="320" cycle="1" title="L'heure de la Gargouille" publisher_id="4" first_edition="2011-05-01" this_edition="2011-05-01" isbn="978-2-302-01739-9" acquisition_date="2018-07-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="50" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="375" />
+      </artists>
+      <colorists>
+        <colorist ref="375" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="21" />
+      </album-taxons>
+    </album>
+    <album id="1516" series_id="320" cycle="2" title="Voyage aux Ombres" publisher_id="4" first_edition="2011-05-01" this_edition="2011-05-01" isbn="978-2-302-01738-2" acquisition_date="2018-07-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="60" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="665" />
+      </writers>
+      <artists>
+        <artist ref="233" />
+      </artists>
+      <colorists>
+        <colorist ref="221" />
+        <colorist ref="233" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="21" />
+      </album-taxons>
+    </album>
+    <album id="1517" series_id="320" cycle="3" number="2.0" number_suffix="ré" title="Tykko des Sables - La Cité engloutie" publisher_id="4" first_edition="2010-01-01" acquisition_date="2018-07-14" wishlist="false" binding_id="1" cover_id="1178" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="48" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="663" />
+      </artists>
+      <colorists>
+        <colorist ref="730" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="1518" series_id="320" cycle="4" number="1.0" title="Les Guerrières de Troy - Yquem le généreux" publisher_id="4" first_edition="2010-05-01" this_edition="2010-05-01" isbn="978-2-30201-069-7" acquisition_date="2018-07-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="51" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="156" />
+      </artists>
+      <colorists>
+        <colorist ref="156" />
+        <colorist ref="193" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="1519" series_id="320" cycle="5" number="1.0" title="Nuit Safran - Albumen l'éthéré" publisher_id="4" first_edition="2010-03-01" this_edition="2010-03-01" acquisition_date="2018-07-14" wishlist="false" binding_id="1" height="320.0" width="230.0" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="874" />
+      </artists>
+      <colorists>
+        <colorist ref="874" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="1520" series_id="320" cycle="6" title="L'Expédition d'Alunÿs" publisher_id="4" first_edition="2010-05-01" this_edition="2010-05-01" isbn="978-2-30201-023-9" acquisition_date="2018-07-14" wishlist="false" binding_id="1" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="54" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="875" />
+      </artists>
+      <colorists>
+        <colorist ref="730" />
+      </colorists>
+      <inkers>
+        <inker ref="876" />
+      </inkers>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="21" />
+        <album-taxon ref="53" />
+        <album-taxon ref="114" />
+      </album-taxons>
+    </album>
+    <album id="1521" series_id="320" cycle="7" title="Ploneïs l'incertain" publisher_id="4" first_edition="2014-01-01" this_edition="2014-01-01" isbn="978-2-302-03690-1" acquisition_date="2018-07-14" wishlist="false" binding_id="1" height="320.0" width="230.0" pages="46" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="611" />
+      </writers>
+      <artists>
+        <artist ref="877" />
+      </artists>
+      <colorists>
+        <colorist ref="730" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="21" />
+      </album-taxons>
+    </album>
+    <album id="1552" series_id="320" cycle="4" number="2.0" title="Les Guerrières de Troy - L'Or des profondeurs" publisher_id="4" first_edition="2013-10-01" this_edition="2013-10-01" isbn="978-2-302-02074-2" acquisition_date="2018-10-14" wishlist="false" binding_id="1" cover_id="1416" height="320.0" width="230.0" pages="50" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="156" />
+      </artists>
+      <colorists>
+        <colorist ref="156" />
+        <colorist ref="193" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="1561" series_id="320" cycle="3" number="1.0" title="Tykko des Sables - Les Chevaucheurs des vents" publisher_id="4" first_edition="2009-01-01" this_edition="2009-01-01" isbn="978-2-30200-386-6" acquisition_date="2018-10-14" wishlist="false" binding_id="1" cover_id="1179" height="320.0" width="230.0" pages="52" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="663" />
+      </artists>
+      <colorists>
+        <colorist ref="664" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="1562" series_id="320" cycle="3" number="3.0" title="Tykko des Sables - La Colline des cent temples" publisher_id="4" first_edition="2014-08-01" this_edition="2014-08-01" isbn="978-2-302-04202-5" acquisition_date="2018-10-14" wishlist="false" binding_id="1" cover_id="1180" height="320.0" width="230.0" pages="46" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="663" />
+      </artists>
+      <colorists>
+        <colorist ref="730" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="1563" series_id="320" cycle="5" number="2.0" title="Nuit Safran - La Vengeance d'Albumen" publisher_id="4" first_edition="2012-01-01" this_edition="2016-07-01" isbn="978-2-302-01950-8" acquisition_date="2018-10-14" wishlist="false" binding_id="1" cover_id="1181" height="320.0" width="230.0" pages="50" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+        <writer ref="873" />
+      </writers>
+      <artists>
+        <artist ref="874" />
+      </artists>
+      <colorists>
+        <colorist ref="874" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+      </album-taxons>
+    </album>
+    <album id="1574" series_id="107" number="23.0" title="Art Brut" publisher_id="4" first_edition="2018-10-01" this_edition="2018-10-01" isbn="978-2-302-06297-9" acquisition_date="2018-10-14" wishlist="false" binding_id="1" cover_id="1194" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="46" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="29" />
+        <album-taxon ref="53" />
+      </album-taxons>
+    </album>
+    <album id="1602" series_id="169" number="10.0" title="Un Destin Karaxastin" publisher_id="4" first_edition="2018-11-01" this_edition="2018-11-01" isbn="978-2-302-07279-4" acquisition_date="2019-02-02" wishlist="false" binding_id="1" cover_id="1427" height="320.0" width="230.0" pages="50" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="446" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1770" series_id="107" number="24.0" title="Un caillou sur la tête" publisher_id="4" first_edition="2019-11-01" this_edition="2019-11-01" isbn="978-2-302-07894-9" acquisition_date="2020-01-04" purchase_price="15.5" wishlist="false" binding_id="1" cover_id="1682" height="320.0" width="230.0" pages="46" marked_as_first_edition="true" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="1992" series_id="107" number="25.0" title="On ne badine pas avec les mouches" publisher_id="4" first_edition="2021-04-01" this_edition="2021-04-01" isbn="978-2-302-09095-8" acquisition_date="2022-04-11" purchase_price="15.0" wishlist="false" binding_id="1" cover_id="2359" height="320.0" width="230.0" pages="44" marked_as_first_edition="true" printing="2021-02-01" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="193" />
+      </artists>
+      <colorists>
+        <colorist ref="209" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+        <album-taxon ref="10" />
+        <album-taxon ref="29" />
+      </album-taxons>
+    </album>
+    <album id="2030" series_id="69" cycle="2" number="9.0" title="La forêt noiseuse" publisher_id="4" first_edition="2021-11-01" this_edition="2021-11-01" isbn="978-2-302-09203-7" acquisition_date="2022-05-02" purchase_price="15.0" wishlist="false" binding_id="1" cover_id="2399" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="320.0" width="230.0" pages="56" marked_as_first_edition="true" printing="2021-10-01" book_type_id="1">
+      <writers>
+        <writer ref="120" />
+      </writers>
+      <artists>
+        <artist ref="119" />
+      </artists>
+      <colorists>
+        <colorist ref="755" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="5" />
+      </album-taxons>
+    </album>
+    <album id="2892" title="300" publisher_id="121" first_edition="1999-10-01" this_edition="2006-01-04" isbn="2-87827-031-2" acquisition_date="2007-11-10" wishlist="false" binding_id="1" cover_id="2812" summary="&lt;p&gt;Sample HTML description&lt;/p&gt;" comment="&lt;p&gt;Sample HTML description&lt;/p&gt;" height="248.0" width="318.0" pages="81" marked_as_first_edition="false" book_type_id="1">
+      <writers>
+        <writer ref="1422" />
+      </writers>
+      <artists>
+        <artist ref="1422" />
+      </artists>
+      <colorists>
+        <colorist ref="1423" />
+      </colorists>
+      <album-taxons>
+        <album-taxon ref="150" />
+      </album-taxons>
+      <album-images>
+        <album-image ref="6411" />
+      </album-images>
+    </album>
   </albums>
   <album_prices>
-    <album_price album_id="1" date="2016-01-10" price="10.0"/>
-    <album_price album_id="1" date="2016-01-15" price="1.5"/>
+    <album_price album_id="313" date="2010-09-26" price="15.0" />
+    <album_price album_id="313" date="2018-09-16" price="22.5" />
+    <album_price album_id="988" date="2012-06-01" price="300.0" />
   </album_prices>
   <derivative_types>
-    <derivative_type id="1" name="Offset"/>
-    <derivative_type id="2" name="Serigraphy"/>
+    <derivative_type id="1" name="Offset" />
+    <derivative_type id="2" name="Sérigraphie" />
+    <derivative_type id="3" name="Objet" />
+    <derivative_type id="7" name="Cello (Sérigraphie ou Offset)" />
+    <derivative_type id="9" name="Sérigraphie sur calque" />
   </derivative_types>
+  <sources>
+    <source id="1" name="Durango" owner="Christian Joor" email="bdtop@scarlet.be" website="http://durango.site.voila.fr/index.jhtml" address="Rue de l'Athénée 3 1050 Ixelles" phone_number="02-513.50.88" active="true" />
+    <source id="3" name="Fantasmagories" website="http://fantasmagories.free.fr/" address="&lt;p&gt;Quartier de l'Horloge Rue Brantôme, 13&lt;br /&gt;75003 Paris&lt;/p&gt;" history="&lt;p&gt;Sample HTML description&lt;/p&gt;" active="true" />
+    <source id="4" name="Dargaud" active="true" />
+    <source id="6" name="Espace BD" email="espacebd@espacebd.com" website="http://www.espacebd.com" address="Place Fernand Cocq, 2 Bruxelles - Belgique" phone_number="02- 512.68.69" active="true" />
+    <source id="13" name="Bulles D'écume" active="true" />
+    <source id="16" name="Soleil" website="http://www.soleilprod.com/" active="true" />
+    <source id="50" name="Objectif BD" active="true" />
+  </sources>
   <derivatives>
-    <derivative id="1" series_id="1" album_id="1" derivative_type_id="1" signed="true" authors_copy="false" restricted_sale="false" description="Offset for XIII #3."/>
-    <derivative id="2" series_id="2" derivative_type_id="1" signed="true" authors_copy="false" restricted_sale="false" description="Offset for Sillage, no album."/>
-    <derivative id="3" album_id="2" derivative_type_id="2" signed="true" authors_copy="false" restricted_sale="false" description="Serigraphy for Bludzee, a One Shot."/>
+    <derivative id="53" series_id="69" album_id="311" artist_id="119" derivative_type_id="1" colors="7" number="89" total="150" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="177.0" height="272.0">
+      <derivative-images>
+        <derivative-image ref="139" />
+      </derivative-images>
+    </derivative>
+    <derivative id="54" series_id="69" album_id="313" artist_id="119" derivative_type_id="2" colors="9" source_id="1" number="267" total="325" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="189.0" height="268.0">
+      <derivative-images>
+        <derivative-image ref="140" />
+      </derivative-images>
+    </derivative>
+    <derivative id="55" series_id="70" album_id="315" artist_id="119" derivative_type_id="2" colors="8" source_id="1" number="181" total="300" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="139.0" height="230.0">
+      <derivative-images>
+        <derivative-image ref="141" />
+      </derivative-images>
+    </derivative>
+    <derivative id="56" series_id="70" album_id="564" artist_id="119" derivative_type_id="1" colors="0" source_id="3" number="23" total="40" signed="true" authors_copy="false" restricted_sale="true" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="195.0" height="191.0">
+      <derivative-images>
+        <derivative-image ref="142" />
+      </derivative-images>
+    </derivative>
+    <derivative id="89" series_id="70" album_id="314" artist_id="119" derivative_type_id="2" colors="5" source_id="1" number="39" total="250" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="180.0" height="230.0">
+      <derivative-images>
+        <derivative-image ref="194" />
+      </derivative-images>
+    </derivative>
+    <derivative id="105" series_id="107" album_id="521" artist_id="193" derivative_type_id="2" colors="6" source_id="1" number="229" total="325" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="198.0" height="274.0">
+      <derivative-images>
+        <derivative-image ref="213" />
+      </derivative-images>
+    </derivative>
+    <derivative id="106" series_id="107" album_id="520" artist_id="193" derivative_type_id="2" colors="10" source_id="1" number="167" total="300" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="185.0" height="265.0">
+      <derivative-images>
+        <derivative-image ref="212" />
+      </derivative-images>
+    </derivative>
+    <derivative id="107" series_id="107" album_id="519" artist_id="193" derivative_type_id="2" colors="7" source_id="1" number="86" total="275" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="190.0" height="215.0">
+      <derivative-images>
+        <derivative-image ref="211" />
+      </derivative-images>
+    </derivative>
+    <derivative id="113" series_id="107" album_id="653" artist_id="193" derivative_type_id="3" colors="0" source_id="16" number="0" total="7000" signed="false" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="79.0" height="87.0" depth="5.0" acquisition_date="2008-08-30">
+      <derivative-images>
+        <derivative-image ref="230" />
+        <derivative-image ref="231" />
+      </derivative-images>
+    </derivative>
+    <derivative id="134" series_id="70" album_id="314" artist_id="119" derivative_type_id="2" colors="5" source_id="1" number="29" total="37" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="280.0" height="230.0">
+      <derivative-images>
+        <derivative-image ref="600" />
+      </derivative-images>
+    </derivative>
+    <derivative id="135" series_id="70" album_id="314" artist_id="119" derivative_type_id="2" colors="6" source_id="1" number="26" total="50" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="180.0" height="230.0">
+      <derivative-images>
+        <derivative-image ref="601" />
+      </derivative-images>
+    </derivative>
+    <derivative id="213" series_id="69" artist_id="119" derivative_type_id="1" number="122" total="200" signed="true" authors_copy="false" restricted_sale="false" width="400.0" height="600.0" purchase_price="25.0">
+      <derivative-images>
+        <derivative-image ref="927" />
+      </derivative-images>
+    </derivative>
+    <derivative id="214" series_id="69" album_id="312" artist_id="119" derivative_type_id="1" number="196" total="300" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="500.0" height="700.0" purchase_price="30.0">
+      <derivative-images>
+        <derivative-image ref="928" />
+      </derivative-images>
+    </derivative>
+    <derivative id="253" series_id="320" album_id="1516" artist_id="665" derivative_type_id="2" source_id="1" number="40" total="200" signed="true" authors_copy="false" restricted_sale="false" width="155.0" height="290.0" acquisition_date="2018-07-14">
+      <derivative-images>
+        <derivative-image ref="1253" />
+      </derivative-images>
+    </derivative>
+    <derivative id="254" series_id="320" album_id="1516" artist_id="665" derivative_type_id="2" colors="1" source_id="1" number="21" total="30" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="155.0" height="290.0" acquisition_date="2018-07-14">
+      <derivative-images>
+        <derivative-image ref="1254" />
+      </derivative-images>
+    </derivative>
+    <derivative id="255" series_id="320" album_id="1516" artist_id="665" derivative_type_id="7" source_id="1" number="25" total="35" signed="true" authors_copy="false" restricted_sale="false" width="155.0" height="290.0" acquisition_date="2018-07-14">
+      <derivative-images>
+        <derivative-image ref="1255" />
+      </derivative-images>
+    </derivative>
+    <derivative id="256" series_id="320" album_id="1519" artist_id="874" derivative_type_id="2" colors="4" source_id="1" number="186" total="200" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="155.0" height="210.0" acquisition_date="2018-07-14">
+      <derivative-images>
+        <derivative-image ref="1256" />
+      </derivative-images>
+    </derivative>
+    <derivative id="257" series_id="320" album_id="1519" artist_id="874" derivative_type_id="2" colors="1" source_id="1" number="20" total="25" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="155.0" height="210.0" acquisition_date="2018-07-14">
+      <derivative-images>
+        <derivative-image ref="1257" />
+      </derivative-images>
+    </derivative>
+    <derivative id="422" series_id="69" album_id="307" artist_id="119" derivative_type_id="2" colors="4" source_id="1" number="211" total="250" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="120.0" height="250.0" acquisition_date="2019-02-02">
+      <derivative-images>
+        <derivative-image ref="1723" />
+      </derivative-images>
+    </derivative>
+    <derivative id="423" series_id="69" derivative_type_id="2" colors="3" source_id="50" number="166" total="168" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" />
+    <derivative id="424" series_id="69" album_id="310" artist_id="119" derivative_type_id="2" colors="5" source_id="1" number="5" total="275" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="302.0" height="112.0">
+      <derivative-images>
+        <derivative-image ref="1726" />
+      </derivative-images>
+    </derivative>
+    <derivative id="425" series_id="69" album_id="313" artist_id="119" derivative_type_id="1" source_id="3" number="4" total="45" signed="true" authors_copy="false" restricted_sale="true" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="160.0" height="220.0">
+      <derivative-images>
+        <derivative-image ref="1729" />
+      </derivative-images>
+    </derivative>
+    <derivative id="426" series_id="69" album_id="312" artist_id="119" derivative_type_id="2" source_id="1" number="5" total="350" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="185.0" height="255.0">
+      <derivative-images>
+        <derivative-image ref="1728" />
+      </derivative-images>
+    </derivative>
+    <derivative id="427" series_id="69" album_id="311" artist_id="119" derivative_type_id="2" colors="7" source_id="1" number="127" total="300" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="190.0" height="230.0">
+      <derivative-images>
+        <derivative-image ref="1727" />
+      </derivative-images>
+    </derivative>
+    <derivative id="428" series_id="69" album_id="309" artist_id="119" derivative_type_id="2" source_id="1" number="120" total="275" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="190.0" height="270.0">
+      <derivative-images>
+        <derivative-image ref="1725" />
+      </derivative-images>
+    </derivative>
+    <derivative id="429" series_id="69" album_id="308" artist_id="119" derivative_type_id="2" colors="4" source_id="1" number="5" total="250" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="135.0" height="250.0">
+      <derivative-images>
+        <derivative-image ref="1724" />
+      </derivative-images>
+    </derivative>
+    <derivative id="430" series_id="70" album_id="315" artist_id="119" derivative_type_id="2" colors="1" source_id="1" number="35" total="50" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="140.0" height="230.0">
+      <derivative-images>
+        <derivative-image ref="1721" />
+      </derivative-images>
+    </derivative>
+    <derivative id="431" series_id="70" album_id="315" artist_id="119" derivative_type_id="9" colors="1" source_id="1" number="33" total="45" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="140.0" height="220.0">
+      <derivative-images>
+        <derivative-image ref="1722" />
+      </derivative-images>
+    </derivative>
+    <derivative id="433" series_id="320" album_id="1516" artist_id="233" derivative_type_id="2" colors="3" source_id="3" signed="true" authors_copy="true" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="160.0" height="240.0" acquisition_date="2019-02-02" purchase_price="15.0">
+      <derivative-images>
+        <derivative-image ref="1730" />
+      </derivative-images>
+    </derivative>
+    <derivative id="491" series_id="296" album_id="1374" artist_id="817" derivative_type_id="2" colors="1" source_id="4" number="889" total="900" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="200.0" height="250.0" purchase_price="15.0">
+      <derivative-images>
+        <derivative-image ref="1825" />
+      </derivative-images>
+    </derivative>
+    <derivative id="497" series_id="320" album_id="1516" artist_id="233" derivative_type_id="1" source_id="3" signed="true" authors_copy="true" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="160.0" height="240.0" purchase_price="13.0">
+      <derivative-images>
+        <derivative-image ref="1833" />
+      </derivative-images>
+    </derivative>
+    <derivative id="508" series_id="107" album_id="521" artist_id="193" derivative_type_id="9" colors="6" source_id="1" number="42" total="50" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="200.0" height="275.0" acquisition_date="2019-02-02" purchase_price="20.0">
+      <derivative-images>
+        <derivative-image ref="1853" />
+      </derivative-images>
+    </derivative>
+    <derivative id="509" series_id="107" album_id="519" artist_id="193" derivative_type_id="2" colors="1" source_id="1" number="7" total="25" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="190.0" height="215.0" acquisition_date="2019-02-02" purchase_price="30.0">
+      <derivative-images>
+        <derivative-image ref="1854" />
+      </derivative-images>
+    </derivative>
+    <derivative id="510" series_id="107" album_id="520" artist_id="193" derivative_type_id="1" source_id="6" number="2" total="225" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="170.0" height="240.0" acquisition_date="2019-02-02" purchase_price="15.0">
+      <derivative-images>
+        <derivative-image ref="1855" />
+      </derivative-images>
+    </derivative>
+    <derivative id="511" series_id="107" artist_id="193" derivative_type_id="1" source_id="13" signed="true" authors_copy="false" restricted_sale="false" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="210.0" height="300.0" acquisition_date="2019-02-02">
+      <derivative-images>
+        <derivative-image ref="1856" />
+      </derivative-images>
+    </derivative>
+    <derivative id="512" series_id="107" artist_id="193" derivative_type_id="1" source_id="3" number="13" total="50" signed="true" authors_copy="false" restricted_sale="true" description="&lt;p&gt;Sample HTML description&lt;/p&gt;" width="210.0" height="300.0" acquisition_date="2019-02-02" purchase_price="15.0">
+      <derivative-images>
+        <derivative-image ref="1857" />
+      </derivative-images>
+    </derivative>
   </derivatives>
+  <derivative_prices>
+    <derivative_price derivative_id="53" date="2010-09-26" price="30.0" />
+    <derivative_price derivative_id="56" date="2010-09-26" price="20.0" />
+    <derivative_price derivative_id="134" date="2010-09-26" price="30.0" />
+    <derivative_price derivative_id="135" date="2010-09-26" price="30.0" />
+  </derivative_prices>
   <readers>
-    <reader id="2" name="Xavier" colour="#FF69B4">
+    <reader id="1" name="My Reader" colour="#304ffe">
       <favourite-series-list>
-        <favourite-series ref="2"/>
+        <favourite-series ref="169" />
+        <favourite-series ref="296" />
+        <favourite-series ref="312" />
       </favourite-series-list>
       <favourite-albums>
-        <favourite-album ref="1"/>
+        <favourite-album ref="1362" />
       </favourite-albums>
       <reading-list>
-        <reading-list-entry ref="3"/>
+        <reading-list-entry ref="1515" />
+        <reading-list-entry ref="1516" />
+        <reading-list-entry ref="1517" />
+        <reading-list-entry ref="1518" />
+        <reading-list-entry ref="1519" />
+        <reading-list-entry ref="1520" />
+        <reading-list-entry ref="1521" />
+        <reading-list-entry ref="1552" />
+        <reading-list-entry ref="1561" />
+        <reading-list-entry ref="1562" />
+        <reading-list-entry ref="1563" />
+        <reading-list-entry ref="1770" />
+        <reading-list-entry ref="1992" />
+        <reading-list-entry ref="2030" />
+        <reading-list-entry ref="2892" />
       </reading-list>
     </reader>
   </readers>
+  <configuration>
+    <configuration-entry id="8" config_key="paging.textPageSize" config_value="50" reader_id="1" />
+    <configuration-entry id="9" config_key="language" config_value="fr" reader_id="1" />
+    <configuration-entry id="10" config_key="paging.imagePageSize" config_value="15" reader_id="1" />
+    <configuration-entry id="36" config_key="paging.pageSizeForCards" config_value="40" reader_id="1" />
+    <configuration-entry id="37" config_key="paging.subItemsInCardIndex" config_value="5" reader_id="1" />
+  </configuration>
 </library>

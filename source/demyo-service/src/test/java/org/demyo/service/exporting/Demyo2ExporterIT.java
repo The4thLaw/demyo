@@ -33,7 +33,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 	private IExporter exporter;
 
 	/**
-	 * Tests that the export does not miss anything.
+	 * Tests the completeness of a Demyo 2+ export.
 	 *
 	 * @throws DemyoException In case of export error.
 	 * @throws IOException In case of I/O error.
