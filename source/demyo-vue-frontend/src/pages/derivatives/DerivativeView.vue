@@ -6,6 +6,11 @@
 				:to="`/derivatives/${derivative.id}/edit`"
 				icon="mdi-image-frame dem-overlay-edit"
 			/>
+			<AppTask
+				:label="$t('quickTasks.add.images.to.derivative')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
 			<!--
 			Adding an @click="appTasksMenu = false" causes the dialog to instantly
 			disappear because the AppTask isn't rendered anymore
@@ -16,11 +21,6 @@
 				icon="mdi-image-frame dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteModel"
-			/>
-			<AppTask
-				:label="$t('quickTasks.add.images.to.derivative')"
-				icon="mdi-camera dem-overlay-add"
-				@click="appTasksMenu = false; dndDialog = true"
 			/>
 		</AppTasks>
 		<DnDImage v-model="dndDialog" other-images-label="field.Derivative.images" @save="saveDndImages" />

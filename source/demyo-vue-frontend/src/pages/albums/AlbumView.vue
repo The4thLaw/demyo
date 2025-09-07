@@ -10,18 +10,6 @@
 				:to="`/albums/${album.id}/edit`"
 				icon="mdi-book-open-variant dem-overlay-edit"
 			/>
-			<!--
-			Adding an @click="appTasksMenu = false" causes the dialog to instantly
-			disappear because the AppTask isn't rendered anymore
-			-->
-			<AppTask
-				v-if="!loading && derivativeCount <= 0"
-				:label="$t('quickTasks.delete.album')"
-				:confirm="$t('quickTasks.delete.album.confirm')"
-				icon="mdi-book-open-variant dem-overlay-delete"
-				@cancel="appTasksMenu = false"
-				@confirm="deleteModel"
-			/>
 			<AppTask
 				:label="$t('quickTasks.add.images.to.album')"
 				icon="mdi-camera dem-overlay-add"
@@ -37,6 +25,14 @@
 				:label="$t('quickTasks.add.derivative.to.album')"
 				:to="{ name: 'DerivativeAdd', query: derivativeQuery }"
 				icon="mdi-image-frame dem-overlay-add"
+			/>
+			<AppTask
+				v-if="!loading && derivativeCount <= 0"
+				:label="$t('quickTasks.delete.album')"
+				:confirm="$t('quickTasks.delete.album.confirm')"
+				icon="mdi-book-open-variant dem-overlay-delete"
+				@cancel="appTasksMenu = false"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 		<DnDImage
