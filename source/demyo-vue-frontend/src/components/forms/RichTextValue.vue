@@ -9,5 +9,5 @@ const props = defineProps<{
 	value?: string
 }>()
 
-const processedValue = useRichTextTemplate(computed(() => props.value))
+const processedValue = useRichTextTemplate(toRef(() => props.value))
 </script>
