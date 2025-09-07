@@ -42,9 +42,18 @@ class AlbumService extends AbstractModelService<Album> {
 		return promise
 	}
 
-	async saveFilepondImages(modelId: number, coverId: string, otherImageIds: string[]): Promise<boolean> {
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Album.
+	 *
+	 * @param modelId The Album ID.
+	 * @param filePondMainImage The image ID from FilePond for the cover
+	 * @param filePondOtherImages The image IDs from FilePond
+	 * @return true if saving was successful.
+	 */
+	async saveFilepondImages(modelId: number, filePondMainImage: string,
+		filePondOtherImages: string[]): Promise<boolean> {
 		return axiosPost(`${this.basePath}${modelId}/images`,
-			{ filePondMainImage: coverId, filePondOtherImages: otherImageIds }, false)
+			{ filePondMainImage, filePondOtherImages }, false)
 	}
 
 	/**

@@ -6,10 +6,12 @@ import java.util.concurrent.CompletableFuture;
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IUniverseRepo;
 import org.demyo.model.Album;
@@ -25,6 +27,8 @@ import org.demyo.service.IUniverseService;
 public class UniverseService extends AbstractModelService<Universe> implements IUniverseService {
 	@Autowired
 	private IUniverseRepo repo;
+	@Autowired
+	private FilePondModelService filePondModelService;
 
 	/**
 	 * Default constructor.
@@ -61,5 +65,17 @@ public class UniverseService extends AbstractModelService<Universe> implements I
 		List<Album> contents = repo.findContents(id);
 		contents.sort(new AlbumAndSeriesComparator());
 		return contents;
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public void recoverFromFilePond(long universeId, String logoFilePondId, String[] otherFilePondIds)
+			throws DemyoException {
+		filePondModelService.recoverFromFilePond(universeId,
+				logoFilePondId, otherFilePondIds,
+				"special.filepond.Universe.baseCoverName", "special.filepond.Album.baseImageName",
+				(u, i) -> u.setLogo(i), (u, li) -> u.getImages().addAll(li),
+				this, (u) -> u.getIdentifyingName());
 	}
 }

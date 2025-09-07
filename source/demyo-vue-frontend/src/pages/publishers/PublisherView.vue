@@ -7,6 +7,16 @@
 				icon="mdi-office-building dem-overlay-edit"
 			/>
 			<AppTask
+				:label="$t('quickTasks.add.collection.to.publisher')"
+				:to="{ name: 'CollectionAdd', query: { toPublisher: publisher.id } }"
+				icon="mdi-folder-multiple dem-overlay-add"
+			/>
+			<AppTask
+				:label="$t('quickTasks.add.image.to.publisher')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
+			<AppTask
 				v-if="albumCount === 0 && collectionCount === 0"
 				:label="$t('quickTasks.delete.publisher')"
 				:confirm="$t('quickTasks.delete.publisher.confirm')"
@@ -14,12 +24,8 @@
 				@cancel="appTasksMenu = false"
 				@confirm="deleteModel"
 			/>
-			<AppTask
-				:label="$t('quickTasks.add.collection.to.publisher')"
-				:to="{ name: 'CollectionAdd', query: { toPublisher: publisher.id } }"
-				icon="mdi-folder-multiple dem-overlay-add"
-			/>
 		</AppTasks>
+		<DnDImage v-model="dndDialog" main-image-label="field.Publisher.logo" @save="saveDndImages" />
 
 		<SectionCard :loading="loading" :image="publisher.logo" :title="publisher.identifyingName">
 			<v-row>
@@ -65,6 +71,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import publisherService from '@/services/publisher-service'
 
@@ -76,8 +83,13 @@ async function fetchData(id: number): Promise<Publisher> {
 	return publisherP
 }
 
-const { model: publisher, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData,
+const { model: publisher, loading, loadData, appTasksMenu, deleteModel } = useSimpleView(fetchData,
 	publisherService, 'quickTasks.delete.publisher.confirm.done', 'PublisherIndex')
 
 const collectionCount = computed(() => publisher.value?.collections?.length || 0)
+
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => publisherService.saveFilepondImages(publisher.value.id, data.mainImage),
+	loadData
+)
 </script>

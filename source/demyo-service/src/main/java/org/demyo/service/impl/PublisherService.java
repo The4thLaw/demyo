@@ -6,13 +6,16 @@ import java.util.concurrent.CompletableFuture;
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IModelRepo;
 import org.demyo.dao.IPublisherRepo;
 import org.demyo.model.Publisher;
+import org.demyo.service.IFilePondModelService;
 import org.demyo.service.IPublisherService;
 
 /**
@@ -22,6 +25,8 @@ import org.demyo.service.IPublisherService;
 public class PublisherService extends AbstractModelService<Publisher> implements IPublisherService {
 	@Autowired
 	private IPublisherRepo repo;
+	@Autowired
+	private IFilePondModelService filePondModelService;
 
 	/**
 	 * Default constructor.
@@ -50,6 +55,17 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 	@Override
 	public CompletableFuture<List<Publisher>> quickSearch(String query, boolean exact) {
 		return quickSearch(query, exact, repo);
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public void recoverFromFilePond(long publisherId, String logoFilePondId) throws DemyoException {
+		filePondModelService.recoverFromFilePond(publisherId,
+				logoFilePondId, null,
+				"special.filepond.Publisher.baseImageName", null,
+				(a, i) -> a.setLogo(i), null,
+				this, (a) -> a.getIdentifyingName());
 	}
 
 	@Override

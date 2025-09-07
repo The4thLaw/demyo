@@ -10,18 +10,6 @@
 				:to="`/albums/${album.id}/edit`"
 				icon="mdi-book-open-variant dem-overlay-edit"
 			/>
-			<!--
-			Adding an @click="appTasksMenu = false" causes the dialog to instantly
-			disappear because the AppTask isn't rendered anymore
-			-->
-			<AppTask
-				v-if="!loading && derivativeCount <= 0"
-				:label="$t('quickTasks.delete.album')"
-				:confirm="$t('quickTasks.delete.album.confirm')"
-				icon="mdi-book-open-variant dem-overlay-delete"
-				@cancel="appTasksMenu = false"
-				@confirm="deleteModel"
-			/>
 			<AppTask
 				:label="$t('quickTasks.add.images.to.album')"
 				icon="mdi-camera dem-overlay-add"
@@ -37,6 +25,14 @@
 				:label="$t('quickTasks.add.derivative.to.album')"
 				:to="{ name: 'DerivativeAdd', query: derivativeQuery }"
 				icon="mdi-image-frame dem-overlay-add"
+			/>
+			<AppTask
+				v-if="!loading && derivativeCount <= 0"
+				:label="$t('quickTasks.delete.album')"
+				:confirm="$t('quickTasks.delete.album.confirm')"
+				icon="mdi-book-open-variant dem-overlay-delete"
+				@cancel="appTasksMenu = false"
+				@confirm="deleteModel"
 			/>
 		</AppTasks>
 		<DnDImage
@@ -292,19 +288,17 @@
 <script setup lang="ts">
 import GalleryIndex from '@/components/generic/GalleryIndex.vue'
 import { useCurrency } from '@/composables/currency'
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import albumService from '@/services/album-service'
 import bookTypeService from '@/services/book-type-service'
 import derivativeService from '@/services/derivative-service'
 import readerService from '@/services/reader-service'
 import { useReaderStore } from '@/stores/reader'
-import { useUiStore } from '@/stores/ui'
 import sortedIndexOf from 'lodash/sortedIndexOf'
 import { useTemplateRef } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useAuthorCountries } from '../../helpers/countries'
 
-const dndDialog = ref(false)
 const derivativeCount = ref(-1)
 const inhibitObserver = ref(true)
 const derivativesLoading = ref(false)
@@ -379,18 +373,10 @@ const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => al
 const readerStore = useReaderStore()
 const isInReadingList = computed(() => sortedIndexOf(readerStore.readingList, album.value.id) > -1)
 
-const uiStore = useUiStore()
-const i18n = useI18n()
-async function saveDndImages(data: FilePondData): Promise<void> {
-	const ok = await albumService.saveFilepondImages(album.value.id, data.mainImage, data.otherImages)
-	if (ok) {
-		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
-		// Refresh
-		void loadData()
-	} else {
-		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
-	}
-}
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => albumService.saveFilepondImages(album.value.id, data.mainImage, data.otherImages),
+	loadData
+)
 
 async function loadDerivatives(): Promise<void> {
 	if (inhibitObserver.value || derivativeCount.value <= 0) {

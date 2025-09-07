@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IAuthorRepo;
 import org.demyo.dao.IModelRepo;
@@ -26,6 +27,7 @@ import org.demyo.model.beans.AuthorAlbums;
 import org.demyo.model.projections.IAuthorAlbum;
 import org.demyo.model.util.AuthorComparator;
 import org.demyo.service.IAuthorService;
+import org.demyo.service.IFilePondModelService;
 
 /**
  * Implements the contract defined by {@link IAuthorService}.
@@ -36,6 +38,8 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	private IAuthorRepo repo;
 	@Autowired
 	private IAlbumRepo albumRepo;
+	@Autowired
+	private IFilePondModelService filePondModelService;
 	@Autowired
 	private ITaxonRepo taxonRepo;
 
@@ -104,6 +108,17 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		ret.setAlbums(albumRepo.findAllById(albumIds));
 
 		return ret;
+	}
+
+	@Transactional(rollbackFor = Throwable.class)
+	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Override
+	public void recoverFromFilePond(long authorId, String portraitFilePondId) throws DemyoException {
+		filePondModelService.recoverFromFilePond(authorId,
+				portraitFilePondId, null,
+				"special.filepond.Author.baseImageName", null,
+				(a, i) -> a.setPortrait(i), null,
+				this, (a) -> a.getIdentifyingName());
 	}
 
 	@Override

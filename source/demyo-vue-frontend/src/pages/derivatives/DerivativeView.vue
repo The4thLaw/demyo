@@ -6,6 +6,11 @@
 				:to="`/derivatives/${derivative.id}/edit`"
 				icon="mdi-image-frame dem-overlay-edit"
 			/>
+			<AppTask
+				:label="$t('quickTasks.add.images.to.derivative')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
 			<!--
 			Adding an @click="appTasksMenu = false" causes the dialog to instantly
 			disappear because the AppTask isn't rendered anymore
@@ -16,11 +21,6 @@
 				icon="mdi-image-frame dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteModel"
-			/>
-			<AppTask
-				:label="$t('quickTasks.add.images.to.derivative')"
-				icon="mdi-camera dem-overlay-add"
-				@click="appTasksMenu = false; dndDialog = true"
 			/>
 		</AppTasks>
 		<DnDImage v-model="dndDialog" other-images-label="field.Derivative.images" @save="saveDndImages" />
@@ -168,12 +168,9 @@
 
 <script setup lang="ts">
 import { useCurrency } from '@/composables/currency'
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import derivativeService from '@/services/derivative-service'
-import { useUiStore } from '@/stores/ui'
-import { useI18n } from 'vue-i18n'
-
-const dndDialog = ref(false)
 
 async function fetchData(id: number): Promise<Derivative> {
 	return derivativeService.findById(id)
@@ -198,15 +195,9 @@ const sizeSpec = computed(() => {
 
 const { qualifiedPrice: qualifiedPurchasePrice } = useCurrency(computed(() => derivative.value.purchasePrice))
 
-const uiStore = useUiStore()
-const i18n = useI18n()
-async function saveDndImages(data: FilePondData): Promise<void> {
-	const ok = await derivativeService.saveFilepondImages(derivative.value.id, data.otherImages)
-	if (ok) {
-		uiStore.showSnackbar(i18n.t('draganddrop.snack.confirm'))
-		void loadData()
-	} else {
-		uiStore.showSnackbar(i18n.t('core.exception.api.title'))
-	}
-}
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => derivativeService.saveFilepondImages(derivative.value.id, data.otherImages),
+	loadData
+)
+
 </script>

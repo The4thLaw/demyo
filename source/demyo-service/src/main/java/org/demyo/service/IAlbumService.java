@@ -34,7 +34,7 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	/**
 	 * Recovers images from FilePond and uses them for the specified Album.
 	 * <p>
-	 * The cover replaces any existing one. The other images are added to the current one.
+	 * The cover replaces any existing one. The other images are added to the current ones.
 	 * </p>
 	 *
 	 * @param albumId The ID of the Album to change.

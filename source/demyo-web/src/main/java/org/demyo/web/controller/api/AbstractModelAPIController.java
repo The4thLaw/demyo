@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.demyo.common.exception.DemyoException;
+import org.demyo.common.function.CheckedRunnable;
 import org.demyo.model.IModel;
 import org.demyo.model.ModelView;
 import org.demyo.service.IModelService;
+
+import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
 
 /**
  * Base controller for most API calls.
@@ -127,6 +131,18 @@ public abstract class AbstractModelAPIController<M extends IModel> {
 	@DeleteMapping("/{modelId}")
 	public boolean delete(@PathVariable("modelId") long modelId) {
 		service.delete(modelId);
+		return true;
+	}
+
+	protected boolean saveFromFilePond(FilePondData data, CheckedRunnable serviceHandler)
+			throws DemyoException {
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("{}: Saving from FilePond: main image = {}, other images = {}",
+					getClass().getSimpleName(), sanitize(data.getMainImage()), sanitize(data.getOtherImages()));
+		}
+
+		serviceHandler.run();
+
 		return true;
 	}
 }

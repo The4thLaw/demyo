@@ -2,8 +2,6 @@ package org.demyo.web.controller.api;
 
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +17,12 @@ import org.demyo.model.Derivative;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IDerivativeService;
 
-import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
-
 /**
  * Controller handling the API calls for {@link Derivative}s.
  */
 @RestController
 @RequestMapping("/api/derivatives")
 public class DerivativeAPIController extends AbstractModelAPIController<Derivative> {
-	private static final Logger LOGGER = LoggerFactory.getLogger(DerivativeAPIController.class);
-
 	private final IDerivativeService service;
 
 	/**
@@ -80,14 +74,6 @@ public class DerivativeAPIController extends AbstractModelAPIController<Derivati
 	@PostMapping("/{modelId}/images")
 	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
 			@RequestBody FilePondData data) throws DemyoException {
-		String[] otherImages = data.getOtherImages();
-
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Saving from FilePond: other images = {}", sanitize(otherImages));
-		}
-
-		service.recoverFromFilePond(modelId, otherImages);
-
-		return true;
+		return saveFromFilePond(data, () -> service.recoverFromFilePond(modelId, data.getOtherImages()));
 	}
 }

@@ -1,4 +1,4 @@
-import { axiosGet } from '@/helpers/axios'
+import { axiosGet, axiosPost } from '@/helpers/axios'
 import AbstractModelService from './abstract-model-service'
 
 /**
@@ -29,6 +29,17 @@ class PublisherService extends AbstractModelService<Publisher> {
 	 */
 	async countAlbums(id: number): Promise<number> {
 		return axiosGet(`publishers/${id}/albums/count`, 0)
+	}
+
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Publisher.
+	 *
+	 * @param modelId The Publisher ID.
+	 * @param filePondMainImage The image ID from FilePond
+	 * @return true if saving was successful.
+	 */
+	async saveFilepondImages(modelId: number, filePondMainImage: string): Promise<boolean> {
+		return axiosPost(`${this.basePath}${modelId}/images`, { filePondMainImage }, false)
 	}
 }
 
