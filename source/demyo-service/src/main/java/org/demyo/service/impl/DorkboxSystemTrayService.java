@@ -12,7 +12,7 @@ import dorkbox.systemTray.SystemTray;
 
 @Service(DorkboxSystemTrayService.QUALIFIER)
 public class DorkboxSystemTrayService extends BaseSystemTrayService {
-	public static final String QUALIFIER = "DorkboxSystemTrayService";
+	public static final String QUALIFIER = "dorkboxSystemTrayService";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DorkboxSystemTrayService.class);
 

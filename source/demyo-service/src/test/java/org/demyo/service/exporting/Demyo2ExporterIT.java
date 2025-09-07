@@ -53,8 +53,8 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.contains("<book_type id=\"1\" name=\"Bande dessinée\" description=\"Pour toutes les BDs\" label_type=\"GRAPHIC_NOVEL\"/>")
 				// Album assertions
 				.containsPattern(".*<album id=\"1313\" .*printing=\"2015-09-01\" .*book_type_id=\"1\".*>")
-				// Tag assertions
-				.contains("<tag id=\"1\" name=\"science-fiction\" description=\"SF\"/>")
+				// Taxon assertions
+				.contains("<taxon id=\"1\" name=\"science-fiction\" description=\"SF\" taxon_type=\"TAG\"/>")
 				// Reader assertions
 				.contains("<reader id=\"1\" name=\"Xavier\" colour=\"#304ffe\">")
 				.contains("<favourite-series ref=\"99\"/>")

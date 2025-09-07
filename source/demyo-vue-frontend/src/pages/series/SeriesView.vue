@@ -57,6 +57,13 @@
 				{{ series.location }}
 			</FieldValue>
 
+			<FieldValue v-if="allGenres.length" :label="$t('field.Taxonomized.genres', allGenres.length)">
+				<TaxonLink :model="allGenres" />
+			</FieldValue>
+			<FieldValue v-if="allTags.length" :label="$t('field.Taxonomized.tags', allTags.length)">
+				<TaxonLink :model="allTags" />
+			</FieldValue>
+
 			<div class="dem-columnized">
 				<FieldValue :value="series.summary" label-key="field.Series.summary" type="rich-text" />
 				<FieldValue :value="series.comment" label-key="field.Series.comment" type="rich-text" />
@@ -129,10 +136,6 @@
 							:label="$t('field.Album.coverArtists', allCoverArtists.length)"
 						>
 							<ModelLink :model="allCoverArtists" view="AuthorPseudonym" />
-						</FieldValue>
-
-						<FieldValue v-if="allTags.length" :label="$t('field.Album.tags', allTags.length)">
-							<TagLink :model="allTags" />
 						</FieldValue>
 					</div>
 					<v-switch
@@ -283,7 +286,12 @@ const allAuthors = computed(() => [
 	...allCoverArtists.value
 ])
 const authorOrigins = useAuthorCountries(allAuthors)
-const allTags = computed(() => albumsLoaded.value ? mergeModels(albumsArray.value, 'tags', 'identifyingName') : [])
+const allGenres = computed(() => albumsLoaded.value
+	? mergeModels([series.value, ...albumsArray.value], 'genres', 'identifyingName')
+	: series.value.genres)
+const allTags = computed(() => albumsLoaded.value
+	? mergeModels([series.value, ...albumsArray.value], 'tags', 'identifyingName')
+	: series.value.tags)
 
 const allWritersLabels = computed(() => {
 	return allBookTypes.value

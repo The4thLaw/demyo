@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Author;
 import org.demyo.model.ModelView;
+import org.demyo.model.Taxon;
 import org.demyo.model.beans.AuthorAlbums;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAuthorService;
@@ -74,6 +75,18 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	@JsonView(ModelView.Basic.class)
 	public AuthorAlbums getAuthorAlbums(@PathVariable("modelId") long id) {
 		return service.getAuthorAlbums(id);
+	}
+
+	/**
+	 * Gets the genres in which a specific author is active.
+	 *
+	 * @param id The Author internal identifier
+	 * @return The genres.
+	 */
+	@GetMapping("/{modelId}/genres")
+	@JsonView(ModelView.Basic.class)
+	public List<Taxon> getAuthorGenres(@PathVariable("modelId") long id) {
+		return service.getAuthorGenres(id);
 	}
 
 	/**

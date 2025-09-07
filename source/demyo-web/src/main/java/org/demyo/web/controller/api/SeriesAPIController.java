@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.demyo.model.Album;
 import org.demyo.model.ModelView;
 import org.demyo.model.Series;
-import org.demyo.model.Universe;
 import org.demyo.model.filters.DerivativeFilter;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IDerivativeService;
@@ -25,7 +24,6 @@ import org.demyo.service.ISeriesService;
 @RestController
 @RequestMapping("/api/series")
 public class SeriesAPIController extends AbstractModelAPIController<Series> {
-	private final ISeriesService service;
 	private final IAlbumService albumService;
 	private final IDerivativeService derivativeService;
 
@@ -40,7 +38,6 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	public SeriesAPIController(ISeriesService service, IAlbumService albumService,
 			IDerivativeService derivativeService) {
 		super(service);
-		this.service = service;
 		this.albumService = albumService;
 		this.derivativeService = derivativeService;
 	}
@@ -55,18 +52,6 @@ public class SeriesAPIController extends AbstractModelAPIController<Series> {
 	@GetMapping("/{seriesId}/albums")
 	public List<Album> getAlbumsForSeries(@PathVariable("seriesId") long seriesId) {
 		return albumService.findBySeriesId(seriesId);
-	}
-
-	/**
-	 * Finds the Universe for a given Series.
-	 *
-	 * @param seriesId The Series ID
-	 * @return The Universe
-	 */
-	@JsonView(ModelView.Minimal.class)
-	@GetMapping("/{seriesId}/universe")
-	public Universe getUniverseForSeries(@PathVariable("seriesId") long seriesId) {
-		return service.getByIdForView(seriesId).getUniverse();
 	}
 
 	/**

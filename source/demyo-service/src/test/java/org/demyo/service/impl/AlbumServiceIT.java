@@ -1,7 +1,5 @@
 package org.demyo.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Date;
 import java.util.Iterator;
 
@@ -14,6 +12,8 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.demyo.model.Album;
 import org.demyo.model.AlbumPrice;
 import org.demyo.service.IAlbumService;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for {@link AlbumService} and for the configuration of {@link Album} and {@link AlbumPrice}.
@@ -42,10 +42,10 @@ class AlbumServiceIT extends AbstractServiceTest {
 	}
 
 	/**
-	 * Tests {@link IAlbumService#countAlbumsByTag(long)}.
+	 * Tests {@link IAlbumService#countAlbumsByTaxon(long)}.
 	 */
 	@Test
 	void testCountAlbumByFilter() {
-		assertThat(service.countAlbumsByTag(1L)).isEqualTo(24);
+		assertThat(service.countAlbumsByTaxon(1L)).isEqualTo(24);
 	}
 }

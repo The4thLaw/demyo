@@ -1,3 +1,4 @@
+-- Issue #243: Support author pseudonyms
 ALTER TABLE authors
 	ADD COLUMN pseudonym_of_id INT NULL;
 ALTER TABLE authors

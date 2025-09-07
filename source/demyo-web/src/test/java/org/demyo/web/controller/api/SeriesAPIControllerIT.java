@@ -38,8 +38,9 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	@Test
 	void view() throws Exception {
 		mockMvc.perform(get( "/api/series/99"))
-				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
+				.andDo(printResolvedException())
+				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(99))
 				.andExpect(jsonPath("$.name").value("Sillage"))
 				.andExpect(jsonPath("$.website").value("http://www.poukram.org/"))
@@ -49,6 +50,7 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 						contains(444, 737, 764, 435, 436, 437, 438, 439, 440, 441, 442, 443, 567, 669, 746, 848, 945,
 								946, 1000, 1086, 1229, 1459, 1186, 1370)))
 				.andExpect(jsonPath("$.albums").doesNotExist())
+				.andExpect(jsonPath("$.albumTaxons").doesNotExist())
 				.andExpect(jsonPath("$.albumTags").doesNotExist());
 	}
 

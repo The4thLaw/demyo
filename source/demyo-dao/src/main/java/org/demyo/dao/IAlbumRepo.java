@@ -142,14 +142,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	List<Long> findAlbumIdsBySeries(long seriesId);
 
 	/**
-	 * Counts the number of Albums that feature the provided tag.
+	 * Counts the number of Albums that feature the provided taxon.
 	 *
-	 * @param tagId The Tag internal ID
+	 * @param taxonId The Taxon internal ID
 	 * @return The album count
 	 */
 	// Way more efficient than any JPA query we could make
-	@Query(value = "select count(*) from albums_tags where tag_id = ?1", nativeQuery = true)
-	int countAlbumsByTag(long tagId);
+	@Query(value = "select count(*) from albums_aggregated_taxons where taxon_id = ?1", nativeQuery = true)
+	int countAlbumsByTaxon(long taxonId);
 
 	/**
 	 * Counts how many Albums use the given Binding.

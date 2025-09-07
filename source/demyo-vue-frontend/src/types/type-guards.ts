@@ -11,9 +11,9 @@ function isAbstractModel(object: any): object is AbstractModel {
 }
 
 /**
- * Custom guard for processed tags
+ * Custom guard for processed taxons
  */
-export function isProcessed(object: any): object is ProcessedTag {
+export function isProcessed(object: any): object is ProcessedTaxon {
 	return 'relativeWeight' in object
 }
 

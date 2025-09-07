@@ -35,6 +35,14 @@ class AuthorService extends AbstractModelService<Author> {
 	}
 
 	/**
+	 * Finds the genres the Author participates to.
+	 * @param id The Author ID
+	 */
+	async getAuthorGenres(id: number): Promise<Taxon[]> {
+		return axiosGet(`authors/${id}/genres`, {})
+	}
+
+	/**
 	 * Finds how many Derivatives use the given artist.
 	 * @param {Number} id The Author ID
 	 */

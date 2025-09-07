@@ -11,10 +11,12 @@ class AlbumService extends AbstractModelService<Album> {
 			// Publishers are mandatory but could be missing from album templates
 			fillMissingObjects: ['series', 'publisher', 'collection', 'binding', 'cover', 'universe'],
 			fillMissingArrays: [
-				'writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists', 'tags', 'images', 'prices'
+				'writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists', 'tags', 'genres',
+				'images', 'prices'
 			],
 			sanitizeArrays: [
-				'writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists', 'tags', 'images'
+				'writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists', 'tags', 'genres',
+				'images'
 			]
 		})
 	}

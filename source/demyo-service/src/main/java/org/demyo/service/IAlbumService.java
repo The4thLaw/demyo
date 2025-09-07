@@ -60,15 +60,15 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	Collection<MetaSeries> findAllForIndex(AlbumFilter filter);
 
 	/**
-	 * Counts the number of Albums that feature the provided tag.
+	 * Counts the number of Albums that feature the provided taxon.
 	 * <p>
 	 * This method is more efficient than an equivalent call to {@link #countAlbumsByFilter(AlbumFilter)}.
 	 * </p>
 	 *
-	 * @param tagId The Tag internal ID
+	 * @param taxonId The Taxon internal ID
 	 * @return The album count
 	 */
-	int countAlbumsByTag(long tagId);
+	int countAlbumsByTaxon(long taxonId);
 
 	/**
 	 * Counts how many Albums use the given criteria.

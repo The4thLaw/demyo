@@ -7,6 +7,7 @@ import autoImport from 'unplugin-auto-import/vite'
 import autoComponents from 'unplugin-vue-components/vite'
 import type { ConfigEnv, UserConfig } from 'vite'
 import { defineConfig } from 'vite'
+import vueDevTools from 'vite-plugin-vue-devtools'
 import vuetify from 'vite-plugin-vuetify'
 import worldCountriesFilter from './vite-plugins/world-countries-filter'
 
@@ -84,7 +85,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 				include: [path.resolve(__dirname, './src/locales/strings/**')]
 			}),
 			worldCountriesFilter(),
-			visualizer()
+			visualizer(),
+			vueDevTools({
+				launchEditor: 'code'
+			})
 		],
 
 		css: {

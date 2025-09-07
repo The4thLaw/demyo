@@ -250,7 +250,7 @@ watch(route, () => {
 	#l-DefaultLayout__mainContainer,
 	#l-DefaultLayout__mainContainer > .container,
 	#l-DefaultLayout__routerView > .container,
-	.container.v-TagIndex__list {
+	.container.v-TaxonIndex__list {
 		padding-left: 0;
 		padding-right: 0;
 	}

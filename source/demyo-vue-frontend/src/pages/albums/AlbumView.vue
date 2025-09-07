@@ -51,13 +51,9 @@
 							<ModelLink :model="album.series" view="SeriesView" />
 						</FieldValue>
 					</v-col>
-					<v-col v-if="album.universe.id || album.series.universe?.id" cols="12" md="6">
+					<v-col v-if="album.universe.id" cols="12" md="6">
 						<FieldValue :label="$t('field.Album.universe')">
-							<ModelLink v-if="album.universe.id" :model="album.universe" view="UniverseView" />
-							<ModelLink
-								v-if="album.series?.universe?.id" :model="album.series.universe"
-								view="UniverseView"
-							/>
+							<ModelLink :model="album.universe" view="UniverseView" />
 						</FieldValue>
 					</v-col>
 				</v-row>
@@ -67,9 +63,14 @@
 							<ModelLink :model="album.bookType" view="BookTypeView" />
 						</FieldValue>
 					</v-col>
+					<v-col v-if="album.genres && album.genres.length > 0" cols="12" md="6">
+						<FieldValue :label="$t('field.Taxonomized.genres', album.genres.length)">
+							<TaxonLink :model="album.genres" />
+						</FieldValue>
+					</v-col>
 					<v-col v-if="album.tags && album.tags.length > 0" cols="12">
-						<FieldValue :label="$t('field.Album.tags', album.tags.length)">
-							<TagLink :model="album.tags" />
+						<FieldValue :label="$t('field.Taxonomized.tags', album.tags.length)">
+							<TaxonLink :model="album.tags" />
 						</FieldValue>
 					</v-col>
 				</v-row>

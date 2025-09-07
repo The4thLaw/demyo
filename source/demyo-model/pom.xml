@@ -102,6 +102,7 @@
 				</dependencies>
 				<executions>
 					<execution>
+						<id>generate-querydsl-models</id>
 						<goals>
 							<goal>process</goal>
 						</goals>

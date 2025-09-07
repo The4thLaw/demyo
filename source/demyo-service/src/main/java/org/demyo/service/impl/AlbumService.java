@@ -68,15 +68,24 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Transactional(readOnly = true)
 	@Override
 	public Album getByIdForView(long id) {
-		Album album = repo.findOneForEdition(id);
+		Album album = repo.findOneForView(id);
 		if (album == null) {
 			throw new EntityNotFoundException("No Album for ID " + id);
 		}
 
+		// Inherit some properties from the series
 		Series series = album.getSeries();
 		if (series != null) {
+			album.setUniverse(series.getUniverse());
 			if (StringUtils.isBlank(album.getLocation())) {
 				album.setLocation(series.getLocation());
+			}
+			if (series.getTaxons() != null) {
+				if (album.getTaxons() != null) {
+					album.getTaxons().addAll(series.getTaxons());
+				} else {
+					album.setTaxons(series.getTaxons());
+				}
 			}
 		}
 
@@ -152,7 +161,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setPages(last.getPages());
 			template.setPublisher(last.getPublisher());
 			template.setSeries(last.getSeries());
-			template.setTags(last.getTags());
+			template.setTaxons(last.getTaxons());
 			template.setTranslators(last.getTranslators());
 			template.setWidth(last.getWidth());
 			template.setWriters(last.getWriters());
@@ -202,6 +211,9 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	public long save(@NotNull Album newAlbum) {
 		boolean isNewAlbum = newAlbum.getId() == null;
 		boolean isLeavingWishlist = false;
+
+		// Merge tags and genres to save them as taxons
+		newAlbum.mergeTaxons();
 
 		if (!isNewAlbum) {
 			// Check if the album is leaving the wishlist
@@ -262,8 +274,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	@Override
-	public int countAlbumsByTag(long tagId) {
-		return repo.countAlbumsByTag(tagId);
+	public int countAlbumsByTaxon(long taxonId) {
+		return repo.countAlbumsByTaxon(taxonId);
 	}
 
 	@Override

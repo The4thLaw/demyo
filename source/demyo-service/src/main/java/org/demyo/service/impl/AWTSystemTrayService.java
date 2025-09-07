@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 @Service(AWTSystemTrayService.QUALIFIER)
 public class AWTSystemTrayService extends BaseSystemTrayService {
-	public static final String QUALIFIER = "AWTSystemTrayService";
+	public static final String QUALIFIER = "awtSystemTrayService";
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AWTSystemTrayService.class);
 

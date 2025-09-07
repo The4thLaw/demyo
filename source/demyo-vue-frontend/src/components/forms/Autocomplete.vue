@@ -37,7 +37,7 @@
 				<v-card-text>
 					<component
 						:is="addComponent" mode="minimal" teleport-actions=".c-Autocomplete__dialog-actions"
-						@save="saved"
+						v-bind="addProps" @save="saved"
 					/>
 				</v-card-text>
 
@@ -67,6 +67,7 @@ withDefaults(defineProps<{
 	loading?: boolean
 	multiple?: boolean,
 	addComponent?: Component,
+	addProps?: unknown,
 	addLabel?: string
 }>(), {
 	itemTitle: 'identifyingName',
@@ -74,6 +75,7 @@ withDefaults(defineProps<{
 	loading: false,
 	multiple: false,
 	addComponent: undefined,
+	addProps: undefined,
 	addLabel: undefined
 })
 
