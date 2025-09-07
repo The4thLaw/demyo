@@ -2,7 +2,7 @@
 	<v-dialog v-model="model" max-width="800px">
 		<v-card>
 			<v-card-title>
-				{{ $t('draganddrop.dialog.title') }}
+				{{ $t(titleLabel) }}
 			</v-card-title>
 			<v-card-text>
 				<div v-if="mainImageLabel">
@@ -106,7 +106,7 @@ const emit = defineEmits<{
 	save: [value: SaveData]
 }>()
 
-defineProps<{
+const props = defineProps<{
 	mainImageLabel?: string,
 	otherImagesLabel?: string
 }>()
@@ -123,6 +123,10 @@ function showDialog(e: Event): void {
 	e.preventDefault()
 	model.value = true
 }
+
+const titleLabel = computed(() => props.otherImagesLabel
+	? 'draganddrop.dialog.title.multiple'
+	: 'draganddrop.dialog.title.single')
 
 function cancel(): void {
 	if (mainPond.value) {
