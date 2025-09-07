@@ -6,16 +6,16 @@
 				icon="mdi-account dem-overlay-edit"
 			/>
 			<AppTask
+				:label="$t('quickTasks.add.image.to.author')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
+			<AppTask
 				:label="$t('quickTasks.delete.author')"
 				:confirm="$t('quickTasks.delete.author.confirm')"
 				icon="mdi-account dem-overlay-delete"
 				@cancel="appTasksMenu = false"
 				@confirm="deleteModel"
-			/>
-			<AppTask
-				:label="$t('quickTasks.add.image.to.author')"
-				icon="mdi-camera dem-overlay-add"
-				@click="appTasksMenu = false; dndDialog = true"
 			/>
 		</AppTasks>
 		<DnDImage v-model="dndDialog" main-image-label="field.Author.portrait" @save="saveDndImages" />
