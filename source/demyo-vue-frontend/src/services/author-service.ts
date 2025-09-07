@@ -1,4 +1,4 @@
-import { axiosGet } from '@/helpers/axios'
+import { axiosGet, axiosPost } from '@/helpers/axios'
 import AbstractModelService from './abstract-model-service'
 
 /**
@@ -40,6 +40,17 @@ class AuthorService extends AbstractModelService<Author> {
 	 */
 	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`authors/${id}/derivatives/count`, 0)
+	}
+
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Author.
+	 *
+	 * @param modelId The Author ID.
+	 * @param imageId The data from FilePond
+	 * @return true if saving was successful.
+	 */
+	async saveFilepondImages(modelId: number, imageId: string): Promise<boolean> {
+		return axiosPost(`${this.basePath}${modelId}/images`, { filePondMainImage: imageId }, false)
 	}
 }
 

@@ -12,7 +12,13 @@
 				@cancel="appTasksMenu = false"
 				@confirm="deleteModel"
 			/>
+			<AppTask
+				:label="$t('quickTasks.add.image.to.author')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
 		</AppTasks>
+		<DnDImage v-model="dndDialog" main-image-label="field.Author.portrait" @save="saveDndImages" />
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue
@@ -84,6 +90,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import { useCountry } from '@/helpers/countries'
 import authorService from '@/services/author-service'
@@ -112,7 +119,7 @@ async function fetchData(id: number): Promise<Author> {
 	return authorP
 }
 
-const { model: author, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData, authorService,
+const { model: author, loading, loadData, appTasksMenu, deleteModel } = useSimpleView(fetchData, authorService,
 	'quickTasks.delete.author.confirm.done', 'AuthorIndex')
 
 const albums = computed(() => authorAlbums.value.albums || [])
@@ -172,4 +179,9 @@ function describeAuthor(album: Album): string {
 
 	return `${qualifiers.join(', ')} ${pseudonym}`
 }
+
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => authorService.saveFilepondImages(author.value.id, data.mainImage),
+	loadData
+)
 </script>
