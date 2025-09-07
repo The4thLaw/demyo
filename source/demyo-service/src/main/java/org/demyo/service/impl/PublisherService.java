@@ -64,8 +64,8 @@ public class PublisherService extends AbstractModelService<Publisher> implements
 		filePondModelService.recoverFromFilePond(publisherId,
 				logoFilePondId, null,
 				"special.filepond.Publisher.baseImageName", null,
-				(a, i) -> a.setLogo(i), null,
-				this, (a) -> a.getIdentifyingName());
+				Publisher::setLogo, null,
+				this, Publisher::getIdentifyingName);
 	}
 
 	@Override

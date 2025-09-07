@@ -117,8 +117,8 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		filePondModelService.recoverFromFilePond(authorId,
 				portraitFilePondId, null,
 				"special.filepond.Author.baseImageName", null,
-				(a, i) -> a.setPortrait(i), null,
-				this, (a) -> a.getIdentifyingName());
+				Author::setPortrait, null,
+				this, Author::getIdentifyingName);
 	}
 
 	@Override

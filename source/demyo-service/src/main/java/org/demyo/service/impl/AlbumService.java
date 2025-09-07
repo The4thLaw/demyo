@@ -269,8 +269,8 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		filePondModelService.recoverFromFilePond(albumId,
 				coverFilePondId, otherFilePondIds,
 				"special.filepond.Album.baseCoverName", "special.filepond.Album.baseImageName",
-				(a, i) -> a.setCover(i), (a, li) -> a.getImages().addAll(li),
-				this, (a) -> a.getBaseNameForImages());
+				Album::setCover, (a, li) -> a.getImages().addAll(li),
+				this, Album::getBaseNameForImages);
 	}
 
 	@Override

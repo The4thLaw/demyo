@@ -75,7 +75,7 @@ public class UniverseService extends AbstractModelService<Universe> implements I
 		filePondModelService.recoverFromFilePond(universeId,
 				logoFilePondId, otherFilePondIds,
 				"special.filepond.Universe.baseCoverName", "special.filepond.Album.baseImageName",
-				(u, i) -> u.setLogo(i), (u, li) -> u.getImages().addAll(li),
-				this, (u) -> u.getIdentifyingName());
+				Universe::setLogo, (u, li) -> u.getImages().addAll(li),
+				this, Universe::getIdentifyingName);
 	}
 }

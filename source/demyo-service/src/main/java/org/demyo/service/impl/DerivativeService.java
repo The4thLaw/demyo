@@ -82,7 +82,7 @@ public class DerivativeService extends AbstractModelService<Derivative> implemen
 				null, otherFilePondIds,
 				null, "special.filepond.Derivative.baseImageName",
 				null, (d, li) -> d.getImages().addAll(li),
-				this, (d) -> d.getBaseNameForImages());
+				this, Derivative::getBaseNameForImages);
 	}
 
 	@Override

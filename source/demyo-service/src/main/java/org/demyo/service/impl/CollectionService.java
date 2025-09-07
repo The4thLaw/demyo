@@ -53,8 +53,8 @@ public class CollectionService extends AbstractModelService<Collection> implemen
 		filePondModelService.recoverFromFilePond(collectionId,
 				logoFilePondId, null,
 				"special.filepond.Collection.baseImageName", null,
-				(a, i) -> a.setLogo(i), null,
-				this, (a) -> a.getIdentifyingName());
+				Collection::setLogo, null,
+				this, Collection::getIdentifyingName);
 	}
 
 	@Override
