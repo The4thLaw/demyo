@@ -46,11 +46,11 @@ class AuthorService extends AbstractModelService<Author> {
 	 * Saves / Commits the images uploaded through FilePond to the current Author.
 	 *
 	 * @param modelId The Author ID.
-	 * @param imageId The data from FilePond
+	 * @param filePondMainImage The image ID from FilePond
 	 * @return true if saving was successful.
 	 */
-	async saveFilepondImages(modelId: number, imageId: string): Promise<boolean> {
-		return axiosPost(`${this.basePath}${modelId}/images`, { filePondMainImage: imageId }, false)
+	async saveFilepondImages(modelId: number, filePondMainImage: string): Promise<boolean> {
+		return axiosPost(`${this.basePath}${modelId}/images`, { filePondMainImage }, false)
 	}
 }
 

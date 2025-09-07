@@ -30,11 +30,11 @@ class DerivativeService extends AbstractModelService<Derivative> {
 	 * Saves / Commits the images uploaded through FilePond to the current Derivative.
 	 *
 	 * @param modelId The Derivative ID.
-	 * @param imageIds The data from FilePond
+	 * @param filePondOtherImages The image IDs from FilePond
 	 * @return true if saving was successful.
 	 */
-	async saveFilepondImages(modelId: number, imageIds: string[]): Promise<boolean> {
-		return axiosPost(`${this.basePath}${modelId}/images`, { filePondOtherImages: imageIds }, false)
+	async saveFilepondImages(modelId: number, filePondOtherImages: string[]): Promise<boolean> {
+		return axiosPost(`${this.basePath}${modelId}/images`, { filePondOtherImages }, false)
 	}
 }
 
