@@ -1,5 +1,6 @@
 # Expect LF as 
 *	text=auto
+mvnw	text eol=lf
 *.sh	text eol=lf
 *.nsi	text eol=crlf
 *.nsh	text eol=crlf
