@@ -50,8 +50,9 @@ const routes: RouteRecordRaw[] = [
 	}
 ]
 
-const processBase = import.meta.env.BASE_URL || ''
-let baseUrl = `/${processBase}${contextRoot}`
+// Don't use import.meta.env.BASE_URL as, in relative mode, it's going to be "/./" and we'll add the context path
+// twice for the root page (e.g. "/bds/bds/")
+let baseUrl = `/${contextRoot}`
 // Ensure this does not lead to duplicate slashes, which (1) is not correct and (2) confuses the router
 baseUrl = baseUrl.replaceAll(/\/\/+/g, '/')
 console.log('Initializing Vue router with base:', baseUrl)
