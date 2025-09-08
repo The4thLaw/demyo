@@ -1,12 +1,16 @@
 #!/bin/bash
 
-version="3.1.0-SNAPSHOT"
+set -e
+version="3.1.0-beta1"
 
 rm -f demyo-v*.tar.bz2 Demyo*.exe
 
-echo "Building Demyo..."
 cd ../source
-mvn clean install -Pprod,prod-win,vue
+echo "Updating versions..."
+./mvnw versions:set -DnewVersion=$version -DgenerateBackupPoms=false
+
+echo "Building Demyo..."
+./mvnw clean install -Pprod,prod-win,vue
 cd -
 
 #
