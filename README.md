@@ -5,7 +5,7 @@
 ## Description
 Demyo is a free and open source comic and book manager intended for local usage trough a Web interface. It is (subjectively) aesthetically pleasing and designed to fit both casual readers wanting to catalog their collections and obsessive dans who want to document every little detail.
 
-Unlike generic collection managers such as GCstar or Tellico, Demyo is exclusively meant to index books and everything connected to them (including collectibles). As such, it does a better job of structuring the appropriate data but is also ill-fitted for other itemd such as movies.
+Unlike generic collection managers such as GCstar or Tellico, Demyo is exclusively meant to index books and everything connected to them (including collectibles). As such, it does a better job of structuring the appropriate data but is also ill-fitted for other items such as movies.
 
 Moderately technical users can also host it like any other Java Web application.
 
