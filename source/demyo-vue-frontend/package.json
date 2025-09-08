@@ -73,7 +73,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "rollup-plugin-visualizer": "^6.0.3",
     "sass": "~1.90.0",
-    "serve": "^14.2.4",
+    "serve": "^14.2.5",
     "stylelint": "^16.23.0",
     "stylelint-config-recommended-vue": "^1.6.1",
     "stylelint-config-standard": "^39.0.0",
