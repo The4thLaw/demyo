@@ -352,7 +352,6 @@ const bookTypeManagement = ref(false)
 const seriesDetails: Ref<Series | undefined> = ref(undefined)
 
 async function loadSeriesDetails(newSeriesId?: number): Promise<void> {
-	console.log('New series:', newSeriesId)
 	// Clear the current cache
 	seriesDetails.value = undefined
 	// Check the new applicable one
