@@ -143,11 +143,12 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
 	@Override
 	public long uploadImage(@NotEmpty String originalFileName, @NotNull Path imageFile) throws DemyoException {
+		FileSecurityUtils.assertChildOf(imagesDirectory, imageFile);
 		return uploadImage(originalFileName, null, imageFile).getId();
 	}
 
 	private Image uploadImage(String originalFileName, String description, Path imageFile) throws DemyoException {
-		FileSecurityUtils.assertChildOf(imagesDirectory, imageFile);
+		// For Filepond, the traversal assertion is done in FilePondService#getFileForId(...)
 
 		// Determine the hash of the uploaded file
 		String hash;
