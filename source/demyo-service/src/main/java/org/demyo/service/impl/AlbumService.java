@@ -163,6 +163,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			template.setSeries(last.getSeries());
 			template.setTaxons(last.getTaxons());
 			template.setTranslators(last.getTranslators());
+			template.setUniverse(last.getUniverse());
 			template.setWidth(last.getWidth());
 			template.setWriters(last.getWriters());
 		} else {
