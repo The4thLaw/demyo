@@ -20,26 +20,33 @@
 							clearable label-key="field.Author.pseudonymOf"
 						/>
 					</v-col>
-					<v-col cols="12" md="4">
+					<v-col v-if="!author.pseudonymOf.id" cols="12" md="4">
 						<Autocomplete v-model="author.country" :items="countries" label-key="field.Author.country" />
 					</v-col>
-					<v-col cols="12" md="4">
+					<v-col v-if="!author.pseudonymOf.id" cols="12" md="4">
 						<v-text-field
 							v-model="author.birthDate" :label="$t('field.Author.birthDate')" type="date"
 						/>
 					</v-col>
-					<v-col cols="12" md="4">
+					<v-col v-if="!author.pseudonymOf.id" cols="12" md="4">
 						<v-text-field
 							v-model="author.deathDate" :label="$t('field.Author.deathDate')" type="date"
 						/>
 					</v-col>
-					<v-col cols="12" md="6">
+					<v-col v-if="!author.pseudonymOf.id" cols="12" md="6">
 						<Autocomplete
 							v-model="author.portrait.id" :items="images" :loading="imagesLoading"
 							label-key="field.Author.portrait" refreshable @refresh="loadImages"
 						/>
 					</v-col>
 				</v-row>
+				<v-alert
+					v-if="author.pseudonymOf.id"
+					border="start" type="info" text class="my-4"
+					variant="outlined"
+				>
+					{{ $t('page.Author.editDisabledDueToPseudonym') }}
+				</v-alert>
 			</SectionCard>
 
 			<SectionCard :subtitle="$t('fieldset.Author.biography')" :loading="loading">
@@ -75,6 +82,7 @@ async function fetchData(id: number | undefined): Promise<Partial<Author>> {
 		return authorService.editById(id)
 	}
 	return Promise.resolve({
+		pseudonymOf: {} as Author,
 		portrait: {} as Image
 	})
 }

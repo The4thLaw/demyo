@@ -6,6 +6,7 @@
 				icon="mdi-account dem-overlay-edit"
 			/>
 			<AppTask
+				v-if="!author.pseudonymOf?.id"
 				:label="$t('quickTasks.add.image.to.author')"
 				icon="mdi-camera dem-overlay-add"
 				@click="appTasksMenu = false; dndDialog = true"
@@ -18,7 +19,10 @@
 				@confirm="deleteModel"
 			/>
 		</AppTasks>
-		<DnDImage v-model="dndDialog" main-image-label="field.Author.portrait" @save="saveDndImages" />
+		<DnDImage
+			v-if="!author.pseudonymOf?.id" v-model="dndDialog"
+			main-image-label="field.Author.portrait" @save="saveDndImages"
+		/>
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
 			<FieldValue
@@ -27,7 +31,7 @@
 			/>
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 
-			<FieldValue v-if="author.country" :value="author.country" label-key="field.Author.country">
+			<FieldValue v-if="author.country" label-key="field.Author.country">
 				{{ country }}
 			</FieldValue>
 
@@ -99,7 +103,6 @@
 				/>
 			</div>
 		</SectionCard>
-		Loading: {{ authorLoading }}
 	</v-container>
 </template>
 

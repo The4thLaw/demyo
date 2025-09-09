@@ -50,14 +50,32 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		super(Author.class);
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public Author getByIdForEdition(long id) {
+		Author author = repo.findOneForEdition(id);
+		if (author == null) {
+			throw new EntityNotFoundException("No Author for ID " + id);
+		}
+		return author;
+	}
+
 	@Override
 	@Transactional(readOnly = true)
 	public Author getByIdForView(long id) {
-		Author entity = repo.findOneForView(id);
-		if (entity == null) {
+		Author author = repo.findOneForView(id);
+		if (author == null) {
 			throw new EntityNotFoundException("No Author for ID " + id);
 		}
-		return entity;
+		// For pseudonyms, most fields come from the parent
+		Author real = author.getPseudonymOf();
+		if (real != null) {
+			author.setBirthDate(real.getBirthDate());
+			author.setDeathDate(real.getDeathDate());
+			author.setCountry(real.getCountry());
+			author.setPortrait(real.getPortrait());
+		}
+		return author;
 	}
 
 	@Override

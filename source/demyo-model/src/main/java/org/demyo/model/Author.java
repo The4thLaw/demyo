@@ -10,11 +10,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedAttributeNode;
 import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.SortComparator;
 import org.hibernate.validator.constraints.URL;
@@ -39,7 +41,11 @@ import org.demyo.model.util.StartsWithField;
 @NamedEntityGraph(name = "Author.forEdition", attributeNodes =
 { @NamedAttributeNode("portrait"), @NamedAttributeNode("pseudonymOf") })
 @NamedEntityGraph(name = "Author.forView", attributeNodes =
-{ @NamedAttributeNode("portrait"), @NamedAttributeNode("pseudonymOf"), @NamedAttributeNode("pseudonyms") })
+{ @NamedAttributeNode("portrait"), @NamedAttributeNode(value = "pseudonymOf", subgraph = "Author.subgraph.Author"),
+	@NamedAttributeNode("pseudonyms") },
+subgraphs = {
+		@NamedSubgraph(name = "Author.subgraph.Author", attributeNodes = @NamedAttributeNode("portrait"))
+	})
 public class Author extends AbstractModel {
 	/** The last name. */
 	@Column
@@ -81,6 +87,7 @@ public class Author extends AbstractModel {
 	/** The real author behind this pseudonym. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pseudonym_of_id")
+	@JsonIgnoreProperties({"biography", "birthDate", "deathDate", "country", "portrait"})
 	private Author pseudonymOf;
 
 	/** The pseudonyms for this author. */
@@ -104,7 +111,9 @@ public class Author extends AbstractModel {
 	@JsonView(ModelView.Minimal.class)
 	public String getNameWithPseudonym() {
 		StringBuilder sb = new StringBuilder(getIdentifyingName());
-		if (pseudonymOf != null) {
+		// Some views may not load the pseudonym (like the Album edit)
+		// Be wary of this and avoid lazy-init of the field at the wrong time
+		if (pseudonymOf != null && Hibernate.isInitialized(pseudonymOf)) {
 			sb.append(" (")
 					.append(pseudonymOf.getIdentifyingName())
 					.append(')');
