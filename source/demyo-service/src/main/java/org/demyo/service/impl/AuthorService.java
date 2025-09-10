@@ -101,6 +101,16 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 		return super.save(model);
 	}
 
+	@Transactional(rollbackFor = Throwable.class)
+	@Caching(evict = {
+		@CacheEvict(cacheNames = "ModelLists", key = "'Authors::All'"),
+		@CacheEvict(cacheNames = "ModelLists", key = "'Authors::Real'")
+	})
+	@Override
+	public void delete(long id) {
+		super.delete(id);
+	}
+
 	@Async
 	@Override
 	@Transactional(readOnly = true)
@@ -129,7 +139,10 @@ public class AuthorService extends AbstractModelService<Author> implements IAuth
 	}
 
 	@Transactional(rollbackFor = Throwable.class)
-	@CacheEvict(cacheNames = "ModelLists", key = "#root.targetClass.simpleName.replaceAll('Service$', '')")
+	@Caching(evict = {
+		@CacheEvict(cacheNames = "ModelLists", key = "'Authors::All'"),
+		@CacheEvict(cacheNames = "ModelLists", key = "'Authors::Real'")
+	})
 	@Override
 	public void recoverFromFilePond(long authorId, String portraitFilePondId) throws DemyoException {
 		filePondModelService.recoverFromFilePond(authorId,
