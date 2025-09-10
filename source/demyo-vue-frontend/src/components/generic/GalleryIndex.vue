@@ -23,7 +23,7 @@
 			v-if="pageCount > 1"
 			v-model="currentPage"
 			:length="pageCount"
-			total-visible="10"
+			:total-visible="paginationVisible"
 			class="my-2"
 			@update:model-value="emit('page-change')"
 		/>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends IModel">
-import { emitTypes } from '@/composables/pagination'
+import { emitTypes, useResponsivePageCount } from '@/composables/pagination'
 import { focusElement } from '@/helpers/dom'
 import { useReaderStore } from '@/stores/reader'
 import { isImage } from '@/types/type-guards'
@@ -87,6 +87,8 @@ const paginatedItems = computed(() => {
 		return processedItem
 	})
 })
+
+const paginationVisible = useResponsivePageCount()
 
 function focusKeyboardNav(): void {
 	if (props.keyboardNavigation) {
@@ -211,6 +213,10 @@ function nextPage(): void {
 	width: 266px;
 	padding: 8px;
 	margin: 16px;
+
+	.c-ImageThumb {
+		max-width: initial;
+	}
 }
 
 .v-application .c-GalleryIndex__imageLegend {

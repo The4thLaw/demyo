@@ -48,13 +48,15 @@
 			v-if="pageCount > 1"
 			v-model="currentPage"
 			:length="pageCount"
-			total-visible="10"
+			:total-visible="paginationVisible"
 			class="my-2"
 		/>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { useResponsivePageCount } from '@/composables/pagination'
+
 const ITEMS_PER_PAGE = 10
 
 const props = defineProps<{
@@ -62,6 +64,7 @@ const props = defineProps<{
 }>()
 
 const currentPage = ref(1)
+const paginationVisible = useResponsivePageCount()
 
 interface MetaSeries extends Partial<Album>, Partial<Series> {
 	isSeries?: boolean
