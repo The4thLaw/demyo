@@ -240,14 +240,20 @@ watch(route, () => {
 	}
 }
 
-@media screen and (width >= 600px) {
+@media screen and (width > 600px) {
 	#l-DefaultLayout__menuSearch {
 		display: none;
 	}
 }
 
+@media (width <= 600px) {
+	#l-DefaultLayout__mainContainer {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
 @media (width <= 435px) {
-	#l-DefaultLayout__mainContainer,
 	#l-DefaultLayout__mainContainer > .container,
 	#l-DefaultLayout__routerView > .container,
 	.container.v-TaxonIndex__list {
