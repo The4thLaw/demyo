@@ -3,13 +3,13 @@
 		<v-form ref="form">
 			<SectionCard :subtitle="$t('fieldset.Album.identification')" :loading="loading">
 				<v-row>
-					<v-col :cols="bookTypeManagement ? 8 : 12">
+					<v-col cols="12" :md="bookTypeManagement ? 8 : 12">
 						<Autocomplete
 							v-model="album.series.id" :items="series" :loading="seriesLoading"
 							label-key="field.Album.series" clearable refreshable @refresh="loadSeries"
 						/>
 					</v-col>
-					<v-col v-if="bookTypeManagement" cols="4">
+					<v-col v-if="bookTypeManagement" cols="12" md="4">
 						<Autocomplete
 							v-model="album.bookType.id" :items="bookTypes" :loading="bookTypesLoading"
 							:rules="rules.bookType" label-key="field.Album.bookType"
@@ -66,7 +66,8 @@
 						<Autocomplete
 							v-model="album.genres" :items="filteredGenres" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }"
+							add-label="title.add.taxon.GENRE"
 							label-key="field.Taxonomized.genres" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.genres.push(id)"
 						/>
@@ -79,7 +80,8 @@
 						<Autocomplete
 							v-model="album.tags" :items="filteredTags" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }"
+							add-label="title.add.taxon.TAG"
 							label-key="field.Taxonomized.tags" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.tags.push(id)"
 						/>
