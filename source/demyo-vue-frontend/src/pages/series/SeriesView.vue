@@ -277,15 +277,14 @@ const allTranslators = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
 const allCoverArtists = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'coverArtists', ['name', 'firstName']) : [])
-const allAuthors = computed(() => [
+const allOriginAuthors = computed(() => [
 	...allWriters.value,
 	...allArtists.value,
 	...allColorists.value,
 	...allInkers.value,
-	...allTranslators.value,
 	...allCoverArtists.value
 ])
-const authorOrigins = useAuthorCountries(allAuthors)
+const authorOrigins = useAuthorCountries(allOriginAuthors)
 const allGenres = computed(() => albumsLoaded.value
 	? mergeModels([series.value, ...albumsArray.value], 'genres', 'identifyingName')
 	: series.value.genres)

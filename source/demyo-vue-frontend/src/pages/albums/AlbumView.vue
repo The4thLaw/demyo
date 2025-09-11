@@ -263,6 +263,7 @@
 			<div v-if="derivativesLoading" class="text-center">
 				<v-progress-circular indeterminate color="primary" size="64" />
 			</div>
+			<!-- @vue-generic {Derivative} -->
 			<GalleryIndex
 				:items="derivatives" image-path="mainImage" bordered
 				:keyboard-navigation="false"
@@ -327,16 +328,19 @@ const { model: album, loading, appTasksMenu, deleteModel, loadData }
 		'quickTasks.delete.album.confirm.done', 'AlbumIndex',
 		a => a.title)
 
-const allAuthors = computed(() => [
+const originAuthors = computed(() => [
 	...album.value.writers || [],
 	...album.value.artists || [],
 	...album.value.colorists || [],
 	...album.value.inkers || [],
-	...album.value.translators || [],
 	...album.value.coverArtists || []
 ])
+const allAuthors = computed(() => [
+	...originAuthors.value,
+	...album.value.translators || []
+])
 const hasAuthors = computed(() => allAuthors.value.length > 0)
-const authorOrigins = useAuthorCountries(allAuthors)
+const authorOrigins = useAuthorCountries(originAuthors)
 
 const hasPrices = computed(() => album.value.prices?.length)
 const hasAnyPrice = computed(() => !!hasPrices.value || !!album.value.purchasePrice)
