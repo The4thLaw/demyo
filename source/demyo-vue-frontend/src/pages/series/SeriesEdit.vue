@@ -34,7 +34,8 @@
 						<Autocomplete
 							v-model="series.genres" :items="genres" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }"
+							add-label="title.add.taxon.GENRE"
 							label-key="field.Taxonomized.genres" refreshable @refresh="loadTaxons"
 							@added="(id: number) => series.genres.push(id)"
 						/>
@@ -43,7 +44,8 @@
 						<Autocomplete
 							v-model="series.tags" :items="tags" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }"
+							add-label="title.add.taxon.TAG"
 							label-key="field.Taxonomized.tags" refreshable @refresh="loadTaxons"
 							@added="(id: number) => series.tags.push(id)"
 						/>
