@@ -72,6 +72,7 @@
 </template>
 
 <script setup lang="ts">
+import TaxonLightCreate from '@/components/tags/TaxonLightCreate.vue'
 import UniverseLightCreate from '@/components/universes/UniverseLightCreate.vue'
 import { useSimpleEdit } from '@/composables/model-edit'
 import { useRefreshableTaxons, useRefreshableUniverses } from '@/composables/refreshable-models'
