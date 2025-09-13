@@ -20,6 +20,25 @@ import org.demyo.model.projections.IAuthorAlbum;
 @Repository
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	/**
+	 * Finds the approximate number of rows that would be fetched from the database.
+	 * @param id The identifier of the album.
+	 * @return The expected row count.
+	 */
+	@Query(value = """
+			 select
+				(select greatest(count(*), 1) from albums_writers where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_artists where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_colorists where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_inkers where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_translators where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_cover_artists where album_id = ?1)
+				*(select greatest(count(*), 1) from readers_favourite_albums where album_id = ?1)
+				as rows_lower_bound
+			from dual
+			""", nativeQuery = true)
+	long getFindOneComplexity(long id);
+
+	/**
 	 * Returns a model for the view page.
 	 *
 	 * @param id The identifier of the model.
@@ -29,10 +48,30 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@EntityGraph("Album.forView")
 	Album findOneForView(long id);
 
+	/**
+	 * Returns a model for the view page, not loading authors or taxons.
+	 *
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	@EntityGraph("Album.forView.light")
+	Album findOneForViewLight(long id);
+
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
 	Album findOneForEdition(long id);
+
+	/**
+	 * Returns a model for the edit page, not loading authors or taxons.
+	 *
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	@EntityGraph("Album.forEdition.light")
+	Album findOneForEditionLight(long id);
 
 	/**
 	 * Finds the first Album for a given Series.
