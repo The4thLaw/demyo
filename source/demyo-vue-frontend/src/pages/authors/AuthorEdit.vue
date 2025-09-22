@@ -15,6 +15,12 @@
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
+						<v-text-field
+							v-model="author.nativeLanguageName"
+							:label="$t('field.Author.nativeLanguageName')"
+						/>
+					</v-col>
+					<v-col cols="12" md="4">
 						<Autocomplete
 							v-model="author.pseudonymOf.id" :items="otherAuthors" :loading="authorsLoading"
 							clearable label-key="field.Author.pseudonymOf"
@@ -33,7 +39,7 @@
 							v-model="author.deathDate" :label="$t('field.Author.deathDate')" type="date"
 						/>
 					</v-col>
-					<v-col v-if="!author.pseudonymOf.id" cols="12" md="6">
+					<v-col v-if="!author.pseudonymOf.id" cols="12" md="8">
 						<Autocomplete
 							v-model="author.portrait.id" :items="images" :loading="imagesLoading"
 							label-key="field.Author.portrait" refreshable @refresh="loadImages"

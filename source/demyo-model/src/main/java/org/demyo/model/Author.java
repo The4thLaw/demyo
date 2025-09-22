@@ -60,6 +60,9 @@ public class Author extends AbstractModel {
 	/** The nickname. */
 	@Column
 	private String nickname;
+	/** The name in the author's native language. */
+	@Column(name = "native_lang_name")
+	private String nativeLanguageName;
 	/** The biography. */
 	@Column
 	private String biography;
@@ -190,6 +193,22 @@ public class Author extends AbstractModel {
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	/**
+	 * Gets the name in the author's native language.
+	 * @return The name
+	 */
+	public String getNativeLanguageName() {
+		return nativeLanguageName;
+	}
+
+	/**
+	 * Sets the name in the author's native language
+	 * @param nativeLanguageName the name
+	 */
+	public void setNativeLanguageName(String nativeLanguageName) {
+		this.nativeLanguageName = nativeLanguageName;
 	}
 
 	/**

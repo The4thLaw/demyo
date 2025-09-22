@@ -25,6 +25,10 @@
 		/>
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
+			<div v-if="author.nativeLanguageName" class="v-AuthorView__nativeLanguageName">
+				({{ author.nativeLanguageName }})
+			</div>
+
 			<FieldValue
 				v-if="author.pseudonymOf?.id" :value="author.pseudonymOf"
 				label-key="field.Author.pseudonymOf" type="AuthorView"
@@ -243,6 +247,11 @@ const chartData = computed(() => {
 </script>
 
 <style lang="scss">
+.v-AuthorView__nativeLanguageName {
+	margin-top: -1em;
+	opacity: 0.87;
+}
+
 .v-AuthorView__genresChart {
 	width: max(200px, 20vw);
 	margin: auto;
