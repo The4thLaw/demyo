@@ -20,6 +20,7 @@ declare module 'vue' {
     AuthorEdit: typeof import('./src/pages/authors/AuthorEdit.vue')['default']
     AuthorIndex: typeof import('./src/pages/authors/AuthorIndex.vue')['default']
     AuthorLightCreate: typeof import('./src/components/authors/AuthorLightCreate.vue')['default']
+    AuthorOnlineLookup: typeof import('./src/pages/authors/AuthorOnlineLookup.vue')['default']
     AuthorView: typeof import('./src/pages/authors/AuthorView.vue')['default']
     Autocomplete: typeof import('./src/components/forms/Autocomplete.vue')['default']
     BindingEdit: typeof import('./src/pages/bindings/BindingEdit.vue')['default']

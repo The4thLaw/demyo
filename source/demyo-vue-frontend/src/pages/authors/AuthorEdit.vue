@@ -69,6 +69,8 @@
 
 			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
+
+		<AuthorOnlineLookup :term="`${author.firstName} ${author.name}`" />
 	</v-container>
 </template>
 
