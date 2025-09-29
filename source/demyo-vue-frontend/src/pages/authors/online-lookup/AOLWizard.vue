@@ -5,10 +5,9 @@
 		<v-stepper-header>
 			<v-stepper-item icon="mdi-magnify">{{ $t('page.AuthorOnlineLookup.step.search') }}</v-stepper-item>
 			<v-divider />
-			<!-- TODO: icons -->
-			<v-stepper-item>{{ $t('page.AuthorOnlineLookup.step.review') }}</v-stepper-item>
+			<v-stepper-item icon="mdi-check">{{ $t('page.AuthorOnlineLookup.step.review') }}</v-stepper-item>
 			<v-divider />
-			<v-stepper-item>{{ $t('page.AuthorOnlineLookup.step.biography') }}</v-stepper-item>
+			<v-stepper-item icon="text-box">{{ $t('page.AuthorOnlineLookup.step.biography') }}</v-stepper-item>
 		</v-stepper-header>
 
 		<v-stepper-window>

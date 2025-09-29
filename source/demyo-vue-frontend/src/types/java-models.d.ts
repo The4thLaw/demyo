@@ -93,6 +93,7 @@ interface Author extends AbstractModel {
     fullName: string;
     name: string;
     nameWithPseudonym: string;
+    nativeLanguageName: string;
     nickname: string;
     portrait: Image;
     pseudonymOf: Author;
