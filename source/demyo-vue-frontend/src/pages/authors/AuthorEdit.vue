@@ -70,7 +70,7 @@
 			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
 
-		<AuthorOnlineLookup :term="`${author.firstName} ${author.name}`" />
+		<AuthorOnlineLookup :term="`${author.firstName ?? ''} ${author.name ?? ''}`" />
 	</v-container>
 </template>
 
@@ -102,7 +102,7 @@ const otherAuthors = computed(() => {
 	if (!author.value.id) {
 		return authors.value
 	}
-	return authors.value.filter(a => a.id !== author.value.id)
+	return authors.value.filter((a: Author) => a.id !== author.value.id)
 })
 
 const rules = {
