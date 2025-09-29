@@ -1,7 +1,7 @@
 <template>
 	<span>
 		<template v-if="isArray">
-			<span v-for="(item, index) in model" :key="item.id">
+			<span v-for="(item, index) in (model as IModel[])" :key="item.id">
 				<ModelLinkSingle
 					:model="item" :view="view" :label="label" :css-class="cssClass"
 				>
@@ -39,9 +39,6 @@ const props = withDefaults(defineProps<{
 
 const isArray = computed(() => Array.isArray(props.model))
 const length = computed(() => Array.isArray(props.model) ? (props.model as IModel[]).length : 1)
-
-const slots = useSlots()
-const hasDefaultSlot = computed(() => !!slots.default)
 </script>
 
 <style lang="scss">

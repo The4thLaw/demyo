@@ -7,11 +7,11 @@ import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const readerStore = useReaderStore()
-readerStore.currentReader = {
+readerStore.currentReader = ({
 	configuration: {
 		pageSizeForText: 10
-	}
-}
+	} as ApplicationConfiguration
+} as unknown as Reader)
 
 vi.mock('@/services/binding-service')
 vi.mock('@/services/derivative-type-service')
