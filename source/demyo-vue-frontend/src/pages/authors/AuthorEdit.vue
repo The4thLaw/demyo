@@ -48,8 +48,7 @@
 				</v-row>
 				<v-alert
 					v-if="author.pseudonymOf.id"
-					border="start" type="info" text class="my-4"
-					variant="outlined"
+					border="start" type="info" class="my-4" variant="outlined"
 				>
 					{{ $t('page.Author.editDisabledDueToPseudonym') }}
 				</v-alert>

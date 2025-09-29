@@ -11,19 +11,24 @@
 							<div>
 								<router-link :to="`/${key}/${item.id}/view`" @click="emit('navigate')">
 									<template v-if="key === 'albums'">
-										{{ item.title }}
+										{{ (item as Album).title }}
 									</template>
 									<template v-else-if="key === 'authors'">
-										{{ item.nameWithPseudonym }}
+										{{ (item as Author).nameWithPseudonym }}
 									</template>
 									<template v-else>
 										{{ item.identifyingName }}
 									</template>
 								</router-link>
 							</div>
-							<div v-if="key === 'albums' && item.series" class="c-QuickSearchResults__albumSeries">
-								<router-link :to="`/series/${item.series.id}/view`" @click="emit('navigate')">
-									{{ item.series.identifyingName }}
+							<div
+								v-if="key === 'albums' && (item as Album).series"
+								class="c-QuickSearchResults__albumSeries"
+							>
+								<router-link
+									:to="`/series/${(item as Album).series.id}/view`" @click="emit('navigate')"
+								>
+									{{ (item as Album).series.identifyingName }}
 								</router-link>
 							</div>
 						</v-list-item>
@@ -32,10 +37,7 @@
 			</template>
 		</template>
 		<template v-else-if="hasLoadedResults">
-			<v-alert
-				border="start" type="info" text
-				class="my-4" variant="outlined"
-			>
+			<v-alert border="start" type="info" class="my-4" variant="outlined">
 				{{ $t('quicksearch.noResults') }}
 			</v-alert>
 		</template>

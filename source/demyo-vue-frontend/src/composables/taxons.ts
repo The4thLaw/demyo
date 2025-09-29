@@ -1,12 +1,13 @@
 import { isProcessed } from '@/types/type-guards'
+import type { CSSProperties } from 'vue'
 
 /**
  * Gets the CSS style to apply for a taxon
  * @param taxon The taxon to use for the style
  * @returns The CSS style
  */
-export function getStyle(taxon: ProcessedTaxon | Taxon | Partial<Taxon>): Partial<CSSStyleDeclaration> {
-	const style: Partial<CSSStyleDeclaration> = {}
+export function getStyle(taxon: ProcessedTaxon | Taxon | Partial<Taxon>): CSSProperties {
+	const style: CSSProperties = {}
 	if (taxon.fgColour) {
 		style.color = taxon.fgColour
 	}
@@ -24,7 +25,7 @@ export function getStyle(taxon: ProcessedTaxon | Taxon | Partial<Taxon>): Partia
  * @param taxon The taxon to use for the style
  * @returns The CSS style
  */
-export function useTaxonStyle(taxon: Ref<Partial<Taxon>>): Ref<Partial<CSSStyleDeclaration>> {
+export function useTaxonStyle(taxon: Ref<Partial<Taxon>>): Ref<CSSProperties> {
 	return computed(() => getStyle(taxon.value))
 }
 

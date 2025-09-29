@@ -52,8 +52,7 @@
 			</v-btn>
 			<v-alert
 				v-if="albumCount === 0"
-				border="start" type="info" text class="my-4"
-				variant="outlined"
+				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.BookType.noAlbums') }}
 			</v-alert>

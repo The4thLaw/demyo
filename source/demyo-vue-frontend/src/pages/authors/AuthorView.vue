@@ -65,8 +65,7 @@
 			<FieldValue :value="author.biography" label-key="field.Author.biography" type="rich-text" />
 			<v-alert
 				v-if="!albumsLoading && albums.length === 0"
-				border="start" type="info" text class="my-4"
-				variant="outlined"
+				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Author.noAlbums') }}
 			</v-alert>
@@ -79,8 +78,7 @@
 			</v-btn>
 			<v-alert
 				v-if="derivativeCount === 0"
-				border="start" type="info" text class="my-4"
-				variant="outlined"
+				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Author.noDerivatives') }}
 			</v-alert>
