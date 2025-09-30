@@ -69,7 +69,6 @@ export async function searchPeople(term: string, language: string): Promise<Peop
 			item: e
 		}))
 
-	console.log('People search results: ', items)
 
 	return items
 }
@@ -88,7 +87,6 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 		return {}
 	}
 
-	console.log(psr.item.claims)
 	const indirectIds = [
 		...psr.item.claims[P_GIVEN_NAME] as EntityId[],
 		...psr.item.claims[P_FAMILY_NAME] as EntityId[],
@@ -98,7 +96,6 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 	const indirectQuery = wdk.getEntities({ ids: indirectIds, languages })
 	const indirectEntities: Entities = (await axios.get<parse.WbGetEntitiesResponse>(indirectQuery)).data.entities
 	const simplified = wdk.simplify.entities(indirectEntities)
-	console.log('Simplified', simplified)
 
 	const author: Partial<Author> = {}
 
@@ -110,7 +107,7 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 	const countryCode = citizenship.claims ? citizenship.claims[P_ISO_3166_ALPHA_3][0] as string : undefined
 	author.country = countryCode ?? ''
 
-	// TODO: fix date binding issue in generated types
+	// TODO: #263 fix date binding issue in generated types
 	if (psr.item.claims[P_DOB].length) {
 		author.birthDate = (psr.item.claims[P_DOB][0] as string).replace(/T.*/, '') as unknown as Date
 	}

@@ -14,6 +14,7 @@ declare module 'vue' {
     AlbumIndex: typeof import('./src/pages/albums/AlbumIndex.vue')['default']
     AlbumTextList: typeof import('./src/components/albums/AlbumTextList.vue')['default']
     AlbumView: typeof import('./src/pages/albums/AlbumView.vue')['default']
+    AOLBio: typeof import('./src/pages/authors/online-lookup/AOLBio.vue')['default']
     AOLDetails: typeof import('./src/pages/authors/online-lookup/AOLDetails.vue')['default']
     AOLSearch: typeof import('./src/pages/authors/online-lookup/AOLSearch.vue')['default']
     AOLWizard: typeof import('./src/pages/authors/online-lookup/AOLWizard.vue')['default']

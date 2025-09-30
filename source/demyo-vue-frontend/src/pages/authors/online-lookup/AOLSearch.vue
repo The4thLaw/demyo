@@ -6,6 +6,7 @@
 			<v-text-field
 				v-model="searchTerm"
 				:label="$t('page.AuthorOnlineLookup.searchTerm')"
+				@update:model-value="resetPeopleSearch"
 			/>
 			<v-btn
 				color="secondary" prepend-icon="mdi-magnify"
@@ -57,15 +58,19 @@ const hasSearched = ref(false)
 const searchingPeople = ref(false)
 const peopleSearchResults = ref([] as PeopleSearchResult[])
 
-if (props.term && props.term.trim().length > 0) {
-	// Automatically search if we start with a term
-	void searchOnline()
+function autoSearch(): void {
+	// Automatically search if we start with a term coming from the props
+	if (props.term && props.term.trim().length > 0) {
+		void searchOnline()
+	}
 }
+
+autoSearch()
 
 watch(() => props.term, t => {
 	searchTerm.value = t
+	autoSearch()
 })
-watch(searchTerm, resetPeopleSearch)
 
 function resetPeopleSearch(): void {
 	hasSearched.value = false
