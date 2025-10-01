@@ -96,24 +96,21 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 
 	const author: Partial<Author> = {}
 
-	author.nativeLanguageName = (psr.item.claims[P_NATIVE_NAME][0] ?? '') as string
+	author.nativeLanguageName = (psr.item.claims[P_NATIVE_NAME]?.[0] ?? '') as string
 	author.name = simplifyClaims(psr.item.claims, P_FAMILY_NAME, simplified, language)
 	author.firstName = simplifyClaims(psr.item.claims, P_GIVEN_NAME, simplified, language)
 
-	const citizenship = simplified[psr.item.claims[P_CITIZENSHIP as PropertyId][0] as string] as SimplifiedItem
-	const countryCode = citizenship.claims ? citizenship.claims[P_ISO_3166_ALPHA_3][0] as string : undefined
-	author.country = countryCode ?? ''
+	const citizenshipId = (psr.item.claims[P_CITIZENSHIP as PropertyId]?.[0] ?? '') as string
+	if (citizenshipId) {
+		const citizenship = simplified[citizenshipId] as SimplifiedItem
+		const countryCode = citizenship.claims ? (citizenship.claims[P_ISO_3166_ALPHA_3]?.[0] ?? '') as string : undefined
+		author.country = countryCode ?? ''
+	}
 
 	// Strip the time parts of the dates
 	// Note that TypeScript expects the items to always be defined but that's not the case
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-	if (psr.item.claims[P_DOB]?.length) {
-		author.birthDate = (psr.item.claims[P_DOB][0] as string).replace(/T.*/, '')
-	}
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-	if (psr.item.claims[P_DOD]?.length) {
-		author.deathDate = (psr.item.claims[P_DOD][0] as string).replace(/T.*/, '')
-	}
+	author.birthDate = ((psr.item.claims[P_DOB]?.[0] ?? '') as string).replace(/T.*/, '')
+	author.deathDate = ((psr.item.claims[P_DOD]?.[0] ?? '') as string).replace(/T.*/, '')
 
 	return author
 }
