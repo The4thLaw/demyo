@@ -43,6 +43,7 @@
     "vue-i18n": "^11.1.11",
     "vue-router": "^4.5.1",
     "vuetify": "~3.9.4",
+    "wikibase-sdk": "^11.0.0",
     "world-countries": "^5.1.0"
   },
   "devDependencies": {

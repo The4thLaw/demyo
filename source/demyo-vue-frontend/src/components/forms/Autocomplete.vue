@@ -29,7 +29,7 @@
 				</v-btn>
 			</template>
 		</v-autocomplete>
-		<v-dialog v-if="addComponent" v-model="showAddDialog" max-width="45em">
+		<v-dialog v-if="addComponent" v-model="showAddDialog" max-width="max(50vw, 45em)">
 			<v-card>
 				<v-card-title>
 					{{ $t(addLabel) }}
