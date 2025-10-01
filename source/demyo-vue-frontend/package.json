@@ -29,7 +29,6 @@
     "filepond": "^4.32.8",
     "filepond-plugin-file-validate-type": "^1.2.6",
     "filepond-plugin-image-preview": "^4.6.11",
-    "google-translate-api-x": "^10.7.2",
     "lodash": "^4.17.20",
     "pinia": "^3.0.3",
     "randomcolor": "^0.6.2",

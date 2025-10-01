@@ -80,6 +80,7 @@
 							</classes>
 							<customTypeMappings>
 								<mapping>java.util.Locale:string</mapping>
+								<mapping>java.util.Date:string</mapping>
 							</customTypeMappings>
 							<excludeClasses>
 								<class>java.lang.Comparable</class>

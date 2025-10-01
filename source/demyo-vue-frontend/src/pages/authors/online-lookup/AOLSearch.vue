@@ -7,6 +7,7 @@
 				v-model="searchTerm"
 				:label="$t('page.AuthorOnlineLookup.searchTerm')"
 				@update:model-value="resetPeopleSearch"
+				@keydown.enter.stop.prevent="searchOnline"
 			/>
 			<v-btn
 				color="secondary" prepend-icon="mdi-magnify"
@@ -79,6 +80,7 @@ function resetPeopleSearch(): void {
 }
 
 async function searchOnline(): Promise<void> {
+	searchingPeople.value = true
 	resetPeopleSearch()
 	peopleSearchResults.value = await searchPeople(searchTerm.value, props.language)
 	searchingPeople.value = false
@@ -93,5 +95,11 @@ function selectResult(psr: PeopleSearchResult): void {
 <style lang="scss">
 .c-AOLSearch__searchTerm {
 	display: flex;
+}
+
+@media screen and (width <= 600px) { // Vuetify "xs" breakpoint
+	.c-AOLSearch__searchTerm {
+		flex-direction: column;
+	}
 }
 </style>

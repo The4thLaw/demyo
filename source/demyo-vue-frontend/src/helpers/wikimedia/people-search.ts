@@ -28,7 +28,7 @@ export interface PeopleSearchResult {
 }
 
 export async function searchPeople(term: string, language: string): Promise<PeopleSearchResult[]> {
-	console.debug(`Searching for '${term}' in '${language}'`)
+	console.debug(`Searching for people named '${term}' in '${language}'`)
 
 	// There are to approaches here. We could search for all entities and get a description, but then we
 	// need to fetch all entities to check if they are human. Or we can search for humans and get less
@@ -58,7 +58,7 @@ export async function searchPeople(term: string, language: string): Promise<Peop
 
 	const simplified = wdk.simplify.entities(entities)
 
-	const items = Object.values(simplified)
+	return Object.values(simplified)
 		.filter(e => instanceOfSimplifiedItem(e))
 		// Only keep results with understandable labels
 		.filter(e => withFallback(e.labels, language) !== undefined)
@@ -68,9 +68,6 @@ export async function searchPeople(term: string, language: string): Promise<Peop
 			description: withFallback(e.descriptions, language) ?? '',
 			item: e
 		}))
-
-
-	return items
 }
 
 function getLanguages(language: string): string[] {
@@ -107,12 +104,15 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 	const countryCode = citizenship.claims ? citizenship.claims[P_ISO_3166_ALPHA_3][0] as string : undefined
 	author.country = countryCode ?? ''
 
-	// TODO: #263 fix date binding issue in generated types
-	if (psr.item.claims[P_DOB].length) {
-		author.birthDate = (psr.item.claims[P_DOB][0] as string).replace(/T.*/, '') as unknown as Date
+	// Strip the time parts of the dates
+	// Note that TypeScript expects the items to always be defined but that's not the case
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	if (psr.item.claims[P_DOB]?.length) {
+		author.birthDate = (psr.item.claims[P_DOB][0] as string).replace(/T.*/, '')
 	}
-	if (psr.item.claims[P_DOD].length) {
-		author.deathDate = (psr.item.claims[P_DOD][0] as string).replace(/T.*/, '') as unknown as Date
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	if (psr.item.claims[P_DOD]?.length) {
+		author.deathDate = (psr.item.claims[P_DOD][0] as string).replace(/T.*/, '')
 	}
 
 	return author

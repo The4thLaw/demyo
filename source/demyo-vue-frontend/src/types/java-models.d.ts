@@ -19,12 +19,12 @@ interface AbstractNamedModel extends AbstractModel {
 }
 
 interface AbstractPrice<P, M> {
-    date: Date;
+    date: string;
     price: number;
 }
 
 interface AbstractPricedModel<P, M> extends AbstractModel {
-    acquisitionDate: Date;
+    acquisitionDate: string;
     priceList: P[];
     prices: P[];
     purchasePrice: number;
@@ -40,9 +40,9 @@ interface Album extends AbstractPricedModel<AlbumPrice, Album>, Taxonomized {
     comment: string;
     cover: Image;
     coverArtists: Author[];
-    currentEditionDate: Date;
+    currentEditionDate: string;
     cycle: number;
-    firstEditionDate: Date;
+    firstEditionDate: string;
     height: number;
     images: Image[];
     inkers: Author[];
@@ -56,7 +56,7 @@ interface Album extends AbstractPricedModel<AlbumPrice, Album>, Taxonomized {
     priceList: AlbumPrice[];
     prices: AlbumPrice[];
     pricesRaw: AlbumPrice[];
-    printingDate: Date;
+    printingDate: string;
     publisher: Publisher;
     readersFavourites: Reader[];
     readersReadingList: Reader[];
@@ -86,9 +86,9 @@ interface ApplicationConfiguration {
 
 interface Author extends AbstractModel {
     biography: string;
-    birthDate: Date;
+    birthDate: string;
     country: string;
-    deathDate: Date;
+    deathDate: string;
     firstName: string;
     fullName: string;
     name: string;

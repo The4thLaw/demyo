@@ -36,7 +36,13 @@ export async function findExcerpts(pageTitles: Record<string, string>, language:
 	return excerpts
 }
 
-async function findExcerptExact(pageTitle: string, language: string): Promise<Excerpt | undefined> {
+async function findExcerptExact(pageTitle: string | undefined, language: string): Promise<Excerpt | undefined> {
+	if (!pageTitle) {
+		return undefined
+	}
+
+	console.debug(`Searching for the excerpt of pages named '${pageTitle}' in '${language}'`)
+
 	const wikipediaExtractUrl
 		= `https://${language}.wikipedia.org/w/api.php?action=query&format=json&titles=${pageTitle}`
 		+ '&prop=extracts&exintro&explaintext&origin=*&redirects=1'
@@ -45,9 +51,7 @@ async function findExcerptExact(pageTitle: string, language: string): Promise<Ex
 	const firstPageId = Object.keys(pages)[0]
 	let excerpt = pages[firstPageId].extract
 	if (excerpt) {
-		console.log(excerpt)
 		excerpt = `<p>${excerpt.replace(/(?:\r\n|\r|\n)/g, '</p><p>')}</p>`
-		console.log(excerpt)
 		return {
 			language,
 			title: `${language}.wikipedia.org`,

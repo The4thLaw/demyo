@@ -3,11 +3,17 @@
 		v-model="step"
 	>
 		<v-stepper-header>
-			<v-stepper-item icon="mdi-magnify">{{ $t('page.AuthorOnlineLookup.step.search') }}</v-stepper-item>
+			<v-stepper-item icon="mdi-magnify">
+				{{ $t('page.AuthorOnlineLookup.step.search') }}
+			</v-stepper-item>
 			<v-divider />
-			<v-stepper-item icon="mdi-check">{{ $t('page.AuthorOnlineLookup.step.review') }}</v-stepper-item>
+			<v-stepper-item icon="mdi-check">
+				{{ $t('page.AuthorOnlineLookup.step.review') }}
+			</v-stepper-item>
 			<v-divider />
-			<v-stepper-item icon="text-box">{{ $t('page.AuthorOnlineLookup.step.biography') }}</v-stepper-item>
+			<v-stepper-item icon="text-box">
+				{{ $t('page.AuthorOnlineLookup.step.biography') }}
+			</v-stepper-item>
 		</v-stepper-header>
 
 		<v-stepper-window>
@@ -29,7 +35,7 @@
 
 		<v-stepper-actions
 			:disabled="actionsDisabled"
-			:prev-text="$t('page.AuthorOnlineLookup.step-action.back')"
+			:prev-text="prevText"
 			:next-text="nextText"
 			@click:prev="prev"
 			@click:next="next"
@@ -50,6 +56,11 @@ defineProps<{
 	term: string
 }>()
 
+const emit = defineEmits<{
+	close: []
+	apply: [author: Partial<Author>]
+}>()
+
 const step = ref(STEP_INIT)
 const i18n = useI18n()
 const language = computed(() => i18n.locale.value.substring(0, 2))
@@ -57,6 +68,13 @@ const selectedPerson = ref<PeopleSearchResult | undefined>(undefined)
 const detailsLoaded = ref(false)
 const bioLoaded = ref(false)
 const author = ref<Partial<Author>>({})
+
+const prevText = computed(() => {
+	if (step.value > STEP_INIT) {
+		return i18n.t('page.AuthorOnlineLookup.step-action.back')
+	}
+	return i18n.t('page.AuthorOnlineLookup.step-action.close')
+})
 
 const nextText = computed(() => {
 	switch (step.value) {
@@ -84,23 +102,13 @@ const isNextEnabled = computed(() => {
 	return false
 })
 
-const actionsDisabled = computed(() => {
-	const isPrevEnabled = step.value > STEP_INIT
-	if (isPrevEnabled && isNextEnabled.value) {
-		return false
-	}
-	if (isPrevEnabled) {
-		return 'next'
-	}
-	if (isNextEnabled.value) {
-		return 'prev'
-	}
-	return true
-})
+const actionsDisabled = computed(() => isNextEnabled.value ? false : 'next')
 
 function prev(): void {
 	if (step.value > STEP_INIT) {
 		step.value--
+	} else {
+		emit('close')
 	}
 }
 
@@ -111,8 +119,7 @@ function next(): void {
 	if (step.value < STEP_BIO) {
 		step.value++
 	} else {
-		// Send the author
-		alert('OK author')
+		emit('apply', author.value)
 	}
 }
 

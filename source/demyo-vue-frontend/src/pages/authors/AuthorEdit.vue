@@ -2,7 +2,12 @@
 	<v-container fluid>
 		<v-form ref="form">
 			<SectionCard :subtitle="$t('fieldset.Author.identity')" :loading="loading">
-				<v-row>
+				<AuthorOnlineLookup
+					:term="`${author.firstName ?? ''} ${author.name ?? ''}`"
+					@apply="applyOnlineLookup"
+				/>
+
+				<v-row class="mt-4">
 					<v-col cols="12" md="4">
 						<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
 					</v-col>
@@ -68,8 +73,6 @@
 
 			<FormActions v-if="!loading" @save="save" @reset="reset" />
 		</v-form>
-
-		<AuthorOnlineLookup :term="`${author.firstName ?? ''} ${author.name ?? ''}`" />
 	</v-container>
 </template>
 
@@ -103,6 +106,13 @@ const otherAuthors = computed(() => {
 	}
 	return authors.value.filter((a: Author) => a.id !== author.value.id)
 })
+
+function applyOnlineLookup(online: Partial<Author>): void {
+	author.value = {
+		...author.value,
+		...online
+	}
+}
 
 const rules = {
 	name: [
