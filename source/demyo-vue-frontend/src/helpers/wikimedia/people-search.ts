@@ -84,41 +84,56 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 		return {}
 	}
 
-	const indirectIds = [
-		...psr.item.claims[P_GIVEN_NAME] as EntityId[],
-		...psr.item.claims[P_FAMILY_NAME] as EntityId[],
-		...psr.item.claims[P_CITIZENSHIP] as EntityId[]
+	const mainClaims: SimplifiedClaims = psr.item.claims
+	const subClaimIds = [
+		...mainClaims[P_GIVEN_NAME] as EntityId[],
+		...mainClaims[P_FAMILY_NAME] as EntityId[],
+		...mainClaims[P_CITIZENSHIP] as EntityId[]
 	]
 	const languages = getLanguages(language)
-	const indirectQuery = wdk.getEntities({ ids: indirectIds, languages })
-	const indirectEntities: Entities = (await axios.get<parse.WbGetEntitiesResponse>(indirectQuery)).data.entities
-	const simplified = wdk.simplify.entities(indirectEntities)
+	const subQuery = wdk.getEntities({ ids: subClaimIds, languages })
+	const subEntities: Entities = (await axios.get<parse.WbGetEntitiesResponse>(subQuery)).data.entities
+	const simpleSubClaims = wdk.simplify.entities(subEntities)
 
 	const author: Partial<Author> = {}
 
-	author.nativeLanguageName = (psr.item.claims[P_NATIVE_NAME]?.[0] ?? '') as string
-	author.name = simplifyClaims(psr.item.claims, P_FAMILY_NAME, simplified, language)
-	author.firstName = simplifyClaims(psr.item.claims, P_GIVEN_NAME, simplified, language)
+	author.nativeLanguageName = getSingleClaim(mainClaims, P_NATIVE_NAME)
+	author.name = resolveClaims(mainClaims, P_FAMILY_NAME, simpleSubClaims, language)
+	author.firstName = resolveClaims(mainClaims, P_GIVEN_NAME, simpleSubClaims, language)
 
-	const citizenshipId = (psr.item.claims[P_CITIZENSHIP as PropertyId]?.[0] ?? '') as string
+	const citizenshipId = getSingleClaim(mainClaims, P_CITIZENSHIP)
 	if (citizenshipId) {
-		const citizenship = simplified[citizenshipId] as SimplifiedItem
-		const countryCode = citizenship.claims ? (citizenship.claims[P_ISO_3166_ALPHA_3]?.[0] ?? '') as string : undefined
-		author.country = countryCode ?? ''
+		const citizenship = simpleSubClaims[citizenshipId] as SimplifiedItem
+		author.country = getSingleClaim(citizenship.claims, P_ISO_3166_ALPHA_3)
 	}
 
 	// Strip the time parts of the dates
-	// Note that TypeScript expects the items to always be defined but that's not the case
-	author.birthDate = ((psr.item.claims[P_DOB]?.[0] ?? '') as string).replace(/T.*/, '')
-	author.deathDate = ((psr.item.claims[P_DOD]?.[0] ?? '') as string).replace(/T.*/, '')
+	author.birthDate = getSingleClaim(mainClaims, P_DOB).replace(/T.*/, '')
+	author.deathDate = getSingleClaim(mainClaims, P_DOD).replace(/T.*/, '')
 
 	return author
 }
 
-function simplifyClaims(claims: SimplifiedClaims, prop: PropertyId,
-		resolved: Record<string, SimplifiedEntity>, language: string): string {
-	return claims[prop]
+/**
+ * Gets the first value matching a property in a set of claims.
+ * @param claims The simplified claims.
+ * @param property The property to get values for.
+ * @returns The first value. If the claims are undefined or the property doesn't exist or the array of values is
+ * empty, returns the empty string.
+ */
+function getSingleClaim(claims: SimplifiedClaims | undefined, property: string): string {
+	if (!claims) {
+		return ''
+	}
+	const claimValues = claims[property as PropertyId]
+	const singleValue  = claimValues?.[0]
+	return (singleValue ?? '') as string
+}
+
+function resolveClaims(mainClaims: SimplifiedClaims, prop: PropertyId,
+		simpleSubClaims: Record<string, SimplifiedEntity>, language: string): string {
+	return mainClaims[prop]
 		.map(
-			id => withFallback((resolved[id as string] as SimplifiedItem).labels, language)
+			id => withFallback((simpleSubClaims[id as string] as SimplifiedItem).labels, language)
 		).join(' ')
 }
