@@ -86,9 +86,9 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 
 	const mainClaims: SimplifiedClaims = psr.item.claims
 	const subClaimIds = [
-		...mainClaims[P_GIVEN_NAME] as EntityId[],
-		...mainClaims[P_FAMILY_NAME] as EntityId[],
-		...mainClaims[P_CITIZENSHIP] as EntityId[]
+		...(mainClaims[P_GIVEN_NAME] ?? []) as EntityId[],
+		...(mainClaims[P_FAMILY_NAME] ?? []) as EntityId[],
+		...(mainClaims[P_CITIZENSHIP] ?? []) as EntityId[],
 	]
 	const languages = getLanguages(language)
 	const subQuery = wdk.getEntities({ ids: subClaimIds, languages })
@@ -100,6 +100,12 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 	author.nativeLanguageName = getSingleClaim(mainClaims, P_NATIVE_NAME)
 	author.name = resolveClaims(mainClaims, P_FAMILY_NAME, simpleSubClaims, language)
 	author.firstName = resolveClaims(mainClaims, P_GIVEN_NAME, simpleSubClaims, language)
+	if (author.nativeLanguageName
+			&& ((author.nativeLanguageName === `${author.firstName} ${author.name}`.trim())
+			|| (author.nativeLanguageName === `${author.name} ${author.firstName}`.trim()))) {
+		// If the native language name is basically the first and last name, clear it, it brings no added value
+		author.nativeLanguageName = ''
+	}
 
 	const citizenshipId = getSingleClaim(mainClaims, P_CITIZENSHIP)
 	if (citizenshipId) {
@@ -132,6 +138,9 @@ function getSingleClaim(claims: SimplifiedClaims | undefined, property: string):
 
 function resolveClaims(mainClaims: SimplifiedClaims, prop: PropertyId,
 		simpleSubClaims: Record<string, SimplifiedEntity>, language: string): string {
+	if (!mainClaims[prop]) {
+		return ''
+	}
 	return mainClaims[prop]
 		.map(
 			id => withFallback((simpleSubClaims[id as string] as SimplifiedItem).labels, language)
