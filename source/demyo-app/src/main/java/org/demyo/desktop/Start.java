@@ -88,13 +88,6 @@ public final class Start {
 		webapp.setThrowUnavailableOnStartupException(true);
 		webapp.setTempDirectory(sysConfig.getTempDirectory().resolve("jetty").toFile());
 
-		// Set paths to plugins
-		PluginManager pluginMgr = new PluginManager(sysConfig.getSystemPluginDirectory(),
-				sysConfig.getUserPluginDirectory());
-		String extraClasspath = pluginMgr.getPluginPaths();
-		LOGGER.info("Setting extra classpath for Jetty: {}", extraClasspath);
-		webapp.setExtraClasspath(extraClasspath);
-
 		setDesktopCallbacks(server);
 		server.setHandler(webapp);
 

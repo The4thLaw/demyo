@@ -21,7 +21,6 @@ import org.demyo.common.exception.DemyoRuntimeException;
  * @see ApplicationConfiguration
  */
 public final class SystemConfiguration {
-	private static final String PLUGIN_DIR_NAME = "plugins";
 	private static final String CONFIG_KEY_WAR_PATH = "war.path";
 	private static final String CONFIG_KEY_CONTEXT_ROOT = "war.contextRoot";
 	private static final String CONFIG_KEY_PORTABLE = "portable";
@@ -70,10 +69,6 @@ public final class SystemConfiguration {
 	private final Path tempDirectory;
 	/** The directory to store image thumbnails. */
 	private final Path thumbnailDirectory;
-	/** The directory where system-wide plugins are located. */
-	private final Path systemPluginDirectory;
-	/** The directory where user-specific directories are located. */
-	private final Path userPluginDirectory;
 	/** The flag indicating whether to start the Web browser automatically. */
 	private final boolean autoStartWebBrowser;
 	/** The maximum number of threads that should be used for thumbnails. If left empty, Demyo uses a heuristic. */
@@ -109,7 +104,6 @@ public final class SystemConfiguration {
 		maxThumbnailThreads = StringUtils.isBlank(threads) ? null : Integer.parseInt(threads);
 		thumbnailQueueSize = config.getInt(CONFIG_KEY_THUMB_QUEUE_SIZE, DEFAULT_THUMBNAIL_QUEUE);
 		autoStartWebBrowser = !config.getBoolean("desktop.noBrowserAutoStart", false);
-		systemPluginDirectory = applicationDirectory.resolve(PLUGIN_DIR_NAME);
 
 		// Prepare all paths
 		if (portable) {
@@ -140,7 +134,6 @@ public final class SystemConfiguration {
 			}
 		}
 
-		userPluginDirectory = userDirectory.resolve(PLUGIN_DIR_NAME);
 		imagesDirectory = userDirectory.resolve("images");
 		thumbnailDirectory = userDirectory.resolve("thumbnails");
 		databaseUrlPath = userDirectory.resolve("demyo");
@@ -158,7 +151,6 @@ public final class SystemConfiguration {
 		createDirectoryIfNeeded(imagesDirectory);
 		createDirectoryIfNeeded(tempDirectory);
 		createDirectoryIfNeeded(thumbnailDirectory);
-		createDirectoryIfNeeded(userPluginDirectory);
 
 		// Logging in info can be pretty useful to detect issues in user setups
 		LOGGER.info("The system configuration is: {}", this);
@@ -297,8 +289,6 @@ public final class SystemConfiguration {
 		sb.append("\n\timages directory: ").append(imagesDirectory);
 		sb.append("\n\tthumbnail directory: ").append(thumbnailDirectory);
 		sb.append("\n\ttemporary directory: ").append(tempDirectory);
-		sb.append("\n\tsystem plugin directory: ").append(systemPluginDirectory);
-		sb.append("\n\tuser plugin directory directory: ").append(userPluginDirectory);
 		sb.append("\n\tmaximum thumbnail threads: ").append(maxThumbnailThreads);
 		sb.append("\n\tthumbnail queue size: ").append(thumbnailQueueSize);
 		return sb.toString();
@@ -429,24 +419,6 @@ public final class SystemConfiguration {
 	 */
 	public boolean isAutoStartWebBrowser() {
 		return autoStartWebBrowser;
-	}
-
-	/**
-	 * Gets the directory where system-wide plugins are located.
-	 *
-	 * @return the directory where system-wide plugins are located
-	 */
-	public Path getSystemPluginDirectory() {
-		return systemPluginDirectory;
-	}
-
-	/**
-	 * Gets the directory where user-specific directories are located.
-	 *
-	 * @return the directory where user-specific directories are located
-	 */
-	public Path getUserPluginDirectory() {
-		return userPluginDirectory;
 	}
 
 	/**
