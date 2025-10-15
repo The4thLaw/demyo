@@ -85,19 +85,29 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 	}
 
 	const mainClaims: SimplifiedClaims = psr.item.claims
+
+	const author: Partial<Author> = {}
+	author.nativeLanguageName = getSingleClaim(mainClaims, P_NATIVE_NAME)
+
+	// Strip the time parts of the dates
+	author.birthDate = getSingleClaim(mainClaims, P_DOB).replace(/T.*/, '')
+	author.deathDate = getSingleClaim(mainClaims, P_DOD).replace(/T.*/, '')
+
 	const subClaimIds = [
 		...(mainClaims[P_GIVEN_NAME] ?? []) as EntityId[],
 		...(mainClaims[P_FAMILY_NAME] ?? []) as EntityId[],
-		...(mainClaims[P_CITIZENSHIP] ?? []) as EntityId[],
+		...(mainClaims[P_CITIZENSHIP] ?? []) as EntityId[]
 	]
 	const languages = getLanguages(language)
+	if (!subClaimIds.length) {
+		console.warn(`Wikidata has very limited information for ${psr.fullName} (${psr.id})`)
+		return author
+	}
+
 	const subQuery = wdk.getEntities({ ids: subClaimIds, languages })
 	const subEntities: Entities = (await axios.get<parse.WbGetEntitiesResponse>(subQuery)).data.entities
 	const simpleSubClaims = wdk.simplify.entities(subEntities)
 
-	const author: Partial<Author> = {}
-
-	author.nativeLanguageName = getSingleClaim(mainClaims, P_NATIVE_NAME)
 	author.name = resolveClaims(mainClaims, P_FAMILY_NAME, simpleSubClaims, language)
 	author.firstName = resolveClaims(mainClaims, P_GIVEN_NAME, simpleSubClaims, language)
 	if (author.nativeLanguageName
@@ -113,12 +123,11 @@ export async function loadPerson(psr: PeopleSearchResult, language: string): Pro
 		author.country = getSingleClaim(citizenship.claims, P_ISO_3166_ALPHA_3)
 	}
 
-	// Strip the time parts of the dates
-	author.birthDate = getSingleClaim(mainClaims, P_DOB).replace(/T.*/, '')
-	author.deathDate = getSingleClaim(mainClaims, P_DOD).replace(/T.*/, '')
-
 	return author
 }
+
+// Type hinting for wikibase makes typescript think that some accessors are safe but they really aren't
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
 /**
  * Gets the first value matching a property in a set of claims.
@@ -132,7 +141,7 @@ function getSingleClaim(claims: SimplifiedClaims | undefined, property: string):
 		return ''
 	}
 	const claimValues = claims[property as PropertyId]
-	const singleValue  = claimValues?.[0]
+	const singleValue = claimValues?.[0]
 	return (singleValue ?? '') as string
 }
 
@@ -146,3 +155,5 @@ function resolveClaims(mainClaims: SimplifiedClaims, prop: PropertyId,
 			id => withFallback((simpleSubClaims[id as string] as SimplifiedItem).labels, language)
 		).join(' ')
 }
+
+/* eslint-enable @typescript-eslint/no-unnecessary-condition */
