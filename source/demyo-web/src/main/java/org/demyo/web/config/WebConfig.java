@@ -13,12 +13,10 @@ import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
-import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
@@ -40,7 +38,6 @@ import org.demyo.web.jackson.NullStringModule;
  * Configuration for the Web layer.
  */
 @Configuration
-@ComponentScan("org.demyo")
 @Import(
 { DaoConfig.class, WebSecurityConfig.class })
 @EnableWebMvc
@@ -135,9 +132,18 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Bean
 	public DesktopCallbacks desktopCallbacks() throws NamingException {
-		JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
+		/*JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
 		bean.setJndiName("org.demyo.services.desktop");
 		bean.afterPropertiesSet();
-		return (DesktopCallbacks) bean.getObject();
+		return (DesktopCallbacks) bean.getObject();*/
+		// TODO: #205: Callbacks should be registered as a plain bean elsewhere
+		return new DesktopCallbacks() {
+
+			@Override
+			public void stopServer() {
+				LOGGER.debug("MOCK STOP SERVER");
+			}
+
+		};
 	}
 }
