@@ -1,0 +1,8 @@
+# TODO: #205: We should use profiles for this
+spring:
+    jpa:
+        show-sql: @config.hibernate.debug@
+        open-in-view: false
+        properties:
+            hibernate:
+                format_sql: @config.hibernate.debug@

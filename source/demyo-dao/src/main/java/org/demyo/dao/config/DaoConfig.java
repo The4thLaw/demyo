@@ -21,7 +21,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -43,7 +42,6 @@ import org.demyo.dao.utils.FlywayUtils;
  */
 @Configuration
 @ComponentScan("org.demyo")
-@PropertySource("classpath:/org/demyo/dao/config.properties")
 @EnableJpaRepositories(basePackages = "org.demyo.dao", bootstrapMode = BootstrapMode.DEFERRED)
 @EnableTransactionManagement
 public class DaoConfig {
@@ -56,8 +54,10 @@ public class DaoConfig {
 	/** The version of H2 used before we started tracking the version numbers. */
 	private static final int DEMYO_3_0_H2_VERSION = 196;
 
-	@Value("${config.hibernate.debug}")
-	private String hibernateDebug;
+	@Value("${spring.jpa.show-sql}")
+	private String showSql;
+	@Value("${spring.jpa.properties.hibernate.format_sql}")
+	private String formatSql;
 
 	public DaoConfig() {
 		LOGGER.info("Parsing configuration");
@@ -139,6 +139,7 @@ public class DaoConfig {
 	// Spring data needs this bean to be named entityManagerFactory, even though it's a SessionFactory
 	@Bean(name = "entityManagerFactory")
 	// Must be run after Flyway to ensure the database is compatible with the code
+	// TODO: #205: Maybe there's a way to set everything with Spring Boot here
 	@DependsOn(FLYWAY_BEAN_NAME)
 	public LocalSessionFactoryBean entityManagerFactory() throws SQLException {
 		LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
@@ -146,9 +147,9 @@ public class DaoConfig {
 		factory.setDataSource(dataSource());
 
 		Properties props = new Properties();
-		LOGGER.info("Hibernate debug is enabled: {}", hibernateDebug);
-		props.setProperty("hibernate.show_sql", hibernateDebug);
-		props.setProperty("hibernate.format_sql", hibernateDebug);
+		LOGGER.info("Hibernate debug is enabled: show={}, format={}", showSql, formatSql);
+		props.setProperty("hibernate.show_sql", showSql);
+		props.setProperty("hibernate.format_sql", formatSql);
 		// Dialect will be automatically detected
 		// If enabled, Hibernate will collect statistics useful for performance tuning
 		props.setProperty("generate_statistics", "false");
