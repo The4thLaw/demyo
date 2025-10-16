@@ -70,7 +70,6 @@ public class Derivative extends AbstractPricedModel<DerivativePrice, Derivative>
 	/** The {@link Author} who worked on this Derivative. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artist_id")
-	@BatchSize(size = BATCH_SIZE)
 	private Author artist;
 
 	/** The {@link DerivativeType type} of this Derivative. */
