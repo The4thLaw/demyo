@@ -108,14 +108,16 @@ Includes the Web server, H2 server, and startup program.</description>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>logback.xml</include>
+					<include>**/*.xml</include>
+					<include>**/*.yml</include>
 				</includes>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>false</filtering>
 				<excludes>
-					<exclude>logback.xml</exclude>
+					<exclude>**/*.xml</exclude>
+					<exclude>**/*.yml</exclude>
 				</excludes>
 			</resource>
 		</resources>
