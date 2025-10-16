@@ -2,24 +2,20 @@ package org.demyo.desktop;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.SplashScreen;
-import java.net.InetSocketAddress;
-import java.nio.file.Path;
 
 import javax.naming.NamingException;
-import javax.swing.JOptionPane;
 
-import org.eclipse.jetty.ee10.webapp.WebAppContext;
-import org.eclipse.jetty.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.desktop.DesktopCallbacks;
-import org.demyo.common.desktop.DesktopUtils;
 
 /**
  * Main entry point for Demyo operation.
  */
+@SpringBootApplication(scanBasePackages = "org.demyo")
 public final class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
 
@@ -32,6 +28,15 @@ public final class Start {
 	 * @param args The command line arguments.
 	 */
 	public static void main(String[] args) {
+		SpringApplication.run(Start.class, args);
+	}
+
+	/**
+	 * Startup method (legacy version).
+	 *
+	 * @param args The command line arguments.
+	 */
+	/*public static void mainLegacy(String[] args) {
 		try {
 			startDemyo();
 		} catch (Exception e) {
@@ -46,9 +51,9 @@ public final class Start {
 		LOGGER.debug("Main method exiting");
 		// This should not be needed, but the EDT hangs on.
 		System.exit(0);
-	}
+	}*/
 
-	private static void startDemyo() throws Exception {
+	/*private static void startDemyo() throws Exception {
 		// Try to detect the application directory, based on the app JAR (the only reliable one since others may come
 		// from the exploded WAR).
 		if (System.getProperty("demyo.applicationDirectory") == null) {
@@ -68,9 +73,9 @@ public final class Start {
 		LOGGER.info("Demyo is now ready");
 		closeSplashScreen();
 		server.join();
-	}
+	}*/
 
-	private static Server startHttpServer()
+	/*private static Server startHttpServer()
 			throws Exception {
 		SystemConfiguration sysConfig = SystemConfiguration.getInstance();
 		String httpAddress = sysConfig.getHttpAddress();
@@ -82,7 +87,7 @@ public final class Start {
 
 		WebAppContext webapp = new WebAppContext();
 		// Needed to help Jetty find the JAR from Glassfish containing the JSTL implementations
-		webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*/[^/]*jstl.*\\.jar$");
+		webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", ".*\/[^/]*jstl.*\\.jar$");
 		webapp.setContextPath(contextRoot);
 		webapp.setWar(sysConfig.getWarPath());
 		webapp.setThrowUnavailableOnStartupException(true);
@@ -93,7 +98,7 @@ public final class Start {
 
 		server.start();
 		return server;
-	}
+	}*/
 
 	/**
 	 * Sets the required {@link DesktopCallbacks} for the application.
@@ -107,7 +112,7 @@ public final class Start {
 	 * @param server The Jetty server
 	 * @throws NamingException In case registering the JNDI attribute fails.
 	 */
-	private static void setDesktopCallbacks(final Server server) throws NamingException {
+	/*private static void setDesktopCallbacks(final Server server) throws NamingException {
 		new org.eclipse.jetty.plus.jndi.Resource("org.demyo.services.desktop", new DesktopCallbacks() {
 			@Override
 			public void stopServer() {
@@ -118,8 +123,9 @@ public final class Start {
 				}
 			}
 		});
-	}
+	}*/
 
+	// TODO: #205: this should be called when the spring context is OK. Callback / listener.
 	private static void closeSplashScreen() {
 		if (GraphicsEnvironment.isHeadless()) {
 			return;
