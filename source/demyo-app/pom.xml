@@ -205,8 +205,7 @@ Includes the Web server, H2 server, and startup program.</description>
 										<postCp>lib/*</postCp>
 									</classPath>
 									<jre>
-										<minVersion>1.8.0</minVersion>
-										<maxVersion>11</maxVersion>
+										<minVersion>17</minVersion>
 										<opts>
 											<opt>-Ddemyo.applicationDirectory="%EXEDIR%"</opt>
 										</opts>
