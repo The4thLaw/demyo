@@ -7,7 +7,6 @@
 		<version>3.1.0-beta3</version>
 	</parent>
 	<artifactId>demyo-web</artifactId>
-	<packaging>war</packaging>
 	<name>Demyo: Web Application</name>
 	<description>Spring controllers for the Web application.</description>
 
@@ -52,10 +51,10 @@
 			<artifactId>spring-orm</artifactId>
 		</dependency>
 
-		<dependency>
+		<!--TODO: #205: review this <dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>javax.activation-api</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
@@ -94,7 +93,6 @@
 			<artifactId>json-path</artifactId>
 		</dependency>
 
-		<!-- Needed for JDK9+ compatibility -->
 		<dependency>
             <groupId>com.sun.activation</groupId>
             <artifactId>javax.activation</artifactId>
@@ -102,7 +100,7 @@
 
 		<!-- Some dependencies related to JEE, provided by the container.
 			We need to declare them for unit tests to work -->
-		<dependency>
+		<!--TODO: #205: review this <dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>
 			<scope>provided</scope>
@@ -111,7 +109,7 @@
 			<groupId>xml-apis</groupId>
 			<artifactId>xml-apis</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>

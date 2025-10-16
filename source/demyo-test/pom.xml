@@ -20,6 +20,13 @@
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
 		</dependency>
+
+		<!-- TODO: #205: Review need for other dependencies -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -84,11 +91,11 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- We need an implementation for the tests -->
-		<dependency>
+		<!--TODO: #205: review this <dependency>
 			<groupId>org.mortbay.jasper</groupId>
 			<artifactId>apache-el</artifactId>
 			<scope>compile</scope>
-		</dependency>
+		</dependency>-->
 
 		<!-- Logging -->
 		<dependency>

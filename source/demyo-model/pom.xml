@@ -57,10 +57,10 @@
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
-		<dependency>
+		<!--TODO: #205: review this <dependency>
 			<groupId>jakarta.el</groupId>
 			<artifactId>jakarta.el-api</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>com.querydsl</groupId>

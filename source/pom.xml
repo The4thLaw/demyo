@@ -2,6 +2,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.6</version>
+		<relativePath/>
+	</parent>
+
 	<groupId>org.demyo</groupId>
 	<artifactId>demyo</artifactId>
 	<version>3.1.0-beta3</version>
@@ -50,9 +58,7 @@
 		<com.querydsl.version>5.1.0</com.querydsl.version>
 		<com.fasterxml.jackson.version>2.16.1</com.fasterxml.jackson.version>
 		<org.junit.version>5.10.2</org.junit.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Yoruichi</project.versionCodename>
 		<org.eclipse.jetty.version>12.0.9</org.eclipse.jetty.version>
 		<js.frontend-maven-plugin.version>1.15.1</js.frontend-maven-plugin.version>
@@ -85,7 +91,9 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- All internal dependencies -->
+			<!--
+				All internal dependencies
+			-->
 			<dependency>
 				<groupId>org.demyo</groupId>
 				<artifactId>demyo-common</artifactId>
@@ -116,6 +124,17 @@
 				<artifactId>demyo-vue-frontend</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.demyo</groupId>
+				<artifactId>demyo-test</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
+			</dependency>
 
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
@@ -133,15 +152,19 @@
 				<version>${org.the4thlaw.commons.version}</version>
 			</dependency>
 
+			<!--
+				Standard dependencies not covered by Spring Boot
+			-->
+			<!-- Commons -->
 			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-				<version>3.18.0</version>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.20.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-beanutils </groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<version>1.9.4</version>
+				<version>1.11.0</version>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -153,9 +176,6 @@
 				<groupId>commons-configuration</groupId>
 				<artifactId>commons-configuration</artifactId>
 				<version>1.10</version>
-				<!--
-				We can't exclude commons-logging from here because we need it when loading the system configuration
-				-->
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -163,18 +183,99 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
+
+			<!-- JEE -->
+			<!-- Needed for JDK9+ compatibility, used at least for MimetypesFileTypeMap -->
+			<!--TODO: #205: Review this <dependency>
+				<groupId>javax.activation</groupId>
+				<artifactId>javax.activation-api</artifactId>
+				<version>1.2.0</version>
+			</dependency>-->
 			<dependency>
-				<groupId>commons-io</groupId>
-				<artifactId>commons-io</artifactId>
-				<version>2.15.1</version>
+				<groupId>com.sun.activation</groupId>
+				<artifactId>javax.activation</artifactId>
+				<version>1.2.0</version>
 			</dependency>
+
+			<!-- Persistence -->
+			<dependency>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<classifier>jakarta</classifier>
+				<version>${com.querydsl.version}</version>
+			</dependency>
+
+			<!-- XML -->
+			<dependency>
+				<groupId>net.java.dev.stax-utils</groupId>
+				<artifactId>stax-utils</artifactId>
+				<version>20070216</version>
+				<exclusions>
+					<!-- Already in JDK6+ -->
+					<exclusion>
+						<groupId>com.bea.xml</groupId>
+						<artifactId>jsr173-ri</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Image processing -->
+			<dependency>
+				<groupId>org.imgscalr</groupId>
+				<artifactId>imgscalr-lib</artifactId>
+				<version>4.2</version>
+			</dependency>
+
+			<!-- Desktop integration -->
+			<dependency>
+				<groupId>com.dorkbox</groupId>
+				<artifactId>SystemTray</artifactId>
+				<version>4.4</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dorkbox</groupId>
+				<artifactId>Collections</artifactId>
+				<version>2.4</version>
+			</dependency>
+
+			<!-- Testing -->
+			<dependency>
+				<groupId>org.dbunit</groupId>
+				<artifactId>dbunit</artifactId>
+				<version>2.7.3</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.ppodgorsek</groupId>
+				<artifactId>spring-test-dbunit-core</artifactId>
+				<version>6.0.0</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!--<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.18.0</version>
+			</dependency>
+
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
 				<version>1.16.1</version>
 			</dependency>
 
-			<!-- Logging -->
+			!- Logging -
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -284,18 +385,12 @@
 				<version>${org.springframework.security.version}</version>
 			</dependency>
 
-			<!-- Used at least for MimetypesFileTypeMap -->
-			<dependency>
-				<groupId>javax.activation</groupId>
-				<artifactId>javax.activation-api</artifactId>
-				<version>1.2.0</version>
-			</dependency>
 
 			<dependency>
 				<groupId>jakarta.servlet.jsp.jstl</groupId>
 				<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 				<version>3.0.0</version>
-				<!-- Must not be "provided" -->
+				!- Must not be "provided" -
 			</dependency>
 
 			<dependency>
@@ -309,7 +404,7 @@
 				<version>${org.eclipse.jetty.version}</version>
 			</dependency>
 
-			<!-- Needed for JNDI -->
+			!- Needed for JNDI -
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-plus</artifactId>
@@ -357,20 +452,11 @@
 				<artifactId>querydsl-core</artifactId>
 				<version>${com.querydsl.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.querydsl</groupId>
-				<artifactId>querydsl-jpa</artifactId>
-				<classifier>jakarta</classifier>
-				<version>${com.querydsl.version}</version>
-			</dependency>
 
-			<dependency>
-				<groupId>org.imgscalr</groupId>
-				<artifactId>imgscalr-lib</artifactId>
-				<version>4.2</version>
-			</dependency>
 
-			<!-- Spring 5.3 supports Jackson 2.12 -->
+
+
+			!- Spring 5.3 supports Jackson 2.12 -
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
@@ -393,49 +479,20 @@
 				<version>2.2.224</version>
 			</dependency>
 
-			<dependency>
-				<groupId>com.sun.activation</groupId>
-				<artifactId>javax.activation</artifactId>
-				<version>1.2.0</version>
-			</dependency>
 
-			<dependency>
-				<groupId>net.java.dev.stax-utils</groupId>
-				<artifactId>stax-utils</artifactId>
-				<version>20070216</version>
-				<exclusions>
-					<!-- Already in JDK6+ -->
-					<exclusion>
-						<groupId>com.bea.xml</groupId>
-						<artifactId>jsr173-ri</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
 
-			<dependency>
-				<groupId>com.dorkbox</groupId>
-				<artifactId>SystemTray</artifactId>
-				<version>4.4</version>
-			</dependency>
-			<dependency>
-				<groupId>com.dorkbox</groupId>
-				<artifactId>Collections</artifactId>
-				<version>2.4</version>
-			</dependency>
 
-			<dependency>
-				<groupId>org.demyo</groupId>
-				<artifactId>demyo-test</artifactId>
-				<version>${project.version}</version>
-				<scope>test</scope>
-			</dependency>
+
+
+
+
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${org.springframework.version}</version>
 				<scope>test</scope>
 			</dependency>
-			<!-- Optional spring-test dependencies -->
+			!- Optional spring-test dependencies -
 			<dependency>
 				<groupId>org.hamcrest</groupId>
 				<artifactId>hamcrest</artifactId>
@@ -485,29 +542,7 @@
 				<version>5.10.0</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.dbunit</groupId>
-				<artifactId>dbunit</artifactId>
-				<version>2.7.3</version>
-				<scope>test</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>junit</groupId>
-						<artifactId>junit</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>com.github.ppodgorsek</groupId>
-				<artifactId>spring-test-dbunit-core</artifactId>
-				<version>6.0.0</version>
-				<scope>test</scope>
-			</dependency>
+			-->
 		</dependencies>
 	</dependencyManagement>
 
@@ -528,7 +563,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.12.1</version>
 				<configuration>
 					<source>17</source>
 					<target>17</target>
@@ -540,7 +574,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.2.5</version>
 				<executions>
 					<execution>
 						<goals>
@@ -556,22 +589,9 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.3.1</version>
 					<configuration>
 						<escapeString>\</escapeString>
 					</configuration>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.6.1</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.4.0</version>
 				</plugin>
 
 				<plugin>
@@ -592,36 +612,6 @@
 				-->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<version>3.1.0</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<version>3.6.0</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.3.2</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>3.1.1</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-install-plugin</artifactId>
-					<version>3.1.1</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
 					<version>3.0.1</version>
 				</plugin>
@@ -630,12 +620,6 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
 					<version>3.12.1</version>
-				</plugin>
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.3.0</version>
 				</plugin>
 
 				<plugin>
@@ -662,6 +646,7 @@
 			<properties>
 				<config.hibernate.debug>false</config.hibernate.debug>
 				<config.core.log.level>DEBUG</config.core.log.level>
+				<!-- TODO: #205: review this -->
 				<config.war.path>../demyo-web/target/demyo-web-${project.version}</config.war.path>
 			</properties>
 			<activation>

@@ -16,9 +16,14 @@ Includes the Web server, H2 server, and startup program.</description>
 	</properties>
 	<dependencies>
 		<!-- Needed for SystemConfiguration -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.demyo</groupId>
 			<artifactId>demyo-common</artifactId>
+		</dependency>-->
+		<!-- We're just a proxy for the web part -->
+		<dependency>
+			<groupId>org.demyo</groupId>
+			<artifactId>demyo-web</artifactId>
 		</dependency>
 
 		<dependency>
@@ -27,6 +32,16 @@ Includes the Web server, H2 server, and startup program.</description>
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- TODO: #205: Review this -->
+		<!--<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
 		</dependency>
@@ -34,21 +49,22 @@ Includes the Web server, H2 server, and startup program.</description>
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-webapp</artifactId>
 		</dependency>
-		<!-- Needed for JSP -->
+		!- Needed for JSP -
 		<dependency>
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-apache-jsp</artifactId>
 		</dependency>
-		<!-- Needed for the TLD cache -->
+		!- Needed for the TLD cache -
 		<dependency>
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-annotations</artifactId>
 		</dependency>
-		<!-- Implementation for the JSTL libraries -->
+		!- Implementation for the JSTL libraries -
 		<dependency>
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-glassfish-jstl</artifactId>
 		</dependency>
+		-->
 
 		<!-- Used to resize the tray icon -->
 		<dependency>
@@ -57,7 +73,7 @@ Includes the Web server, H2 server, and startup program.</description>
 		</dependency>
 
 		<!-- Logging (managed by the app package, provided by it at runtime) -->
-		<dependency>
+		<!-- TODO: #205: review this <dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
@@ -68,22 +84,22 @@ Includes the Web server, H2 server, and startup program.</description>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>log4j-over-slf4j</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- We need the bridge here because we don't have a dependency on Spring yet,
 		and want to use this everywhere in the application -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jcl</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<!--
 			We need this at the app level to avoid classpath issues when exiting
 			See https://github.com/dorkbox/SystemTray/issues/228
 		-->
-		<dependency>
+		<!-- TODO: #205: review this <dependency>
 			<groupId>com.dorkbox</groupId>
 			<artifactId>Collections</artifactId>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -105,6 +121,10 @@ Includes the Web server, H2 server, and startup program.</description>
 		</resources>
 
 		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
