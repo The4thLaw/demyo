@@ -174,6 +174,7 @@ public class DaoConfig {
 		return new HibernateTransactionManager(sessionFactory);
 	}
 
+	// TODO: #205: Probably no longer relevant with Spring Boot
 	@Bean
 	public static BeanPostProcessor exceptionTranslator() {
 		return new PersistenceExceptionTranslationPostProcessor();

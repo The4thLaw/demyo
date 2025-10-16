@@ -7,8 +7,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Vector;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -37,12 +37,13 @@ public class ImportService implements IImportService {
 	@Autowired
 	private IRawSQLDao rawSqlDao;
 	@Autowired
-	private List<IImporter> importers = new Vector<>();
+	private List<IImporter> importers;
 
-	@Override
-	public void registerImporter(IImporter importer) {
-		LOGGER.debug("Registering importer of type: {}", importer.getClass().getCanonicalName());
-		importers.add(importer);
+	@PostConstruct
+	private void logImporters() {
+		for (IImporter importer : importers) {
+			LOGGER.debug("Registered importer of type: {}", importer.getClass().getCanonicalName());
+		}
 	}
 
 	@Transactional(rollbackFor = Throwable.class)

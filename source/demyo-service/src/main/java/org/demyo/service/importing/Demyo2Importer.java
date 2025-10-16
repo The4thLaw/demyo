@@ -44,18 +44,11 @@ public class Demyo2Importer implements IImporter {
 	private static final Pattern FORMAT_PATTERN = Pattern.compile(".*<library>.*<meta>.*<version.*", Pattern.DOTALL);
 
 	@Autowired
-	private IImportService importService;
-	@Autowired
 	private IImageService imageService;
 	@Autowired
 	protected IRawSQLDao rawSqlDao;
 	@Autowired
 	protected DataSource dataSource;
-
-	@PostConstruct
-	private void init() {
-		importService.registerImporter(this);
-	}
 
 	@Override
 	public boolean supports(String originalFilename, Path file) throws DemyoException {
