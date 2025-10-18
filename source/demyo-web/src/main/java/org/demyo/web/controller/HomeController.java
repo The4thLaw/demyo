@@ -18,15 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.web.config.NoncedCSPHeaderWriter;
@@ -107,13 +104,6 @@ public class HomeController extends AbstractController {
 		LOGGER.trace("Index JS resource: {}", indexJsFilename);
 		LOGGER.trace("Sorted non-index JS resources: {}", otherJsFilenames);
 		LOGGER.trace("Sorted CSS resources: {}", cssFilenames);
-	}
-
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler()
-	@ResponseBody
-	public String handle(Throwable e) {
-		return e.getMessage();
 	}
 
 	/**
