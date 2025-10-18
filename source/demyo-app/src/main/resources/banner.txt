@@ -1,0 +1,11 @@
+______ ________  ____   _______
+|  _  \  ___|  \/  \ \ / /  _  |
+| | | | |__ | .  . |\ V /| | | |
+| | | |  __|| |\/| | \ / | | | |
+| | | | |___| |  | | | | \ | | |
+| |/ /\____/\_|  |_/ \_/  \ \| |
+|___/                      \___|
+
+TODO: #205: Add the version codename
+Version ${application.version}
+Powered by Spring Boot${spring-boot.formatted-version}
