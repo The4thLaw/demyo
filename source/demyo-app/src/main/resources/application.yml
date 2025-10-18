@@ -6,3 +6,12 @@ spring:
         properties:
             hibernate:
                 format_sql: @config.hibernate.debug@
+    devtools:
+        restart:
+              additional-paths:
+                  - ../demyo-common
+                  - ../demyo-dao
+                  - ../demyo-model
+                  - ../demyo-service
+                  - ../demyo-utils
+                  - ../demyo-web
