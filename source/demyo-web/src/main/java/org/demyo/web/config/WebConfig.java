@@ -23,7 +23,6 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +37,7 @@ import org.demyo.web.jackson.NullStringModule;
  * Configuration for the Web layer.
  */
 @Configuration
+// TODO: #205: Check if the import is needed
 @Import(
 { DaoConfig.class, WebSecurityConfig.class })
 @EnableWebMvc
@@ -53,8 +53,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/assets/**").addResourceLocations("/assets/", "classpath:/public/assets/");
-		registry.addResourceHandler("/icons/**").addResourceLocations("/icons/");
-		registry.addResourceHandler("/favicon.ico").addResourceLocations("/favicon.ico");
+		registry.addResourceHandler("/icons/**").addResourceLocations("classpath:/public/icons/");
+		registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/public/");
 	}
 
 	@Override
@@ -117,17 +117,10 @@ public class WebConfig implements WebMvcConfigurer {
 		return ms;
 	}
 
+	// TODO: #205: Might not be needed anymore
 	@Bean
 	public MultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
-	}
-
-	@Bean
-	public InternalResourceViewResolver viewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/jsp/");
-		resolver.setSuffix(".jsp");
-		return resolver;
 	}
 
 	@Bean

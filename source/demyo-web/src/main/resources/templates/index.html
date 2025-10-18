@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--/* The lang attribute will be adjusted by the frontend */-->
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<title>Demyo</title>
+
+	<meta name="application-name" content="Demyo">
+	<meta name="mobile-web-app-capable" content="yes">
+	<!--/* The manifest link will be injected by the Vue app */-->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-title" content="Demyo">
+	<meta name="msapplication-starturl" th:content="@{/}">
+
+	<!--/* In case someone exposes it publicly by mistake */-->
+	<meta name="robots" content="noindex,nofollow">
+	<!--/* Don't send info to linked sites, this is supposed to be a private application */-->
+	<meta name="referrer" content="never">
+
+	<link rel="copyright" th:href="@{/about}">
+
+	<link
+		th:each="size : ${ {76, 120, 152, 180} }"
+		rel="apple-touch-icon-precomposed" th:sizes="${size} + 'x' + ${size}"
+		th:href="@{/icons/demyo-{size}-whitebg.png(size=${size})}"
+	>
+
+	<link
+		th:each="size : ${ {16, 24, 32, 48, 64, 144, 192, 196, 270, 558} }"
+		rel="icon" th:sizes="${size} + 'x' + ${size}"
+		th:href="@{/icons/demyo-{size}.png(size=${size})}"
+	>
+
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" th:content="@{/icons/demyo-144.png}">
+
+	<!--/* Note: the nonce is required on external scripts too on Firefox. Chromium Edge doesn't seem to care. */-->
+	<script type="module" crossorigin th:src="@{/assets/{js}(js=${indexJsFilename})}" th:nonce="${cspScriptNonce}"></script>
+	<link
+		th:each="asset : ${otherJsFilenames}"
+		rel="modulepreload" crossorigin
+		th:href="@{/assets/{js}(js=${asset})}"
+	>
+
+	<link
+		th:each="asset : ${cssFilenames}"
+		rel="stylesheet" crossorigin
+		th:href="@{/assets/{css}(css=${asset})}"
+	>
+</head>
+<body
+	th:data-contextRoot="@{/}"
+	th:data-apiRoot="@{/api/}"
+	th:data-version="${appVersion}"
+	th:data-codename="${appCodename}"
+	th:data-cspStyleNonce="${cspStyleNonce}"
+>
+    <noscript>
+        <strong>We're sorry but the Vue frontend to Demyo doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id=app></div>
+</body>
+</html>

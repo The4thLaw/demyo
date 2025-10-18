@@ -39,6 +39,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- TODO: #205: review Spring dependencies. Here and everywhere else -->
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
@@ -56,7 +66,7 @@
 			<artifactId>javax.activation-api</artifactId>
 		</dependency>-->
 
-		<dependency>
+		<!--TODO: #205: review this <dependency>
 			<groupId>jakarta.servlet.jsp.jstl</groupId>
 			<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 		</dependency>
@@ -64,7 +74,7 @@
 			<groupId>org.eclipse.jetty.ee10</groupId>
 			<artifactId>jetty-ee10-apache-jsp</artifactId>
 			<scope>provided</scope>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>

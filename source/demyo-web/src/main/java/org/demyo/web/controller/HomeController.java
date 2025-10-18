@@ -18,11 +18,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.web.config.NoncedCSPHeaderWriter;
@@ -105,15 +109,23 @@ public class HomeController extends AbstractController {
 		LOGGER.trace("Sorted CSS resources: {}", cssFilenames);
 	}
 
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler()
+	@ResponseBody
+	public String handle(Throwable e) {
+		return e.getMessage();
+	}
+
 	/**
 	 * Displays the home page.
 	 *
 	 * @param model The view model
 	 * @return The view name
 	 */
-	@GetMapping({"/", "{_:^(?!api|favicon).*$}", "{_:^(?!api|assets|icons).*$}/**"})
-	public String index(Model model, HttpServletRequest request, HttpServletResponse response) {
-		LOGGER.trace("Accessing the home page");
+	@GetMapping({"/", "{_:^(?!api|favicon).*$}", "{_:^(?!api|assets|icons|favicon).*$}/**"})
+	public String index(@PathVariable("_") String path, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
+		LOGGER.debug("Accessing the home page for {}", path);
 
 		model.addAttribute(MODEL_KEY_VERSION, appVersion);
 		model.addAttribute(MODEL_KEY_CODENAME, appCodename);
