@@ -1,4 +1,3 @@
-# TODO: #205: We should use profiles for this
 spring:
     jpa:
         show-sql: @config.hibernate.debug@
@@ -15,3 +14,9 @@ spring:
                   - ../demyo-service
                   - ../demyo-utils
                   - ../demyo-web
+#TODO: #205: Restrict this to local dev, use exclude by default
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
