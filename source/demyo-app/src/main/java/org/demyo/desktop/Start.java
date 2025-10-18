@@ -16,6 +16,8 @@ import org.demyo.common.desktop.DesktopCallbacks;
 /**
  * Main entry point for Demyo operation.
  */
+// TODO: #205: Rename this class to just "Demyo"
+// TODO: #205: Set a banner
 @SpringBootApplication(scanBasePackages = "org.demyo")
 public final class Start {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);

@@ -10,6 +10,7 @@ import org.springframework.web.context.ContextLoaderListener;
  * Servlet context listener that rethrows Spring initialization errors to make the container Web Application context
  * fail.
  */
+// TODO: #205: Probably not needed anymore
 public class DemyoContextLoaderListener extends ContextLoaderListener {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DemyoContextLoaderListener.class);
 

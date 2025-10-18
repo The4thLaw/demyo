@@ -25,6 +25,7 @@ public class WebSecurityConfig {
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		LOGGER.debug("Configuring Spring Security");
+		// TODO: #205: UserDetailsServiceAutoConfiguration logs a warning, try https://stackoverflow.com/a/72460696/109813
 
 		return http
 				// Headers

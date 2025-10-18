@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO: #205: Is this still working? It should probably be replaced. See for example https://stackoverflow.com/a/67262413/109813 -->
 <web-app
 	xmlns="https://jakarta.ee/xml/ns/jakartaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -68,6 +69,7 @@
 		<load-on-startup>10</load-on-startup>
 		<multipart-config>
 			<!-- 5GB max, for import/export files -->
+			 <!-- TODO: #205: This should be elsewhere : https://stackoverflow.com/a/54302823/109813 -->
 			<max-file-size>5368709120</max-file-size>
 			<max-request-size>5368709120</max-request-size>
 		</multipart-config>
