@@ -14,11 +14,14 @@
 			"mainClass": "org.demyo.desktop.Start",
 			"projectName": "demyo-app",
 			"vmArgs": [
-				"-Ddemyo.http.port=1607",
-				"-Ddemyo.war.contextRoot=/",
 				"-Ddemyo.h2.cacheDirectoryName=target/legacy-h2-versions",
-				//"-Dnope.demyo.thumbnails.maxThreads=1",
-				//"-Dnope.demyo.thumbnails.queueSize=2"
+				"-Djava.awt.headless=false"
+				//"-Ddemyo.thumbnails.maxThreads=1",
+				//"-Ddemyo.thumbnails.queueSize=2"
+			],
+			"args": [
+				"--server.port=1607",
+				"--server.servlet.context-path=/",
 			],
 			"cwd": "${workspaceFolder}/demyo-app"
 		},
