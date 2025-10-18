@@ -1,4 +1,6 @@
 spring:
+    application:
+        name: Demyo
     jpa:
         show-sql: @config.hibernate.debug@
         open-in-view: false
