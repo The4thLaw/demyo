@@ -118,6 +118,15 @@
 				"group": "build"
 			},
 			{
+				"label": "Run backend (hot reload)",
+				"type": "shell",
+				"command": "../mvnw spring-boot:run '-Dspring-boot.run.arguments=--server.port=1607 --server.servlet.context-path=/' '-Dspring-boot.run.jvmArguments=-Ddemyo.h2.cacheDirectoryName=target/legacy-h2-versions -Djava.awt.headless=false'",
+				"options": {
+					"cwd": "demyo-app"
+				},
+				"group": "test"
+			},
+			{
 				"label": "Run frontend (hot reload)",
 				"type": "shell",
 				"command": "npm run dev",
