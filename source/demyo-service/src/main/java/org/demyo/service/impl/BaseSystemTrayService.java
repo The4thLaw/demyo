@@ -7,8 +7,8 @@ import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 
-import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.common.desktop.DesktopUtils;
 import org.demyo.service.ITranslationService;
 import org.demyo.service.SystemTrayService;
@@ -20,7 +20,7 @@ public abstract class BaseSystemTrayService implements SystemTrayService {
 	private static final String APP_ICON_MONOCHROME = "/org/demyo/common/desktop/app-icon-monochrome.png";
 
 	@Autowired
-	private DesktopCallbacks desktop;
+	private ConfigurableApplicationContext springContext;
 
 	@Autowired
 	protected ITranslationService translationService;
@@ -60,7 +60,7 @@ public abstract class BaseSystemTrayService implements SystemTrayService {
 		return e -> {
 			LOGGER.info("Stopping Demyo");
 			r.run();
-			desktop.stopServer();
+			springContext.close();
 		};
 	}
 }

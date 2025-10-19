@@ -3,8 +3,6 @@ package org.demyo.web.config;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import javax.naming.NamingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -28,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 
-import org.demyo.common.desktop.DesktopCallbacks;
 import org.demyo.dao.config.DaoConfig;
 import org.demyo.service.i18n.BrowsableResourceBundleMessageSource;
 import org.demyo.web.jackson.NullStringModule;
@@ -121,22 +118,5 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public MultipartResolver multipartResolver() {
 		return new StandardServletMultipartResolver();
-	}
-
-	@Bean
-	public DesktopCallbacks desktopCallbacks() throws NamingException {
-		/*JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
-		bean.setJndiName("org.demyo.services.desktop");
-		bean.afterPropertiesSet();
-		return (DesktopCallbacks) bean.getObject();*/
-		// TODO: #205: Callbacks should be registered as a plain bean elsewhere
-		return new DesktopCallbacks() {
-
-			@Override
-			public void stopServer() {
-				LOGGER.debug("MOCK STOP SERVER");
-			}
-
-		};
 	}
 }
