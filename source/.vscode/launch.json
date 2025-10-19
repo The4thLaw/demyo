@@ -15,7 +15,8 @@
 			"projectName": "demyo-app",
 			"vmArgs": [
 				"-Ddemyo.h2.cacheDirectoryName=target/legacy-h2-versions",
-				"-Djava.awt.headless=false"
+				"-Djava.awt.headless=false",
+				//"-splash:src/main/resources/org/demyo/desktop/splash.png"
 				//"-Ddemyo.thumbnails.maxThreads=1",
 				//"-Ddemyo.thumbnails.queueSize=2"
 			],

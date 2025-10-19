@@ -39,6 +39,7 @@ public final class Start {
 		String port = ctx.getEnvironment().getProperty("server.port");
 		String context = ctx.getEnvironment().getProperty("server.servlet.context-path");
 		LOGGER.info("Demyo is now ready on http://{}:{}{}", host, port, context);
+		closeSplashScreen();
 	}
 
 	/**
@@ -135,7 +136,6 @@ public final class Start {
 		});
 	}*/
 
-	// TODO: #205: this should be called when the spring context is OK. Callback / listener.
 	private static void closeSplashScreen() {
 		if (GraphicsEnvironment.isHeadless()) {
 			return;
@@ -148,6 +148,8 @@ public final class Start {
 			} catch (IllegalStateException e) {
 				LOGGER.debug("Splash screen already closed; no big deal");
 			}
+		} else {
+			LOGGER.trace("There is no splash screen");
 		}
 	}
 }
