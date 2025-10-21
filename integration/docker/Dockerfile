@@ -28,7 +28,7 @@ COPY --from=mvn-build  /mvn-app/demyo-app/target/demyo-app-*.jar lib/
 COPY --from=mvn-build /mvn-app/demyo-web/target/demyo-web-*.war war/
 COPY --from=mvn-build /mvn-app/demyo-app/target/legacy-h2-versions/* legacy-h2-versions/
 RUN mkdir /demyo-data
-CMD java -Xmx256m -Duser.home=/demyo-data -Ddemyo.http.address=0.0.0.0 -cp 'lib/*' org.demyo.desktop.Start
+CMD java -Xmx256m -Duser.home=/demyo-data -Ddemyo.http.address=0.0.0.0 -cp 'lib/*' org.demyo.desktop.Demyo
 
 EXPOSE 8080
 

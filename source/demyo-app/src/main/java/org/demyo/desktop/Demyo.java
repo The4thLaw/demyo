@@ -22,12 +22,11 @@ import org.demyo.common.config.SystemConfiguration;
 /**
  * Main entry point for Demyo operation.
  */
-// TODO: #205: Rename this class to just "Demyo"
 @SpringBootApplication(scanBasePackages = "org.demyo")
-public final class Start {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Start.class);
+public final class Demyo {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo.class);
 
-	private Start() {
+	private Demyo() {
 	}
 
 	/**
@@ -36,7 +35,7 @@ public final class Start {
 	 * @param args The command line arguments.
 	 */
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(Start.class);
+		SpringApplication app = new SpringApplication(Demyo.class);
 		Path pidFile = SystemConfiguration.getInstance().getUserDirectory().resolve("demyo.pid");
 		ApplicationPidFileWriter pidWriter = new ApplicationPidFileWriter(pidFile.toFile());
 		app.addListeners(pidWriter);

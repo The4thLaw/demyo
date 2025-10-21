@@ -6,7 +6,7 @@ DefaultDependencies=no
 Type=simple
 User=demyo
 Group=demyo
-ExecStart=/usr/bin/java -Xmx512m -Djava.net.preferIPv4Stack=true -Ddemyo.applicationDirectory=/home/demyo/opt/demyo/demyo-latest -Ddemyo.war.path=/home/demyo/opt/demyo/demyo-web-latest.war -Ddemyo.http.address=0.0.0.0 -Ddemyo.http.port=8080 -Ddemyo.war.contextRoot=/ -server -Djava.awt.headless=true -cp '/home/demyo/opt/demyo/demyo-latest/lib/*' org.demyo.desktop.Start
+ExecStart=/usr/bin/java -Xmx512m -Djava.net.preferIPv4Stack=true -Ddemyo.applicationDirectory=/home/demyo/opt/demyo/demyo-latest -Ddemyo.war.path=/home/demyo/opt/demyo/demyo-web-latest.war -Ddemyo.http.address=0.0.0.0 -Ddemyo.http.port=8080 -Ddemyo.war.contextRoot=/ -server -Djava.awt.headless=true -cp '/home/demyo/opt/demyo/demyo-latest/lib/*' org.demyo.desktop.Demyo
 ExecStop=/bin/kill "$MAINPID"
 TimeoutStartSec=0
 StandardOutput=journal

@@ -225,7 +225,7 @@ Includes the Web server, H2 server, and startup program.</description>
 									<chdir>.</chdir>
 									<icon>../../integration/windows/Demyo.ico</icon>
 									<classPath>
-										<mainClass>org.demyo.desktop.Start</mainClass>
+										<mainClass>org.demyo.desktop.Demyo</mainClass>
 										<addDependencies>false</addDependencies><!-- We use lib/* instead -->
 										<postCp>lib/*</postCp>
 									</classPath>

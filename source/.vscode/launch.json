@@ -11,7 +11,7 @@
 			"type": "java",
 			"name": "Start Demyo Java server",
 			"request": "launch",
-			"mainClass": "org.demyo.desktop.Start",
+			"mainClass": "org.demyo.desktop.Demyo",
 			"projectName": "demyo-app",
 			"vmArgs": [
 				"-Ddemyo.h2.cacheDirectoryName=target/legacy-h2-versions",
