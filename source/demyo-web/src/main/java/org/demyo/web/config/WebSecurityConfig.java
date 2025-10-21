@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.HstsConfig;
@@ -25,8 +27,6 @@ public class WebSecurityConfig {
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		LOGGER.debug("Configuring Spring Security");
-		// TODO: #205: UserDetailsServiceAutoConfiguration logs a warning, try https://stackoverflow.com/a/72460696/109813
-
 		return http
 				// Headers
 				.headers(headers -> headers
@@ -54,4 +54,13 @@ public class WebSecurityConfig {
 				// Done
 				.build();
 	}
+
+	@Bean
+    public AuthenticationManager noopAuthenticationManager() {
+		// Explicits and avoid a logging issue with UserDetailsServiceAutoConfiguration
+		// See https://stackoverflow.com/a/72460696/109813
+        return authentication -> {
+            throw new AuthenticationServiceException("Authentication is disabled");
+        };
+    }
 }
