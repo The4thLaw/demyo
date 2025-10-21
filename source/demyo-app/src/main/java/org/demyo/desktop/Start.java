@@ -2,6 +2,11 @@ package org.demyo.desktop;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.SplashScreen;
+import java.net.Inet4Address;
+import java.net.Inet6Address;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.nio.file.Path;
 
 import javax.naming.NamingException;
 
@@ -9,9 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import org.demyo.common.desktop.DesktopCallbacks;
+import org.demyo.common.config.SystemConfiguration;
 
 /**
  * Main entry point for Demyo operation.
@@ -30,15 +36,45 @@ public final class Start {
 	 * @param args The command line arguments.
 	 */
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = SpringApplication.run(Start.class, args);
+		SpringApplication app = new SpringApplication(Start.class);
+		Path pidFile = SystemConfiguration.getInstance().getUserDirectory().resolve("demyo.pid");
+		ApplicationPidFileWriter pidWriter = new ApplicationPidFileWriter(pidFile.toFile());
+		app.addListeners(pidWriter);
+		ConfigurableApplicationContext ctx = app.run(args);
+
 		String host = ctx.getEnvironment().getProperty("server.address");
-		if (host == null) {
-			// TODO: #205: Actually this should be 0.0.0.0 so we should log all addresses.
-			host = "127.0.0.1";
-		}
 		String port = ctx.getEnvironment().getProperty("server.port");
 		String context = ctx.getEnvironment().getProperty("server.servlet.context-path");
-		LOGGER.info("Demyo is now ready on http://{}:{}{}", host, port, context);
+		if (host == null) {
+			LOGGER.info("Demyo is now ready on:");
+			try {
+				NetworkInterface.networkInterfaces()
+					.flatMap(NetworkInterface::inetAddresses)
+					.filter(i -> {
+						if (i instanceof Inet4Address) {
+							return true;
+						} else if (i instanceof Inet6Address i6) {
+							// Filter out scoped addresses
+							return i6.getScopeId() == 0;
+						}
+						return false;
+					})
+					.map(i -> {
+						if (i instanceof Inet6Address) {
+							return "[" + i.getHostAddress() + "]";
+						}
+						return i.getHostAddress();
+					})
+					.forEach(h -> LOGGER.info("\thttp://{}:{}{}", h, port, context));
+			} catch (SocketException e) {
+				LOGGER.info("\t\t<failed to get network interfaces, Demyo is still available>");
+			}
+		} else {
+			LOGGER.info("Demyo is now ready on http://{}:{}{}", host, port, context);
+		}
+
+		LOGGER.info("PID file is in {}", pidFile.toAbsolutePath());
+
 		closeSplashScreen();
 	}
 
