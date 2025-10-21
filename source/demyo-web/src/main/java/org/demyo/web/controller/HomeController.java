@@ -113,9 +113,9 @@ public class HomeController extends AbstractController {
 	 * @return The view name
 	 */
 	@GetMapping({"/", "{_:^(?!api|favicon).*$}", "{_:^(?!api|assets|icons|favicon).*$}/**"})
-	public String index(@PathVariable("_") String path, Model model,
+	public String index(@PathVariable(name = "_", required = false) String path, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
-		LOGGER.debug("Accessing the home page for {}", path);
+		LOGGER.trace("Accessing the home page for {}", path);
 
 		model.addAttribute(MODEL_KEY_VERSION, appVersion);
 		model.addAttribute(MODEL_KEY_CODENAME, appCodename);
