@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import org.demyo.common.config.SystemConfiguration;
 import org.demyo.web.config.NoncedCSPHeaderWriter;
 
 /**
@@ -54,13 +53,10 @@ public class HomeController extends AbstractController {
 	private Resource[] allCssResources;
 	private List<String> cssFilenames;
 
-	private final String appVersion;
-	private final String appCodename;
-
-	public HomeController() {
-		this.appVersion = SystemConfiguration.getInstance().getVersion();
-		this.appCodename = SystemConfiguration.getInstance().getCodename();
-	}
+	@Value("${demyo.meta.version}")
+	private String appVersion;
+	@Value("${demyo.meta.codename}")
+	private String appCodename;
 
 	private static Comparator<Resource> indexPositionComparator(int position) {
 		return (r1, r2) -> {

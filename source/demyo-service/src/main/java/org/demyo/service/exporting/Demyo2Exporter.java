@@ -21,6 +21,7 @@ import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.the4thlaw.commons.utils.xml.XMLUtils;
@@ -47,6 +48,8 @@ public class Demyo2Exporter implements IExporter {
 	private static final ThreadLocal<DateFormat> DATE_FORMAT = ThreadLocal
 			.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd"));
 
+	@Value("${demyo.meta.version}")
+	private String demyoVersion;
 	@Autowired
 	private IExportService exportService;
 	@Autowired
@@ -154,7 +157,7 @@ public class Demyo2Exporter implements IExporter {
 		xsw.writeStartElement("meta");
 
 		xsw.writeEmptyElement("version");
-		xsw.writeAttribute("demyo", SystemConfiguration.getInstance().getVersion());
+		xsw.writeAttribute("demyo", demyoVersion);
 		xsw.writeAttribute("schema", String.valueOf(rawSqlDao.getSchemaVersion()));
 
 		xsw.writeEmptyElement("counts");

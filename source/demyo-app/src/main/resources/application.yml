@@ -1,3 +1,8 @@
+demyo:
+    meta:
+        version: @project.version@
+        codename: @project.versionCodename@
+
 spring:
     application:
         name: Demyo

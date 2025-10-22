@@ -1,0 +1,14 @@
+{
+	"properties": [
+		{
+			"name": "demyo.meta.codename",
+			"type": "java.lang.String",
+			"description": "The Demyo version codename"
+		},
+		{
+			"name": "demyo.meta.version",
+			"type": "java.lang.String",
+			"description": "The Demyo version number"
+		}
+	]
+}

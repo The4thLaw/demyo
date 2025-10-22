@@ -6,6 +6,5 @@ ______ ________  ____   _______
 | |/ /\____/\_|  |_/ \_/  \ \| |
 |___/                      \___|
 
-TODO: #205: Add the version codename
-Version ${application.version}
+Version ${demyo.meta.codename} (${demyo.meta.version})
 Powered by Spring Boot${spring-boot.formatted-version}

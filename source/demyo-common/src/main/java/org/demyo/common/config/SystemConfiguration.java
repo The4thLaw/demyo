@@ -41,10 +41,6 @@ public final class SystemConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SystemConfiguration.class);
 	private static final String SYSTEM_CONFIGURATION_FILENAME = "system.properties";
 
-	/** The version of Demyo. */
-	private final String version;
-	/** The version codename of Demyo. */
-	private final String codename;
 	/** The root directory for the Demyo installation. */
 	private final Path applicationDirectory;
 	/** Path to the WAR file containing the Demyo Web app. */
@@ -93,8 +89,6 @@ public final class SystemConfiguration {
 
 		PropertiesConfiguration config = loadConfig();
 
-		version = config.getString("version");
-		codename = config.getString("codename");
 		warPath = config.getString(CONFIG_KEY_WAR_PATH);
 		contextRoot = config.getString(CONFIG_KEY_CONTEXT_ROOT);
 		portable = config.getBoolean(CONFIG_KEY_PORTABLE);
@@ -276,8 +270,6 @@ public final class SystemConfiguration {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("System configuration:");
-		sb.append("\n\tversion: ").append(version);
-		sb.append("\n\tcodename: ").append(codename);
 		sb.append("\n\tHTTP address: ").append(httpAddress);
 		sb.append("\n\tHTTP port: ").append(httpPort);
 		sb.append("\n\tstart browser automatically: ").append(autoStartWebBrowser);
@@ -292,24 +284,6 @@ public final class SystemConfiguration {
 		sb.append("\n\tmaximum thumbnail threads: ").append(maxThumbnailThreads);
 		sb.append("\n\tthumbnail queue size: ").append(thumbnailQueueSize);
 		return sb.toString();
-	}
-
-	/**
-	 * Gets the version of Demyo.
-	 *
-	 * @return the version of Demyo
-	 */
-	public String getVersion() {
-		return version;
-	}
-
-	/**
-	 * Gets the version codename of Demyo.
-	 *
-	 * @return the version codename of Demyo
-	 */
-	public String getCodename() {
-		return codename;
 	}
 
 	/**
