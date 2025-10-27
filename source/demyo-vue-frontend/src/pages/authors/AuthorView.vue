@@ -64,7 +64,7 @@
 
 			<FieldValue :value="author.biography" label-key="field.Author.biography" type="rich-text" />
 			<v-alert
-				v-if="!albumsLoading && albums.length === 0"
+				v-if="hasNoAlbums"
 				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Author.noAlbums') }}
@@ -77,7 +77,7 @@
 				{{ $t('page.Author.viewDerivatives', derivativeCount) }}
 			</v-btn>
 			<v-alert
-				v-if="derivativeCount === 0"
+				v-if="derivativeCount === 0 && hasNoAlbums"
 				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Author.noDerivatives') }}
@@ -161,6 +161,7 @@ const { model: author, loading, loadData, appTasksMenu, deleteModel } = useSimpl
 
 const albums = computed(() => authorAlbums.value.albums || [])
 const albumCount = computed(() => albums.value.length)
+const hasNoAlbums = computed(() => !albumsLoading.value && albumCount.value === 0)
 const works = computed(() => ({
 	asArtist: new Set(authorAlbums.value.asArtist),
 	asWriter: new Set(authorAlbums.value.asWriter),
