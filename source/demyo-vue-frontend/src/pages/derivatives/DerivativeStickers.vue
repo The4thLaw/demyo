@@ -46,8 +46,9 @@ import derivativeService from '@/services/derivative-service'
 import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.index.derivative.stickers')
+	title: computed(() => i18n.t('title.index.derivative.stickers'))
 })
 
 const loading = ref(true)

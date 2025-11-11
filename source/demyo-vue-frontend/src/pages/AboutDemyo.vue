@@ -165,8 +165,9 @@ import aboutService from '@/services/about-service'
 import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.about')
+	title: computed(() => i18n.t('title.about'))
 })
 
 const { userAgent } = navigator

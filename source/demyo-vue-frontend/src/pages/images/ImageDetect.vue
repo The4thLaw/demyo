@@ -42,9 +42,11 @@ import { useUiStore } from '@/stores/ui'
 import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.add.image')
+	title: computed(() => i18n.t('title.add.image'))
 })
+
 const uiStore = useUiStore()
 
 const detecting = ref(true)
