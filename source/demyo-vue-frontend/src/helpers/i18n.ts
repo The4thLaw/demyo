@@ -68,9 +68,9 @@ export function formatCurrency(amount?: number, currency?: string): string | und
  * @param currency The currency symbol or code
  * @returns The currency symbol
  */
-export function getCurrencySymbol(currency: string): string {
-	if (!currency || currency.length !== 3) {
-		return currency
+export function getCurrencySymbol(currency: string | undefined): string {
+	if (currency?.length !== 3) {
+		return currency ?? ''
 	}
 
 	// Looks like a currency code, try the map
