@@ -33,6 +33,11 @@
 				v-if="author.pseudonymOf?.id" :value="author.pseudonymOf"
 				label-key="field.Author.pseudonymOf" type="AuthorView"
 			/>
+
+			<FieldValue v-if="roles.length" label-key="field.Author.roles">
+				{{ roles.join(', ') }}
+			</FieldValue>
+
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 
 			<FieldValue v-if="author.country" label-key="field.Author.country">
@@ -122,6 +127,8 @@ import { useI18n } from 'vue-i18n'
 
 ChartJS.register(Title, Tooltip, ArcElement)
 
+const i18n = useI18n()
+
 const authorLoading = ref(true)
 const albumsLoading = ref(true)
 const authorAlbums = ref({} as AuthorAlbums)
@@ -170,6 +177,50 @@ const works = computed(() => ({
 	asTranslator: new Set(authorAlbums.value.asTranslator),
 	asCoverArtist: new Set(authorAlbums.value.asCoverArtist)
 }))
+const roles = computed(() => {
+	let ret = []
+
+	if (albums.value.some(a =>
+		a.bookType.labelType === 'GRAPHIC_NOVEL'
+			&& works.value.asArtist.has(a.id))) {
+		ret.push('page.Author.works.role.artist.GRAPHIC_NOVEL')
+	}
+	if (albums.value.some(a =>
+		a.bookType.labelType === 'NOVEL'
+			&& works.value.asArtist.has(a.id))) {
+		ret.push('page.Author.works.role.artist.NOVEL')
+	}
+	if (albums.value.some(a =>
+		a.bookType.labelType === 'GRAPHIC_NOVEL'
+			&& works.value.asWriter.has(a.id))) {
+		ret.push('page.Author.works.role.writer.GRAPHIC_NOVEL')
+	}
+	if (albums.value.some(a =>
+		a.bookType.labelType === 'NOVEL'
+			&& works.value.asWriter.has(a.id))) {
+		ret.push('page.Author.works.role.writer.NOVEL')
+	}
+	if (works.value.asColorist.size > 0) {
+		ret.push('page.Author.works.role.colorist')
+	}
+	if (works.value.asInker.size > 0) {
+		ret.push('page.Author.works.role.inker')
+	}
+	if (works.value.asTranslator.size > 0) {
+		ret.push('page.Author.works.role.translator')
+	}
+	if (works.value.asCoverArtist.size > 0) {
+		ret.push('page.Author.works.role.coverArtist')
+	}
+
+	// Translate labels
+	ret = ret.map(l => i18n.t(l))
+
+	// Keep only distinct translated values
+	ret = [...new Set(ret)]
+
+	return ret
+})
 const isAlive = computed(() => author.value.birthDate && !author.value.deathDate)
 const age = computed(() => {
 	if (!author.value.birthDate) {
@@ -188,7 +239,6 @@ const isBirthday = computed(() => {
 })
 const country = useCountry(computed(() => author.value.country))
 
-const i18n = useI18n()
 function describeAuthor(album: Album): string {
 	const albumId = album.id
 	const qualifiers = []
