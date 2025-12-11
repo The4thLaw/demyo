@@ -99,7 +99,7 @@
 						<Autocomplete
 							v-model="album.publisher.id" :items="publishers" :loading="publishersLoading"
 							label-key="field.Album.publisher" required :rules="rules.publisher"
-							refreshable @refresh="loadPublishers" @input="loadCollections(album)"
+							refreshable @refresh="loadPublishers" @change="loadCollections(album)"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -286,7 +286,7 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.cover.id" :items="images" :loading="imagesLoading"
-							label-key="field.Album.cover" refreshable @refresh="loadImages"
+							label-key="field.Album.cover" clearable refreshable @refresh="loadImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
