@@ -21,8 +21,9 @@
 			<AppTask
 				v-if="hasAlbumsOutsideReadingList"
 				:label="$t('quickTasks.add.series.to.readingList')"
+				:confirm="$t('quickTasks.add.series.to.readingList.confirm')"
 				icon="mdi-library"
-				@click="addSeriesToReadingList"
+				@confirm="addSeriesToReadingList"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.album.to.series')"
@@ -410,6 +411,7 @@ async function albumLoader(id: number): Promise<void> {
 }
 
 async function addSeriesToReadingList(): Promise<void> {
+	appTasksMenu.value = false
 	return readerService.addSeriesToReadingList(series.value.id)
 }
 
