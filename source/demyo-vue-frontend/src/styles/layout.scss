@@ -7,7 +7,7 @@
 	/* stylelint-disable-next-line color-function-notation */
 	column-rule: 1px solid rgb(var(--v-border-color), var(--v-border-opacity));
 
-	@media (width >= 1264px) { // Vuetify "lg" breakpoint
+	@media (width >= 1200px) { // MacBook 13" res, slightly below Vuetify "lg" breakpoint
 		columns: 2;
 	}
 
