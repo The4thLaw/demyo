@@ -127,6 +127,10 @@ public interface Taxonomized {
 		if (tags != null) {
 			taxons.addAll(tags);
 		}
-		setTaxons(taxons);
+		// Only merge if the transient caches are not empty, else we can't load from the database,
+		// edit and save an album in a single transaction as there is no transient cache in that case
+		if (!taxons.isEmpty()) {
+			setTaxons(taxons);
+		}
 	}
 }
