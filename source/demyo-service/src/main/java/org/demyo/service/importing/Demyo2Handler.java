@@ -119,10 +119,7 @@ public class Demyo2Handler extends DefaultHandler {
 				relations.addSeriesTaxon(seriesId, attributes);
 				break;
 			// Before v3.1, we used tags
-			case "album-tag":
-				relations.addAlbumTag(albumId, attributes);
-				break;
-			case "album-taxon":
+			case "album-tag", "album-taxon":
 				relations.addAlbumTaxon(albumId, attributes);
 				break;
 			case "album-image":
