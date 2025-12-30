@@ -220,7 +220,7 @@
 					</template>
 
 					<v-col v-if="album.pages" cols="12" md="4">
-						<FieldValue :label="$t('field.Album.pages')">
+						<FieldValue :label="$t(`field.Album.pages.${album.bookType.labelType}`)">
 							{{ album.pages }}
 						</FieldValue>
 					</v-col>

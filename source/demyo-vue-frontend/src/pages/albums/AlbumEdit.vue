@@ -240,7 +240,7 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="album.pages" :label="$t('field.Album.pages')"
+							v-model="album.pages" :label="$t(`field.Album.pages.${labelType}`)"
 							type="number" inputmode="decimal" :rules="rules.pages"
 						/>
 					</v-col>
