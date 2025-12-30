@@ -117,6 +117,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		Hibernate.initialize(album.getTranslators());
 		Hibernate.initialize(album.getWriters());
 		Hibernate.initialize(album.getTaxons());
+		Hibernate.initialize(album.getPrices());
 		Stream.of(
 			album.getArtists(),
 			album.getColorists(),
