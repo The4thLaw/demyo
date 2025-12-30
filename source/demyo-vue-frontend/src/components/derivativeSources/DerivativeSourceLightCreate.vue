@@ -1,6 +1,6 @@
 <template>
 	<NamedLightCreate
-		:service="derivativeSourceService" :teleport-actions="teleportActions" model-name="Tag"
+		:service="derivativeSourceService" :teleport-actions="teleportActions" model-name="DerivativeSource"
 		@save="(id: number) => emit('save', id)"
 	/>
 </template>
