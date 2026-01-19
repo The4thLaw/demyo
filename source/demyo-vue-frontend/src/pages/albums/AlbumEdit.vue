@@ -184,6 +184,7 @@
 							v-model="album.currentEditionDate" :label="$t('field.Album.currentEditionDate')"
 							type="date" :readonly="sameEditionDates"
 							:append-icon="sameEditionDates ? 'mdi-pencil-off-outline' : ''"
+							@change="adjustEditionDates"
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
@@ -198,7 +199,13 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date"
+							v-model="album.printingDate" :label="$t('field.Album.printingDate')"
+							type="date" :readonly="printSameAsEdition"
+							:append-icon="printSameAsEdition ? 'mdi-pencil-off-outline' : ''"
+						/>
+						<v-checkbox
+							v-model="printSameAsEdition" :label="$t('field.Album.printingDate.sameAsCurrent')"
+							@update:model-value="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
@@ -325,6 +332,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const sameEditionDates = ref(false)
+const printSameAsEdition = ref(false)
 
 const { bookTypes, bookTypesLoading, loadBookTypes } = useRefreshableBookTypes()
 const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors()
@@ -404,6 +412,8 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	// Check the edition dates
 	sameEditionDates.value = (!!fetched.firstEditionDate
 		&& fetched.firstEditionDate === fetched.currentEditionDate) || false
+	printSameAsEdition.value = (!!fetched.currentEditionDate
+		&& fetched.currentEditionDate === fetched.printingDate) || false
 
 	bookTypeManagement.value = await btmP
 
@@ -427,6 +437,9 @@ function adjustEditionDates(): void {
 	}
 	if (sameEditionDates.value) {
 		album.value.currentEditionDate = album.value.firstEditionDate
+	}
+	if (printSameAsEdition.value) {
+		album.value.printingDate = album.value.currentEditionDate
 	}
 }
 
