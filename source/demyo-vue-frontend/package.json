@@ -29,7 +29,7 @@
     "filepond": "^4.32.8",
     "filepond-plugin-file-validate-type": "^1.2.6",
     "filepond-plugin-image-preview": "^4.6.11",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.23",
     "pinia": "^3.0.3",
     "randomcolor": "^0.6.2",
     "roboto-fontface": "^0.10.0",
