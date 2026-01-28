@@ -2,7 +2,6 @@ package org.demyo.dao;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -74,14 +73,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	Album findOneForEditionLight(long id);
 
 	/**
-	 * Finds the first Album for a given Series.
+	 * Finds the ID of the first Album for a given Series.
 	 *
 	 * @param id The Series ID
 	 * @param sort The order to determine the "first"
-	 * @return The matching Album
+	 * @return The matching Album ID
 	 */
-	@EntityGraph("Album.forEdition")
-	Album findTopBySeriesId(long id, Sort sort);
+	@Query(value = "select ID from ALBUMS where SERIES_ID = ?1 order by cycle desc, number desc, number_suffix desc, first_edition desc, this_edition desc, title desc limit 1", nativeQuery = true)
+	Long findLastAlbumInSeries(long series);
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.

@@ -208,11 +208,13 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	public Album getAlbumTemplateForSeries(long seriesId) {
 		Sort sort = Sort.by(Direction.DESC, "cycle", "number", "numberSuffix", "firstEditionDate",
 				"currentEditionDate", "title");
-		Album last = repo.findTopBySeriesId(seriesId, sort);
+		Long lastId = repo.findLastAlbumInSeries(seriesId);
 
 		Album template = new Album();
 
-		if (last != null) {
+		if (lastId != null) {
+			// Reload with all needed data, to avoid potential performance issues
+			Album last = loadAndInitAlbum(lastId, true);
 			template.setBookType(last.getBookType());
 			template.setArtists(last.getArtists());
 			template.setBinding(last.getBinding());
