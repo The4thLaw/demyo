@@ -90,7 +90,7 @@ public class Author extends AbstractModel {
 	/** The real author behind this pseudonym. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pseudonym_of_id")
-	@JsonIgnoreProperties({"biography", "birthDate", "deathDate", "country", "portrait"})
+	@JsonIgnoreProperties({"biography", "birthDate", "deathDate", "portrait"})
 	private Author pseudonymOf;
 
 	/** The pseudonyms for this author. */
