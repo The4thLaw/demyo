@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -56,9 +58,22 @@ public class Demyo2Handler extends DefaultHandler {
 			case "book_type":
 				hasBookType = true;
 				// Fall-through
-			case "image", "publisher", "collection", "binding", "author", "taxon", "borrower", "source", //
+			case "image", "publisher", "collection", "binding", "taxon", "borrower", "source", //
 					"derivative_type", "universe":
 				createLine(localName + "s", attributes);
+				break;
+			case "author":
+				Map<String, String> authorAttributes = toMap(attributes);
+				String pseudonymOf = authorAttributes.get("pseudonym_of_id");
+				if (StringUtils.isNotBlank(pseudonymOf)) {
+					// Some authors may reference a later author as pseudonym and that breaks referential integrity
+					// This can happen if you first encode the pseudonym as a specific author and later add
+					// the real identity
+					String id = authorAttributes.get("id");
+					authorAttributes.remove("pseudonym_of_id");
+					relations.addAuthorPseudonym(id, pseudonymOf);
+				}
+				createLine("authors", authorAttributes);
 				break;
 			// Before 3.1, we used tags
 			case "tag":
@@ -233,6 +248,10 @@ public class Demyo2Handler extends DefaultHandler {
 			for (Map<String, String> line : tableContent) {
 				rawSqlDao.insert(tableName, line);
 			}
+		}
+		LOGGER.debug("Persisting deferred relationships");
+		for (Pair<String, String> authorPseudo : relations.getAuthorPseudonyms()) {
+			rawSqlDao.setAuthorPseudonym(authorPseudo.getLeft(), authorPseudo.getRight());
 		}
 	}
 

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.xml.sax.Attributes;
 
 public class RelationsHolder {
@@ -21,6 +23,7 @@ public class RelationsHolder {
 	private final List<Map<String, String>> albumCoverArtists = new ArrayList<>();
 	private final List<Map<String, String>> albumTaxons = new ArrayList<>();
 	private final List<Map<String, String>> albumImages = new ArrayList<>();
+	private final List<Pair<String, String>> authorPseudonyms = new ArrayList<>();
 	private final List<Map<String, String>> derivativeImages = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
@@ -104,6 +107,14 @@ public class RelationsHolder {
 
 	public void addReaderReadingList(String readerId, Attributes attributes) {
 		readerReadingList.add(join(FK_READER_ID, readerId, FK_ALBUM_ID, attributes.getValue("ref")));
+	}
+
+	public void addAuthorPseudonym(String authorId, String pseudonymOfId) {
+		authorPseudonyms.add(new ImmutablePair<>(authorId, pseudonymOfId));
+	}
+
+	public List<Pair<String,String>> getAuthorPseudonyms() {
+		return authorPseudonyms;
 	}
 
     public Map<String, List<Map<String, String>>> getAllRelations() {
