@@ -21,8 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -206,8 +204,6 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	@Transactional(readOnly = true)
 	public Album getAlbumTemplateForSeries(long seriesId) {
-		Sort sort = Sort.by(Direction.DESC, "cycle", "number", "numberSuffix", "firstEditionDate",
-				"currentEditionDate", "title");
 		Long lastId = repo.findLastAlbumInSeries(seriesId);
 
 		Album template = new Album();
