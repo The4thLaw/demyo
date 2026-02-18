@@ -211,11 +211,13 @@ const albumsLoaded = ref(false)
 const derivatives = ref([] as Derivative[])
 const derivativeCount = ref(-1)
 const showWishlist = ref(true)
-const currentTab = ref(0)
+const currentTab = ref('albums')
 
 async function fetchData(id: number): Promise<Series> {
-	// Clear the albums. Else they're kept from one series to the next when navigating
+	// Clear some data. Else it's kept from one series to the next when navigating
 	albums.value = {}
+	currentTab.value = 'albums'
+	derivatives.value = []
 
 	const dcPromise = seriesService.countDerivatives(id)
 
@@ -399,7 +401,7 @@ async function loadAlbums(forSeries: Series): Promise<void> {
 
 	if (albumCount.value === 0 && derivativeCount.value > 0) {
 		// If there are no albums but there are derivatives, load the derivatives
-		currentTab.value = 1
+		currentTab.value = 'derivatives'
 		void loadDerivatives()
 	}
 }
@@ -418,6 +420,10 @@ async function addSeriesToReadingList(): Promise<void> {
 async function loadDerivatives(): Promise<void> {
 	if (derivatives.value.length > 0) {
 		// Don't reload every time
+		return
+	}
+	if (loading.value) {
+		// Don't reload while the page is loading, the series might not be initialized yet
 		return
 	}
 	derivatives.value = await derivativeService.findForIndex({ series: series.value.id })
