@@ -5,7 +5,6 @@ import { axiosGet } from '@/helpers/axios'
  */
 class SearchService {
 	async quicksearch(query: string): Promise<IModel[]> {
-		console.debug('Searching for', query)
 		return axiosGet('search/quick', { q: query }, [])
 	}
 }
