@@ -156,7 +156,8 @@ public class HomeController extends AbstractController {
 		manifest.put("display", "standalone");
 		manifest.put("lang", lang.toLanguageTag());
 		manifest.put("orientation", "portrait-primary");
-		manifest.put("start_url", servletContextPath + "/");
+		manifest.put("start_url", "./");
+		manifest.put("prefer_related_applications", false);
 		manifest.put("icons",
 			IntStream.of(16, 32, 48, 64, 144, 192, 196, 270, 558).mapToObj(this::getManifestIcon).toList());
 		return manifest;
@@ -164,7 +165,7 @@ public class HomeController extends AbstractController {
 
 	private Map<String, Object> getManifestIcon(int size) {
 		Map<String, Object> icon = new HashMap<>();
-		icon.put("src", servletContextPath + "/icons/demyo-" + size + ".png");
+		icon.put("src", "icons/demyo-" + size + ".png");
 		icon.put("sizes", size + "x" + size);
 		icon.put("type", "image/png");
 		return icon;
