@@ -20,7 +20,7 @@
     "@intlify/unplugin-vue-i18n": "^6.0.8",
     "@mdi/font": "^7.4.47",
     "@tinymce/tinymce-vue": "^6.3.0",
-    "@unhead/vue": "^2.0.14",
+    "@unhead/vue": "^2.1.13",
     "autoprefixer": "^10.4.21",
     "axios": "^1.13.5",
     "chart.js": "^4.5.0",
