@@ -9,21 +9,24 @@
 					<v-list :key="`ti-${key}`" class="dem-columnized c-QuickSearchResults__list" density="compact">
 						<v-list-item v-for="item in results[key]" :key="item.id">
 							<div>
-								<router-link :to="`/${key}/${item.id}/view`" @click="emit('navigate')">
+								<router-link :to="`/${key}/${item.id}/view`">
 									<template v-if="key === 'albums'">
-										{{ item.title }}
+										{{ (item as Album).title }}
 									</template>
 									<template v-else-if="key === 'authors'">
-										{{ item.nameWithPseudonym }}
+										{{ (item as Author).nameWithPseudonym }}
 									</template>
 									<template v-else>
 										{{ item.identifyingName }}
 									</template>
 								</router-link>
 							</div>
-							<div v-if="key === 'albums' && item.series" class="c-QuickSearchResults__albumSeries">
-								<router-link :to="`/series/${item.series.id}/view`" @click="emit('navigate')">
-									{{ item.series.identifyingName }}
+							<div
+								v-if="key === 'albums' && (item as Album).series"
+								class="c-QuickSearchResults__albumSeries"
+							>
+								<router-link :to="`/series/${(item as Album).series.id}/view`">
+									{{ (item as Album).series.identifyingName }}
 								</router-link>
 							</div>
 						</v-list-item>
@@ -32,10 +35,7 @@
 			</template>
 		</template>
 		<template v-else-if="hasLoadedResults">
-			<v-alert
-				border="start" type="info" text
-				class="my-4" variant="outlined"
-			>
+			<v-alert border="start" type="info" class="my-4" variant="outlined">
 				{{ $t('quicksearch.noResults') }}
 			</v-alert>
 		</template>
@@ -52,8 +52,6 @@ const props = withDefaults(defineProps<{
 	results: undefined,
 	loading: false
 })
-
-const emit = defineEmits(['navigate'])
 
 const hasLoadedResults = computed(() => props.results !== undefined)
 const hasResults = computed(() => props.results && Object.keys(props.results).length > 0)

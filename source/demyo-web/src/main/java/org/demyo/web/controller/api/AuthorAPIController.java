@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import org.demyo.common.exception.DemyoException;
 import org.demyo.model.Author;
 import org.demyo.model.ModelView;
 import org.demyo.model.Taxon;
@@ -44,7 +47,7 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	}
 
 	@Override
-    @GetMapping({ "/", "/index" })
+	@GetMapping({ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		List<Author> value = service.findAll(true);
 		return getIndexView(view, value);
@@ -95,5 +98,19 @@ public class AuthorAPIController extends AbstractModelAPIController<Author> {
 	@GetMapping("{modelId}/derivatives/count")
 	public long countDerivativesByArtist(@PathVariable("modelId") long modelId) {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forArtist(modelId));
+	}
+
+	/**
+	 * Saves / Commits the image uploaded through FilePond to the current Author.
+	 *
+	 * @param modelId The Author ID.
+	 * @param data The data from FilePond
+	 * @return The view name.
+	 * @throws DemyoException In case of error during recovery of the FilePond images.
+	 */
+	@PostMapping("/{modelId}/images")
+	public boolean saveFromFilePond(@PathVariable("modelId") long modelId,
+			@RequestBody FilePondData data) throws DemyoException {
+		return saveFromFilePond(data, () -> service.recoverFromFilePond(modelId, data.getMainImage()));
 	}
 }

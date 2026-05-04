@@ -6,6 +6,7 @@ import { useReaderStore } from '@/stores/reader'
 import type { Dictionary } from 'lodash'
 import deburr from 'lodash/deburr'
 import groupBy from 'lodash/groupBy'
+import { useDisplay } from 'vuetify'
 
 const PAGE_CHANGE_EVENT = 'page-change'
 
@@ -30,6 +31,8 @@ interface PaginationState<T extends AbstractModel> {
 	hasPreviousPage: Ref<boolean>
 	/** Whether a next page is available. */
 	hasNextPage: Ref<boolean>
+	/** The number of pages to display. */
+	paginationVisible: Ref<number>
 	/** The items, paginated. */
 	paginatedItems: Ref<T[]>
 	/** The items, paginated and grouped by first letter if relevant. */
@@ -43,6 +46,19 @@ interface PaginationState<T extends AbstractModel> {
 export function useBasicPagination<T extends AbstractModel>(items: Ref<T[]>,
 		itemsPerPage?: Ref<number>): PaginationState<T> {
 	return usePagination(items, () => '#', () => undefined, itemsPerPage)
+}
+
+export function useResponsivePageCount(): Ref<number> {
+	const display = useDisplay()
+	return computed(() => {
+		if (display.xs.value) {
+			return 3
+		}
+		if (display.smAndDown.value) {
+			return 5
+		}
+		return 10
+	})
 }
 
 export function usePagination<T extends AbstractModel>(items: Ref<T[]>, firstLetterExtractor: (item: T) => string,
@@ -81,6 +97,7 @@ export function usePagination<T extends AbstractModel>(items: Ref<T[]>, firstLet
 		pageCount,
 		hasPreviousPage,
 		hasNextPage,
+		paginationVisible: useResponsivePageCount(),
 
 		paginatedItems,
 		groupedItems,

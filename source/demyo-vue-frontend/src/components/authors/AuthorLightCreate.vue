@@ -1,7 +1,11 @@
 <template>
 	<v-container fluid>
 		<v-form ref="form">
-			<v-row>
+			<AuthorOnlineLookup
+				:term="`${author.firstName ?? ''} ${author.name ?? ''}`"
+				@apply="applyOnlineLookup"
+			/>
+			<v-row no-gutters class="mt-4">
 				<v-col cols="12">
 					<v-text-field v-model="author.firstName" :label="$t('field.Author.firstName')" />
 				</v-col>
@@ -15,6 +19,12 @@
 					<FormActions v-if="!loading" :show-reset="false" :show-back="false" @save="saveAndEmit" />
 				</Teleport>
 			</v-row>
+			<v-alert
+				v-if="hasAdditionalFields"
+				border="start" type="info" class="my-4" variant="outlined"
+			>
+				{{ $t('page.AuthorOnlineLookup.additionalFields') }}
+			</v-alert>
 		</v-form>
 	</v-container>
 </template>
@@ -32,6 +42,18 @@ const emit = defineEmits<{
 }>()
 
 const { model: author, loading, saveAndEmit } = useLightEdit(async () => Promise.resolve({}), authorService, emit)
+
+function applyOnlineLookup(online: Partial<Author>): void {
+	author.value = {
+		...author.value,
+		...online
+	}
+}
+
+const hasAdditionalFields = computed(() => {
+	const a = author.value
+	return !!a.nativeLanguageName || !!a.country || !!a.birthDate || !!a.deathDate || !!a.biography
+})
 
 const rules = {
 	name: [

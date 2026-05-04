@@ -52,7 +52,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 			}
 		},
 
-		base: '/',
+		base: '',
 
 		resolve: {
 			alias: {

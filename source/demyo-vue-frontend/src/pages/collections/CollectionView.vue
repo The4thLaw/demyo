@@ -7,6 +7,11 @@
 				icon="mdi-folder-multiple dem-overlay-edit"
 			/>
 			<AppTask
+				:label="$t('quickTasks.add.image.to.collection')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
+			<AppTask
 				v-if="albumCount === 0"
 				:label="$t('quickTasks.delete.collection')"
 				:confirm="$t('quickTasks.delete.collection.confirm')"
@@ -15,6 +20,7 @@
 				@confirm="deleteModel"
 			/>
 		</AppTasks>
+		<DnDImage v-model="dndDialog" main-image-label="field.Collection.logo" @save="saveDndImages" />
 
 		<SectionCard :loading="loading" :image="collection.logo" :title="collection.identifyingName">
 			<FieldValue
@@ -40,8 +46,7 @@
 			</v-btn>
 			<v-alert
 				v-if="albumCount === 0"
-				border="start" type="info" text class="my-4"
-				variant="outlined"
+				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Collection.noAlbums') }}
 			</v-alert>
@@ -50,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import collectionService from '@/services/collection-service'
 
@@ -61,7 +67,12 @@ async function fetchData(id: number): Promise<Collection> {
 	return collectionP // Resolve calls in parallel
 }
 
-const { model: collection, loading, appTasksMenu, deleteModel }
+const { model: collection, loading, loadData, appTasksMenu, deleteModel }
 	= useSimpleView(fetchData, collectionService, 'quickTasks.delete.collection.confirm.done', 'PublisherIndex',
 		c => c ? `${c.identifyingName} – ${c.publisher?.identifyingName}` : '')
+
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => collectionService.saveFilepondImages(collection.value.id, data.mainImage),
+	loadData
+)
 </script>

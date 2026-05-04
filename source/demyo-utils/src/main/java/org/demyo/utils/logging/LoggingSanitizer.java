@@ -21,6 +21,9 @@ public final class LoggingSanitizer {
 	 * @return The sanitized copy.
 	 */
 	public static String sanitize(String input) {
+		if (input == null) {
+			return null;
+		}
 		return NEWLINES.matcher(input).replaceAll("_NEWLINE_");
 	}
 

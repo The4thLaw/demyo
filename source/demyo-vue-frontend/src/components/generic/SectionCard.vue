@@ -69,8 +69,12 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 </script>
 
 <style lang="scss">
+$xs-breakpoint: 600px; // From Vuetify
+$padding-regular: 24px;
+$padding-small: 16px;
+
 .c-SectionCard.v-card {
-	padding-bottom: 24px;
+	padding-bottom: $padding-regular;
 
 	.text-h4 {
 		margin-bottom: 16px;
@@ -78,8 +82,12 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 }
 
 #demyo .c-SectionCard__container {
-	padding: 24px;
+	padding: $padding-regular;
 	padding-bottom: 0;
+
+	@media (width <= $xs-breakpoint) {
+		padding: $padding-small;
+	}
 
 	> :last-child {
 		margin-bottom: 0;
@@ -99,39 +107,39 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
 		}
 
 		> .v-window {
-			padding: 24px;
+			padding: $padding-regular;
+
+			@media (width <= $xs-breakpoint) {
+				padding: $padding-small;
+			}
 		}
 	}
 }
 
 .c-SectionCard__container--image {
 	display: flex;
+
+	@media (width <= $xs-breakpoint) {
+		flex-direction: column;
+	}
 }
 
 .c-SectionCard__content {
-	padding-left: 24px;
+	padding-left: $padding-regular;
 	flex: 1;
+
+	@media (width <= $xs-breakpoint) {
+		padding-left: 0;
+	}
 }
 
-@media (width <= 600px) { // Vuetify "xs" breakpoint
-	.c-SectionCard__container--image {
-		flex-direction: column;
-	}
-
-	.c-SectionCard__container {
-		padding: 16px;
-	}
-
+@media (width <= $xs-breakpoint) {
 	.c-SectionCard--tabbed .v-tabs-items {
-		padding: 16px;
+		padding: $padding-small;
 	}
 
 	.c-SectionCard__image {
 		text-align: center;
-	}
-
-	.c-SectionCard__content {
-		padding-left: 0;
 	}
 }
 
@@ -141,10 +149,8 @@ const baseImageUrl = computed(() => getBaseImageUrl(props.image))
  */
 .c-SectionCard__image img {
 	max-width: 350px;
-}
 
-@media (width <= 700px) {
-	.c-SectionCard__image img {
+	@media (width <= 700px) {
 		max-width: 200px;
 	}
 }

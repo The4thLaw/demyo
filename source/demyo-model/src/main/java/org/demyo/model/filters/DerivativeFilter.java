@@ -16,7 +16,7 @@ import org.demyo.model.Series;
 public class DerivativeFilter extends AbstractModelFilter {
 	/**
 	 * Factory method that creates a filter based on the {@link Series} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link Series}.
 	 * @return the filter instance
 	 */
@@ -28,7 +28,7 @@ public class DerivativeFilter extends AbstractModelFilter {
 
 	/**
 	 * Factory method that creates a filter based on the {@link Album} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link Album}.
 	 * @return the filter instance
 	 */
@@ -40,7 +40,7 @@ public class DerivativeFilter extends AbstractModelFilter {
 
 	/**
 	 * Factory method that creates a filter based on the {@link org.demyo.model.Author artist} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link org.demyo.model.Author artist}.
 	 * @return the filter instance
 	 */
@@ -52,7 +52,7 @@ public class DerivativeFilter extends AbstractModelFilter {
 
 	/**
 	 * Factory method that creates a filter based on the {@link DerivativeType} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link DerivativeType}.
 	 * @return the filter instance
 	 */
@@ -64,7 +64,7 @@ public class DerivativeFilter extends AbstractModelFilter {
 
 	/**
 	 * Factory method that creates a filter based on the {@link DerivativeSource} internal ID.
-	 * 
+	 *
 	 * @param The internal ID of the {@link DerivativeSource}.
 	 * @return the filter instance
 	 */
@@ -96,7 +96,8 @@ public class DerivativeFilter extends AbstractModelFilter {
 			e = combine(e, QDerivative.derivative.album.id.eq(album));
 		}
 		if (artist != null) {
-			e = combine(e, QDerivative.derivative.artist.id.eq(artist));
+			e = combine(e, QDerivative.derivative.artist.id.eq(artist)
+				.or(QDerivative.derivative.artist.pseudonymOf.id.eq(artist)));
 		}
 		if (type != null) {
 			e = combine(e, QDerivative.derivative.type.id.eq(type));

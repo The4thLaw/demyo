@@ -24,7 +24,7 @@ const uiStore = useUiStore()
 const i18n = useI18n()
 
 useHead({
-	title: i18n.t('title.manage.import.select')
+	title: computed(() => i18n.t('title.manage.import.select'))
 })
 
 const file: Ref<File | undefined> = ref(undefined)

@@ -73,9 +73,11 @@ import org.demyo.model.Taxon;
 							albums_authors aa
 							INNER JOIN albums_aggregated_taxons at ON aa.album_id = at.album_id
 							INNER JOIN taxons t ON t.id = at.taxon_id
-						WHERE author_id = ? and t.taxon_type = 'GENRE'
+						WHERE (author_id = ? or author_id in (select id from authors where pseudonym_of_id = ?))
+							and t.taxon_type = 'GENRE'
 						GROUP BY t.id""");
 		query.setParameter(1, authorId);
+		query.setParameter(2, authorId);
 		List<?> results = query.getResultList();
 
 		List<Long> ids = results.stream().map(row -> ((Number) ((Object[]) row)[0]).longValue()).toList();

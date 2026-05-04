@@ -31,6 +31,7 @@
 			v-if="pageCount > 1"
 			v-model="currentPage"
 			:length="pageCount"
+			:total-visible="paginationVisible"
 			@update:model-value="emit('page-change')"
 		/>
 	</div>
@@ -61,7 +62,7 @@ onMounted(() => focusElement(keyTarget.value))
 
 const emit = defineEmits(emitTypes)
 
-const { pageCount, currentPage, paginatedItems, groupedItems, previousPage, nextPage }
+const { pageCount, currentPage, paginationVisible, paginatedItems, groupedItems, previousPage, nextPage }
 	= usePagination(toRef(() => props.items), props.firstLetterExtractor, emit)
 </script>
 

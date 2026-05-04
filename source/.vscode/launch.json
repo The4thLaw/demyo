@@ -21,6 +21,12 @@
 				//"-Dnope.demyo.thumbnails.queueSize=2"
 			],
 			"cwd": "${workspaceFolder}/demyo-app"
+		},
+		{
+			"type": "java",
+			"name": "Start H2 console",
+			"request": "launch",
+			"mainClass": "org.h2.tools.Console"
 		}
 	]
 }

@@ -2,7 +2,6 @@ package org.demyo.dao;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,6 +19,25 @@ import org.demyo.model.projections.IAuthorAlbum;
 @Repository
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	/**
+	 * Finds the approximate number of rows that would be fetched from the database.
+	 * @param id The identifier of the album.
+	 * @return The expected row count.
+	 */
+	@Query(value = """
+			 select
+				(select greatest(count(*), 1) from albums_writers where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_artists where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_colorists where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_inkers where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_translators where album_id = ?1)
+				*(select greatest(count(*), 1) from albums_cover_artists where album_id = ?1)
+				*(select greatest(count(*), 1) from readers_favourite_albums where album_id = ?1)
+				as rows_lower_bound
+			from dual
+			""", nativeQuery = true)
+	long getFindOneComplexity(long id);
+
+	/**
 	 * Returns a model for the view page.
 	 *
 	 * @param id The identifier of the model.
@@ -29,20 +47,40 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	@EntityGraph("Album.forView")
 	Album findOneForView(long id);
 
+	/**
+	 * Returns a model for the view page, not loading authors or taxons.
+	 *
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	@EntityGraph("Album.forView.light")
+	Album findOneForViewLight(long id);
+
 	@Override
 	@Query("select x from #{#entityName} x where id=?1")
 	@EntityGraph("Album.forEdition")
 	Album findOneForEdition(long id);
 
 	/**
-	 * Finds the first Album for a given Series.
+	 * Returns a model for the edit page, not loading authors or taxons.
+	 *
+	 * @param id The identifier of the model.
+	 * @return The fetched model.
+	 */
+	@Query("select x from #{#entityName} x where id=?1")
+	@EntityGraph("Album.forEdition.light")
+	Album findOneForEditionLight(long id);
+
+	/**
+	 * Finds the ID of the first Album for a given Series.
 	 *
 	 * @param id The Series ID
 	 * @param sort The order to determine the "first"
-	 * @return The matching Album
+	 * @return The matching Album ID
 	 */
-	@EntityGraph("Album.forEdition")
-	Album findTopBySeriesId(long id, Sort sort);
+	@Query(value = "select ID from ALBUMS where SERIES_ID = ?1 order by cycle desc, number desc, number_suffix desc, first_edition desc, this_edition desc, title desc limit 1", nativeQuery = true)
+	Long findLastAlbumInSeries(long series);
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.

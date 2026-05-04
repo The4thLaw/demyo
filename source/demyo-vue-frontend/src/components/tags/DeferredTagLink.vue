@@ -10,7 +10,7 @@ const props = defineProps<{
 	label?: string
 }>()
 const loading = ref(true)
-const tag = ref({} as Tag)
+const tag = ref({} as Taxon)
 
 async function load(): Promise<void> {
 	tag.value = await tagService.findById(props.tagId as number)

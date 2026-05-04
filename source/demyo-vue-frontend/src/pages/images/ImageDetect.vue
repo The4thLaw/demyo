@@ -2,14 +2,14 @@
 	<v-container class="c-ImageDetect">
 		<SectionCard :subtitle="$t('title.add.image.detect')">
 			<v-alert
-				v-if="detectedImages.length > 0" border="start"
-				type="info" text variant="outlined"
+				v-if="detectedImages.length > 0"
+				border="start" type="info" variant="outlined"
 			>
 				{{ $t('page.Image.detect.recommendation') }}
 			</v-alert>
 			<v-alert
-				v-if="!detecting && detectedImages.length === 0" border="start"
-				type="warning" text variant="outlined"
+				v-if="!detecting && detectedImages.length === 0"
+				border="start" type="warning" variant="outlined"
 			>
 				{{ $t('page.Image.detect.noImages') }}
 			</v-alert>
@@ -42,9 +42,11 @@ import { useUiStore } from '@/stores/ui'
 import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.add.image')
+	title: computed(() => i18n.t('title.add.image'))
 })
+
 const uiStore = useUiStore()
 
 const detecting = ref(true)

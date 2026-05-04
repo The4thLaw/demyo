@@ -15,8 +15,8 @@ public interface IDerivativeService extends IModelService<Derivative> {
 	 * <p>
 	 * The other images are added to the current ones.
 	 * </p>
-	 * 
-	 * @param derivativeId The ID of the Album to change.
+	 *
+	 * @param derivativeId The ID of the Derivative to change.
 	 * @param otherFilePondIds The FilePond IDs of the other images to recover.
 	 * @throws DemyoException In case of error during recovery.
 	 */
@@ -24,14 +24,14 @@ public interface IDerivativeService extends IModelService<Derivative> {
 
 	/**
 	 * Finds all Derivatives in a format and order suitable for the index.
-	 * 
+	 *
 	 * @return The Derivatives
 	 */
 	List<Derivative> findAllForIndex();
 
 	/**
 	 * Finds the Derivatives in a format and order suitable for the index.
-	 * 
+	 *
 	 * @param filter A filter to apply to the returned Derivatives.
 	 * @return The Derivatives
 	 */
@@ -39,7 +39,7 @@ public interface IDerivativeService extends IModelService<Derivative> {
 
 	/**
 	 * Counts how many Derivatives use the given criteria.
-	 * 
+	 *
 	 * @param filter The criteria.
 	 * @return the count
 	 */

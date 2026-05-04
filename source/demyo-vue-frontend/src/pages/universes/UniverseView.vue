@@ -6,6 +6,11 @@
 				icon="mdi-earth dem-overlay-edit"
 			/>
 			<AppTask
+				:label="$t('quickTasks.add.images.to.universe')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
+			<AppTask
 				:label="$t('quickTasks.delete.universe')"
 				:confirm="$t('quickTasks.delete.universe.confirm')"
 				icon="mdi-earth dem-overlay-delete"
@@ -13,6 +18,10 @@
 				@confirm="deleteModel"
 			/>
 		</AppTasks>
+		<DnDImage
+			v-model="dndDialog" main-image-label="field.Universe.logo"
+			other-images-label="field.Universe.images" @save="saveDndImages"
+		/>
 
 		<SectionCard :loading="universeLoading" :image="universe.logo" :title="universe.identifyingName">
 			<FieldValue :value="universe.website" label-key="field.Universe.website" type="url" />
@@ -40,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import universeService from '@/services/universe-service'
 
@@ -60,9 +70,15 @@ async function fetchData(id: number): Promise<Universe> {
 	return universeP
 }
 
-const { model: universe, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData, universeService,
+const { model: universe, loading, loadData, appTasksMenu, deleteModel } = useSimpleView(fetchData, universeService,
 	'quickTasks.delete.universe.confirm.done', 'UniverseIndex')
 
 const hasImages = computed(() => universe.value.images?.length)
 const albumCount = computed(() => albums.value.length)
+
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => universeService.saveFilepondImages(
+		universe.value.id, data.mainImage, data.otherImages),
+	loadData
+)
 </script>

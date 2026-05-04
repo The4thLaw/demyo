@@ -6,6 +6,12 @@
 				icon="mdi-account dem-overlay-edit"
 			/>
 			<AppTask
+				v-if="!author.pseudonymOf?.id"
+				:label="$t('quickTasks.add.image.to.author')"
+				icon="mdi-camera dem-overlay-add"
+				@click="appTasksMenu = false; dndDialog = true"
+			/>
+			<AppTask
 				:label="$t('quickTasks.delete.author')"
 				:confirm="$t('quickTasks.delete.author.confirm')"
 				icon="mdi-account dem-overlay-delete"
@@ -13,21 +19,32 @@
 				@confirm="deleteModel"
 			/>
 		</AppTasks>
+		<DnDImage
+			v-if="!author.pseudonymOf?.id" v-model="dndDialog"
+			main-image-label="field.Author.portrait" @save="saveDndImages"
+		/>
 
 		<SectionCard :loading="authorLoading" :image="author.portrait" :title="author.identifyingName">
+			<div v-if="author.nativeLanguageName" class="v-AuthorView__nativeLanguageName">
+				({{ author.nativeLanguageName }})
+			</div>
+
 			<FieldValue
 				v-if="author.pseudonymOf?.id" :value="author.pseudonymOf"
 				label-key="field.Author.pseudonymOf" type="AuthorView"
 			/>
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
 
-			<FieldValue v-if="author.country" :value="author.country" label-key="field.Author.country">
+			<FieldValue v-if="author.country" label-key="field.Author.country">
 				{{ country }}
 			</FieldValue>
 
 			<FieldValue :value="author.birthDate" label-key="field.Author.birthDate" type="date">
 				<template v-if="isAlive" #append>
 					({{ $t('field.Author.age.alive', { age }) }})
+					<v-icon v-if="isBirthday" class="v-AuthorView__cake">
+						mdi-cake-variant-outline
+					</v-icon>
 				</template>
 			</FieldValue>
 
@@ -47,9 +64,8 @@
 
 			<FieldValue :value="author.biography" label-key="field.Author.biography" type="rich-text" />
 			<v-alert
-				v-if="!albumsLoading && albums.length === 0"
-				border="start" type="info" text class="my-4"
-				variant="outlined"
+				v-if="hasNoAlbums"
+				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Author.noAlbums') }}
 			</v-alert>
@@ -61,9 +77,8 @@
 				{{ $t('page.Author.viewDerivatives', derivativeCount) }}
 			</v-btn>
 			<v-alert
-				v-if="derivativeCount === 0"
-				border="start" type="info" text class="my-4"
-				variant="outlined"
+				v-if="derivativeCount === 0 && hasNoAlbums"
+				border="start" type="info" class="my-4" variant="outlined"
 			>
 				{{ $t('page.Author.noDerivatives') }}
 			</v-alert>
@@ -94,6 +109,7 @@
 </template>
 
 <script setup lang="ts">
+import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import { postProcessTaxons } from '@/composables/taxons'
 import { useCountry } from '@/helpers/countries'
@@ -140,11 +156,12 @@ async function fetchData(id: number): Promise<Author> {
 	return authorP
 }
 
-const { model: author, loading, appTasksMenu, deleteModel } = useSimpleView(fetchData, authorService,
+const { model: author, loading, loadData, appTasksMenu, deleteModel } = useSimpleView(fetchData, authorService,
 	'quickTasks.delete.author.confirm.done', 'AuthorIndex')
 
 const albums = computed(() => authorAlbums.value.albums || [])
 const albumCount = computed(() => albums.value.length)
+const hasNoAlbums = computed(() => !albumsLoading.value && albumCount.value === 0)
 const works = computed(() => ({
 	asArtist: new Set(authorAlbums.value.asArtist),
 	asWriter: new Set(authorAlbums.value.asWriter),
@@ -160,6 +177,14 @@ const age = computed(() => {
 	}
 	const endDate = author.value.deathDate ? dayjs(author.value.deathDate) : dayjs()
 	return endDate.diff(author.value.birthDate, 'year')
+})
+const isBirthday = computed(() => {
+	if (!author.value.birthDate) {
+		return false
+	}
+	const today = dayjs()
+	const birth = dayjs(author.value.birthDate)
+	return today.date() === birth.date() && today.month() === birth.month()
 })
 const country = useCountry(computed(() => author.value.country))
 
@@ -201,6 +226,11 @@ function describeAuthor(album: Album): string {
 	return `${qualifiers.join(', ')} ${pseudonym}`
 }
 
+const { dndDialog, saveDndImages } = useDndImages(
+	async (data: FilePondData) => authorService.saveFilepondImages(author.value.id, data.mainImage),
+	loadData
+)
+
 const chartData = computed(() => {
 	const labels = genres.value.map(g => g.identifyingName)
 	const data = genres.value.map(g => g.usageCount)
@@ -216,9 +246,18 @@ const chartData = computed(() => {
 </script>
 
 <style lang="scss">
+.v-AuthorView__nativeLanguageName {
+	margin-top: -1em;
+	opacity: 0.87;
+}
+
 .v-AuthorView__genresChart {
 	width: max(200px, 20vw);
 	margin: auto;
 	position: relative;
+}
+
+.v-AuthorView__cake {
+	margin-top: -0.3em;
 }
 </style>

@@ -8,8 +8,8 @@ import readerService from './reader-service'
 class AlbumService extends AbstractModelService<Album> {
 	constructor() {
 		super('albums/', {
-			// Publishers are mandatory but could be missing from album templates
-			fillMissingObjects: ['series', 'publisher', 'collection', 'binding', 'cover', 'universe'],
+			// Publishers and book types are mandatory but could be missing from album templates
+			fillMissingObjects: ['series', 'bookType', 'publisher', 'collection', 'binding', 'cover', 'universe'],
 			fillMissingArrays: [
 				'writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists', 'tags', 'genres',
 				'images', 'prices'
@@ -42,9 +42,18 @@ class AlbumService extends AbstractModelService<Album> {
 		return promise
 	}
 
-	async saveFilepondImages(modelId: number, coverId: string, otherImageIds: string[]): Promise<boolean> {
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Album.
+	 *
+	 * @param modelId The Album ID.
+	 * @param filePondMainImage The image ID from FilePond for the cover
+	 * @param filePondOtherImages The image IDs from FilePond
+	 * @return true if saving was successful.
+	 */
+	async saveFilepondImages(modelId: number, filePondMainImage: string,
+		filePondOtherImages: string[]): Promise<boolean> {
 		return axiosPost(`${this.basePath}${modelId}/images`,
-			{ filePondMainImage: coverId, filePondOtherImages: otherImageIds }, false)
+			{ filePondMainImage, filePondOtherImages }, false)
 	}
 
 	/**

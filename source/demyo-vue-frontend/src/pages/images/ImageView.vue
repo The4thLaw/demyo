@@ -29,7 +29,7 @@
 			:title="$t('page.Image.usedIn')"
 		>
 			<v-list>
-				<template v-for="(value, modelType) in parsedDependencies">
+				<template v-for="(value, modelType) in (parsedDependencies as IParsedDependency)">
 					<v-list-group
 						v-if="value.length > 0"
 						:key="modelType"
@@ -94,7 +94,14 @@ function hasSeries(item: IModel): boolean {
 	return !!(item as Album).series
 }
 
-const parsedDependencies = computed(() => {
+interface IParsedDependency {
+	albums: Album[]
+	authors: Author[]
+	publishers: Publisher[]
+	collections: Collection[]
+	derivatives: Derivative[]
+}
+const parsedDependencies: Ref<IParsedDependency> = computed(() => {
 	const covs: Album[] = dependencies.value?.albumCovers ?? []
 	const other: Album[] = dependencies.value?.albumOtherImages ?? []
 	// This won't work if an image is used twice in an Album, although that hardly makes any sense

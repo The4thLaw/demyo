@@ -3,13 +3,13 @@
 		<v-form ref="form">
 			<SectionCard :subtitle="$t('fieldset.Album.identification')" :loading="loading">
 				<v-row>
-					<v-col :cols="bookTypeManagement ? 8 : 12">
+					<v-col cols="12" :md="bookTypeManagement ? 8 : 12">
 						<Autocomplete
 							v-model="album.series.id" :items="series" :loading="seriesLoading"
 							label-key="field.Album.series" clearable refreshable @refresh="loadSeries"
 						/>
 					</v-col>
-					<v-col v-if="bookTypeManagement" cols="4">
+					<v-col v-if="bookTypeManagement" cols="12" md="4">
 						<Autocomplete
 							v-model="album.bookType.id" :items="bookTypes" :loading="bookTypesLoading"
 							:rules="rules.bookType" label-key="field.Album.bookType"
@@ -66,7 +66,8 @@
 						<Autocomplete
 							v-model="album.genres" :items="filteredGenres" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }" add-label="title.add.genre"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'GENRE' }"
+							add-label="title.add.taxon.GENRE"
 							label-key="field.Taxonomized.genres" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.genres.push(id)"
 						/>
@@ -79,7 +80,8 @@
 						<Autocomplete
 							v-model="album.tags" :items="filteredTags" :loading="taxonsLoading"
 							multiple clearable
-							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }" add-label="title.add.tag"
+							:add-component="TaxonLightCreate" :add-props="{ type: 'TAG' }"
+							add-label="title.add.taxon.TAG"
 							label-key="field.Taxonomized.tags" refreshable @refresh="loadTaxons"
 							@added="(id: number) => album.tags.push(id)"
 						/>
@@ -97,7 +99,7 @@
 						<Autocomplete
 							v-model="album.publisher.id" :items="publishers" :loading="publishersLoading"
 							label-key="field.Album.publisher" required :rules="rules.publisher"
-							refreshable @refresh="loadPublishers" @input="loadCollections(album)"
+							refreshable @refresh="loadPublishers" @change="loadCollections(album)"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -182,6 +184,7 @@
 							v-model="album.currentEditionDate" :label="$t('field.Album.currentEditionDate')"
 							type="date" :readonly="sameEditionDates"
 							:append-icon="sameEditionDates ? 'mdi-pencil-off-outline' : ''"
+							@change="adjustEditionDates"
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
@@ -196,7 +199,13 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date"
+							v-model="album.printingDate" :label="$t('field.Album.printingDate')"
+							type="date" :readonly="printSameAsEdition"
+							:append-icon="printSameAsEdition ? 'mdi-pencil-off-outline' : ''"
+						/>
+						<v-checkbox
+							v-model="printSameAsEdition" :label="$t('field.Album.printingDate.sameAsCurrent')"
+							@update:model-value="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
@@ -238,7 +247,7 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="album.pages" :label="$t('field.Album.pages')"
+							v-model="album.pages" :label="$t(`field.Album.pages.${labelType}`)"
 							type="number" inputmode="decimal" :rules="rules.pages"
 						/>
 					</v-col>
@@ -284,7 +293,7 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.cover.id" :items="images" :loading="imagesLoading"
-							label-key="field.Album.cover" refreshable @refresh="loadImages"
+							label-key="field.Album.cover" clearable refreshable @refresh="loadImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -323,6 +332,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const sameEditionDates = ref(false)
+const printSameAsEdition = ref(false)
 
 const { bookTypes, bookTypesLoading, loadBookTypes } = useRefreshableBookTypes()
 const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors()
@@ -352,7 +362,6 @@ const bookTypeManagement = ref(false)
 const seriesDetails: Ref<Series | undefined> = ref(undefined)
 
 async function loadSeriesDetails(newSeriesId?: number): Promise<void> {
-	console.log('New series:', newSeriesId)
 	// Clear the current cache
 	seriesDetails.value = undefined
 	// Check the new applicable one
@@ -403,6 +412,8 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 	// Check the edition dates
 	sameEditionDates.value = (!!fetched.firstEditionDate
 		&& fetched.firstEditionDate === fetched.currentEditionDate) || false
+	printSameAsEdition.value = (!!fetched.currentEditionDate
+		&& fetched.currentEditionDate === fetched.printingDate) || false
 
 	bookTypeManagement.value = await btmP
 
@@ -426,6 +437,9 @@ function adjustEditionDates(): void {
 	}
 	if (sameEditionDates.value) {
 		album.value.currentEditionDate = album.value.firstEditionDate
+	}
+	if (printSameAsEdition.value) {
+		album.value.printingDate = album.value.currentEditionDate
 	}
 }
 

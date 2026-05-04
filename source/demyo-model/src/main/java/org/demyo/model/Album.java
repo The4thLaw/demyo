@@ -58,6 +58,15 @@ import org.demyo.model.util.IdentifyingNameComparator;
 { @NamedAttributeNode("series") })
 @NamedEntityGraph(name = "Album.forWorks", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("bookType") })
+@NamedEntityGraph(name = "Album.forView.light", attributeNodes =
+{ @NamedAttributeNode(value = "series", subgraph = "Album.subgraph.Series"),
+		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"),
+		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("readersFavourites"),
+		@NamedAttributeNode("bookType"), @NamedAttributeNode("universe")},
+	subgraphs = {
+		@NamedSubgraph(name = "Album.subgraph.Series", attributeNodes = @NamedAttributeNode("universe"))
+	})
 @NamedEntityGraph(name = "Album.forView", attributeNodes =
 { @NamedAttributeNode(value = "series", subgraph = "Album.subgraph.Series"),
 		@NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
@@ -74,6 +83,11 @@ import org.demyo.model.util.IdentifyingNameComparator;
 		@NamedSubgraph(name = "Album.subgraph.Series", attributeNodes = @NamedAttributeNode("universe")),
 		@NamedSubgraph(name = "Album.subgraph.Author", attributeNodes = @NamedAttributeNode("pseudonymOf"))
 	})
+@NamedEntityGraph(name = "Album.forEdition.light", attributeNodes =
+{ @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
+		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"),
+		@NamedAttributeNode("images"), @NamedAttributeNode("prices"), @NamedAttributeNode("bookType"),
+		@NamedAttributeNode("universe") })
 @NamedEntityGraph(name = "Album.forEdition", attributeNodes =
 { @NamedAttributeNode("series"), @NamedAttributeNode("publisher"), @NamedAttributeNode("collection"),
 		@NamedAttributeNode("cover"), @NamedAttributeNode("binding"), @NamedAttributeNode("taxons"),

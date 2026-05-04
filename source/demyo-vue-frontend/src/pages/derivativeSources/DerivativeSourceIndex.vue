@@ -2,7 +2,7 @@
 	<div>
 		<TextIndex
 			view-route="DerivativeSourceView" :items="modelList"
-			:first-letter-extractor="(item) => item.identifyingName[0]" @page-change="scrollToTop"
+			:first-letter-extractor="(item: DerivativeSource) => item.identifyingName[0]" @page-change="scrollToTop"
 		/>
 		<Fab to="/derivativeSources/new" icon="mdi-plus" />
 	</div>

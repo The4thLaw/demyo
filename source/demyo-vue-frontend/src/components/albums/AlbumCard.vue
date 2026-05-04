@@ -30,7 +30,7 @@
 			<v-card-text>
 				<v-alert
 					v-if="album.wishlist" color="primary" border="start"
-					icon="mdi-gift" text density="compact" variant="outlined"
+					icon="mdi-gift" density="compact" variant="outlined"
 				>
 					{{ $t('field.Album.wishlist.value.true') }}
 				</v-alert>

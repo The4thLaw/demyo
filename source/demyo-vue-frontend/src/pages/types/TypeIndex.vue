@@ -16,10 +16,7 @@
 
 		<SectionCard :title="$t('title.index.bookType')" :loading="bookTypesLoading">
 			<template v-if="!bookTypeManagement">
-				<v-alert
-					border="start" type="info" text
-					class="my-4" variant="outlined"
-				>
+				<v-alert border="start" type="info" class="my-4" variant="outlined">
 					{{ $t('page.BookType.management.disabled') }}
 				</v-alert>
 				<v-btn color="secondary" @click="enableBookTypeManagement">

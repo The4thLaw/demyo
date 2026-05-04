@@ -112,6 +112,11 @@ public abstract class AbstractPricedModel<P extends AbstractPrice<P, M>, M exten
 	 * @param prices the new prices applicable to the Model
 	 */
 	public void setPrices(SortedSet<P> prices) {
+		if (prices == this.getPrices()) {
+			// If we work on the same data, do nothing. Else, we will clear the set while restoring it
+			// This can happen when loading-saving-loading in a single transaction like when adding an image to an album
+			return;
+		}
 		if (prices == null && this.getPrices() == null) {
 			return;
 		}

@@ -35,8 +35,9 @@ const format = ref('XML')
 const withResources = ref(true)
 const exportForm = useTemplateRef<HTMLFormElement>('export-form')
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.manage.export.select')
+	title: computed(() => i18n.t('title.manage.export.select'))
 })
 
 function doExport(): void {

@@ -116,7 +116,7 @@
 				</v-overlay>
 				<QuickSearchResults
 					v-if="isRelevantSearchQuery" :results="quicksearchResults"
-					:loading="quicksearchLoading" @navigate="showQuicksearch = false; clearSearch()"
+					:loading="quicksearchLoading"
 				/>
 				<!-- Do it on show so that the element stays alive. v-show doesn't work on slot so use a div -->
 				<div v-show="!isRelevantSearchQuery" id="l-DefaultLayout__routerView">
@@ -205,6 +205,7 @@ function blurSearch(): void {
 const route = useRoute()
 watch(route, () => {
 	// Route changed, clear the quick search and collapse the field
+	showQuicksearch.value = false
 	clearSearch()
 	blurSearch()
 })
@@ -240,14 +241,20 @@ watch(route, () => {
 	}
 }
 
-@media screen and (width >= 600px) {
+@media screen and (width > 600px) {
 	#l-DefaultLayout__menuSearch {
 		display: none;
 	}
 }
 
+@media (width <= 600px) {
+	#l-DefaultLayout__mainContainer {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
 @media (width <= 435px) {
-	#l-DefaultLayout__mainContainer,
 	#l-DefaultLayout__mainContainer > .container,
 	#l-DefaultLayout__routerView > .container,
 	.container.v-TaxonIndex__list {

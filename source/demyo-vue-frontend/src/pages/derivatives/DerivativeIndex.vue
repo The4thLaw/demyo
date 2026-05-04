@@ -30,8 +30,9 @@ import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.index.derivative')
+	title: computed(() => i18n.t('title.index.derivative'))
 })
 
 const uiStore = useUiStore()

@@ -60,5 +60,7 @@ export function useCountries(countryCodes: Ref<(string | undefined)[]>): Ref<str
 }
 
 export function useAuthorCountries(authors: Ref<Author[]>): Ref<string | undefined> {
-	return useCountries(computed(() => authors.value.map(a => a.country)))
+	// eslint thinks the country can't be null and I like it that way but we have to circumvent it
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+	return useCountries(computed(() => authors.value.map(a => a.country ?? a.pseudonymOf?.country)))
 }

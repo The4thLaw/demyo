@@ -21,8 +21,9 @@
 			<AppTask
 				v-if="hasAlbumsOutsideReadingList"
 				:label="$t('quickTasks.add.series.to.readingList')"
+				:confirm="$t('quickTasks.add.series.to.readingList.confirm')"
 				icon="mdi-library"
-				@click="addSeriesToReadingList"
+				@confirm="addSeriesToReadingList"
 			/>
 			<AppTask
 				:label="$t('quickTasks.add.album.to.series')"
@@ -210,11 +211,13 @@ const albumsLoaded = ref(false)
 const derivatives = ref([] as Derivative[])
 const derivativeCount = ref(-1)
 const showWishlist = ref(true)
-const currentTab = ref(0)
+const currentTab = ref('albums')
 
 async function fetchData(id: number): Promise<Series> {
-	// Clear the albums. Else they're kept from one series to the next when navigating
+	// Clear some data. Else it's kept from one series to the next when navigating
 	albums.value = {}
+	currentTab.value = 'albums'
+	derivatives.value = []
 
 	const dcPromise = seriesService.countDerivatives(id)
 
@@ -277,15 +280,14 @@ const allTranslators = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'translators', ['name', 'firstName']) : [])
 const allCoverArtists = computed(() =>
 	albumsLoaded.value ? mergeModels<Album, Author>(albumsArray.value, 'coverArtists', ['name', 'firstName']) : [])
-const allAuthors = computed(() => [
+const allOriginAuthors = computed(() => [
 	...allWriters.value,
 	...allArtists.value,
 	...allColorists.value,
 	...allInkers.value,
-	...allTranslators.value,
 	...allCoverArtists.value
 ])
-const authorOrigins = useAuthorCountries(allAuthors)
+const authorOrigins = useAuthorCountries(allOriginAuthors)
 const allGenres = computed(() => albumsLoaded.value
 	? mergeModels([series.value, ...albumsArray.value], 'genres', 'identifyingName')
 	: series.value.genres)
@@ -399,7 +401,7 @@ async function loadAlbums(forSeries: Series): Promise<void> {
 
 	if (albumCount.value === 0 && derivativeCount.value > 0) {
 		// If there are no albums but there are derivatives, load the derivatives
-		currentTab.value = 1
+		currentTab.value = 'derivatives'
 		void loadDerivatives()
 	}
 }
@@ -411,12 +413,17 @@ async function albumLoader(id: number): Promise<void> {
 }
 
 async function addSeriesToReadingList(): Promise<void> {
+	appTasksMenu.value = false
 	return readerService.addSeriesToReadingList(series.value.id)
 }
 
 async function loadDerivatives(): Promise<void> {
 	if (derivatives.value.length > 0) {
 		// Don't reload every time
+		return
+	}
+	if (loading.value) {
+		// Don't reload while the page is loading, the series might not be initialized yet
 		return
 	}
 	derivatives.value = await derivativeService.findForIndex({ series: series.value.id })

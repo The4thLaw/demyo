@@ -1,4 +1,4 @@
-import { axiosGet } from '@/helpers/axios'
+import { axiosGet, axiosPost } from '@/helpers/axios'
 import AbstractModelService from './abstract-model-service'
 
 /**
@@ -18,6 +18,17 @@ class CollectionService extends AbstractModelService<Collection> {
 	 */
 	async countAlbums(id: number): Promise<number> {
 		return axiosGet(`collections/${id}/albums/count`, 0)
+	}
+
+	/**
+	 * Saves / Commits the images uploaded through FilePond to the current Collection.
+	 *
+	 * @param modelId The Collection ID.
+	 * @param filePondMainImage The image ID from FilePond
+	 * @return true if saving was successful.
+	 */
+	async saveFilepondImages(modelId: number, filePondMainImage: string): Promise<boolean> {
+		return axiosPost(`${this.basePath}${modelId}/images`, { filePondMainImage }, false)
 	}
 }
 
