@@ -348,7 +348,7 @@ const hasImages = computed(() => album.value.images?.length)
 
 const sizeSpec = computed(() => {
 	if (album.value.width && album.value.height) {
-		return `${album.value.width} x ${album.value.height}`
+		return `${album.value.width} × ${album.value.height}`
 	}
 
 	return null

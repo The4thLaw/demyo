@@ -8,6 +8,7 @@ import org.demyo.model.Album;
 import org.demyo.model.Series;
 import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
+import org.demyo.model.projections.IAlbumSize;
 
 /**
  * Service for management of {@link Album}s.
@@ -78,4 +79,11 @@ public interface IAlbumService extends IModelService<Album>, IQuickSearchableSer
 	 */
 	long countAlbumsByFilter(AlbumFilter filter);
 
+	/**
+	 * Finds the common sizes for Albums by a Publisher or in a Collection.
+	 * @param publisherId The Publisher ID, if any
+	 * @param collectionId The Collection ID, if any
+	 * @return The found sizes
+	 */
+    List<IAlbumSize> findCommonSizes(Long publisherId, Long collectionId);
 }

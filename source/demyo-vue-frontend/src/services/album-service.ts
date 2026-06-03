@@ -63,6 +63,17 @@ class AlbumService extends AbstractModelService<Album> {
 	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
 	}
+
+	async findCommonSizes(publisher: number | undefined, collection: number | undefined): Promise<CommonAlbumSize[]> {
+		const params: Record<string, number> = {}
+		if (publisher) {
+			params.publisher = publisher
+		}
+		if (collection) {
+			params.collection = collection
+		}
+		return axiosGet(`${this.basePath}common-sizes`, params, [])
+	}
 }
 
 export default new AlbumService()

@@ -11,6 +11,7 @@ import com.querydsl.core.types.Predicate;
 import org.demyo.model.Album;
 import org.demyo.model.BookType;
 import org.demyo.model.Series;
+import org.demyo.model.projections.IAlbumSize;
 import org.demyo.model.projections.IAuthorAlbum;
 
 /**
@@ -20,6 +21,7 @@ import org.demyo.model.projections.IAuthorAlbum;
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	/**
 	 * Finds the approximate number of rows that would be fetched from the database.
+	 *
 	 * @param id The identifier of the album.
 	 * @return The expected row count.
 	 */
@@ -197,4 +199,32 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 */
 	@Query("select count(*) from Album a where a.binding.id = ?1")
 	int countAlbumsByBinding(long typeId);
+
+	@Query(value = """
+			select *
+			from
+				(select
+					'publisher' as source, count(*) as cnt, WIDTH, HEIGHT
+				from ALBUMS
+				where
+					PUBLISHER_ID = ?1
+					and WIDTH is not null
+					and HEIGHT is not null
+				group by WIDTH, HEIGHT)
+			order by cnt desc limit 3""", nativeQuery = true)
+	List<IAlbumSize> findCommonSizesByPublisher(long pubId);
+
+	@Query(value = """
+			select *
+			from
+				(select
+					'collection' as source, count(*) as cnt, WIDTH, HEIGHT
+				from ALBUMS
+				where
+					COLLECTION_ID = ?1
+					and WIDTH is not null
+					and HEIGHT is not null
+				group by WIDTH, HEIGHT)
+			order by cnt desc limit 3""", nativeQuery = true)
+	List<IAlbumSize> findCommonSizesByCollection(long colId);
 }
