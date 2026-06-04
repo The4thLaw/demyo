@@ -29,7 +29,9 @@ inverse-FK_SERIES_TAXONS_TAXON; ; ignore
 
 #! block additional subjects
 # subject; condition; limit; limit-order
-ALBUMS; T.TITLE in ('300'); ; 
+ALBUMS; T.TITLE in ('300', 'Apologie de Socrate'); ; 
+AUTHORS; T.NAME = 'Acar'; ; 
+UNIVERSES; T.NAME = 'Dantec'; ; 
 
 #! block xml-mapping
 
@@ -119,4 +121,4 @@ FK_UNIVERSES_IMAGES_UNIVERSE;
 FK_UNIVERSES_LOGO; 
 
 #! block version
-16.7
+17.1.1

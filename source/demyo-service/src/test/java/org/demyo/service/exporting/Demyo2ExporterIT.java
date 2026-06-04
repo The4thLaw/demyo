@@ -6,8 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.the4thlaw.commons.utils.io.FileUtils;
@@ -25,7 +23,6 @@ import org.demyo.test.assertions.xml.ElementAssert;
  */
 @DatabaseSetup(value = "/org/demyo/test/demyo-dbunit-standard.xml", type = DatabaseOperation.REFRESH)
 class Demyo2ExporterIT extends AbstractServiceTest {
-	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2ExporterIT.class);
 	private static final String SAMPLE_HTML_DESCRIPTION = "<p>Sample HTML description</p>";
 
 	@Autowired
@@ -44,50 +41,19 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		String expContent = Files.readString(expFile, StandardCharsets.UTF_8);
 		FileUtils.deleteQuietly(expFile);
-		LOGGER.error(expContent);
+		// System.out.println(expContent);
 
 		ElementAssert documentAssert = Assert.assertThatXml(expContent);
 
 		/*
 		 * TODO: The following properties still need to be checked
 		 *
-		 * AUTHORS
-		 *  - pseudonyms
-		 *  - date of birth
-		 *  - date of death
-		 *  - country
-		 *  - website
-		 *  - portrait
-		 *
-		 * PUBLISHER
-		 *  - history
-		 *
-		 * COLLECTION
-		 *  - feed
-		 *  - history
-		 *  - logo
-		 *  - Album with collection_id
-		 *
 		 * SERIES
 		 *  - Everything
-		 *  - Including universe_id
+		 *  - Including universe_id*
 		 *
 		 * ALBUM
 		 *  - All author types
-		 *  - Original title
-		 *  - Location
-		 *
-		 * TAXONS
-		 *  - series-taxon
-		 *
-		 * BOOK TYPES
-		 *  - description
-		 *  - field_config
-		 *
-		 * UNIVERSES
-		 *  - album universe
-		 *  - logo
-		 *  - description
 		 *
 		 * DERIVATIVES
 		 *  - All properties
@@ -96,7 +62,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Images
 		documentAssert.css("image")
-				.hasSize(91)
+				.hasSize(140)
 				.byId(306)
 				.exists()
 				.hasAttribute("url", "dummy-image.jpg")
@@ -115,7 +81,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Publishers
 		documentAssert.css("publisher")
-				.hasSize(3)
+				.hasSize(5)
 				.byId(1)
 				.hasAttribute("name", "Dargaud")
 				.hasAttribute("website", "http://www.dargaud.com/")
@@ -123,64 +89,94 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("logo_id", 5014);
 		documentAssert.xpathSingle("//album[@id=306]")
 				.hasAttribute("publisher_id", 4);
-		documentAssert.xpathSingle("//collection[@id=90]")
-				.hasAttribute("publisher_id", 1);
+		documentAssert.xpathSingle("//publisher[@id=4]")
+				.hasAttribute("history", SAMPLE_HTML_DESCRIPTION);
 
 		// Collections
+		// Note: can't test the feed, noone offers it anymore at this level
 		documentAssert.css("collection")
 				.hasSize(22)
 				.byId(90)
 				.hasAttribute("name", "Fictions")
 				.hasAttribute("website", "http://www.dargaud.com/front/albums/collections/collection.aspx?id=954");
+		documentAssert.xpathSingle("//collection[@id=38]")
+				.hasAttribute("history", SAMPLE_HTML_DESCRIPTION);
+		documentAssert.xpathSingle("//collection[@id=31]")
+				.hasAttribute("logo_id", 7083);
+		documentAssert.xpathSingle("//collection[@id=90]")
+				.hasAttribute("publisher_id", 1);
 
 		// Bindings
 		documentAssert.css("binding")
-				.hasSize(2)
+				.hasSize(3)
 				.byId(1)
 				.hasAttribute("name", "Cartonné");
 
 		// Authors
 		documentAssert.css("author")
-				.hasSize(31)
-				.byId(10)
-				.hasAttribute("name", "Vatine")
-				.hasAttribute("fname", "Olivier")
+				.hasSize(37)
+				.byId(119)
+				.hasAttribute("name", "Tarquin")
+				.hasAttribute("fname", "Didier")
 				.hasAttribute("biography", SAMPLE_HTML_DESCRIPTION);
 		documentAssert.xpathSingle("//author[@id=216]")
 				.hasAttribute("nickname", "Fred");
+		documentAssert.xpathSingle("//author[@id=282]")
+				.hasAttribute("birth", "1937-03-14")
+				.hasAttribute("death", "1976-01-21")
+				.hasAttribute("country", "BEL");
+		documentAssert.xpathSingle("//author[@id=311]")
+				.hasAttribute("website", "https://seblamirand.blogspot.com/");
+		documentAssert.xpathSingle("//author[@id=120]")
+				.hasAttribute("portrait_id", 6737);
+		documentAssert.xpathSingle("//author[@id=658]")
+				.hasAttribute("pseudonym_of_id", 120);
 
 		// Taxons
 		documentAssert.css("taxon")
-				.hasSize(12)
+				.hasSize(19)
 				.byId(21)
 				.hasAttribute("name", "one shot")
 				.hasAttribute("taxon_type", "TAG");
-		documentAssert.xpath("//album[@id=797]/album-taxons/album-taxon")
-				.hasSize(2)
+		documentAssert.xpath("//album[@id=653]/album-taxons/album-taxon")
+				.hasSize(3)
 				.at(0)
-				.hasAttribute("ref", 21)
+				.hasAttribute("ref", 5)
 				.siblings()
 				.at(0)
-				.hasAttribute("ref", 69);
+				.hasAttribute("ref", 10)
+				.siblings()
+				.at(1)
+				.hasAttribute("ref", 128);
+		documentAssert.xpath("//series[@id=69]/series-taxons/series-taxon")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 5);
 
 		// Book types
 		documentAssert.css("book_type")
-				.hasSize(1)
-				.byId(1)
-				.hasAttribute("name", "__DEFAULT__")
-				.hasAttribute("label_type", "GRAPHIC_NOVEL");
+				.hasSize(3)
+				.byId(3)
+				.hasAttribute("name", "Roman")
+				.hasAttribute("label_type", "NOVEL")
+				.hasAttribute("description", SAMPLE_HTML_DESCRIPTION)
+				.hasAttribute("field_config", "ALBUM_COLORIST,ALBUM_INKER");
 		documentAssert.xpathSingle("//album[@id=306]")
 				.hasAttribute("book_type_id", 1);
 
 		// Universes
 		documentAssert.css("universe")
-				.hasSize(2)
+				.hasSize(3)
 				.byId(8)
-				.hasAttribute("name", "Lanfeust de Troy");
+				.hasAttribute("name", "Mondes de Troy")
+				.hasAttribute("logo_id", 7085);
+		documentAssert.xpathSingle("//universe[@id=30]")
+		.hasAttribute("description", SAMPLE_HTML_DESCRIPTION);
+		// TODO: add other images, find an album with a universe
 
 		// Albums
 		documentAssert.css("album")
-				.hasSize(77)
+				.hasSize(93)
 				.byId(306)
 				.hasAttribute("series_id", 69)
 				.hasAttribute("cycle", 1)
@@ -202,6 +198,12 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		documentAssert.xpathSingle("//album[@id=796]")
 				.hasAttribute("isbn", "978-2-30200-869-4")
 				.hasAttribute("summary", SAMPLE_HTML_DESCRIPTION);
+		documentAssert.xpathSingle("//album[@id=2892]")
+				.hasAttribute("location", "Mezzanine, D3");
+		documentAssert.xpathSingle("//album[@id=3962]")
+				.hasAttribute("original_title", "Πλάτωνος Ἀπολογία Σωκράτους");
+		documentAssert.xpathSingle("//album[@id=1024]")
+				.hasAttribute("collection_id", 33);
 
 		documentAssert.source()
 				// Album prices
