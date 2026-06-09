@@ -49,20 +49,38 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		 * TODO: The following properties still need to be checked
 		 *
 		 * SERIES
-		 *  - Everything
-		 *  - Including universe_id*
-		 *
-		 * ALBUM
-		 *  - All author types
+		 *  - name
+		 *  - original_name
+		 *  - universe_id*
+		 *  - summary
+		 *  - comment
+		 *  - website
+		 *  - completed
+		 *  - location
 		 *
 		 * DERIVATIVES
-		 *  - All properties
+		 *  - acquisition_date
+		 *  - acquisition_price
+		 *  - series
+		 *  - album
+		 *  - artist
+		 *  - type
+		 *  - total
+		 *  - number
+		 *  - size (wxgxh)
+		 *  - source
+		 *  - colors
+		 *  - signed
+		 *  - author's copy
+		 *  - restricted sale
+		 *  - description
+		 *  - images
 		 *
 		 */
 
 		// Images
 		documentAssert.css("image")
-				.hasSize(140)
+				.hasSize(160)
 				.byId(306)
 				.exists()
 				.hasAttribute("url", "dummy-image.jpg")
@@ -81,7 +99,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Publishers
 		documentAssert.css("publisher")
-				.hasSize(5)
+				.hasSize(7)
 				.byId(1)
 				.hasAttribute("name", "Dargaud")
 				.hasAttribute("website", "http://www.dargaud.com/")
@@ -95,7 +113,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		// Collections
 		// Note: can't test the feed, noone offers it anymore at this level
 		documentAssert.css("collection")
-				.hasSize(22)
+				.hasSize(36)
 				.byId(90)
 				.hasAttribute("name", "Fictions")
 				.hasAttribute("website", "http://www.dargaud.com/front/albums/collections/collection.aspx?id=954");
@@ -114,7 +132,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Authors
 		documentAssert.css("author")
-				.hasSize(37)
+				.hasSize(41)
 				.byId(119)
 				.hasAttribute("name", "Tarquin")
 				.hasAttribute("fname", "Didier")
@@ -134,7 +152,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Taxons
 		documentAssert.css("taxon")
-				.hasSize(19)
+				.hasSize(23)
 				.byId(21)
 				.hasAttribute("name", "one shot")
 				.hasAttribute("taxon_type", "TAG");
@@ -155,7 +173,7 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Book types
 		documentAssert.css("book_type")
-				.hasSize(3)
+				.hasSize(4)
 				.byId(3)
 				.hasAttribute("name", "Roman")
 				.hasAttribute("label_type", "NOVEL")
@@ -166,17 +184,17 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		// Universes
 		documentAssert.css("universe")
-				.hasSize(3)
+				.hasSize(5)
 				.byId(8)
 				.hasAttribute("name", "Mondes de Troy")
 				.hasAttribute("logo_id", 7085);
 		documentAssert.xpathSingle("//universe[@id=30]")
-		.hasAttribute("description", SAMPLE_HTML_DESCRIPTION);
-		// TODO: add other images, find an album with a universe
+				.hasAttribute("description", SAMPLE_HTML_DESCRIPTION);
+		// TODO: add other images (OK on universe 8)
 
 		// Albums
 		documentAssert.css("album")
-				.hasSize(93)
+				.hasSize(109)
 				.byId(306)
 				.hasAttribute("series_id", 69)
 				.hasAttribute("cycle", 1)
@@ -204,6 +222,36 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("original_title", "Πλάτωνος Ἀπολογία Σωκράτους");
 		documentAssert.xpathSingle("//album[@id=1024]")
 				.hasAttribute("collection_id", 33);
+		documentAssert.xpathSingle("//album[@id=2030]")
+				.hasAttribute("purchase_price", "15.0")
+				.hasAttribute("acquisition_date", "2022-05-02");
+		documentAssert.xpathSingle("//album[@id=1128]")
+				.hasAttribute("universe_id", 18);
+
+		documentAssert.xpath("//album[@id=1520]/artists/artist")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 875);
+		documentAssert.xpath("//album[@id=1520]/writers/writer")
+				.hasSize(2)
+				.at(0)
+				.hasAttribute("ref", 120);
+		documentAssert.xpath("//album[@id=1520]/colorists/colorist")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 730);
+		documentAssert.xpath("//album[@id=1520]/inkers/inker")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 876);
+		documentAssert.xpath("//album[@id=3997]/translators/translator")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 2115);
+		documentAssert.xpath("//album[@id=3997]/cover-artists/cover-artist")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 2116);
 
 		documentAssert.source()
 				// Album prices

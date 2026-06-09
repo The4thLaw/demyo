@@ -1,5 +1,5 @@
 # subject; condition; limit; limit-order
-SERIES; T.NAME in ('Alvin', 'Cross Fire', 'Trolls de Troy'); ; 
+SERIES; T.NAME in ('Alvin', 'Cross Fire', 'Trolls de Troy', 'Le Seigneur des Anneaux'); ; 
 
 # association; ; restriction-condition
 inverse-FK_ALBUMS_ARTISTS_AUTHOR; ; ignore
@@ -29,7 +29,7 @@ inverse-FK_SERIES_TAXONS_TAXON; ; ignore
 
 #! block additional subjects
 # subject; condition; limit; limit-order
-ALBUMS; T.TITLE in ('300', 'Apologie de Socrate'); ; 
+ALBUMS; T.TITLE in ('300', 'Apologie de Socrate', 'NOiSE'); ; 
 AUTHORS; T.NAME = 'Acar'; ; 
 UNIVERSES; T.NAME = 'Dantec'; ; 
 
