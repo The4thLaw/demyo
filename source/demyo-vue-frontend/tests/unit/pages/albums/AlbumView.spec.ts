@@ -17,8 +17,7 @@ vi.mock('vue-router', () => ({
 	}))
 }))
 
-// eslint-disable-next-line max-len
-// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+// eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
 global.ResizeObserver = require('resize-observer-polyfill')
 
 vi.mock('@/composables/model-view', () => ({
