@@ -77,7 +77,7 @@ class DbUnitExtractorIT extends AbstractServiceTest {
 		// Note that we can't have emojis in the test database. DBUnit uses the same code internally that caused issue
 		// https://github.com/The4thLaw/demyo/issues/76
 		try (BufferedWriter writer = Files.newBufferedWriter(output, StandardCharsets.UTF_8)) {
-			FlatXmlDataSet.write(fullDataSet, writer, StandardCharsets.UTF_8.name());
+			FlatXmlDataSet.write(fullDataSet, writer, StandardCharsets.UTF_8);
 		}
 	}
 }
