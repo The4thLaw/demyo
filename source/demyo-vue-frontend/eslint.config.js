@@ -172,10 +172,7 @@ export default [
 				// Vue + unplugin-auto-import
 				ref: false
 			},
-			parser: tsParser,
-			parserOptions: {
-				project: './tsconfig.json'
-			}
+			parser: tsParser
 		},
 
 		rules: {
@@ -193,6 +190,7 @@ export default [
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
+				projectService: false,
 				project: './tsconfig.node.json'
 			}
 		},
@@ -218,6 +216,7 @@ export default [
 				// See https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
 				parser: tsParser,
 				project: './tsconfig.json',
+				projectService: false,
 				extraFileExtensions: ['.vue']
 			}
 		},
