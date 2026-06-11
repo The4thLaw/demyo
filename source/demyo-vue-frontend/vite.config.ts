@@ -2,7 +2,6 @@ import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import * as path from 'path'
-import { visualizer } from 'rollup-plugin-visualizer'
 import autoImport from 'unplugin-auto-import/vite'
 import autoComponents from 'unplugin-vue-components/vite'
 import type { ConfigEnv, UserConfig } from 'vite'
@@ -88,7 +87,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 				include: [path.resolve(__dirname, './src/locales/strings/**')]
 			}),
 			worldCountriesFilter(),
-			visualizer(),
 			vueDevTools({
 				launchEditor: 'code'
 			})
