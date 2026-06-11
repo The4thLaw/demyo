@@ -27,6 +27,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 			rollupOptions: {
 				output: {
 					// TODO: Vite 8 moves to rolldown so we need to change this
+					// eslint-disable-next-line max-len
 					// https://vite.dev/guide/migration#removed-object-form-build-rollupoptions-output-manualchunks-and-deprecate-function-form-one
 					manualChunks(id) {
 						if (id.includes('filepond')) {
