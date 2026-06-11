@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
+import { scrollToTop } from '@/helpers/dom'
 import sourceService from '@/services/derivative-source-service'
 
 const { modelList } = useSimpleIndex(sourceService, 'title.index.derivativeSource')

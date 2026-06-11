@@ -23,6 +23,7 @@
 </template>
 
 <script setup lang="ts">
+import { scrollToTop } from '@/helpers/dom'
 import { retrieveFilter } from '@/helpers/filter'
 import derivativeService from '@/services/derivative-service'
 import { useUiStore } from '@/stores/ui'
