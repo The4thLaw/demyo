@@ -183,11 +183,11 @@ const hasPrices = computed(() => derivative.value.prices?.length > 0)
 const hasImages = computed(() => derivative.value.images?.length > 1)
 const sizeSpec = computed(() => {
 	if (derivative.value.width && derivative.value.height && derivative.value.depth) {
-		return `${derivative.value.width} x ${derivative.value.height} x ${derivative.value.depth}`
+		return `${derivative.value.width} × ${derivative.value.height} × ${derivative.value.depth}`
 	}
 
 	if (derivative.value.width && derivative.value.height) {
-		return `${derivative.value.width} x ${derivative.value.height}`
+		return `${derivative.value.width} × ${derivative.value.height}`
 	}
 
 	return null

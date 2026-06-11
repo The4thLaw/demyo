@@ -10,8 +10,8 @@ const readerStore = useReaderStore()
 readerStore.currentReader = ({
 	configuration: {
 		pageSizeForText: 10
-	} as ApplicationConfiguration
-} as unknown as Reader)
+	}
+})
 
 vi.mock('@/services/binding-service')
 vi.mock('@/services/derivative-type-service')

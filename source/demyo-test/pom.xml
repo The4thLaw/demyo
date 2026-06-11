@@ -92,7 +92,7 @@
 		<!-- We need an implementation for the tests -->
 		<dependency>
 			<groupId>org.mortbay.jasper</groupId>
-			<artifactId>apache-el</artifactId>
+			<artifactId>mortbay-apache-el</artifactId>
 			<scope>compile</scope>
 		</dependency>
 

@@ -10,7 +10,7 @@ describe('Authors', () => {
 		cy.url().should('match', /authors\/\d+\/view/)
 		// Ensure that the encoded data is correct
 		cy.assertTitle('John Doe')
-		cy.contains('You have no albums by this author').should('exist')
+		cy.contains('You have no books by this author').should('exist')
 		cy.contains('You have no derivatives by this author').should('exist')
 	})
 

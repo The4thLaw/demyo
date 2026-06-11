@@ -3,6 +3,8 @@
 		v-if="view !== 'AuthorPseudonym'"
 		:to="{ name: view, params: { id: model.id } }" :class="`c-ModelLink ${cssClass}`"
 	>
+		<!-- Needed for templates without heading or trailing spaces -->
+		<!-- eslint-disable vue/singleline-html-element-content-newline -->
 		<template v-if="hasDefaultSlot">
 			<slot :item="model" />
 		</template>

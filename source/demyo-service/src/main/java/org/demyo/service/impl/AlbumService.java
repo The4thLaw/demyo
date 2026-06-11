@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -37,6 +39,7 @@ import org.demyo.model.Author;
 import org.demyo.model.Series;
 import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
+import org.demyo.model.projections.IAlbumSize;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IFilePondModelService;
@@ -72,10 +75,10 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	/**
 	 * Loads and initializes an album in an efficient manner.
 	 * <p>
-	 * Albums are very particular entities. Collected comics issues can have (simplification of an actual case)
-	 * 10 writers, 10 artists, 10 colorists, 5 inkers. It's not uncommon for albums to have 5 taxons.
-	 * 10*10*10*5*5 = 25000 thousand rows in a full JOIN statement that Hibernate would generate for a full
-	 * entity graph. This results in absymal performance.
+	 * Albums are very particular entities. Collected comics issues can have (simplification of an actual case) 10
+	 * writers, 10 artists, 10 colorists, 5 inkers. It's not uncommon for albums to have 5 taxons. 10*10*10*5*5 = 25000
+	 * thousand rows in a full JOIN statement that Hibernate would generate for a full entity graph. This results in
+	 * absymal performance.
 	 * </p>
 	 * <p>
 	 * For this reason, this method drops some eager joins and lazy loads what's needed. It can result in lower
@@ -117,16 +120,15 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		Hibernate.initialize(album.getTaxons());
 		Hibernate.initialize(album.getPrices());
 		Stream.of(
-			album.getArtists(),
-			album.getColorists(),
-			album.getCoverArtists(),
-			album.getInkers(),
-			album.getTranslators(),
-			album.getWriters()
-		).flatMap(Collection::stream)
-			.map(Author::getPseudonymOf)
-			.filter(Objects::nonNull)
-			.forEach(Hibernate::initialize);
+				album.getArtists(),
+				album.getColorists(),
+				album.getCoverArtists(),
+				album.getInkers(),
+				album.getTranslators(),
+				album.getWriters()).flatMap(Collection::stream)
+				.map(Author::getPseudonymOf)
+				.filter(Objects::nonNull)
+				.forEach(Hibernate::initialize);
 		subLoadSw.stop();
 		LOGGER.debug("Loading secondary associations for album {} from the DB took {}ms", id, subLoadSw.getTime());
 
@@ -343,5 +345,35 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	public long countAlbumsByFilter(AlbumFilter filter) {
 		return repo.count(filter.toPredicate());
+	}
+
+	@Override
+	public List<IAlbumSize> findCommonSizes(Long publisherId, Long collectionId) {
+		List<IAlbumSize> common = findCommonSizes(collectionId, () -> AlbumFilter.forCollection(collectionId),
+				repo::findCommonSizesByCollection);
+		if (!common.isEmpty()) {
+			return common;
+		}
+		common = findCommonSizes(publisherId, () -> AlbumFilter.forPublisher(publisherId),
+				repo::findCommonSizesByPublisher);
+		return common;
+	}
+
+	private List<IAlbumSize> findCommonSizes(Long modelId, Supplier<AlbumFilter> afs,
+			Function<Long, List<IAlbumSize>> ass) {
+		if (modelId == null) {
+			return Collections.emptyList();
+		}
+
+		double numAlbums = countAlbumsByFilter(afs.get());
+		if (numAlbums > 0) {
+			List<IAlbumSize> common = ass.apply(modelId);
+			return common.stream()
+					// Require at least 15% of the books to be this size
+					.filter(as -> (double) as.getCnt() / numAlbums > 0.15)
+					.toList();
+		}
+
+		return Collections.emptyList();
 	}
 }

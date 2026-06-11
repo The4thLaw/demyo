@@ -1,5 +1,6 @@
 package org.demyo.web.controller.api;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.demyo.model.Album;
 import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
 import org.demyo.model.filters.DerivativeFilter;
+import org.demyo.model.projections.IAlbumSize;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IDerivativeService;
 
@@ -49,7 +51,8 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	 * @return The list.
 	 */
 	@Override
-	@GetMapping({ "/", "/index" })
+	@GetMapping(
+	{ "/", "/index" })
 	public MappingJacksonValue index(@RequestParam("view") Optional<String> view) {
 		Iterable<MetaSeries> value = service.findAllForIndex();
 		return getIndexView(view, value);
@@ -93,5 +96,11 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 	@GetMapping("{modelId}/derivatives/count")
 	public long countDerivativesByAlbums(@PathVariable("modelId") long modelId) {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forAlbum(modelId));
+	}
+
+	@GetMapping("common-sizes")
+	public List<IAlbumSize> findCommonSizes(@RequestParam(value = "publisher", required = false) Long publisherId,
+			@RequestParam(value = "collection", required = false) Long collectionId) {
+		return service.findCommonSizes(publisherId, collectionId);
 	}
 }

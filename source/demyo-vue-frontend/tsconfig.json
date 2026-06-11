@@ -28,8 +28,7 @@
   },
   "include": [
 		"auto-imports.d.ts", "components.d.ts", "types/augments.d.ts",
-		"src/**/*.ts", "src/**/*.tsx", "src/**/*.vue",
-		"tests/**/*.ts"
+		"src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"
 	],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

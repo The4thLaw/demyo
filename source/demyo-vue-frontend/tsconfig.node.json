@@ -5,7 +5,11 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+
+	"paths": {
+      "@/*": ["./src/*"]
+    },
   },
-  "include": ["vite.config.ts", "vitest.config.ts", "vite-plugins/**/*.ts"]
+  "include": ["auto-imports.d.ts", "types/java-models.d.ts", "vite.config.ts", "vitest.config.ts", "vite-plugins/**/*.ts", "tests/**/*.ts"]
 }
