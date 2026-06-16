@@ -45,42 +45,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		ElementAssert documentAssert = Assert.assertThatXml(expContent);
 
-		/*
-		 * TODO: The following properties still need to be checked
-		 *
-		 * SERIES
-		 *  - name
-		 *  - original_name
-		 *  - universe_id*
-		 *  - summary
-		 *  - comment
-		 *  - website
-		 *  - completed
-		 *  - location
-		 *
-		 * DERIVATIVES
-		 *  - acquisition_date
-		 *  - acquisition_price
-		 *  - series
-		 *  - album
-		 *  - artist
-		 *  - type
-		 *  - total
-		 *  - number
-		 *  - size (wxgxh)
-		 *  - source
-		 *  - colors
-		 *  - signed
-		 *  - author's copy
-		 *  - restricted sale
-		 *  - description
-		 *  - images
-		 *
-		 */
-
 		// Images
 		documentAssert.css("image")
-				.hasSize(160)
+				.hasSize(161)
 				.byId(306)
 				.exists()
 				.hasAttribute("url", "dummy-image.jpg")
@@ -150,6 +117,21 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		documentAssert.xpathSingle("//author[@id=658]")
 				.hasAttribute("pseudonym_of_id", 120);
 
+		// Series
+		documentAssert.css("series")
+				.hasSize(14)
+				.byId(132)
+				.hasAttribute("name", "Blame!")
+				.hasAttribute("original_name", "BLAME!")
+				.hasAttribute("universe_id", 18)
+				.hasAttribute("location", "Salon, G5")
+				.hasAttribute("completed", true)
+				.hasAttribute("website", "http://en.wikipedia.org/wiki/Blame!");
+		documentAssert.xpathSingle("//series[@id=142]")
+				.hasAttribute("summary", SAMPLE_HTML_DESCRIPTION);
+		documentAssert.xpathSingle("//series[@id=320]")
+				.hasAttribute("comment", SAMPLE_HTML_DESCRIPTION);
+
 		// Taxons
 		documentAssert.css("taxon")
 				.hasSize(23)
@@ -190,7 +172,10 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("logo_id", 7085);
 		documentAssert.xpathSingle("//universe[@id=30]")
 				.hasAttribute("description", SAMPLE_HTML_DESCRIPTION);
-		// TODO: add other images (OK on universe 8)
+		documentAssert.xpath("//universe[@id=8]/universe-images/universe-image")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 1091);
 
 		// Albums
 		documentAssert.css("album")
@@ -252,6 +237,34 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasSize(1)
 				.at(0)
 				.hasAttribute("ref", 2116);
+
+		// Derivatives
+		documentAssert.css("derivative")
+				.hasSize(43)
+				.byId(433)
+				.hasAttribute("series_id", 320)
+				.hasAttribute("album_id", 1516)
+				.hasAttribute("artist_id", 233)
+				.hasAttribute("derivative_type_id", 2)
+				.hasAttribute("colors", 3)
+				.hasAttribute("source_id", 3)
+				.hasAttribute("signed", true)
+				.hasAttribute("authors_copy", true)
+				.hasAttribute("restricted_sale", false)
+				.hasAttribute("description", SAMPLE_HTML_DESCRIPTION)
+				.hasAttribute("width", "160.0")
+				.hasAttribute("height", "240.0")
+				.hasAttribute("acquisition_date", "2019-02-02")
+				.hasAttribute("purchase_price", "15.0");
+		documentAssert.xpathSingle("//derivative[@id=113]")
+				.hasAttribute("depth", "5.0");
+		documentAssert.xpathSingle("//derivative[@id=54]")
+				.hasAttribute("number", 267)
+				.hasAttribute("total", 325);
+		documentAssert.xpath("//derivative[@id=53]/derivative-images/derivative-image")
+				.hasSize(1)
+				.at(0)
+				.hasAttribute("ref", 139);
 
 		documentAssert.source()
 				// Album prices

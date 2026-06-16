@@ -9,6 +9,7 @@ inverse-FK_ALBUMS_COLLECTIONS; ; ignore
 inverse-FK_ALBUMS_COLORISTS_AUTHOR; ; ignore
 inverse-FK_ALBUMS_COVER_ARTISTS_AUTHOR; ; ignore
 inverse-FK_ALBUMS_IMAGES; ; ignore
+inverse-FK_ALBUMS_IMAGES_IMAGE; ; ignore
 inverse-FK_ALBUMS_INKERS_AUTHOR; ; ignore
 inverse-FK_ALBUMS_PUBLISHERS; ; ignore
 inverse-FK_ALBUMS_TAXONS_TAXON; ; ignore
@@ -17,6 +18,7 @@ inverse-FK_ALBUMS_UNIVERSE; ; ignore
 inverse-FK_ALBUMS_WRITERS_AUTHOR; ; ignore
 inverse-FK_ALBUM_TYPE; ; ignore
 inverse-FK_DERIVATIVES_AUTHORS; ; ignore
+inverse-FK_DERIVATIVES_IMAGES_IMAGE; ; ignore
 inverse-FK_DERIVATIVES_SOURCES; ; ignore
 inverse-FK_DERIVATIVES_TYPES; ; ignore
 inverse-FK_READERS_FAVOURITE_ALBUMS_ALBUM; ; B.READER_ID=1
@@ -26,6 +28,7 @@ inverse-FK_READERS_FAVOURITE_SERIES_SERIES; ; B.READER_ID=1
 inverse-FK_READERS_READING_LIST_ALBUM; ; B.READER_ID=1
 inverse-FK_READERS_READING_LIST_READER; ; ignore
 inverse-FK_SERIES_TAXONS_TAXON; ; ignore
+inverse-FK_UNIVERSES_IMAGES_IMAGE; ; ignore
 
 #! block additional subjects
 # subject; condition; limit; limit-order
