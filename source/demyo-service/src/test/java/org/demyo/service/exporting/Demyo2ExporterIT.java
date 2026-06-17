@@ -41,7 +41,6 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		String expContent = Files.readString(expFile, StandardCharsets.UTF_8);
 		FileUtils.deleteQuietly(expFile);
-		// System.out.println(expContent);
 
 		ElementAssert documentAssert = Assert.assertThatXml(expContent);
 
@@ -78,18 +77,17 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("history", SAMPLE_HTML_DESCRIPTION);
 
 		// Collections
-		// Note: can't test the feed, noone offers it anymore at this level
+		// Note: can't test the feed, no-one offers it anymore at this level
 		documentAssert.css("collection")
 				.hasSize(36)
 				.byId(90)
 				.hasAttribute("name", "Fictions")
-				.hasAttribute("website", "http://www.dargaud.com/front/albums/collections/collection.aspx?id=954");
+				.hasAttribute("website", "http://www.dargaud.com/front/albums/collections/collection.aspx?id=954")
+				.hasAttribute("publisher_id", 1);
 		documentAssert.xpathSingle("//collection[@id=38]")
 				.hasAttribute("history", SAMPLE_HTML_DESCRIPTION);
 		documentAssert.xpathSingle("//collection[@id=31]")
 				.hasAttribute("logo_id", 7083);
-		documentAssert.xpathSingle("//collection[@id=90]")
-				.hasAttribute("publisher_id", 1);
 
 		// Bindings
 		documentAssert.css("binding")
@@ -238,6 +236,12 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.at(0)
 				.hasAttribute("ref", 2116);
 
+		// Derivative types
+		documentAssert.css("derivative_type")
+				.hasSize(5)
+				.byId(1)
+				.hasAttribute("name", "Offset");
+
 		// Derivatives
 		documentAssert.css("derivative")
 				.hasSize(43)
@@ -269,9 +273,6 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 		documentAssert.source()
 				// Album prices
 				.contains("<album_price album_id=\"313\" date=\"2010-09-26\" price=\"15.0\" />")
-
-				// Derivative types
-				.contains("<derivative_type id=\"1\" name=\"Offset\" />")
 
 				// Derivative prices
 				.contains("<derivative_price derivative_id=\"53\" date=\"2010-09-26\" price=\"30.0\" />")
