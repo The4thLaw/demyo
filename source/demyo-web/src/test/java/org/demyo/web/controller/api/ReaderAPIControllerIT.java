@@ -42,8 +42,10 @@ class ReaderAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$.favouriteSeries", Matchers.containsInAnyOrder(169, 296, 312)))
 				.andExpect(jsonPath("$.favouriteAlbums", hasSize(1)))
 				.andExpect(jsonPath("$.favouriteAlbums", Matchers.hasItem(1362)))
-				.andExpect(jsonPath("$.readingList", hasSize(15)))
-				.andExpect(jsonPath("$.readingList", Matchers.containsInAnyOrder(1515, 1516, 1517, 1518, 1519, 1520,
-						1521, 1552, 1561, 1562, 1563, 1770, 1992, 2030, 2892)));
+				.andExpect(jsonPath("$.readingList", hasSize(28)))
+				.andExpect(jsonPath("$.readingList",
+						Matchers.containsInAnyOrder(1515, 1516, 1517, 1518, 1519, 1520, 1521, 1552, 1561, 1562, 1563,
+								1729, 1770, 1946, 1992, 2030, 2323, 2324, 2892, 2900, 2996, 3079, 3187, 3905, 3962,
+								3997, 3998, 3999)));
 	}
 }

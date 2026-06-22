@@ -29,7 +29,7 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/series/"))
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(10)))
+				.andExpect(jsonPath("$", hasSize(14)))
 				.andExpect(jsonPath("$[1].id").value(312))
 				.andExpect(jsonPath("$[1].identifyingName").value("Alvin"))
 				.andExpect(jsonPath("$[1].comment").doesNotExist())
@@ -76,9 +76,9 @@ class SeriesAPIControllerIT extends AbstractModelAPIIT {
 	void getAlbumsWithoutSeries() throws Exception {
 		mockMvc.perform(get("/api/series/none/albums"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(1)))
-				.andExpect(jsonPath("$[0].id").value(2892))
-				.andExpect(jsonPath("$[0].identifyingName").value("300"));
+				.andExpect(jsonPath("$", hasSize(3)))
+				.andExpect(jsonPath("$[0].id").value(3962))
+				.andExpect(jsonPath("$[0].identifyingName").value("Apologie de Socrate"));
 	}
 
 	@Test

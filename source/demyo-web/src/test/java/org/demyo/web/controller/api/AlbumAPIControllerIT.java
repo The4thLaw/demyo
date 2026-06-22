@@ -28,7 +28,7 @@ class AlbumAPIControllerIT extends AbstractModelAPIIT {
 
 				.andExpect(status().isOk())
 				// 10 Series, 1 one shot
-				.andExpect(jsonPath("$", hasSize(11)))
+				.andExpect(jsonPath("$", hasSize(17)))
 				// First series is actually an Album
 				.andExpect(jsonPath("$[0].series").doesNotExist())
 				.andExpect(jsonPath("$[0].album.title").value("300"))

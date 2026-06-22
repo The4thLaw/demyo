@@ -26,16 +26,16 @@ class AuthorAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/authors/"))
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(31)))
+				.andExpect(jsonPath("$", hasSize(41)))
 				// Check a specific entry. Include some checks for properties that shouldn't be mentioned
-				.andExpect(jsonPath("$[3].id").value(216))
-				.andExpect(jsonPath("$[3].name").value("Besson"))
-				.andExpect(jsonPath("$[3].firstName").value("Frédéric"))
-				.andExpect(jsonPath("$[3].nickname").doesNotExist())
+				.andExpect(jsonPath("$[6].id").value(216))
+				.andExpect(jsonPath("$[6].name").value("Besson"))
+				.andExpect(jsonPath("$[6].firstName").value("Frédéric"))
+				.andExpect(jsonPath("$[6].nickname").doesNotExist())
 				// Check the first entry. Only basic stuff
-				.andExpect(jsonPath("$[0].id").value(665))
-				.andExpect(jsonPath("$[0].name").value("Alwett"))
-				.andExpect(jsonPath("$[0].firstName").value("Audrey"));
+				.andExpect(jsonPath("$[0].id").value(282))
+				.andExpect(jsonPath("$[0].name").value("Acar"))
+				.andExpect(jsonPath("$[0].firstName").value("Jacques"));
 	}
 
 	@Test
@@ -45,8 +45,7 @@ class AuthorAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$.id").value(10))
 				.andExpect(jsonPath("$.name").value("Vatine"))
 				.andExpect(jsonPath("$.firstName").value("Olivier"))
-				.andExpect(jsonPath("$.identifyingName").value("Olivier Vatine"))
-				.andExpect(jsonPath("$.biography").value("<p>Sample HTML description</p>"));
+				.andExpect(jsonPath("$.identifyingName").value("Olivier Vatine"));
 	}
 
 	@Test

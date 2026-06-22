@@ -29,7 +29,7 @@ class DerivativeAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/derivatives/")) //
 				.andExpect(status().isOk()) //
 				.andDo(MockMvcResultHandlers.print()) //
-				.andExpect(jsonPath("$", hasSize(36))) //
+				.andExpect(jsonPath("$", hasSize(43))) //
 				// Check first entry. Includes some checks for properties that shouldn't be mentioned
 				.andExpect(jsonPath("$[0].id").value(491)) //
 				.andExpect(jsonPath("$[0].album.id").value(1374)) //

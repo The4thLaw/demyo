@@ -47,6 +47,6 @@ class AlbumServiceIT extends AbstractServiceTest {
 	 */
 	@Test
 	void testCountAlbumByFilter() {
-		assertThat(service.countAlbumsByTaxon(5L)).isEqualTo(58);
+		assertThat(service.countAlbumsByTaxon(5L)).isEqualTo(74);
 	}
 }
