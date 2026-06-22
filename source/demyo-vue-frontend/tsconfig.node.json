@@ -11,5 +11,5 @@
       "@/*": ["./src/*"]
     },
   },
-  "include": ["auto-imports.d.ts", "types/java-models.d.ts", "vite.config.ts", "vitest.config.ts", "vite-plugins/**/*.ts", "tests/**/*.ts"]
+  "include": [ "vite.config.ts", "vitest.config.ts", "vite-plugins/**/*.ts" ]
 }

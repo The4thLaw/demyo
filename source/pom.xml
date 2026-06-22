@@ -56,7 +56,7 @@
 		<project.versionCodename>Yoruichi</project.versionCodename>
 		<org.eclipse.jetty.version>12.0.36</org.eclipse.jetty.version>
 		<js.frontend-maven-plugin.version>1.15.1</js.frontend-maven-plugin.version>
-		<js.node.version>v22.15.1</js.node.version>
+		<js.node.version>v24.16.0</js.node.version>
 		<org.the4thlaw.commons.version>1.4.0</org.the4thlaw.commons.version>
 
 		<sonar.organization>the4thlaw</sonar.organization>

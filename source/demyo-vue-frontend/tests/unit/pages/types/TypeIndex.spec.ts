@@ -7,11 +7,13 @@ import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const readerStore = useReaderStore()
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 readerStore.currentReader = ({
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	configuration: {
 		pageSizeForText: 10
-	}
-})
+	} as ApplicationConfiguration
+}) as Reader
 
 vi.mock('@/services/binding-service')
 vi.mock('@/services/derivative-type-service')
