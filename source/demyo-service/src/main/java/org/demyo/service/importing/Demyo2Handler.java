@@ -34,6 +34,7 @@ public class Demyo2Handler extends DefaultHandler {
 	private String seriesId;
 	private String albumId;
 	private String derivativeId;
+	private String universeId;
 	private String readerId;
 
 	private final RelationsToUniverseConverter rtuConverter;
@@ -59,7 +60,7 @@ public class Demyo2Handler extends DefaultHandler {
 				hasBookType = true;
 				// Fall-through
 			case "image", "publisher", "collection", "binding", "taxon", "borrower", "source", //
-					"derivative_type", "universe":
+					"derivative_type":
 				createLine(localName + "s", attributes);
 				break;
 			case "author":
@@ -155,6 +156,13 @@ public class Demyo2Handler extends DefaultHandler {
 				break;
 			case "derivative_price":
 				createLine("derivatives_prices", attributes);
+				break;
+			case "universe":
+				universeId = attributes.getValue("id");
+				createLine("universes", attributes);
+				break;
+			case "universe-image":
+				relations.addUniverseImage(universeId, attributes);
 				break;
 			case "reader":
 				readerId = attributes.getValue("id");

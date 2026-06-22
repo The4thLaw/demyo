@@ -25,6 +25,7 @@ public class RelationsHolder {
 	private final List<Map<String, String>> albumImages = new ArrayList<>();
 	private final List<Pair<String, String>> authorPseudonyms = new ArrayList<>();
 	private final List<Map<String, String>> derivativeImages = new ArrayList<>();
+	private final List<Map<String, String>> universeImages = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
 	private final List<Map<String, String>> readerReadingList = new ArrayList<>();
@@ -41,6 +42,7 @@ public class RelationsHolder {
 		allRelations.put("albums_taxons", albumTaxons);
 		allRelations.put("albums_images", albumImages);
 		allRelations.put("derivatives_images", derivativeImages);
+		allRelations.put("universes_images", universeImages);
 		allRelations.put("readers_favourite_series", readerFavouriteSeries);
 		allRelations.put("readers_favourite_albums", readerFavouriteAlbums);
 		allRelations.put("readers_reading_list", readerReadingList);
@@ -95,6 +97,10 @@ public class RelationsHolder {
 
 	public void addDerivativeImage(String derivativeId, Attributes attributes) {
 		derivativeImages.add(join("derivative_id", derivativeId, "image_id", attributes.getValue("ref")));
+	}
+
+	public void addUniverseImage(String universeId, Attributes attributes) {
+		universeImages.add(join("universe_id", universeId, "image_id", attributes.getValue("ref")));
 	}
 
 	public void addReaderFavouriteSeries(String readerId, Attributes attributes) {
