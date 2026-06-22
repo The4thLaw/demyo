@@ -12,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
+import org.demyo.model.AbstractModel;
 import org.demyo.model.AbstractPricedModel;
 import org.demyo.model.Album;
 import org.demyo.model.AlbumPrice;
 import org.demyo.model.Author;
+import org.demyo.model.Derivative;
+import org.demyo.model.DerivativePrice;
 import org.demyo.model.IModel;
 import org.demyo.model.Publisher;
 import org.demyo.model.Reader;
@@ -277,36 +280,38 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(derivativeTypeService.count()).isEqualTo(5);
 		assertThat(derivativeTypeService.getByIdForView(1)).hasName("Offset");
 
-		// TODO: derivatives
-		/*
-		documentAssert.css("derivative")
-				.hasSize(43)
-				.byId(433)
-				.hasAttribute("series_id", 320)
-				.hasAttribute("album_id", 1516)
-				.hasAttribute("artist_id", 233)
-				.hasAttribute("derivative_type_id", 2)
-				.hasAttribute("colors", 3)
-				.hasAttribute("source_id", 3)
-				.hasAttribute("signed", true)
-				.hasAttribute("authors_copy", true)
-				.hasAttribute("restricted_sale", false)
-				.hasAttribute("description", SAMPLE_HTML_DESCRIPTION)
-				.hasAttribute("width", "160.0")
-				.hasAttribute("height", "240.0")
-				.hasAttribute("acquisition_date", "2019-02-02")
-				.hasAttribute("purchase_price", "15.0");
-		documentAssert.xpathSingle("//derivative[@id=113]")
-				.hasAttribute("depth", "5.0");
-		documentAssert.xpathSingle("//derivative[@id=54]")
-				.hasAttribute("number", 267)
-				.hasAttribute("total", 325);
-		documentAssert.xpath("//derivative[@id=53]/derivative-images/derivative-image")
-				.hasSize(1)
-				.at(0)
-				.hasAttribute("ref", 139);
-		 */
-		// TODO: .contains("<derivative_price derivative_id=\"53\" date=\"2010-09-26\" price=\"30.0\" />")
+		// Derivatives
+		assertThat(derivativeService.count()).isEqualTo(43L);
+		Derivative ombres = derivativeService.getByIdForView(433L);
+		assertThat(ombres)
+				.hasColours(3)
+				.isSigned()
+				.isAuthorsCopy()
+				.isNotRestrictedSale()
+				.hasDescription(SAMPLE_HTML_DESCRIPTION)
+				.hasWidth(new BigDecimal("160.0"))
+				.hasHeight(new BigDecimal("240.0"));
+		assertThat((AbstractPricedModel<?, ?>) ombres)
+				.hasPurchasePrice(new BigDecimal("15.0"));
+		assertThat(ombres.getAcquisitionDate()).isInSameDayAs("2019-02-02");
+		assertThat(ombres.getSeries()).hasId(320L);
+		assertThat((AbstractModel) ombres.getAlbum()).hasId(1516L);
+		assertThat(ombres.getArtist()).hasId(233L);
+		assertThat(ombres.getType()).hasId(2L);
+		assertThat(ombres.getSource()).hasId(3L);
+		assertThat(derivativeService.getByIdForView(113))
+		.hasDepth(new BigDecimal("5.0"));
+		assertThat(derivativeService.getByIdForView(54))
+		.hasNumber(267)
+		.hasTotal(325);
+		Derivative cixi = derivativeService.getByIdForView(53);
+		assertThat(cixi.getImages())
+		.hasSize(1)
+		.allMatch(i -> i.getId().equals(139L));
+		assertThat(cixi.getPriceList()).hasSize(1);
+		DerivativePrice cp1 = cixi.getPriceList().get(0);
+		assertThat(cp1.getPrice()).isEqualTo("30.0");
+		assertThat(cp1.getDate()).isInSameDayAs("2010-09-26");
 
 		List<Reader> readers = readerService.findAll();
 		assertThat(readers).hasSize(1);
