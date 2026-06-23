@@ -179,14 +179,6 @@ public final class SystemConfiguration {
 		LOGGER.info("The system configuration is: {}", this);
 	}
 
-	private Path withOverride(String systemProperty, Path base) {
-		String systemValue = System.getProperty(systemProperty);
-		if (StringUtils.isNotBlank(systemValue)) {
-			return Path.of(systemValue);
-		}
-		return base;
-	}
-
 	/**
 	 * Loads the configuration, including defaults and CLI overrides.
 	 *

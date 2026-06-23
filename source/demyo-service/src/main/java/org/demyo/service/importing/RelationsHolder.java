@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.xml.sax.Attributes;
 
 public class RelationsHolder {
+	private static final String FK_IMAGE_ID = "image_id";
 	private static final String FK_ALBUM_ID = "album_id";
 	private static final String FK_READER_ID = "reader_id";
 	private static final String FK_SERIES_ID = "series_id";
@@ -92,15 +93,15 @@ public class RelationsHolder {
 	}
 
 	public void addAlbumImage(String albumId, Attributes attributes) {
-		albumImages.add(join(FK_ALBUM_ID, albumId, "image_id", attributes.getValue("ref")));
+		albumImages.add(join(FK_ALBUM_ID, albumId, FK_IMAGE_ID, attributes.getValue("ref")));
 	}
 
 	public void addDerivativeImage(String derivativeId, Attributes attributes) {
-		derivativeImages.add(join("derivative_id", derivativeId, "image_id", attributes.getValue("ref")));
+		derivativeImages.add(join("derivative_id", derivativeId, FK_IMAGE_ID, attributes.getValue("ref")));
 	}
 
 	public void addUniverseImage(String universeId, Attributes attributes) {
-		universeImages.add(join("universe_id", universeId, "image_id", attributes.getValue("ref")));
+		universeImages.add(join("universe_id", universeId, FK_IMAGE_ID, attributes.getValue("ref")));
 	}
 
 	public void addReaderFavouriteSeries(String readerId, Attributes attributes) {

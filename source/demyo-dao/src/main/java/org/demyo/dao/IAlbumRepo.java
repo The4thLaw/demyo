@@ -81,7 +81,14 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 * @param sort The order to determine the "first"
 	 * @return The matching Album ID
 	 */
-	@Query(value = "select ID from ALBUMS where SERIES_ID = ?1 order by cycle desc, number desc, number_suffix desc, first_edition desc, this_edition desc, title desc limit 1", nativeQuery = true)
+	@Query(value = """
+		select ID
+		from ALBUMS
+		where SERIES_ID = ?1
+		order by
+			cycle desc, number desc, number_suffix desc, first_edition desc,
+			this_edition desc, title desc limit 1
+				""";, nativeQuery = true)
 	Long findLastAlbumInSeries(long series);
 
 	/**

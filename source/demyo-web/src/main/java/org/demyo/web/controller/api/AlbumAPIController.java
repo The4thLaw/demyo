@@ -98,6 +98,12 @@ public class AlbumAPIController extends AbstractModelAPIController<Album> {
 		return derivativeService.countDerivativesByFilter(DerivativeFilter.forAlbum(modelId));
 	}
 
+	/**
+	 * Finds the common sizes for Albums by a Publisher or in a Collection.
+	 * @param publisherId The Publisher ID, if any
+	 * @param collectionId The Collection ID, if any
+	 * @return The found sizes
+	 */
 	@GetMapping("common-sizes")
 	public List<IAlbumSize> findCommonSizes(@RequestParam(value = "publisher", required = false) Long publisherId,
 			@RequestParam(value = "collection", required = false) Long collectionId) {

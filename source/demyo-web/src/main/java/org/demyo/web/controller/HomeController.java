@@ -159,11 +159,11 @@ public class HomeController extends AbstractController {
 		manifest.put("start_url", "./");
 		manifest.put("prefer_related_applications", false);
 		manifest.put("icons",
-			IntStream.of(16, 32, 48, 64, 144, 192, 196, 270, 558).mapToObj(this::getManifestIcon).toList());
+			IntStream.of(16, 32, 48, 64, 144, 192, 196, 270, 558).mapToObj(HomeController::getManifestIcon).toList());
 		return manifest;
 	}
 
-	private Map<String, Object> getManifestIcon(int size) {
+	private static Map<String, Object> getManifestIcon(int size) {
 		Map<String, Object> icon = new HashMap<>();
 		icon.put("src", "icons/demyo-" + size + ".png");
 		icon.put("sizes", size + "x" + size);

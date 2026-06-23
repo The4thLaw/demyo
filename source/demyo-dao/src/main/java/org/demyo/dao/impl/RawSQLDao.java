@@ -127,7 +127,8 @@ public class RawSQLDao implements IRawSQLDao {
 
 	@Override
 	public void setAuthorPseudonym(String authorId, String pseudonymOfId) {
-		Query query = entityManager.createNativeQuery("update AUTHORS set PSEUDONYM_OF_ID = :pseudonymOfId where ID = :authorId");
+		Query query = entityManager.createNativeQuery(
+			"update AUTHORS set PSEUDONYM_OF_ID = :pseudonymOfId where ID = :authorId");
 		query.setParameter("authorId", authorId);
 		query.setParameter("pseudonymOfId", pseudonymOfId);
 		query.executeUpdate();

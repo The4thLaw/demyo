@@ -38,6 +38,7 @@ import javanet.staxutils.IndentingXMLStreamWriter;
  */
 @Component
 public class Demyo2Exporter implements IExporter {
+	private static final String IMAGE_KEY = "IMAGE_ID";
 	private static final String SERIES_KEY = "SERIES_ID";
 	private static final String READER_KEY = "READER_ID";
 	private static final String ALBUM_KEY = "ALBUM_ID";
@@ -85,7 +86,7 @@ public class Demyo2Exporter implements IExporter {
 			exportModel(xsw, "book_types", "book_type", "BOOK_TYPES");
 
 			exportModel(xsw, "universes", "universe", "UNIVERSES",
-					new ManyToManyRelation("universe-images", "universe-image", "UNIVERSE_ID", "IMAGE_ID",
+					new ManyToManyRelation("universe-images", "universe-image", "UNIVERSE_ID", IMAGE_KEY,
 							rawSqlDao.getRawRecords("UNIVERSES_IMAGES")));
 
 			exportModel(xsw, "series-list", "series", "SERIES",
@@ -108,7 +109,7 @@ public class Demyo2Exporter implements IExporter {
 							rawSqlDao.getRawRecords("ALBUMS_COVER_ARTISTS")),
 					new ManyToManyRelation("album-taxons", "album-taxon", ALBUM_KEY, "TAXON_ID",
 							rawSqlDao.getRawRecords("ALBUMS_TAXONS")),
-					new ManyToManyRelation("album-images", "album-image", ALBUM_KEY, "IMAGE_ID",
+					new ManyToManyRelation("album-images", "album-image", ALBUM_KEY, IMAGE_KEY,
 							rawSqlDao.getRawRecords("ALBUMS_IMAGES")));
 
 			exportModel(xsw, "album_prices", "album_price", "ALBUMS_PRICES");
@@ -119,7 +120,7 @@ public class Demyo2Exporter implements IExporter {
 
 			// Derivatives
 			exportModel(xsw, "derivatives", "derivative", "DERIVATIVES",
-					new ManyToManyRelation("derivative-images", "derivative-image", "DERIVATIVE_ID", "IMAGE_ID",
+					new ManyToManyRelation("derivative-images", "derivative-image", "DERIVATIVE_ID", IMAGE_KEY,
 							rawSqlDao.getRawRecords("DERIVATIVES_IMAGES")));
 
 			exportModel(xsw, "derivative_prices", "derivative_price", "DERIVATIVES_PRICES");
