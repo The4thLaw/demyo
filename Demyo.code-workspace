@@ -77,6 +77,10 @@
 		//"eslint.codeActionsOnSave.rules": null,
 		"eslint.debug": true,
 		"eslint.useFlatConfig": true,
+		"prettier.singleQuote": true,
+		"javascript.preferences.quoteStyle": "single",
+		"typescript.preferences.quoteStyle": "single",
+		"prettier.semi": false,
 	},
 	"tasks": {
 		"version": "2.0.0",
