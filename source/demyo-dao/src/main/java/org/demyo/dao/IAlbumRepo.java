@@ -88,7 +88,7 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 		order by
 			cycle desc, number desc, number_suffix desc, first_edition desc,
 			this_edition desc, title desc limit 1
-				""";, nativeQuery = true)
+				""", nativeQuery = true)
 	Long findLastAlbumInSeries(long series);
 
 	/**
