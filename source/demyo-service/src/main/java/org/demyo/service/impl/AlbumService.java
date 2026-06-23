@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
+import java.util.function.LongFunction;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -360,7 +360,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	}
 
 	private List<IAlbumSize> findCommonSizes(Long modelId, Supplier<AlbumFilter> afs,
-			Function<Long, List<IAlbumSize>> ass) {
+			LongFunction<List<IAlbumSize>> ass) {
 		if (modelId == null) {
 			return Collections.emptyList();
 		}
@@ -370,7 +370,7 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 			List<IAlbumSize> common = ass.apply(modelId);
 			return common.stream()
 					// Require at least 15% of the books to be this size
-					.filter(as -> (double) as.getCnt() / numAlbums > 0.15)
+					.filter(as -> as.getCnt() / numAlbums > 0.15)
 					.toList();
 		}
 

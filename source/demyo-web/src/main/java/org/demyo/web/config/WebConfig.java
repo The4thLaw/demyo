@@ -74,7 +74,7 @@ public class WebConfig implements WebMvcConfigurer {
 				mapper.registerModule(module);
 
 				// Filter out empty values when serializing
-				mapper.setSerializationInclusion(Include.NON_EMPTY);
+				mapper.setDefaultPropertyInclusion(Include.NON_EMPTY);
 
 				// Filter out empty values when deserializing
 				mapper.registerModule(new NullStringModule());

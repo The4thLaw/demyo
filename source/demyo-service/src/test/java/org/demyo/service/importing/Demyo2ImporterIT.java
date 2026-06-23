@@ -115,6 +115,22 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		importer.importFile(sourceFile.getFileName().toString(), sourceFile);
 
 		// Images
+		assertImages();
+		Publisher dargaud = assertPublishers();
+		assertCollections(dargaud);
+		assertBindings();
+		assertAuthors();
+		assertSeries();
+		assertTaxons();
+		assertBookTypes();
+		assertUniverses();
+		assertAlbums();
+		assertDerivativeTypes();
+		assertDerivatives();
+		assertReaders();
+	}
+
+	private void assertImages() {
 		assertThat(imageService.count()).isEqualTo(161);
 		assertThat(imageService.getByIdForView(306))
 				.hasUrl("dummy-image.jpg")
@@ -128,8 +144,9 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(imageService.getByIdForView(139))
 				.hasDescription("Lanfeust de Troy 6 - Ex-Libris");
 		assertThat(derivativeService.getByIdForView(53).getImages()).anyMatch(i -> i.getId().equals(139L));
+	}
 
-		// Publishers
+	private Publisher assertPublishers() {
 		assertThat(publisherService.count()).isEqualTo(7);
 		Publisher dargaud = publisherService.getByIdForView(1);
 		assertThat(dargaud)
@@ -139,8 +156,10 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(dargaud.getLogo()).hasId(5014L);
 		assertThat(albumService.getByIdForView(306).getPublisher()).hasId(4L);
 		assertThat(publisherService.getByIdForView(4)).hasHistory(SAMPLE_HTML_DESCRIPTION);
+		return dargaud;
+	}
 
-		// Collections
+	private void assertCollections(Publisher dargaud) {
 		// Note: can't test the feed, no-one offers it anymore at this level
 		assertThat(collectionService.count()).isEqualTo(36);
 		assertThat(collectionService.getByIdForView(90))
@@ -150,13 +169,15 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(collectionService.getByIdForView(38))
 				.hasHistory(SAMPLE_HTML_DESCRIPTION);
 		assertThat(collectionService.getByIdForView(31).getLogo()).hasId(7083L);
+	}
 
-		// Bindings
+	private void assertBindings() {
 		assertThat(bindingService.count()).isEqualTo(3);
 		assertThat(bindingService.getByIdForView(1))
 				.hasName("Cartonné");
+	}
 
-		// Authors
+	private void assertAuthors() {
 		assertThat(authorService.count()).isEqualTo(41);
 		assertThat(authorService.getByIdForView(119))
 				.hasName("Tarquin")
@@ -172,8 +193,9 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 				.hasWebsite("https://seblamirand.blogspot.com/");
 		assertThat(authorService.getByIdForView(120).getPortrait()).hasId(6737L);
 		assertThat(authorService.getByIdForView(658).getPseudonymOf()).hasId(120L);
+	}
 
-		// Series
+	private void assertSeries() {
 		assertThat(seriesService.count()).isEqualTo(14);
 		Series blame = seriesService.getByIdForView(132);
 		assertThat(blame)
@@ -185,8 +207,9 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(blame.getUniverse()).hasId(18L);
 		assertThat(seriesService.getByIdForView(142L)).hasSummary(SAMPLE_HTML_DESCRIPTION);
 		assertThat(seriesService.getByIdForView(320L)).hasComment(SAMPLE_HTML_DESCRIPTION);
+	}
 
-		// Taxons
+	private void assertTaxons() {
 		assertThat(taxonService.count()).isEqualTo(23);
 		assertThat(taxonService.getByIdForView(21))
 				.hasName("one shot")
@@ -198,8 +221,9 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 				.toList()).containsExactlyInAnyOrder(5L, 10L, 29L /* from series */, 128L);
 		assertThat(seriesService.getByIdForView(69).getTaxons()).hasSize(1)
 				.allMatch(t -> t.getId().equals(5L));
+	}
 
-		// Book types
+	private void assertBookTypes() {
 		assertThat(bookTypeService.count()).isEqualTo(4);
 		assertThat(bookTypeService.getByIdForView(3))
 				.hasName("Roman")
@@ -207,8 +231,9 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 				.hasDescription(SAMPLE_HTML_DESCRIPTION)
 				.hasStructuredFieldConfig(ModelField.ALBUM_COLORIST, ModelField.ALBUM_INKER);
 		assertThat(albumService.getByIdForView(306).getBookType()).hasId(1L);
+	}
 
-		// Universes
+	private void assertUniverses() {
 		assertThat(universeService.count()).isEqualTo(5);
 		Universe mondesDeTroy = universeService.getByIdForView(8);
 		assertThat(mondesDeTroy).hasName("Mondes de Troy");
@@ -217,8 +242,9 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 				.hasSize(1)
 				.allMatch(i -> i.getId().equals(1091L));
 		assertThat(universeService.getByIdForView(30)).hasDescription(SAMPLE_HTML_DESCRIPTION);
+	}
 
-		// Albums
+	private void assertAlbums() {
 		assertThat(albumService.count()).isEqualTo(109);
 		Album magohamoth = albumService.getByIdForView(306);
 		assertThat(magohamoth)
@@ -275,12 +301,14 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		AlbumPrice bfp1 = beteFabuleuse.getPriceList().get(0);
 		assertThat(bfp1.getPrice()).isEqualTo("15.0");
 		assertThat(bfp1.getDate()).isInSameDayAs("2010-09-26");
+	}
 
-		// Derivative types
+	private void assertDerivativeTypes() {
 		assertThat(derivativeTypeService.count()).isEqualTo(5);
 		assertThat(derivativeTypeService.getByIdForView(1)).hasName("Offset");
+	}
 
-		// Derivatives
+	private void assertDerivatives() {
 		assertThat(derivativeService.count()).isEqualTo(43L);
 		Derivative ombres = derivativeService.getByIdForView(433L);
 		assertThat(ombres)
@@ -300,19 +328,21 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 		assertThat(ombres.getType()).hasId(2L);
 		assertThat(ombres.getSource()).hasId(3L);
 		assertThat(derivativeService.getByIdForView(113))
-		.hasDepth(new BigDecimal("5.0"));
+				.hasDepth(new BigDecimal("5.0"));
 		assertThat(derivativeService.getByIdForView(54))
-		.hasNumber(267)
-		.hasTotal(325);
+				.hasNumber(267)
+				.hasTotal(325);
 		Derivative cixi = derivativeService.getByIdForView(53);
 		assertThat(cixi.getImages())
-		.hasSize(1)
-		.allMatch(i -> i.getId().equals(139L));
+				.hasSize(1)
+				.allMatch(i -> i.getId().equals(139L));
 		assertThat(cixi.getPriceList()).hasSize(1);
 		DerivativePrice cp1 = cixi.getPriceList().get(0);
 		assertThat(cp1.getPrice()).isEqualTo("30.0");
 		assertThat(cp1.getDate()).isInSameDayAs("2010-09-26");
+	}
 
+	private void assertReaders() {
 		List<Reader> readers = readerService.findAll();
 		assertThat(readers).hasSize(1);
 		Reader reader = readers.get(0);

@@ -44,7 +44,22 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 
 		ElementAssert documentAssert = Assert.assertThatXml(expContent);
 
-		// Images
+		assertImages(documentAssert);
+		assertPublishers(documentAssert);
+		assertCollections(documentAssert);
+		assertBindings(documentAssert);
+		assertAuthors(documentAssert);
+		assertSeries(documentAssert);
+		assertTaxons(documentAssert);
+		assertBookTypes(documentAssert);
+		assertUniverses(documentAssert);
+		assertAlbums(documentAssert);
+		assertDerivativeTypes(documentAssert);
+		assertDerivatives(documentAssert);
+		assertOthers(documentAssert);
+	}
+
+	private void assertImages(ElementAssert documentAssert) {
 		documentAssert.css("image")
 				.hasSize(161)
 				.byId(306)
@@ -62,8 +77,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("description", "Lanfeust de Troy 6 - Ex-Libris");
 		documentAssert.xpathSingle("//derivative[@id=53]/derivative-images/derivative-image")
 				.hasAttribute("ref", "139");
+	}
 
-		// Publishers
+	private void assertPublishers(ElementAssert documentAssert) {
 		documentAssert.css("publisher")
 				.hasSize(7)
 				.byId(1)
@@ -75,8 +91,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("publisher_id", 4);
 		documentAssert.xpathSingle("//publisher[@id=4]")
 				.hasAttribute("history", SAMPLE_HTML_DESCRIPTION);
+	}
 
-		// Collections
+	private void assertCollections(ElementAssert documentAssert) {
 		// Note: can't test the feed, no-one offers it anymore at this level
 		documentAssert.css("collection")
 				.hasSize(36)
@@ -88,14 +105,16 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("history", SAMPLE_HTML_DESCRIPTION);
 		documentAssert.xpathSingle("//collection[@id=31]")
 				.hasAttribute("logo_id", 7083);
+	}
 
-		// Bindings
+		private void assertBindings(ElementAssert documentAssert) {
 		documentAssert.css("binding")
 				.hasSize(3)
 				.byId(1)
 				.hasAttribute("name", "Cartonné");
+	}
 
-		// Authors
+	private void assertAuthors(ElementAssert documentAssert) {
 		documentAssert.css("author")
 				.hasSize(41)
 				.byId(119)
@@ -114,8 +133,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("portrait_id", 6737);
 		documentAssert.xpathSingle("//author[@id=658]")
 				.hasAttribute("pseudonym_of_id", 120);
+	}
 
-		// Series
+	private void assertSeries(ElementAssert documentAssert) {
 		documentAssert.css("series")
 				.hasSize(14)
 				.byId(132)
@@ -129,8 +149,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("summary", SAMPLE_HTML_DESCRIPTION);
 		documentAssert.xpathSingle("//series[@id=320]")
 				.hasAttribute("comment", SAMPLE_HTML_DESCRIPTION);
+	}
 
-		// Taxons
+	private void assertTaxons(ElementAssert documentAssert) {
 		documentAssert.css("taxon")
 				.hasSize(23)
 				.byId(21)
@@ -150,8 +171,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasSize(1)
 				.at(0)
 				.hasAttribute("ref", 5);
+	}
 
-		// Book types
+	private void assertBookTypes(ElementAssert documentAssert) {
 		documentAssert.css("book_type")
 				.hasSize(4)
 				.byId(3)
@@ -161,8 +183,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasAttribute("field_config", "ALBUM_COLORIST,ALBUM_INKER");
 		documentAssert.xpathSingle("//album[@id=306]")
 				.hasAttribute("book_type_id", 1);
+	}
 
-		// Universes
+	private void assertUniverses(ElementAssert documentAssert) {
 		documentAssert.css("universe")
 				.hasSize(5)
 				.byId(8)
@@ -174,8 +197,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasSize(1)
 				.at(0)
 				.hasAttribute("ref", 1091);
+	}
 
-		// Albums
+	private void assertAlbums(ElementAssert documentAssert) {
 		documentAssert.css("album")
 				.hasSize(109)
 				.byId(306)
@@ -235,14 +259,16 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasSize(1)
 				.at(0)
 				.hasAttribute("ref", 2116);
+	}
 
-		// Derivative types
+	private void assertDerivativeTypes(ElementAssert documentAssert) {
 		documentAssert.css("derivative_type")
 				.hasSize(5)
 				.byId(1)
 				.hasAttribute("name", "Offset");
+	}
 
-		// Derivatives
+	private void assertDerivatives(ElementAssert documentAssert) {
 		documentAssert.css("derivative")
 				.hasSize(43)
 				.byId(433)
@@ -269,7 +295,9 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				.hasSize(1)
 				.at(0)
 				.hasAttribute("ref", 139);
+	}
 
+	private void assertOthers(ElementAssert documentAssert) {
 		documentAssert.source()
 				// Album prices
 				.contains("<album_price album_id=\"313\" date=\"2010-09-26\" price=\"15.0\" />")
@@ -286,6 +314,5 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 				// Configuration
 				.contains(
 						"<configuration-entry id=\"9\" config_key=\"language\" config_value=\"fr\" reader_id=\"1\" />");
-
 	}
 }
