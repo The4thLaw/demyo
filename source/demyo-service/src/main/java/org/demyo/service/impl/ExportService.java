@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
@@ -29,6 +30,7 @@ import org.demyo.utils.io.ZipUtils;
  * Implements the contract defined by {@link IExportService}.
  */
 @Service
+@Validated
 public class ExportService implements IExportService {
 	/**
 	 * Defines the result of an export.

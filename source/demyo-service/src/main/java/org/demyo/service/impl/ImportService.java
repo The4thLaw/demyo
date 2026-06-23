@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.the4thlaw.commons.utils.io.FileUtils;
 
 import org.demyo.common.config.SystemConfiguration;
@@ -31,6 +32,7 @@ import org.demyo.service.importing.IImporter;
  * Implements the contract defined by {@link IImportService}.
  */
 @Service
+@Validated
 public class ImportService implements IImportService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImportService.class);
 

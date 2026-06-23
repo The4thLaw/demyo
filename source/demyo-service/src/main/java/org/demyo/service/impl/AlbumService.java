@@ -26,6 +26,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
@@ -50,6 +51,7 @@ import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
  * Implements the contract defined by {@link IAlbumService}.
  */
 @Service
+@Validated
 public class AlbumService extends AbstractModelService<Album> implements IAlbumService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AlbumService.class);
 	private static final long MAX_ROWS_COMPLEXITY = 100;

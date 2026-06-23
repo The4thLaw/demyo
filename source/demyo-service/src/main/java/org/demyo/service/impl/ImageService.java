@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
 import org.the4thlaw.commons.utils.fluent.FluentUtils;
 import org.the4thlaw.commons.utils.io.FileSecurityUtils;
@@ -48,6 +49,7 @@ import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
  * Implements the contract defined by {@link IImageService}.
  */
 @Service
+@Validated
 public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "uploads";

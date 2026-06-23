@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.dao.IAlbumRepo;
 import org.demyo.dao.IModelRepo;
@@ -22,6 +23,7 @@ import org.demyo.service.ISeriesService;
  * Implements the contract defined by {@link ISeriesService}.
  */
 @Service
+@Validated
 public class SeriesService extends AbstractModelService<Series> implements ISeriesService {
 	@Autowired
 	private ISeriesRepo repo;
