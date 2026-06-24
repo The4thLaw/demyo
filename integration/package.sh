@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-version="3.1.0-beta4"
+version="3.1.0"
 
 rm -f demyo-v*.tar.bz2 Demyo*.exe
 
