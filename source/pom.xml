@@ -48,7 +48,7 @@
 		<org.springframework.security.version>6.5.11</org.springframework.security.version>
 		<org.hibernate.version>6.4.10.Final</org.hibernate.version>
 		<com.querydsl.version>5.1.0</com.querydsl.version>
-		<com.fasterxml.jackson.version>2.22.0</com.fasterxml.jackson.version>
+		<com.fasterxml.jackson.version>2.22.1</com.fasterxml.jackson.version>
 		<org.junit.version>6.1.0</org.junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
