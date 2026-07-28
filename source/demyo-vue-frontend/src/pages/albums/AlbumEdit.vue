@@ -511,6 +511,11 @@ const rules = {
 }
 
 .v-AlbumEdit__commonSizes {
+	> div {
+		margin-top: -.75em;
+		line-height: 300%;
+	}
+
 	button {
 		margin-right: 1em;
 	}
