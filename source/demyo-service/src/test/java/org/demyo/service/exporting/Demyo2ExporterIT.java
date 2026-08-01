@@ -8,12 +8,13 @@ import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.the4thlaw.commons.exception.CommonException;
+import org.the4thlaw.commons.services.exporting.IExporter;
 import org.the4thlaw.commons.utils.io.FileUtils;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
-import org.demyo.common.exception.DemyoException;
 import org.demyo.service.impl.AbstractServiceTest;
 import org.demyo.test.assertions.Assert;
 import org.demyo.test.assertions.xml.ElementAssert;
@@ -32,11 +33,11 @@ class Demyo2ExporterIT extends AbstractServiceTest {
 	/**
 	 * Tests the completeness of a Demyo 2+ export.
 	 *
-	 * @throws DemyoException In case of export error.
+	 * @throws CommonException In case of export error.
 	 * @throws IOException In case of I/O error.
 	 */
 	@Test
-	void testExportCompleteness() throws DemyoException, IOException {
+	void testExportCompleteness() throws CommonException, IOException {
 		Path expFile = exporter.export();
 
 		String expContent = Files.readString(expFile, StandardCharsets.UTF_8);

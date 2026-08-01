@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.the4thlaw.commons.exception.CommonErrorCode;
+import org.the4thlaw.commons.exception.CommonRuntimeException;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -290,7 +292,7 @@ public final class SystemConfiguration {
 		try {
 			temp = Files.createTempFile(directory, prefix, suffix);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
+			throw new CommonRuntimeException(CommonErrorCode.IO_GENERIC_ERROR, e);
 		}
 		temp.toFile().deleteOnExit();
 		return temp;

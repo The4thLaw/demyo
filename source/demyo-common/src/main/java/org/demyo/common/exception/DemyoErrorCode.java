@@ -1,9 +1,11 @@
 package org.demyo.common.exception;
 
+import org.the4thlaw.commons.exception.ErrorCode;
+
 /**
  * Exhaustive list of error codes in Demyo.
  */
-public enum DemyoErrorCode {
+public enum DemyoErrorCode implements ErrorCode {
 	/*
 	 * 10xxx: system errors
 	 * 11xxx: import errors
@@ -68,12 +70,7 @@ public enum DemyoErrorCode {
 	QUICK_TASKS_INVALID_CONFIG(15000),
 	/** The quick task configuration is invalid: the task is missing its label. */
 	QUICK_TASKS_MISSING_LABEL(15001),
-	/** The system encountered an I/O error during export. */
-	EXPORT_IO_ERROR(16000),
-	/** An assumption about the database could not be met. */
-	EXPORT_DB_CONSISTENCY_ERROR(16001),
-	/** The system encountered a parse error during export. */
-	EXPORT_XML_ERROR(16001),
+	// 16xxx is reserved (legacy export)
 	/** ORM: A mapped property is invalid. */
 	ORM_INVALID_PROPERTY(17000),
 	/** ORM: The PreSave method doesn't have a valid signature. */
@@ -82,8 +79,7 @@ public enum DemyoErrorCode {
 	WEB_FORM_INVALID_OPTIONS(18000),
 	/** Cannot delete the last reader. */
 	READER_CANNOT_DELETE_LAST(19000),
-	/** Generic I/O operation error. */
-	IO_GENERIC_ERROR(20000),
+	// 20000 is reserved
 	/** There was an issue during a file compression. */
 	IO_COMPRESSION_ERROR(20001),
 	/** Book type management is already enabled and cannot be re-enabled. */
@@ -95,6 +91,11 @@ public enum DemyoErrorCode {
 
 	DemyoErrorCode(int numericCode) {
 		this.numericCode = numericCode;
+	}
+
+	@Override
+	public int getNumericCode() {
+		return numericCode;
 	}
 
 	@Override

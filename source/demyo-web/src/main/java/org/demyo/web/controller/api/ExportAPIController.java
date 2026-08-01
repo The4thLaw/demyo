@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.the4thlaw.commons.exception.CommonException;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IExportService;
@@ -42,7 +43,7 @@ public class ExportAPIController {
 	 */
 	@GetMapping
 	public HttpEntity<Resource> exportFile(@RequestParam("format") String format,
-			@RequestParam("withResources") boolean withResources) throws DemyoException, IOException {
+			@RequestParam("withResources") boolean withResources) throws CommonException, IOException {
 		Output exportedData = exportService.export(withResources);
 		Path file = exportedData.getFile();
 

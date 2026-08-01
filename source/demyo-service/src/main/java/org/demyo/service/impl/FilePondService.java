@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.the4thlaw.commons.exception.CommonErrorCode;
+import org.the4thlaw.commons.exception.CommonRuntimeException;
 import org.the4thlaw.commons.utils.io.FileSecurityUtils;
 import org.the4thlaw.commons.utils.io.FileUtils;
 import org.the4thlaw.commons.utils.io.FilenameUtils;
@@ -22,7 +24,6 @@ import org.the4thlaw.commons.utils.io.FilenameUtils;
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
-import org.demyo.common.exception.DemyoRuntimeException;
 import org.demyo.service.IFilePondService;
 
 import static org.demyo.utils.logging.LoggingSanitizer.sanitize;
@@ -59,7 +60,7 @@ public class FilePondService implements IFilePondService {
 		try {
 			Files.createDirectories(uploadDirectory);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
+			throw new CommonRuntimeException(CommonErrorCode.IO_GENERIC_ERROR, e);
 		}
 	}
 

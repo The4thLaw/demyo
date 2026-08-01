@@ -18,12 +18,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+import org.the4thlaw.commons.exception.CommonErrorCode;
+import org.the4thlaw.commons.exception.CommonException;
+import org.the4thlaw.commons.services.exporting.IExporter;
 
 import org.demyo.common.config.SystemConfiguration;
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
 import org.demyo.service.IExportService;
-import org.demyo.service.exporting.IExporter;
 import org.demyo.utils.io.ZipUtils;
 
 /**
@@ -75,7 +75,7 @@ public class ExportService implements IExportService {
 
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
-	public Output export(boolean withResources) throws DemyoException {
+	public Output export(boolean withResources) throws CommonException {
 		// Note that we don't check if withResources makes sense for the selected exporter.
 		// It's not a issue at the moment.
 
@@ -102,7 +102,7 @@ public class ExportService implements IExportService {
 			ZipUtils.compress(SystemConfiguration.getInstance().getImagesDirectory(), "images", zos);
 		} catch (IOException|RuntimeException e) {
 			LOGGER.warn("Failed to export", e);
-			throw new DemyoException(DemyoErrorCode.EXPORT_IO_ERROR);
+			throw new CommonException(CommonErrorCode.EXPORT_IO_ERROR);
 		}
 
 		long length = -1;
