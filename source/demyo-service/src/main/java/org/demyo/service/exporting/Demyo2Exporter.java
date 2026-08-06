@@ -5,9 +5,6 @@ import java.nio.file.Path;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import jakarta.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.the4thlaw.commons.exception.CommonException;
@@ -18,7 +15,6 @@ import org.the4thlaw.commons.services.io.IDirectoryService;
 
 import org.demyo.common.config.SystemConfiguration;
 import org.demyo.dao.IRawSQLDao;
-import org.demyo.service.IExportService;
 
 /**
  * {@link IExporter} using the native Demyo 2 format.
@@ -30,16 +26,8 @@ public class Demyo2Exporter extends BaseXmlExporter {
 	private static final String READER_KEY = "READER_ID";
 	private static final String ALBUM_KEY = "ALBUM_ID";
 
-	@Autowired
-	private IExportService exportService;
-
 	public Demyo2Exporter(IRawSQLDao rawSQLDao, IDirectoryService directoryService) {
 		super("demyo", SystemConfiguration.getInstance().getVersion(), "dea", directoryService, rawSQLDao);
-	}
-
-	@PostConstruct
-	private void init() {
-		exportService.registerExporter(this);
 	}
 
 	@Override

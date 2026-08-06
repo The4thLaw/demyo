@@ -1,118 +1,41 @@
 package org.demyo.service.impl;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Vector;
-import java.util.zip.ZipOutputStream;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.the4thlaw.commons.exception.CommonErrorCode;
 import org.the4thlaw.commons.exception.CommonException;
+import org.the4thlaw.commons.services.exporting.ExportOutput;
+import org.the4thlaw.commons.services.exporting.IExportService;
 import org.the4thlaw.commons.services.exporting.IExporter;
-
-import org.demyo.common.config.SystemConfiguration;
-import org.demyo.service.IExportService;
-import org.demyo.utils.io.ZipUtils;
+import org.the4thlaw.commons.services.exporting.impl.BaseExportService;
+import org.the4thlaw.commons.services.io.IDirectoryService;
 
 /**
  * Implements the contract defined by {@link IExportService}.
  */
 @Service
 @Validated
-public class ExportService implements IExportService {
-	/**
-	 * Defines the result of an export.
-	 */
-	public static final class Output {
-		/** The {@link Path} containing the data. */
-		private final Path file;
-		/** The name of the file to provide to the user. */
-		private final String fileName;
+public class ExportService extends BaseExportService {
+	@Autowired
+	private List<IExporter> exporters;
 
-		Output(Path file, String fileName) {
-			this.file = file;
-			this.fileName = fileName;
-		}
-
-		public Path getFile() {
-			return file;
-		}
-
-		public String getFileName() {
-			return fileName;
-		}
+	public ExportService(IDirectoryService directoryService) {
+		super(directoryService);
 	}
 
-	private static final String EXPORT_DIRECTORY_NAME = "exports";
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExportService.class);
-	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	private final List<IExporter> exporters = new Vector<>();
-	private final Path exportDirectory;
-
-	public ExportService() throws IOException {
-		exportDirectory = SystemConfiguration.getInstance().getUserDirectory().resolve(EXPORT_DIRECTORY_NAME);
-		Files.createDirectories(exportDirectory);
-	}
-
-	@Override
-	public void registerExporter(@NotNull IExporter exporter) {
-		LOGGER.debug("Registering exporter of type: {}", exporter.getClass().getCanonicalName());
-		exporters.add(exporter);
+	@PostConstruct
+	void init() {
+		exporters.forEach(this::registerExporter);
 	}
 
 	@Override
 	@Transactional(rollbackFor = Throwable.class)
-	public Output export(boolean withResources) throws CommonException {
-		// Note that we don't check if withResources makes sense for the selected exporter.
-		// It's not a issue at the moment.
-
-		IExporter exporter = exporters.get(0);
-		String baseExportFileName = "demyo_" + LocalDate.now().format(DATE_FORMAT) + ".";
-
-		Path libraryExport = exporter.export();
-		LOGGER.debug("Data export complete");
-
-		if (!withResources) {
-			return new Output(libraryExport, baseExportFileName + exporter.getExtension(false));
-		}
-
-		LOGGER.debug("Adding resources to export");
-		// Build the ZIP file including all resources
-		Path zipFile = SystemConfiguration.getInstance().createTempFile("demyo-export-archive-",
-				"." + exporter.getExtension(true), exportDirectory);
-
-		try (OutputStream fos = Files.newOutputStream(zipFile);
-				BufferedOutputStream bos = new BufferedOutputStream(fos);
-				ZipOutputStream zos = new ZipOutputStream(bos)) {
-			// The file inside the archive must always have the same name to be imported back
-			ZipUtils.compress(libraryExport, "demyo." + exporter.getExtension(false), zos);
-			ZipUtils.compress(SystemConfiguration.getInstance().getImagesDirectory(), "images", zos);
-		} catch (IOException|RuntimeException e) {
-			LOGGER.warn("Failed to export", e);
-			throw new CommonException(CommonErrorCode.EXPORT_IO_ERROR);
-		}
-
-		long length = -1;
-		try {
-			length = Files.size(zipFile);
-		} catch (IOException e) {
-			LOGGER.warn("Failed to get the file size", e);
-		}
-		LOGGER.debug("All resources added, export is fully complete ({} bytes)", length);
-
-		return new Output(zipFile, baseExportFileName + exporter.getExtension(true));
+	public ExportOutput export(boolean withResources) throws CommonException {
+		return super.export(withResources);
 	}
 }

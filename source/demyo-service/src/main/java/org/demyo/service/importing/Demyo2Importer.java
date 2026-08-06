@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.the4thlaw.commons.utils.io.IOUtils;
 import org.the4thlaw.commons.utils.io.Sniffer;
+import org.the4thlaw.commons.utils.io.ZipUtils;
 import org.the4thlaw.commons.utils.xml.XMLUtils;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -32,7 +33,6 @@ import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.service.IImageService;
 import org.demyo.service.IImportService;
-import org.demyo.utils.io.ZipUtils;
 
 /**
  * Importer for Demyo 2.x files.

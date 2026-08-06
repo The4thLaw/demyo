@@ -80,8 +80,7 @@ public enum DemyoErrorCode implements ErrorCode {
 	/** Cannot delete the last reader. */
 	READER_CANNOT_DELETE_LAST(19000),
 	// 20000 is reserved
-	/** There was an issue during a file compression. */
-	IO_COMPRESSION_ERROR(20001),
+	// 20001 is reserved
 	/** Book type management is already enabled and cannot be re-enabled. */
 	BOOK_TYPE_MGMT_ALREADY_ENABLED(21000),
 	/** Book type management is enabled, so it's needed on albums. */
