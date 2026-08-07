@@ -28,8 +28,8 @@ public class RawSQLDao extends BaseDatabaseDao implements IRawSQLDao {
 		super("schema_version",
 				new String[]
 				{ "albums", "authors", "bindings", "borrowers", "collections", "configuration",
-						"derivative_types", "derivatives", "images", "publishers", "readers", "searches", "series",
-						"sources", "taxons", "book_types", "universes" },
+						"derivatives", "derivative_types", "publishers", "readers", "searches", "series",
+						"sources", "taxons", "book_types", "universes", "images" },
 				new String[]
 				{ "albums_borrowers", "derivatives_images",
 						"derivatives_prices", "albums_taxons", "series_taxons",
