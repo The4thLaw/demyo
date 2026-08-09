@@ -93,6 +93,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public IDirectoryService directoryService() {
 		return new DirectoryServiceFactory()
 				.withAppName("Demyo")
+				.withPortableSystemPropertyOverride("demyo.userDirectory")
 				.autoDetectImplementation()
 				.autoDetectLegacy()
 				.build();
