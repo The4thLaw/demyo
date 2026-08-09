@@ -22,6 +22,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.the4thlaw.commons.services.io.IDirectoryService;
 import org.the4thlaw.commons.utils.io.FileUtils;
 import org.the4thlaw.commons.utils.io.IOUtils;
 import org.the4thlaw.commons.utils.io.Sniffer;
@@ -49,6 +50,10 @@ public class Demyo1Importer extends Demyo2Importer {
 			+ "\\]>";
 	private static final Pattern XSL_DTD_PRESENCE_PATTERN = Pattern
 			.compile(".*<!ATTLIST xsl:stylesheet id ID #REQUIRED>.*", Pattern.DOTALL);
+
+	public Demyo1Importer(IDirectoryService directoryService) {
+		super(directoryService);
+	}
 
 	@Override
 	public boolean supports(String originalFilename, Path file) throws DemyoException {
