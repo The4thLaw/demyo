@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -18,21 +17,18 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.the4thlaw.commons.services.io.IDirectoryService;
-import org.the4thlaw.commons.utils.io.FileUtils;
 import org.the4thlaw.commons.utils.io.IOUtils;
 import org.the4thlaw.commons.utils.io.Sniffer;
-import org.the4thlaw.commons.utils.xml.XMLUtils;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
+import org.demyo.dao.IRawSQLDao;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -51,55 +47,32 @@ public class Demyo1Importer extends Demyo2Importer {
 	private static final Pattern XSL_DTD_PRESENCE_PATTERN = Pattern
 			.compile(".*<!ATTLIST xsl:stylesheet id ID #REQUIRED>.*", Pattern.DOTALL);
 
-	public Demyo1Importer(IDirectoryService directoryService) {
-		super(directoryService);
+	public Demyo1Importer(IDirectoryService directoryService, IRawSQLDao rawSQLDao) {
+		super(directoryService, rawSQLDao);
 	}
 
 	@Override
-	public boolean supports(String originalFilename, Path file) throws DemyoException {
-		String originalFilenameLc = originalFilename.toLowerCase();
-
-		if (originalFilenameLc.endsWith(".xml")) {
-			return Sniffer.sniffFile(file, FORMAT_PATTERN);
-		}
-
-		return originalFilenameLc.endsWith(".zip");
+	protected String getZipExtension() {
+		return "zip";
 	}
 
 	@Override
-	public void importFile(String originalFilename, Path file) throws DemyoException {
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		Path archiveDirectory = null;
+	protected Pattern getSniffPattern() {
+		return FORMAT_PATTERN;
+	}
+
+	@Override
+	protected void restoreImages(Path archiveDirectory, String imagesDirectoryName) throws DemyoException {
+		// Demyo 1 had a specific directory for images, hardcode it here
+		super.restoreImages(archiveDirectory, "collection_images");
+	}
+
+	@Override
+	protected void parseAndImport(BufferedInputStream xmlBis, XMLReader xmlReader)
+			throws IOException, SAXException, TransformerException {
 		InputStream xslSheet = null;
-		InputStream xmlFis = null;
-		BufferedInputStream xmlBis = null;
 
 		try {
-			if (LOGGER.isInfoEnabled()) {
-				LOGGER.info("Starting import, file size is {} bytes", Files.size(file));
-			}
-
-			// Extract if needed
-			String originalFilenameLc = originalFilename.toLowerCase();
-			boolean isArchive = originalFilenameLc.endsWith(".zip");
-
-			Path xmlFile;
-			if (isArchive) {
-				archiveDirectory = extractZip(file);
-				xmlFile = archiveDirectory.resolve("demyo.xml");
-			} else {
-				xmlFile = file;
-			}
-
-			stopWatch.split();
-			long splitTime = stopWatch.getSplitDuration().toMillis();
-
-			stripXslDoctype(xmlFile);
-
-			// Create a SAX parser for the input file
-			XMLReader xmlReader = XMLUtils.createXmlReader();
-
 			// Convert Demyo 1.5 to Demyo 2 on-the-fly
 			xslSheet = Demyo1Importer.class.getResourceAsStream("demyo-to-demyo2.xsl");
 			Source style = new StreamSource(xslSheet);
@@ -108,36 +81,19 @@ public class Demyo1Importer extends Demyo2Importer {
 			transFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 			Transformer trans = transFactory.newTransformer(style);
 
-			// Input is the XML from Demyo 1.5, output is a bridge to the Demyo 2.x SAX parser
-			xmlFis = Files.newInputStream(xmlFile);
-			xmlBis = new BufferedInputStream(xmlFis);
 			Source source = new SAXSource(xmlReader, new InputSource(xmlBis));
-			Result result = new SAXResult(new Demyo2Handler(rawSqlDao, dataSource));
+			Result result = new SAXResult(new Demyo2Handler(databaseDao, dataSource));
 
 			// Transform and import
 			trans.transform(source, result);
-
-			stopWatch.split();
-			splitTime = stopWatch.getSplitDuration().toMillis() - splitTime;
-
-			// Move extracted images to the right directory
-			if (isArchive) {
-				restoreImages(archiveDirectory, "collection_images");
-			}
-			stopWatch.stop();
-
-			LOGGER.info("Import took {}ms: {}ms in database and {}ms in I/O operations", stopWatch.getTime(), splitTime,
-					stopWatch.getTime() - splitTime);
-		} catch (IOException ioe) {
-			throw new DemyoException(DemyoErrorCode.IMPORT_IO_ERROR, ioe);
-		} catch (SAXException | TransformerException | ParserConfigurationException e) {
-			throw new DemyoException(DemyoErrorCode.IMPORT_PARSE_ERROR, e);
 		} finally {
 			IOUtils.closeQuietly(xslSheet);
-			IOUtils.closeQuietly(xmlBis);
-			IOUtils.closeQuietly(xmlFis);
-			FileUtils.deleteDirectoryQuietly(archiveDirectory);
 		}
+	}
+
+	@Override
+	protected void preProcessXml(Path xmlFile) throws IOException {
+		stripXslDoctype(xmlFile);
 	}
 
 	/**

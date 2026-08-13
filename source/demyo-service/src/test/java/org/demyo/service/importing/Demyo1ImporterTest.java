@@ -55,7 +55,7 @@ class Demyo1ImporterTest {
 			tempFile = Files.createTempFile("Demyo1ImporterTest", ".xml");
 			Files.write(tempFile, sampleHeader.getBytes(StandardCharsets.UTF_8));
 
-			Demyo1Importer instance = new Demyo1Importer();
+			Demyo1Importer instance = new Demyo1Importer(null, null);
 
 			assertThat(instance.supports(tempFile.getFileName().toString(), tempFile)).isTrue();
 		} finally {
