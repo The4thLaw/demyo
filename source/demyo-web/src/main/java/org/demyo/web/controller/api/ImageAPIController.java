@@ -1,6 +1,7 @@
 package org.demyo.web.controller.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -88,6 +89,9 @@ public class ImageAPIController extends AbstractModelAPIController<Image> {
 	 */
 	@PostMapping("/detect")
 	public List<Long> saveDetectedImages(@RequestBody List<String> paths) throws DemyoException {
+		if (paths == null) {
+			paths = Collections.emptyList();
+		}
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Selected images: {}", LoggingSanitizer.sanitize(paths));
 		}
