@@ -25,7 +25,7 @@ public class ExportService extends BaseExportService {
 	private List<IExporter> exporters;
 
 	public ExportService(IDirectoryService directoryService) {
-		super(directoryService);
+		super("Demyo", directoryService);
 	}
 
 	@PostConstruct

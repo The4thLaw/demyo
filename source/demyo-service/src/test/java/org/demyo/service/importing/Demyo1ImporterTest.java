@@ -6,8 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-
-import org.demyo.common.exception.DemyoException;
+import org.the4thlaw.commons.exception.CommonException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,10 +19,10 @@ class Demyo1ImporterTest {
 	 * Tests {@link Demyo1Importer#supports(String, Path)} for a simple 1.5 file.
 	 *
 	 * @throws IOException In case of support error.
-	 * @throws DemyoException In case of I/O error while writing or reading the sample file.
+	 * @throws CommonException In case of I/O error while writing or reading the sample file.
 	 */
 	@Test
-	void testSupportsSimple() throws IOException, DemyoException {
+	void testSupportsSimple() throws IOException, CommonException {
 		String sampleHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<library demyo-version=\"1.5\"";
 		assertSupportsFile(sampleHeader);
 	}
@@ -32,10 +31,10 @@ class Demyo1ImporterTest {
 	 * Tests {@link Demyo1Importer#supports(String, Path)} for a 1.4 file with an embedded XSL.
 	 *
 	 * @throws IOException In case of support error.
-	 * @throws DemyoException In case of I/O error while writing or reading the sample file.
+	 * @throws CommonException In case of I/O error while writing or reading the sample file.
 	 */
 	@Test
-	void testSupportsHollisterWithXSL() throws IOException, DemyoException {
+	void testSupportsHollisterWithXSL() throws IOException, CommonException {
 		String sampleHeader = """
 				<?xml version="1.0" encoding="UTF-8"?>
 				<?xml-stylesheet href="#style" type="text/xsl"?>
@@ -49,13 +48,13 @@ class Demyo1ImporterTest {
 		assertSupportsFile(sampleHeader);
 	}
 
-	private void assertSupportsFile(String sampleHeader) throws IOException, DemyoException {
+	private void assertSupportsFile(String sampleHeader) throws IOException, CommonException {
 		Path tempFile = null;
 		try {
 			tempFile = Files.createTempFile("Demyo1ImporterTest", ".xml");
 			Files.write(tempFile, sampleHeader.getBytes(StandardCharsets.UTF_8));
 
-			Demyo1Importer instance = new Demyo1Importer(null, null);
+			Demyo1Importer instance = new Demyo1Importer(null, null, null);
 
 			assertThat(instance.supports(tempFile.getFileName().toString(), tempFile)).isTrue();
 		} finally {

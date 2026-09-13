@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
+import javax.sql.DataSource;
 import javax.xml.XMLConstants;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -20,6 +21,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.the4thlaw.commons.exception.CommonException;
 import org.the4thlaw.commons.services.io.IDirectoryService;
 import org.the4thlaw.commons.utils.io.IOUtils;
 import org.the4thlaw.commons.utils.io.Sniffer;
@@ -27,7 +29,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -47,8 +48,8 @@ public class Demyo1Importer extends Demyo2Importer {
 	private static final Pattern XSL_DTD_PRESENCE_PATTERN = Pattern
 			.compile(".*<!ATTLIST xsl:stylesheet id ID #REQUIRED>.*", Pattern.DOTALL);
 
-	public Demyo1Importer(IDirectoryService directoryService, IRawSQLDao rawSQLDao) {
-		super(directoryService, rawSQLDao);
+	public Demyo1Importer(IDirectoryService directoryService, IRawSQLDao rawSQLDao, DataSource dataSource) {
+		super(directoryService, rawSQLDao, dataSource);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class Demyo1Importer extends Demyo2Importer {
 	}
 
 	@Override
-	protected void restoreImages(Path archiveDirectory, String imagesDirectoryName) throws DemyoException {
+	protected void restoreImages(Path archiveDirectory, String imagesDirectoryName) throws CommonException {
 		// Demyo 1 had a specific directory for images, hardcode it here
 		super.restoreImages(archiveDirectory, "collection_images");
 	}

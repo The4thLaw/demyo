@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
+import org.the4thlaw.commons.exception.CommonException;
+import org.the4thlaw.commons.services.importing.IImporter;
 
-import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.AbstractModel;
 import org.demyo.model.AbstractPricedModel;
@@ -102,11 +103,11 @@ class Demyo2ImporterIT extends AbstractServiceTest {
 	 * Tests the completeness of a Demyo 2+ import.
 	 *
 	 * @throws IOException In case of I/O error.
-	 * @throws DemyoException In case of import error.
+	 * @throws CommonException In case of import error.
 	 */
 	@Test
 	@Transactional(readOnly = true)
-	void testImport() throws IOException, DemyoException {
+	void testImport() throws IOException, CommonException {
 		// This is normally done by the import service, but injecting the import service is actually
 		// a bit more tricky
 		rawSqlDao.pruneAllTables();

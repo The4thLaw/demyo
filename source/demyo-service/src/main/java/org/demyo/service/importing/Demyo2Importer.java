@@ -5,16 +5,13 @@ import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
-import jakarta.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.the4thlaw.commons.services.importing.BaseXmlImporter;
 import org.the4thlaw.commons.services.io.IDirectoryService;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import org.demyo.dao.IRawSQLDao;
-import org.demyo.service.IImportService;
 
 /**
  * Importer for Demyo 2.x files.
@@ -23,18 +20,11 @@ import org.demyo.service.IImportService;
 public class Demyo2Importer extends BaseXmlImporter<IRawSQLDao> {
 	private static final Pattern FORMAT_PATTERN = Pattern.compile(".*<library>.*<meta>.*<version.*", Pattern.DOTALL);
 
-	@Autowired
-	private IImportService importService;
-	@Autowired
-	protected DataSource dataSource;
+	protected final DataSource dataSource;
 
-	public Demyo2Importer(IDirectoryService directoryService, IRawSQLDao rawSQLDao) {
+	public Demyo2Importer(IDirectoryService directoryService, IRawSQLDao rawSQLDao, DataSource dataSource) {
 		super("Demyo", directoryService, rawSQLDao);
-	}
-
-	@PostConstruct
-	private void init() {
-		importService.registerImporter(this);
+		this.dataSource = dataSource;
 	}
 
 	@Override

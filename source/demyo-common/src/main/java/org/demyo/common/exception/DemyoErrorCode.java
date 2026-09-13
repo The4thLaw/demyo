@@ -32,15 +32,7 @@ public enum DemyoErrorCode implements ErrorCode {
 	SYS_MISSING_DB_SCHEMA_VERSION(10009),
 	/** System tray initialization failure. */
 	SYS_TRAY_FAILING(10010),
-	/** This import format is not supported. */
-	IMPORT_FORMAT_NOT_SUPPORTED(11000),
-	/** The system encountered an I/O error during import. */
-	IMPORT_IO_ERROR(11001),
-	/** The system encountered a parse error during import. */
-	IMPORT_PARSE_ERROR(11002),
-	/** The system encountered an error while restoring the images. */
-	IMPORT_IMAGES_ERROR(11003),
-	// 11004 is reserved
+	// 11000-11004 are reserved
 	/** The accessed image is trying to perform a directory traversal. */
 	IMAGE_DIRECTORY_TRAVERSAL(12000),
 	/** The accessed image does not exist. */
