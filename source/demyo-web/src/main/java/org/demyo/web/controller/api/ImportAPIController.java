@@ -13,8 +13,6 @@ import org.the4thlaw.commons.exception.CommonErrorCode;
 import org.the4thlaw.commons.exception.CommonException;
 import org.the4thlaw.commons.services.importing.IImportService;
 
-import org.demyo.common.exception.DemyoException;
-
 /**
  * Controller for import of files.
  */
@@ -29,7 +27,7 @@ public class ImportAPIController {
 	 *
 	 * @param upload The file to import.
 	 * @return Always <code>true</code>
-	 * @throws DemyoException If import fails.
+	 * @throws CommonException If import fails.
 	 */
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public boolean importFile(@RequestParam("importFile") MultipartFile upload) throws CommonException {

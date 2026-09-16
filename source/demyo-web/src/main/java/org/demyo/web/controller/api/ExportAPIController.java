@@ -21,8 +21,6 @@ import org.the4thlaw.commons.exception.CommonException;
 import org.the4thlaw.commons.services.exporting.ExportOutput;
 import org.the4thlaw.commons.services.exporting.IExportService;
 
-import org.demyo.common.exception.DemyoException;
-
 /**
  * Controller for export of files.
  */
@@ -37,7 +35,7 @@ public class ExportAPIController {
 	 *
 	 * @param format The export format.
 	 * @param withResources Whether to include resources in the export.
-	 * @throws DemyoException In case of error during export.
+	 * @throws CommonException In case of error during export.
 	 * @throws IOException In case of error during download.
 	 * @return The
 	 */
