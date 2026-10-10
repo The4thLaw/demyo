@@ -42,6 +42,9 @@ public class MetaSeries implements Comparable<MetaSeries> {
 	}
 
 	public boolean isActualSeries() {
+		if (series == null && album == null) {
+			throw new IllegalStateException("Both the album and series are null");
+		}
 		return this.series != null;
 	}
 
