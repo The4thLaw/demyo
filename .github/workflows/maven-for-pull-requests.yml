@@ -21,6 +21,26 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+      - name: Configure Maven for GitHub packages
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          repositories: |
+            [{
+                "id": "github-the4thlaw-commons",
+                "url": "https://maven.pkg.github.com/The4thLaw/java-commons",
+                "snapshots": {
+                  "enabled": "true"
+                }
+            }]
+          servers: |
+            [{
+                "id": "github-the4thlaw",
+                "username": "The4thLaw",
+                "password": "${{ secrets.GITHUB_TOKEN }}",
+                "repositoryOrigins": {
+                  "repositoryOrigin": "https://maven.pkg.github.com/"
+                }
+            }]
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
