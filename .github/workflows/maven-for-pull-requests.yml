@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0  # Shallow clones are disabled for a better relevancy of analysis
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6.0.1
         with:
           java-version: 17
           distribution: temurin
@@ -42,21 +42,11 @@ jobs:
                 }
             }]
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: maven-settings
-        uses: s4u/maven-settings-action@v3.0.0
-        with:
-          servers: |
-            [{
-                "id": "github-the4thlaw",
-                "username": "The4thLaw",
-                "password": "${{ secrets.GITHUB_TOKEN }}"
-            }]
-          githubServer: false
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
