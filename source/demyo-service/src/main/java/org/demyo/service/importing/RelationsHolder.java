@@ -1,13 +1,16 @@
 package org.demyo.service.importing;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.the4thlaw.commons.services.importing.BaseRelationsHolder;
 import org.xml.sax.Attributes;
 
-public class RelationsHolder {
+public class RelationsHolder extends BaseRelationsHolder {
+	private static final String FK_IMAGE_ID = "image_id";
 	private static final String FK_ALBUM_ID = "album_id";
 	private static final String FK_READER_ID = "reader_id";
 	private static final String FK_SERIES_ID = "series_id";
@@ -21,11 +24,12 @@ public class RelationsHolder {
 	private final List<Map<String, String>> albumCoverArtists = new ArrayList<>();
 	private final List<Map<String, String>> albumTaxons = new ArrayList<>();
 	private final List<Map<String, String>> albumImages = new ArrayList<>();
+	private final List<Pair<String, String>> authorPseudonyms = new ArrayList<>();
 	private final List<Map<String, String>> derivativeImages = new ArrayList<>();
+	private final List<Map<String, String>> universeImages = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
 	private final List<Map<String, String>> readerReadingList = new ArrayList<>();
-	private final Map<String, List<Map<String, String>>> allRelations = new HashMap<>();
 
 	public RelationsHolder() {
 		allRelations.put("series_taxons", seriesTaxons);
@@ -38,16 +42,10 @@ public class RelationsHolder {
 		allRelations.put("albums_taxons", albumTaxons);
 		allRelations.put("albums_images", albumImages);
 		allRelations.put("derivatives_images", derivativeImages);
+		allRelations.put("universes_images", universeImages);
 		allRelations.put("readers_favourite_series", readerFavouriteSeries);
 		allRelations.put("readers_favourite_albums", readerFavouriteAlbums);
 		allRelations.put("readers_reading_list", readerReadingList);
-	}
-
-	private static Map<String, String> join(String col1, String val1, String col2, String val2) {
-		HashMap<String, String> columns = new HashMap<>();
-		columns.put(col1, val1);
-		columns.put(col2, val2);
-		return columns;
 	}
 
 	public void addSeriesTaxon(String seriesId, Attributes attributes) {
@@ -87,11 +85,15 @@ public class RelationsHolder {
 	}
 
 	public void addAlbumImage(String albumId, Attributes attributes) {
-		albumImages.add(join(FK_ALBUM_ID, albumId, "image_id", attributes.getValue("ref")));
+		albumImages.add(join(FK_ALBUM_ID, albumId, FK_IMAGE_ID, attributes.getValue("ref")));
 	}
 
 	public void addDerivativeImage(String derivativeId, Attributes attributes) {
-		derivativeImages.add(join("derivative_id", derivativeId, "image_id", attributes.getValue("ref")));
+		derivativeImages.add(join("derivative_id", derivativeId, FK_IMAGE_ID, attributes.getValue("ref")));
+	}
+
+	public void addUniverseImage(String universeId, Attributes attributes) {
+		universeImages.add(join("universe_id", universeId, FK_IMAGE_ID, attributes.getValue("ref")));
 	}
 
 	public void addReaderFavouriteSeries(String readerId, Attributes attributes) {
@@ -106,7 +108,11 @@ public class RelationsHolder {
 		readerReadingList.add(join(FK_READER_ID, readerId, FK_ALBUM_ID, attributes.getValue("ref")));
 	}
 
-    public Map<String, List<Map<String, String>>> getAllRelations() {
-        return allRelations;
-    }
+	public void addAuthorPseudonym(String authorId, String pseudonymOfId) {
+		authorPseudonyms.add(new ImmutablePair<>(authorId, pseudonymOfId));
+	}
+
+	public List<Pair<String,String>> getAuthorPseudonyms() {
+		return authorPseudonyms;
+	}
 }

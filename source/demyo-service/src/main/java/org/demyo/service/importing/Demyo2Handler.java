@@ -2,63 +2,69 @@ package org.demyo.service.importing;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.the4thlaw.commons.services.importing.BaseXmlHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
-import org.demyo.common.exception.DemyoErrorCode;
-import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IRawSQLDao;
 import org.demyo.model.schema.common.RelationsToUniverseConverter;
 
 /**
  * SAX handler for import of Demyo 2.x files.
  */
-public class Demyo2Handler extends DefaultHandler {
+public class Demyo2Handler extends BaseXmlHandler<IRawSQLDao, RelationsHolder> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Demyo2Handler.class);
-
-	private final IRawSQLDao rawSqlDao;
 
 	private boolean hasBookType;
 	private String seriesId;
 	private String albumId;
 	private String derivativeId;
+	private String universeId;
 	private String readerId;
 
 	private final RelationsToUniverseConverter rtuConverter;
-	private final RelationsHolder relations;
 
 	/**
 	 * Initializes structures for the handler.
 	 */
 	public Demyo2Handler(IRawSQLDao rawSqlDao, DataSource dataSource) {
-		this.rawSqlDao = rawSqlDao;
+		super(rawSqlDao, new RelationsHolder());
 		rtuConverter = new RelationsToUniverseConverter(DataSourceUtils.getConnection(dataSource));
-		this.relations = new RelationsHolder();
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes)
 			throws SAXException {
+		super.startElement(uri, localName, qName, attributes);
 		switch (localName) {
-			case "version":
-				handleVersion(attributes);
-				break;
 			case "book_type":
 				hasBookType = true;
 				// Fall-through
-			case "image", "publisher", "collection", "binding", "author", "taxon", "borrower", "source", //
-					"derivative_type", "universe":
+			case "image", "publisher", "collection", "binding", "taxon", "borrower", "source", //
+					"derivative_type":
 				createLine(localName + "s", attributes);
+				break;
+			case "author":
+				Map<String, String> authorAttributes = toMap(attributes);
+				String pseudonymOf = authorAttributes.get("pseudonym_of_id");
+				if (StringUtils.isNotBlank(pseudonymOf)) {
+					// Some authors may reference a later author as pseudonym and that breaks referential integrity
+					// This can happen if you first encode the pseudonym as a specific author and later add
+					// the real identity
+					String id = authorAttributes.get("id");
+					authorAttributes.remove("pseudonym_of_id");
+					relations.addAuthorPseudonym(id, pseudonymOf);
+				}
+				createLine("authors", authorAttributes);
 				break;
 			// Before 3.1, we used tags
 			case "tag":
@@ -119,10 +125,7 @@ public class Demyo2Handler extends DefaultHandler {
 				relations.addSeriesTaxon(seriesId, attributes);
 				break;
 			// Before v3.1, we used tags
-			case "album-tag":
-				relations.addAlbumTag(albumId, attributes);
-				break;
-			case "album-taxon":
+			case "album-tag", "album-taxon":
 				relations.addAlbumTaxon(albumId, attributes);
 				break;
 			case "album-image":
@@ -143,6 +146,13 @@ public class Demyo2Handler extends DefaultHandler {
 				break;
 			case "derivative_price":
 				createLine("derivatives_prices", attributes);
+				break;
+			case "universe":
+				universeId = attributes.getValue("id");
+				createLine("universes", attributes);
+				break;
+			case "universe-image":
+				relations.addUniverseImage(universeId, attributes);
 				break;
 			case "reader":
 				readerId = attributes.getValue("id");
@@ -165,25 +175,9 @@ public class Demyo2Handler extends DefaultHandler {
 		}
 	}
 
-	private void handleVersion(Attributes attributes) throws SAXException {
-		int currentSchemaVersion = rawSqlDao.getSchemaVersion();
-		Integer importSchemaVersion = null;
-		for (int i = 0; i < attributes.getLength(); i++) {
-			if ("schema".equals(attributes.getLocalName(i))) {
-				importSchemaVersion = Integer.parseInt(attributes.getValue(i));
-			}
-		}
-		if (importSchemaVersion == null || importSchemaVersion > currentSchemaVersion) {
-			throw new SAXException(new DemyoException(DemyoErrorCode.IMPORT_WRONG_SCHEMA,
-					"The imported file schema is at version " + importSchemaVersion
-							+ " and seems to originate from an incompatible version of Demyo. "
-							+ "This version of Demyo can only import schema versions " + currentSchemaVersion
-							+ " and below."));
-		}
-	}
-
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
+		super.endElement(uri, localName, qName);
 		switch (localName) {
 			case "series":
 				seriesId = null;
@@ -197,50 +191,24 @@ public class Demyo2Handler extends DefaultHandler {
 			case "readers":
 				readerId = null;
 				break;
-			case "library":
-				persistRelations();
-				try {
-					persistSeriesRelations();
-				} catch (SQLException e) {
-					throw new SAXException("Failed to persist universe migrations");
-				}
-				break;
 			default:
 				// No special behaviour for other tags
 		}
 	}
 
-	private void createLine(String tableName, Attributes attributes) {
-		Map<String, String> attributeMap = toMap(attributes);
-		createLine(tableName, attributeMap);
-	}
-
-	private void createLine(String tableName, Map<String, ?> attributes) {
-		rawSqlDao.insert(tableName, attributes);
-	}
-
-	private static Map<String, String> toMap(Attributes attributes) {
-		Map<String, String> attributeMap = new HashMap<>(attributes.getLength());
-		for (int i = 0; i < attributes.getLength(); i++) {
-			attributeMap.put(attributes.getLocalName(i), attributes.getValue(i));
+	@Override
+	protected void persistRelations() throws SAXException {
+		super.persistRelations();
+		LOGGER.debug("Persisting deferred relationships");
+		for (Pair<String, String> authorPseudo : relations.getAuthorPseudonyms()) {
+			databaseDao.setAuthorPseudonym(authorPseudo.getLeft(), authorPseudo.getRight());
 		}
-		return attributeMap;
-	}
 
-	private void persistRelations() {
-		LOGGER.debug("Persisting many-to-many relationships");
-		for (Entry<String, List<Map<String, String>>> entry : relations.getAllRelations().entrySet()) {
-			String tableName = entry.getKey();
-			List<Map<String, String>> tableContent = entry.getValue();
-			LOGGER.debug("{} entries for {}", tableContent.size(), tableName);
-			for (Map<String, String> line : tableContent) {
-				rawSqlDao.insert(tableName, line);
-			}
-		}
-	}
-
-	private void persistSeriesRelations() throws SQLException {
 		LOGGER.debug("Persisting series relations to universes migration...");
-		rtuConverter.convert();
+		try {
+			rtuConverter.convert();
+		} catch (SQLException e) {
+			throw new SAXException("Failed to persist universe migrations", e);
+		}
 	}
 }

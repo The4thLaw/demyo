@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.demyo</groupId>
 	<artifactId>demyo</artifactId>
-	<version>3.1.0-beta3</version>
+	<version>3.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Demyo</name>
 	<description>The root Demyo project</description>
@@ -43,24 +43,25 @@
 	</developers>
 
 	<properties>
-		<org.slf4j.version>2.0.12</org.slf4j.version>
-		<org.springframework.version>6.1.21</org.springframework.version>
-		<org.springframework.security.version>6.2.7</org.springframework.security.version>
-		<org.hibernate.version>6.4.4.Final</org.hibernate.version>
+		<org.slf4j.version>2.0.18</org.slf4j.version>
+		<org.springframework.version>6.2.19</org.springframework.version>
+		<org.springframework.security.version>6.5.11</org.springframework.security.version>
+		<org.hibernate.version>6.4.10.Final</org.hibernate.version>
 		<com.querydsl.version>5.1.0</com.querydsl.version>
-		<com.fasterxml.jackson.version>2.16.1</com.fasterxml.jackson.version>
-		<org.junit.version>5.10.2</org.junit.version>
+		<com.fasterxml.jackson.version>2.22.3</com.fasterxml.jackson.version>
+		<org.junit.version>6.1.0</org.junit.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.rootdir>${project.basedir}</project.rootdir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.versionCodename>Yoruichi</project.versionCodename>
-		<org.eclipse.jetty.version>12.0.9</org.eclipse.jetty.version>
+		<org.eclipse.jetty.version>12.0.36</org.eclipse.jetty.version>
 		<js.frontend-maven-plugin.version>1.15.1</js.frontend-maven-plugin.version>
-		<js.node.version>v22.15.1</js.node.version>
-		<org.the4thlaw.commons.version>1.4.0</org.the4thlaw.commons.version>
+		<js.node.version>v24.16.0</js.node.version>
+		<org.the4thlaw.commons.version>1.5.0-SNAPSHOT</org.the4thlaw.commons.version>
 
 		<sonar.organization>the4thlaw</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.exclusions>**/deeper-skin.css</sonar.exclusions>
 		<!--
 		This one took a while to guess:
 		 - Jacoco reports only include the current module
@@ -119,12 +120,22 @@
 
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
+				<artifactId>common-model</artifactId>
+				<version>${org.the4thlaw.commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.the4thlaw</groupId>
 				<artifactId>common-utils</artifactId>
 				<version>${org.the4thlaw.commons.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.the4thlaw</groupId>
 				<artifactId>h2-utils</artifactId>
+				<version>${org.the4thlaw.commons.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.the4thlaw</groupId>
+				<artifactId>common-dao</artifactId>
 				<version>${org.the4thlaw.commons.version}</version>
 			</dependency>
 			<dependency>
@@ -136,12 +147,12 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.18.0</version>
+				<version>3.20.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-beanutils </groupId>
 				<artifactId>commons-beanutils</artifactId>
-				<version>1.9.4</version>
+				<version>1.11.0</version>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -166,12 +177,12 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.15.1</version>
+				<version>2.22.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.16.1</version>
+				<version>1.22.0</version>
 			</dependency>
 
 			<!-- Logging -->
@@ -183,7 +194,7 @@
 			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
-				<version>1.5.0</version>
+				<version>1.5.34</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
@@ -204,13 +215,13 @@
 			<dependency>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-core</artifactId>
-				<version>10.8.1</version>
+				<version>12.8.1</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>8.0.1.Final</version>
+				<version>8.0.3.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>jakarta.validation</groupId>
@@ -226,8 +237,8 @@
 			</dependency>
 			<dependency>
 				<groupId>org.mortbay.jasper</groupId>
-				<artifactId>apache-el</artifactId>
-				<version>10.1.16</version>
+				<artifactId>mortbay-apache-el</artifactId>
+				<version>10.1.55</version>
 				<scope>runtime</scope>
 			</dependency>
 
@@ -294,7 +305,7 @@
 			<dependency>
 				<groupId>jakarta.servlet.jsp.jstl</groupId>
 				<artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-				<version>3.0.0</version>
+				<version>3.0.2</version>
 				<!-- Must not be "provided" -->
 			</dependency>
 
@@ -349,7 +360,7 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
-				<version>3.2.3</version>
+				<version>3.5.12</version>
 			</dependency>
 
 			<dependency>
@@ -383,7 +394,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
-    			<artifactId>jackson-datatype-hibernate6</artifactId>
+				<artifactId>jackson-datatype-hibernate6</artifactId>
 				<version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 
@@ -400,19 +411,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>net.java.dev.stax-utils</groupId>
-				<artifactId>stax-utils</artifactId>
-				<version>20070216</version>
-				<exclusions>
-					<!-- Already in JDK6+ -->
-					<exclusion>
-						<groupId>com.bea.xml</groupId>
-						<artifactId>jsr173-ri</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
 				<groupId>com.dorkbox</groupId>
 				<artifactId>SystemTray</artifactId>
 				<version>4.4</version>
@@ -420,7 +418,7 @@
 			<dependency>
 				<groupId>com.dorkbox</groupId>
 				<artifactId>Collections</artifactId>
-				<version>2.4</version>
+				<version>2.9</version>
 			</dependency>
 
 			<dependency>
@@ -439,20 +437,26 @@
 			<dependency>
 				<groupId>org.hamcrest</groupId>
 				<artifactId>hamcrest</artifactId>
-				<version>2.2</version>
+				<version>3.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.skyscreamer</groupId>
 				<artifactId>jsonassert</artifactId>
-				<version>1.5.1</version>
+				<version>1.5.3</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>com.jayway.jsonpath</groupId>
 				<artifactId>json-path</artifactId>
-				<version>2.9.0</version>
+				<version>3.0.0</version>
 				<scope>test</scope>
+			</dependency>
+			<!-- Easy way to check XML files in tests -->
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>1.23.2</version>
 			</dependency>
 
 			<dependency>
@@ -476,19 +480,19 @@
 			<dependency>
 				<groupId>org.assertj</groupId>
 				<artifactId>assertj-core</artifactId>
-				<version>3.25.3</version>
+				<version>3.27.7</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.mockito</groupId>
 				<artifactId>mockito-core</artifactId>
-				<version>5.10.0</version>
+				<version>5.23.0</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.dbunit</groupId>
 				<artifactId>dbunit</artifactId>
-				<version>2.7.3</version>
+				<version>3.2.0</version>
 				<scope>test</scope>
 				<exclusions>
 					<exclusion>
@@ -528,7 +532,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.12.1</version>
+				<version>3.15.0</version>
 				<configuration>
 					<source>17</source>
 					<target>17</target>
@@ -540,7 +544,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>3.2.5</version>
+				<version>3.5.6</version>
+				<configuration>
+					<systemPropertyVariables>
+						<demyo.userDirectory>${project.build.directory}/user-directory</demyo.userDirectory>
+					</systemPropertyVariables>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -556,7 +565,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.3.1</version>
+					<version>3.5.0</version>
 					<configuration>
 						<escapeString>\</escapeString>
 					</configuration>
@@ -565,25 +574,89 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
-					<version>3.6.1</version>
+					<version>3.11.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>3.4.0</version>
+					<version>3.5.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>com.akathist.maven.plugins.launch4j</groupId>
 					<artifactId>launch4j-maven-plugin</artifactId>
-					<version>2.5.0</version>
+					<version>2.7.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>com.mysema.maven</groupId>
 					<artifactId>apt-maven-plugin</artifactId>
 					<version>1.1.3</version>
+				</plugin>
+
+				<plugin>
+					<!--
+						Template plugin execution for the AssertJ assertions generator.
+						We can't directly include this in demyo-test because it introduces all kinds of
+						inconvenient dependency loops or prevents us from making a dependency to demyo-test
+						in some modules to get all the convenient auto configuration (such as junit dependencies
+						or logging configuration)
+					-->
+					<groupId>org.assertj</groupId>
+					<artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+					<version>2.1.0</version>
+					<!--
+						Override the generator dependency to fix annotation issues
+						https://github.com/assertj/assertj-assertions-generator-maven-plugin/issues/93#issuecomment-2823351574
+					-->
+					<dependencies>
+						<dependency>
+							<groupId>org.assertj</groupId>
+							<artifactId>assertj-assertions-generator</artifactId>
+							<version>3.0.0-M5</version>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<hierarchical>true</hierarchical>
+						<generateBddAssertions>false</generateBddAssertions>
+						<!-- The generateAssertionsInPackage property seems to be broken as it's forgetting that we need to
+						import all other models when relevant since we're no longer in the same package. Leave the default. -->
+						<entryPointClassPackage>org.demyo.test.assertions.model</entryPointClassPackage>
+						<classes>
+							<param>org.demyo.model.AbstractBasicLegalEntity</param>
+							<param>org.demyo.model.AbstractLegalEntity</param>
+							<param>org.demyo.model.AbstractModel</param>
+							<param>org.demyo.model.AbstractNamedModel</param>
+							<param>org.demyo.model.AbstractPricedModel</param>
+							<param>org.demyo.model.Album</param>
+							<param>org.demyo.model.AlbumPrice</param>
+							<param>org.demyo.model.Author</param>
+							<param>org.demyo.model.Binding</param>
+							<param>org.demyo.model.BookType</param>
+							<param>org.demyo.model.Collection</param>
+							<param>org.demyo.model.ConfigurationEntry</param>
+							<param>org.demyo.model.Derivative</param>
+							<param>org.demyo.model.DervativePrice</param>
+							<param>org.demyo.model.DerivativeSource</param>
+							<param>org.demyo.model.DerivativeType</param>
+							<param>org.demyo.model.Image</param>
+							<param>org.demyo.model.Publisher</param>
+							<param>org.demyo.model.Reader</param>
+							<param>org.demyo.model.Series</param>
+							<param>org.demyo.model.Taxon</param>
+							<param>org.demyo.model.Universe</param>
+						</classes>
+					</configuration>
+					<executions>
+						<execution>
+							<id>generate-assertions</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>generate-assertions</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 
 				<!--
@@ -593,64 +666,67 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
-					<version>3.1.0</version>
+					<version>3.2.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
-					<version>3.6.0</version>
+					<version>3.8.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.3.2</version>
+					<version>3.5.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.1.4</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
-					<version>3.1.1</version>
+					<version>3.1.4</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>3.3.1</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-					<version>3.12.1</version>
+					<version>3.22.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.3.0</version>
+					<version>3.5.0</version>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
-					<version>3.2.5</version>
+					<version>3.5.6</version>
 					<configuration>
 						<argLine>-Djava.awt.headless=true</argLine>
+						<systemPropertyVariables>
+							<demyo.userDirectory>${project.build.directory}/user-directory</demyo.userDirectory>
+						</systemPropertyVariables>
 					</configuration>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-project-info-reports-plugin</artifactId>
-					<version>3.5.0</version>
+					<version>3.9.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -688,6 +764,9 @@
 							<artifactId>maven-surefire-plugin</artifactId>
 							<configuration>
 								<argLine>@{argLine} -Djava.awt.headless=true</argLine>
+								<systemPropertyVariables>
+									<demyo.userDirectory>${project.build.directory}/user-directory</demyo.userDirectory>
+								</systemPropertyVariables>
 							</configuration>
 						</plugin>
 

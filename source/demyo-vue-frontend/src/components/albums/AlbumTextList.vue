@@ -16,7 +16,11 @@
 								<v-icon v-else>
 									mdi-chevron-down
 								</v-icon>
-								<v-btn :to="`/series/${value.id}/view`" icon size="small" variant="flat">
+								<v-btn
+									:to="`/series/${value.id}/view`"
+									icon size="small" variant="flat"
+									@click.stop=""
+								>
 									<v-icon>mdi-eye</v-icon>
 								</v-btn>
 							</template>

@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
+import { scrollToTop } from '@/helpers/dom'
 import imageService from '@/services/image-service'
 
 const { modelList } = useSimpleIndex(imageService, 'title.index.image')

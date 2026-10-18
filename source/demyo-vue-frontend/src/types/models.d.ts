@@ -62,3 +62,10 @@ type DeferrableLinkModel = 'album' | 'author' | 'binding' | 'bookType' | 'collec
 type FieldValueType = 'rich-text' | 'text' | 'url' |
 		'AuthorView' | 'PublisherView' |
 		'AuthorPseudonym'
+
+interface CommonAlbumSize {
+	source: 'publisher' | 'collection'
+	height: number
+	width: number
+	cnt: number
+}

@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 /**
  * A Jackson deserializer that is able to build {@link SortedSet}s of non-comparables by providing the relevant
  * comparators.
- * 
+ *
  * @param <T> The element type
  * @param <C> The comparator type
  */
@@ -106,7 +106,7 @@ public class SortedSetDeserializer<T, C extends Comparator<T>> extends JsonDeser
 			throw new JsonParseException(p,
 					"Unexpected structure for the SortedSet deserialization (not an array but a "
 							+ p.currentToken() + ")",
-					p.getCurrentLocation());
+					p.currentLocation());
 		}
 		p.nextToken();
 

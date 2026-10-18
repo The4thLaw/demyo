@@ -27,19 +27,20 @@ class AlbumAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(get("/api/albums/"))
 
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", hasSize(3)))
+				// 10 Series, 1 one shot
+				.andExpect(jsonPath("$", hasSize(17)))
 				// First series is actually an Album
 				.andExpect(jsonPath("$[0].series").doesNotExist())
-				.andExpect(jsonPath("$[0].album.title").value("Maître d'Armes (Le)"))
-				.andExpect(jsonPath("$[0].album.identifyingName").value("Maître d'Armes (Le)"))
+				.andExpect(jsonPath("$[0].album.title").value("300"))
+				.andExpect(jsonPath("$[0].album.identifyingName").value("300"))
 				// Second is a long series
 				.andExpect(jsonPath("$[1].album").doesNotExist())
-				.andExpect(jsonPath("$[1].series.identifyingName").value("Sillage"))
-				.andExpect(jsonPath("$[1].albums", hasSize(24)))
+				.andExpect(jsonPath("$[1].series.identifyingName").value("Abélard"))
+				.andExpect(jsonPath("$[1].albums", hasSize(2)))
 				// Third is a short one
 				.andExpect(jsonPath("$[2].album").doesNotExist())
-				.andExpect(jsonPath("$[2].series.identifyingName").value("Sillage - Premières Armes"))
-				.andExpect(jsonPath("$[2].albums", hasSize(1)));
+				.andExpect(jsonPath("$[2].series.identifyingName").value("Alvin"))
+				.andExpect(jsonPath("$[2].albums", hasSize(2)));
 	}
 
 	@Test
@@ -54,9 +55,9 @@ class AlbumAPIControllerIT extends AbstractModelAPIIT {
 				.andExpect(jsonPath("$", hasSize(1)))
 				// Test the single match
 				.andExpect(jsonPath("$[0].album").doesNotExist())
-				.andExpect(jsonPath("$[0].series.identifyingName").value("Sillage"))
+				.andExpect(jsonPath("$[0].series.identifyingName").value("Lanfeust de Troy"))
 				.andExpect(jsonPath("$[0].albums", hasSize(1)))
-				.andExpect(jsonPath("$[0].albums[0].title").value("Grands Froids"));
+				.andExpect(jsonPath("$[0].albums[0].title").value("Les Pétaures se Cachent pour Mourir"));
 	}
 
 	@Test
@@ -64,15 +65,15 @@ class AlbumAPIControllerIT extends AbstractModelAPIIT {
 		mockMvc.perform(post("/api/albums/index/filtered")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{"
-						+ "\"taxon\": 1"
+						+ "\"taxon\": 24"
 						+ "}")) //
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(2)))
 				// Test the single match
 				.andExpect(jsonPath("$[0].album").doesNotExist())
-				.andExpect(jsonPath("$[0].series.identifyingName").value("Sillage"))
-				.andExpect(jsonPath("$[0].albums", hasSize(23)))
-				.andExpect(jsonPath("$[0].albums[0].title").value("Le Collectionneur"));
+				.andExpect(jsonPath("$[0].series.identifyingName").value("Abélard"))
+				.andExpect(jsonPath("$[0].albums", hasSize(2)))
+				.andExpect(jsonPath("$[0].albums[1].title").value("Une brève histoire de poussière et de cendre"));
 	}
 }

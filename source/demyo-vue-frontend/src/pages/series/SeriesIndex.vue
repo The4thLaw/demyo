@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
+import { scrollToTop } from '@/helpers/dom'
 import seriesService from '@/services/series-service'
 
 const { modelList } = useSimpleIndex(seriesService, 'title.index.series')

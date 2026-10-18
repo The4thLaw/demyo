@@ -1,16 +1,8 @@
 <template>
-	<v-card :flat="true" :hover="true" class="c-MetaSeriesCard">
+	<v-card :flat="true" :hover="true" :class="`c-MetaSeriesCard c-MetaSeriesCard__${meta.album ? 'album' : 'series'}`">
 		<template v-if="meta.album">
-			<router-link
-				v-ripple :to="cardLink"
-				class="c-MetaSeriesCard__title" role="heading" aria-level="3"
-			>
-				{{ meta.album.title }}
-			</router-link>
 			<v-list density="compact">
-				<v-list-item
-					:to="cardLink" class="c-MetaSeriesCard__one-shot" :title="$t('field.Album.oneShot.view')"
-				/>
+				<v-list-item :to="cardLink" :title="meta.album.title" />
 			</v-list>
 		</template>
 		<template v-if="meta.series">
@@ -73,11 +65,15 @@ const { pageCount, paginatedItems, previousPage, nextPage, hasPreviousPage, hasN
 <style lang="scss">
 @use '@/styles/mixins';
 
+.c-CardTextIndex__item > .c-MetaSeriesCard__album {
+	flex: none;
+}
+
 .v-application .c-MetaSeriesCard .v-list-item--link:hover {
 	text-decoration: none;
 }
 
-.v-application a.c-MetaSeriesCard__title {
+.v-application .c-MetaSeriesCard__series a.c-MetaSeriesCard__title {
 	@include mixins.dem-model-card-title;
 }
 

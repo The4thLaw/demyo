@@ -15,7 +15,7 @@ describe('AlbumCard.vue', () => {
 				album: {
 					id: 13,
 					identifyingName: 'My album title',
-					currentEditionDate: new Date('2024-01-01'),
+					currentEditionDate: '2024-01-01',
 					cover: {
 						id: 42,
 						identifyingName: 'My cover',

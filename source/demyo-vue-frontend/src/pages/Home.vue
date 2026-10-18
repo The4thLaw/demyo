@@ -27,8 +27,9 @@ const uiStore = useUiStore()
 uiStore.disableSearch()
 uiStore.disableGlobalOverlay()
 
+const i18n = useI18n()
 useHead({
-	title: useI18n().t('title.home')
+	title: computed(() => i18n.t('title.home'))
 })
 
 const {

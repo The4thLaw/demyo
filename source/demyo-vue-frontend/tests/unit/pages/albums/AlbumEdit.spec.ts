@@ -53,12 +53,12 @@ describe('AlbumEdit.vue', () => {
 	it('Save the form', async () => {
 		const saveBtn = wrapper.findComponent('.c-FormActions__submit')
 		await saveBtn.trigger('click')
-		expect(wrapper.vm.save).toBeCalled()
+		expect(wrapper.vm.save).toHaveBeenCalled()
 	})
 
 	it('Reset the form', async () => {
 		const resetBtn = wrapper.findComponent('.c-FormActions__reset')
 		await resetBtn.trigger('click')
-		expect(wrapper.vm.reset).toBeCalled()
+		expect(wrapper.vm.reset).toHaveBeenCalled()
 	})
 })

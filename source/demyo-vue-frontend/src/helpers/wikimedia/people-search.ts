@@ -63,7 +63,7 @@ export async function searchPeople(term: string, language: string): Promise<Peop
 		// Only keep results with understandable labels
 		.filter(e => withFallback(e.labels, language) !== undefined)
 		.map(e => ({
-			id: e.id as string,
+			id: e.id,
 			fullName: withFallback(e.labels, language) ?? e.id, // Coalescing should never happen
 			description: withFallback(e.descriptions, language) ?? '',
 			item: e

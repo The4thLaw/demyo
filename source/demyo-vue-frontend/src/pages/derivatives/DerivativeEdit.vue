@@ -7,7 +7,7 @@
 						<Autocomplete
 							v-model="derivative.series.id" :items="allSeries" label-key="field.Derivative.series"
 							:loading="seriesLoading" refreshable clearable
-							:rules="rules.albumOrSeries" @update:model-value="loadAlbums(); formRef.validate()"
+							:rules="rules.albumOrSeries" @update:model-value="loadAlbums(); formRef?.validate()"
 							@refresh="loadSeries"
 						/>
 					</v-col>
@@ -15,7 +15,7 @@
 						<Autocomplete
 							v-model="derivative.album.id" :items="relatedAlbums" :loading="relatedAlbumsLoading"
 							label-key="field.Derivative.album" refreshable clearable
-							:rules="rules.albumOrSeries" @update:model-value="formRef.validate()" @refresh="loadAlbums"
+							:rules="rules.albumOrSeries" @update:model-value="formRef?.validate()" @refresh="loadAlbums"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">

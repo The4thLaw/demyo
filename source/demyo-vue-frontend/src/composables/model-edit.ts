@@ -68,7 +68,7 @@ function useEdit<T extends AbstractModel>(fetchData: (id: number | undefined) =>
 		// Set it as soon as it's resolved but without blocking other promises
 		void modelP.then(m => (model.value = m))
 
-		additionalLoaders.forEach(l => loadPromises.push(l()))
+		additionalLoaders.forEach(l => { loadPromises.push(l()) })
 
 		await Promise.all(loadPromises)
 

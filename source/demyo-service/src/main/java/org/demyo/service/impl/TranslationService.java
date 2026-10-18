@@ -12,6 +12,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -25,6 +26,7 @@ import org.demyo.utils.logging.LoggingSanitizer;
  * Implements the contract defined by {@link ITranslationService}.
  */
 @Service
+@Validated
 public class TranslationService implements ITranslationService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TranslationService.class);
 	private static final Object[] NO_PARAMS = new Object[0];

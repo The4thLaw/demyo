@@ -78,7 +78,7 @@ describe('AlbumView.vue', () => {
 
 		wrapper.vm.album.width = 240
 		wrapper.vm.album.height = 320
-		expect(wrapper.vm.sizeSpec).toBe('240 x 320')
+		expect(wrapper.vm.sizeSpec).toBe('240 × 320')
 	})
 
 	it('Build a query to add a derivative', () => {

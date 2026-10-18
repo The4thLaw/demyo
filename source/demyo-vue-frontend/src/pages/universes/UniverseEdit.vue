@@ -22,7 +22,7 @@
 				<v-row>
 					<v-col cols="12" md="6">
 						<Autocomplete
-							v-model="universe.logo.id" :items="images" :loading="imagesLoading"
+							v-model="universe.logo!.id" :items="images" :loading="imagesLoading"
 							label-key="field.Universe.logo" refreshable @refresh="loadImages"
 						/>
 					</v-col>

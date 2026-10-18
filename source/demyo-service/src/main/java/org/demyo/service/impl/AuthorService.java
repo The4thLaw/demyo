@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.common.exception.DemyoException;
 import org.demyo.dao.IAlbumRepo;
@@ -33,6 +34,7 @@ import org.demyo.service.IFilePondModelService;
  * Implements the contract defined by {@link IAuthorService}.
  */
 @Service
+@Validated
 public class AuthorService extends AbstractModelService<Author> implements IAuthorService {
 	@Autowired
 	private IAuthorRepo repo;

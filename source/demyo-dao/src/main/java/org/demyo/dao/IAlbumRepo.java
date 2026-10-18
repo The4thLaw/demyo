@@ -2,7 +2,6 @@ package org.demyo.dao;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,6 +11,7 @@ import com.querydsl.core.types.Predicate;
 import org.demyo.model.Album;
 import org.demyo.model.BookType;
 import org.demyo.model.Series;
+import org.demyo.model.projections.IAlbumSize;
 import org.demyo.model.projections.IAuthorAlbum;
 
 /**
@@ -21,6 +21,7 @@ import org.demyo.model.projections.IAuthorAlbum;
 public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Album>, IAlbumCustomRepo {
 	/**
 	 * Finds the approximate number of rows that would be fetched from the database.
+	 *
 	 * @param id The identifier of the album.
 	 * @return The expected row count.
 	 */
@@ -74,14 +75,21 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	Album findOneForEditionLight(long id);
 
 	/**
-	 * Finds the first Album for a given Series.
+	 * Finds the ID of the first Album for a given Series.
 	 *
 	 * @param id The Series ID
 	 * @param sort The order to determine the "first"
-	 * @return The matching Album
+	 * @return The matching Album ID
 	 */
-	@EntityGraph("Album.forEdition")
-	Album findTopBySeriesId(long id, Sort sort);
+	@Query(value = """
+		select ID
+		from ALBUMS
+		where SERIES_ID = ?1
+		order by
+			cycle desc, number desc, number_suffix desc, first_edition desc,
+			this_edition desc, title desc limit 1
+				""", nativeQuery = true)
+	Long findLastAlbumInSeries(long series);
 
 	/**
 	 * Finds the {@link Album}s belonging to a specific {@link Series}.
@@ -198,4 +206,32 @@ public interface IAlbumRepo extends IModelRepo<Album>, IQuickSearchableRepo<Albu
 	 */
 	@Query("select count(*) from Album a where a.binding.id = ?1")
 	int countAlbumsByBinding(long typeId);
+
+	@Query(value = """
+			select *
+			from
+				(select
+					'publisher' as source, count(*) as cnt, WIDTH, HEIGHT
+				from ALBUMS
+				where
+					PUBLISHER_ID = ?1
+					and WIDTH is not null
+					and HEIGHT is not null
+				group by WIDTH, HEIGHT)
+			order by cnt desc limit 3""", nativeQuery = true)
+	List<IAlbumSize> findCommonSizesByPublisher(long pubId);
+
+	@Query(value = """
+			select *
+			from
+				(select
+					'collection' as source, count(*) as cnt, WIDTH, HEIGHT
+				from ALBUMS
+				where
+					COLLECTION_ID = ?1
+					and WIDTH is not null
+					and HEIGHT is not null
+				group by WIDTH, HEIGHT)
+			order by cnt desc limit 3""", nativeQuery = true)
+	List<IAlbumSize> findCommonSizesByCollection(long colId);
 }

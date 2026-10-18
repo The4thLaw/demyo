@@ -99,14 +99,14 @@
 						<Autocomplete
 							v-model="album.publisher.id" :items="publishers" :loading="publishersLoading"
 							label-key="field.Album.publisher" required :rules="rules.publisher"
-							refreshable @refresh="loadPublishers" @input="loadCollections(album)"
+							refreshable @refresh="loadPublishers" @change="publisherChange(album)"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.collection.id" :items="collections" :loading="collectionsLoading"
 							label-key="field.Album.collection" clearable
-							refreshable @refresh="loadCollections(album)"
+							refreshable @refresh="loadCollections(album)" @change="loadCommonSizes(album)"
 						/>
 					</v-col>
 				</v-row>
@@ -184,6 +184,7 @@
 							v-model="album.currentEditionDate" :label="$t('field.Album.currentEditionDate')"
 							type="date" :readonly="sameEditionDates"
 							:append-icon="sameEditionDates ? 'mdi-pencil-off-outline' : ''"
+							@change="adjustEditionDates"
 						/>
 						<v-checkbox
 							v-model="sameEditionDates" :label="$t('field.Album.currentEditionDate.sameAsFirst')"
@@ -198,7 +199,13 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="album.printingDate" :label="$t('field.Album.printingDate')" type="date"
+							v-model="album.printingDate" :label="$t('field.Album.printingDate')"
+							type="date" :readonly="printSameAsEdition"
+							:append-icon="printSameAsEdition ? 'mdi-pencil-off-outline' : ''"
+						/>
+						<v-checkbox
+							v-model="printSameAsEdition" :label="$t('field.Album.printingDate.sameAsCurrent')"
+							@update:model-value="adjustEditionDates"
 						/>
 					</v-col>
 					<v-col cols="12" md="4">
@@ -231,6 +238,22 @@
 							v-model="album.width" :label="$t('field.Album.width')"
 							type="number" inputmode="decimal" step="any" :rules="rules.width"
 						/>
+						<div
+							v-if="commonSizes.length"
+							class="v-AlbumEdit__commonSizes"
+						>
+							<p>{{ $t(`page.Album.commonSizes.${commonSizes[0].source}`) }}</p>
+
+							<div>
+								<v-btn
+									v-for="(cs, k) of commonSizes" :key="k"
+									variant="tonal" color="primary"
+									@click="album.width = cs.width; album.height = cs.height"
+								>
+									{{ cs.width }} &times; {{ cs.height }}
+								</v-btn>
+							</div>
+						</div>
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
@@ -240,7 +263,7 @@
 					</v-col>
 					<v-col cols="12" md="4">
 						<v-text-field
-							v-model="album.pages" :label="$t('field.Album.pages')"
+							v-model="album.pages" :label="$t(`field.Album.pages.${labelType}`)"
 							type="number" inputmode="decimal" :rules="rules.pages"
 						/>
 					</v-col>
@@ -286,7 +309,7 @@
 					<v-col cols="12" md="6">
 						<Autocomplete
 							v-model="album.cover.id" :items="images" :loading="imagesLoading"
-							label-key="field.Album.cover" refreshable @refresh="loadImages"
+							label-key="field.Album.cover" clearable refreshable @refresh="loadImages"
 						/>
 					</v-col>
 					<v-col cols="12" md="6">
@@ -325,6 +348,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const sameEditionDates = ref(false)
+const printSameAsEdition = ref(false)
 
 const { bookTypes, bookTypesLoading, loadBookTypes } = useRefreshableBookTypes()
 const { authors, authorsLoading, loadAuthors } = useRefreshableAuthors()
@@ -335,8 +359,28 @@ const { series, seriesLoading, loadSeries } = useRefreshableSeries()
 const { genres, tags, taxonsLoading, loadTaxons } = useRefreshableTaxons()
 const { universes, universesLoading, loadUniverses } = useRefreshableUniverses()
 
+let hasInitialSize = false
+const commonSizes = ref([] as CommonAlbumSize[])
+
 const collections = ref([] as Collection[])
 const collectionsLoading = ref(false)
+async function loadCommonSizes(forAlbum: Partial<Album>): Promise<void> {
+	if (hasInitialSize) {
+		// Make no suggestion if we started with a known size
+		return
+	}
+
+	if (forAlbum.publisher?.id || forAlbum.collection?.id) {
+		commonSizes.value = await albumService.findCommonSizes(
+			forAlbum.publisher?.id, forAlbum.collection?.id)
+	} else {
+		commonSizes.value = []
+	}
+}
+async function publisherChange(forAlbum: Partial<Album>): Promise<void> {
+	await loadCollections(forAlbum)
+	await loadCommonSizes(forAlbum)
+}
 async function loadCollections(forAlbum: Partial<Album>): Promise<void> {
 	collectionsLoading.value = true
 	collections.value = await publisherService.findCollectionsForList(forAlbum.publisher?.id)
@@ -398,12 +442,16 @@ async function fetchData(id: number | undefined): Promise<Partial<Album>> {
 		}
 	}
 
-	// Load collections with the currently available data
-	void loadCollections(fetched)
+	hasInitialSize = !!fetched.width || !!fetched.height
+
+	// Load collections and album sizes with the currently available data
+	void publisherChange(fetched)
 
 	// Check the edition dates
 	sameEditionDates.value = (!!fetched.firstEditionDate
 		&& fetched.firstEditionDate === fetched.currentEditionDate) || false
+	printSameAsEdition.value = (!!fetched.currentEditionDate
+		&& fetched.currentEditionDate === fetched.printingDate) || false
 
 	bookTypeManagement.value = await btmP
 
@@ -427,6 +475,9 @@ function adjustEditionDates(): void {
 	}
 	if (sameEditionDates.value) {
 		album.value.currentEditionDate = album.value.firstEditionDate
+	}
+	if (printSameAsEdition.value) {
+		album.value.printingDate = album.value.currentEditionDate
 	}
 }
 
@@ -457,5 +508,16 @@ const rules = {
 .v-AlbumEdit__inherited {
 	color: rgb(var(--v-theme-primary));
 	font-size: 0.8em;
+}
+
+.v-AlbumEdit__commonSizes {
+	> div {
+		margin-top: -.75em;
+		line-height: 300%;
+	}
+
+	button {
+		margin-right: 1em;
+	}
 }
 </style>

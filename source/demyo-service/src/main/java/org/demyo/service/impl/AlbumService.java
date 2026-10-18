@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.LongFunction;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,11 +23,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoException;
@@ -39,6 +40,7 @@ import org.demyo.model.Author;
 import org.demyo.model.Series;
 import org.demyo.model.beans.MetaSeries;
 import org.demyo.model.filters.AlbumFilter;
+import org.demyo.model.projections.IAlbumSize;
 import org.demyo.model.util.AlbumComparator;
 import org.demyo.service.IAlbumService;
 import org.demyo.service.IFilePondModelService;
@@ -49,6 +51,7 @@ import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
  * Implements the contract defined by {@link IAlbumService}.
  */
 @Service
+@Validated
 public class AlbumService extends AbstractModelService<Album> implements IAlbumService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AlbumService.class);
 	private static final long MAX_ROWS_COMPLEXITY = 100;
@@ -74,10 +77,10 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	/**
 	 * Loads and initializes an album in an efficient manner.
 	 * <p>
-	 * Albums are very particular entities. Collected comics issues can have (simplification of an actual case)
-	 * 10 writers, 10 artists, 10 colorists, 5 inkers. It's not uncommon for albums to have 5 taxons.
-	 * 10*10*10*5*5 = 25000 thousand rows in a full JOIN statement that Hibernate would generate for a full
-	 * entity graph. This results in absymal performance.
+	 * Albums are very particular entities. Collected comics issues can have (simplification of an actual case) 10
+	 * writers, 10 artists, 10 colorists, 5 inkers. It's not uncommon for albums to have 5 taxons. 10*10*10*5*5 = 25000
+	 * thousand rows in a full JOIN statement that Hibernate would generate for a full entity graph. This results in
+	 * absymal performance.
 	 * </p>
 	 * <p>
 	 * For this reason, this method drops some eager joins and lazy loads what's needed. It can result in lower
@@ -117,17 +120,17 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 		Hibernate.initialize(album.getTranslators());
 		Hibernate.initialize(album.getWriters());
 		Hibernate.initialize(album.getTaxons());
+		Hibernate.initialize(album.getPrices());
 		Stream.of(
-			album.getArtists(),
-			album.getColorists(),
-			album.getCoverArtists(),
-			album.getInkers(),
-			album.getTranslators(),
-			album.getWriters()
-		).flatMap(Collection::stream)
-			.map(Author::getPseudonymOf)
-			.filter(Objects::nonNull)
-			.forEach(Hibernate::initialize);
+				album.getArtists(),
+				album.getColorists(),
+				album.getCoverArtists(),
+				album.getInkers(),
+				album.getTranslators(),
+				album.getWriters()).flatMap(Collection::stream)
+				.map(Author::getPseudonymOf)
+				.filter(Objects::nonNull)
+				.forEach(Hibernate::initialize);
 		subLoadSw.stop();
 		LOGGER.debug("Loading secondary associations for album {} from the DB took {}ms", id, subLoadSw.getTime());
 
@@ -205,13 +208,13 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	@Transactional(readOnly = true)
 	public Album getAlbumTemplateForSeries(long seriesId) {
-		Sort sort = Sort.by(Direction.DESC, "cycle", "number", "numberSuffix", "firstEditionDate",
-				"currentEditionDate", "title");
-		Album last = repo.findTopBySeriesId(seriesId, sort);
+		Long lastId = repo.findLastAlbumInSeries(seriesId);
 
 		Album template = new Album();
 
-		if (last != null) {
+		if (lastId != null) {
+			// Reload with all needed data, to avoid potential performance issues
+			Album last = loadAndInitAlbum(lastId, true);
 			template.setBookType(last.getBookType());
 			template.setArtists(last.getArtists());
 			template.setBinding(last.getBinding());
@@ -344,5 +347,35 @@ public class AlbumService extends AbstractModelService<Album> implements IAlbumS
 	@Override
 	public long countAlbumsByFilter(AlbumFilter filter) {
 		return repo.count(filter.toPredicate());
+	}
+
+	@Override
+	public List<IAlbumSize> findCommonSizes(Long publisherId, Long collectionId) {
+		List<IAlbumSize> common = findCommonSizes(collectionId, () -> AlbumFilter.forCollection(collectionId),
+				repo::findCommonSizesByCollection);
+		if (!common.isEmpty()) {
+			return common;
+		}
+		common = findCommonSizes(publisherId, () -> AlbumFilter.forPublisher(publisherId),
+				repo::findCommonSizesByPublisher);
+		return common;
+	}
+
+	private List<IAlbumSize> findCommonSizes(Long modelId, Supplier<AlbumFilter> afs,
+			LongFunction<List<IAlbumSize>> ass) {
+		if (modelId == null) {
+			return Collections.emptyList();
+		}
+
+		double numAlbums = countAlbumsByFilter(afs.get());
+		if (numAlbums > 0) {
+			List<IAlbumSize> common = ass.apply(modelId);
+			return common.stream()
+					// Require at least 15% of the books to be this size
+					.filter(as -> as.getCnt() / numAlbums > 0.15)
+					.toList();
+		}
+
+		return Collections.emptyList();
 	}
 }

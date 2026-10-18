@@ -84,11 +84,13 @@ const showAddDialog = ref(false)
 
 const emit = defineEmits<{
 	refresh: [],
+	change: [],
 	added: [id: number]
 }>()
 
 function onUpdateSelection(): void {
 	search.value = ''
+	emit('change')
 }
 
 function saved(id: number): void {

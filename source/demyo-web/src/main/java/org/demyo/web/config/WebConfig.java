@@ -26,6 +26,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.the4thlaw.commons.services.io.DirectoryServiceFactory;
+import org.the4thlaw.commons.services.io.IDirectoryService;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,7 +76,7 @@ public class WebConfig implements WebMvcConfigurer {
 				mapper.registerModule(module);
 
 				// Filter out empty values when serializing
-				mapper.setSerializationInclusion(Include.NON_EMPTY);
+				mapper.setDefaultPropertyInclusion(Include.NON_EMPTY);
 
 				// Filter out empty values when deserializing
 				mapper.registerModule(new NullStringModule());
@@ -85,6 +87,16 @@ public class WebConfig implements WebMvcConfigurer {
 				LOGGER.debug("... successful");
 			}
 		}
+	}
+
+	@Bean
+	public IDirectoryService directoryService() {
+		return new DirectoryServiceFactory()
+				.withAppName("Demyo")
+				.withPortableSystemPropertyOverride("demyo.userDirectory")
+				.autoDetectImplementation()
+				.autoDetectLegacy()
+				.build();
 	}
 
 	/*

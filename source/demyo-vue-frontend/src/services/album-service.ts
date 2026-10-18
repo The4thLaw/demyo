@@ -8,8 +8,8 @@ import readerService from './reader-service'
 class AlbumService extends AbstractModelService<Album> {
 	constructor() {
 		super('albums/', {
-			// Publishers are mandatory but could be missing from album templates
-			fillMissingObjects: ['series', 'publisher', 'collection', 'binding', 'cover', 'universe'],
+			// Publishers and book types are mandatory but could be missing from album templates
+			fillMissingObjects: ['series', 'bookType', 'publisher', 'collection', 'binding', 'cover', 'universe'],
 			fillMissingArrays: [
 				'writers', 'artists', 'colorists', 'inkers', 'translators', 'coverArtists', 'tags', 'genres',
 				'images', 'prices'
@@ -62,6 +62,17 @@ class AlbumService extends AbstractModelService<Album> {
 	 */
 	async countDerivatives(id: number): Promise<number> {
 		return axiosGet(`${this.basePath}${id}/derivatives/count`, 0)
+	}
+
+	async findCommonSizes(publisher: number | undefined, collection: number | undefined): Promise<CommonAlbumSize[]> {
+		const params: Record<string, number> = {}
+		if (publisher) {
+			params.publisher = publisher
+		}
+		if (collection) {
+			params.collection = collection
+		}
+		return axiosGet(`${this.basePath}common-sizes`, params, [])
 	}
 }
 

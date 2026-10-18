@@ -11,6 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.the4thlaw.commons.exception.CommonErrorCode;
+import org.the4thlaw.commons.exception.CommonRuntimeException;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -116,6 +118,9 @@ public final class SystemConfiguration {
 			userDirectory = applicationDirectory.resolve("data");
 			tempDirectory = applicationDirectory.resolve("temp");
 		} else {
+			Path userDir;
+			Path tempDir;
+
 			if (SystemUtils.IS_OS_WINDOWS) {
 				// On Windows, try to send the settings to the Application Data folder
 				// rather than just the home, if possible
@@ -123,21 +128,33 @@ public final class SystemConfiguration {
 				if (StringUtils.isBlank(baseDirectory)) {
 					baseDirectory = SystemUtils.USER_HOME;
 				}
-				userDirectory = Path.of(baseDirectory, APP_NAME);
-				tempDirectory = userDirectory.resolve("temp");
+				userDir = Path.of(baseDirectory, APP_NAME);
+				tempDir = userDir.resolve("temp");
 			} else if (SystemUtils.IS_OS_MAC_OSX) {
 				// https://www.google.com/search?q=os+x+"where+to+put+files"
 				// https://developer.apple.com/library/mac/#documentation/General/Conceptual/
 				// MOSXAppProgrammingGuide/AppRuntime/AppRuntime.html
 
-				userDirectory = Path.of(SystemUtils.USER_HOME, "Library", "Application Support", APP_NAME);
-				tempDirectory = Path.of(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
+				userDir = Path.of(SystemUtils.USER_HOME, "Library", "Application Support", APP_NAME);
+				tempDir = Path.of(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
 			} else {
-				userDirectory = Path.of(SystemUtils.USER_HOME, ".demyo");
+				userDir = Path.of(SystemUtils.USER_HOME, ".demyo");
 				// Unices may have special temporary directories residing in RAM or being cleaned automatically,
 				// so use them
-				tempDirectory = Path.of(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
+				tempDir = Path.of(SystemUtils.JAVA_IO_TMPDIR, APP_NAME);
 			}
+
+			// Allow overriding the user directory
+			String systemValue = System.getProperty("demyo.userDirectory");
+			if (StringUtils.isNotBlank(systemValue)) {
+				userDir = Path.of(systemValue);
+				if (SystemUtils.IS_OS_WINDOWS) {
+					tempDir = userDir.resolve("temp");
+				}
+			}
+
+			this.userDirectory = userDir;
+			this.tempDirectory = tempDir;
 		}
 
 		userPluginDirectory = userDirectory.resolve(PLUGIN_DIR_NAME);
@@ -275,7 +292,7 @@ public final class SystemConfiguration {
 		try {
 			temp = Files.createTempFile(directory, prefix, suffix);
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
+			throw new CommonRuntimeException(CommonErrorCode.IO_GENERIC_ERROR, e);
 		}
 		temp.toFile().deleteOnExit();
 		return temp;
@@ -377,8 +394,7 @@ public final class SystemConfiguration {
 	}
 
 	/**
-	 * Gets the path/URL for the database.
-	 * Similar to the databaseFile but without file extensions. Feed this to H2.
+	 * Gets the path/URL for the database. Similar to the databaseFile but without file extensions. Feed this to H2.
 	 *
 	 * @return the path
 	 */

@@ -1,15 +1,15 @@
 package org.demyo.web.controller.api;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Tests for {@link SearchAPIController}.
@@ -21,18 +21,18 @@ class SearchAPIControllerIT extends AbstractAPIIT {
 	 */
 	@Test
 	void quicksearch() throws Exception {
-		mockMvc.perform(get("/api/search/quick?q=sill"))
+		mockMvc.perform(get("/api/search/quick?q=codex"))
 				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
 				.andExpect(jsonPath("$.albums").doesNotExist())
-				.andExpect(jsonPath("$.series", hasSize(2)))
-				.andExpect(jsonPath("$.series[0].identifyingName").value("Sillage"));
+				.andExpect(jsonPath("$.series", hasSize(1)))
+				.andExpect(jsonPath("$.series[0].identifyingName").value("Codex de Troy"));
 
-		mockMvc.perform(get("/api/search/quick?q=feu"))
+		mockMvc.perform(get("/api/search/quick?q=than"))
 				.andExpect(status().isOk())
 				.andDo(MockMvcResultHandlers.print())
-				.andExpect(jsonPath("$.albums[0].series.identifyingName").value("Sillage"))
-				.andExpect(jsonPath("$.albums[0].title").value("À Feu et à Cendres"));
+				.andExpect(jsonPath("$.albums[0].series.identifyingName").value("Lanfeust de Troy"))
+				.andExpect(jsonPath("$.albums[0].title").value("Thanos l'Incongru"));
 
 	}
 }

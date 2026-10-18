@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.common.exception.DemyoErrorCode;
 import org.demyo.common.exception.DemyoRuntimeException;
@@ -36,6 +37,7 @@ import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
  * Implements the contract defined by {@link ISeriesService}.
  */
 @Service
+@Validated
 public class ReaderService extends AbstractModelService<Reader> implements IReaderService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReaderService.class);
 

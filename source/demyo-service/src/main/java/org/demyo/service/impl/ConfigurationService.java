@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import org.demyo.dao.IConfigurationEntryRepo;
 import org.demyo.model.ConfigurationEntry;
@@ -27,6 +28,7 @@ import org.demyo.service.IConfigurationService;
  * Implements the contract defined by {@link IConfigurationService}.
  */
 @Service
+@Validated
 public class ConfigurationService implements IConfigurationService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationService.class);

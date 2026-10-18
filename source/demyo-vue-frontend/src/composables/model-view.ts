@@ -32,8 +32,8 @@ export function useSimpleView<T extends AbstractModel>(fetchData: (id: number) =
 	})
 
 	async function loadData(): Promise<void> {
-		parsedId.value = getParsedId(route)
 		loading.value = true
+		parsedId.value = getParsedId(route)
 		model.value = await fetchData(parsedId.value)
 		loading.value = false
 	}

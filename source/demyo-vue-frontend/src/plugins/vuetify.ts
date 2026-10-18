@@ -61,7 +61,7 @@ const vuetify = createVuetify({
 		},
 		VNumberInput: {
 			color: 'primary',
-			variant: 'underlined',
+			variant: 'underlined'
 		}
 	}
 })

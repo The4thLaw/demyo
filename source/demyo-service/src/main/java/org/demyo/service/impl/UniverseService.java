@@ -74,7 +74,7 @@ public class UniverseService extends AbstractModelService<Universe> implements I
 			throws DemyoException {
 		filePondModelService.recoverFromFilePond(universeId,
 				logoFilePondId, otherFilePondIds,
-				"special.filepond.Universe.baseCoverName", "special.filepond.Album.baseImageName",
+				"special.filepond.Universe.baseLogoName", "special.filepond.Album.baseImageName",
 				Universe::setLogo, (u, li) -> u.getImages().addAll(li),
 				this, Universe::getIdentifyingName);
 	}

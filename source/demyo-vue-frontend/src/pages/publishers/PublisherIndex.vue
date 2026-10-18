@@ -31,6 +31,7 @@
 
 <script setup lang="ts">
 import { useSimpleIndex } from '@/composables/model-index'
+import { scrollToTop } from '@/helpers/dom'
 import publisherService from '@/services/publisher-service'
 
 const { modelList } = useSimpleIndex(publisherService, 'title.index.publisher')

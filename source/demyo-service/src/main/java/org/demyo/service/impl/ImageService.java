@@ -25,6 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+import org.the4thlaw.commons.exception.CommonErrorCode;
+import org.the4thlaw.commons.exception.CommonRuntimeException;
 import org.the4thlaw.commons.services.image.ImageRetrievalResponse;
 import org.the4thlaw.commons.utils.fluent.FluentUtils;
 import org.the4thlaw.commons.utils.io.FileSecurityUtils;
@@ -48,6 +51,7 @@ import static org.the4thlaw.commons.utils.fluent.FluentUtils.notFoundById;
  * Implements the contract defined by {@link IImageService}.
  */
 @Service
+@Validated
 public class ImageService extends AbstractModelService<Image> implements IImageService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImageService.class);
 	private static final String UPLOAD_DIRECTORY_NAME = "uploads";
@@ -135,7 +139,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 				throw new DemyoRuntimeException(DemyoErrorCode.IMAGE_DIRECTORY_TRAVERSAL, imagePath.toString());
 			}
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e);
+			throw new CommonRuntimeException(CommonErrorCode.IO_GENERIC_ERROR, e);
 		}
 	}
 
@@ -255,7 +259,7 @@ public class ImageService extends AbstractModelService<Image> implements IImageS
 					}
 				});
 		} catch (IOException e) {
-			throw new DemyoRuntimeException(DemyoErrorCode.IO_GENERIC_ERROR, e, "Failed to find the missing files");
+			throw new CommonRuntimeException(CommonErrorCode.IO_GENERIC_ERROR, e, "Failed to find the missing files");
 		}
 
 		Collections.sort(unknownFiles);
