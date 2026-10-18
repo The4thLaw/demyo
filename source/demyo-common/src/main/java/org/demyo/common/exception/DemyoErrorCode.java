@@ -1,9 +1,11 @@
 package org.demyo.common.exception;
 
+import org.the4thlaw.commons.exception.ErrorCode;
+
 /**
  * Exhaustive list of error codes in Demyo.
  */
-public enum DemyoErrorCode {
+public enum DemyoErrorCode implements ErrorCode {
 	/*
 	 * 10xxx: system errors
 	 * 11xxx: import errors
@@ -30,16 +32,7 @@ public enum DemyoErrorCode {
 	SYS_MISSING_DB_SCHEMA_VERSION(10009),
 	/** System tray initialization failure. */
 	SYS_TRAY_FAILING(10010),
-	/** This import format is not supported. */
-	IMPORT_FORMAT_NOT_SUPPORTED(11000),
-	/** The system encountered an I/O error during import. */
-	IMPORT_IO_ERROR(11001),
-	/** The system encountered a parse error during import. */
-	IMPORT_PARSE_ERROR(11002),
-	/** The system encountered an error while restoring the images. */
-	IMPORT_IMAGES_ERROR(11003),
-	/** This version of the schema is not supported by Demyo. */
-	IMPORT_WRONG_SCHEMA(11004),
+	// 11000-11004 are reserved
 	/** The accessed image is trying to perform a directory traversal. */
 	IMAGE_DIRECTORY_TRAVERSAL(12000),
 	/** The accessed image does not exist. */
@@ -68,12 +61,7 @@ public enum DemyoErrorCode {
 	QUICK_TASKS_INVALID_CONFIG(15000),
 	/** The quick task configuration is invalid: the task is missing its label. */
 	QUICK_TASKS_MISSING_LABEL(15001),
-	/** The system encountered an I/O error during export. */
-	EXPORT_IO_ERROR(16000),
-	/** An assumption about the database could not be met. */
-	EXPORT_DB_CONSISTENCY_ERROR(16001),
-	/** The system encountered a parse error during export. */
-	EXPORT_XML_ERROR(16001),
+	// 16xxx is reserved (legacy export)
 	/** ORM: A mapped property is invalid. */
 	ORM_INVALID_PROPERTY(17000),
 	/** ORM: The PreSave method doesn't have a valid signature. */
@@ -82,10 +70,8 @@ public enum DemyoErrorCode {
 	WEB_FORM_INVALID_OPTIONS(18000),
 	/** Cannot delete the last reader. */
 	READER_CANNOT_DELETE_LAST(19000),
-	/** Generic I/O operation error. */
-	IO_GENERIC_ERROR(20000),
-	/** There was an issue during a file compression. */
-	IO_COMPRESSION_ERROR(20001),
+	// 20000 is reserved
+	// 20001 is reserved
 	/** Book type management is already enabled and cannot be re-enabled. */
 	BOOK_TYPE_MGMT_ALREADY_ENABLED(21000),
 	/** Book type management is enabled, so it's needed on albums. */
@@ -95,6 +81,11 @@ public enum DemyoErrorCode {
 
 	DemyoErrorCode(int numericCode) {
 		this.numericCode = numericCode;
+	}
+
+	@Override
+	public int getNumericCode() {
+		return numericCode;
 	}
 
 	@Override

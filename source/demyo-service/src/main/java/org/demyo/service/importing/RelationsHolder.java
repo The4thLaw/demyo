@@ -1,15 +1,15 @@
 package org.demyo.service.importing;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.the4thlaw.commons.services.importing.BaseRelationsHolder;
 import org.xml.sax.Attributes;
 
-public class RelationsHolder {
+public class RelationsHolder extends BaseRelationsHolder {
 	private static final String FK_IMAGE_ID = "image_id";
 	private static final String FK_ALBUM_ID = "album_id";
 	private static final String FK_READER_ID = "reader_id";
@@ -30,7 +30,6 @@ public class RelationsHolder {
 	private final List<Map<String, String>> readerFavouriteSeries = new ArrayList<>();
 	private final List<Map<String, String>> readerFavouriteAlbums = new ArrayList<>();
 	private final List<Map<String, String>> readerReadingList = new ArrayList<>();
-	private final Map<String, List<Map<String, String>>> allRelations = new HashMap<>();
 
 	public RelationsHolder() {
 		allRelations.put("series_taxons", seriesTaxons);
@@ -47,13 +46,6 @@ public class RelationsHolder {
 		allRelations.put("readers_favourite_series", readerFavouriteSeries);
 		allRelations.put("readers_favourite_albums", readerFavouriteAlbums);
 		allRelations.put("readers_reading_list", readerReadingList);
-	}
-
-	private static Map<String, String> join(String col1, String val1, String col2, String val2) {
-		HashMap<String, String> columns = new HashMap<>();
-		columns.put(col1, val1);
-		columns.put(col2, val2);
-		return columns;
 	}
 
 	public void addSeriesTaxon(String seriesId, Attributes attributes) {
@@ -123,8 +115,4 @@ public class RelationsHolder {
 	public List<Pair<String,String>> getAuthorPseudonyms() {
 		return authorPseudonyms;
 	}
-
-    public Map<String, List<Map<String, String>>> getAllRelations() {
-        return allRelations;
-    }
 }

@@ -1,5 +1,6 @@
 package org.demyo.test.config;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.SimpleThreadScope;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.the4thlaw.commons.services.io.IDirectoryService;
+import org.the4thlaw.commons.services.io.impl.PortableDirectoryService;
 
 import com.github.springtestdbunit.bean.DatabaseConfigBean;
 import com.github.springtestdbunit.bean.DatabaseDataSourceConnectionFactoryBean;
@@ -49,5 +52,9 @@ public class TestConfiguration {
 				dataSource());
 		dbConnection.setDatabaseConfig(dbUnitDatabaseConfig());
 		return dbConnection;
+	}
+
+	@Bean IDirectoryService directoryService() {
+		return new PortableDirectoryService(Path.of("target/test-root-data-directory"), "Demyo");
 	}
 }

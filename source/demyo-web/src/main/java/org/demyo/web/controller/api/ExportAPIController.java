@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.demyo.common.exception.DemyoException;
-import org.demyo.service.IExportService;
-import org.demyo.service.impl.ExportService.Output;
+import org.the4thlaw.commons.exception.CommonException;
+import org.the4thlaw.commons.services.exporting.ExportOutput;
+import org.the4thlaw.commons.services.exporting.IExportService;
 
 /**
  * Controller for export of files.
@@ -36,15 +35,15 @@ public class ExportAPIController {
 	 *
 	 * @param format The export format.
 	 * @param withResources Whether to include resources in the export.
-	 * @throws DemyoException In case of error during export.
+	 * @throws CommonException In case of error during export.
 	 * @throws IOException In case of error during download.
 	 * @return The
 	 */
 	@GetMapping
 	public HttpEntity<Resource> exportFile(@RequestParam("format") String format,
-			@RequestParam("withResources") boolean withResources) throws DemyoException, IOException {
-		Output exportedData = exportService.export(withResources);
-		Path file = exportedData.getFile();
+			@RequestParam("withResources") boolean withResources) throws CommonException, IOException {
+		ExportOutput exportedData = exportService.export(withResources);
+		Path file = exportedData.file();
 
 		HttpHeaders headers = new HttpHeaders();
 
@@ -55,7 +54,7 @@ public class ExportAPIController {
 				MediaTypeFactory.getMediaType(file.getFileName().toString()).orElse(MediaType.APPLICATION_OCTET_STREAM));
 
 		ContentDisposition contentDisp = ContentDisposition.builder("attachment")
-				.filename(exportedData.getFileName(), StandardCharsets.UTF_8)
+				.filename(exportedData.fileName(), StandardCharsets.UTF_8)
 				.build();
 		headers.setContentDisposition(contentDisp);
 
