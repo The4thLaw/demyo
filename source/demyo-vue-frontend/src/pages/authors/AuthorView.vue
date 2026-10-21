@@ -34,8 +34,8 @@
 				label-key="field.Author.pseudonymOf" type="AuthorView"
 			/>
 
-			<FieldValue v-if="roles.length" label-key="field.Author.roles">
-				{{ roles.join(', ') }}
+			<FieldValue v-if="roles.length" :label="$t('field.Author.roles', roles.length)">
+				{{ capitalize(roles.join(', ')) }}
 			</FieldValue>
 
 			<FieldValue :value="author.website" label-key="field.Author.website" type="url" />
@@ -118,6 +118,7 @@ import { useDndImages } from '@/composables/dnd-images'
 import { useSimpleView } from '@/composables/model-view'
 import { postProcessTaxons } from '@/composables/taxons'
 import { useCountry } from '@/helpers/countries'
+import { capitalize } from '@/helpers/strings'
 import authorService from '@/services/author-service'
 import { ArcElement, Chart as ChartJS, Title, Tooltip } from 'chart.js'
 import dayjs from 'dayjs'
@@ -310,4 +311,5 @@ const chartData = computed(() => {
 .v-AuthorView__cake {
 	margin-top: -0.3em;
 }
+
 </style>
