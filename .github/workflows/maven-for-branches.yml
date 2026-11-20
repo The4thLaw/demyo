@@ -23,23 +23,16 @@ jobs:
       - name: Configure Maven for GitHub packages
         uses: s4u/maven-settings-action@v4.0.0
         with:
-          repositories: |
-            [{
-                "id": "github-the4thlaw-commons",
-                "url": "https://maven.pkg.github.com/The4thLaw/java-commons",
-                "snapshots": {
-                  "enabled": "true"
-                }
-            }]
           servers: |
             [{
                 "id": "github-the4thlaw",
                 "username": "The4thLaw",
-                "password": "${{ secrets.GITHUB_TOKEN }}",
+                "password": "${{ secrets.T4L_PKG_TOKEN }}",
                 "repositoryOrigins": {
                   "repositoryOrigin": "https://maven.pkg.github.com/"
                 }
             }]
+          githubServer: false
       - name: Cache SonarQube packages
         uses: actions/cache@v6.1.0
         with:
